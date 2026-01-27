@@ -1,0 +1,295 @@
+__attribute__((section (".systeminit")))
+SystemInit ()
+{
+  uint32 coreId;
+  uint32 coreMask;
+  uint32 i;
+  unsigned char _1;
+  struct MSCM_Type * _2;
+  short unsigned int _3;
+  short unsigned int _4;
+  struct MSCM_Type * _5;
+  short unsigned int _6;
+
+  <bb 2> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _1 = Sys_GetCoreID ();
+  coreId_12 = (uint32) _1;
+  # DEBUG coreId => coreId_12
+  # DEBUG BEGIN_STMT
+  switch (coreId_12) <default: <L3> [INV], case 0: <L1> [INV], case 1: <L2> [INV], case 2: <L0> [INV]>
+
+  <bb 3> :
+<L0>:
+  # DEBUG BEGIN_STMT
+  coreMask_13 = 16;
+  # DEBUG coreMask => coreMask_13
+  # DEBUG BEGIN_STMT
+  goto <bb 7>; [INV]
+
+  <bb 4> :
+<L1>:
+  # DEBUG BEGIN_STMT
+  coreMask_15 = 1;
+  # DEBUG coreMask => coreMask_15
+  # DEBUG BEGIN_STMT
+  goto <bb 7>; [INV]
+
+  <bb 5> :
+<L2>:
+  # DEBUG BEGIN_STMT
+  coreMask_14 = 2;
+  # DEBUG coreMask => coreMask_14
+  # DEBUG BEGIN_STMT
+  goto <bb 7>; [INV]
+
+  <bb 6> :
+<L3>:
+  # DEBUG BEGIN_STMT
+  coreMask_16 = 0;
+  # DEBUG coreMask => coreMask_16
+  # DEBUG BEGIN_STMT
+
+  <bb 7> :
+  # coreMask_8 = PHI <coreMask_13(3), coreMask_15(4), coreMask_14(5), coreMask_16(6)>
+  # DEBUG coreMask => coreMask_8
+  # DEBUG BEGIN_STMT
+  i_17 = 0;
+  # DEBUG i => i_17
+  goto <bb 9>; [INV]
+
+  <bb 8> :
+  # DEBUG BEGIN_STMT
+  _2 = 1073807360B;
+  _3 ={v} _2->IRSPRC[i_7];
+  _4 = (short unsigned int) coreMask_8;
+  _5 = 1073807360B;
+  _6 = _3 | _4;
+  _5->IRSPRC[i_7] ={v} _6;
+  # DEBUG BEGIN_STMT
+  i_24 = i_7 + 1;
+  # DEBUG i => i_24
+
+  <bb 9> :
+  # i_7 = PHI <i_17(7), i_24(8)>
+  # DEBUG i => i_7
+  # DEBUG BEGIN_STMT
+  if (i_7 <= 239)
+    goto <bb 8>; [INV]
+  else
+    goto <bb 10>; [INV]
+
+  <bb 10> :
+  # DEBUG BEGIN_STMT
+  Sys_EnablePartitions ();
+  # DEBUG BEGIN_STMT
+  Core_IC_Init ();
+  # DEBUG BEGIN_STMT
+  Core_FPU_Init ();
+  # DEBUG BEGIN_STMT
+  Core_MPU_Init ();
+  # DEBUG BEGIN_STMT
+  Core_Cache_Init ();
+  return;
+
+}
+
+
+Sys_EnablePartitions ()
+{
+  struct MC_RGM_Type * _1;
+  long unsigned int _2;
+  long unsigned int _3;
+  struct MC_ME_Type * _4;
+  long unsigned int _5;
+  struct MC_ME_Type * _6;
+  long unsigned int _7;
+  struct MC_ME_Type * _8;
+  struct MC_ME_Type * _9;
+  struct MC_ME_Type * _10;
+  struct MC_ME_Type * _11;
+  long unsigned int _12;
+  long unsigned int _13;
+  struct RESET_Type * _14;
+  struct RESET_Type * _15;
+  long unsigned int _16;
+  struct RESET_Type * _17;
+  long unsigned int _18;
+  struct RESET_Type * _19;
+  long unsigned int _20;
+  long unsigned int _21;
+  struct MC_RGM_Type * _22;
+  long unsigned int _23;
+  struct MC_RGM_Type * _24;
+  long unsigned int _25;
+  struct MC_ME_Type * _26;
+  long unsigned int _27;
+  struct MC_ME_Type * _28;
+  long unsigned int _29;
+  struct MC_ME_Type * _30;
+  struct MC_ME_Type * _31;
+  struct MC_ME_Type * _32;
+  struct MC_ME_Type * _33;
+  long unsigned int _34;
+  long unsigned int _35;
+  struct MC_RGM_Type * _36;
+  long unsigned int _37;
+  long unsigned int _38;
+  struct RESET_Type * _39;
+  long unsigned int _40;
+  struct RESET_Type * _41;
+  long unsigned int _42;
+
+  <bb 2> :
+  # DEBUG BEGIN_STMT
+  _1 = 1074577408B;
+  _2 ={v} _1->PSTAT1_0;
+  _3 = _2 & 1;
+  if (_3 != 0)
+    goto <bb 3>; [INV]
+  else
+    goto <bb 11>; [INV]
+
+  <bb 3> :
+  # DEBUG BEGIN_STMT
+  _4 = 1074593792B;
+  _5 ={v} _4->PRTN1_PCONF;
+  _6 = 1074593792B;
+  _7 = _5 | 1;
+  _6->PRTN1_PCONF ={v} _7;
+  # DEBUG BEGIN_STMT
+  _8 = 1074593792B;
+  _8->PRTN1_PUPD ={v} 1;
+  # DEBUG BEGIN_STMT
+  _9 = 1074593792B;
+  _9->CTL_KEY ={v} 23280;
+  # DEBUG BEGIN_STMT
+  _10 = 1074593792B;
+  _10->CTL_KEY ={v} 42255;
+  # DEBUG BEGIN_STMT
+
+  <bb 4> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _11 = 1074593792B;
+  _12 ={v} _11->PRTN1_STAT;
+  _13 = _12 & 1;
+  if (_13 == 0)
+    goto <bb 4>; [INV]
+  else
+    goto <bb 5>; [INV]
+
+  <bb 5> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _14 = 1141719040B;
+  _14->RD1_CTRL_REG ={v} 2147483648;
+  # DEBUG BEGIN_STMT
+  _15 = 1141719040B;
+  _16 ={v} _15->RD1_CTRL_REG;
+  _17 = 1141719040B;
+  _18 = _16 & 4294967287;
+  _17->RD1_CTRL_REG ={v} _18;
+  # DEBUG BEGIN_STMT
+
+  <bb 6> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _19 = 1141719040B;
+  _20 ={v} _19->RD1_STAT_REG;
+  _21 = _20 & 16;
+  if (_21 != 0)
+    goto <bb 6>; [INV]
+  else
+    goto <bb 7>; [INV]
+
+  <bb 7> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _22 = 1074577408B;
+  _23 ={v} _22->PRST1_0;
+  _24 = 1074577408B;
+  _25 = _23 & 4294967294;
+  _24->PRST1_0 ={v} _25;
+  # DEBUG BEGIN_STMT
+  _26 = 1074593792B;
+  _27 ={v} _26->PRTN1_PCONF;
+  _28 = 1074593792B;
+  _29 = _27 & 4294967291;
+  _28->PRTN1_PCONF ={v} _29;
+  # DEBUG BEGIN_STMT
+  _30 = 1074593792B;
+  _30->PRTN1_PUPD ={v} 4;
+  # DEBUG BEGIN_STMT
+  _31 = 1074593792B;
+  _31->CTL_KEY ={v} 23280;
+  # DEBUG BEGIN_STMT
+  _32 = 1074593792B;
+  _32->CTL_KEY ={v} 42255;
+  # DEBUG BEGIN_STMT
+
+  <bb 8> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _33 = 1074593792B;
+  _34 ={v} _33->PRTN1_STAT;
+  _35 = _34 & 4;
+  if (_35 != 0)
+    goto <bb 8>; [INV]
+  else
+    goto <bb 9>; [INV]
+
+  <bb 9> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _36 = 1074577408B;
+  _37 ={v} _36->PSTAT1_0;
+  _38 = _37 & 1;
+  if (_38 != 0)
+    goto <bb 9>; [INV]
+  else
+    goto <bb 10>; [INV]
+
+  <bb 10> :
+  # DEBUG BEGIN_STMT
+  _39 = 1141719040B;
+  _40 ={v} _39->RD1_CTRL_REG;
+  _41 = 1141719040B;
+  _42 = _40 & 2147483647;
+  _41->RD1_CTRL_REG ={v} _42;
+
+  <bb 11> :
+  return;
+
+}
+
+
+Sys_GetCoreID ()
+{
+  struct MSCM_Type * _1;
+  long unsigned int _2;
+  unsigned char _3;
+  uint8 _5;
+
+  <bb 2> :
+  # DEBUG BEGIN_STMT
+  _1 = 1073807360B;
+  _2 ={v} _1->CPXNUM;
+  _3 = (unsigned char) _2;
+  _5 = _3 & 3;
+  return _5;
+
+}
+
+
+startup_go_to_user_mode ()
+{
+  <bb 2> :
+  # DEBUG BEGIN_STMT
+  return;
+
+}
+
+

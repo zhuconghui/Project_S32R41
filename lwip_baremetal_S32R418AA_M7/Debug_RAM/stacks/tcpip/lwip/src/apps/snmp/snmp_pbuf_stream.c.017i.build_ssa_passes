@@ -1,0 +1,345 @@
+snmp_pbuf_stream_seek_abs (struct snmp_pbuf_stream * pbuf_stream, u32_t offset)
+{
+  s32_t rel_offset;
+  err_t D.6594;
+
+  <bb 2> :
+  # DEBUG BEGIN_STMT
+  _1 = pbuf_stream->offset;
+  _2 = (long unsigned int) _1;
+  _3 = offset - _2;
+  rel_offset = (s32_t) _3;
+  # DEBUG BEGIN_STMT
+  D.6594 = snmp_pbuf_stream_seek (pbuf_stream, rel_offset);
+  return D.6594;
+
+}
+
+
+snmp_pbuf_stream_seek (struct snmp_pbuf_stream * pbuf_stream, s32_t offset)
+{
+  err_t D.6592;
+
+  <bb 2> :
+  # DEBUG BEGIN_STMT
+  if (offset < 0)
+    goto <bb 4>; [INV]
+  else
+    goto <bb 3>; [INV]
+
+  <bb 3> :
+  _1 = pbuf_stream->length;
+  _2 = (long int) _1;
+  if (offset > _2)
+    goto <bb 4>; [INV]
+  else
+    goto <bb 5>; [INV]
+
+  <bb 4> :
+  # DEBUG BEGIN_STMT
+  D.6592 = -16;
+  // predicted unlikely by early return (on trees) predictor.
+  goto <bb 6>; [INV]
+
+  <bb 5> :
+  # DEBUG BEGIN_STMT
+  _3 = pbuf_stream->offset;
+  _4 = (short unsigned int) offset;
+  _5 = _3 + _4;
+  pbuf_stream->offset = _5;
+  # DEBUG BEGIN_STMT
+  _6 = pbuf_stream->length;
+  _7 = (short unsigned int) offset;
+  _8 = _6 - _7;
+  pbuf_stream->length = _8;
+  # DEBUG BEGIN_STMT
+  D.6592 = 0;
+
+  <bb 6> :
+  return D.6592;
+
+}
+
+
+snmp_pbuf_stream_writeto (struct snmp_pbuf_stream * pbuf_stream, struct snmp_pbuf_stream * target_pbuf_stream, u16_t len)
+{
+  struct pbuf * pbuf;
+  u16_t target_offset;
+  err_t err;
+  u16_t chunk_len;
+  err_t D.6575;
+
+  <bb 2> :
+  # DEBUG BEGIN_STMT
+  if (pbuf_stream == 0B)
+    goto <bb 4>; [INV]
+  else
+    goto <bb 3>; [INV]
+
+  <bb 3> :
+  if (target_pbuf_stream == 0B)
+    goto <bb 4>; [INV]
+  else
+    goto <bb 5>; [INV]
+
+  <bb 4> :
+  # DEBUG BEGIN_STMT
+  D.6575 = -16;
+  // predicted unlikely by early return (on trees) predictor.
+  goto <bb 19>; [INV]
+
+  <bb 5> :
+  # DEBUG BEGIN_STMT
+  _1 = pbuf_stream->length;
+  if (len > _1)
+    goto <bb 7>; [INV]
+  else
+    goto <bb 6>; [INV]
+
+  <bb 6> :
+  _2 = target_pbuf_stream->length;
+  if (len > _2)
+    goto <bb 7>; [INV]
+  else
+    goto <bb 8>; [INV]
+
+  <bb 7> :
+  # DEBUG BEGIN_STMT
+  D.6575 = -16;
+  // predicted unlikely by early return (on trees) predictor.
+  goto <bb 19>; [INV]
+
+  <bb 8> :
+  # DEBUG BEGIN_STMT
+  if (len == 0)
+    goto <bb 9>; [INV]
+  else
+    goto <bb 17>; [INV]
+
+  <bb 9> :
+  # DEBUG BEGIN_STMT
+  _3 = target_pbuf_stream->length;
+  _4 = pbuf_stream->length;
+  len = MIN_EXPR <_3, _4>;
+  goto <bb 17>; [INV]
+
+  <bb 10> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _5 = pbuf_stream->pbuf;
+  _6 = pbuf_stream->offset;
+  pbuf = pbuf_skip (_5, _6, &target_offset);
+  # DEBUG BEGIN_STMT
+  if (pbuf == 0B)
+    goto <bb 12>; [INV]
+  else
+    goto <bb 11>; [INV]
+
+  <bb 11> :
+  _7 = pbuf->len;
+  if (_7 == 0)
+    goto <bb 12>; [INV]
+  else
+    goto <bb 13>; [INV]
+
+  <bb 12> :
+  # DEBUG BEGIN_STMT
+  D.6575 = -2;
+  // predicted unlikely by early return (on trees) predictor.
+  goto <bb 16>; [INV]
+
+  <bb 13> :
+  # DEBUG BEGIN_STMT
+  _8 = pbuf->len;
+  chunk_len = MIN_EXPR <len, _8>;
+  # DEBUG BEGIN_STMT
+  _9 = pbuf->payload;
+  target_offset.0_10 = target_offset;
+  _11 = (sizetype) target_offset.0_10;
+  _12 = _9 + _11;
+  err = snmp_pbuf_stream_writebuf (target_pbuf_stream, _12, chunk_len);
+  # DEBUG BEGIN_STMT
+  if (err != 0)
+    goto <bb 14>; [INV]
+  else
+    goto <bb 15>; [INV]
+
+  <bb 14> :
+  # DEBUG BEGIN_STMT
+  D.6575 = err;
+  // predicted unlikely by early return (on trees) predictor.
+  goto <bb 16>; [INV]
+
+  <bb 15> :
+  # DEBUG BEGIN_STMT
+  _13 = pbuf_stream->offset;
+  _14 = chunk_len + _13;
+  pbuf_stream->offset = _14;
+  # DEBUG BEGIN_STMT
+  _15 = pbuf_stream->length;
+  _16 = _15 - chunk_len;
+  pbuf_stream->length = _16;
+  # DEBUG BEGIN_STMT
+  len = len - chunk_len;
+  target_offset = {CLOBBER};
+  goto <bb 17>; [INV]
+
+  <bb 16> :
+  target_offset = {CLOBBER};
+  goto <bb 19>; [INV]
+
+  <bb 17> :
+  # DEBUG BEGIN_STMT
+  if (len != 0)
+    goto <bb 10>; [INV]
+  else
+    goto <bb 18>; [INV]
+
+  <bb 18> :
+  # DEBUG BEGIN_STMT
+  D.6575 = 0;
+
+  <bb 19> :
+  return D.6575;
+
+}
+
+
+snmp_pbuf_stream_writebuf (struct snmp_pbuf_stream * pbuf_stream, const void * buf, u16_t buf_len)
+{
+  err_t D.6568;
+
+  <bb 2> :
+  # DEBUG BEGIN_STMT
+  _1 = pbuf_stream->length;
+  if (buf_len > _1)
+    goto <bb 3>; [INV]
+  else
+    goto <bb 4>; [INV]
+
+  <bb 3> :
+  # DEBUG BEGIN_STMT
+  D.6568 = -2;
+  // predicted unlikely by early return (on trees) predictor.
+  goto <bb 7>; [INV]
+
+  <bb 4> :
+  # DEBUG BEGIN_STMT
+  _2 = pbuf_stream->pbuf;
+  _3 = pbuf_stream->offset;
+  _4 = pbuf_take_at (_2, buf, buf_len, _3);
+  if (_4 != 0)
+    goto <bb 5>; [INV]
+  else
+    goto <bb 6>; [INV]
+
+  <bb 5> :
+  # DEBUG BEGIN_STMT
+  D.6568 = -2;
+  // predicted unlikely by early return (on trees) predictor.
+  goto <bb 7>; [INV]
+
+  <bb 6> :
+  # DEBUG BEGIN_STMT
+  _5 = pbuf_stream->offset;
+  _6 = buf_len + _5;
+  pbuf_stream->offset = _6;
+  # DEBUG BEGIN_STMT
+  _7 = pbuf_stream->length;
+  _8 = _7 - buf_len;
+  pbuf_stream->length = _8;
+  # DEBUG BEGIN_STMT
+  D.6568 = 0;
+
+  <bb 7> :
+  return D.6568;
+
+}
+
+
+snmp_pbuf_stream_write (struct snmp_pbuf_stream * pbuf_stream, u8_t data)
+{
+  err_t D.6564;
+
+  <bb 2> :
+  # DEBUG BEGIN_STMT
+  D.6564 = snmp_pbuf_stream_writebuf (pbuf_stream, &data, 1);
+  return D.6564;
+
+}
+
+
+snmp_pbuf_stream_read (struct snmp_pbuf_stream * pbuf_stream, u8_t * data)
+{
+  err_t D.6560;
+
+  <bb 2> :
+  # DEBUG BEGIN_STMT
+  _1 = pbuf_stream->length;
+  if (_1 == 0)
+    goto <bb 3>; [INV]
+  else
+    goto <bb 4>; [INV]
+
+  <bb 3> :
+  # DEBUG BEGIN_STMT
+  D.6560 = -2;
+  // predicted unlikely by early return (on trees) predictor.
+  goto <bb 7>; [INV]
+
+  <bb 4> :
+  # DEBUG BEGIN_STMT
+  _2 = pbuf_stream->pbuf;
+  _3 = pbuf_stream->offset;
+  _4 = pbuf_copy_partial (_2, data, 1, _3);
+  if (_4 == 0)
+    goto <bb 5>; [INV]
+  else
+    goto <bb 6>; [INV]
+
+  <bb 5> :
+  # DEBUG BEGIN_STMT
+  D.6560 = -2;
+  // predicted unlikely by early return (on trees) predictor.
+  goto <bb 7>; [INV]
+
+  <bb 6> :
+  # DEBUG BEGIN_STMT
+  _5 = pbuf_stream->offset;
+  _6 = _5;
+  _7 = _6 + 1;
+  pbuf_stream->offset = _7;
+  # DEBUG BEGIN_STMT
+  _8 = pbuf_stream->length;
+  _9 = _8;
+  _10 = _9 + 65535;
+  pbuf_stream->length = _10;
+  # DEBUG BEGIN_STMT
+  D.6560 = 0;
+
+  <bb 7> :
+  return D.6560;
+
+}
+
+
+snmp_pbuf_stream_init (struct snmp_pbuf_stream * pbuf_stream, struct pbuf * p, u16_t offset, u16_t length)
+{
+  err_t D.6556;
+
+  <bb 2> :
+  # DEBUG BEGIN_STMT
+  pbuf_stream->offset = offset;
+  # DEBUG BEGIN_STMT
+  pbuf_stream->length = length;
+  # DEBUG BEGIN_STMT
+  pbuf_stream->pbuf = p;
+  # DEBUG BEGIN_STMT
+  D.6556 = 0;
+  return D.6556;
+
+}
+
+

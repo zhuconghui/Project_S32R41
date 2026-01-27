@@ -1,0 +1,580 @@
+
+IPA constant propagation start:
+Determining dynamic type for call: snmp_set_value.part.0 (value_4(D));
+  Starting walk at: snmp_set_value.part.0 (value_4(D));
+  instance pointer: value_4(D)  Outer instance pointer: value_4(D) offset: 0 (bits) vtbl reference: 
+Determining dynamic type for call: ret_3 = snmp_set_test.part.0 (value_6(D));
+  Starting walk at: ret_3 = snmp_set_test.part.0 (value_6(D));
+  instance pointer: value_6(D)  Outer instance pointer: value_6(D) offset: 0 (bits) vtbl reference: 
+
+IPA structures before propagation:
+
+Jump functions:
+  Jump functions of caller  snmp_set_value.part.0/12:
+  Jump functions of caller  snmp_set_test.part.0/11:
+  Jump functions of caller  snmp_get_auth_traps_enabled/10:
+  Jump functions of caller  snmp_set_auth_traps_enabled/8:
+  Jump functions of caller  snmp_scalar_array_get_next_instance/7:
+  Jump functions of caller  snmp_scalar_array_get_instance/6:
+  Jump functions of caller  snmp_set_value/3:
+    callsite  snmp_set_value/3 -> snmp_set_value.part.0/12 : 
+       param 0: PASS THROUGH: 2, op nop_expr, agg_preserved
+         value: 0x0, mask: 0xffffffff
+         Unknown VR
+  Jump functions of caller  snmp_set_test/2:
+    callsite  snmp_set_test/2 -> snmp_set_test.part.0/11 : 
+       param 0: PASS THROUGH: 2, op nop_expr, agg_preserved
+         value: 0x0, mask: 0xffffffff
+         Unknown VR
+  Jump functions of caller  snmp_get_value/1:
+
+ Propagating constants:
+
+Not considering snmp_set_value for cloning; -fipa-cp-clone disabled.
+Not considering snmp_set_test for cloning; -fipa-cp-clone disabled.
+Not considering snmp_get_value for cloning; -fipa-cp-clone disabled.
+
+overall_size: 162, max_new_size: 11001
+ - context independent values, size: 8, time_benefit: 1.000000
+ - context independent values, size: 9, time_benefit: 1.000000
+
+IPA lattices after all propagation:
+
+Lattices:
+  Node: snmp_set_value.part.0/12:
+    param [0]: VARIABLE
+         ctxs: VARIABLE
+         Bits unusable (BOTTOM)
+         VARYING
+        AGGS VARIABLE
+  Node: snmp_set_test.part.0/11:
+    param [0]: VARIABLE
+         ctxs: VARIABLE
+         Bits unusable (BOTTOM)
+         VARYING
+        AGGS VARIABLE
+  Node: snmp_set_value/3:
+    param [0]: BOTTOM
+         ctxs: BOTTOM
+         Bits unusable (BOTTOM)
+         VARYING
+        AGGS BOTTOM
+    param [1]: BOTTOM
+         ctxs: BOTTOM
+         Bits unusable (BOTTOM)
+         VARYING
+        AGGS BOTTOM
+    param [2]: BOTTOM
+         ctxs: BOTTOM
+         Bits unusable (BOTTOM)
+         VARYING
+        AGGS BOTTOM
+  Node: snmp_set_test/2:
+    param [0]: BOTTOM
+         ctxs: BOTTOM
+         Bits unusable (BOTTOM)
+         VARYING
+        AGGS BOTTOM
+    param [1]: BOTTOM
+         ctxs: BOTTOM
+         Bits unusable (BOTTOM)
+         VARYING
+        AGGS BOTTOM
+    param [2]: BOTTOM
+         ctxs: BOTTOM
+         Bits unusable (BOTTOM)
+         VARYING
+        AGGS BOTTOM
+  Node: snmp_get_value/1:
+    param [0]: BOTTOM
+         ctxs: BOTTOM
+         Bits unusable (BOTTOM)
+         VARYING
+        AGGS BOTTOM
+    param [1]: BOTTOM
+         ctxs: BOTTOM
+         Bits unusable (BOTTOM)
+         VARYING
+        AGGS BOTTOM
+
+IPA decision stage:
+
+
+IPA constant propagation end
+
+Reclaiming functions:
+Reclaiming variables:
+Clearing address taken flags:
+Symbol table:
+
+snmp_set_value.part.0/12 (snmp_set_value.part.0) @060dd0e0
+  Type: function definition analyzed
+  Visibility: prevailing_def_ironly artificial
+  References: 
+  Referring: 
+  Availability: local
+  Function flags: count:1073741824 (estimated locally) first_run:1 body local split_part optimize_size
+  Called by: snmp_set_value/3 (365072224 (estimated locally),0.34 per call) 
+  Calls: snmp_set_auth_traps_enabled/8 (365072220 (estimated locally),0.34 per call) snmp_set_auth_traps_enabled/8 (708669605 (estimated locally),0.66 per call) 
+snmp_set_test.part.0/11 (snmp_set_test.part.0) @05f0c8c0
+  Type: function definition analyzed
+  Visibility: prevailing_def_ironly artificial
+  References: 
+  Referring: 
+  Availability: local
+  Function flags: count:1073741824 (estimated locally) first_run:1 body local split_part optimize_size
+  Called by: snmp_set_test/2 (524952376 (estimated locally),0.49 per call) 
+  Calls: 
+snmp_get_auth_traps_enabled/10 (snmp_get_auth_traps_enabled) @060a7e00
+  Type: function
+  Visibility: external public
+  References: 
+  Referring: 
+  Availability: not_available
+  Function flags: optimize_size
+  Called by: snmp_get_value/1 (34636833 (estimated locally),0.03 per call) 
+  Calls: 
+snmp_stats/9 (snmp_stats) @060a8f78
+  Type: variable
+  Body removed by symtab_remove_unreachable_nodes
+  Visibility: external public
+  References: 
+  Referring: snmp_get_value/1 (read)snmp_get_value/1 (read)snmp_get_value/1 (read)snmp_get_value/1 (read)snmp_get_value/1 (read)snmp_get_value/1 (read)snmp_get_value/1 (read)snmp_get_value/1 (read)snmp_get_value/1 (read)snmp_get_value/1 (read)snmp_get_value/1 (read)snmp_get_value/1 (read)snmp_get_value/1 (read)snmp_get_value/1 (read)snmp_get_value/1 (read)snmp_get_value/1 (read)snmp_get_value/1 (read)snmp_get_value/1 (read)snmp_get_value/1 (read)snmp_get_value/1 (read)snmp_get_value/1 (read)snmp_get_value/1 (read)snmp_get_value/1 (read)snmp_get_value/1 (read)snmp_get_value/1 (read)snmp_get_value/1 (read)snmp_get_value/1 (read)
+  Availability: not_available
+  Varpool flags:
+snmp_set_auth_traps_enabled/8 (snmp_set_auth_traps_enabled) @060a7620
+  Type: function
+  Visibility: external public
+  References: 
+  Referring: 
+  Availability: not_available
+  Function flags: optimize_size
+  Called by: snmp_set_value.part.0/12 (365072220 (estimated locally),0.34 per call) snmp_set_value.part.0/12 (708669605 (estimated locally),0.66 per call) 
+  Calls: 
+snmp_scalar_array_get_next_instance/7 (snmp_scalar_array_get_next_instance) @060a70e0
+  Type: function
+  Visibility: external public
+  Address is taken.
+  References: 
+  Referring: snmp_mib2_snmp_root/5 (addr)
+  Availability: not_available
+  Function flags: optimize_size
+  Called by: 
+  Calls: 
+snmp_scalar_array_get_instance/6 (snmp_scalar_array_get_instance) @060a7000
+  Type: function
+  Visibility: external public
+  Address is taken.
+  References: 
+  Referring: snmp_mib2_snmp_root/5 (addr)
+  Availability: not_available
+  Function flags: optimize_size
+  Called by: 
+  Calls: 
+snmp_mib2_snmp_root/5 (snmp_mib2_snmp_root) @0604ed80
+  Type: variable definition analyzed
+  Visibility: externally_visible public
+  References: snmp_scalar_array_get_instance/6 (addr)snmp_scalar_array_get_next_instance/7 (addr)snmp_nodes/4 (addr)snmp_get_value/1 (addr)snmp_set_test/2 (addr)snmp_set_value/3 (addr)
+  Referring: 
+  Availability: available
+  Varpool flags: initialized read-only const-value-known
+snmp_nodes/4 (snmp_nodes) @0604eca8
+  Type: variable definition analyzed
+  Visibility: prevailing_def_ironly
+  References: 
+  Referring: snmp_mib2_snmp_root/5 (addr)
+  Availability: available
+  Varpool flags: initialized read-only const-value-known
+snmp_set_value/3 (snmp_set_value) @060697e0
+  Type: function definition analyzed
+  Visibility: prevailing_def_ironly
+  Address is taken.
+  References: 
+  Referring: snmp_mib2_snmp_root/5 (addr)
+  Availability: available
+  Function flags: count:1073741824 (estimated locally) body optimize_size
+  Called by: 
+  Calls: snmp_set_value.part.0/12 (365072224 (estimated locally),0.34 per call) 
+snmp_set_test/2 (snmp_set_test) @06069540
+  Type: function definition analyzed
+  Visibility: prevailing_def_ironly
+  Address is taken.
+  References: 
+  Referring: snmp_mib2_snmp_root/5 (addr)
+  Availability: available
+  Function flags: count:1073741824 (estimated locally) body optimize_size
+  Called by: 
+  Calls: snmp_set_test.part.0/11 (524952376 (estimated locally),0.49 per call) 
+snmp_get_value/1 (snmp_get_value) @060692a0
+  Type: function definition analyzed
+  Visibility: prevailing_def_ironly
+  Address is taken.
+  References: snmp_stats/9 (read)snmp_stats/9 (read)snmp_stats/9 (read)snmp_stats/9 (read)snmp_stats/9 (read)snmp_stats/9 (read)snmp_stats/9 (read)snmp_stats/9 (read)snmp_stats/9 (read)snmp_stats/9 (read)snmp_stats/9 (read)snmp_stats/9 (read)snmp_stats/9 (read)snmp_stats/9 (read)snmp_stats/9 (read)snmp_stats/9 (read)snmp_stats/9 (read)snmp_stats/9 (read)snmp_stats/9 (read)snmp_stats/9 (read)snmp_stats/9 (read)snmp_stats/9 (read)snmp_stats/9 (read)snmp_stats/9 (read)snmp_stats/9 (read)snmp_stats/9 (read)snmp_stats/9 (read)
+  Referring: snmp_mib2_snmp_root/5 (addr)
+  Availability: available
+  Function flags: count:1072347769 (estimated locally) body optimize_size
+  Called by: 
+  Calls: snmp_get_auth_traps_enabled/10 (34636833 (estimated locally),0.03 per call) 
+
+;; Function snmp_get_value (snmp_get_value, funcdef_no=1, decl_uid=6716, cgraph_uid=2, symbol_order=1)
+
+Modification phase of node snmp_get_value/1
+snmp_get_value (const struct snmp_scalar_array_node_def * node, void * value)
+{
+  long unsigned int _1;
+  long unsigned int _2;
+  long unsigned int _3;
+  long unsigned int _4;
+  long unsigned int _5;
+  long unsigned int _6;
+  long unsigned int _7;
+  long unsigned int _8;
+  long unsigned int _9;
+  long unsigned int _10;
+  long unsigned int _11;
+  long unsigned int _12;
+  long unsigned int _13;
+  long unsigned int _14;
+  long unsigned int _15;
+  long unsigned int _16;
+  long unsigned int _17;
+  long unsigned int _18;
+  long unsigned int _19;
+  long unsigned int _20;
+  long unsigned int _21;
+  long unsigned int _22;
+  long unsigned int _23;
+  long unsigned int _24;
+  long unsigned int _25;
+  long unsigned int _26;
+  long unsigned int _27;
+  long unsigned int _28;
+  unsigned char _29;
+  s16_t _30;
+
+  <bb 2> [local count: 1072347769]:
+  # DEBUG BEGIN_STMT
+  # DEBUG uint_ptr => value_32(D)
+  # DEBUG BEGIN_STMT
+  _1 = node_34(D)->oid;
+  switch (_1) <default: <L36> [3.23%], case 1: <L0> [3.23%], case 2: <L1> [3.23%], case 3: <L2> [3.23%], case 4: <L3> [3.23%], case 5: <L4> [3.23%], case 6: <L5> [3.23%], case 8: <L6> [3.23%], case 9: <L7> [3.23%], case 10: <L8> [3.23%], case 11: <L9> [3.23%], case 12: <L10> [3.23%], case 13: <L11> [3.23%], case 14: <L12> [3.23%], case 15: <L13> [3.23%], case 16: <L14> [3.23%], case 17: <L15> [3.23%], case 18: <L16> [3.23%], case 19: <L17> [3.23%], case 20: <L18> [3.23%], case 21: <L19> [3.23%], case 22: <L20> [3.23%], case 24: <L21> [3.23%], case 25: <L22> [3.23%], case 26: <L23> [3.23%], case 27: <L24> [3.23%], case 28: <L25> [3.23%], case 29: <L26> [3.23%], case 30: <L27> [3.23%], case 31: <L31> [3.23%], case 32: <L32> [3.23%]>
+
+  <bb 3> [local count: 34636833]:
+<L0>:
+  # DEBUG BEGIN_STMT
+  _2 = snmp_stats.inpkts;
+  MEM[(u32_t *)value_32(D)] = _2;
+  # DEBUG BEGIN_STMT
+  goto <bb 36>; [100.00%]
+
+  <bb 4> [local count: 34636833]:
+<L1>:
+  # DEBUG BEGIN_STMT
+  _3 = snmp_stats.outpkts;
+  MEM[(u32_t *)value_32(D)] = _3;
+  # DEBUG BEGIN_STMT
+  goto <bb 36>; [100.00%]
+
+  <bb 5> [local count: 34636833]:
+<L2>:
+  # DEBUG BEGIN_STMT
+  _4 = snmp_stats.inbadversions;
+  MEM[(u32_t *)value_32(D)] = _4;
+  # DEBUG BEGIN_STMT
+  goto <bb 36>; [100.00%]
+
+  <bb 6> [local count: 34636833]:
+<L3>:
+  # DEBUG BEGIN_STMT
+  _5 = snmp_stats.inbadcommunitynames;
+  MEM[(u32_t *)value_32(D)] = _5;
+  # DEBUG BEGIN_STMT
+  goto <bb 36>; [100.00%]
+
+  <bb 7> [local count: 34636833]:
+<L4>:
+  # DEBUG BEGIN_STMT
+  _6 = snmp_stats.inbadcommunityuses;
+  MEM[(u32_t *)value_32(D)] = _6;
+  # DEBUG BEGIN_STMT
+  goto <bb 36>; [100.00%]
+
+  <bb 8> [local count: 34636833]:
+<L5>:
+  # DEBUG BEGIN_STMT
+  _7 = snmp_stats.inasnparseerrs;
+  MEM[(u32_t *)value_32(D)] = _7;
+  # DEBUG BEGIN_STMT
+  goto <bb 36>; [100.00%]
+
+  <bb 9> [local count: 34636833]:
+<L6>:
+  # DEBUG BEGIN_STMT
+  _8 = snmp_stats.intoobigs;
+  MEM[(u32_t *)value_32(D)] = _8;
+  # DEBUG BEGIN_STMT
+  goto <bb 36>; [100.00%]
+
+  <bb 10> [local count: 34636833]:
+<L7>:
+  # DEBUG BEGIN_STMT
+  _9 = snmp_stats.innosuchnames;
+  MEM[(u32_t *)value_32(D)] = _9;
+  # DEBUG BEGIN_STMT
+  goto <bb 36>; [100.00%]
+
+  <bb 11> [local count: 34636833]:
+<L8>:
+  # DEBUG BEGIN_STMT
+  _10 = snmp_stats.inbadvalues;
+  MEM[(u32_t *)value_32(D)] = _10;
+  # DEBUG BEGIN_STMT
+  goto <bb 36>; [100.00%]
+
+  <bb 12> [local count: 34636833]:
+<L9>:
+  # DEBUG BEGIN_STMT
+  _11 = snmp_stats.inreadonlys;
+  MEM[(u32_t *)value_32(D)] = _11;
+  # DEBUG BEGIN_STMT
+  goto <bb 36>; [100.00%]
+
+  <bb 13> [local count: 34636833]:
+<L10>:
+  # DEBUG BEGIN_STMT
+  _12 = snmp_stats.ingenerrs;
+  MEM[(u32_t *)value_32(D)] = _12;
+  # DEBUG BEGIN_STMT
+  goto <bb 36>; [100.00%]
+
+  <bb 14> [local count: 34636833]:
+<L11>:
+  # DEBUG BEGIN_STMT
+  _13 = snmp_stats.intotalreqvars;
+  MEM[(u32_t *)value_32(D)] = _13;
+  # DEBUG BEGIN_STMT
+  goto <bb 36>; [100.00%]
+
+  <bb 15> [local count: 34636833]:
+<L12>:
+  # DEBUG BEGIN_STMT
+  _14 = snmp_stats.intotalsetvars;
+  MEM[(u32_t *)value_32(D)] = _14;
+  # DEBUG BEGIN_STMT
+  goto <bb 36>; [100.00%]
+
+  <bb 16> [local count: 34636833]:
+<L13>:
+  # DEBUG BEGIN_STMT
+  _15 = snmp_stats.ingetrequests;
+  MEM[(u32_t *)value_32(D)] = _15;
+  # DEBUG BEGIN_STMT
+  goto <bb 36>; [100.00%]
+
+  <bb 17> [local count: 34636833]:
+<L14>:
+  # DEBUG BEGIN_STMT
+  _16 = snmp_stats.ingetnexts;
+  MEM[(u32_t *)value_32(D)] = _16;
+  # DEBUG BEGIN_STMT
+  goto <bb 36>; [100.00%]
+
+  <bb 18> [local count: 34636833]:
+<L15>:
+  # DEBUG BEGIN_STMT
+  _17 = snmp_stats.insetrequests;
+  MEM[(u32_t *)value_32(D)] = _17;
+  # DEBUG BEGIN_STMT
+  goto <bb 36>; [100.00%]
+
+  <bb 19> [local count: 34636833]:
+<L16>:
+  # DEBUG BEGIN_STMT
+  _18 = snmp_stats.ingetresponses;
+  MEM[(u32_t *)value_32(D)] = _18;
+  # DEBUG BEGIN_STMT
+  goto <bb 36>; [100.00%]
+
+  <bb 20> [local count: 34636833]:
+<L17>:
+  # DEBUG BEGIN_STMT
+  _19 = snmp_stats.intraps;
+  MEM[(u32_t *)value_32(D)] = _19;
+  # DEBUG BEGIN_STMT
+  goto <bb 36>; [100.00%]
+
+  <bb 21> [local count: 34636833]:
+<L18>:
+  # DEBUG BEGIN_STMT
+  _20 = snmp_stats.outtoobigs;
+  MEM[(u32_t *)value_32(D)] = _20;
+  # DEBUG BEGIN_STMT
+  goto <bb 36>; [100.00%]
+
+  <bb 22> [local count: 34636833]:
+<L19>:
+  # DEBUG BEGIN_STMT
+  _21 = snmp_stats.outnosuchnames;
+  MEM[(u32_t *)value_32(D)] = _21;
+  # DEBUG BEGIN_STMT
+  goto <bb 36>; [100.00%]
+
+  <bb 23> [local count: 34636833]:
+<L20>:
+  # DEBUG BEGIN_STMT
+  _22 = snmp_stats.outbadvalues;
+  MEM[(u32_t *)value_32(D)] = _22;
+  # DEBUG BEGIN_STMT
+  goto <bb 36>; [100.00%]
+
+  <bb 24> [local count: 34636833]:
+<L21>:
+  # DEBUG BEGIN_STMT
+  _23 = snmp_stats.outgenerrs;
+  MEM[(u32_t *)value_32(D)] = _23;
+  # DEBUG BEGIN_STMT
+  goto <bb 36>; [100.00%]
+
+  <bb 25> [local count: 34636833]:
+<L22>:
+  # DEBUG BEGIN_STMT
+  _24 = snmp_stats.outgetrequests;
+  MEM[(u32_t *)value_32(D)] = _24;
+  # DEBUG BEGIN_STMT
+  goto <bb 36>; [100.00%]
+
+  <bb 26> [local count: 34636833]:
+<L23>:
+  # DEBUG BEGIN_STMT
+  _25 = snmp_stats.outgetnexts;
+  MEM[(u32_t *)value_32(D)] = _25;
+  # DEBUG BEGIN_STMT
+  goto <bb 36>; [100.00%]
+
+  <bb 27> [local count: 34636833]:
+<L24>:
+  # DEBUG BEGIN_STMT
+  _26 = snmp_stats.outsetrequests;
+  MEM[(u32_t *)value_32(D)] = _26;
+  # DEBUG BEGIN_STMT
+  goto <bb 36>; [100.00%]
+
+  <bb 28> [local count: 34636833]:
+<L25>:
+  # DEBUG BEGIN_STMT
+  _27 = snmp_stats.outgetresponses;
+  MEM[(u32_t *)value_32(D)] = _27;
+  # DEBUG BEGIN_STMT
+  goto <bb 36>; [100.00%]
+
+  <bb 29> [local count: 34636833]:
+<L26>:
+  # DEBUG BEGIN_STMT
+  _28 = snmp_stats.outtraps;
+  MEM[(u32_t *)value_32(D)] = _28;
+  # DEBUG BEGIN_STMT
+  goto <bb 36>; [100.00%]
+
+  <bb 30> [local count: 34636833]:
+<L27>:
+  # DEBUG BEGIN_STMT
+  _29 = snmp_get_auth_traps_enabled ();
+  if (_29 == 0)
+    goto <bb 31>; [50.00%]
+  else
+    goto <bb 32>; [50.00%]
+
+  <bb 31> [local count: 17318416]:
+  # DEBUG BEGIN_STMT
+  MEM[(u32_t *)value_32(D)] = 2;
+  goto <bb 36>; [100.00%]
+
+  <bb 32> [local count: 17318416]:
+  # DEBUG BEGIN_STMT
+  MEM[(u32_t *)value_32(D)] = 1;
+  goto <bb 36>; [100.00%]
+
+  <bb 33> [local count: 34636833]:
+<L31>:
+  # DEBUG BEGIN_STMT
+  MEM[(u32_t *)value_32(D)] = 0;
+  # DEBUG BEGIN_STMT
+  goto <bb 36>; [100.00%]
+
+  <bb 34> [local count: 34636833]:
+<L32>:
+  # DEBUG BEGIN_STMT
+  MEM[(u32_t *)value_32(D)] = 0;
+  # DEBUG BEGIN_STMT
+
+  <bb 36> [local count: 1073741824]:
+  # _30 = PHI <0(2), 4(4), 4(3), 4(31), 4(34), 4(33), 4(32), 4(29), 4(28), 4(27), 4(26), 4(25), 4(24), 4(23), 4(22), 4(21), 4(20), 4(19), 4(18), 4(17), 4(16), 4(15), 4(14), 4(13), 4(12), 4(11), 4(10), 4(9), 4(8), 4(7), 4(6), 4(5)>
+<L36>:
+  return _30;
+
+}
+
+
+
+;; Function snmp_set_test (snmp_set_test, funcdef_no=2, decl_uid=6754, cgraph_uid=3, symbol_order=2)
+
+Modification phase of node snmp_set_test/2
+snmp_set_test (const struct snmp_scalar_array_node_def * node, u16_t len, void * value)
+{
+  snmp_err_t ret;
+  long unsigned int _1;
+
+  <bb 2> [local count: 1073741824]:
+  # DEBUG BEGIN_STMT
+  # DEBUG ret => 10
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _1 = node_5(D)->oid;
+  if (_1 == 30)
+    goto <bb 3>; [48.89%]
+  else
+    goto <bb 4>; [51.11%]
+
+  <bb 3> [local count: 524952376]:
+  # DEBUG D#1 => node_5(D)
+  # DEBUG D#2 => len_7(D)
+  ret_3 = snmp_set_test.part.0 (value_6(D));
+
+  <bb 4> [local count: 1073741824]:
+  # ret_2 = PHI <10(2), ret_3(3)>
+  # DEBUG ret => ret_2
+  # DEBUG BEGIN_STMT
+  return ret_2;
+
+}
+
+
+
+;; Function snmp_set_value (snmp_set_value, funcdef_no=3, decl_uid=6761, cgraph_uid=4, symbol_order=3)
+
+Modification phase of node snmp_set_value/3
+snmp_set_value (const struct snmp_scalar_array_node_def * node, u16_t len, void * value)
+{
+  long unsigned int _1;
+
+  <bb 2> [local count: 1073741824]:
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _1 = node_3(D)->oid;
+  if (_1 == 30)
+    goto <bb 3>; [34.00%]
+  else
+    goto <bb 4>; [66.00%]
+
+  <bb 3> [local count: 365072224]:
+  # DEBUG D#5 => node_3(D)
+  # DEBUG D#6 => len_5(D)
+  snmp_set_value.part.0 (value_4(D));
+
+  <bb 4> [local count: 1073741824]:
+  # DEBUG BEGIN_STMT
+  return 0;
+
+}
+
+

@@ -1,0 +1,476 @@
+memp_free (memp_t type, void * mem)
+{
+  int _1;
+  const struct memp_desc * _2;
+
+  <bb 2> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  if (type_4(D) > 14)
+    goto <bb 3>; [INV]
+  else
+    goto <bb 4>; [INV]
+
+  <bb 3> :
+  # DEBUG BEGIN_STMT
+  // predicted unlikely by early return (on trees) predictor.
+  goto <bb 7>; [INV]
+
+  <bb 4> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  if (mem_5(D) == 0B)
+    goto <bb 5>; [INV]
+  else
+    goto <bb 6>; [INV]
+
+  <bb 5> :
+  # DEBUG BEGIN_STMT
+  // predicted unlikely by early return (on trees) predictor.
+  goto <bb 7>; [INV]
+
+  <bb 6> :
+  # DEBUG BEGIN_STMT
+  _1 = (int) type_4(D);
+  _2 = memp_pools[_1];
+  do_memp_free_pool (_2, mem_5(D));
+
+  <bb 7> :
+  return;
+
+}
+
+
+memp_free_pool (const struct memp_desc * desc, void * mem)
+{
+  <bb 2> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  if (desc_3(D) == 0B)
+    goto <bb 3>; [INV]
+  else
+    goto <bb 4>; [INV]
+
+  <bb 3> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  __asm__ __volatile__("BKPT #0
+	");
+  # DEBUG BEGIN_STMT
+  goto <bb 3>; [INV]
+
+  <bb 4> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  if (desc_3(D) == 0B)
+    goto <bb 6>; [INV]
+  else
+    goto <bb 5>; [INV]
+
+  <bb 5> :
+  if (mem_5(D) == 0B)
+    goto <bb 6>; [INV]
+  else
+    goto <bb 7>; [INV]
+
+  <bb 6> :
+  # DEBUG BEGIN_STMT
+  // predicted unlikely by early return (on trees) predictor.
+  goto <bb 8>; [INV]
+
+  <bb 7> :
+  # DEBUG BEGIN_STMT
+  do_memp_free_pool (desc_3(D), mem_5(D));
+
+  <bb 8> :
+  return;
+
+}
+
+
+do_memp_free_pool (const struct memp_desc * desc, void * mem)
+{
+  struct memp * memp;
+  unsigned int mem.2_1;
+  unsigned int _2;
+  struct stats_mem * _3;
+  long unsigned int _4;
+  long unsigned int _5;
+  struct memp * * _6;
+  struct memp * _7;
+  struct memp * * _8;
+
+  <bb 2> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  mem.2_1 = (unsigned int) mem_10(D);
+  _2 = mem.2_1 & 15;
+  if (_2 != 0)
+    goto <bb 3>; [INV]
+  else
+    goto <bb 4>; [INV]
+
+  <bb 3> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  __asm__ __volatile__("BKPT #0
+	");
+  # DEBUG BEGIN_STMT
+  goto <bb 3>; [INV]
+
+  <bb 4> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  memp_12 = mem_10(D);
+  # DEBUG memp => memp_12
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _3 = desc_13(D)->stats;
+  _4 = _3->used;
+  _5 = _4 + 4294967295;
+  _3->used = _5;
+  # DEBUG BEGIN_STMT
+  _6 = desc_13(D)->tab;
+  _7 = *_6;
+  memp_12->next = _7;
+  # DEBUG BEGIN_STMT
+  _8 = desc_13(D)->tab;
+  *_8 = memp_12;
+  # DEBUG BEGIN_STMT
+  return;
+
+}
+
+
+memp_malloc (memp_t type)
+{
+  void * memp;
+  int _1;
+  const struct memp_desc * _2;
+  void * _3;
+  void * _9;
+  void * _10;
+
+  <bb 2> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  if (type_5(D) > 14)
+    goto <bb 3>; [INV]
+  else
+    goto <bb 4>; [INV]
+
+  <bb 3> :
+  # DEBUG BEGIN_STMT
+  _10 = 0B;
+  // predicted unlikely by early return (on trees) predictor.
+  goto <bb 5>; [INV]
+
+  <bb 4> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _1 = (int) type_5(D);
+  _2 = memp_pools[_1];
+  memp_8 = do_memp_malloc_pool (_2);
+  # DEBUG memp => memp_8
+  # DEBUG BEGIN_STMT
+  _9 = memp_8;
+
+  <bb 5> :
+  # _3 = PHI <_10(3), _9(4)>
+  return _3;
+
+}
+
+
+memp_malloc_pool (const struct memp_desc * desc)
+{
+  void * _1;
+  void * _7;
+  void * _8;
+
+  <bb 2> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  if (desc_4(D) == 0B)
+    goto <bb 3>; [INV]
+  else
+    goto <bb 4>; [INV]
+
+  <bb 3> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  __asm__ __volatile__("BKPT #0
+	");
+  # DEBUG BEGIN_STMT
+  goto <bb 3>; [INV]
+
+  <bb 4> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  if (desc_4(D) == 0B)
+    goto <bb 5>; [INV]
+  else
+    goto <bb 6>; [INV]
+
+  <bb 5> :
+  # DEBUG BEGIN_STMT
+  _8 = 0B;
+  // predicted unlikely by early return (on trees) predictor.
+  goto <bb 7>; [INV]
+
+  <bb 6> :
+  # DEBUG BEGIN_STMT
+  _7 = do_memp_malloc_pool (desc_4(D));
+
+  <bb 7> :
+  # _1 = PHI <_8(5), _7(6)>
+  return _1;
+
+}
+
+
+do_memp_malloc_pool (const struct memp_desc * desc)
+{
+  struct memp * memp;
+  struct memp * * _1;
+  struct memp * * _2;
+  struct memp * _3;
+  unsigned int memp.1_4;
+  unsigned int _5;
+  struct stats_mem * _6;
+  long unsigned int _7;
+  long unsigned int _8;
+  struct stats_mem * _9;
+  long unsigned int _10;
+  struct stats_mem * _11;
+  long unsigned int _12;
+  struct stats_mem * _13;
+  struct stats_mem * _14;
+  long unsigned int _15;
+  struct stats_mem * _16;
+  short unsigned int _17;
+  short unsigned int _18;
+  short unsigned int _19;
+  void * _20;
+  void * _28;
+  void * _32;
+
+  <bb 2> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _1 = desc_25(D)->tab;
+  memp_26 = *_1;
+  # DEBUG memp => memp_26
+  # DEBUG BEGIN_STMT
+  if (memp_26 != 0B)
+    goto <bb 3>; [INV]
+  else
+    goto <bb 8>; [INV]
+
+  <bb 3> :
+  # DEBUG BEGIN_STMT
+  _2 = desc_25(D)->tab;
+  _3 = memp_26->next;
+  *_2 = _3;
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  memp.1_4 = (unsigned int) memp_26;
+  _5 = memp.1_4 & 15;
+  if (_5 != 0)
+    goto <bb 4>; [INV]
+  else
+    goto <bb 5>; [INV]
+
+  <bb 4> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  __asm__ __volatile__("BKPT #0
+	");
+  # DEBUG BEGIN_STMT
+  goto <bb 4>; [INV]
+
+  <bb 5> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _6 = desc_25(D)->stats;
+  _7 = _6->used;
+  _8 = _7 + 1;
+  _6->used = _8;
+  # DEBUG BEGIN_STMT
+  _9 = desc_25(D)->stats;
+  _10 = _9->used;
+  _11 = desc_25(D)->stats;
+  _12 = _11->max;
+  if (_10 > _12)
+    goto <bb 6>; [INV]
+  else
+    goto <bb 7>; [INV]
+
+  <bb 6> :
+  # DEBUG BEGIN_STMT
+  _13 = desc_25(D)->stats;
+  _14 = desc_25(D)->stats;
+  _15 = _13->used;
+  _14->max = _15;
+
+  <bb 7> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _32 = memp_26;
+  // predicted unlikely by early return (on trees) predictor.
+  goto <bb 9>; [INV]
+
+  <bb 8> :
+  # DEBUG BEGIN_STMT
+  _16 = desc_25(D)->stats;
+  _17 = _16->err;
+  _18 = _17;
+  _19 = _18 + 1;
+  _16->err = _19;
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _28 = 0B;
+
+  <bb 9> :
+  # _20 = PHI <_32(7), _28(8)>
+  return _20;
+
+}
+
+
+memp_init ()
+{
+  u16_t i;
+  int _1;
+  const struct memp_desc * _2;
+  int _3;
+  const struct memp_desc * _4;
+  int _5;
+  struct stats_mem * _6;
+  short unsigned int i.0_7;
+
+  <bb 2> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  i_10 = 0;
+  # DEBUG i => i_10
+  goto <bb 4>; [INV]
+
+  <bb 3> :
+  # DEBUG BEGIN_STMT
+  _1 = (int) i_8;
+  _2 = memp_pools[_1];
+  memp_init_pool (_2);
+  # DEBUG BEGIN_STMT
+  _3 = (int) i_8;
+  _4 = memp_pools[_3];
+  _5 = (int) i_8;
+  _6 = _4->stats;
+  lwip_stats.memp[_5] = _6;
+  # DEBUG BEGIN_STMT
+  i.0_7 = i_8;
+  i_14 = i.0_7 + 1;
+  # DEBUG i => i_14
+
+  <bb 4> :
+  # i_8 = PHI <i_10(2), i_14(3)>
+  # DEBUG i => i_8
+  # DEBUG BEGIN_STMT
+  if (i_8 <= 14)
+    goto <bb 3>; [INV]
+  else
+    goto <bb 5>; [INV]
+
+  <bb 5> :
+  return;
+
+}
+
+
+memp_init_pool (const struct memp_desc * desc)
+{
+  struct memp * memp;
+  int i;
+  struct memp * * _1;
+  u8_t * _2;
+  unsigned int _3;
+  unsigned int _4;
+  unsigned int _5;
+  struct memp * * _6;
+  struct memp * _7;
+  struct memp * * _8;
+  short unsigned int _9;
+  sizetype _10;
+  short unsigned int _11;
+  int _12;
+  short unsigned int _13;
+  struct stats_mem * _14;
+  long unsigned int _15;
+
+  <bb 2> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _1 = desc_20(D)->tab;
+  *_1 = 0B;
+  # DEBUG BEGIN_STMT
+  _2 = desc_20(D)->base;
+  _3 = (unsigned int) _2;
+  _4 = _3 + 15;
+  _5 = _4 & 4294967280;
+  memp_22 = (struct memp *) _5;
+  # DEBUG memp => memp_22
+  # DEBUG BEGIN_STMT
+  i_23 = 0;
+  # DEBUG i => i_23
+  goto <bb 4>; [INV]
+
+  <bb 3> :
+  # DEBUG BEGIN_STMT
+  _6 = desc_20(D)->tab;
+  _7 = *_6;
+  memp_17->next = _7;
+  # DEBUG BEGIN_STMT
+  _8 = desc_20(D)->tab;
+  *_8 = memp_17;
+  # DEBUG BEGIN_STMT
+  _9 = desc_20(D)->size;
+  _10 = (sizetype) _9;
+  memp_27 = memp_17 + _10;
+  # DEBUG memp => memp_27
+  # DEBUG BEGIN_STMT
+  i_28 = i_16 + 1;
+  # DEBUG i => i_28
+
+  <bb 4> :
+  # i_16 = PHI <i_23(2), i_28(3)>
+  # memp_17 = PHI <memp_22(2), memp_27(3)>
+  # DEBUG memp => memp_17
+  # DEBUG i => i_16
+  # DEBUG BEGIN_STMT
+  _11 = desc_20(D)->num;
+  _12 = (int) _11;
+  if (i_16 < _12)
+    goto <bb 3>; [INV]
+  else
+    goto <bb 5>; [INV]
+
+  <bb 5> :
+  # DEBUG BEGIN_STMT
+  _13 = desc_20(D)->num;
+  _14 = desc_20(D)->stats;
+  _15 = (long unsigned int) _13;
+  _14->avail = _15;
+  return;
+
+}
+
+

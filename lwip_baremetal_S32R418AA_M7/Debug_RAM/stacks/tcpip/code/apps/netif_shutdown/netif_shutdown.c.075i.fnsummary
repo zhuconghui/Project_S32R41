@@ -1,0 +1,199 @@
+
+Analyzing function: end_tcpip_execution/4
+;; 1 loops found
+;;
+;; Loop 0
+;;  header 0, latch 1
+;;  depth 0, outer -1
+;;  nodes: 0 1 2 3 4
+;; 2 succs { 3 4 }
+;; 3 succs { 4 }
+;; 4 succs { 1 }
+
+Analyzing function body size: end_tcpip_execution
+
+IPA function summary for end_tcpip_execution/4 inlinable
+  global time:     10.881700
+  self size:       8
+  global size:     0
+  min size:       0
+  self stack:      0
+  global stack:    0
+    size:1.000000, time:1.000000
+    size:3.000000, time:2.000000,  executed if:(not inlined)
+    size:2.000000, time:2.000000,  nonconst if:(op0 changed)
+  calls:
+    gmac_ethernetif_shutdown/6 function body not available
+      loop depth: 0 freq:0.53 size: 2 time: 11 predicate: (op0 != 0B)
+
+
+Analyzing function: is_netif_shutdown_command/3
+;; 1 loops found
+;;
+;; Loop 0
+;;  header 0, latch 1
+;;  depth 0, outer -1
+;;  nodes: 0 1 2 3 4 5
+;; 2 succs { 3 5 }
+;; 3 succs { 4 5 }
+;; 4 succs { 5 }
+;; 5 succs { 1 }
+
+Analyzing function body size: is_netif_shutdown_command
+
+IPA function summary for is_netif_shutdown_command/3 inlinable
+  global time:     9.440000
+  self size:       12
+  global size:     0
+  min size:       0
+  self stack:      0
+  global stack:    0
+    size:0.000000, time:0.000000
+    size:3.000000, time:2.000000,  executed if:(not inlined)
+    size:2.000000, time:2.000000,  nonconst if:(op1 changed)
+    size:2.000000, time:0.680000,  executed if:(op1 == 14)
+  calls:
+    strncmp/5 function body not available
+      loop depth: 0 freq:0.34 size: 5 time: 14 predicate: (op1 == 14)
+       op1 is compile time invariant
+       op2 is compile time invariant
+
+
+Analyzing function: set_software_breakpoint/2
+;; 1 loops found
+;;
+;; Loop 0
+;;  header 0, latch 1
+;;  depth 0, outer -1
+;;  nodes: 0 1 2
+;; 2 succs { 1 }
+
+Analyzing function body size: set_software_breakpoint
+
+IPA function summary for set_software_breakpoint/2 inlinable
+  global time:     3.000000
+  self size:       4
+  global size:     0
+  min size:       0
+  self stack:      0
+  global stack:    0
+    size:1.000000, time:1.000000
+    size:3.000000, time:2.000000,  executed if:(not inlined)
+  calls:
+
+Symbol table:
+
+gmac_ethernetif_shutdown/6 (gmac_ethernetif_shutdown) @06ff8b60
+  Type: function
+  Visibility: external public
+  References: 
+  Referring: 
+  Availability: not_available
+  Function flags: optimize_size
+  Called by: end_tcpip_execution/4 (574129754 (estimated locally),0.53 per call) 
+  Calls: 
+strncmp/5 (strncmp) @06ff89a0
+  Type: function
+  Visibility: external public
+  References: 
+  Referring: 
+  Availability: not_available
+  Function flags: optimize_size
+  Called by: is_netif_shutdown_command/3 (365072220 (estimated locally),0.34 per call) 
+  Calls: 
+end_tcpip_execution/4 (end_tcpip_execution) @06ff8460
+  Type: function definition analyzed
+  Visibility: externally_visible public
+  References: 
+  Referring: 
+  Availability: available
+  Function flags: count:1073741824 (estimated locally) body optimize_size
+  Called by: 
+  Calls: gmac_ethernetif_shutdown/6 (574129754 (estimated locally),0.53 per call) 
+is_netif_shutdown_command/3 (is_netif_shutdown_command) @06ff81c0
+  Type: function definition analyzed
+  Visibility: externally_visible public
+  References: netif_shutdown_cmd/1 (addr)
+  Referring: 
+  Availability: available
+  Function flags: count:1073741823 (estimated locally) body optimize_size
+  Called by: 
+  Calls: strncmp/5 (365072220 (estimated locally),0.34 per call) 
+set_software_breakpoint/2 (set_software_breakpoint) @06ff5e00
+  Type: function definition analyzed
+  Visibility: externally_visible public
+  References: 
+  Referring: 
+  Availability: available
+  Function flags: count:1073741824 (estimated locally) body optimize_size
+  Called by: 
+  Calls: 
+netif_shutdown_cmd/1 (netif_shutdown_cmd) @06caec18
+  Type: variable definition analyzed
+  Visibility: prevailing_def_ironly
+  References: 
+  Referring: is_netif_shutdown_command/3 (addr)
+  Availability: available
+  Varpool flags: initialized read-only const-value-known
+end_tcpip_execution (struct netif * netif)
+{
+  <bb 2> [local count: 1073741824]:
+  # DEBUG BEGIN_STMT
+  if (netif_2(D) != 0B)
+    goto <bb 3>; [53.47%]
+  else
+    goto <bb 4>; [46.53%]
+
+  <bb 3> [local count: 574129754]:
+  # DEBUG BEGIN_STMT
+  gmac_ethernetif_shutdown (netif_2(D));
+
+  <bb 4> [local count: 1073741824]:
+  # DEBUG BEGIN_STMT
+  # DEBUG INLINE_ENTRY set_software_breakpoint
+  # DEBUG BEGIN_STMT
+  __asm__ __volatile__("BKPT #0");
+  return;
+
+}
+
+
+is_netif_shutdown_command (char * buf_ptr, uint16_t buf_len)
+{
+  int _1;
+  _Bool _2;
+
+  <bb 2> [local count: 1073741823]:
+  # DEBUG BEGIN_STMT
+  if (buf_len_3(D) == 14)
+    goto <bb 3>; [34.00%]
+  else
+    goto <bb 5>; [66.00%]
+
+  <bb 3> [local count: 365072220]:
+  _1 = strncmp (buf_ptr_5(D), &netif_shutdown_cmd, 14);
+  if (_1 == 0)
+    goto <bb 4>; [34.00%]
+  else
+    goto <bb 5>; [66.00%]
+
+  <bb 4> [local count: 124124555]:
+  # DEBUG BEGIN_STMT
+
+  <bb 5> [local count: 1073741824]:
+  # _2 = PHI <1(4), 0(3), 0(2)>
+  return _2;
+
+}
+
+
+set_software_breakpoint ()
+{
+  <bb 2> [local count: 1073741824]:
+  # DEBUG BEGIN_STMT
+  __asm__ __volatile__("BKPT #0");
+  return;
+
+}
+
+

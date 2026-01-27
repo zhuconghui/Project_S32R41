@@ -1,0 +1,313 @@
+__attribute__((section (".systeminit")))
+Core_Cache_Init ()
+{
+  uint32 ways;
+  uint32 sets;
+  uint32 ccsidr;
+  struct S32_SCB_Type * _1;
+  struct S32_SCB_Type * _2;
+  long unsigned int _3;
+  long unsigned int _4;
+  long unsigned int _5;
+  long unsigned int _6;
+  long unsigned int _7;
+  struct S32_SCB_Type * _8;
+  long unsigned int _9;
+  long unsigned int ways.1_10;
+  long unsigned int sets.2_11;
+  struct S32_SCB_Type * _12;
+  long unsigned int _13;
+  struct S32_SCB_Type * _14;
+  long unsigned int _15;
+  struct S32_SCB_Type * _16;
+  struct S32_SCB_Type * _17;
+  long unsigned int _18;
+  struct S32_SCB_Type * _19;
+  long unsigned int _20;
+
+  <bb 2> :
+  # DEBUG BEGIN_STMT
+  ccsidr_25 = 0;
+  # DEBUG ccsidr => ccsidr_25
+  # DEBUG BEGIN_STMT
+  sets_26 = 0;
+  # DEBUG sets => sets_26
+  # DEBUG BEGIN_STMT
+  ways_27 = 0;
+  # DEBUG ways => ways_27
+  # DEBUG BEGIN_STMT
+  _1 = 3758153728B;
+  _1->CSSELR ={v} 0;
+  # DEBUG BEGIN_STMT
+  __asm__ __volatile__("dsb");
+  # DEBUG BEGIN_STMT
+  _2 = 3758153728B;
+  ccsidr_31 ={v} _2->CCSIDR;
+  # DEBUG ccsidr => ccsidr_31
+  # DEBUG BEGIN_STMT
+  _3 = ccsidr_31 >> 13;
+  sets_32 = _3 & 32767;
+  # DEBUG sets => sets_32
+
+  <bb 3> :
+  # sets_21 = PHI <sets_32(2), sets_36(5)>
+  # DEBUG sets => sets_21
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _4 = ccsidr_31 >> 3;
+  ways_33 = _4 & 1023;
+  # DEBUG ways => ways_33
+
+  <bb 4> :
+  # ways_22 = PHI <ways_33(3), ways_35(4)>
+  # DEBUG ways => ways_22
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _5 = sets_21 << 5;
+  _6 = _5 & 16352;
+  _7 = ways_22 << 30;
+  _8 = 3758153728B;
+  _9 = _6 | _7;
+  _8->DCISW ={v} _9;
+  # DEBUG BEGIN_STMT
+  ways.1_10 = ways_22;
+  ways_35 = ways.1_10 + 4294967295;
+  # DEBUG ways => ways_35
+  if (ways.1_10 != 0)
+    goto <bb 4>; [INV]
+  else
+    goto <bb 5>; [INV]
+
+  <bb 5> :
+  # DEBUG BEGIN_STMT
+  sets.2_11 = sets_21;
+  sets_36 = sets.2_11 + 4294967295;
+  # DEBUG sets => sets_36
+  if (sets.2_11 != 0)
+    goto <bb 3>; [INV]
+  else
+    goto <bb 6>; [INV]
+
+  <bb 6> :
+  # DEBUG BEGIN_STMT
+  __asm__ __volatile__("dsb");
+  # DEBUG BEGIN_STMT
+  _12 = 3758153728B;
+  _13 ={v} _12->CCR;
+  _14 = 3758153728B;
+  _15 = _13 | 65536;
+  _14->CCR ={v} _15;
+  # DEBUG BEGIN_STMT
+  __asm__ __volatile__("dsb");
+  # DEBUG BEGIN_STMT
+  __asm__ __volatile__("isb");
+  # DEBUG BEGIN_STMT
+  __asm__ __volatile__("dsb");
+  # DEBUG BEGIN_STMT
+  __asm__ __volatile__("isb");
+  # DEBUG BEGIN_STMT
+  _16 = 3758153728B;
+  _16->ICIALLU ={v} 0;
+  # DEBUG BEGIN_STMT
+  __asm__ __volatile__("dsb");
+  # DEBUG BEGIN_STMT
+  __asm__ __volatile__("isb");
+  # DEBUG BEGIN_STMT
+  _17 = 3758153728B;
+  _18 ={v} _17->CCR;
+  _19 = 3758153728B;
+  _20 = _18 | 131072;
+  _19->CCR ={v} _20;
+  # DEBUG BEGIN_STMT
+  __asm__ __volatile__("dsb");
+  # DEBUG BEGIN_STMT
+  __asm__ __volatile__("isb");
+  return;
+
+}
+
+
+__attribute__((section (".systeminit")))
+Core_MPU_Init ()
+{
+  uint32 regionNum;
+  struct S32_MPU_Type * _1;
+  struct S32_MPU_Type * _2;
+  long unsigned int _3;
+  struct S32_MPU_Type * _4;
+  long unsigned int _5;
+  struct S32_MPU_Type * _6;
+  long unsigned int _7;
+  struct S32_MPU_Type * _8;
+  long unsigned int _9;
+
+  <bb 2> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  __asm__ __volatile__("dsb");
+  # DEBUG BEGIN_STMT
+  __asm__ __volatile__("isb");
+  # DEBUG BEGIN_STMT
+  regionNum_15 = 0;
+  # DEBUG regionNum => regionNum_15
+  goto <bb 4>; [INV]
+
+  <bb 3> :
+  # DEBUG BEGIN_STMT
+  _1 = 3758153728B;
+  _1->RNR ={v} regionNum_10;
+  # DEBUG BEGIN_STMT
+  _2 = 3758153728B;
+  _3 = rbar[regionNum_10];
+  _2->RBAR ={v} _3;
+  # DEBUG BEGIN_STMT
+  _4 = 3758153728B;
+  _5 = rasr[regionNum_10];
+  _4->RASR ={v} _5;
+  # DEBUG BEGIN_STMT
+  regionNum_22 = regionNum_10 + 1;
+  # DEBUG regionNum => regionNum_22
+
+  <bb 4> :
+  # regionNum_10 = PHI <regionNum_15(2), regionNum_22(3)>
+  # DEBUG regionNum => regionNum_10
+  # DEBUG BEGIN_STMT
+  if (regionNum_10 <= 9)
+    goto <bb 3>; [INV]
+  else
+    goto <bb 5>; [INV]
+
+  <bb 5> :
+  # DEBUG BEGIN_STMT
+  _6 = 3758153728B;
+  _7 ={v} _6->CTRL;
+  _8 = 3758153728B;
+  _9 = _7 | 1;
+  _8->CTRL ={v} _9;
+  # DEBUG BEGIN_STMT
+  __asm__ __volatile__("dsb");
+  # DEBUG BEGIN_STMT
+  __asm__ __volatile__("isb");
+  return;
+
+}
+
+
+__attribute__((section (".systeminit")))
+Core_FPU_Init ()
+{
+  struct S32_SCB_Type * _1;
+  long unsigned int _2;
+  struct S32_SCB_Type * _3;
+  long unsigned int _4;
+
+  <bb 2> :
+  # DEBUG BEGIN_STMT
+  _1 = 3758153728B;
+  _2 ={v} _1->CPACR;
+  _3 = 3758153728B;
+  _4 = _2 | 15728640;
+  _3->CPACR ={v} _4;
+  # DEBUG BEGIN_STMT
+  __asm__ __volatile__("dsb");
+  # DEBUG BEGIN_STMT
+  __asm__ __volatile__("isb");
+  return;
+
+}
+
+
+__attribute__((section (".systeminit")))
+Core_IC_Init ()
+{
+  struct S32_SCB_Type * _1;
+  long unsigned int _2;
+  struct S32_SCB_Type * _3;
+  long unsigned int _4;
+  struct S32_SCB_Type * _5;
+
+  <bb 2> :
+  # DEBUG BEGIN_STMT
+  NVIC_SetPriorityGrouping (0);
+  # DEBUG BEGIN_STMT
+  _1 = 3758153728B;
+  _2 ={v} _1->CCR;
+  _3 = 3758153728B;
+  _4 = _2 | 1;
+  _3->CCR ={v} _4;
+  # DEBUG BEGIN_STMT
+  _5 = 3758153728B;
+  _5->SHPR3 ={v} 0;
+  return;
+
+}
+
+
+Core_registerIsrHandler (uint16 irq_id, void (*<T4a3>) (void) isr_handler)
+{
+  volatile uint32 * _1;
+  long unsigned int _2;
+  int _3;
+  int _4;
+  int _5;
+  long unsigned int _6;
+  long unsigned int _7;
+  volatile uint32 * _8;
+  long unsigned int isr_handler.0_9;
+
+  <bb 2> :
+  # DEBUG BEGIN_STMT
+  _1 = 3758157064B;
+  _2 ={v} *_1;
+  _3 = (int) irq_id_11(D);
+  _4 = _3 + 16;
+  _5 = _4 << 2;
+  _6 = (long unsigned int) _5;
+  _7 = _2 + _6;
+  _8 = (volatile uint32 *) _7;
+  isr_handler.0_9 = (long unsigned int) isr_handler_12(D);
+  *_8 ={v} isr_handler.0_9;
+  return;
+
+}
+
+
+Core_clearPendingIsrSource (uint16 id)
+{
+  <bb 2> :
+  # DEBUG BEGIN_STMT
+  return;
+
+}
+
+
+Core_enableIsrSource (uint16 id, uint8 prio)
+{
+  unsigned char _1;
+  unsigned char _2;
+
+  <bb 2> :
+  # DEBUG BEGIN_STMT
+  _1 = (unsigned char) id_3(D);
+  NVIC_SetPriority (_1, prio_5(D));
+  # DEBUG BEGIN_STMT
+  _2 = (unsigned char) id_3(D);
+  NVIC_EnableIRQ (_2);
+  return;
+
+}
+
+
+Core_disableIsrSource (uint16 id)
+{
+  unsigned char _1;
+
+  <bb 2> :
+  # DEBUG BEGIN_STMT
+  _1 = (unsigned char) id_2(D);
+  NVIC_DisableIRQ (_1);
+  return;
+
+}
+
+

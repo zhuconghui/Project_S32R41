@@ -1,0 +1,620 @@
+
+IPA constant propagation start:
+Determining dynamic type for call: _25 = _5 (netif_23(D), p_15(D));
+  Starting walk at: _25 = _5 (netif_23(D), p_15(D));
+  instance pointer: netif_23(D)  Outer instance pointer: netif_23(D) offset: 0 (bits) vtbl reference: 
+  Function call may change dynamic type:memcpy (_3, src_21(D), 6);
+  Function call may change dynamic type:memcpy (_2, dst_19(D), 6);
+  Function call may change dynamic type:_1 = pbuf_add_header (p_15(D), 14);
+  Function call may change dynamic type:eth_type_be_14 = lwip_htons (eth_type_12(D));
+Determining dynamic type for call: _25 = _5 (netif_23(D), p_15(D));
+  Starting walk at: _25 = _5 (netif_23(D), p_15(D));
+  instance pointer: p_15(D)  Outer instance pointer: p_15(D) offset: 0 (bits) vtbl reference: 
+  Function call may change dynamic type:memcpy (_3, src_21(D), 6);
+  Function call may change dynamic type:memcpy (_2, dst_19(D), 6);
+  Function call may change dynamic type:_1 = pbuf_add_header (p_15(D), 14);
+  Function call may change dynamic type:eth_type_be_14 = lwip_htons (eth_type_12(D));
+
+IPA structures before propagation:
+
+Jump functions:
+  Jump functions of caller  memcpy/14:
+  Jump functions of caller  pbuf_add_header/13:
+  Jump functions of caller  lwip_htons/12:
+  Jump functions of caller  pbuf_free/11:
+  Jump functions of caller  ip6_input/10:
+  Jump functions of caller  etharp_input/9:
+  Jump functions of caller  ip4_input/8:
+  Jump functions of caller  pbuf_remove_header/7:
+  Jump functions of caller  memcmp/6:
+  Jump functions of caller  ethernet_output/4:
+    indirect aggregate callsite, calling param 0, offset 1472, by reference, for stmt _25 = _5 (netif_23(D), p_15(D));
+       param 0: PASS THROUGH: 0, op nop_expr
+         value: 0x0, mask: 0xffffffff
+         Unknown VR
+       param 1: PASS THROUGH: 1, op nop_expr
+         value: 0x0, mask: 0xffffffff
+         Unknown VR
+  Jump functions of caller  ethernet_input/3:
+
+ Propagating constants:
+
+Not considering ethernet_output for cloning; -fipa-cp-clone disabled.
+Not considering ethernet_input for cloning; -fipa-cp-clone disabled.
+
+overall_size: 153, max_new_size: 11001
+
+IPA lattices after all propagation:
+
+Lattices:
+  Node: ethernet_output/4:
+    param [0]: BOTTOM
+         ctxs: BOTTOM
+         Bits unusable (BOTTOM)
+         VARYING
+        AGGS BOTTOM
+    param [1]: BOTTOM
+         ctxs: BOTTOM
+         Bits unusable (BOTTOM)
+         VARYING
+        AGGS BOTTOM
+    param [2]: BOTTOM
+         ctxs: BOTTOM
+         Bits unusable (BOTTOM)
+         VARYING
+        AGGS BOTTOM
+    param [3]: BOTTOM
+         ctxs: BOTTOM
+         Bits unusable (BOTTOM)
+         VARYING
+        AGGS BOTTOM
+    param [4]: BOTTOM
+         ctxs: BOTTOM
+         Bits unusable (BOTTOM)
+         VARYING
+        AGGS BOTTOM
+  Node: ethernet_input/3:
+    param [0]: BOTTOM
+         ctxs: BOTTOM
+         Bits unusable (BOTTOM)
+         VARYING
+        AGGS BOTTOM
+    param [1]: BOTTOM
+         ctxs: BOTTOM
+         Bits unusable (BOTTOM)
+         VARYING
+        AGGS BOTTOM
+
+IPA decision stage:
+
+
+IPA constant propagation end
+
+Reclaiming functions:
+Reclaiming variables:
+Clearing address taken flags:
+Symbol table:
+
+memcpy/14 (memcpy) @06d387e0
+  Type: function
+  Visibility: external public
+  References: 
+  Referring: 
+  Availability: not_available
+  Function flags: optimize_size
+  Called by: ethernet_output/4 (162688 (estimated locally),0.98 per call) ethernet_output/4 (162688 (estimated locally),0.98 per call) 
+  Calls: 
+pbuf_add_header/13 (pbuf_add_header) @06d38700
+  Type: function
+  Visibility: external public
+  References: 
+  Referring: 
+  Availability: not_available
+  Function flags: optimize_size
+  Called by: ethernet_output/4 (166161 (estimated locally),1.00 per call) 
+  Calls: 
+lwip_htons/12 (lwip_htons) @06d38620
+  Type: function
+  Visibility: external public
+  References: 
+  Referring: 
+  Availability: not_available
+  Function flags: optimize_size
+  Called by: ethernet_output/4 (166161 (estimated locally),1.00 per call) 
+  Calls: 
+pbuf_free/11 (pbuf_free) @06d38460
+  Type: function
+  Visibility: external public
+  References: 
+  Referring: 
+  Availability: not_available
+  Function flags: optimize_size
+  Called by: ethernet_input/3 (902482801 (estimated locally),0.84 per call) 
+  Calls: 
+ip6_input/10 (ip6_input) @06d38380
+  Type: function
+  Visibility: external public
+  References: 
+  Referring: 
+  Availability: not_available
+  Function flags: optimize_size
+  Called by: ethernet_input/3 (86599426 (estimated locally),0.08 per call) 
+  Calls: 
+etharp_input/9 (etharp_input) @06d382a0
+  Type: function
+  Visibility: external public
+  References: 
+  Referring: 
+  Availability: not_available
+  Function flags: optimize_size
+  Called by: ethernet_input/3 (42329799 (estimated locally),0.04 per call) 
+  Calls: 
+ip4_input/8 (ip4_input) @06d380e0
+  Type: function
+  Visibility: external public
+  References: 
+  Referring: 
+  Availability: not_available
+  Function flags: optimize_size
+  Called by: ethernet_input/3 (42329799 (estimated locally),0.04 per call) 
+  Calls: 
+pbuf_remove_header/7 (pbuf_remove_header) @06d38000
+  Type: function
+  Visibility: external public
+  References: 
+  Referring: 
+  Availability: not_available
+  Function flags: optimize_size
+  Called by: ethernet_input/3 (177167401 (estimated locally),0.17 per call) ethernet_input/3 (86599426 (estimated locally),0.08 per call) ethernet_input/3 (86599426 (estimated locally),0.08 per call) 
+  Calls: 
+memcmp/6 (memcmp) @06d05700
+  Type: function
+  Visibility: external public
+  References: 
+  Referring: 
+  Availability: not_available
+  Function flags: optimize_size
+  Called by: ethernet_input/3 (206826641 (estimated locally),0.19 per call) 
+  Calls: 
+lwip_stats/5 (lwip_stats) @06d357e0
+  Type: variable
+  Body removed by symtab_remove_unreachable_nodes
+  Visibility: external public
+  References: 
+  Referring: ethernet_input/3 (read)ethernet_input/3 (write)ethernet_input/3 (read)ethernet_input/3 (write)ethernet_input/3 (read)ethernet_input/3 (write)ethernet_input/3 (read)ethernet_input/3 (write)ethernet_input/3 (read)ethernet_input/3 (write)ethernet_input/3 (read)ethernet_input/3 (write)ethernet_output/4 (read)ethernet_output/4 (write)
+  Availability: not_available
+  Varpool flags:
+ethernet_output/4 (ethernet_output) @06d05a80
+  Type: function definition analyzed
+  Visibility: externally_visible public
+  References: lwip_stats/5 (read)lwip_stats/5 (write)
+  Referring: 
+  Availability: available
+  Function flags: count:166161 (estimated locally) body optimize_size
+  Called by: 
+  Calls: memcpy/14 (162688 (estimated locally),0.98 per call) memcpy/14 (162688 (estimated locally),0.98 per call) pbuf_add_header/13 (166161 (estimated locally),1.00 per call) lwip_htons/12 (166161 (estimated locally),1.00 per call) 
+   Indirect call(55314 (estimated locally),0.33 per call)  of param:0 loaded from aggregate passed by reference at offset 1472 (vptr maybe changed)
+ethernet_input/3 (ethernet_input) @06d05620
+  Type: function definition analyzed
+  Visibility: externally_visible public
+  References: lwip_stats/5 (read)lwip_stats/5 (write)lwip_stats/5 (read)lwip_stats/5 (write)ethbroadcast/1 (addr)lwip_stats/5 (read)lwip_stats/5 (write)lwip_stats/5 (read)lwip_stats/5 (write)lwip_stats/5 (read)lwip_stats/5 (write)lwip_stats/5 (read)lwip_stats/5 (write)
+  Referring: 
+  Availability: available
+  Function flags: count:1073741824 (estimated locally) body optimize_size
+  Called by: 
+  Calls: pbuf_free/11 (902482801 (estimated locally),0.84 per call) ip6_input/10 (86599426 (estimated locally),0.08 per call) pbuf_remove_header/7 (177167401 (estimated locally),0.17 per call) etharp_input/9 (42329799 (estimated locally),0.04 per call) pbuf_remove_header/7 (86599426 (estimated locally),0.08 per call) ip4_input/8 (42329799 (estimated locally),0.04 per call) pbuf_remove_header/7 (86599426 (estimated locally),0.08 per call) memcmp/6 (206826641 (estimated locally),0.19 per call) 
+ethzero/2 (ethzero) @06d04678
+  Type: variable definition analyzed
+  Visibility: externally_visible public
+  References: 
+  Referring: 
+  Availability: available
+  Varpool flags: initialized read-only const-value-known
+ethbroadcast/1 (ethbroadcast) @06d045e8
+  Type: variable definition analyzed
+  Visibility: externally_visible public
+  References: 
+  Referring: ethernet_input/3 (addr)
+  Availability: available
+  Varpool flags: initialized read-only const-value-known
+
+;; Function ethernet_input (ethernet_input, funcdef_no=1, decl_uid=6836, cgraph_uid=2, symbol_order=3)
+
+Modification phase of node ethernet_input/3
+ethernet_input (struct pbuf * p, struct netif * netif)
+{
+  u16_t type;
+  struct eth_hdr * ethhdr;
+  short unsigned int _1;
+  short unsigned int _2;
+  short unsigned int _3;
+  short unsigned int _4;
+  short unsigned int _5;
+  long unsigned int _6;
+  long unsigned int _7;
+  unsigned char _8;
+  unsigned char _9;
+  unsigned char _10;
+  unsigned char _11;
+  unsigned char _12;
+  unsigned char _13;
+  unsigned char _14;
+  unsigned char _15;
+  unsigned char _16;
+  unsigned char _17;
+  unsigned char _18;
+  u8_t[6] * _19;
+  int _20;
+  unsigned char _21;
+  unsigned char _22;
+  unsigned char _23;
+  unsigned char _24;
+  unsigned char _25;
+  unsigned char _26;
+  unsigned char _27;
+  short unsigned int _28;
+  short unsigned int _29;
+  short unsigned int _30;
+  short unsigned int _31;
+  unsigned char _32;
+  unsigned char _33;
+  short unsigned int _34;
+  short unsigned int _35;
+  short unsigned int _36;
+  short unsigned int _37;
+  long unsigned int _38;
+  long unsigned int _39;
+  unsigned char _44;
+
+  <bb 2> [local count: 1073741824]:
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG next_hdr_offset => 14
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _1 = p_46(D)->len;
+  if (_1 <= 14)
+    goto <bb 3>; [34.00%]
+  else
+    goto <bb 4>; [66.00%]
+
+  <bb 3> [local count: 365072220]:
+  # DEBUG BEGIN_STMT
+  _2 = lwip_stats.etharp.proterr;
+  _3 = _2 + 1;
+  lwip_stats.etharp.proterr = _3;
+  # DEBUG BEGIN_STMT
+  _4 = lwip_stats.etharp.drop;
+  _5 = _4 + 1;
+  lwip_stats.etharp.drop = _5;
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _6 = netif_47(D)->mib2_counters.ifinerrors;
+  _7 = _6 + 1;
+  netif_47(D)->mib2_counters.ifinerrors = _7;
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  // predicted unlikely by goto predictor.
+  goto <bb 31>; [100.00%]
+
+  <bb 4> [local count: 708669605]:
+  # DEBUG BEGIN_STMT
+  _8 = p_46(D)->if_idx;
+  if (_8 == 0)
+    goto <bb 5>; [50.00%]
+  else
+    goto <bb 6>; [50.00%]
+
+  <bb 5> [local count: 354334802]:
+  # DEBUG BEGIN_STMT
+  _9 = netif_47(D)->num;
+  _10 = _9 + 1;
+  p_46(D)->if_idx = _10;
+
+  <bb 6> [local count: 708669605]:
+  # DEBUG BEGIN_STMT
+  ethhdr_49 = p_46(D)->payload;
+  # DEBUG ethhdr => ethhdr_49
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  type_50 = ethhdr_49->type;
+  # DEBUG type => type_50
+  # DEBUG BEGIN_STMT
+  _11 = ethhdr_49->dest.addr[0];
+  _44 = _11 & 1;
+  if (_44 != 0)
+    goto <bb 7>; [50.00%]
+  else
+    goto <bb 16>; [50.00%]
+
+  <bb 7> [local count: 354334802]:
+  # DEBUG BEGIN_STMT
+  if (_11 == 1)
+    goto <bb 8>; [34.00%]
+  else
+    goto <bb 11>; [66.00%]
+
+  <bb 8> [local count: 120473833]:
+  # DEBUG BEGIN_STMT
+  _12 = ethhdr_49->dest.addr[1];
+  if (_12 == 0)
+    goto <bb 9>; [50.00%]
+  else
+    goto <bb 16>; [50.00%]
+
+  <bb 9> [local count: 60236916]:
+  _13 = ethhdr_49->dest.addr[2];
+  if (_13 == 94)
+    goto <bb 10>; [34.00%]
+  else
+    goto <bb 16>; [66.00%]
+
+  <bb 10> [local count: 20480552]:
+  # DEBUG BEGIN_STMT
+  _14 = p_46(D)->flags;
+  _15 = _14 | 16;
+  p_46(D)->flags = _15;
+  goto <bb 16>; [100.00%]
+
+  <bb 11> [local count: 233860969]:
+  # DEBUG BEGIN_STMT
+  if (_11 == 51)
+    goto <bb 12>; [34.00%]
+  else
+    goto <bb 14>; [66.00%]
+
+  <bb 12> [local count: 79512730]:
+  _16 = ethhdr_49->dest.addr[1];
+  if (_16 == 51)
+    goto <bb 13>; [34.00%]
+  else
+    goto <bb 14>; [66.00%]
+
+  <bb 13> [local count: 27034328]:
+  # DEBUG BEGIN_STMT
+  _17 = p_46(D)->flags;
+  _18 = _17 | 16;
+  p_46(D)->flags = _18;
+  goto <bb 16>; [100.00%]
+
+  <bb 14> [local count: 206826641]:
+  # DEBUG BEGIN_STMT
+  _19 = &ethhdr_49->dest.addr;
+  _20 = memcmp (_19, &ethbroadcast.addr, 6);
+  if (_20 == 0)
+    goto <bb 15>; [50.00%]
+  else
+    goto <bb 16>; [50.00%]
+
+  <bb 15> [local count: 103413321]:
+  # DEBUG BEGIN_STMT
+  _21 = p_46(D)->flags;
+  _22 = _21 | 8;
+  p_46(D)->flags = _22;
+
+  <bb 16> [local count: 708669605]:
+  # DEBUG BEGIN_STMT
+  switch (type_50) <default: <L33> [25.00%], case 8: <L19> [25.00%], case 1544: <L24> [25.00%], case 56710: <L37> [25.00%]>
+
+  <bb 17> [local count: 177167401]:
+<L19>:
+  # DEBUG BEGIN_STMT
+  _23 = netif_47(D)->flags;
+  _26 = _23 & 8;
+  if (_26 == 0)
+    goto <bb 18>; [51.12%]
+  else
+    goto <bb 19>; [48.88%]
+
+  <bb 18> [local count: 90567975]:
+  # DEBUG BEGIN_STMT
+  // predicted unlikely by goto predictor.
+  goto <bb 31>; [100.00%]
+
+  <bb 19> [local count: 86599426]:
+  # DEBUG BEGIN_STMT
+  _24 = pbuf_remove_header (p_46(D), 14);
+  if (_24 != 0)
+    goto <bb 20>; [51.12%]
+  else
+    goto <bb 21>; [48.88%]
+
+  <bb 20> [local count: 44269626]:
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  // predicted unlikely by goto predictor.
+  goto <bb 31>; [100.00%]
+
+  <bb 21> [local count: 42329799]:
+  # DEBUG BEGIN_STMT
+  ip4_input (p_46(D), netif_47(D));
+  # DEBUG BEGIN_STMT
+  goto <bb 32>; [100.00%]
+
+  <bb 22> [local count: 177167401]:
+<L24>:
+  # DEBUG BEGIN_STMT
+  _25 = netif_47(D)->flags;
+  _32 = _25 & 8;
+  if (_32 == 0)
+    goto <bb 23>; [51.12%]
+  else
+    goto <bb 24>; [48.88%]
+
+  <bb 23> [local count: 90567975]:
+  # DEBUG BEGIN_STMT
+  // predicted unlikely by goto predictor.
+  goto <bb 31>; [100.00%]
+
+  <bb 24> [local count: 86599426]:
+  # DEBUG BEGIN_STMT
+  _27 = pbuf_remove_header (p_46(D), 14);
+  if (_27 != 0)
+    goto <bb 25>; [51.12%]
+  else
+    goto <bb 26>; [48.88%]
+
+  <bb 25> [local count: 44269626]:
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _28 = lwip_stats.etharp.lenerr;
+  _29 = _28 + 1;
+  lwip_stats.etharp.lenerr = _29;
+  # DEBUG BEGIN_STMT
+  _30 = lwip_stats.etharp.drop;
+  _31 = _30 + 1;
+  lwip_stats.etharp.drop = _31;
+  # DEBUG BEGIN_STMT
+  // predicted unlikely by goto predictor.
+  goto <bb 31>; [100.00%]
+
+  <bb 26> [local count: 42329799]:
+  # DEBUG BEGIN_STMT
+  etharp_input (p_46(D), netif_47(D));
+  # DEBUG BEGIN_STMT
+  goto <bb 32>; [100.00%]
+
+  <bb 27> [local count: 177167401]:
+<L37>:
+  # DEBUG BEGIN_STMT
+  _33 = pbuf_remove_header (p_46(D), 14);
+  if (_33 != 0)
+    goto <bb 28>; [51.12%]
+  else
+    goto <bb 29>; [48.88%]
+
+  <bb 28> [local count: 90567975]:
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  // predicted unlikely by goto predictor.
+  goto <bb 31>; [100.00%]
+
+  <bb 29> [local count: 86599426]:
+  # DEBUG BEGIN_STMT
+  ip6_input (p_46(D), netif_47(D));
+  # DEBUG BEGIN_STMT
+  goto <bb 32>; [100.00%]
+
+  <bb 30> [local count: 177167401]:
+<L33>:
+  # DEBUG BEGIN_STMT
+  _34 = lwip_stats.etharp.proterr;
+  _35 = _34 + 1;
+  lwip_stats.etharp.proterr = _35;
+  # DEBUG BEGIN_STMT
+  _36 = lwip_stats.etharp.drop;
+  _37 = _36 + 1;
+  lwip_stats.etharp.drop = _37;
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _38 = netif_47(D)->mib2_counters.ifinunknownprotos;
+  _39 = _38 + 1;
+  netif_47(D)->mib2_counters.ifinunknownprotos = _39;
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  // predicted unlikely by goto predictor.
+
+  <bb 31> [local count: 902482801]:
+free_and_return:
+  # DEBUG BEGIN_STMT
+  pbuf_free (p_46(D));
+  # DEBUG BEGIN_STMT
+
+  <bb 32> [local count: 1073741824]:
+  return 0;
+
+}
+
+
+
+;; Function ethernet_output (ethernet_output, funcdef_no=2, decl_uid=6842, cgraph_uid=3, symbol_order=4)
+
+Modification phase of node ethernet_output/4
+ethernet_output (struct netif * netif, struct pbuf * p, const struct eth_addr * src, const struct eth_addr * dst, u16_t eth_type)
+{
+  u16_t eth_type_be;
+  struct eth_hdr * ethhdr;
+  unsigned char _1;
+  struct eth_addr * _2;
+  struct eth_addr * _3;
+  unsigned char _4;
+  err_t (*<T6b9>) (struct netif *, struct pbuf *) _5;
+  short unsigned int _6;
+  short unsigned int _7;
+  err_t _8;
+  err_t _25;
+
+  <bb 2> [local count: 166161]:
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  eth_type_be_14 = lwip_htons (eth_type_12(D));
+  # DEBUG eth_type_be => eth_type_be_14
+  # DEBUG BEGIN_STMT
+  _1 = pbuf_add_header (p_15(D), 14);
+  if (_1 != 0)
+    goto <bb 3>; [2.09%]
+  else
+    goto <bb 4>; [97.91%]
+
+  <bb 3> [local count: 3473]:
+  # DEBUG BEGIN_STMT
+  // predicted unlikely by goto predictor.
+  # DEBUG pbuf_header_failed => NULL
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _6 = lwip_stats.link.lenerr;
+  _7 = _6 + 1;
+  lwip_stats.link.lenerr = _7;
+  # DEBUG BEGIN_STMT
+  goto <bb 7>; [100.00%]
+
+  <bb 4> [local count: 162688]:
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  ethhdr_17 = p_15(D)->payload;
+  # DEBUG ethhdr => ethhdr_17
+  # DEBUG BEGIN_STMT
+  ethhdr_17->type = eth_type_be_14;
+  # DEBUG BEGIN_STMT
+  _2 = &ethhdr_17->dest;
+  memcpy (_2, dst_19(D), 6);
+  # DEBUG BEGIN_STMT
+  _3 = &ethhdr_17->src;
+  memcpy (_3, src_21(D), 6);
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _4 = netif_23(D)->hwaddr_len;
+  if (_4 != 6)
+    goto <bb 8>; [66.00%]
+  else
+    goto <bb 6>; [34.00%]
+
+  <bb 8> [local count: 107374]:
+
+  <bb 5> [local count: 1073741824]:
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  __asm__ __volatile__("BKPT #0
+	");
+  # DEBUG BEGIN_STMT
+
+  <bb 9> [local count: 1073741824]:
+  goto <bb 5>; [100.00%]
+
+  <bb 6> [local count: 55314]:
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _5 = netif_23(D)->linkoutput;
+  _25 = _5 (netif_23(D), p_15(D));
+
+  <bb 7> [local count: 58787]:
+  # _8 = PHI <_25(6), -2(3)>
+  return _8;
+
+}
+
+

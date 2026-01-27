@@ -1,0 +1,1222 @@
+
+IPA constant propagation start:
+Determining dynamic type for call: sys_timeout_abs (next_timeout_time_3, handler_4(D), arg_5(D));
+  Starting walk at: sys_timeout_abs (next_timeout_time_3, handler_4(D), arg_5(D));
+  instance pointer: handler_4(D)  Outer instance pointer: handler_4(D) offset: 0 (bits) vtbl reference: 
+  Function call may change dynamic type:_1 = sys_now ();
+Determining dynamic type for call: sys_timeout_abs (next_timeout_time_3, handler_4(D), arg_5(D));
+  Starting walk at: sys_timeout_abs (next_timeout_time_3, handler_4(D), arg_5(D));
+  instance pointer: arg_5(D)  Outer instance pointer: arg_5(D) offset: 0 (bits) vtbl reference: 
+  Function call may change dynamic type:_1 = sys_now ();
+Determining dynamic type for call: handler_18 (arg_19);
+  Starting walk at: handler_18 (arg_19);
+  instance pointer: arg_19  Outer instance pointer: arg_14 offset: 0 (bits) vtbl reference: 
+  Function call may change dynamic type:memp_free (9, tmptimeout_11);
+  Function call may change dynamic type:now_10 = sys_now ();
+  Function call may change dynamic type:handler_18 (arg_19);
+  Function call may change dynamic type:memp_free (9, tmptimeout_11);
+Determining dynamic type for call: sys_timeout.part.0 (msecs_2(D), handler_4(D), arg_5(D));
+  Starting walk at: sys_timeout.part.0 (msecs_2(D), handler_4(D), arg_5(D));
+  instance pointer: handler_4(D)  Outer instance pointer: handler_4(D) offset: 0 (bits) vtbl reference: 
+Determining dynamic type for call: sys_timeout.part.0 (msecs_2(D), handler_4(D), arg_5(D));
+  Starting walk at: sys_timeout.part.0 (msecs_2(D), handler_4(D), arg_5(D));
+  instance pointer: arg_5(D)  Outer instance pointer: arg_5(D) offset: 0 (bits) vtbl reference: 
+Determining dynamic type for call: sys_timeout (_1, lwip_cyclic_timer, _2);
+  Starting walk at: sys_timeout (_1, lwip_cyclic_timer, _2);
+  instance pointer: lwip_cyclic_timer  Outer instance pointer: lwip_cyclic_timer offset: 0 (bits) vtbl reference: 
+  Function call may change dynamic type:sys_timeout (_1, lwip_cyclic_timer, _2);
+Determining dynamic type for call: sys_timeout (_1, lwip_cyclic_timer, _2);
+  Starting walk at: sys_timeout (_1, lwip_cyclic_timer, _2);
+  instance pointer: _2  Outer instance pointer: &lwip_cyclic_timers[i_3] offset: 0 (bits) vtbl reference: 
+Determining dynamic type for call: sys_timeout_abs (next_timeout_time_14, lwip_cyclic_timer, arg_9(D));
+  Starting walk at: sys_timeout_abs (next_timeout_time_14, lwip_cyclic_timer, arg_9(D));
+  instance pointer: lwip_cyclic_timer  Outer instance pointer: lwip_cyclic_timer offset: 0 (bits) vtbl reference: 
+  Function call may change dynamic type:now_13 = sys_now ();
+  Function call may change dynamic type:_1 ();
+Determining dynamic type for call: sys_timeout_abs (next_timeout_time_14, lwip_cyclic_timer, arg_9(D));
+  Starting walk at: sys_timeout_abs (next_timeout_time_14, lwip_cyclic_timer, arg_9(D));
+  instance pointer: arg_9(D)  Outer instance pointer: arg_9(D) offset: 0 (bits) vtbl reference: 
+  Function call may change dynamic type:now_13 = sys_now ();
+  Function call may change dynamic type:_1 ();
+Determining dynamic type for call: sys_timeout_abs (_7, lwip_cyclic_timer, arg_9(D));
+  Starting walk at: sys_timeout_abs (_7, lwip_cyclic_timer, arg_9(D));
+  instance pointer: lwip_cyclic_timer  Outer instance pointer: lwip_cyclic_timer offset: 0 (bits) vtbl reference: 
+  Function call may change dynamic type:now_13 = sys_now ();
+  Function call may change dynamic type:_1 ();
+Determining dynamic type for call: sys_timeout_abs (_7, lwip_cyclic_timer, arg_9(D));
+  Starting walk at: sys_timeout_abs (_7, lwip_cyclic_timer, arg_9(D));
+  instance pointer: arg_9(D)  Outer instance pointer: arg_9(D) offset: 0 (bits) vtbl reference: 
+  Function call may change dynamic type:now_13 = sys_now ();
+  Function call may change dynamic type:_1 ();
+Determining dynamic type for call: sys_timeout.part.0 (250, tcpip_tcp_timer, 0B);
+  Starting walk at: sys_timeout.part.0 (250, tcpip_tcp_timer, 0B);
+  instance pointer: tcpip_tcp_timer  Outer instance pointer: tcpip_tcp_timer offset: 0 (bits) vtbl reference: 
+Determining dynamic type for call: sys_timeout.part.0 (250, tcpip_tcp_timer, 0B);
+  Starting walk at: sys_timeout.part.0 (250, tcpip_tcp_timer, 0B);
+  instance pointer: 0B  Outer instance pointer: 0B offset: 0 (bits) vtbl reference: 
+Determining dynamic type for call: sys_timeout.part.0 (250, tcpip_tcp_timer, 0B);
+  Starting walk at: sys_timeout.part.0 (250, tcpip_tcp_timer, 0B);
+  instance pointer: tcpip_tcp_timer  Outer instance pointer: tcpip_tcp_timer offset: 0 (bits) vtbl reference: 
+  Function call may change dynamic type:tcp_tmr ();
+Determining dynamic type for call: sys_timeout.part.0 (250, tcpip_tcp_timer, 0B);
+  Starting walk at: sys_timeout.part.0 (250, tcpip_tcp_timer, 0B);
+  instance pointer: 0B  Outer instance pointer: 0B offset: 0 (bits) vtbl reference: 
+  Function call may change dynamic type:tcp_tmr ();
+
+IPA structures before propagation:
+
+Jump functions:
+  Jump functions of caller  sys_timeout.part.0/29:
+    callsite  sys_timeout.part.0/29 -> sys_timeout_abs/8 : 
+       param 0: UNKNOWN
+         value: 0x0, mask: 0xffffffff
+         Unknown VR
+       param 1: PASS THROUGH: 1, op nop_expr
+         value: 0x0, mask: 0xffffffff
+         Unknown VR
+       param 2: PASS THROUGH: 2, op nop_expr
+         value: 0x0, mask: 0xffffffff
+         Unknown VR
+  Jump functions of caller  memp_free/28:
+  Jump functions of caller  memp_malloc/27:
+  Jump functions of caller  sys_now/26:
+  Jump functions of caller  mld6_tmr/23:
+  Jump functions of caller  ip6_reass_tmr/22:
+  Jump functions of caller  nd6_tmr/21:
+  Jump functions of caller  dns_tmr/20:
+  Jump functions of caller  igmp_tmr/19:
+  Jump functions of caller  etharp_tmr/18:
+  Jump functions of caller  ip_reass_tmr/17:
+  Jump functions of caller  tcp_tmr/16:
+  Jump functions of caller  sys_timeouts_sleeptime/15:
+  Jump functions of caller  sys_restart_timeouts/14:
+  Jump functions of caller  sys_check_timeouts/13:
+    indirect simple callsite, calling param -1, offset 0, for stmt handler_18 (arg_19);
+       param 0: UNKNOWN
+         value: 0x0, mask: 0xffffffff
+         Unknown VR
+  Jump functions of caller  sys_untimeout/12:
+  Jump functions of caller  sys_timeout/11:
+    callsite  sys_timeout/11 -> sys_timeout.part.0/29 : 
+       param 0: PASS THROUGH: 0, op nop_expr
+         value: 0x0, mask: 0xffffffff
+         Unknown VR
+       param 1: PASS THROUGH: 1, op nop_expr, agg_preserved
+         value: 0x0, mask: 0xffffffff
+         Unknown VR
+       param 2: PASS THROUGH: 2, op nop_expr, agg_preserved
+         value: 0x0, mask: 0xffffffff
+         Unknown VR
+  Jump functions of caller  sys_timeouts_init/10:
+    callsite  sys_timeouts_init/10 -> sys_timeout/11 : 
+       param 0: UNKNOWN
+         value: 0x0, mask: 0xffffffff
+         Unknown VR
+       param 1: CONST: lwip_cyclic_timer
+         value: 0x0, mask: 0xffffffff
+         VR  ~[0, 0]
+       param 2: UNKNOWN
+         value: 0x0, mask: 0xfffffffc
+         VR  ~[0, 0]
+  Jump functions of caller  lwip_cyclic_timer/9:
+    callsite  lwip_cyclic_timer/9 -> sys_timeout_abs/8 : 
+       param 0: UNKNOWN
+         value: 0x0, mask: 0xffffffff
+         Unknown VR
+       param 1: CONST: lwip_cyclic_timer
+         value: 0x0, mask: 0xffffffff
+         VR  ~[0, 0]
+       param 2: PASS THROUGH: 0, op nop_expr
+         value: 0x0, mask: 0xffffffff
+         Unknown VR
+    callsite  lwip_cyclic_timer/9 -> sys_timeout_abs/8 : 
+       param 0: UNKNOWN
+         value: 0x0, mask: 0xffffffff
+         Unknown VR
+       param 1: CONST: lwip_cyclic_timer
+         value: 0x0, mask: 0xffffffff
+         VR  ~[0, 0]
+       param 2: PASS THROUGH: 0, op nop_expr
+         value: 0x0, mask: 0xffffffff
+         Unknown VR
+    indirect aggregate callsite, calling param 0, offset 32, by reference, for stmt _1 ();
+  Jump functions of caller  sys_timeout_abs/8:
+  Jump functions of caller  tcp_timer_needed/7:
+    callsite  tcp_timer_needed/7 -> sys_timeout.part.0/29 : 
+       param 0: CONST: 250
+         value: 0xfa, mask: 0x0
+         Unknown VR
+       param 1: CONST: tcpip_tcp_timer
+         value: 0x0, mask: 0xffffffff
+         VR  ~[0, 0]
+       param 2: CONST: 0B
+         value: 0x0, mask: 0xfffffff8
+         Unknown VR
+  Jump functions of caller  tcpip_tcp_timer/6:
+    callsite  tcpip_tcp_timer/6 -> sys_timeout.part.0/29 : 
+       param 0: CONST: 250
+         value: 0xfa, mask: 0x0
+         Unknown VR
+       param 1: CONST: tcpip_tcp_timer
+         value: 0x0, mask: 0xffffffff
+         VR  ~[0, 0]
+       param 2: CONST: 0B
+         value: 0x0, mask: 0xfffffff8
+         Unknown VR
+
+ Propagating constants:
+
+Not considering sys_timeouts_sleeptime for cloning; -fipa-cp-clone disabled.
+Not considering sys_restart_timeouts for cloning; -fipa-cp-clone disabled.
+Not considering sys_check_timeouts for cloning; -fipa-cp-clone disabled.
+Not considering sys_untimeout for cloning; -fipa-cp-clone disabled.
+Not considering sys_timeout for cloning; -fipa-cp-clone disabled.
+Not considering sys_timeouts_init for cloning; -fipa-cp-clone disabled.
+Not considering lwip_cyclic_timer for cloning; -fipa-cp-clone disabled.
+Not considering tcp_timer_needed for cloning; -fipa-cp-clone disabled.
+Not considering tcpip_tcp_timer for cloning; -fipa-cp-clone disabled.
+
+overall_size: 212, max_new_size: 11001
+ - context independent values, size: 15, time_benefit: 1.000000
+
+IPA lattices after all propagation:
+
+Lattices:
+  Node: sys_timeout.part.0/29:
+    param [0]: VARIABLE
+               250 [loc_time: 1, loc_size: 10, prop_time: 0, prop_size: 0]
+         ctxs: VARIABLE
+         Bits unusable (BOTTOM)
+         VARYING
+        AGGS VARIABLE
+    param [1]: VARIABLE
+               tcpip_tcp_timer [loc_time: 1, loc_size: 10, prop_time: 0, prop_size: 0]
+         ctxs: VARIABLE
+         Bits unusable (BOTTOM)
+         VARYING
+        AGGS VARIABLE
+    param [2]: VARIABLE
+               0B [loc_time: 1, loc_size: 10, prop_time: 0, prop_size: 0]
+         ctxs: VARIABLE
+         Bits unusable (BOTTOM)
+         VARYING
+        AGGS VARIABLE
+  Node: sys_timeouts_sleeptime/15:
+  Node: sys_restart_timeouts/14:
+  Node: sys_check_timeouts/13:
+  Node: sys_untimeout/12:
+    param [0]: BOTTOM
+         ctxs: BOTTOM
+         Bits unusable (BOTTOM)
+         VARYING
+        AGGS BOTTOM
+    param [1]: BOTTOM
+         ctxs: BOTTOM
+         Bits unusable (BOTTOM)
+         VARYING
+        AGGS BOTTOM
+  Node: sys_timeout/11:
+    param [0]: BOTTOM
+         ctxs: BOTTOM
+         Bits unusable (BOTTOM)
+         VARYING
+        AGGS BOTTOM
+    param [1]: BOTTOM
+         ctxs: BOTTOM
+         Bits unusable (BOTTOM)
+         VARYING
+        AGGS BOTTOM
+    param [2]: BOTTOM
+         ctxs: BOTTOM
+         Bits unusable (BOTTOM)
+         VARYING
+        AGGS BOTTOM
+  Node: sys_timeouts_init/10:
+  Node: lwip_cyclic_timer/9:
+    param [0]: BOTTOM
+         ctxs: BOTTOM
+         Bits unusable (BOTTOM)
+         VARYING
+        AGGS BOTTOM
+  Node: sys_timeout_abs/8:
+    param [0]: VARIABLE
+         ctxs: VARIABLE
+         Bits unusable (BOTTOM)
+         VARYING
+        AGGS VARIABLE
+    param [1]: VARIABLE
+               tcpip_tcp_timer [loc_time: 1, loc_size: 37, prop_time: 0, prop_size: 0]
+               lwip_cyclic_timer [loc_time: 1, loc_size: 37, prop_time: 0, prop_size: 0]
+         ctxs: VARIABLE
+         Bits unusable (BOTTOM)
+         VARYING
+        AGGS VARIABLE
+    param [2]: VARIABLE
+               0B [loc_time: 1, loc_size: 37, prop_time: 0, prop_size: 0]
+         ctxs: VARIABLE
+         Bits unusable (BOTTOM)
+         VARYING
+        AGGS VARIABLE
+  Node: tcp_timer_needed/7:
+  Node: tcpip_tcp_timer/6:
+    param [0]: BOTTOM
+         ctxs: BOTTOM
+         Bits unusable (BOTTOM)
+         VARYING
+        AGGS BOTTOM
+
+IPA decision stage:
+
+
+IPA constant propagation end
+
+Reclaiming functions:
+Reclaiming variables:
+Clearing address taken flags:
+Symbol table:
+
+sys_timeout.part.0/29 (sys_timeout.part.0) @05f088c0
+  Type: function definition analyzed
+  Visibility: prevailing_def_ironly artificial
+  References: 
+  Referring: 
+  Availability: local
+  Function flags: count:1073741824 (estimated locally) first_run:1 body local split_part optimize_size
+  Called by: tcpip_tcp_timer/6 (923858203 (estimated locally),0.86 per call) tcp_timer_needed/7 (461929101 (estimated locally),0.43 per call) sys_timeout/11 (52886 (estimated locally),0.33 per call) 
+  Calls: sys_now/26 (1073741824 (estimated locally),1.00 per call) sys_timeout_abs/8 (1073741824 (estimated locally),1.00 per call) 
+memp_free/28 (memp_free) @0615aee0
+  Type: function
+  Visibility: external public
+  References: 
+  Referring: 
+  Availability: not_available
+  Function flags: optimize_size
+  Called by: sys_check_timeouts/13 (996582264 (estimated locally),12.92 per call) sys_untimeout/12 (16742319 (estimated locally),0.18 per call) 
+  Calls: 
+memp_malloc/27 (memp_malloc) @0615ab60
+  Type: function
+  Visibility: external public
+  References: 
+  Referring: 
+  Availability: not_available
+  Function flags: optimize_size
+  Called by: sys_timeout_abs/8 (357913 (estimated locally),1.00 per call) 
+  Calls: 
+sys_now/26 (sys_now) @0615a9a0
+  Type: function
+  Visibility: external public
+  References: 
+  Referring: 
+  Availability: not_available
+  Function flags: optimize_size
+  Called by: sys_timeouts_sleeptime/15 (283280 (estimated locally),0.81 per call) sys_restart_timeouts/14 (118111600 (estimated locally),0.69 per call) sys_check_timeouts/13 (77159559 (estimated locally),1.00 per call) sys_timeout.part.0/29 (1073741824 (estimated locally),1.00 per call) lwip_cyclic_timer/9 (1073741824 (estimated locally),1.00 per call) 
+  Calls: 
+tcp_tw_pcbs/25 (tcp_tw_pcbs) @06158510
+  Type: variable
+  Body removed by symtab_remove_unreachable_nodes
+  Visibility: external public
+  References: 
+  Referring: tcp_timer_needed/7 (read)tcpip_tcp_timer/6 (read)
+  Availability: not_available
+  Varpool flags:
+tcp_active_pcbs/24 (tcp_active_pcbs) @061584c8
+  Type: variable
+  Body removed by symtab_remove_unreachable_nodes
+  Visibility: external public
+  References: 
+  Referring: tcp_timer_needed/7 (read)tcpip_tcp_timer/6 (read)
+  Availability: not_available
+  Varpool flags:
+mld6_tmr/23 (mld6_tmr) @0615a2a0
+  Type: function
+  Visibility: external public
+  Address is taken.
+  References: 
+  Referring: lwip_cyclic_timers/1 (addr)
+  Availability: not_available
+  Function flags: optimize_size
+  Called by: 
+  Calls: 
+ip6_reass_tmr/22 (ip6_reass_tmr) @0615a1c0
+  Type: function
+  Visibility: external public
+  Address is taken.
+  References: 
+  Referring: lwip_cyclic_timers/1 (addr)
+  Availability: not_available
+  Function flags: optimize_size
+  Called by: 
+  Calls: 
+nd6_tmr/21 (nd6_tmr) @0615a000
+  Type: function
+  Visibility: external public
+  Address is taken.
+  References: 
+  Referring: lwip_cyclic_timers/1 (addr)
+  Availability: not_available
+  Function flags: optimize_size
+  Called by: 
+  Calls: 
+dns_tmr/20 (dns_tmr) @0614fd20
+  Type: function
+  Visibility: external public
+  Address is taken.
+  References: 
+  Referring: lwip_cyclic_timers/1 (addr)
+  Availability: not_available
+  Function flags: optimize_size
+  Called by: 
+  Calls: 
+igmp_tmr/19 (igmp_tmr) @0614fa80
+  Type: function
+  Visibility: external public
+  Address is taken.
+  References: 
+  Referring: lwip_cyclic_timers/1 (addr)
+  Availability: not_available
+  Function flags: optimize_size
+  Called by: 
+  Calls: 
+etharp_tmr/18 (etharp_tmr) @0614f7e0
+  Type: function
+  Visibility: external public
+  Address is taken.
+  References: 
+  Referring: lwip_cyclic_timers/1 (addr)
+  Availability: not_available
+  Function flags: optimize_size
+  Called by: 
+  Calls: 
+ip_reass_tmr/17 (ip_reass_tmr) @0614f540
+  Type: function
+  Visibility: external public
+  Address is taken.
+  References: 
+  Referring: lwip_cyclic_timers/1 (addr)
+  Availability: not_available
+  Function flags: optimize_size
+  Called by: 
+  Calls: 
+tcp_tmr/16 (tcp_tmr) @0614f2a0
+  Type: function
+  Visibility: external public
+  Address is taken.
+  References: 
+  Referring: lwip_cyclic_timers/1 (addr)
+  Availability: not_available
+  Function flags: optimize_size
+  Called by: tcpip_tcp_timer/6 (1073741824 (estimated locally),1.00 per call) 
+  Calls: 
+sys_timeouts_sleeptime/15 (sys_timeouts_sleeptime) @0614fee0
+  Type: function definition analyzed
+  Visibility: externally_visible public
+  References: next_timeout/3 (read)next_timeout/3 (read)
+  Referring: 
+  Availability: available
+  Function flags: count:351639 (estimated locally) body optimize_size
+  Called by: 
+  Calls: sys_now/26 (283280 (estimated locally),0.81 per call) 
+sys_restart_timeouts/14 (sys_restart_timeouts) @0614fc40
+  Type: function definition analyzed
+  Visibility: externally_visible public
+  References: next_timeout/3 (read)next_timeout/3 (read)
+  Referring: 
+  Availability: available
+  Function flags: count:171052281 (estimated locally) body optimize_size
+  Called by: 
+  Calls: sys_now/26 (118111600 (estimated locally),0.69 per call) 
+sys_check_timeouts/13 (sys_check_timeouts) @0614f9a0
+  Type: function definition analyzed
+  Visibility: externally_visible public
+  References: next_timeout/3 (read)next_timeout/3 (write)current_timeout_due_time/4 (write)
+  Referring: 
+  Availability: available
+  Function flags: count:77159559 (estimated locally) body optimize_size
+  Called by: 
+  Calls: memp_free/28 (996582264 (estimated locally),12.92 per call) sys_now/26 (77159559 (estimated locally),1.00 per call) 
+   Indirect call(36474911 (estimated locally),0.47 per call) 
+sys_untimeout/12 (sys_untimeout) @0614f700
+  Type: function definition analyzed
+  Visibility: externally_visible public
+  References: next_timeout/3 (read)next_timeout/3 (write)
+  Referring: 
+  Availability: available
+  Function flags: count:92538298 (estimated locally) body optimize_size
+  Called by: 
+  Calls: memp_free/28 (16742319 (estimated locally),0.18 per call) 
+sys_timeout/11 (sys_timeout) @0614f460
+  Type: function definition analyzed
+  Visibility: externally_visible public
+  References: 
+  Referring: 
+  Availability: available
+  Function flags: count:160260 (estimated locally) body optimize_size
+  Called by: sys_timeouts_init/10 (939524097 (estimated locally),7.00 per call) 
+  Calls: sys_timeout.part.0/29 (52886 (estimated locally),0.33 per call) 
+sys_timeouts_init/10 (sys_timeouts_init) @0614f1c0
+  Type: function definition analyzed
+  Visibility: externally_visible public
+  References: lwip_cyclic_timers/1 (read)lwip_cyclic_timers/1 (addr)lwip_cyclic_timer/9 (addr)
+  Referring: 
+  Availability: available
+  Function flags: count:134217728 (estimated locally) body optimize_size
+  Called by: 
+  Calls: sys_timeout/11 (939524097 (estimated locally),7.00 per call) 
+lwip_cyclic_timer/9 (lwip_cyclic_timer) @06125ee0
+  Type: function definition analyzed
+  Visibility: prevailing_def_ironly
+  Address is taken.
+  References: current_timeout_due_time/4 (read)lwip_cyclic_timer/9 (addr)lwip_cyclic_timer/9 (addr)
+  Referring: lwip_cyclic_timer/9 (addr)lwip_cyclic_timer/9 (addr)sys_timeouts_init/10 (addr)
+  Availability: available
+  Function flags: count:1073741824 (estimated locally) body optimize_size
+  Called by: 
+  Calls: sys_timeout_abs/8 (536870913 (estimated locally),0.50 per call) sys_timeout_abs/8 (536870913 (estimated locally),0.50 per call) sys_now/26 (1073741824 (estimated locally),1.00 per call) 
+   Indirect call(1073741824 (estimated locally),1.00 per call)  of param:0 loaded from aggregate passed by reference at offset 32 (vptr maybe changed)
+sys_timeout_abs/8 (sys_timeout_abs) @06125b60
+  Type: function definition analyzed
+  Visibility: prevailing_def_ironly
+  References: next_timeout/3 (read)next_timeout/3 (write)next_timeout/3 (write)
+  Referring: 
+  Availability: local
+  Function flags: count:357913 (estimated locally) body local optimize_size
+  Called by: sys_timeout.part.0/29 (1073741824 (estimated locally),1.00 per call) lwip_cyclic_timer/9 (536870913 (estimated locally),0.50 per call) lwip_cyclic_timer/9 (536870913 (estimated locally),0.50 per call) 
+  Calls: memp_malloc/27 (357913 (estimated locally),1.00 per call) 
+tcp_timer_needed/7 (tcp_timer_needed) @061258c0
+  Type: function definition analyzed
+  Visibility: externally_visible public
+  References: tcpip_tcp_timer_active/5 (read)tcp_active_pcbs/24 (read)tcp_tw_pcbs/25 (read)tcpip_tcp_timer_active/5 (write)tcpip_tcp_timer/6 (addr)
+  Referring: 
+  Availability: available
+  Function flags: count:1073741824 (estimated locally) body optimize_size
+  Called by: 
+  Calls: sys_timeout.part.0/29 (461929101 (estimated locally),0.43 per call) 
+tcpip_tcp_timer/6 (tcpip_tcp_timer) @06125620
+  Type: function definition analyzed
+  Visibility: prevailing_def_ironly
+  Address is taken.
+  References: tcp_active_pcbs/24 (read)tcp_tw_pcbs/25 (read)tcpip_tcp_timer/6 (addr)tcpip_tcp_timer_active/5 (write)
+  Referring: tcp_timer_needed/7 (addr)tcpip_tcp_timer/6 (addr)
+  Availability: available
+  Function flags: count:1073741824 (estimated locally) body optimize_size
+  Called by: 
+  Calls: sys_timeout.part.0/29 (923858203 (estimated locally),0.86 per call) tcp_tmr/16 (1073741824 (estimated locally),1.00 per call) 
+tcpip_tcp_timer_active/5 (tcpip_tcp_timer_active) @061228b8
+  Type: variable definition analyzed
+  Visibility: prevailing_def_ironly
+  References: 
+  Referring: tcp_timer_needed/7 (write)tcp_timer_needed/7 (read)tcpip_tcp_timer/6 (write)
+  Availability: available
+  Varpool flags:
+current_timeout_due_time/4 (current_timeout_due_time) @06122828
+  Type: variable definition analyzed
+  Visibility: prevailing_def_ironly
+  References: 
+  Referring: lwip_cyclic_timer/9 (read)sys_check_timeouts/13 (write)
+  Availability: available
+  Varpool flags:
+next_timeout/3 (next_timeout) @06122798
+  Type: variable definition analyzed
+  Visibility: prevailing_def_ironly
+  References: 
+  Referring: sys_timeout_abs/8 (read)sys_untimeout/12 (read)sys_untimeout/12 (write)sys_timeout_abs/8 (write)sys_check_timeouts/13 (read)sys_check_timeouts/13 (write)sys_timeout_abs/8 (write)sys_restart_timeouts/14 (read)sys_restart_timeouts/14 (read)sys_timeouts_sleeptime/15 (read)sys_timeouts_sleeptime/15 (read)
+  Availability: available
+  Varpool flags:
+lwip_num_cyclic_timers/2 (lwip_num_cyclic_timers) @06122708
+  Type: variable definition analyzed
+  Visibility: externally_visible public
+  References: 
+  Referring: 
+  Availability: available
+  Varpool flags: initialized read-only const-value-known
+lwip_cyclic_timers/1 (lwip_cyclic_timers) @06122630
+  Type: variable definition analyzed
+  Visibility: externally_visible public
+  References: tcp_tmr/16 (addr)ip_reass_tmr/17 (addr)etharp_tmr/18 (addr)igmp_tmr/19 (addr)dns_tmr/20 (addr)nd6_tmr/21 (addr)ip6_reass_tmr/22 (addr)mld6_tmr/23 (addr)
+  Referring: sys_timeouts_init/10 (read)sys_timeouts_init/10 (addr)
+  Availability: available
+  Varpool flags: initialized read-only const-value-known
+
+;; Function sys_timeout_abs (sys_timeout_abs, funcdef_no=3, decl_uid=7646, cgraph_uid=4, symbol_order=8)
+
+Modification phase of node sys_timeout_abs/8
+sys_timeout_abs (u32_t abs_time, void (*sys_timeout_handler) (void *) handler, void * arg)
+{
+  struct sys_timeo * t;
+  struct sys_timeo * timeout;
+  struct sys_timeo * next_timeout.6_1;
+  struct sys_timeo * _2;
+  long unsigned int _4;
+  long unsigned int _5;
+  unsigned int _6;
+  _Bool _7;
+  struct sys_timeo * _8;
+  long unsigned int _9;
+  long unsigned int _10;
+  unsigned int _11;
+  _Bool _12;
+
+  <bb 2> [local count: 357913]:
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  timeout_18 = memp_malloc (9);
+  # DEBUG timeout => timeout_18
+  # DEBUG BEGIN_STMT
+  if (timeout_18 == 0B)
+    goto <bb 13>; [30.00%]
+  else
+    goto <bb 4>; [70.00%]
+
+  <bb 13> [local count: 107374]:
+
+  <bb 3> [local count: 1073741824]:
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  __asm__ __volatile__("BKPT #0
+	");
+  # DEBUG BEGIN_STMT
+
+  <bb 15> [local count: 1073741824]:
+  goto <bb 3>; [100.00%]
+
+  <bb 4> [local count: 250539]:
+  # DEBUG BEGIN_STMT
+  timeout_18->next = 0B;
+  # DEBUG BEGIN_STMT
+  timeout_18->h = handler_20(D);
+  # DEBUG BEGIN_STMT
+  timeout_18->arg = arg_22(D);
+  # DEBUG BEGIN_STMT
+  timeout_18->time = abs_time_24(D);
+  # DEBUG BEGIN_STMT
+  next_timeout.6_1 = next_timeout;
+  if (next_timeout.6_1 == 0B)
+    goto <bb 5>; [18.09%]
+  else
+    goto <bb 6>; [81.91%]
+
+  <bb 5> [local count: 45323]:
+  # DEBUG BEGIN_STMT
+  next_timeout = timeout_18;
+  # DEBUG BEGIN_STMT
+  goto <bb 12>; [100.00%]
+
+  <bb 6> [local count: 205217]:
+  # DEBUG BEGIN_STMT
+  _4 = next_timeout.6_1->time;
+  _5 = abs_time_24(D) - _4;
+  _6 = _5 >> 31;
+  _7 = (_Bool) _6;
+  if (_7 != 0)
+    goto <bb 7>; [50.00%]
+  else
+    goto <bb 14>; [50.00%]
+
+  <bb 7> [local count: 102608]:
+  # DEBUG BEGIN_STMT
+  timeout_18->next = next_timeout.6_1;
+  # DEBUG BEGIN_STMT
+  next_timeout = timeout_18;
+  goto <bb 12>; [100.00%]
+
+  <bb 8> [local count: 934070]:
+  # DEBUG BEGIN_STMT
+  _8 = t_13->next;
+  if (_8 == 0B)
+    goto <bb 10>; [3.66%]
+  else
+    goto <bb 9>; [96.34%]
+
+  <bb 9> [local count: 899883]:
+  _9 = _8->time;
+  _10 = abs_time_24(D) - _9;
+  _11 = _10 >> 31;
+  _12 = (_Bool) _11;
+  if (_12 != 0)
+    goto <bb 10>; [3.66%]
+  else
+    goto <bb 16>; [96.34%]
+
+  <bb 16> [local count: 866947]:
+  goto <bb 11>; [100.00%]
+
+  <bb 10> [local count: 67123]:
+  # _2 = PHI <_8(8), _8(9)>
+  # t_3 = PHI <t_13(8), t_13(9)>
+  # DEBUG BEGIN_STMT
+  timeout_18->next = _2;
+  # DEBUG BEGIN_STMT
+  t_3->next = timeout_18;
+  # DEBUG BEGIN_STMT
+  goto <bb 12>; [100.00%]
+
+  <bb 14> [local count: 102609]:
+
+  <bb 11> [local count: 969555]:
+  # t_13 = PHI <next_timeout.6_1(14), _8(16)>
+  # DEBUG t => t_13
+  # DEBUG BEGIN_STMT
+  if (t_13 != 0B)
+    goto <bb 8>; [96.34%]
+  else
+    goto <bb 12>; [3.66%]
+
+  <bb 12> [local count: 250539]:
+  return;
+
+}
+
+
+
+;; Function lwip_cyclic_timer (lwip_cyclic_timer, funcdef_no=4, decl_uid=7655, cgraph_uid=5, symbol_order=9)
+
+Modification phase of node lwip_cyclic_timer/9
+lwip_cyclic_timer (void * arg)
+{
+  u32_t next_timeout_time;
+  u32_t now;
+  void (*<T4eb>) (void) _1;
+  long unsigned int _2;
+  long unsigned int current_timeout_due_time.5_3;
+  long unsigned int _4;
+  unsigned int _5;
+  _Bool _6;
+  long unsigned int _7;
+
+  <bb 2> [local count: 1073741824]:
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG cyclic => arg_9(D)
+  # DEBUG BEGIN_STMT
+  _1 = MEM[(const struct lwip_cyclic_timer *)arg_9(D)].handler;
+  _1 ();
+  # DEBUG BEGIN_STMT
+  now_13 = sys_now ();
+  # DEBUG now => now_13
+  # DEBUG BEGIN_STMT
+  _2 = MEM[(const struct lwip_cyclic_timer *)arg_9(D)].interval_ms;
+  current_timeout_due_time.5_3 = current_timeout_due_time;
+  next_timeout_time_14 = _2 + current_timeout_due_time.5_3;
+  # DEBUG next_timeout_time => next_timeout_time_14
+  # DEBUG BEGIN_STMT
+  _4 = next_timeout_time_14 - now_13;
+  _5 = _4 >> 31;
+  _6 = (_Bool) _5;
+  if (_6 != 0)
+    goto <bb 3>; [50.00%]
+  else
+    goto <bb 4>; [50.00%]
+
+  <bb 3> [local count: 536870913]:
+  # DEBUG BEGIN_STMT
+  _7 = _2 + now_13;
+  sys_timeout_abs (_7, lwip_cyclic_timer, arg_9(D));
+  goto <bb 5>; [100.00%]
+
+  <bb 4> [local count: 536870913]:
+  # DEBUG BEGIN_STMT
+  sys_timeout_abs (next_timeout_time_14, lwip_cyclic_timer, arg_9(D));
+
+  <bb 5> [local count: 1073741824]:
+  return;
+
+}
+
+
+
+;; Function tcpip_tcp_timer (tcpip_tcp_timer, funcdef_no=1, decl_uid=7638, cgraph_uid=2, symbol_order=6)
+
+Modification phase of node tcpip_tcp_timer/6
+tcpip_tcp_timer (void * arg)
+{
+  struct tcp_pcb * tcp_active_pcbs.3_1;
+  struct tcp_pcb * tcp_tw_pcbs.4_2;
+
+  <bb 2> [local count: 1073741824]:
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  tcp_tmr ();
+  # DEBUG BEGIN_STMT
+  tcp_active_pcbs.3_1 = tcp_active_pcbs;
+  if (tcp_active_pcbs.3_1 != 0B)
+    goto <bb 4>; [53.47%]
+  else
+    goto <bb 3>; [46.53%]
+
+  <bb 3> [local count: 499612071]:
+  tcp_tw_pcbs.4_2 = tcp_tw_pcbs;
+  if (tcp_tw_pcbs.4_2 != 0B)
+    goto <bb 4>; [70.00%]
+  else
+    goto <bb 5>; [30.00%]
+
+  <bb 4> [local count: 923858203]:
+  # DEBUG BEGIN_STMT
+  # DEBUG msecs => 250
+  # DEBUG handler => tcpip_tcp_timer
+  # DEBUG arg => 0B
+  # DEBUG INLINE_ENTRY sys_timeout
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  sys_timeout.part.0 (250, tcpip_tcp_timer, 0B);
+  goto <bb 6>; [100.00%]
+
+  <bb 5> [local count: 149883621]:
+  # DEBUG BEGIN_STMT
+  tcpip_tcp_timer_active = 0;
+
+  <bb 6> [local count: 1073741824]:
+  # DEBUG msecs => NULL
+  # DEBUG handler => NULL
+  # DEBUG arg => NULL
+  return;
+
+}
+
+
+
+;; Function tcp_timer_needed (tcp_timer_needed, funcdef_no=2, decl_uid=7388, cgraph_uid=3, symbol_order=7)
+
+Modification phase of node tcp_timer_needed/7
+tcp_timer_needed ()
+{
+  int tcpip_tcp_timer_active.0_1;
+  struct tcp_pcb * tcp_active_pcbs.1_2;
+  struct tcp_pcb * tcp_tw_pcbs.2_3;
+
+  <bb 2> [local count: 1073741824]:
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  tcpip_tcp_timer_active.0_1 = tcpip_tcp_timer_active;
+  if (tcpip_tcp_timer_active.0_1 == 0)
+    goto <bb 3>; [50.00%]
+  else
+    goto <bb 6>; [50.00%]
+
+  <bb 3> [local count: 536870913]:
+  tcp_active_pcbs.1_2 = tcp_active_pcbs;
+  if (tcp_active_pcbs.1_2 != 0B)
+    goto <bb 5>; [53.47%]
+  else
+    goto <bb 4>; [46.53%]
+
+  <bb 4> [local count: 249806035]:
+  tcp_tw_pcbs.2_3 = tcp_tw_pcbs;
+  if (tcp_tw_pcbs.2_3 != 0B)
+    goto <bb 5>; [70.00%]
+  else
+    goto <bb 6>; [30.00%]
+
+  <bb 5> [local count: 461929101]:
+  # DEBUG BEGIN_STMT
+  tcpip_tcp_timer_active = 1;
+  # DEBUG BEGIN_STMT
+  # DEBUG msecs => 250
+  # DEBUG handler => tcpip_tcp_timer
+  # DEBUG arg => 0B
+  # DEBUG INLINE_ENTRY sys_timeout
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  sys_timeout.part.0 (250, tcpip_tcp_timer, 0B);
+
+  <bb 6> [local count: 1073741824]:
+  # DEBUG msecs => NULL
+  # DEBUG handler => NULL
+  # DEBUG arg => NULL
+  return;
+
+}
+
+
+
+;; Function sys_timeout (sys_timeout, funcdef_no=6, decl_uid=6253, cgraph_uid=7, symbol_order=11)
+
+Modification phase of node sys_timeout/11
+sys_timeout (u32_t msecs, void (*sys_timeout_handler) (void *) handler, void * arg)
+{
+  <bb 2> [local count: 160260]:
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  if (msecs_2(D) > 1073741823)
+    goto <bb 5>; [67.00%]
+  else
+    goto <bb 4>; [33.00%]
+
+  <bb 5> [local count: 107374]:
+
+  <bb 3> [local count: 1073741824]:
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  __asm__ __volatile__("BKPT #0
+	");
+  # DEBUG BEGIN_STMT
+
+  <bb 6> [local count: 1073741824]:
+  goto <bb 3>; [100.00%]
+
+  <bb 4> [local count: 52886]:
+  sys_timeout.part.0 (msecs_2(D), handler_4(D), arg_5(D));
+  return;
+
+}
+
+
+
+;; Function sys_timeouts_init (sys_timeouts_init, funcdef_no=5, decl_uid=6249, cgraph_uid=6, symbol_order=10)
+
+Modification phase of node sys_timeouts_init/10
+sys_timeouts_init ()
+{
+  size_t i;
+  long unsigned int _1;
+  const struct lwip_cyclic_timer * _2;
+
+  <bb 2> [local count: 134217728]:
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG i => 1
+  goto <bb 4>; [100.00%]
+
+  <bb 3> [local count: 939524097]:
+  # DEBUG BEGIN_STMT
+  _1 = lwip_cyclic_timers[i_3].interval_ms;
+  _2 = &lwip_cyclic_timers[i_3];
+  sys_timeout (_1, lwip_cyclic_timer, _2);
+  # DEBUG BEGIN_STMT
+  i_7 = i_3 + 1;
+  # DEBUG i => i_7
+
+  <bb 4> [local count: 1073741824]:
+  # i_3 = PHI <1(2), i_7(3)>
+  # DEBUG i => i_3
+  # DEBUG BEGIN_STMT
+  if (i_3 != 8)
+    goto <bb 3>; [87.50%]
+  else
+    goto <bb 5>; [12.50%]
+
+  <bb 5> [local count: 134217728]:
+  return;
+
+}
+
+
+
+;; Function sys_untimeout (sys_untimeout, funcdef_no=7, decl_uid=6256, cgraph_uid=8, symbol_order=12)
+
+Modification phase of node sys_untimeout/12
+sys_untimeout (void (*sys_timeout_handler) (void *) handler, void * arg)
+{
+  struct sys_timeo * t;
+  struct sys_timeo * prev_t;
+  struct sys_timeo * next_timeout.9_1;
+  void (*<Te3>) (void *) _2;
+  void * _3;
+  struct sys_timeo * _4;
+  struct sys_timeo * _5;
+
+  <bb 2> [local count: 92538298]:
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  next_timeout.9_1 = next_timeout;
+  if (next_timeout.9_1 == 0B)
+    goto <bb 11>; [18.09%]
+  else
+    goto <bb 12>; [81.91%]
+
+  <bb 12> [local count: 75798120]:
+  goto <bb 10>; [100.00%]
+
+  <bb 3> [local count: 1014686024]:
+  # DEBUG BEGIN_STMT
+  _2 = t_7->h;
+  if (_2 == handler_12(D))
+    goto <bb 4>; [30.00%]
+  else
+    goto <bb 9>; [70.00%]
+
+  <bb 4> [local count: 304405807]:
+  _3 = t_7->arg;
+  if (_3 == arg_13(D))
+    goto <bb 5>; [5.50%]
+  else
+    goto <bb 9>; [94.50%]
+
+  <bb 5> [local count: 16742319]:
+  # prev_t_11 = PHI <prev_t_6(4)>
+  # t_17 = PHI <t_7(4)>
+  # DEBUG BEGIN_STMT
+  if (prev_t_11 == 0B)
+    goto <bb 6>; [30.00%]
+  else
+    goto <bb 7>; [70.00%]
+
+  <bb 6> [local count: 5022696]:
+  # DEBUG BEGIN_STMT
+  _4 = t_17->next;
+  next_timeout = _4;
+  goto <bb 8>; [100.00%]
+
+  <bb 7> [local count: 11719624]:
+  # DEBUG BEGIN_STMT
+  _5 = t_17->next;
+  prev_t_11->next = _5;
+
+  <bb 8> [local count: 16742319]:
+  # DEBUG BEGIN_STMT
+  memp_free (9, t_17);
+  # DEBUG BEGIN_STMT
+  goto <bb 11>; [100.00%]
+
+  <bb 9> [local count: 997943705]:
+  # DEBUG BEGIN_STMT
+  # DEBUG prev_t => t_7
+  t_18 = t_7->next;
+  # DEBUG t => t_18
+
+  <bb 10> [local count: 1073741824]:
+  # prev_t_6 = PHI <t_7(9), 0B(12)>
+  # t_7 = PHI <t_18(9), next_timeout.9_1(12)>
+  # DEBUG t => t_7
+  # DEBUG prev_t => prev_t_6
+  # DEBUG BEGIN_STMT
+  if (t_7 != 0B)
+    goto <bb 3>; [94.50%]
+  else
+    goto <bb 11>; [5.50%]
+
+  <bb 11> [local count: 92538298]:
+  return;
+
+}
+
+
+
+;; Function sys_check_timeouts (sys_check_timeouts, funcdef_no=8, decl_uid=6260, cgraph_uid=9, symbol_order=13)
+
+Modification phase of node sys_check_timeouts/13
+sys_check_timeouts ()
+{
+  void * arg;
+  void (*sys_timeout_handler) (void *) handler;
+  struct sys_timeo * tmptimeout;
+  u32_t now;
+  long unsigned int _1;
+  long unsigned int _2;
+  unsigned int _3;
+  _Bool _4;
+  struct sys_timeo * _5;
+
+  <bb 2> [local count: 77159559]:
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  now_10 = sys_now ();
+  # DEBUG now => now_10
+
+  <bb 3> [local count: 113634470]:
+
+  <bb 4> [local count: 1073741824]:
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  tmptimeout_11 = next_timeout;
+  # DEBUG tmptimeout => tmptimeout_11
+  # DEBUG BEGIN_STMT
+  if (tmptimeout_11 == 0B)
+    goto <bb 8>; [3.66%]
+  else
+    goto <bb 5>; [96.34%]
+
+  <bb 5> [local count: 1034442874]:
+  # DEBUG BEGIN_STMT
+  _1 = tmptimeout_11->time;
+  _2 = now_10 - _1;
+  _3 = _2 >> 31;
+  _4 = (_Bool) _3;
+  if (_4 != 0)
+    goto <bb 8>; [3.66%]
+  else
+    goto <bb 6>; [96.34%]
+
+  <bb 6> [local count: 996582264]:
+  # DEBUG BEGIN_STMT
+  _5 = tmptimeout_11->next;
+  next_timeout = _5;
+  # DEBUG BEGIN_STMT
+  handler_13 = tmptimeout_11->h;
+  # DEBUG handler => handler_13
+  # DEBUG BEGIN_STMT
+  arg_14 = tmptimeout_11->arg;
+  # DEBUG arg => arg_14
+  # DEBUG BEGIN_STMT
+  current_timeout_due_time = _1;
+  # DEBUG BEGIN_STMT
+  memp_free (9, tmptimeout_11);
+  # DEBUG BEGIN_STMT
+  if (handler_13 != 0B)
+    goto <bb 7>; [3.66%]
+  else
+    goto <bb 9>; [96.34%]
+
+  <bb 9> [local count: 960107352]:
+  goto <bb 4>; [100.00%]
+
+  <bb 7> [local count: 36474911]:
+  # handler_18 = PHI <handler_13(6)>
+  # arg_19 = PHI <arg_14(6)>
+  # DEBUG BEGIN_STMT
+  handler_18 (arg_19);
+  goto <bb 3>; [100.00%]
+
+  <bb 8> [local count: 77159560]:
+  return;
+
+}
+
+
+
+;; Function sys_restart_timeouts (sys_restart_timeouts, funcdef_no=9, decl_uid=6258, cgraph_uid=10, symbol_order=14)
+
+Modification phase of node sys_restart_timeouts/14
+sys_restart_timeouts ()
+{
+  struct sys_timeo * t;
+  u32_t base;
+  u32_t now;
+  struct sys_timeo * next_timeout.10_1;
+  struct sys_timeo * next_timeout.11_2;
+  long unsigned int _3;
+  long unsigned int _4;
+  long unsigned int _5;
+
+  <bb 2> [local count: 171052281]:
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  next_timeout.10_1 = next_timeout;
+  if (next_timeout.10_1 == 0B)
+    goto <bb 6>; [30.95%]
+  else
+    goto <bb 3>; [69.05%]
+
+  <bb 3> [local count: 118111600]:
+  # DEBUG BEGIN_STMT
+  now_11 = sys_now ();
+  # DEBUG now => now_11
+  # DEBUG BEGIN_STMT
+  next_timeout.11_2 = next_timeout;
+  base_12 = next_timeout.11_2->time;
+  # DEBUG base => base_12
+  # DEBUG BEGIN_STMT
+  # DEBUG t => next_timeout.11_2
+  goto <bb 5>; [100.00%]
+
+  <bb 4> [local count: 955630223]:
+  # DEBUG BEGIN_STMT
+  _3 = t_6->time;
+  _4 = _3 - base_12;
+  _5 = _4 + now_11;
+  t_6->time = _5;
+  # DEBUG BEGIN_STMT
+  t_14 = t_6->next;
+  # DEBUG t => t_14
+
+  <bb 5> [local count: 1073741824]:
+  # t_6 = PHI <next_timeout.11_2(3), t_14(4)>
+  # DEBUG t => t_6
+  # DEBUG BEGIN_STMT
+  if (t_6 != 0B)
+    goto <bb 4>; [89.00%]
+  else
+    goto <bb 6>; [11.00%]
+
+  <bb 6> [local count: 171052282]:
+  return;
+
+}
+
+
+
+;; Function sys_timeouts_sleeptime (sys_timeouts_sleeptime, funcdef_no=10, decl_uid=6262, cgraph_uid=11, symbol_order=15)
+
+Modification phase of node sys_timeouts_sleeptime/15
+sys_timeouts_sleeptime ()
+{
+  u32_t now;
+  struct sys_timeo * next_timeout.12_1;
+  struct sys_timeo * next_timeout.13_2;
+  long unsigned int _3;
+  long unsigned int _4;
+  unsigned int _5;
+  _Bool _6;
+  signed int ret.15_7;
+  u32_t _8;
+
+  <bb 2> [local count: 351639]:
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  next_timeout.12_1 = next_timeout;
+  if (next_timeout.12_1 == 0B)
+    goto <bb 6>; [19.44%]
+  else
+    goto <bb 3>; [80.56%]
+
+  <bb 3> [local count: 283280]:
+  # DEBUG BEGIN_STMT
+  now_13 = sys_now ();
+  # DEBUG now => now_13
+  # DEBUG BEGIN_STMT
+  next_timeout.13_2 = next_timeout;
+  _3 = next_timeout.13_2->time;
+  _4 = _3 - now_13;
+  _5 = _4 >> 31;
+  _6 = (_Bool) _5;
+  if (_6 != 0)
+    goto <bb 6>; [34.00%]
+  else
+    goto <bb 4>; [66.00%]
+
+  <bb 4> [local count: 186965]:
+  # DEBUG BEGIN_STMT
+  # DEBUG ret => _4
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  ret.15_7 = (signed int) _4;
+  if (ret.15_7 < 0)
+    goto <bb 7>; [57.43%]
+  else
+    goto <bb 6>; [42.57%]
+
+  <bb 7> [local count: 107374]:
+
+  <bb 5> [local count: 1073741824]:
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  __asm__ __volatile__("BKPT #0
+	");
+  # DEBUG BEGIN_STMT
+
+  <bb 8> [local count: 1073741824]:
+  goto <bb 5>; [100.00%]
+
+  <bb 6> [local count: 244265]:
+  # _8 = PHI <4294967295(2), 0(3), _4(4)>
+  return _8;
+
+}
+
+

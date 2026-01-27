@@ -1,0 +1,1023 @@
+inet_chksum_pbuf (struct pbuf * p)
+{
+  int swapped;
+  struct pbuf * q;
+  u32_t acc;
+  void * _1;
+  short unsigned int _2;
+  int _3;
+  long unsigned int _4;
+  long unsigned int _5;
+  long unsigned int _6;
+  short unsigned int _7;
+  short unsigned int _8;
+  _Bool _9;
+  long unsigned int _10;
+  long unsigned int _11;
+  long unsigned int _12;
+  long unsigned int _13;
+  long unsigned int _14;
+  long unsigned int _15;
+  long unsigned int _16;
+  long unsigned int _17;
+  short unsigned int _18;
+  u16_t _32;
+  short unsigned int _34;
+
+  <bb 2> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  swapped_26 = 0;
+  # DEBUG swapped => swapped_26
+  # DEBUG BEGIN_STMT
+  acc_27 = 0;
+  # DEBUG acc => acc_27
+  # DEBUG BEGIN_STMT
+  q_29 = p_28(D);
+  # DEBUG q => q_29
+  goto <bb 6>; [INV]
+
+  <bb 3> :
+  # DEBUG BEGIN_STMT
+  _1 = q_22->payload;
+  _2 = q_22->len;
+  _3 = (int) _2;
+  _34 = lwip_standard_chksum (_1, _3);
+  _4 = (long unsigned int) _34;
+  acc_35 = acc_20 + _4;
+  # DEBUG acc => acc_35
+  # DEBUG BEGIN_STMT
+  _5 = acc_35 >> 16;
+  _6 = acc_35 & 65535;
+  acc_36 = _5 + _6;
+  # DEBUG acc => acc_36
+  # DEBUG BEGIN_STMT
+  _7 = q_22->len;
+  _8 = _7 & 1;
+  if (_8 != 0)
+    goto <bb 4>; [INV]
+  else
+    goto <bb 5>; [INV]
+
+  <bb 4> :
+  # DEBUG BEGIN_STMT
+  _9 = swapped_24 == 0;
+  swapped_37 = (int) _9;
+  # DEBUG swapped => swapped_37
+  # DEBUG BEGIN_STMT
+  _10 = acc_36 << 8;
+  _11 = _10 & 65535;
+  _12 = acc_36 >> 8;
+  _13 = _12 & 255;
+  acc_38 = _11 | _13;
+  # DEBUG acc => acc_38
+
+  <bb 5> :
+  # acc_19 = PHI <acc_36(3), acc_38(4)>
+  # swapped_23 = PHI <swapped_24(3), swapped_37(4)>
+  # DEBUG swapped => swapped_23
+  # DEBUG acc => acc_19
+  # DEBUG BEGIN_STMT
+  q_39 = q_22->next;
+  # DEBUG q => q_39
+
+  <bb 6> :
+  # acc_20 = PHI <acc_27(2), acc_19(5)>
+  # q_22 = PHI <q_29(2), q_39(5)>
+  # swapped_24 = PHI <swapped_26(2), swapped_23(5)>
+  # DEBUG swapped => swapped_24
+  # DEBUG q => q_22
+  # DEBUG acc => acc_20
+  # DEBUG BEGIN_STMT
+  if (q_22 != 0B)
+    goto <bb 3>; [INV]
+  else
+    goto <bb 7>; [INV]
+
+  <bb 7> :
+  # DEBUG BEGIN_STMT
+  if (swapped_24 != 0)
+    goto <bb 8>; [INV]
+  else
+    goto <bb 9>; [INV]
+
+  <bb 8> :
+  # DEBUG BEGIN_STMT
+  _14 = acc_20 << 8;
+  _15 = _14 & 65535;
+  _16 = acc_20 >> 8;
+  _17 = _16 & 255;
+  acc_31 = _15 | _17;
+  # DEBUG acc => acc_31
+
+  <bb 9> :
+  # acc_21 = PHI <acc_20(7), acc_31(8)>
+  # DEBUG acc => acc_21
+  # DEBUG BEGIN_STMT
+  _18 = (short unsigned int) acc_21;
+  _32 = ~_18;
+  return _32;
+
+}
+
+
+inet_chksum (const void * dataptr, u16_t len)
+{
+  int _1;
+  short unsigned int _2;
+  u16_t _7;
+
+  <bb 2> :
+  # DEBUG BEGIN_STMT
+  _1 = (int) len_3(D);
+  _2 = lwip_standard_chksum (dataptr_5(D), _1);
+  _7 = ~_2;
+  return _7;
+
+}
+
+
+ip_chksum_pseudo_partial (struct pbuf * p, u8_t proto, u16_t proto_len, u16_t chksum_len, const struct ip_addr_t * src, const struct ip_addr_t * dest)
+{
+  unsigned char _1;
+  const struct ip6_addr_t * _2;
+  const struct ip6_addr_t * _3;
+  const struct ip4_addr_t * _4;
+  const struct ip4_addr_t * _5;
+  u16_t _6;
+  u16_t _16;
+  u16_t _18;
+
+  <bb 2> :
+  # DEBUG BEGIN_STMT
+  if (dest_8(D) != 0B)
+    goto <bb 3>; [INV]
+  else
+    goto <bb 5>; [INV]
+
+  <bb 3> :
+  _1 = dest_8(D)->type;
+  if (_1 == 6)
+    goto <bb 4>; [INV]
+  else
+    goto <bb 5>; [INV]
+
+  <bb 4> :
+  # DEBUG BEGIN_STMT
+  _2 = &src_10(D)->u_addr.ip6;
+  _3 = &dest_8(D)->u_addr.ip6;
+  _16 = ip6_chksum_pseudo_partial (p_11(D), proto_12(D), proto_len_13(D), chksum_len_14(D), _2, _3);
+  // predicted unlikely by early return (on trees) predictor.
+  goto <bb 6>; [INV]
+
+  <bb 5> :
+  # DEBUG BEGIN_STMT
+  _4 = &src_10(D)->u_addr.ip4;
+  _5 = &dest_8(D)->u_addr.ip4;
+  _18 = inet_chksum_pseudo_partial (p_11(D), proto_12(D), proto_len_13(D), chksum_len_14(D), _4, _5);
+  // predicted unlikely by early return (on trees) predictor.
+
+  <bb 6> :
+  # _6 = PHI <_16(4), _18(5)>
+  return _6;
+
+}
+
+
+ip6_chksum_pseudo_partial (struct pbuf * p, u8_t proto, u16_t proto_len, u16_t chksum_len, const struct ip6_addr_t * src, const struct ip6_addr_t * dest)
+{
+  u8_t addr_part;
+  u32_t addr;
+  u32_t acc;
+  int _1;
+  long unsigned int _2;
+  long unsigned int _3;
+  int _4;
+  long unsigned int _5;
+  long unsigned int _6;
+  unsigned char addr_part.6_7;
+  long unsigned int _8;
+  long unsigned int _9;
+  long unsigned int _10;
+  long unsigned int _11;
+  u16_t _24;
+
+  <bb 2> :
+  # DEBUG BEGIN_STMT
+  acc_14 = 0;
+  # DEBUG acc => acc_14
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  addr_part_15 = 0;
+  # DEBUG addr_part => addr_part_15
+  goto <bb 4>; [INV]
+
+  <bb 3> :
+  # DEBUG BEGIN_STMT
+  _1 = (int) addr_part_13;
+  addr_26 = src_25(D)->addr[_1];
+  # DEBUG addr => addr_26
+  # DEBUG BEGIN_STMT
+  _2 = addr_26 & 65535;
+  acc_27 = acc_12 + _2;
+  # DEBUG acc => acc_27
+  # DEBUG BEGIN_STMT
+  _3 = addr_26 >> 16;
+  acc_28 = acc_27 + _3;
+  # DEBUG acc => acc_28
+  # DEBUG BEGIN_STMT
+  _4 = (int) addr_part_13;
+  addr_30 = dest_29(D)->addr[_4];
+  # DEBUG addr => addr_30
+  # DEBUG BEGIN_STMT
+  _5 = addr_30 & 65535;
+  acc_31 = acc_28 + _5;
+  # DEBUG acc => acc_31
+  # DEBUG BEGIN_STMT
+  _6 = addr_30 >> 16;
+  acc_32 = acc_31 + _6;
+  # DEBUG acc => acc_32
+  # DEBUG BEGIN_STMT
+  addr_part.6_7 = addr_part_13;
+  addr_part_33 = addr_part.6_7 + 1;
+  # DEBUG addr_part => addr_part_33
+
+  <bb 4> :
+  # acc_12 = PHI <acc_14(2), acc_32(3)>
+  # addr_part_13 = PHI <addr_part_15(2), addr_part_33(3)>
+  # DEBUG addr_part => addr_part_13
+  # DEBUG acc => acc_12
+  # DEBUG BEGIN_STMT
+  if (addr_part_13 <= 3)
+    goto <bb 3>; [INV]
+  else
+    goto <bb 5>; [INV]
+
+  <bb 5> :
+  # DEBUG BEGIN_STMT
+  _8 = acc_12 >> 16;
+  _9 = acc_12 & 65535;
+  acc_16 = _8 + _9;
+  # DEBUG acc => acc_16
+  # DEBUG BEGIN_STMT
+  _10 = acc_16 >> 16;
+  _11 = acc_16 & 65535;
+  acc_17 = _10 + _11;
+  # DEBUG acc => acc_17
+  # DEBUG BEGIN_STMT
+  _24 = inet_cksum_pseudo_partial_base (p_19(D), proto_20(D), proto_len_21(D), chksum_len_22(D), acc_17);
+  return _24;
+
+}
+
+
+inet_chksum_pseudo_partial (struct pbuf * p, u8_t proto, u16_t proto_len, u16_t chksum_len, const struct ip4_addr_t * src, const struct ip4_addr_t * dest)
+{
+  u32_t addr;
+  u32_t acc;
+  long unsigned int _1;
+  long unsigned int _2;
+  long unsigned int _3;
+  long unsigned int _4;
+  long unsigned int _5;
+  long unsigned int _6;
+  long unsigned int _7;
+  u16_t _24;
+
+  <bb 2> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  addr_10 = src_9(D)->addr;
+  # DEBUG addr => addr_10
+  # DEBUG BEGIN_STMT
+  acc_11 = addr_10 & 65535;
+  # DEBUG acc => acc_11
+  # DEBUG BEGIN_STMT
+  _1 = addr_10 >> 16;
+  acc_12 = acc_11 + _1;
+  # DEBUG acc => acc_12
+  # DEBUG BEGIN_STMT
+  addr_14 = dest_13(D)->addr;
+  # DEBUG addr => addr_14
+  # DEBUG BEGIN_STMT
+  _2 = addr_14 & 65535;
+  acc_15 = acc_12 + _2;
+  # DEBUG acc => acc_15
+  # DEBUG BEGIN_STMT
+  _3 = addr_14 >> 16;
+  acc_16 = acc_15 + _3;
+  # DEBUG acc => acc_16
+  # DEBUG BEGIN_STMT
+  _4 = acc_16 >> 16;
+  _5 = acc_16 & 65535;
+  acc_17 = _4 + _5;
+  # DEBUG acc => acc_17
+  # DEBUG BEGIN_STMT
+  _6 = acc_17 >> 16;
+  _7 = acc_17 & 65535;
+  acc_18 = _6 + _7;
+  # DEBUG acc => acc_18
+  # DEBUG BEGIN_STMT
+  _24 = inet_cksum_pseudo_partial_base (p_19(D), proto_20(D), proto_len_21(D), chksum_len_22(D), acc_18);
+  return _24;
+
+}
+
+
+inet_cksum_pseudo_partial_base (struct pbuf * p, u8_t proto, u16_t proto_len, u16_t chksum_len, u32_t acc)
+{
+  u16_t chklen;
+  int swapped;
+  struct pbuf * q;
+  void * _1;
+  int _2;
+  long unsigned int _3;
+  long unsigned int _4;
+  long unsigned int _5;
+  short unsigned int _6;
+  short unsigned int _7;
+  _Bool _8;
+  long unsigned int _9;
+  long unsigned int _10;
+  long unsigned int _11;
+  long unsigned int _12;
+  long unsigned int _13;
+  long unsigned int _14;
+  long unsigned int _15;
+  long unsigned int _16;
+  short unsigned int _17;
+  short unsigned int _18;
+  short unsigned int _19;
+  long unsigned int _20;
+  long unsigned int _21;
+  long unsigned int _22;
+  long unsigned int _23;
+  short unsigned int _24;
+  short unsigned int _44;
+  long unsigned int _55;
+  long unsigned int _59;
+  u16_t _63;
+
+  <bb 2> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  swapped_35 = 0;
+  # DEBUG swapped => swapped_35
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  q_37 = p_36(D);
+  # DEBUG q => q_37
+  goto <bb 10>; [INV]
+
+  <bb 3> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  chklen_41 = q_29->len;
+  # DEBUG chklen => chklen_41
+  # DEBUG BEGIN_STMT
+  if (chklen_41 > chksum_len_25)
+    goto <bb 4>; [INV]
+  else
+    goto <bb 5>; [INV]
+
+  <bb 4> :
+  # DEBUG BEGIN_STMT
+  chklen_42 = chksum_len_25;
+  # DEBUG chklen => chklen_42
+
+  <bb 5> :
+  # chklen_32 = PHI <chklen_41(3), chklen_42(4)>
+  # DEBUG chklen => chklen_32
+  # DEBUG BEGIN_STMT
+  _1 = q_29->payload;
+  _2 = (int) chklen_32;
+  _44 = lwip_standard_chksum (_1, _2);
+  _3 = (long unsigned int) _44;
+  acc_45 = acc_27 + _3;
+  # DEBUG acc => acc_45
+  # DEBUG BEGIN_STMT
+  chksum_len_46 = chksum_len_25 - chklen_32;
+  # DEBUG chksum_len => chksum_len_46
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  if (chksum_len_46 > 32766)
+    goto <bb 6>; [INV]
+  else
+    goto <bb 7>; [INV]
+
+  <bb 6> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  __asm__ __volatile__("BKPT #0
+	");
+  # DEBUG BEGIN_STMT
+  goto <bb 6>; [INV]
+
+  <bb 7> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _4 = acc_45 >> 16;
+  _5 = acc_45 & 65535;
+  acc_47 = _4 + _5;
+  # DEBUG acc => acc_47
+  # DEBUG BEGIN_STMT
+  _6 = q_29->len;
+  _7 = _6 & 1;
+  if (_7 != 0)
+    goto <bb 8>; [INV]
+  else
+    goto <bb 9>; [INV]
+
+  <bb 8> :
+  # DEBUG BEGIN_STMT
+  _8 = swapped_31 == 0;
+  swapped_48 = (int) _8;
+  # DEBUG swapped => swapped_48
+  # DEBUG BEGIN_STMT
+  _9 = acc_47 << 8;
+  _10 = _9 & 65535;
+  _11 = acc_47 >> 8;
+  _12 = _11 & 255;
+  acc_49 = _10 | _12;
+  # DEBUG acc => acc_49
+
+  <bb 9> :
+  # acc_26 = PHI <acc_47(7), acc_49(8)>
+  # swapped_30 = PHI <swapped_31(7), swapped_48(8)>
+  # DEBUG swapped => swapped_30
+  # DEBUG acc => acc_26
+  # DEBUG BEGIN_STMT
+  q_50 = q_29->next;
+  # DEBUG q => q_50
+
+  <bb 10> :
+  # chksum_len_25 = PHI <chksum_len_38(D)(2), chksum_len_46(9)>
+  # acc_27 = PHI <acc_39(D)(2), acc_26(9)>
+  # q_29 = PHI <q_37(2), q_50(9)>
+  # swapped_31 = PHI <swapped_35(2), swapped_30(9)>
+  # DEBUG swapped => swapped_31
+  # DEBUG q => q_29
+  # DEBUG acc => acc_27
+  # DEBUG chksum_len => chksum_len_25
+  # DEBUG BEGIN_STMT
+  if (q_29 != 0B)
+    goto <bb 11>; [INV]
+  else
+    goto <bb 12>; [INV]
+
+  <bb 11> :
+  if (chksum_len_25 != 0)
+    goto <bb 3>; [INV]
+  else
+    goto <bb 12>; [INV]
+
+  <bb 12> :
+  # DEBUG BEGIN_STMT
+  if (swapped_31 != 0)
+    goto <bb 13>; [INV]
+  else
+    goto <bb 14>; [INV]
+
+  <bb 13> :
+  # DEBUG BEGIN_STMT
+  _13 = acc_27 << 8;
+  _14 = _13 & 65535;
+  _15 = acc_27 >> 8;
+  _16 = _15 & 255;
+  acc_52 = _14 | _16;
+  # DEBUG acc => acc_52
+
+  <bb 14> :
+  # acc_28 = PHI <acc_27(12), acc_52(13)>
+  # DEBUG acc => acc_28
+  # DEBUG BEGIN_STMT
+  _17 = (short unsigned int) proto_53(D);
+  _18 = lwip_htons (_17);
+  _55 = (long unsigned int) _18;
+  acc_56 = _55 + acc_28;
+  # DEBUG acc => acc_56
+  # DEBUG BEGIN_STMT
+  _19 = lwip_htons (proto_len_57(D));
+  _59 = (long unsigned int) _19;
+  acc_60 = _59 + acc_56;
+  # DEBUG acc => acc_60
+  # DEBUG BEGIN_STMT
+  _20 = acc_60 >> 16;
+  _21 = acc_60 & 65535;
+  acc_61 = _20 + _21;
+  # DEBUG acc => acc_61
+  # DEBUG BEGIN_STMT
+  _22 = acc_61 >> 16;
+  _23 = acc_61 & 65535;
+  acc_62 = _22 + _23;
+  # DEBUG acc => acc_62
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _24 = (short unsigned int) acc_62;
+  _63 = ~_24;
+  return _63;
+
+}
+
+
+ip_chksum_pseudo (struct pbuf * p, u8_t proto, u16_t proto_len, const struct ip_addr_t * src, const struct ip_addr_t * dest)
+{
+  unsigned char _1;
+  const struct ip6_addr_t * _2;
+  const struct ip6_addr_t * _3;
+  const struct ip4_addr_t * _4;
+  const struct ip4_addr_t * _5;
+  u16_t _6;
+  u16_t _15;
+  u16_t _17;
+
+  <bb 2> :
+  # DEBUG BEGIN_STMT
+  if (dest_8(D) != 0B)
+    goto <bb 3>; [INV]
+  else
+    goto <bb 5>; [INV]
+
+  <bb 3> :
+  _1 = dest_8(D)->type;
+  if (_1 == 6)
+    goto <bb 4>; [INV]
+  else
+    goto <bb 5>; [INV]
+
+  <bb 4> :
+  # DEBUG BEGIN_STMT
+  _2 = &src_10(D)->u_addr.ip6;
+  _3 = &dest_8(D)->u_addr.ip6;
+  _15 = ip6_chksum_pseudo (p_11(D), proto_12(D), proto_len_13(D), _2, _3);
+  // predicted unlikely by early return (on trees) predictor.
+  goto <bb 6>; [INV]
+
+  <bb 5> :
+  # DEBUG BEGIN_STMT
+  _4 = &src_10(D)->u_addr.ip4;
+  _5 = &dest_8(D)->u_addr.ip4;
+  _17 = inet_chksum_pseudo (p_11(D), proto_12(D), proto_len_13(D), _4, _5);
+  // predicted unlikely by early return (on trees) predictor.
+
+  <bb 6> :
+  # _6 = PHI <_15(4), _17(5)>
+  return _6;
+
+}
+
+
+ip6_chksum_pseudo (struct pbuf * p, u8_t proto, u16_t proto_len, const struct ip6_addr_t * src, const struct ip6_addr_t * dest)
+{
+  u8_t addr_part;
+  u32_t addr;
+  u32_t acc;
+  int _1;
+  long unsigned int _2;
+  long unsigned int _3;
+  int _4;
+  long unsigned int _5;
+  long unsigned int _6;
+  unsigned char addr_part.5_7;
+  long unsigned int _8;
+  long unsigned int _9;
+  long unsigned int _10;
+  long unsigned int _11;
+  u16_t _23;
+
+  <bb 2> :
+  # DEBUG BEGIN_STMT
+  acc_14 = 0;
+  # DEBUG acc => acc_14
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  addr_part_15 = 0;
+  # DEBUG addr_part => addr_part_15
+  goto <bb 4>; [INV]
+
+  <bb 3> :
+  # DEBUG BEGIN_STMT
+  _1 = (int) addr_part_13;
+  addr_25 = src_24(D)->addr[_1];
+  # DEBUG addr => addr_25
+  # DEBUG BEGIN_STMT
+  _2 = addr_25 & 65535;
+  acc_26 = acc_12 + _2;
+  # DEBUG acc => acc_26
+  # DEBUG BEGIN_STMT
+  _3 = addr_25 >> 16;
+  acc_27 = acc_26 + _3;
+  # DEBUG acc => acc_27
+  # DEBUG BEGIN_STMT
+  _4 = (int) addr_part_13;
+  addr_29 = dest_28(D)->addr[_4];
+  # DEBUG addr => addr_29
+  # DEBUG BEGIN_STMT
+  _5 = addr_29 & 65535;
+  acc_30 = acc_27 + _5;
+  # DEBUG acc => acc_30
+  # DEBUG BEGIN_STMT
+  _6 = addr_29 >> 16;
+  acc_31 = acc_30 + _6;
+  # DEBUG acc => acc_31
+  # DEBUG BEGIN_STMT
+  addr_part.5_7 = addr_part_13;
+  addr_part_32 = addr_part.5_7 + 1;
+  # DEBUG addr_part => addr_part_32
+
+  <bb 4> :
+  # acc_12 = PHI <acc_14(2), acc_31(3)>
+  # addr_part_13 = PHI <addr_part_15(2), addr_part_32(3)>
+  # DEBUG addr_part => addr_part_13
+  # DEBUG acc => acc_12
+  # DEBUG BEGIN_STMT
+  if (addr_part_13 <= 3)
+    goto <bb 3>; [INV]
+  else
+    goto <bb 5>; [INV]
+
+  <bb 5> :
+  # DEBUG BEGIN_STMT
+  _8 = acc_12 >> 16;
+  _9 = acc_12 & 65535;
+  acc_16 = _8 + _9;
+  # DEBUG acc => acc_16
+  # DEBUG BEGIN_STMT
+  _10 = acc_16 >> 16;
+  _11 = acc_16 & 65535;
+  acc_17 = _10 + _11;
+  # DEBUG acc => acc_17
+  # DEBUG BEGIN_STMT
+  _23 = inet_cksum_pseudo_base (p_19(D), proto_20(D), proto_len_21(D), acc_17);
+  return _23;
+
+}
+
+
+inet_chksum_pseudo (struct pbuf * p, u8_t proto, u16_t proto_len, const struct ip4_addr_t * src, const struct ip4_addr_t * dest)
+{
+  u32_t addr;
+  u32_t acc;
+  long unsigned int _1;
+  long unsigned int _2;
+  long unsigned int _3;
+  long unsigned int _4;
+  long unsigned int _5;
+  long unsigned int _6;
+  long unsigned int _7;
+  u16_t _23;
+
+  <bb 2> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  addr_10 = src_9(D)->addr;
+  # DEBUG addr => addr_10
+  # DEBUG BEGIN_STMT
+  acc_11 = addr_10 & 65535;
+  # DEBUG acc => acc_11
+  # DEBUG BEGIN_STMT
+  _1 = addr_10 >> 16;
+  acc_12 = acc_11 + _1;
+  # DEBUG acc => acc_12
+  # DEBUG BEGIN_STMT
+  addr_14 = dest_13(D)->addr;
+  # DEBUG addr => addr_14
+  # DEBUG BEGIN_STMT
+  _2 = addr_14 & 65535;
+  acc_15 = acc_12 + _2;
+  # DEBUG acc => acc_15
+  # DEBUG BEGIN_STMT
+  _3 = addr_14 >> 16;
+  acc_16 = acc_15 + _3;
+  # DEBUG acc => acc_16
+  # DEBUG BEGIN_STMT
+  _4 = acc_16 >> 16;
+  _5 = acc_16 & 65535;
+  acc_17 = _4 + _5;
+  # DEBUG acc => acc_17
+  # DEBUG BEGIN_STMT
+  _6 = acc_17 >> 16;
+  _7 = acc_17 & 65535;
+  acc_18 = _6 + _7;
+  # DEBUG acc => acc_18
+  # DEBUG BEGIN_STMT
+  _23 = inet_cksum_pseudo_base (p_19(D), proto_20(D), proto_len_21(D), acc_18);
+  return _23;
+
+}
+
+
+inet_cksum_pseudo_base (struct pbuf * p, u8_t proto, u16_t proto_len, u32_t acc)
+{
+  int swapped;
+  struct pbuf * q;
+  void * _1;
+  short unsigned int _2;
+  int _3;
+  long unsigned int _4;
+  long unsigned int _5;
+  long unsigned int _6;
+  short unsigned int _7;
+  short unsigned int _8;
+  _Bool _9;
+  long unsigned int _10;
+  long unsigned int _11;
+  long unsigned int _12;
+  long unsigned int _13;
+  long unsigned int _14;
+  long unsigned int _15;
+  long unsigned int _16;
+  long unsigned int _17;
+  short unsigned int _18;
+  short unsigned int _19;
+  short unsigned int _20;
+  long unsigned int _21;
+  long unsigned int _22;
+  long unsigned int _23;
+  long unsigned int _24;
+  short unsigned int _25;
+  long unsigned int _41;
+  long unsigned int _45;
+  u16_t _49;
+  short unsigned int _51;
+
+  <bb 2> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  swapped_33 = 0;
+  # DEBUG swapped => swapped_33
+  # DEBUG BEGIN_STMT
+  q_35 = p_34(D);
+  # DEBUG q => q_35
+  goto <bb 6>; [INV]
+
+  <bb 3> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _1 = q_29->payload;
+  _2 = q_29->len;
+  _3 = (int) _2;
+  _51 = lwip_standard_chksum (_1, _3);
+  _4 = (long unsigned int) _51;
+  acc_52 = acc_27 + _4;
+  # DEBUG acc => acc_52
+  # DEBUG BEGIN_STMT
+  _5 = acc_52 >> 16;
+  _6 = acc_52 & 65535;
+  acc_53 = _5 + _6;
+  # DEBUG acc => acc_53
+  # DEBUG BEGIN_STMT
+  _7 = q_29->len;
+  _8 = _7 & 1;
+  if (_8 != 0)
+    goto <bb 4>; [INV]
+  else
+    goto <bb 5>; [INV]
+
+  <bb 4> :
+  # DEBUG BEGIN_STMT
+  _9 = swapped_31 == 0;
+  swapped_54 = (int) _9;
+  # DEBUG swapped => swapped_54
+  # DEBUG BEGIN_STMT
+  _10 = acc_53 << 8;
+  _11 = _10 & 65535;
+  _12 = acc_53 >> 8;
+  _13 = _12 & 255;
+  acc_55 = _11 | _13;
+  # DEBUG acc => acc_55
+
+  <bb 5> :
+  # acc_26 = PHI <acc_53(3), acc_55(4)>
+  # swapped_30 = PHI <swapped_31(3), swapped_54(4)>
+  # DEBUG swapped => swapped_30
+  # DEBUG acc => acc_26
+  # DEBUG BEGIN_STMT
+  q_56 = q_29->next;
+  # DEBUG q => q_56
+
+  <bb 6> :
+  # acc_27 = PHI <acc_36(D)(2), acc_26(5)>
+  # q_29 = PHI <q_35(2), q_56(5)>
+  # swapped_31 = PHI <swapped_33(2), swapped_30(5)>
+  # DEBUG swapped => swapped_31
+  # DEBUG q => q_29
+  # DEBUG acc => acc_27
+  # DEBUG BEGIN_STMT
+  if (q_29 != 0B)
+    goto <bb 3>; [INV]
+  else
+    goto <bb 7>; [INV]
+
+  <bb 7> :
+  # DEBUG BEGIN_STMT
+  if (swapped_31 != 0)
+    goto <bb 8>; [INV]
+  else
+    goto <bb 9>; [INV]
+
+  <bb 8> :
+  # DEBUG BEGIN_STMT
+  _14 = acc_27 << 8;
+  _15 = _14 & 65535;
+  _16 = acc_27 >> 8;
+  _17 = _16 & 255;
+  acc_38 = _15 | _17;
+  # DEBUG acc => acc_38
+
+  <bb 9> :
+  # acc_28 = PHI <acc_27(7), acc_38(8)>
+  # DEBUG acc => acc_28
+  # DEBUG BEGIN_STMT
+  _18 = (short unsigned int) proto_39(D);
+  _19 = lwip_htons (_18);
+  _41 = (long unsigned int) _19;
+  acc_42 = _41 + acc_28;
+  # DEBUG acc => acc_42
+  # DEBUG BEGIN_STMT
+  _20 = lwip_htons (proto_len_43(D));
+  _45 = (long unsigned int) _20;
+  acc_46 = _45 + acc_42;
+  # DEBUG acc => acc_46
+  # DEBUG BEGIN_STMT
+  _21 = acc_46 >> 16;
+  _22 = acc_46 & 65535;
+  acc_47 = _21 + _22;
+  # DEBUG acc => acc_47
+  # DEBUG BEGIN_STMT
+  _23 = acc_47 >> 16;
+  _24 = acc_47 & 65535;
+  acc_48 = _23 + _24;
+  # DEBUG acc => acc_48
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _25 = (short unsigned int) acc_48;
+  _49 = ~_25;
+  return _49;
+
+}
+
+
+lwip_standard_chksum (const void * dataptr, int len)
+{
+  int odd;
+  u32_t sum;
+  u16_t t;
+  const u16_t * ps;
+  const u8_t * pb;
+  int pb.0_1;
+  const u8_t * pb.1_2;
+  u8_t * _3;
+  unsigned char _4;
+  const u16_t * ps.2_5;
+  long unsigned int _6;
+  u16_t * t.3_7;
+  unsigned char _8;
+  short unsigned int t.4_9;
+  long unsigned int _10;
+  long unsigned int _11;
+  long unsigned int _12;
+  long unsigned int _13;
+  long unsigned int _14;
+  long unsigned int _15;
+  long unsigned int _16;
+  long unsigned int _17;
+  long unsigned int _18;
+  u16_t _43;
+  short unsigned int _46;
+
+  <bb 2> :
+  # DEBUG BEGIN_STMT
+  pb_28 = dataptr_27(D);
+  # DEBUG pb => pb_28
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  t = 0;
+  # DEBUG BEGIN_STMT
+  sum_31 = 0;
+  # DEBUG sum => sum_31
+  # DEBUG BEGIN_STMT
+  pb.0_1 = (int) pb_28;
+  odd_32 = pb.0_1 & 1;
+  # DEBUG odd => odd_32
+  # DEBUG BEGIN_STMT
+  if (odd_32 != 0)
+    goto <bb 3>; [INV]
+  else
+    goto <bb 5>; [INV]
+
+  <bb 3> :
+  if (len_33(D) > 0)
+    goto <bb 4>; [INV]
+  else
+    goto <bb 5>; [INV]
+
+  <bb 4> :
+  # DEBUG BEGIN_STMT
+  pb.1_2 = pb_28;
+  pb_34 = pb.1_2 + 1;
+  # DEBUG pb => pb_34
+  _3 = &t + 1;
+  _4 = *pb.1_2;
+  *_3 = _4;
+  # DEBUG BEGIN_STMT
+  len_36 = len_33(D) + -1;
+  # DEBUG len => len_36
+
+  <bb 5> :
+  # len_19 = PHI <len_33(D)(2), len_33(D)(3), len_36(4)>
+  # pb_21 = PHI <pb_28(2), pb_28(3), pb_34(4)>
+  # DEBUG pb => pb_21
+  # DEBUG len => len_19
+  # DEBUG BEGIN_STMT
+  ps_37 = pb_21;
+  # DEBUG ps => ps_37
+  # DEBUG BEGIN_STMT
+  goto <bb 7>; [INV]
+
+  <bb 6> :
+  # DEBUG BEGIN_STMT
+  ps.2_5 = ps_22;
+  ps_45 = ps.2_5 + 2;
+  # DEBUG ps => ps_45
+  _46 = *ps.2_5;
+  _6 = (long unsigned int) _46;
+  sum_47 = sum_23 + _6;
+  # DEBUG sum => sum_47
+  # DEBUG BEGIN_STMT
+  len_48 = len_20 + -2;
+  # DEBUG len => len_48
+
+  <bb 7> :
+  # len_20 = PHI <len_19(5), len_48(6)>
+  # ps_22 = PHI <ps_37(5), ps_45(6)>
+  # sum_23 = PHI <sum_31(5), sum_47(6)>
+  # DEBUG sum => sum_23
+  # DEBUG ps => ps_22
+  # DEBUG len => len_20
+  # DEBUG BEGIN_STMT
+  if (len_20 > 1)
+    goto <bb 6>; [INV]
+  else
+    goto <bb 8>; [INV]
+
+  <bb 8> :
+  # DEBUG BEGIN_STMT
+  if (len_20 > 0)
+    goto <bb 9>; [INV]
+  else
+    goto <bb 10>; [INV]
+
+  <bb 9> :
+  # DEBUG BEGIN_STMT
+  t.3_7 = &t;
+  _8 = MEM[(const u8_t *)ps_22];
+  MEM[(u8_t *)t.3_7] = _8;
+
+  <bb 10> :
+  # DEBUG BEGIN_STMT
+  t.4_9 = t;
+  _10 = (long unsigned int) t.4_9;
+  sum_39 = sum_23 + _10;
+  # DEBUG sum => sum_39
+  # DEBUG BEGIN_STMT
+  _11 = sum_39 >> 16;
+  _12 = sum_39 & 65535;
+  sum_40 = _11 + _12;
+  # DEBUG sum => sum_40
+  # DEBUG BEGIN_STMT
+  _13 = sum_40 >> 16;
+  _14 = sum_40 & 65535;
+  sum_41 = _13 + _14;
+  # DEBUG sum => sum_41
+  # DEBUG BEGIN_STMT
+  if (odd_32 != 0)
+    goto <bb 11>; [INV]
+  else
+    goto <bb 12>; [INV]
+
+  <bb 11> :
+  # DEBUG BEGIN_STMT
+  _15 = sum_41 << 8;
+  _16 = _15 & 65535;
+  _17 = sum_41 >> 8;
+  _18 = _17 & 255;
+  sum_42 = _16 | _18;
+  # DEBUG sum => sum_42
+
+  <bb 12> :
+  # sum_24 = PHI <sum_41(10), sum_42(11)>
+  # DEBUG sum => sum_24
+  # DEBUG BEGIN_STMT
+  _43 = (u16_t) sum_24;
+  t ={v} {CLOBBER};
+  return _43;
+
+}
+
+

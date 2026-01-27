@@ -1,0 +1,860 @@
+
+Marking local functions: inet_cksum_pseudo_partial_base inet_cksum_pseudo_base
+
+
+Marking externally visible functions: inet_chksum_pbuf inet_chksum ip_chksum_pseudo_partial ip6_chksum_pseudo_partial inet_chksum_pseudo_partial ip_chksum_pseudo ip6_chksum_pseudo inet_chksum_pseudo lwip_standard_chksum
+
+
+Marking externally visible variables:
+
+
+Reclaiming functions:
+Reclaiming variables:
+Clearing address taken flags:
+Symbol table:
+
+lwip_htons/12 (lwip_htons) @0619e7e0
+  Type: function
+  Visibility: external public
+  References: 
+  Referring: 
+  Availability: not_available
+  Function flags: optimize_size
+  Called by: inet_cksum_pseudo_partial_base/6 inet_cksum_pseudo_partial_base/6 inet_cksum_pseudo_base/2 inet_cksum_pseudo_base/2 
+  Calls: 
+inet_chksum_pbuf/11 (inet_chksum_pbuf) @0619e1c0
+  Type: function definition analyzed
+  Visibility: externally_visible public
+  References: 
+  Referring: 
+  Availability: available
+  Function flags: body optimize_size
+  Called by: 
+  Calls: lwip_standard_chksum/1 
+inet_chksum/10 (inet_chksum) @06198700
+  Type: function definition analyzed
+  Visibility: externally_visible public
+  References: 
+  Referring: 
+  Availability: available
+  Function flags: body optimize_size
+  Called by: 
+  Calls: lwip_standard_chksum/1 
+ip_chksum_pseudo_partial/9 (ip_chksum_pseudo_partial) @06198e00
+  Type: function definition analyzed
+  Visibility: externally_visible public
+  References: 
+  Referring: 
+  Availability: available
+  Function flags: body optimize_size
+  Called by: 
+  Calls: inet_chksum_pseudo_partial/7 ip6_chksum_pseudo_partial/8 
+ip6_chksum_pseudo_partial/8 (ip6_chksum_pseudo_partial) @06198a80
+  Type: function definition analyzed
+  Visibility: externally_visible public
+  References: 
+  Referring: 
+  Availability: available
+  Function flags: body optimize_size
+  Called by: ip_chksum_pseudo_partial/9 
+  Calls: inet_cksum_pseudo_partial_base/6 
+inet_chksum_pseudo_partial/7 (inet_chksum_pseudo_partial) @06198620
+  Type: function definition analyzed
+  Visibility: externally_visible public
+  References: 
+  Referring: 
+  Availability: available
+  Function flags: body optimize_size
+  Called by: ip_chksum_pseudo_partial/9 
+  Calls: inet_cksum_pseudo_partial_base/6 
+inet_cksum_pseudo_partial_base/6 (inet_cksum_pseudo_partial_base) @061981c0
+  Type: function definition analyzed
+  Visibility: prevailing_def_ironly
+  References: 
+  Referring: 
+  Availability: local
+  Function flags: body local optimize_size
+  Called by: ip6_chksum_pseudo_partial/8 inet_chksum_pseudo_partial/7 
+  Calls: lwip_htons/12 lwip_htons/12 lwip_standard_chksum/1 
+ip_chksum_pseudo/5 (ip_chksum_pseudo) @0618dc40
+  Type: function definition analyzed
+  Visibility: externally_visible public
+  References: 
+  Referring: 
+  Availability: available
+  Function flags: body optimize_size
+  Called by: 
+  Calls: inet_chksum_pseudo/3 ip6_chksum_pseudo/4 
+ip6_chksum_pseudo/4 (ip6_chksum_pseudo) @0618d8c0
+  Type: function definition analyzed
+  Visibility: externally_visible public
+  References: 
+  Referring: 
+  Availability: available
+  Function flags: body optimize_size
+  Called by: ip_chksum_pseudo/5 
+  Calls: inet_cksum_pseudo_base/2 
+inet_chksum_pseudo/3 (inet_chksum_pseudo) @0618d460
+  Type: function definition analyzed
+  Visibility: externally_visible public
+  References: 
+  Referring: 
+  Availability: available
+  Function flags: body optimize_size
+  Called by: ip_chksum_pseudo/5 
+  Calls: inet_cksum_pseudo_base/2 
+inet_cksum_pseudo_base/2 (inet_cksum_pseudo_base) @0618d000
+  Type: function definition analyzed
+  Visibility: prevailing_def_ironly
+  References: 
+  Referring: 
+  Availability: local
+  Function flags: body local optimize_size
+  Called by: ip6_chksum_pseudo/4 inet_chksum_pseudo/3 
+  Calls: lwip_htons/12 lwip_htons/12 lwip_standard_chksum/1 
+lwip_standard_chksum/1 (lwip_standard_chksum) @061849a0
+  Type: function definition analyzed
+  Visibility: externally_visible public
+  References: 
+  Referring: 
+  Availability: available
+  Function flags: body optimize_size
+  Called by: inet_chksum_pbuf/11 inet_chksum/10 inet_cksum_pseudo_partial_base/6 inet_cksum_pseudo_base/2 
+  Calls: 
+inet_chksum_pbuf (struct pbuf * p)
+{
+  int swapped;
+  struct pbuf * q;
+  u32_t acc;
+  u16_t D.6766;
+  short unsigned int D.6761;
+
+  <bb 2> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  swapped = 0;
+  # DEBUG BEGIN_STMT
+  acc = 0;
+  # DEBUG BEGIN_STMT
+  q = p;
+  goto <bb 6>; [INV]
+
+  <bb 3> :
+  # DEBUG BEGIN_STMT
+  _1 = q->payload;
+  _2 = q->len;
+  _3 = (int) _2;
+  D.6761 = lwip_standard_chksum (_1, _3);
+  _4 = (long unsigned int) D.6761;
+  acc = acc + _4;
+  # DEBUG BEGIN_STMT
+  _5 = acc >> 16;
+  _6 = acc & 65535;
+  acc = _5 + _6;
+  # DEBUG BEGIN_STMT
+  _7 = q->len;
+  _8 = _7 & 1;
+  if (_8 != 0)
+    goto <bb 4>; [INV]
+  else
+    goto <bb 5>; [INV]
+
+  <bb 4> :
+  # DEBUG BEGIN_STMT
+  _9 = swapped == 0;
+  swapped = (int) _9;
+  # DEBUG BEGIN_STMT
+  _10 = acc << 8;
+  _11 = _10 & 65535;
+  _12 = acc >> 8;
+  _13 = _12 & 255;
+  acc = _11 | _13;
+
+  <bb 5> :
+  # DEBUG BEGIN_STMT
+  q = q->next;
+
+  <bb 6> :
+  # DEBUG BEGIN_STMT
+  if (q != 0B)
+    goto <bb 3>; [INV]
+  else
+    goto <bb 7>; [INV]
+
+  <bb 7> :
+  # DEBUG BEGIN_STMT
+  if (swapped != 0)
+    goto <bb 8>; [INV]
+  else
+    goto <bb 9>; [INV]
+
+  <bb 8> :
+  # DEBUG BEGIN_STMT
+  _14 = acc << 8;
+  _15 = _14 & 65535;
+  _16 = acc >> 8;
+  _17 = _16 & 255;
+  acc = _15 | _17;
+
+  <bb 9> :
+  # DEBUG BEGIN_STMT
+  _18 = (short unsigned int) acc;
+  D.6766 = ~_18;
+  return D.6766;
+
+}
+
+
+inet_chksum (const void * dataptr, u16_t len)
+{
+  u16_t D.6759;
+
+  <bb 2> :
+  # DEBUG BEGIN_STMT
+  _1 = (int) len;
+  _2 = lwip_standard_chksum (dataptr, _1);
+  D.6759 = ~_2;
+  return D.6759;
+
+}
+
+
+ip_chksum_pseudo_partial (struct pbuf * p, u8_t proto, u16_t proto_len, u16_t chksum_len, const struct ip_addr_t * src, const struct ip_addr_t * dest)
+{
+  u16_t D.6757;
+
+  <bb 2> :
+  # DEBUG BEGIN_STMT
+  if (dest != 0B)
+    goto <bb 3>; [INV]
+  else
+    goto <bb 5>; [INV]
+
+  <bb 3> :
+  _1 = dest->type;
+  if (_1 == 6)
+    goto <bb 4>; [INV]
+  else
+    goto <bb 5>; [INV]
+
+  <bb 4> :
+  # DEBUG BEGIN_STMT
+  _2 = &src->u_addr.ip6;
+  _3 = &dest->u_addr.ip6;
+  D.6757 = ip6_chksum_pseudo_partial (p, proto, proto_len, chksum_len, _2, _3);
+  // predicted unlikely by early return (on trees) predictor.
+  goto <bb 6>; [INV]
+
+  <bb 5> :
+  # DEBUG BEGIN_STMT
+  _4 = &src->u_addr.ip4;
+  _5 = &dest->u_addr.ip4;
+  D.6757 = inet_chksum_pseudo_partial (p, proto, proto_len, chksum_len, _4, _5);
+  // predicted unlikely by early return (on trees) predictor.
+
+  <bb 6> :
+  return D.6757;
+
+}
+
+
+ip6_chksum_pseudo_partial (struct pbuf * p, u8_t proto, u16_t proto_len, u16_t chksum_len, const struct ip6_addr_t * src, const struct ip6_addr_t * dest)
+{
+  u8_t addr_part;
+  u32_t addr;
+  u32_t acc;
+  u16_t D.6752;
+
+  <bb 2> :
+  # DEBUG BEGIN_STMT
+  acc = 0;
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  addr_part = 0;
+  goto <bb 4>; [INV]
+
+  <bb 3> :
+  # DEBUG BEGIN_STMT
+  _1 = (int) addr_part;
+  addr = src->addr[_1];
+  # DEBUG BEGIN_STMT
+  _2 = addr & 65535;
+  acc = acc + _2;
+  # DEBUG BEGIN_STMT
+  _3 = addr >> 16;
+  acc = acc + _3;
+  # DEBUG BEGIN_STMT
+  _4 = (int) addr_part;
+  addr = dest->addr[_4];
+  # DEBUG BEGIN_STMT
+  _5 = addr & 65535;
+  acc = acc + _5;
+  # DEBUG BEGIN_STMT
+  _6 = addr >> 16;
+  acc = acc + _6;
+  # DEBUG BEGIN_STMT
+  addr_part.6_7 = addr_part;
+  addr_part = addr_part.6_7 + 1;
+
+  <bb 4> :
+  # DEBUG BEGIN_STMT
+  if (addr_part <= 3)
+    goto <bb 3>; [INV]
+  else
+    goto <bb 5>; [INV]
+
+  <bb 5> :
+  # DEBUG BEGIN_STMT
+  _8 = acc >> 16;
+  _9 = acc & 65535;
+  acc = _8 + _9;
+  # DEBUG BEGIN_STMT
+  _10 = acc >> 16;
+  _11 = acc & 65535;
+  acc = _10 + _11;
+  # DEBUG BEGIN_STMT
+  D.6752 = inet_cksum_pseudo_partial_base (p, proto, proto_len, chksum_len, acc);
+  return D.6752;
+
+}
+
+
+inet_chksum_pseudo_partial (struct pbuf * p, u8_t proto, u16_t proto_len, u16_t chksum_len, const struct ip4_addr_t * src, const struct ip4_addr_t * dest)
+{
+  u32_t addr;
+  u32_t acc;
+  u16_t D.6736;
+
+  <bb 2> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  addr = src->addr;
+  # DEBUG BEGIN_STMT
+  acc = addr & 65535;
+  # DEBUG BEGIN_STMT
+  _1 = addr >> 16;
+  acc = acc + _1;
+  # DEBUG BEGIN_STMT
+  addr = dest->addr;
+  # DEBUG BEGIN_STMT
+  _2 = addr & 65535;
+  acc = acc + _2;
+  # DEBUG BEGIN_STMT
+  _3 = addr >> 16;
+  acc = acc + _3;
+  # DEBUG BEGIN_STMT
+  _4 = acc >> 16;
+  _5 = acc & 65535;
+  acc = _4 + _5;
+  # DEBUG BEGIN_STMT
+  _6 = acc >> 16;
+  _7 = acc & 65535;
+  acc = _6 + _7;
+  # DEBUG BEGIN_STMT
+  D.6736 = inet_cksum_pseudo_partial_base (p, proto, proto_len, chksum_len, acc);
+  return D.6736;
+
+}
+
+
+inet_cksum_pseudo_partial_base (struct pbuf * p, u8_t proto, u16_t proto_len, u16_t chksum_len, u32_t acc)
+{
+  u16_t chklen;
+  int swapped;
+  struct pbuf * q;
+  u16_t D.6750;
+  long unsigned int D.6749;
+  long unsigned int D.6748;
+  short unsigned int D.6740;
+
+  <bb 2> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  swapped = 0;
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  q = p;
+  goto <bb 10>; [INV]
+
+  <bb 3> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  chklen = q->len;
+  # DEBUG BEGIN_STMT
+  if (chklen > chksum_len)
+    goto <bb 4>; [INV]
+  else
+    goto <bb 5>; [INV]
+
+  <bb 4> :
+  # DEBUG BEGIN_STMT
+  chklen = chksum_len;
+
+  <bb 5> :
+  # DEBUG BEGIN_STMT
+  _1 = q->payload;
+  _2 = (int) chklen;
+  D.6740 = lwip_standard_chksum (_1, _2);
+  _3 = (long unsigned int) D.6740;
+  acc = acc + _3;
+  # DEBUG BEGIN_STMT
+  chksum_len = chksum_len - chklen;
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  if (chksum_len > 32766)
+    goto <bb 6>; [INV]
+  else
+    goto <bb 7>; [INV]
+
+  <bb 6> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  __asm__ __volatile__("BKPT #0
+	");
+  # DEBUG BEGIN_STMT
+  goto <bb 6>; [INV]
+
+  <bb 7> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _4 = acc >> 16;
+  _5 = acc & 65535;
+  acc = _4 + _5;
+  # DEBUG BEGIN_STMT
+  _6 = q->len;
+  _7 = _6 & 1;
+  if (_7 != 0)
+    goto <bb 8>; [INV]
+  else
+    goto <bb 9>; [INV]
+
+  <bb 8> :
+  # DEBUG BEGIN_STMT
+  _8 = swapped == 0;
+  swapped = (int) _8;
+  # DEBUG BEGIN_STMT
+  _9 = acc << 8;
+  _10 = _9 & 65535;
+  _11 = acc >> 8;
+  _12 = _11 & 255;
+  acc = _10 | _12;
+
+  <bb 9> :
+  # DEBUG BEGIN_STMT
+  q = q->next;
+
+  <bb 10> :
+  # DEBUG BEGIN_STMT
+  if (q != 0B)
+    goto <bb 11>; [INV]
+  else
+    goto <bb 12>; [INV]
+
+  <bb 11> :
+  if (chksum_len != 0)
+    goto <bb 3>; [INV]
+  else
+    goto <bb 12>; [INV]
+
+  <bb 12> :
+  # DEBUG BEGIN_STMT
+  if (swapped != 0)
+    goto <bb 13>; [INV]
+  else
+    goto <bb 14>; [INV]
+
+  <bb 13> :
+  # DEBUG BEGIN_STMT
+  _13 = acc << 8;
+  _14 = _13 & 65535;
+  _15 = acc >> 8;
+  _16 = _15 & 255;
+  acc = _14 | _16;
+
+  <bb 14> :
+  # DEBUG BEGIN_STMT
+  _17 = (short unsigned int) proto;
+  _18 = lwip_htons (_17);
+  D.6748 = (long unsigned int) _18;
+  acc = D.6748 + acc;
+  # DEBUG BEGIN_STMT
+  _19 = lwip_htons (proto_len);
+  D.6749 = (long unsigned int) _19;
+  acc = D.6749 + acc;
+  # DEBUG BEGIN_STMT
+  _20 = acc >> 16;
+  _21 = acc & 65535;
+  acc = _20 + _21;
+  # DEBUG BEGIN_STMT
+  _22 = acc >> 16;
+  _23 = acc & 65535;
+  acc = _22 + _23;
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _24 = (short unsigned int) acc;
+  D.6750 = ~_24;
+  return D.6750;
+
+}
+
+
+ip_chksum_pseudo (struct pbuf * p, u8_t proto, u16_t proto_len, const struct ip_addr_t * src, const struct ip_addr_t * dest)
+{
+  u16_t D.6734;
+
+  <bb 2> :
+  # DEBUG BEGIN_STMT
+  if (dest != 0B)
+    goto <bb 3>; [INV]
+  else
+    goto <bb 5>; [INV]
+
+  <bb 3> :
+  _1 = dest->type;
+  if (_1 == 6)
+    goto <bb 4>; [INV]
+  else
+    goto <bb 5>; [INV]
+
+  <bb 4> :
+  # DEBUG BEGIN_STMT
+  _2 = &src->u_addr.ip6;
+  _3 = &dest->u_addr.ip6;
+  D.6734 = ip6_chksum_pseudo (p, proto, proto_len, _2, _3);
+  // predicted unlikely by early return (on trees) predictor.
+  goto <bb 6>; [INV]
+
+  <bb 5> :
+  # DEBUG BEGIN_STMT
+  _4 = &src->u_addr.ip4;
+  _5 = &dest->u_addr.ip4;
+  D.6734 = inet_chksum_pseudo (p, proto, proto_len, _4, _5);
+  // predicted unlikely by early return (on trees) predictor.
+
+  <bb 6> :
+  return D.6734;
+
+}
+
+
+ip6_chksum_pseudo (struct pbuf * p, u8_t proto, u16_t proto_len, const struct ip6_addr_t * src, const struct ip6_addr_t * dest)
+{
+  u8_t addr_part;
+  u32_t addr;
+  u32_t acc;
+  u16_t D.6729;
+
+  <bb 2> :
+  # DEBUG BEGIN_STMT
+  acc = 0;
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  addr_part = 0;
+  goto <bb 4>; [INV]
+
+  <bb 3> :
+  # DEBUG BEGIN_STMT
+  _1 = (int) addr_part;
+  addr = src->addr[_1];
+  # DEBUG BEGIN_STMT
+  _2 = addr & 65535;
+  acc = acc + _2;
+  # DEBUG BEGIN_STMT
+  _3 = addr >> 16;
+  acc = acc + _3;
+  # DEBUG BEGIN_STMT
+  _4 = (int) addr_part;
+  addr = dest->addr[_4];
+  # DEBUG BEGIN_STMT
+  _5 = addr & 65535;
+  acc = acc + _5;
+  # DEBUG BEGIN_STMT
+  _6 = addr >> 16;
+  acc = acc + _6;
+  # DEBUG BEGIN_STMT
+  addr_part.5_7 = addr_part;
+  addr_part = addr_part.5_7 + 1;
+
+  <bb 4> :
+  # DEBUG BEGIN_STMT
+  if (addr_part <= 3)
+    goto <bb 3>; [INV]
+  else
+    goto <bb 5>; [INV]
+
+  <bb 5> :
+  # DEBUG BEGIN_STMT
+  _8 = acc >> 16;
+  _9 = acc & 65535;
+  acc = _8 + _9;
+  # DEBUG BEGIN_STMT
+  _10 = acc >> 16;
+  _11 = acc & 65535;
+  acc = _10 + _11;
+  # DEBUG BEGIN_STMT
+  D.6729 = inet_cksum_pseudo_base (p, proto, proto_len, acc);
+  return D.6729;
+
+}
+
+
+inet_chksum_pseudo (struct pbuf * p, u8_t proto, u16_t proto_len, const struct ip4_addr_t * src, const struct ip4_addr_t * dest)
+{
+  u32_t addr;
+  u32_t acc;
+  u16_t D.6718;
+
+  <bb 2> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  addr = src->addr;
+  # DEBUG BEGIN_STMT
+  acc = addr & 65535;
+  # DEBUG BEGIN_STMT
+  _1 = addr >> 16;
+  acc = acc + _1;
+  # DEBUG BEGIN_STMT
+  addr = dest->addr;
+  # DEBUG BEGIN_STMT
+  _2 = addr & 65535;
+  acc = acc + _2;
+  # DEBUG BEGIN_STMT
+  _3 = addr >> 16;
+  acc = acc + _3;
+  # DEBUG BEGIN_STMT
+  _4 = acc >> 16;
+  _5 = acc & 65535;
+  acc = _4 + _5;
+  # DEBUG BEGIN_STMT
+  _6 = acc >> 16;
+  _7 = acc & 65535;
+  acc = _6 + _7;
+  # DEBUG BEGIN_STMT
+  D.6718 = inet_cksum_pseudo_base (p, proto, proto_len, acc);
+  return D.6718;
+
+}
+
+
+inet_cksum_pseudo_base (struct pbuf * p, u8_t proto, u16_t proto_len, u32_t acc)
+{
+  int swapped;
+  struct pbuf * q;
+  u16_t D.6727;
+  long unsigned int D.6726;
+  long unsigned int D.6725;
+  short unsigned int D.6720;
+
+  <bb 2> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  swapped = 0;
+  # DEBUG BEGIN_STMT
+  q = p;
+  goto <bb 6>; [INV]
+
+  <bb 3> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _1 = q->payload;
+  _2 = q->len;
+  _3 = (int) _2;
+  D.6720 = lwip_standard_chksum (_1, _3);
+  _4 = (long unsigned int) D.6720;
+  acc = acc + _4;
+  # DEBUG BEGIN_STMT
+  _5 = acc >> 16;
+  _6 = acc & 65535;
+  acc = _5 + _6;
+  # DEBUG BEGIN_STMT
+  _7 = q->len;
+  _8 = _7 & 1;
+  if (_8 != 0)
+    goto <bb 4>; [INV]
+  else
+    goto <bb 5>; [INV]
+
+  <bb 4> :
+  # DEBUG BEGIN_STMT
+  _9 = swapped == 0;
+  swapped = (int) _9;
+  # DEBUG BEGIN_STMT
+  _10 = acc << 8;
+  _11 = _10 & 65535;
+  _12 = acc >> 8;
+  _13 = _12 & 255;
+  acc = _11 | _13;
+
+  <bb 5> :
+  # DEBUG BEGIN_STMT
+  q = q->next;
+
+  <bb 6> :
+  # DEBUG BEGIN_STMT
+  if (q != 0B)
+    goto <bb 3>; [INV]
+  else
+    goto <bb 7>; [INV]
+
+  <bb 7> :
+  # DEBUG BEGIN_STMT
+  if (swapped != 0)
+    goto <bb 8>; [INV]
+  else
+    goto <bb 9>; [INV]
+
+  <bb 8> :
+  # DEBUG BEGIN_STMT
+  _14 = acc << 8;
+  _15 = _14 & 65535;
+  _16 = acc >> 8;
+  _17 = _16 & 255;
+  acc = _15 | _17;
+
+  <bb 9> :
+  # DEBUG BEGIN_STMT
+  _18 = (short unsigned int) proto;
+  _19 = lwip_htons (_18);
+  D.6725 = (long unsigned int) _19;
+  acc = D.6725 + acc;
+  # DEBUG BEGIN_STMT
+  _20 = lwip_htons (proto_len);
+  D.6726 = (long unsigned int) _20;
+  acc = D.6726 + acc;
+  # DEBUG BEGIN_STMT
+  _21 = acc >> 16;
+  _22 = acc & 65535;
+  acc = _21 + _22;
+  # DEBUG BEGIN_STMT
+  _23 = acc >> 16;
+  _24 = acc & 65535;
+  acc = _23 + _24;
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _25 = (short unsigned int) acc;
+  D.6727 = ~_25;
+  return D.6727;
+
+}
+
+
+lwip_standard_chksum (const void * dataptr, int len)
+{
+  int odd;
+  u32_t sum;
+  u16_t t;
+  const u16_t * ps;
+  const u8_t * pb;
+  u16_t D.6715;
+  short unsigned int D.6710;
+
+  <bb 2> :
+  # DEBUG BEGIN_STMT
+  pb = dataptr;
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  t = 0;
+  # DEBUG BEGIN_STMT
+  sum = 0;
+  # DEBUG BEGIN_STMT
+  pb.0_1 = (int) pb;
+  odd = pb.0_1 & 1;
+  # DEBUG BEGIN_STMT
+  if (odd != 0)
+    goto <bb 3>; [INV]
+  else
+    goto <bb 5>; [INV]
+
+  <bb 3> :
+  if (len > 0)
+    goto <bb 4>; [INV]
+  else
+    goto <bb 5>; [INV]
+
+  <bb 4> :
+  # DEBUG BEGIN_STMT
+  pb.1_2 = pb;
+  pb = pb.1_2 + 1;
+  _3 = &t + 1;
+  _4 = *pb.1_2;
+  *_3 = _4;
+  # DEBUG BEGIN_STMT
+  len = len + -1;
+
+  <bb 5> :
+  # DEBUG BEGIN_STMT
+  ps = pb;
+  # DEBUG BEGIN_STMT
+  goto <bb 7>; [INV]
+
+  <bb 6> :
+  # DEBUG BEGIN_STMT
+  ps.2_5 = ps;
+  ps = ps.2_5 + 2;
+  D.6710 = *ps.2_5;
+  _6 = (long unsigned int) D.6710;
+  sum = sum + _6;
+  # DEBUG BEGIN_STMT
+  len = len + -2;
+
+  <bb 7> :
+  # DEBUG BEGIN_STMT
+  if (len > 1)
+    goto <bb 6>; [INV]
+  else
+    goto <bb 8>; [INV]
+
+  <bb 8> :
+  # DEBUG BEGIN_STMT
+  if (len > 0)
+    goto <bb 9>; [INV]
+  else
+    goto <bb 10>; [INV]
+
+  <bb 9> :
+  # DEBUG BEGIN_STMT
+  t.3_7 = &t;
+  _8 = MEM[(const u8_t *)ps];
+  MEM[(u8_t *)t.3_7] = _8;
+
+  <bb 10> :
+  # DEBUG BEGIN_STMT
+  t.4_9 = t;
+  _10 = (long unsigned int) t.4_9;
+  sum = sum + _10;
+  # DEBUG BEGIN_STMT
+  _11 = sum >> 16;
+  _12 = sum & 65535;
+  sum = _11 + _12;
+  # DEBUG BEGIN_STMT
+  _13 = sum >> 16;
+  _14 = sum & 65535;
+  sum = _13 + _14;
+  # DEBUG BEGIN_STMT
+  if (odd != 0)
+    goto <bb 11>; [INV]
+  else
+    goto <bb 12>; [INV]
+
+  <bb 11> :
+  # DEBUG BEGIN_STMT
+  _15 = sum << 8;
+  _16 = _15 & 65535;
+  _17 = sum >> 8;
+  _18 = _17 & 255;
+  sum = _16 | _18;
+
+  <bb 12> :
+  # DEBUG BEGIN_STMT
+  D.6715 = (u16_t) sum;
+  t = {CLOBBER};
+  return D.6715;
+
+}
+
+

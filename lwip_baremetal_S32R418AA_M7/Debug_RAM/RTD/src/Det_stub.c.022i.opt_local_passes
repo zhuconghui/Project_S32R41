@@ -1,0 +1,348 @@
+Det_TestNoTransientFault ()
+{
+  uint32 u32CoreId;
+  boolean result;
+  unsigned char _1;
+  <unnamed type> _2;
+  long unsigned int _3;
+  struct Det_LinkedListStateType * _4;
+  boolean _18;
+
+  <bb 2> :
+  # DEBUG BEGIN_STMT
+  result_8 = 1;
+  # DEBUG result => result_8
+  # DEBUG BEGIN_STMT
+  _1 = Sys_GetCoreID ();
+  u32CoreId_11 = (uint32) _1;
+  # DEBUG u32CoreId => u32CoreId_11
+  # DEBUG BEGIN_STMT
+  __asm__ __volatile__(" cpsid i");
+  # DEBUG BEGIN_STMT
+  _2 = Det_ModuleState[u32CoreId_11];
+  if (_2 == 0)
+    goto <bb 3>; [INV]
+  else
+    goto <bb 4>; [INV]
+
+  <bb 3> :
+  # DEBUG BEGIN_STMT
+  Det_Init ();
+  goto <bb 7>; [INV]
+
+  <bb 4> :
+  # DEBUG BEGIN_STMT
+  _3 = Det_numTransientEventErrors[u32CoreId_11];
+  if (_3 != 0)
+    goto <bb 5>; [INV]
+  else
+    goto <bb 6>; [INV]
+
+  <bb 5> :
+  # DEBUG BEGIN_STMT
+  result_13 = 0;
+  # DEBUG result => result_13
+
+  <bb 6> :
+  # result_5 = PHI <result_8(4), result_13(5)>
+  # DEBUG result => result_5
+  # DEBUG BEGIN_STMT
+  Det_numTransientEventErrors[u32CoreId_11] = 0;
+  # DEBUG BEGIN_STMT
+  _4 = &Det_aTransientErrorState[u32CoreId_11];
+  Det_FreeNodesInLinkedList (_4);
+
+  <bb 7> :
+  # result_6 = PHI <result_8(3), result_5(6)>
+  # DEBUG result => result_6
+  # DEBUG BEGIN_STMT
+  __asm__ __volatile__(" cpsie i");
+  # DEBUG BEGIN_STMT
+  _18 = result_6;
+  return _18;
+
+}
+
+
+Det_TestNoRuntimeError ()
+{
+  uint32 u32CoreId;
+  boolean result;
+  unsigned char _1;
+  <unnamed type> _2;
+  long unsigned int _3;
+  struct Det_LinkedListStateType * _4;
+  boolean _18;
+
+  <bb 2> :
+  # DEBUG BEGIN_STMT
+  result_8 = 1;
+  # DEBUG result => result_8
+  # DEBUG BEGIN_STMT
+  _1 = Sys_GetCoreID ();
+  u32CoreId_11 = (uint32) _1;
+  # DEBUG u32CoreId => u32CoreId_11
+  # DEBUG BEGIN_STMT
+  __asm__ __volatile__(" cpsid i");
+  # DEBUG BEGIN_STMT
+  _2 = Det_ModuleState[u32CoreId_11];
+  if (_2 == 0)
+    goto <bb 3>; [INV]
+  else
+    goto <bb 4>; [INV]
+
+  <bb 3> :
+  # DEBUG BEGIN_STMT
+  Det_Init ();
+  goto <bb 7>; [INV]
+
+  <bb 4> :
+  # DEBUG BEGIN_STMT
+  _3 = Det_numRuntimeEventErrors[u32CoreId_11];
+  if (_3 != 0)
+    goto <bb 5>; [INV]
+  else
+    goto <bb 6>; [INV]
+
+  <bb 5> :
+  # DEBUG BEGIN_STMT
+  result_13 = 0;
+  # DEBUG result => result_13
+
+  <bb 6> :
+  # result_5 = PHI <result_8(4), result_13(5)>
+  # DEBUG result => result_5
+  # DEBUG BEGIN_STMT
+  Det_numRuntimeEventErrors[u32CoreId_11] = 0;
+  # DEBUG BEGIN_STMT
+  _4 = &Det_aRuntimeErrorState[u32CoreId_11];
+  Det_FreeNodesInLinkedList (_4);
+
+  <bb 7> :
+  # result_6 = PHI <result_8(3), result_5(6)>
+  # DEBUG result => result_6
+  # DEBUG BEGIN_STMT
+  __asm__ __volatile__(" cpsie i");
+  # DEBUG BEGIN_STMT
+  _18 = result_6;
+  return _18;
+
+}
+
+
+Det_TestNoError ()
+{
+  uint32 u32CoreId;
+  boolean result;
+  unsigned char _1;
+  <unnamed type> _2;
+  long unsigned int _3;
+  struct Det_LinkedListStateType * _4;
+  boolean _18;
+
+  <bb 2> :
+  # DEBUG BEGIN_STMT
+  result_8 = 1;
+  # DEBUG result => result_8
+  # DEBUG BEGIN_STMT
+  _1 = Sys_GetCoreID ();
+  u32CoreId_11 = (uint32) _1;
+  # DEBUG u32CoreId => u32CoreId_11
+  # DEBUG BEGIN_STMT
+  __asm__ __volatile__(" cpsid i");
+  # DEBUG BEGIN_STMT
+  _2 = Det_ModuleState[u32CoreId_11];
+  if (_2 == 0)
+    goto <bb 3>; [INV]
+  else
+    goto <bb 4>; [INV]
+
+  <bb 3> :
+  # DEBUG BEGIN_STMT
+  Det_Init ();
+  goto <bb 7>; [INV]
+
+  <bb 4> :
+  # DEBUG BEGIN_STMT
+  _3 = Det_numEventErrors[u32CoreId_11];
+  if (_3 != 0)
+    goto <bb 5>; [INV]
+  else
+    goto <bb 6>; [INV]
+
+  <bb 5> :
+  # DEBUG BEGIN_STMT
+  result_13 = 0;
+  # DEBUG result => result_13
+
+  <bb 6> :
+  # result_5 = PHI <result_8(4), result_13(5)>
+  # DEBUG result => result_5
+  # DEBUG BEGIN_STMT
+  Det_numEventErrors[u32CoreId_11] = 0;
+  # DEBUG BEGIN_STMT
+  _4 = &Det_aErrorState[u32CoreId_11];
+  Det_FreeNodesInLinkedList (_4);
+
+  <bb 7> :
+  # result_6 = PHI <result_8(3), result_5(6)>
+  # DEBUG result => result_6
+  # DEBUG BEGIN_STMT
+  __asm__ __volatile__(" cpsie i");
+  # DEBUG BEGIN_STMT
+  _18 = result_6;
+  return _18;
+
+}
+
+
+Det_TestLastReportTransientFault (uint16 ModuleId, uint8 InstanceId, uint8 ApiId, uint8 FaultId)
+{
+  uint32 u32CoreId;
+  boolean RetVal;
+  unsigned char _1;
+  <unnamed type> _2;
+  struct Det_LinkedListStateType * _3;
+  boolean _19;
+
+  <bb 2> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _1 = Sys_GetCoreID ();
+  u32CoreId_8 = (uint32) _1;
+  # DEBUG u32CoreId => u32CoreId_8
+  # DEBUG BEGIN_STMT
+  __asm__ __volatile__(" cpsid i");
+  # DEBUG BEGIN_STMT
+  _2 = Det_ModuleState[u32CoreId_8];
+  if (_2 == 0)
+    goto <bb 3>; [INV]
+  else
+    goto <bb 4>; [INV]
+
+  <bb 3> :
+  # DEBUG BEGIN_STMT
+  Det_Init ();
+  # DEBUG BEGIN_STMT
+  RetVal_17 = 0;
+  # DEBUG RetVal => RetVal_17
+  goto <bb 5>; [INV]
+
+  <bb 4> :
+  # DEBUG BEGIN_STMT
+  _3 = &Det_aTransientErrorState[u32CoreId_8];
+  RetVal_15 = Det_DelAllNodesSameId (ModuleId_10(D), InstanceId_11(D), ApiId_12(D), FaultId_13(D), _3);
+  # DEBUG RetVal => RetVal_15
+
+  <bb 5> :
+  # RetVal_4 = PHI <RetVal_17(3), RetVal_15(4)>
+  # DEBUG RetVal => RetVal_4
+  # DEBUG BEGIN_STMT
+  __asm__ __volatile__(" cpsie i");
+  # DEBUG BEGIN_STMT
+  _19 = RetVal_4;
+  return _19;
+
+}
+
+
+Det_TestLastReportRuntimeError (uint16 ModuleId, uint8 InstanceId, uint8 ApiId, uint8 ErrorId)
+{
+  uint32 u32CoreId;
+  boolean RetVal;
+  unsigned char _1;
+  <unnamed type> _2;
+  struct Det_LinkedListStateType * _3;
+  boolean _19;
+
+  <bb 2> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _1 = Sys_GetCoreID ();
+  u32CoreId_8 = (uint32) _1;
+  # DEBUG u32CoreId => u32CoreId_8
+  # DEBUG BEGIN_STMT
+  __asm__ __volatile__(" cpsid i");
+  # DEBUG BEGIN_STMT
+  _2 = Det_ModuleState[u32CoreId_8];
+  if (_2 == 0)
+    goto <bb 3>; [INV]
+  else
+    goto <bb 4>; [INV]
+
+  <bb 3> :
+  # DEBUG BEGIN_STMT
+  Det_Init ();
+  # DEBUG BEGIN_STMT
+  RetVal_17 = 0;
+  # DEBUG RetVal => RetVal_17
+  goto <bb 5>; [INV]
+
+  <bb 4> :
+  # DEBUG BEGIN_STMT
+  _3 = &Det_aRuntimeErrorState[u32CoreId_8];
+  RetVal_15 = Det_DelAllNodesSameId (ModuleId_10(D), InstanceId_11(D), ApiId_12(D), ErrorId_13(D), _3);
+  # DEBUG RetVal => RetVal_15
+
+  <bb 5> :
+  # RetVal_4 = PHI <RetVal_17(3), RetVal_15(4)>
+  # DEBUG RetVal => RetVal_4
+  # DEBUG BEGIN_STMT
+  __asm__ __volatile__(" cpsie i");
+  # DEBUG BEGIN_STMT
+  _19 = RetVal_4;
+  return _19;
+
+}
+
+
+Det_TestLastReportError (uint16 ModuleId, uint8 InstanceId, uint8 ApiId, uint8 ErrorId)
+{
+  uint32 u32CoreId;
+  boolean RetVal;
+  unsigned char _1;
+  <unnamed type> _2;
+  struct Det_LinkedListStateType * _3;
+  boolean _19;
+
+  <bb 2> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _1 = Sys_GetCoreID ();
+  u32CoreId_8 = (uint32) _1;
+  # DEBUG u32CoreId => u32CoreId_8
+  # DEBUG BEGIN_STMT
+  __asm__ __volatile__(" cpsid i");
+  # DEBUG BEGIN_STMT
+  _2 = Det_ModuleState[u32CoreId_8];
+  if (_2 == 0)
+    goto <bb 3>; [INV]
+  else
+    goto <bb 4>; [INV]
+
+  <bb 3> :
+  # DEBUG BEGIN_STMT
+  Det_Init ();
+  # DEBUG BEGIN_STMT
+  RetVal_17 = 0;
+  # DEBUG RetVal => RetVal_17
+  goto <bb 5>; [INV]
+
+  <bb 4> :
+  # DEBUG BEGIN_STMT
+  _3 = &Det_aErrorState[u32CoreId_8];
+  RetVal_15 = Det_DelAllNodesSameId (ModuleId_10(D), InstanceId_11(D), ApiId_12(D), ErrorId_13(D), _3);
+  # DEBUG RetVal => RetVal_15
+
+  <bb 5> :
+  # RetVal_4 = PHI <RetVal_17(3), RetVal_15(4)>
+  # DEBUG RetVal => RetVal_4
+  # DEBUG BEGIN_STMT
+  __asm__ __volatile__(" cpsie i");
+  # DEBUG BEGIN_STMT
+  _19 = RetVal_4;
+  return _19;
+
+}
+
+

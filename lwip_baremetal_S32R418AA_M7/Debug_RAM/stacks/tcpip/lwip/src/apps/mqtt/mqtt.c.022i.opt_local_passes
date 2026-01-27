@@ -1,0 +1,4405 @@
+mqtt_client_is_connected (struct mqtt_client_t * client)
+{
+  unsigned char _1;
+  _Bool _2;
+  u8_t _6;
+
+  <bb 2> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  if (client_4(D) == 0B)
+    goto <bb 3>; [INV]
+  else
+    goto <bb 4>; [INV]
+
+  <bb 3> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  __asm__ __volatile__("BKPT #0
+	");
+  # DEBUG BEGIN_STMT
+  goto <bb 3>; [INV]
+
+  <bb 4> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _1 = client_4(D)->conn_state;
+  _2 = _1 == 3;
+  _6 = (u8_t) _2;
+  return _6;
+
+}
+
+
+mqtt_disconnect (struct mqtt_client_t * client)
+{
+  unsigned char _1;
+
+  <bb 2> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  if (client_4(D) == 0B)
+    goto <bb 3>; [INV]
+  else
+    goto <bb 4>; [INV]
+
+  <bb 3> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  __asm__ __volatile__("BKPT #0
+	");
+  # DEBUG BEGIN_STMT
+  goto <bb 3>; [INV]
+
+  <bb 4> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _1 = client_4(D)->conn_state;
+  if (_1 != 0)
+    goto <bb 5>; [INV]
+  else
+    goto <bb 6>; [INV]
+
+  <bb 5> :
+  # DEBUG BEGIN_STMT
+  client_4(D)->conn_state = 0;
+  # DEBUG BEGIN_STMT
+  mqtt_close (client_4(D), 0);
+
+  <bb 6> :
+  return;
+
+}
+
+
+mqtt_client_connect (struct mqtt_client_t * client, const struct ip_addr_t * ip_addr, u16_t port, void (*mqtt_connection_cb_t) (struct mqtt_client_t *, void *, mqtt_connection_status_t) cb, void * arg, const struct mqtt_connect_client_info_t * client_info)
+{
+  u16_t client_pass_len;
+  u16_t client_user_len;
+  u8_t will_msg_len;
+  u8_t will_topic_len;
+  u8_t flags;
+  u16_t remaining_length;
+  u16_t client_id_length;
+  size_t len;
+  err_t err;
+  const char * _1;
+  unsigned char _2;
+  short unsigned int _3;
+  struct mqtt_request_t[4] * _4;
+  const char * _5;
+  const char * _6;
+  unsigned char _7;
+  int _8;
+  int _9;
+  signed char _10;
+  signed char _11;
+  signed char flags.14_12;
+  signed char _13;
+  unsigned char _14;
+  const char * _15;
+  const char * _16;
+  int _17;
+  int _18;
+  int _19;
+  int _20;
+  int _21;
+  int _22;
+  int _23;
+  const char * _24;
+  const char * _25;
+  int _26;
+  int _27;
+  int _28;
+  int _29;
+  const char * _30;
+  const char * _31;
+  int _32;
+  int _33;
+  int _34;
+  int _35;
+  const char * _36;
+  int _37;
+  int _38;
+  int _39;
+  int _40;
+  struct mqtt_ringbuf_t * _41;
+  unsigned char _42;
+  unsigned char _43;
+  struct tcp_pcb * _44;
+  struct tcp_pcb * _45;
+  struct tcp_pcb * _46;
+  struct tcp_pcb * _47;
+  struct tcp_pcb * _48;
+  struct tcp_pcb * _49;
+  struct mqtt_ringbuf_t * _50;
+  struct mqtt_ringbuf_t * _51;
+  struct mqtt_ringbuf_t * _52;
+  struct mqtt_ringbuf_t * _53;
+  struct mqtt_ringbuf_t * _54;
+  short unsigned int _55;
+  struct mqtt_ringbuf_t * _56;
+  const char * _57;
+  int _58;
+  int _59;
+  struct mqtt_ringbuf_t * _60;
+  const char * _61;
+  short unsigned int _62;
+  struct mqtt_ringbuf_t * _63;
+  const char * _64;
+  short unsigned int _65;
+  signed char flags.15_66;
+  struct mqtt_ringbuf_t * _67;
+  const char * _68;
+  int _69;
+  int _70;
+  struct mqtt_ringbuf_t * _71;
+  const char * _72;
+  struct tcp_pcb * _73;
+  err_t _86;
+  err_t _122;
+  err_t _123;
+  err_t _124;
+  err_t _125;
+  err_t _131;
+  err_t _132;
+  err_t _133;
+  err_t _139;
+  err_t _140;
+  err_t _141;
+  err_t _168;
+  err_t _171;
+  err_t _172;
+  err_t _173;
+  err_t _174;
+  err_t _175;
+  err_t _176;
+
+  <bb 2> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  remaining_length_96 = 10;
+  # DEBUG remaining_length => remaining_length_96
+  # DEBUG BEGIN_STMT
+  flags_97 = 0;
+  # DEBUG flags => flags_97
+  will_topic_len_98 = 0;
+  # DEBUG will_topic_len => will_topic_len_98
+  will_msg_len_99 = 0;
+  # DEBUG will_msg_len => will_msg_len_99
+  # DEBUG BEGIN_STMT
+  client_user_len_100 = 0;
+  # DEBUG client_user_len => client_user_len_100
+  client_pass_len_101 = 0;
+  # DEBUG client_pass_len => client_pass_len_101
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  if (client_102(D) == 0B)
+    goto <bb 3>; [INV]
+  else
+    goto <bb 4>; [INV]
+
+  <bb 3> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  __asm__ __volatile__("BKPT #0
+	");
+  # DEBUG BEGIN_STMT
+  goto <bb 3>; [INV]
+
+  <bb 4> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  if (ip_addr_104(D) == 0B)
+    goto <bb 5>; [INV]
+  else
+    goto <bb 6>; [INV]
+
+  <bb 5> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  __asm__ __volatile__("BKPT #0
+	");
+  # DEBUG BEGIN_STMT
+  goto <bb 5>; [INV]
+
+  <bb 6> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  if (client_info_105(D) == 0B)
+    goto <bb 7>; [INV]
+  else
+    goto <bb 8>; [INV]
+
+  <bb 7> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  __asm__ __volatile__("BKPT #0
+	");
+  # DEBUG BEGIN_STMT
+  goto <bb 7>; [INV]
+
+  <bb 8> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _1 = client_info_105(D)->client_id;
+  if (_1 == 0B)
+    goto <bb 9>; [INV]
+  else
+    goto <bb 10>; [INV]
+
+  <bb 9> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  __asm__ __volatile__("BKPT #0
+	");
+  # DEBUG BEGIN_STMT
+  goto <bb 9>; [INV]
+
+  <bb 10> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _2 = client_102(D)->conn_state;
+  if (_2 != 0)
+    goto <bb 11>; [INV]
+  else
+    goto <bb 12>; [INV]
+
+  <bb 11> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _176 = -10;
+  // predicted unlikely by early return (on trees) predictor.
+  goto <bb 61>; [INV]
+
+  <bb 12> :
+  # DEBUG BEGIN_STMT
+  memset (client_102(D), 0, 496);
+  # DEBUG BEGIN_STMT
+  client_102(D)->connect_arg = arg_107(D);
+  # DEBUG BEGIN_STMT
+  client_102(D)->connect_cb = cb_109(D);
+  # DEBUG BEGIN_STMT
+  _3 = client_info_105(D)->keep_alive;
+  client_102(D)->keep_alive = _3;
+  # DEBUG BEGIN_STMT
+  _4 = &client_102(D)->req_list;
+  mqtt_init_requests (_4, 4);
+  # DEBUG BEGIN_STMT
+  _5 = client_info_105(D)->will_topic;
+  if (_5 != 0B)
+    goto <bb 13>; [INV]
+  else
+    goto <bb 25>; [INV]
+
+  <bb 13> :
+  _6 = client_info_105(D)->will_msg;
+  if (_6 != 0B)
+    goto <bb 14>; [INV]
+  else
+    goto <bb 25>; [INV]
+
+  <bb 14> :
+  # DEBUG BEGIN_STMT
+  flags_113 = flags_97 | 4;
+  # DEBUG flags => flags_113
+  # DEBUG BEGIN_STMT
+  _7 = client_info_105(D)->will_qos;
+  _8 = (int) _7;
+  _9 = _8 << 3;
+  _10 = (signed char) _9;
+  _11 = _10 & 24;
+  flags.14_12 = (signed char) flags_113;
+  _13 = _11 | flags.14_12;
+  flags_114 = (u8_t) _13;
+  # DEBUG flags => flags_114
+  # DEBUG BEGIN_STMT
+  _14 = client_info_105(D)->will_retain;
+  if (_14 != 0)
+    goto <bb 15>; [INV]
+  else
+    goto <bb 16>; [INV]
+
+  <bb 15> :
+  # DEBUG BEGIN_STMT
+  flags_115 = flags_114 | 32;
+  # DEBUG flags => flags_115
+
+  <bb 16> :
+  # flags_78 = PHI <flags_114(14), flags_115(15)>
+  # DEBUG flags => flags_78
+  # DEBUG BEGIN_STMT
+  _15 = client_info_105(D)->will_topic;
+  len_116 = strlen (_15);
+  # DEBUG len => len_116
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  if (len_116 > 255)
+    goto <bb 17>; [INV]
+  else
+    goto <bb 18>; [INV]
+
+  <bb 17> :
+  # DEBUG BEGIN_STMT
+  _125 = -6;
+  // predicted unlikely by early return (on trees) predictor.
+  goto <bb 61>; [INV]
+
+  <bb 18> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  if (len_116 == 0)
+    goto <bb 19>; [INV]
+  else
+    goto <bb 20>; [INV]
+
+  <bb 19> :
+  # DEBUG BEGIN_STMT
+  _124 = -6;
+  // predicted unlikely by early return (on trees) predictor.
+  goto <bb 61>; [INV]
+
+  <bb 20> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  will_topic_len_117 = (u8_t) len_116;
+  # DEBUG will_topic_len => will_topic_len_117
+  # DEBUG BEGIN_STMT
+  _16 = client_info_105(D)->will_msg;
+  len_118 = strlen (_16);
+  # DEBUG len => len_118
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  if (len_118 > 255)
+    goto <bb 21>; [INV]
+  else
+    goto <bb 22>; [INV]
+
+  <bb 21> :
+  # DEBUG BEGIN_STMT
+  _123 = -6;
+  // predicted unlikely by early return (on trees) predictor.
+  goto <bb 61>; [INV]
+
+  <bb 22> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  will_msg_len_119 = (u8_t) len_118;
+  # DEBUG will_msg_len => will_msg_len_119
+  # DEBUG BEGIN_STMT
+  _17 = (int) remaining_length_96;
+  _18 = _17 + 2;
+  _19 = (int) will_topic_len_117;
+  _20 = _18 + _19;
+  _21 = _20 + 2;
+  _22 = (int) will_msg_len_119;
+  _23 = _21 + _22;
+  len_120 = (size_t) _23;
+  # DEBUG len => len_120
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  if (len_120 > 65535)
+    goto <bb 23>; [INV]
+  else
+    goto <bb 24>; [INV]
+
+  <bb 23> :
+  # DEBUG BEGIN_STMT
+  _122 = -6;
+  // predicted unlikely by early return (on trees) predictor.
+  goto <bb 61>; [INV]
+
+  <bb 24> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  remaining_length_121 = (u16_t) len_120;
+  # DEBUG remaining_length => remaining_length_121
+
+  <bb 25> :
+  # remaining_length_75 = PHI <remaining_length_96(12), remaining_length_96(13), remaining_length_121(24)>
+  # flags_79 = PHI <flags_97(12), flags_97(13), flags_78(24)>
+  # will_topic_len_82 = PHI <will_topic_len_98(12), will_topic_len_98(13), will_topic_len_117(24)>
+  # will_msg_len_83 = PHI <will_msg_len_99(12), will_msg_len_99(13), will_msg_len_119(24)>
+  # DEBUG will_msg_len => will_msg_len_83
+  # DEBUG will_topic_len => will_topic_len_82
+  # DEBUG flags => flags_79
+  # DEBUG remaining_length => remaining_length_75
+  # DEBUG BEGIN_STMT
+  _24 = client_info_105(D)->client_user;
+  if (_24 != 0B)
+    goto <bb 26>; [INV]
+  else
+    goto <bb 33>; [INV]
+
+  <bb 26> :
+  # DEBUG BEGIN_STMT
+  flags_126 = flags_79 | 128;
+  # DEBUG flags => flags_126
+  # DEBUG BEGIN_STMT
+  _25 = client_info_105(D)->client_user;
+  len_127 = strlen (_25);
+  # DEBUG len => len_127
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  if (len_127 > 65535)
+    goto <bb 27>; [INV]
+  else
+    goto <bb 28>; [INV]
+
+  <bb 27> :
+  # DEBUG BEGIN_STMT
+  _133 = -6;
+  // predicted unlikely by early return (on trees) predictor.
+  goto <bb 61>; [INV]
+
+  <bb 28> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  if (len_127 == 0)
+    goto <bb 29>; [INV]
+  else
+    goto <bb 30>; [INV]
+
+  <bb 29> :
+  # DEBUG BEGIN_STMT
+  _132 = -6;
+  // predicted unlikely by early return (on trees) predictor.
+  goto <bb 61>; [INV]
+
+  <bb 30> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  client_user_len_128 = (u16_t) len_127;
+  # DEBUG client_user_len => client_user_len_128
+  # DEBUG BEGIN_STMT
+  _26 = (int) remaining_length_75;
+  _27 = _26 + 2;
+  _28 = (int) client_user_len_128;
+  _29 = _27 + _28;
+  len_129 = (size_t) _29;
+  # DEBUG len => len_129
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  if (len_129 > 65535)
+    goto <bb 31>; [INV]
+  else
+    goto <bb 32>; [INV]
+
+  <bb 31> :
+  # DEBUG BEGIN_STMT
+  _131 = -6;
+  // predicted unlikely by early return (on trees) predictor.
+  goto <bb 61>; [INV]
+
+  <bb 32> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  remaining_length_130 = (u16_t) len_129;
+  # DEBUG remaining_length => remaining_length_130
+
+  <bb 33> :
+  # remaining_length_76 = PHI <remaining_length_75(25), remaining_length_130(32)>
+  # flags_80 = PHI <flags_79(25), flags_126(32)>
+  # client_user_len_84 = PHI <client_user_len_100(25), client_user_len_128(32)>
+  # DEBUG client_user_len => client_user_len_84
+  # DEBUG flags => flags_80
+  # DEBUG remaining_length => remaining_length_76
+  # DEBUG BEGIN_STMT
+  _30 = client_info_105(D)->client_pass;
+  if (_30 != 0B)
+    goto <bb 34>; [INV]
+  else
+    goto <bb 41>; [INV]
+
+  <bb 34> :
+  # DEBUG BEGIN_STMT
+  flags_134 = flags_80 | 64;
+  # DEBUG flags => flags_134
+  # DEBUG BEGIN_STMT
+  _31 = client_info_105(D)->client_pass;
+  len_135 = strlen (_31);
+  # DEBUG len => len_135
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  if (len_135 > 65535)
+    goto <bb 35>; [INV]
+  else
+    goto <bb 36>; [INV]
+
+  <bb 35> :
+  # DEBUG BEGIN_STMT
+  _141 = -6;
+  // predicted unlikely by early return (on trees) predictor.
+  goto <bb 61>; [INV]
+
+  <bb 36> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  if (len_135 == 0)
+    goto <bb 37>; [INV]
+  else
+    goto <bb 38>; [INV]
+
+  <bb 37> :
+  # DEBUG BEGIN_STMT
+  _140 = -6;
+  // predicted unlikely by early return (on trees) predictor.
+  goto <bb 61>; [INV]
+
+  <bb 38> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  client_pass_len_136 = (u16_t) len_135;
+  # DEBUG client_pass_len => client_pass_len_136
+  # DEBUG BEGIN_STMT
+  _32 = (int) remaining_length_76;
+  _33 = _32 + 2;
+  _34 = (int) client_pass_len_136;
+  _35 = _33 + _34;
+  len_137 = (size_t) _35;
+  # DEBUG len => len_137
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  if (len_137 > 65535)
+    goto <bb 39>; [INV]
+  else
+    goto <bb 40>; [INV]
+
+  <bb 39> :
+  # DEBUG BEGIN_STMT
+  _139 = -6;
+  // predicted unlikely by early return (on trees) predictor.
+  goto <bb 61>; [INV]
+
+  <bb 40> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  remaining_length_138 = (u16_t) len_137;
+  # DEBUG remaining_length => remaining_length_138
+
+  <bb 41> :
+  # remaining_length_77 = PHI <remaining_length_76(33), remaining_length_138(40)>
+  # flags_81 = PHI <flags_80(33), flags_134(40)>
+  # client_pass_len_85 = PHI <client_pass_len_101(33), client_pass_len_136(40)>
+  # DEBUG client_pass_len => client_pass_len_85
+  # DEBUG flags => flags_81
+  # DEBUG remaining_length => remaining_length_77
+  # DEBUG BEGIN_STMT
+  flags_142 = flags_81 | 2;
+  # DEBUG flags => flags_142
+  # DEBUG BEGIN_STMT
+  _36 = client_info_105(D)->client_id;
+  len_143 = strlen (_36);
+  # DEBUG len => len_143
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  if (len_143 > 65535)
+    goto <bb 42>; [INV]
+  else
+    goto <bb 43>; [INV]
+
+  <bb 42> :
+  # DEBUG BEGIN_STMT
+  _175 = -6;
+  // predicted unlikely by early return (on trees) predictor.
+  goto <bb 61>; [INV]
+
+  <bb 43> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  client_id_length_144 = (u16_t) len_143;
+  # DEBUG client_id_length => client_id_length_144
+  # DEBUG BEGIN_STMT
+  _37 = (int) remaining_length_77;
+  _38 = _37 + 2;
+  _39 = (int) client_id_length_144;
+  _40 = _38 + _39;
+  len_145 = (size_t) _40;
+  # DEBUG len => len_145
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  if (len_145 > 65535)
+    goto <bb 44>; [INV]
+  else
+    goto <bb 45>; [INV]
+
+  <bb 44> :
+  # DEBUG BEGIN_STMT
+  _174 = -6;
+  // predicted unlikely by early return (on trees) predictor.
+  goto <bb 61>; [INV]
+
+  <bb 45> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  remaining_length_146 = (u16_t) len_145;
+  # DEBUG remaining_length => remaining_length_146
+  # DEBUG BEGIN_STMT
+  _41 = &client_102(D)->output;
+  _42 = mqtt_output_check_space (_41, remaining_length_146);
+  if (_42 == 0)
+    goto <bb 46>; [INV]
+  else
+    goto <bb 47>; [INV]
+
+  <bb 46> :
+  # DEBUG BEGIN_STMT
+  _173 = -1;
+  // predicted unlikely by early return (on trees) predictor.
+  goto <bb 61>; [INV]
+
+  <bb 47> :
+  # DEBUG BEGIN_STMT
+  _43 = ip_addr_104(D)->type;
+  _44 = tcp_new_ip_type (_43);
+  client_102(D)->conn = _44;
+  # DEBUG BEGIN_STMT
+  _45 = client_102(D)->conn;
+  if (_45 == 0B)
+    goto <bb 48>; [INV]
+  else
+    goto <bb 49>; [INV]
+
+  <bb 48> :
+  # DEBUG BEGIN_STMT
+  _172 = -1;
+  // predicted unlikely by early return (on trees) predictor.
+  goto <bb 61>; [INV]
+
+  <bb 49> :
+  # DEBUG BEGIN_STMT
+  _46 = client_102(D)->conn;
+  tcp_arg (_46, client_102(D));
+  # DEBUG BEGIN_STMT
+  _47 = client_102(D)->conn;
+  err_152 = tcp_bind (_47, &ip_addr_any, 0);
+  # DEBUG err => err_152
+  # DEBUG BEGIN_STMT
+  if (err_152 != 0)
+    goto <bb 50>; [INV]
+  else
+    goto <bb 51>; [INV]
+
+  <bb 50> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  // predicted unlikely by goto predictor.
+  goto <bb 60>; [INV]
+
+  <bb 51> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _48 = client_102(D)->conn;
+  err_155 = tcp_connect (_48, ip_addr_104(D), port_153(D), mqtt_tcp_connect_cb);
+  # DEBUG err => err_155
+  # DEBUG BEGIN_STMT
+  if (err_155 != 0)
+    goto <bb 52>; [INV]
+  else
+    goto <bb 53>; [INV]
+
+  <bb 52> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  // predicted unlikely by goto predictor.
+  goto <bb 60>; [INV]
+
+  <bb 53> :
+  # DEBUG BEGIN_STMT
+  _49 = client_102(D)->conn;
+  tcp_err (_49, mqtt_tcp_err_cb);
+  # DEBUG BEGIN_STMT
+  client_102(D)->conn_state = 1;
+  # DEBUG BEGIN_STMT
+  _50 = &client_102(D)->output;
+  mqtt_output_append_fixed_header (_50, 1, 0, 0, 0, remaining_length_146);
+  # DEBUG BEGIN_STMT
+  _51 = &client_102(D)->output;
+  mqtt_output_append_string (_51, "MQTT", 4);
+  # DEBUG BEGIN_STMT
+  _52 = &client_102(D)->output;
+  mqtt_output_append_u8 (_52, 4);
+  # DEBUG BEGIN_STMT
+  _53 = &client_102(D)->output;
+  mqtt_output_append_u8 (_53, flags_142);
+  # DEBUG BEGIN_STMT
+  _54 = &client_102(D)->output;
+  _55 = client_info_105(D)->keep_alive;
+  mqtt_output_append_u16 (_54, _55);
+  # DEBUG BEGIN_STMT
+  _56 = &client_102(D)->output;
+  _57 = client_info_105(D)->client_id;
+  mqtt_output_append_string (_56, _57, client_id_length_144);
+  # DEBUG BEGIN_STMT
+  _58 = (int) flags_142;
+  _59 = _58 & 4;
+  if (_59 != 0)
+    goto <bb 54>; [INV]
+  else
+    goto <bb 55>; [INV]
+
+  <bb 54> :
+  # DEBUG BEGIN_STMT
+  _60 = &client_102(D)->output;
+  _61 = client_info_105(D)->will_topic;
+  _62 = (short unsigned int) will_topic_len_82;
+  mqtt_output_append_string (_60, _61, _62);
+  # DEBUG BEGIN_STMT
+  _63 = &client_102(D)->output;
+  _64 = client_info_105(D)->will_msg;
+  _65 = (short unsigned int) will_msg_len_83;
+  mqtt_output_append_string (_63, _64, _65);
+
+  <bb 55> :
+  # DEBUG BEGIN_STMT
+  flags.15_66 = (signed char) flags_142;
+  if (flags.15_66 < 0)
+    goto <bb 56>; [INV]
+  else
+    goto <bb 57>; [INV]
+
+  <bb 56> :
+  # DEBUG BEGIN_STMT
+  _67 = &client_102(D)->output;
+  _68 = client_info_105(D)->client_user;
+  mqtt_output_append_string (_67, _68, client_user_len_84);
+
+  <bb 57> :
+  # DEBUG BEGIN_STMT
+  _69 = (int) flags_142;
+  _70 = _69 & 64;
+  if (_70 != 0)
+    goto <bb 58>; [INV]
+  else
+    goto <bb 59>; [INV]
+
+  <bb 58> :
+  # DEBUG BEGIN_STMT
+  _71 = &client_102(D)->output;
+  _72 = client_info_105(D)->client_pass;
+  mqtt_output_append_string (_71, _72, client_pass_len_85);
+
+  <bb 59> :
+  # DEBUG BEGIN_STMT
+  _168 = 0;
+  goto <bb 61>; [INV]
+
+  <bb 60> :
+  # err_74 = PHI <err_152(50), err_155(52)>
+tcp_fail:
+  # DEBUG err => err_74
+  # DEBUG BEGIN_STMT
+  _73 = client_102(D)->conn;
+  tcp_abort (_73);
+  # DEBUG BEGIN_STMT
+  client_102(D)->conn = 0B;
+  # DEBUG BEGIN_STMT
+  _171 = err_74;
+
+  <bb 61> :
+  # _86 = PHI <_176(11), _125(17), _124(19), _123(21), _122(23), _133(27), _132(29), _131(31), _141(35), _140(37), _139(39), _175(42), _174(44), _173(46), _172(48), _168(59), _171(60)>
+  return _86;
+
+}
+
+
+mqtt_client_free (struct mqtt_client_t * client)
+{
+  <bb 2> :
+  # DEBUG BEGIN_STMT
+  mem_free (client_2(D));
+  return;
+
+}
+
+
+mqtt_client_new ()
+{
+  struct mqtt_client_t * _3;
+
+  <bb 2> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _3 = mem_calloc (1, 496);
+  return _3;
+
+}
+
+
+mqtt_set_inpub_callback (struct mqtt_client_t * client, void (*mqtt_incoming_publish_cb_t) (void *, const char *, u32_t) pub_cb, void (*mqtt_incoming_data_cb_t) (void *, const u8_t *, u16_t, u8_t) data_cb, void * arg)
+{
+  <bb 2> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  if (client_2(D) == 0B)
+    goto <bb 3>; [INV]
+  else
+    goto <bb 4>; [INV]
+
+  <bb 3> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  __asm__ __volatile__("BKPT #0
+	");
+  # DEBUG BEGIN_STMT
+  goto <bb 3>; [INV]
+
+  <bb 4> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  client_2(D)->data_cb = data_cb_4(D);
+  # DEBUG BEGIN_STMT
+  client_2(D)->pub_cb = pub_cb_6(D);
+  # DEBUG BEGIN_STMT
+  client_2(D)->inpub_arg = arg_8(D);
+  return;
+
+}
+
+
+mqtt_sub_unsub (struct mqtt_client_t * client, const char * topic, u8_t qos, void (*mqtt_request_cb_t) (void *, err_t) cb, void * arg, u8_t sub)
+{
+  struct mqtt_request_t * r;
+  u16_t pkt_id;
+  u16_t remaining_length;
+  u16_t topic_len;
+  size_t total_len;
+  size_t topic_strlen;
+  int _1;
+  int _2;
+  _Bool _3;
+  int _4;
+  int _5;
+  unsigned char _6;
+  struct mqtt_request_t[4] * _7;
+  struct mqtt_ringbuf_t * _8;
+  unsigned char _9;
+  struct mqtt_ringbuf_t * _10;
+  struct mqtt_ringbuf_t * _11;
+  struct mqtt_ringbuf_t * _12;
+  struct mqtt_ringbuf_t * _13;
+  unsigned char _14;
+  struct mqtt_request_t * * _15;
+  struct mqtt_ringbuf_t * _16;
+  struct tcp_pcb * _17;
+  err_t _18;
+  u8_t iftmp.13_19;
+  u8_t iftmp.13_41;
+  u8_t iftmp.13_42;
+  err_t _49;
+  err_t _51;
+  err_t _52;
+  err_t _53;
+  err_t _55;
+  err_t _56;
+
+  <bb 2> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  if (client_25(D) == 0B)
+    goto <bb 3>; [INV]
+  else
+    goto <bb 4>; [INV]
+
+  <bb 3> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  __asm__ __volatile__("BKPT #0
+	");
+  # DEBUG BEGIN_STMT
+  goto <bb 3>; [INV]
+
+  <bb 4> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  if (topic_27(D) == 0B)
+    goto <bb 5>; [INV]
+  else
+    goto <bb 6>; [INV]
+
+  <bb 5> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  __asm__ __volatile__("BKPT #0
+	");
+  # DEBUG BEGIN_STMT
+  goto <bb 5>; [INV]
+
+  <bb 6> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  topic_strlen_28 = strlen (topic_27(D));
+  # DEBUG topic_strlen => topic_strlen_28
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  if (topic_strlen_28 > 65533)
+    goto <bb 7>; [INV]
+  else
+    goto <bb 8>; [INV]
+
+  <bb 7> :
+  # DEBUG BEGIN_STMT
+  _56 = -16;
+  // predicted unlikely by early return (on trees) predictor.
+  goto <bb 24>; [INV]
+
+  <bb 8> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  topic_len_29 = (u16_t) topic_strlen_28;
+  # DEBUG topic_len => topic_len_29
+  # DEBUG BEGIN_STMT
+  _1 = (int) topic_len_29;
+  _2 = _1 + 4;
+  _3 = sub_30(D) != 0;
+  _4 = (int) _3;
+  _5 = _2 + _4;
+  total_len_31 = (size_t) _5;
+  # DEBUG total_len => total_len_31
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  if (total_len_31 > 65535)
+    goto <bb 9>; [INV]
+  else
+    goto <bb 10>; [INV]
+
+  <bb 9> :
+  # DEBUG BEGIN_STMT
+  _55 = -16;
+  // predicted unlikely by early return (on trees) predictor.
+  goto <bb 24>; [INV]
+
+  <bb 10> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  remaining_length_32 = (u16_t) total_len_31;
+  # DEBUG remaining_length => remaining_length_32
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  if (qos_33(D) > 2)
+    goto <bb 11>; [INV]
+  else
+    goto <bb 12>; [INV]
+
+  <bb 11> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  __asm__ __volatile__("BKPT #0
+	");
+  # DEBUG BEGIN_STMT
+  goto <bb 11>; [INV]
+
+  <bb 12> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _6 = client_25(D)->conn_state;
+  if (_6 == 0)
+    goto <bb 13>; [INV]
+  else
+    goto <bb 14>; [INV]
+
+  <bb 13> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _53 = -11;
+  // predicted unlikely by early return (on trees) predictor.
+  goto <bb 24>; [INV]
+
+  <bb 14> :
+  # DEBUG BEGIN_STMT
+  pkt_id_35 = msg_generate_packet_id (client_25(D));
+  # DEBUG pkt_id => pkt_id_35
+  # DEBUG BEGIN_STMT
+  _7 = &client_25(D)->req_list;
+  r_39 = mqtt_create_request (_7, 4, pkt_id_35, cb_36(D), arg_37(D));
+  # DEBUG r => r_39
+  # DEBUG BEGIN_STMT
+  if (r_39 == 0B)
+    goto <bb 15>; [INV]
+  else
+    goto <bb 16>; [INV]
+
+  <bb 15> :
+  # DEBUG BEGIN_STMT
+  _52 = -1;
+  // predicted unlikely by early return (on trees) predictor.
+  goto <bb 24>; [INV]
+
+  <bb 16> :
+  # DEBUG BEGIN_STMT
+  _8 = &client_25(D)->output;
+  _9 = mqtt_output_check_space (_8, remaining_length_32);
+  if (_9 == 0)
+    goto <bb 17>; [INV]
+  else
+    goto <bb 18>; [INV]
+
+  <bb 17> :
+  # DEBUG BEGIN_STMT
+  mqtt_delete_request (r_39);
+  # DEBUG BEGIN_STMT
+  _51 = -1;
+  // predicted unlikely by early return (on trees) predictor.
+  goto <bb 24>; [INV]
+
+  <bb 18> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _10 = &client_25(D)->output;
+  if (sub_30(D) != 0)
+    goto <bb 19>; [INV]
+  else
+    goto <bb 20>; [INV]
+
+  <bb 19> :
+  iftmp.13_42 = 8;
+  goto <bb 21>; [INV]
+
+  <bb 20> :
+  iftmp.13_41 = 10;
+
+  <bb 21> :
+  # iftmp.13_19 = PHI <iftmp.13_42(19), iftmp.13_41(20)>
+  mqtt_output_append_fixed_header (_10, iftmp.13_19, 0, 1, 0, remaining_length_32);
+  # DEBUG BEGIN_STMT
+  _11 = &client_25(D)->output;
+  mqtt_output_append_u16 (_11, pkt_id_35);
+  # DEBUG BEGIN_STMT
+  _12 = &client_25(D)->output;
+  mqtt_output_append_string (_12, topic_27(D), topic_len_29);
+  # DEBUG BEGIN_STMT
+  if (sub_30(D) != 0)
+    goto <bb 22>; [INV]
+  else
+    goto <bb 23>; [INV]
+
+  <bb 22> :
+  # DEBUG BEGIN_STMT
+  _13 = &client_25(D)->output;
+  _14 = MIN_EXPR <qos_33(D), 2>;
+  mqtt_output_append_u8 (_13, _14);
+
+  <bb 23> :
+  # DEBUG BEGIN_STMT
+  _15 = &client_25(D)->pend_req_queue;
+  mqtt_append_request (_15, r_39);
+  # DEBUG BEGIN_STMT
+  _16 = &client_25(D)->output;
+  _17 = client_25(D)->conn;
+  mqtt_output_send (_16, _17);
+  # DEBUG BEGIN_STMT
+  _49 = 0;
+
+  <bb 24> :
+  # _18 = PHI <_56(7), _55(9), _53(13), _52(15), _51(17), _49(23)>
+  return _18;
+
+}
+
+
+mqtt_publish (struct mqtt_client_t * client, const char * topic, const void * payload, u16_t payload_length, u8_t qos, u8_t retain, void (*mqtt_request_cb_t) (void *, err_t) cb, void * arg)
+{
+  u16_t remaining_length;
+  u16_t topic_len;
+  size_t total_len;
+  size_t topic_strlen;
+  u16_t pkt_id;
+  struct mqtt_request_t * r;
+  unsigned char _1;
+  int _2;
+  int _3;
+  int _4;
+  int _5;
+  struct mqtt_request_t[4] * _6;
+  struct mqtt_ringbuf_t * _7;
+  unsigned char _8;
+  struct mqtt_ringbuf_t * _9;
+  struct mqtt_ringbuf_t * _10;
+  struct mqtt_ringbuf_t * _11;
+  struct mqtt_ringbuf_t * _12;
+  struct mqtt_request_t * * _13;
+  struct mqtt_ringbuf_t * _14;
+  struct tcp_pcb * _15;
+  err_t _18;
+  err_t _51;
+  err_t _53;
+  err_t _54;
+  err_t _55;
+  err_t _56;
+  err_t _57;
+
+  <bb 2> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  if (client_25(D) == 0B)
+    goto <bb 3>; [INV]
+  else
+    goto <bb 4>; [INV]
+
+  <bb 3> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  __asm__ __volatile__("BKPT #0
+	");
+  # DEBUG BEGIN_STMT
+  goto <bb 3>; [INV]
+
+  <bb 4> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  if (topic_27(D) == 0B)
+    goto <bb 5>; [INV]
+  else
+    goto <bb 6>; [INV]
+
+  <bb 5> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  __asm__ __volatile__("BKPT #0
+	");
+  # DEBUG BEGIN_STMT
+  goto <bb 5>; [INV]
+
+  <bb 6> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _1 = client_25(D)->conn_state;
+  if (_1 == 0)
+    goto <bb 7>; [INV]
+  else
+    goto <bb 8>; [INV]
+
+  <bb 7> :
+  # DEBUG BEGIN_STMT
+  _57 = -11;
+  // predicted unlikely by early return (on trees) predictor.
+  goto <bb 25>; [INV]
+
+  <bb 8> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  topic_strlen_28 = strlen (topic_27(D));
+  # DEBUG topic_strlen => topic_strlen_28
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  if (topic_strlen_28 > 65533)
+    goto <bb 9>; [INV]
+  else
+    goto <bb 10>; [INV]
+
+  <bb 9> :
+  # DEBUG BEGIN_STMT
+  _56 = -16;
+  // predicted unlikely by early return (on trees) predictor.
+  goto <bb 25>; [INV]
+
+  <bb 10> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  topic_len_29 = (u16_t) topic_strlen_28;
+  # DEBUG topic_len => topic_len_29
+  # DEBUG BEGIN_STMT
+  _2 = (int) topic_len_29;
+  _3 = _2 + 2;
+  _4 = (int) payload_length_30(D);
+  _5 = _3 + _4;
+  total_len_31 = (size_t) _5;
+  # DEBUG total_len => total_len_31
+  # DEBUG BEGIN_STMT
+  if (qos_32(D) != 0)
+    goto <bb 11>; [INV]
+  else
+    goto <bb 12>; [INV]
+
+  <bb 11> :
+  # DEBUG BEGIN_STMT
+  total_len_34 = total_len_31 + 2;
+  # DEBUG total_len => total_len_34
+  # DEBUG BEGIN_STMT
+  pkt_id_36 = msg_generate_packet_id (client_25(D));
+  # DEBUG pkt_id => pkt_id_36
+  goto <bb 13>; [INV]
+
+  <bb 12> :
+  # DEBUG BEGIN_STMT
+  pkt_id_33 = 0;
+  # DEBUG pkt_id => pkt_id_33
+
+  <bb 13> :
+  # pkt_id_16 = PHI <pkt_id_36(11), pkt_id_33(12)>
+  # total_len_17 = PHI <total_len_34(11), total_len_31(12)>
+  # DEBUG total_len => total_len_17
+  # DEBUG pkt_id => pkt_id_16
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  if (total_len_17 > 65535)
+    goto <bb 14>; [INV]
+  else
+    goto <bb 15>; [INV]
+
+  <bb 14> :
+  # DEBUG BEGIN_STMT
+  _55 = -16;
+  // predicted unlikely by early return (on trees) predictor.
+  goto <bb 25>; [INV]
+
+  <bb 15> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  remaining_length_37 = (u16_t) total_len_17;
+  # DEBUG remaining_length => remaining_length_37
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _6 = &client_25(D)->req_list;
+  r_41 = mqtt_create_request (_6, 4, pkt_id_16, cb_38(D), arg_39(D));
+  # DEBUG r => r_41
+  # DEBUG BEGIN_STMT
+  if (r_41 == 0B)
+    goto <bb 16>; [INV]
+  else
+    goto <bb 17>; [INV]
+
+  <bb 16> :
+  # DEBUG BEGIN_STMT
+  _54 = -1;
+  // predicted unlikely by early return (on trees) predictor.
+  goto <bb 25>; [INV]
+
+  <bb 17> :
+  # DEBUG BEGIN_STMT
+  _7 = &client_25(D)->output;
+  _8 = mqtt_output_check_space (_7, remaining_length_37);
+  if (_8 == 0)
+    goto <bb 18>; [INV]
+  else
+    goto <bb 19>; [INV]
+
+  <bb 18> :
+  # DEBUG BEGIN_STMT
+  mqtt_delete_request (r_41);
+  # DEBUG BEGIN_STMT
+  _53 = -1;
+  // predicted unlikely by early return (on trees) predictor.
+  goto <bb 25>; [INV]
+
+  <bb 19> :
+  # DEBUG BEGIN_STMT
+  _9 = &client_25(D)->output;
+  mqtt_output_append_fixed_header (_9, 3, 0, qos_32(D), retain_43(D), remaining_length_37);
+  # DEBUG BEGIN_STMT
+  _10 = &client_25(D)->output;
+  mqtt_output_append_string (_10, topic_27(D), topic_len_29);
+  # DEBUG BEGIN_STMT
+  if (qos_32(D) != 0)
+    goto <bb 20>; [INV]
+  else
+    goto <bb 21>; [INV]
+
+  <bb 20> :
+  # DEBUG BEGIN_STMT
+  _11 = &client_25(D)->output;
+  mqtt_output_append_u16 (_11, pkt_id_16);
+
+  <bb 21> :
+  # DEBUG BEGIN_STMT
+  if (payload_47(D) != 0B)
+    goto <bb 22>; [INV]
+  else
+    goto <bb 24>; [INV]
+
+  <bb 22> :
+  if (payload_length_30(D) != 0)
+    goto <bb 23>; [INV]
+  else
+    goto <bb 24>; [INV]
+
+  <bb 23> :
+  # DEBUG BEGIN_STMT
+  _12 = &client_25(D)->output;
+  mqtt_output_append_buf (_12, payload_47(D), payload_length_30(D));
+
+  <bb 24> :
+  # DEBUG BEGIN_STMT
+  _13 = &client_25(D)->pend_req_queue;
+  mqtt_append_request (_13, r_41);
+  # DEBUG BEGIN_STMT
+  _14 = &client_25(D)->output;
+  _15 = client_25(D)->conn;
+  mqtt_output_send (_14, _15);
+  # DEBUG BEGIN_STMT
+  _51 = 0;
+
+  <bb 25> :
+  # _18 = PHI <_57(7), _56(9), _55(14), _54(16), _53(18), _51(24)>
+  return _18;
+
+}
+
+
+mqtt_tcp_connect_cb (void * arg, struct tcp_pcb * tpcb, err_t err)
+{
+  struct mqtt_client_t * client;
+  struct mqtt_ringbuf_t * _1;
+  struct tcp_pcb * _2;
+  err_t _3;
+  err_t _18;
+  err_t _19;
+
+  <bb 2> :
+  # DEBUG BEGIN_STMT
+  client_6 = arg_5(D);
+  # DEBUG client => client_6
+  # DEBUG BEGIN_STMT
+  if (err_7(D) != 0)
+    goto <bb 3>; [INV]
+  else
+    goto <bb 4>; [INV]
+
+  <bb 3> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _19 = err_7(D);
+  // predicted unlikely by early return (on trees) predictor.
+  goto <bb 5>; [INV]
+
+  <bb 4> :
+  # DEBUG BEGIN_STMT
+  client_6->msg_idx = 0;
+  # DEBUG BEGIN_STMT
+  tcp_recv (tpcb_10(D), mqtt_tcp_recv_cb);
+  # DEBUG BEGIN_STMT
+  tcp_sent (tpcb_10(D), mqtt_tcp_sent_cb);
+  # DEBUG BEGIN_STMT
+  tcp_poll (tpcb_10(D), mqtt_tcp_poll_cb, 2);
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  client_6->conn_state = 2;
+  # DEBUG BEGIN_STMT
+  sys_timeout (5000, mqtt_cyclic_timer, client_6);
+  # DEBUG BEGIN_STMT
+  client_6->cyclic_tick = 0;
+  # DEBUG BEGIN_STMT
+  _1 = &client_6->output;
+  _2 = client_6->conn;
+  mqtt_output_send (_1, _2);
+  # DEBUG BEGIN_STMT
+  _18 = 0;
+
+  <bb 5> :
+  # _3 = PHI <_19(3), _18(4)>
+  return _3;
+
+}
+
+
+mqtt_tcp_poll_cb (void * arg, struct tcp_pcb * tpcb)
+{
+  struct mqtt_client_t * client;
+  unsigned char _1;
+  struct mqtt_ringbuf_t * _2;
+  err_t _9;
+
+  <bb 2> :
+  # DEBUG BEGIN_STMT
+  client_5 = arg_4(D);
+  # DEBUG client => client_5
+  # DEBUG BEGIN_STMT
+  _1 = client_5->conn_state;
+  if (_1 == 3)
+    goto <bb 3>; [INV]
+  else
+    goto <bb 4>; [INV]
+
+  <bb 3> :
+  # DEBUG BEGIN_STMT
+  _2 = &client_5->output;
+  mqtt_output_send (_2, tpcb_7(D));
+
+  <bb 4> :
+  # DEBUG BEGIN_STMT
+  _9 = 0;
+  return _9;
+
+}
+
+
+mqtt_tcp_err_cb (void * arg, err_t err)
+{
+  struct mqtt_client_t * client;
+
+  <bb 2> :
+  # DEBUG BEGIN_STMT
+  client_3 = arg_2(D);
+  # DEBUG client => client_3
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  if (client_3 == 0B)
+    goto <bb 3>; [INV]
+  else
+    goto <bb 4>; [INV]
+
+  <bb 3> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  __asm__ __volatile__("BKPT #0
+	");
+  # DEBUG BEGIN_STMT
+  goto <bb 3>; [INV]
+
+  <bb 4> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  client_3->conn = 0B;
+  # DEBUG BEGIN_STMT
+  mqtt_close (client_3, 256);
+  return;
+
+}
+
+
+mqtt_tcp_sent_cb (void * arg, struct tcp_pcb * tpcb, u16_t len)
+{
+  struct mqtt_request_t * r;
+  struct mqtt_client_t * client;
+  unsigned char _1;
+  void (*<T655>) (void *, err_t) _2;
+  void (*<T655>) (void *, err_t) _3;
+  void * _4;
+  struct mqtt_request_t * * _5;
+  struct mqtt_ringbuf_t * _6;
+  struct tcp_pcb * _7;
+  err_t _21;
+
+  <bb 2> :
+  # DEBUG BEGIN_STMT
+  client_12 = arg_11(D);
+  # DEBUG client => client_12
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _1 = client_12->conn_state;
+  if (_1 == 3)
+    goto <bb 3>; [INV]
+  else
+    goto <bb 9>; [INV]
+
+  <bb 3> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  client_12->cyclic_tick = 0;
+  # DEBUG BEGIN_STMT
+  client_12->server_watchdog = 0;
+  # DEBUG BEGIN_STMT
+  goto <bb 7>; [INV]
+
+  <bb 4> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _2 = r_17->cb;
+  if (_2 != 0B)
+    goto <bb 5>; [INV]
+  else
+    goto <bb 6>; [INV]
+
+  <bb 5> :
+  # DEBUG BEGIN_STMT
+  _3 = r_17->cb;
+  _4 = r_17->arg;
+  _3 (_4, 0);
+
+  <bb 6> :
+  # DEBUG BEGIN_STMT
+  mqtt_delete_request (r_17);
+
+  <bb 7> :
+  # DEBUG BEGIN_STMT
+  _5 = &client_12->pend_req_queue;
+  r_17 = mqtt_take_request (_5, 0);
+  # DEBUG r => r_17
+  if (r_17 != 0B)
+    goto <bb 4>; [INV]
+  else
+    goto <bb 8>; [INV]
+
+  <bb 8> :
+  # DEBUG BEGIN_STMT
+  _6 = &client_12->output;
+  _7 = client_12->conn;
+  mqtt_output_send (_6, _7);
+
+  <bb 9> :
+  # DEBUG BEGIN_STMT
+  _21 = 0;
+  return _21;
+
+}
+
+
+mqtt_tcp_recv_cb (void * arg, struct tcp_pcb * pcb, struct pbuf * p, err_t err)
+{
+  mqtt_connection_status_t res;
+  struct mqtt_client_t * client;
+  struct tcp_pcb * _1;
+  short unsigned int _2;
+  short unsigned int _3;
+  err_t _4;
+  err_t _23;
+  err_t _25;
+
+  <bb 2> :
+  # DEBUG BEGIN_STMT
+  client_11 = arg_10(D);
+  # DEBUG client => client_11
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  if (client_11 == 0B)
+    goto <bb 3>; [INV]
+  else
+    goto <bb 4>; [INV]
+
+  <bb 3> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  __asm__ __volatile__("BKPT #0
+	");
+  # DEBUG BEGIN_STMT
+  goto <bb 3>; [INV]
+
+  <bb 4> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _1 = client_11->conn;
+  if (pcb_13(D) != _1)
+    goto <bb 5>; [INV]
+  else
+    goto <bb 6>; [INV]
+
+  <bb 5> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  __asm__ __volatile__("BKPT #0
+	");
+  # DEBUG BEGIN_STMT
+  goto <bb 5>; [INV]
+
+  <bb 6> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  if (p_14(D) == 0B)
+    goto <bb 7>; [INV]
+  else
+    goto <bb 8>; [INV]
+
+  <bb 7> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  mqtt_close (client_11, 256);
+  goto <bb 14>; [INV]
+
+  <bb 8> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  if (err_15(D) != 0)
+    goto <bb 9>; [INV]
+  else
+    goto <bb 10>; [INV]
+
+  <bb 9> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  pbuf_free (p_14(D));
+  # DEBUG BEGIN_STMT
+  _23 = err_15(D);
+  // predicted unlikely by early return (on trees) predictor.
+  goto <bb 15>; [INV]
+
+  <bb 10> :
+  # DEBUG BEGIN_STMT
+  _2 = p_14(D)->tot_len;
+  tcp_recved (pcb_13(D), _2);
+  # DEBUG BEGIN_STMT
+  res_18 = mqtt_parse_incoming (client_11, p_14(D));
+  # DEBUG res => res_18
+  # DEBUG BEGIN_STMT
+  pbuf_free (p_14(D));
+  # DEBUG BEGIN_STMT
+  if (res_18 != 0)
+    goto <bb 11>; [INV]
+  else
+    goto <bb 12>; [INV]
+
+  <bb 11> :
+  # DEBUG BEGIN_STMT
+  mqtt_close (client_11, res_18);
+
+  <bb 12> :
+  # DEBUG BEGIN_STMT
+  _3 = client_11->keep_alive;
+  if (_3 != 0)
+    goto <bb 13>; [INV]
+  else
+    goto <bb 14>; [INV]
+
+  <bb 13> :
+  # DEBUG BEGIN_STMT
+  client_11->server_watchdog = 0;
+
+  <bb 14> :
+  # DEBUG BEGIN_STMT
+  _25 = 0;
+
+  <bb 15> :
+  # _4 = PHI <_23(9), _25(14)>
+  return _4;
+
+}
+
+
+mqtt_parse_incoming (struct mqtt_client_t * client, struct pbuf * p)
+{
+  mqtt_connection_status_t res;
+  u16_t buffer_space;
+  u16_t cpy_len;
+  u8_t b;
+  u8_t fixed_hdr_len;
+  u32_t msg_rem_len;
+  u16_t in_offset;
+  signed char b.16_1;
+  long unsigned int _2;
+  long unsigned int _3;
+  int _4;
+  short unsigned int in_offset.17_5;
+  long unsigned int _6;
+  long unsigned int _7;
+  long unsigned int _8;
+  unsigned char fixed_hdr_len.18_9;
+  long unsigned int _10;
+  long unsigned int _11;
+  int _12;
+  int _13;
+  int _14;
+  long unsigned int _15;
+  signed char b.19_16;
+  long unsigned int _17;
+  long unsigned int _18;
+  long unsigned int _19;
+  short unsigned int _20;
+  short unsigned int _21;
+  long unsigned int _22;
+  short unsigned int _23;
+  short unsigned int _24;
+  u8_t[128] * _25;
+  sizetype _26;
+  void * _27;
+  long unsigned int _28;
+  long unsigned int _29;
+  long unsigned int _30;
+  long unsigned int _31;
+  short unsigned int _32;
+  short unsigned int iftmp.20_40;
+  mqtt_connection_status_t _41;
+  mqtt_connection_status_t _51;
+  short unsigned int iftmp.20_52;
+  short unsigned int iftmp.20_53;
+  mqtt_connection_status_t _66;
+
+  <bb 2> :
+  # DEBUG BEGIN_STMT
+  in_offset_45 = 0;
+  # DEBUG in_offset => in_offset_45
+  # DEBUG BEGIN_STMT
+  msg_rem_len_46 = 0;
+  # DEBUG msg_rem_len => msg_rem_len_46
+  # DEBUG BEGIN_STMT
+  fixed_hdr_len_47 = 0;
+  # DEBUG fixed_hdr_len => fixed_hdr_len_47
+  # DEBUG BEGIN_STMT
+  b_48 = 0;
+  # DEBUG b => b_48
+  # DEBUG BEGIN_STMT
+  goto <bb 24>; [INV]
+
+  <bb 3> :
+  # DEBUG BEGIN_STMT
+  if (fixed_hdr_len_36 <= 1)
+    goto <bb 5>; [INV]
+  else
+    goto <bb 4>; [INV]
+
+  <bb 4> :
+  b.16_1 = (signed char) b_38;
+  if (b.16_1 < 0)
+    goto <bb 5>; [INV]
+  else
+    goto <bb 13>; [INV]
+
+  <bb 5> :
+  # DEBUG BEGIN_STMT
+  _2 = (long unsigned int) fixed_hdr_len_36;
+  _3 = client_57(D)->msg_idx;
+  if (_2 < _3)
+    goto <bb 6>; [INV]
+  else
+    goto <bb 7>; [INV]
+
+  <bb 6> :
+  # DEBUG BEGIN_STMT
+  _4 = (int) fixed_hdr_len_36;
+  b_72 = client_57(D)->rx_buffer[_4];
+  # DEBUG b => b_72
+  goto <bb 8>; [INV]
+
+  <bb 7> :
+  # DEBUG BEGIN_STMT
+  in_offset.17_5 = in_offset_34;
+  in_offset_67 = in_offset.17_5 + 1;
+  # DEBUG in_offset => in_offset_67
+  b_69 = pbuf_get_at (p_50(D), in_offset.17_5);
+  # DEBUG b => b_69
+  # DEBUG BEGIN_STMT
+  _6 = client_57(D)->msg_idx;
+  _7 = _6;
+  _8 = _7 + 1;
+  client_57(D)->msg_idx = _8;
+  client_57(D)->rx_buffer[_7] = b_69;
+
+  <bb 8> :
+  # in_offset_33 = PHI <in_offset_34(6), in_offset_67(7)>
+  # b_37 = PHI <b_72(6), b_69(7)>
+  # DEBUG b => b_37
+  # DEBUG in_offset => in_offset_33
+  # DEBUG BEGIN_STMT
+  fixed_hdr_len.18_9 = fixed_hdr_len_36;
+  fixed_hdr_len_73 = fixed_hdr_len.18_9 + 1;
+  # DEBUG fixed_hdr_len => fixed_hdr_len_73
+  # DEBUG BEGIN_STMT
+  if (fixed_hdr_len_73 > 1)
+    goto <bb 9>; [INV]
+  else
+    goto <bb 24>; [INV]
+
+  <bb 9> :
+  # DEBUG BEGIN_STMT
+  _10 = (long unsigned int) b_37;
+  _11 = _10 & 127;
+  _12 = (int) fixed_hdr_len_73;
+  _13 = _12 + -2;
+  _14 = _13 * 7;
+  _15 = _11 << _14;
+  msg_rem_len_74 = msg_rem_len_35 | _15;
+  # DEBUG msg_rem_len => msg_rem_len_74
+  # DEBUG BEGIN_STMT
+  b.19_16 = (signed char) b_37;
+  if (b.19_16 >= 0)
+    goto <bb 10>; [INV]
+  else
+    goto <bb 24>; [INV]
+
+  <bb 10> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  if (msg_rem_len_74 == 0)
+    goto <bb 11>; [INV]
+  else
+    goto <bb 12>; [INV]
+
+  <bb 11> :
+  # DEBUG BEGIN_STMT
+  mqtt_message_received (client_57(D), fixed_hdr_len_73, 0, 0);
+  # DEBUG BEGIN_STMT
+  client_57(D)->msg_idx = 0;
+  # DEBUG BEGIN_STMT
+  fixed_hdr_len_78 = 0;
+  # DEBUG fixed_hdr_len => fixed_hdr_len_78
+  goto <bb 24>; [INV]
+
+  <bb 12> :
+  # DEBUG BEGIN_STMT
+  _17 = (long unsigned int) fixed_hdr_len_73;
+  _18 = msg_rem_len_74 + _17;
+  _19 = client_57(D)->msg_idx;
+  msg_rem_len_75 = _18 - _19;
+  # DEBUG msg_rem_len => msg_rem_len_75
+  goto <bb 24>; [INV]
+
+  <bb 13> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _20 = p_50(D)->tot_len;
+  _21 = _20 - in_offset_34;
+  _22 = (long unsigned int) _21;
+  if (msg_rem_len_35 > _22)
+    goto <bb 14>; [INV]
+  else
+    goto <bb 15>; [INV]
+
+  <bb 14> :
+  _23 = p_50(D)->tot_len;
+  iftmp.20_53 = _23 - in_offset_34;
+  goto <bb 16>; [INV]
+
+  <bb 15> :
+  iftmp.20_52 = (short unsigned int) msg_rem_len_35;
+
+  <bb 16> :
+  # iftmp.20_40 = PHI <iftmp.20_53(14), iftmp.20_52(15)>
+  cpy_len_54 = iftmp.20_40;
+  # DEBUG cpy_len => cpy_len_54
+  # DEBUG BEGIN_STMT
+  _24 = (short unsigned int) fixed_hdr_len_36;
+  buffer_space_55 = 128 - _24;
+  # DEBUG buffer_space => buffer_space_55
+  # DEBUG BEGIN_STMT
+  if (cpy_len_54 > buffer_space_55)
+    goto <bb 17>; [INV]
+  else
+    goto <bb 18>; [INV]
+
+  <bb 17> :
+  # DEBUG BEGIN_STMT
+  cpy_len_56 = buffer_space_55;
+  # DEBUG cpy_len => cpy_len_56
+
+  <bb 18> :
+  # cpy_len_39 = PHI <cpy_len_54(16), cpy_len_56(17)>
+  # DEBUG cpy_len => cpy_len_39
+  # DEBUG BEGIN_STMT
+  _25 = &client_57(D)->rx_buffer;
+  _26 = (sizetype) fixed_hdr_len_36;
+  _27 = _25 + _26;
+  pbuf_copy_partial (p_50(D), _27, cpy_len_39, in_offset_34);
+  # DEBUG BEGIN_STMT
+  _28 = client_57(D)->msg_idx;
+  _29 = (long unsigned int) cpy_len_39;
+  _30 = _28 + _29;
+  client_57(D)->msg_idx = _30;
+  # DEBUG BEGIN_STMT
+  in_offset_60 = in_offset_34 + cpy_len_39;
+  # DEBUG in_offset => in_offset_60
+  # DEBUG BEGIN_STMT
+  _31 = (long unsigned int) cpy_len_39;
+  msg_rem_len_61 = msg_rem_len_35 - _31;
+  # DEBUG msg_rem_len => msg_rem_len_61
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  if (msg_rem_len_61 == 0)
+    goto <bb 20>; [INV]
+  else
+    goto <bb 19>; [INV]
+
+  <bb 19> :
+  if (cpy_len_39 == buffer_space_55)
+    goto <bb 20>; [INV]
+  else
+    goto <bb 24>; [INV]
+
+  <bb 20> :
+  # DEBUG BEGIN_STMT
+  res_63 = mqtt_message_received (client_57(D), fixed_hdr_len_36, cpy_len_39, msg_rem_len_61);
+  # DEBUG res => res_63
+  # DEBUG BEGIN_STMT
+  if (res_63 != 0)
+    goto <bb 21>; [INV]
+  else
+    goto <bb 22>; [INV]
+
+  <bb 21> :
+  # DEBUG BEGIN_STMT
+  _66 = res_63;
+  // predicted unlikely by early return (on trees) predictor.
+  goto <bb 26>; [INV]
+
+  <bb 22> :
+  # DEBUG BEGIN_STMT
+  if (msg_rem_len_61 == 0)
+    goto <bb 23>; [INV]
+  else
+    goto <bb 24>; [INV]
+
+  <bb 23> :
+  # DEBUG BEGIN_STMT
+  client_57(D)->msg_idx = 0;
+  # DEBUG BEGIN_STMT
+  fixed_hdr_len_65 = 0;
+  # DEBUG fixed_hdr_len => fixed_hdr_len_65
+
+  <bb 24> :
+  # in_offset_34 = PHI <in_offset_45(2), in_offset_33(9), in_offset_60(19), in_offset_60(22), in_offset_60(23), in_offset_33(8), in_offset_33(12), in_offset_33(11)>
+  # msg_rem_len_35 = PHI <msg_rem_len_46(2), msg_rem_len_74(9), msg_rem_len_61(19), msg_rem_len_61(22), msg_rem_len_61(23), msg_rem_len_35(8), msg_rem_len_75(12), msg_rem_len_74(11)>
+  # fixed_hdr_len_36 = PHI <fixed_hdr_len_47(2), fixed_hdr_len_73(9), fixed_hdr_len_36(19), fixed_hdr_len_36(22), fixed_hdr_len_65(23), fixed_hdr_len_73(8), fixed_hdr_len_73(12), fixed_hdr_len_78(11)>
+  # b_38 = PHI <b_48(2), b_37(9), b_38(19), b_38(22), b_38(23), b_37(8), b_37(12), b_37(11)>
+  # DEBUG b => b_38
+  # DEBUG fixed_hdr_len => fixed_hdr_len_36
+  # DEBUG msg_rem_len => msg_rem_len_35
+  # DEBUG in_offset => in_offset_34
+  # DEBUG BEGIN_STMT
+  _32 = p_50(D)->tot_len;
+  if (in_offset_34 < _32)
+    goto <bb 3>; [INV]
+  else
+    goto <bb 25>; [INV]
+
+  <bb 25> :
+  # DEBUG BEGIN_STMT
+  _51 = 0;
+
+  <bb 26> :
+  # _41 = PHI <_66(21), _51(25)>
+  return _41;
+
+}
+
+
+mqtt_message_received (struct mqtt_client_t * client, u8_t fixed_hdr_len, u16_t length, u32_t remaining_length)
+{
+  struct mqtt_request_t * r;
+  u8_t resp_msg;
+  u16_t qos_len;
+  u16_t topic_len;
+  u8_t bkp;
+  u16_t after_topic;
+  u8_t * topic;
+  u8_t qos;
+  u16_t payload_length;
+  u16_t payload_offset;
+  u16_t pkt_id;
+  u8_t pkt_type;
+  size_t var_hdr_payload_bufsize;
+  u8_t * var_hdr_payload;
+  mqtt_connection_status_t res;
+  u8_t[128] * _1;
+  sizetype _2;
+  unsigned int _3;
+  unsigned char _4;
+  long unsigned int _5;
+  long unsigned int _6;
+  int _7;
+  int _8;
+  int _9;
+  unsigned char _10;
+  u8_t * _11;
+  unsigned char _12;
+  void (*<T643>) (struct mqtt_client_t *, void *, mqtt_connection_status_t) _13;
+  void (*<T643>) (struct mqtt_client_t *, void *, mqtt_connection_status_t) _14;
+  void * _15;
+  unsigned char _16;
+  int _17;
+  int _18;
+  unsigned char _19;
+  long unsigned int _20;
+  int _21;
+  int _22;
+  int _23;
+  unsigned char _24;
+  short unsigned int _25;
+  u8_t * _26;
+  unsigned char _27;
+  short unsigned int _28;
+  int _29;
+  int _30;
+  int _31;
+  int _32;
+  int _33;
+  unsigned int _34;
+  unsigned int _35;
+  unsigned int _36;
+  unsigned int _37;
+  unsigned int _38;
+  unsigned int _39;
+  unsigned int _40;
+  unsigned int _41;
+  unsigned int _42;
+  sizetype _43;
+  u8_t * _44;
+  unsigned char _45;
+  short unsigned int _46;
+  short unsigned int _47;
+  sizetype _48;
+  sizetype _49;
+  u8_t * _50;
+  unsigned char _51;
+  short unsigned int _52;
+  short unsigned int _53;
+  sizetype _54;
+  u8_t * _55;
+  sizetype _56;
+  u8_t * _57;
+  void (*<T650>) (void *, const char *, u32_t) _58;
+  void (*<T650>) (void *, const char *, u32_t) _59;
+  void * _60;
+  long unsigned int _61;
+  long unsigned int _62;
+  sizetype _63;
+  u8_t * _64;
+  unsigned int _65;
+  int _66;
+  int _67;
+  int _68;
+  unsigned int _69;
+  void (*<T64b>) (void *, const u8_t *, u16_t, u8_t) _70;
+  void (*<T64b>) (void *, const u8_t *, u16_t, u8_t) _71;
+  void * _72;
+  sizetype _73;
+  u8_t * _74;
+  _Bool _75;
+  unsigned char _76;
+  short unsigned int _77;
+  unsigned char _78;
+  short unsigned int _79;
+  u8_t * _80;
+  unsigned char _81;
+  short unsigned int _82;
+  struct mqtt_request_t * * _83;
+  u8_t * _84;
+  unsigned char _85;
+  void (*<T655>) (void *, err_t) _86;
+  void (*<T655>) (void *, err_t) _87;
+  void * _88;
+  mqtt_connection_status_t _93;
+  u16_t iftmp.21_94;
+  unsigned int iftmp.22_95;
+  u8_t iftmp.23_96;
+  u16_t iftmp.21_127;
+  u16_t iftmp.21_128;
+  unsigned int iftmp.22_134;
+  unsigned int iftmp.22_135;
+  u8_t iftmp.23_147;
+  u8_t iftmp.23_148;
+  mqtt_connection_status_t _155;
+  mqtt_connection_status_t _156;
+  mqtt_connection_status_t _157;
+
+  <bb 2> :
+  # DEBUG BEGIN_STMT
+  res_106 = 0;
+  # DEBUG res => res_106
+  # DEBUG BEGIN_STMT
+  _1 = &client_107(D)->rx_buffer;
+  _2 = (sizetype) fixed_hdr_len_108(D);
+  var_hdr_payload_109 = _1 + _2;
+  # DEBUG var_hdr_payload => var_hdr_payload_109
+  # DEBUG BEGIN_STMT
+  _3 = (unsigned int) fixed_hdr_len_108(D);
+  var_hdr_payload_bufsize_110 = 128 - _3;
+  # DEBUG var_hdr_payload_bufsize => var_hdr_payload_bufsize_110
+  # DEBUG BEGIN_STMT
+  _4 = client_107(D)->rx_buffer[0];
+  pkt_type_112 = _4 >> 4;
+  # DEBUG pkt_type => pkt_type_112
+  # DEBUG BEGIN_STMT
+  pkt_id_113 = 0;
+  # DEBUG pkt_id => pkt_id_113
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _5 = (long unsigned int) fixed_hdr_len_108(D);
+  _6 = client_107(D)->msg_idx;
+  if (_5 > _6)
+    goto <bb 3>; [INV]
+  else
+    goto <bb 4>; [INV]
+
+  <bb 3> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  __asm__ __volatile__("BKPT #0
+	");
+  # DEBUG BEGIN_STMT
+  goto <bb 3>; [INV]
+
+  <bb 4> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _7 = (int) fixed_hdr_len_108(D);
+  _8 = (int) length_114(D);
+  _9 = _7 + _8;
+  if (_9 > 128)
+    goto <bb 5>; [INV]
+  else
+    goto <bb 6>; [INV]
+
+  <bb 5> :
+  # DEBUG BEGIN_STMT
+  _157 = 256;
+  // predicted unlikely by early return (on trees) predictor.
+  goto <bb 70>; [INV]
+
+  <bb 6> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  if (pkt_type_112 == 2)
+    goto <bb 7>; [INV]
+  else
+    goto <bb 13>; [INV]
+
+  <bb 7> :
+  # DEBUG BEGIN_STMT
+  _10 = client_107(D)->conn_state;
+  if (_10 == 2)
+    goto <bb 8>; [INV]
+  else
+    goto <bb 68>; [INV]
+
+  <bb 8> :
+  # DEBUG BEGIN_STMT
+  if (length_114(D) <= 1)
+    goto <bb 9>; [INV]
+  else
+    goto <bb 10>; [INV]
+
+  <bb 9> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  // predicted unlikely by goto predictor.
+  goto <bb 69>; [INV]
+
+  <bb 10> :
+  # DEBUG BEGIN_STMT
+  _11 = var_hdr_payload_109 + 1;
+  _12 = *_11;
+  res_151 = (mqtt_connection_status_t) _12;
+  # DEBUG res => res_151
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  if (res_151 == 0)
+    goto <bb 11>; [INV]
+  else
+    goto <bb 68>; [INV]
+
+  <bb 11> :
+  # DEBUG BEGIN_STMT
+  client_107(D)->cyclic_tick = 0;
+  # DEBUG BEGIN_STMT
+  client_107(D)->conn_state = 3;
+  # DEBUG BEGIN_STMT
+  _13 = client_107(D)->connect_cb;
+  if (_13 != 0B)
+    goto <bb 12>; [INV]
+  else
+    goto <bb 68>; [INV]
+
+  <bb 12> :
+  # DEBUG BEGIN_STMT
+  _14 = client_107(D)->connect_cb;
+  _15 = client_107(D)->connect_arg;
+  _14 (client_107(D), _15, res_151);
+  goto <bb 68>; [INV]
+
+  <bb 13> :
+  # DEBUG BEGIN_STMT
+  if (pkt_type_112 == 13)
+    goto <bb 68>; [INV]
+  else
+    goto <bb 14>; [INV]
+
+  <bb 14> :
+  # DEBUG BEGIN_STMT
+  if (pkt_type_112 == 3)
+    goto <bb 15>; [INV]
+  else
+    goto <bb 49>; [INV]
+
+  <bb 15> :
+  # DEBUG BEGIN_STMT
+  payload_offset_124 = 0;
+  # DEBUG payload_offset => payload_offset_124
+  # DEBUG BEGIN_STMT
+  payload_length_125 = length_114(D);
+  # DEBUG payload_length => payload_length_125
+  # DEBUG BEGIN_STMT
+  _16 = client_107(D)->rx_buffer[0];
+  _17 = (int) _16;
+  _18 = _17 >> 1;
+  _19 = (unsigned char) _18;
+  qos_126 = _19 & 3;
+  # DEBUG qos => qos_126
+  # DEBUG BEGIN_STMT
+  _20 = client_107(D)->msg_idx;
+  if (_20 <= 128)
+    goto <bb 16>; [INV]
+  else
+    goto <bb 37>; [INV]
+
+  <bb 16> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  if (qos_126 != 0)
+    goto <bb 17>; [INV]
+  else
+    goto <bb 18>; [INV]
+
+  <bb 17> :
+  iftmp.21_128 = 2;
+  goto <bb 19>; [INV]
+
+  <bb 18> :
+  iftmp.21_127 = 0;
+
+  <bb 19> :
+  # iftmp.21_94 = PHI <iftmp.21_128(17), iftmp.21_127(18)>
+  qos_len_129 = iftmp.21_94;
+  # DEBUG qos_len => qos_len_129
+  # DEBUG BEGIN_STMT
+  _21 = (int) qos_len_129;
+  _22 = _21 + 1;
+  _23 = (int) length_114(D);
+  if (_22 >= _23)
+    goto <bb 20>; [INV]
+  else
+    goto <bb 21>; [INV]
+
+  <bb 20> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  // predicted unlikely by goto predictor.
+  goto <bb 69>; [INV]
+
+  <bb 21> :
+  # DEBUG BEGIN_STMT
+  _24 = *var_hdr_payload_109;
+  topic_len_130 = (u16_t) _24;
+  # DEBUG topic_len => topic_len_130
+  # DEBUG BEGIN_STMT
+  _25 = topic_len_130 << 8;
+  _26 = var_hdr_payload_109 + 1;
+  _27 = *_26;
+  _28 = (short unsigned int) _27;
+  topic_len_131 = _25 + _28;
+  # DEBUG topic_len => topic_len_131
+  # DEBUG BEGIN_STMT
+  _29 = (int) topic_len_131;
+  _30 = (int) length_114(D);
+  _31 = (int) qos_len_129;
+  _32 = _31 + 2;
+  _33 = _30 - _32;
+  if (_29 > _33)
+    goto <bb 23>; [INV]
+  else
+    goto <bb 22>; [INV]
+
+  <bb 22> :
+  _34 = (unsigned int) topic_len_131;
+  _35 = (unsigned int) qos_len_129;
+  _36 = var_hdr_payload_bufsize_110 - _35;
+  _37 = _36 + 4294967294;
+  if (_34 > _37)
+    goto <bb 23>; [INV]
+  else
+    goto <bb 24>; [INV]
+
+  <bb 23> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  // predicted unlikely by goto predictor.
+  goto <bb 69>; [INV]
+
+  <bb 24> :
+  # DEBUG BEGIN_STMT
+  topic_132 = var_hdr_payload_109 + 2;
+  # DEBUG topic => topic_132
+  # DEBUG BEGIN_STMT
+  after_topic_133 = topic_len_131 + 2;
+  # DEBUG after_topic => after_topic_133
+  # DEBUG BEGIN_STMT
+  _38 = (unsigned int) after_topic_133;
+  if (qos_126 != 0)
+    goto <bb 25>; [INV]
+  else
+    goto <bb 26>; [INV]
+
+  <bb 25> :
+  iftmp.22_135 = 2;
+  goto <bb 27>; [INV]
+
+  <bb 26> :
+  iftmp.22_134 = 1;
+
+  <bb 27> :
+  # iftmp.22_95 = PHI <iftmp.22_135(25), iftmp.22_134(26)>
+  _39 = iftmp.22_95 + _38;
+  if (var_hdr_payload_bufsize_110 < _39)
+    goto <bb 28>; [INV]
+  else
+    goto <bb 29>; [INV]
+
+  <bb 28> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  // predicted unlikely by goto predictor.
+  goto <bb 69>; [INV]
+
+  <bb 29> :
+  # DEBUG BEGIN_STMT
+  if (qos_126 != 0)
+    goto <bb 30>; [INV]
+  else
+    goto <bb 33>; [INV]
+
+  <bb 30> :
+  # DEBUG BEGIN_STMT
+  _40 = (unsigned int) length_114(D);
+  _41 = (unsigned int) after_topic_133;
+  _42 = _41 + 2;
+  if (_40 < _42)
+    goto <bb 31>; [INV]
+  else
+    goto <bb 32>; [INV]
+
+  <bb 31> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  // predicted unlikely by goto predictor.
+  goto <bb 69>; [INV]
+
+  <bb 32> :
+  # DEBUG BEGIN_STMT
+  _43 = (sizetype) after_topic_133;
+  _44 = var_hdr_payload_109 + _43;
+  _45 = *_44;
+  _46 = (short unsigned int) _45;
+  _47 = _46 << 8;
+  _48 = (sizetype) after_topic_133;
+  _49 = _48 + 1;
+  _50 = var_hdr_payload_109 + _49;
+  _51 = *_50;
+  _52 = (short unsigned int) _51;
+  _53 = _47 + _52;
+  client_107(D)->inpub_pkt_id = _53;
+  # DEBUG BEGIN_STMT
+  after_topic_138 = after_topic_133 + 2;
+  # DEBUG after_topic => after_topic_138
+  goto <bb 34>; [INV]
+
+  <bb 33> :
+  # DEBUG BEGIN_STMT
+  client_107(D)->inpub_pkt_id = 0;
+
+  <bb 34> :
+  # after_topic_92 = PHI <after_topic_138(32), after_topic_133(33)>
+  # DEBUG after_topic => after_topic_92
+  # DEBUG BEGIN_STMT
+  _54 = (sizetype) topic_len_131;
+  _55 = topic_132 + _54;
+  bkp_139 = *_55;
+  # DEBUG bkp => bkp_139
+  # DEBUG BEGIN_STMT
+  _56 = (sizetype) topic_len_131;
+  _57 = topic_132 + _56;
+  *_57 = 0;
+  # DEBUG BEGIN_STMT
+  payload_length_141 = length_114(D) - after_topic_92;
+  # DEBUG payload_length => payload_length_141
+  # DEBUG BEGIN_STMT
+  payload_offset_142 = after_topic_92;
+  # DEBUG payload_offset => payload_offset_142
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _58 = client_107(D)->pub_cb;
+  if (_58 != 0B)
+    goto <bb 35>; [INV]
+  else
+    goto <bb 36>; [INV]
+
+  <bb 35> :
+  # DEBUG BEGIN_STMT
+  _59 = client_107(D)->pub_cb;
+  _60 = client_107(D)->inpub_arg;
+  _61 = (long unsigned int) payload_length_141;
+  _62 = remaining_length_143(D) + _61;
+  _59 (_60, topic_132, _62);
+
+  <bb 36> :
+  # DEBUG BEGIN_STMT
+  _63 = (sizetype) topic_len_131;
+  _64 = topic_132 + _63;
+  *_64 = bkp_139;
+
+  <bb 37> :
+  # payload_offset_90 = PHI <payload_offset_124(15), payload_offset_142(36)>
+  # payload_length_91 = PHI <payload_length_125(15), payload_length_141(36)>
+  # DEBUG payload_length => payload_length_91
+  # DEBUG payload_offset => payload_offset_90
+  # DEBUG BEGIN_STMT
+  if (payload_length_91 != 0)
+    goto <bb 39>; [INV]
+  else
+    goto <bb 38>; [INV]
+
+  <bb 38> :
+  if (remaining_length_143(D) == 0)
+    goto <bb 39>; [INV]
+  else
+    goto <bb 68>; [INV]
+
+  <bb 39> :
+  # DEBUG BEGIN_STMT
+  _65 = (unsigned int) length_114(D);
+  _66 = (int) payload_offset_90;
+  _67 = (int) payload_length_91;
+  _68 = _66 + _67;
+  _69 = (unsigned int) _68;
+  if (_65 < _69)
+    goto <bb 40>; [INV]
+  else
+    goto <bb 41>; [INV]
+
+  <bb 40> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  // predicted unlikely by goto predictor.
+  goto <bb 69>; [INV]
+
+  <bb 41> :
+  # DEBUG BEGIN_STMT
+  _70 = client_107(D)->data_cb;
+  if (_70 != 0B)
+    goto <bb 42>; [INV]
+  else
+    goto <bb 43>; [INV]
+
+  <bb 42> :
+  # DEBUG BEGIN_STMT
+  _71 = client_107(D)->data_cb;
+  _72 = client_107(D)->inpub_arg;
+  _73 = (sizetype) payload_offset_90;
+  _74 = var_hdr_payload_109 + _73;
+  _75 = remaining_length_143(D) == 0;
+  _76 = (unsigned char) _75;
+  _71 (_72, _74, payload_length_91, _76);
+
+  <bb 43> :
+  # DEBUG BEGIN_STMT
+  if (remaining_length_143(D) == 0)
+    goto <bb 44>; [INV]
+  else
+    goto <bb 68>; [INV]
+
+  <bb 44> :
+  if (qos_126 != 0)
+    goto <bb 45>; [INV]
+  else
+    goto <bb 68>; [INV]
+
+  <bb 45> :
+  # DEBUG BEGIN_STMT
+  if (qos_126 == 1)
+    goto <bb 46>; [INV]
+  else
+    goto <bb 47>; [INV]
+
+  <bb 46> :
+  iftmp.23_148 = 4;
+  goto <bb 48>; [INV]
+
+  <bb 47> :
+  iftmp.23_147 = 5;
+
+  <bb 48> :
+  # iftmp.23_96 = PHI <iftmp.23_148(46), iftmp.23_147(47)>
+  resp_msg_149 = iftmp.23_96;
+  # DEBUG resp_msg => resp_msg_149
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _77 = client_107(D)->inpub_pkt_id;
+  pub_ack_rec_rel_response (client_107(D), resp_msg_149, _77, 0);
+  goto <bb 68>; [INV]
+
+  <bb 49> :
+  # DEBUG BEGIN_STMT
+  _78 = *var_hdr_payload_109;
+  _79 = (short unsigned int) _78;
+  pkt_id_115 = _79 << 8;
+  # DEBUG pkt_id => pkt_id_115
+  # DEBUG BEGIN_STMT
+  _80 = var_hdr_payload_109 + 1;
+  _81 = *_80;
+  _82 = (short unsigned int) _81;
+  pkt_id_116 = pkt_id_115 | _82;
+  # DEBUG pkt_id => pkt_id_116
+  # DEBUG BEGIN_STMT
+  if (pkt_id_116 == 0)
+    goto <bb 50>; [INV]
+  else
+    goto <bb 51>; [INV]
+
+  <bb 50> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  // predicted unlikely by goto predictor.
+  goto <bb 69>; [INV]
+
+  <bb 51> :
+  # DEBUG BEGIN_STMT
+  if (pkt_type_112 == 5)
+    goto <bb 52>; [INV]
+  else
+    goto <bb 53>; [INV]
+
+  <bb 52> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  pub_ack_rec_rel_response (client_107(D), 6, pkt_id_116, 1);
+  goto <bb 68>; [INV]
+
+  <bb 53> :
+  # DEBUG BEGIN_STMT
+  if (pkt_type_112 == 6)
+    goto <bb 54>; [INV]
+  else
+    goto <bb 55>; [INV]
+
+  <bb 54> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  pub_ack_rec_rel_response (client_107(D), 7, pkt_id_116, 0);
+  goto <bb 68>; [INV]
+
+  <bb 55> :
+  # DEBUG BEGIN_STMT
+  if (pkt_type_112 == 9)
+    goto <bb 59>; [INV]
+  else
+    goto <bb 56>; [INV]
+
+  <bb 56> :
+  if (pkt_type_112 == 11)
+    goto <bb 59>; [INV]
+  else
+    goto <bb 57>; [INV]
+
+  <bb 57> :
+  if (pkt_type_112 == 7)
+    goto <bb 59>; [INV]
+  else
+    goto <bb 58>; [INV]
+
+  <bb 58> :
+  if (pkt_type_112 == 4)
+    goto <bb 59>; [INV]
+  else
+    goto <bb 67>; [INV]
+
+  <bb 59> :
+  # DEBUG BEGIN_STMT
+  _83 = &client_107(D)->pend_req_queue;
+  r_118 = mqtt_take_request (_83, pkt_id_116);
+  # DEBUG r => r_118
+  # DEBUG BEGIN_STMT
+  if (r_118 != 0B)
+    goto <bb 60>; [INV]
+  else
+    goto <bb 68>; [INV]
+
+  <bb 60> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  if (pkt_type_112 == 9)
+    goto <bb 61>; [INV]
+  else
+    goto <bb 64>; [INV]
+
+  <bb 61> :
+  # DEBUG BEGIN_STMT
+  if (length_114(D) <= 2)
+    goto <bb 62>; [INV]
+  else
+    goto <bb 63>; [INV]
+
+  <bb 62> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  // predicted unlikely by goto predictor.
+  goto <bb 69>; [INV]
+
+  <bb 63> :
+  # DEBUG BEGIN_STMT
+  _84 = var_hdr_payload_109 + 2;
+  _85 = *_84;
+  mqtt_incomming_suback (r_118, _85);
+  goto <bb 66>; [INV]
+
+  <bb 64> :
+  # DEBUG BEGIN_STMT
+  _86 = r_118->cb;
+  if (_86 != 0B)
+    goto <bb 65>; [INV]
+  else
+    goto <bb 66>; [INV]
+
+  <bb 65> :
+  # DEBUG BEGIN_STMT
+  _87 = r_118->cb;
+  _88 = r_118->arg;
+  _87 (_88, 0);
+
+  <bb 66> :
+  # DEBUG BEGIN_STMT
+  mqtt_delete_request (r_118);
+  goto <bb 68>; [INV]
+
+  <bb 67> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  // predicted unlikely by goto predictor.
+  goto <bb 69>; [INV]
+
+  <bb 68> :
+  # res_89 = PHI <res_151(11), res_106(13), res_106(43), res_106(52), res_106(54), res_106(66), res_106(7), res_151(12), res_151(10), res_106(38), res_106(48), res_106(44), res_106(59)>
+  # DEBUG res => res_89
+  # DEBUG BEGIN_STMT
+  _155 = res_89;
+  goto <bb 70>; [INV]
+
+  <bb 69> :
+out_disconnect:
+  # DEBUG BEGIN_STMT
+  _156 = 256;
+
+  <bb 70> :
+  # _93 = PHI <_157(5), _155(68), _156(69)>
+  return _93;
+
+}
+
+
+mqtt_incomming_suback (struct mqtt_request_t * r, u8_t result)
+{
+  void (*<T655>) (void *, err_t) _1;
+  void (*<T655>) (void *, err_t) _2;
+  void * _3;
+  err_t iftmp.24_4;
+  err_t iftmp.24_9;
+  err_t iftmp.24_10;
+
+  <bb 2> :
+  # DEBUG BEGIN_STMT
+  _1 = r_7(D)->cb;
+  if (_1 != 0B)
+    goto <bb 3>; [INV]
+  else
+    goto <bb 7>; [INV]
+
+  <bb 3> :
+  # DEBUG BEGIN_STMT
+  _2 = r_7(D)->cb;
+  _3 = r_7(D)->arg;
+  if (result_8(D) <= 2)
+    goto <bb 4>; [INV]
+  else
+    goto <bb 5>; [INV]
+
+  <bb 4> :
+  iftmp.24_10 = 0;
+  goto <bb 6>; [INV]
+
+  <bb 5> :
+  iftmp.24_9 = -13;
+
+  <bb 6> :
+  # iftmp.24_4 = PHI <iftmp.24_10(4), iftmp.24_9(5)>
+  _2 (_3, iftmp.24_4);
+
+  <bb 7> :
+  return;
+
+}
+
+
+pub_ack_rec_rel_response (struct mqtt_client_t * client, u8_t msg, u16_t pkt_id, u8_t qos)
+{
+  err_t err;
+  struct mqtt_ringbuf_t * _1;
+  unsigned char _2;
+  struct mqtt_ringbuf_t * _3;
+  struct mqtt_ringbuf_t * _4;
+  struct mqtt_ringbuf_t * _5;
+  struct tcp_pcb * _6;
+  err_t _20;
+
+  <bb 2> :
+  # DEBUG BEGIN_STMT
+  err_9 = 0;
+  # DEBUG err => err_9
+  # DEBUG BEGIN_STMT
+  _1 = &client_10(D)->output;
+  _2 = mqtt_output_check_space (_1, 2);
+  if (_2 != 0)
+    goto <bb 3>; [INV]
+  else
+    goto <bb 4>; [INV]
+
+  <bb 3> :
+  # DEBUG BEGIN_STMT
+  _3 = &client_10(D)->output;
+  mqtt_output_append_fixed_header (_3, msg_14(D), 0, qos_15(D), 0, 2);
+  # DEBUG BEGIN_STMT
+  _4 = &client_10(D)->output;
+  mqtt_output_append_u16 (_4, pkt_id_17(D));
+  # DEBUG BEGIN_STMT
+  _5 = &client_10(D)->output;
+  _6 = client_10(D)->conn;
+  mqtt_output_send (_5, _6);
+  goto <bb 5>; [INV]
+
+  <bb 4> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  err_13 = -1;
+  # DEBUG err => err_13
+
+  <bb 5> :
+  # err_7 = PHI <err_9(3), err_13(4)>
+  # DEBUG err => err_7
+  # DEBUG BEGIN_STMT
+  _20 = err_7;
+  return _20;
+
+}
+
+
+mqtt_cyclic_timer (void * arg)
+{
+  struct mqtt_client_t * client;
+  u8_t restart_timer;
+  unsigned char _1;
+  short unsigned int _2;
+  short unsigned int _3;
+  short unsigned int _4;
+  short unsigned int _5;
+  int _6;
+  int _7;
+  unsigned char _8;
+  struct mqtt_request_t * * _9;
+  short unsigned int _10;
+  short unsigned int _11;
+  short unsigned int _12;
+  short unsigned int _13;
+  short unsigned int _14;
+  int _15;
+  int _16;
+  short unsigned int _17;
+  int _18;
+  short unsigned int _19;
+  short unsigned int _20;
+  int _21;
+  int _22;
+  short unsigned int _23;
+  int _24;
+  int _25;
+  short unsigned int _26;
+  int _27;
+  struct mqtt_ringbuf_t * _28;
+  unsigned char _29;
+  struct mqtt_ringbuf_t * _30;
+  short unsigned int _31;
+  short unsigned int _32;
+  short unsigned int _33;
+
+  <bb 2> :
+  # DEBUG BEGIN_STMT
+  restart_timer_40 = 1;
+  # DEBUG restart_timer => restart_timer_40
+  # DEBUG BEGIN_STMT
+  client_42 = arg_41(D);
+  # DEBUG client => client_42
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  if (client_42 == 0B)
+    goto <bb 3>; [INV]
+  else
+    goto <bb 4>; [INV]
+
+  <bb 3> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  __asm__ __volatile__("BKPT #0
+	");
+  # DEBUG BEGIN_STMT
+  goto <bb 3>; [INV]
+
+  <bb 4> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _1 = client_42->conn_state;
+  if (_1 == 2)
+    goto <bb 5>; [INV]
+  else
+    goto <bb 7>; [INV]
+
+  <bb 5> :
+  # DEBUG BEGIN_STMT
+  _2 = client_42->cyclic_tick;
+  _3 = _2;
+  _4 = _3 + 1;
+  client_42->cyclic_tick = _4;
+  # DEBUG BEGIN_STMT
+  _5 = client_42->cyclic_tick;
+  _6 = (int) _5;
+  _7 = _6 * 5;
+  if (_7 > 99)
+    goto <bb 6>; [INV]
+  else
+    goto <bb 16>; [INV]
+
+  <bb 6> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  mqtt_close (client_42, 257);
+  # DEBUG BEGIN_STMT
+  restart_timer_55 = 0;
+  # DEBUG restart_timer => restart_timer_55
+  goto <bb 16>; [INV]
+
+  <bb 7> :
+  # DEBUG BEGIN_STMT
+  _8 = client_42->conn_state;
+  if (_8 == 3)
+    goto <bb 8>; [INV]
+  else
+    goto <bb 15>; [INV]
+
+  <bb 8> :
+  # DEBUG BEGIN_STMT
+  _9 = &client_42->pend_req_queue;
+  mqtt_request_time_elapsed (_9, 5);
+  # DEBUG BEGIN_STMT
+  _10 = client_42->keep_alive;
+  if (_10 != 0)
+    goto <bb 9>; [INV]
+  else
+    goto <bb 16>; [INV]
+
+  <bb 9> :
+  # DEBUG BEGIN_STMT
+  _11 = client_42->server_watchdog;
+  _12 = _11;
+  _13 = _12 + 1;
+  client_42->server_watchdog = _13;
+  # DEBUG BEGIN_STMT
+  _14 = client_42->server_watchdog;
+  _15 = (int) _14;
+  _16 = _15 * 5;
+  _17 = client_42->keep_alive;
+  _18 = (int) _17;
+  _19 = client_42->keep_alive;
+  _20 = _19 / 2;
+  _21 = (int) _20;
+  _22 = _18 + _21;
+  if (_16 > _22)
+    goto <bb 10>; [INV]
+  else
+    goto <bb 11>; [INV]
+
+  <bb 10> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  mqtt_close (client_42, 257);
+  # DEBUG BEGIN_STMT
+  restart_timer_48 = 0;
+  # DEBUG restart_timer => restart_timer_48
+
+  <bb 11> :
+  # restart_timer_34 = PHI <restart_timer_40(9), restart_timer_48(10)>
+  # DEBUG restart_timer => restart_timer_34
+  # DEBUG BEGIN_STMT
+  _23 = client_42->cyclic_tick;
+  _24 = (int) _23;
+  _25 = _24 * 5;
+  _26 = client_42->keep_alive;
+  _27 = (int) _26;
+  if (_25 >= _27)
+    goto <bb 12>; [INV]
+  else
+    goto <bb 14>; [INV]
+
+  <bb 12> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _28 = &client_42->output;
+  _29 = mqtt_output_check_space (_28, 0);
+  if (_29 != 0)
+    goto <bb 13>; [INV]
+  else
+    goto <bb 16>; [INV]
+
+  <bb 13> :
+  # DEBUG BEGIN_STMT
+  _30 = &client_42->output;
+  mqtt_output_append_fixed_header (_30, 12, 0, 0, 0, 0);
+  # DEBUG BEGIN_STMT
+  client_42->cyclic_tick = 0;
+  goto <bb 16>; [INV]
+
+  <bb 14> :
+  # DEBUG BEGIN_STMT
+  _31 = client_42->cyclic_tick;
+  _32 = _31;
+  _33 = _32 + 1;
+  client_42->cyclic_tick = _33;
+  goto <bb 16>; [INV]
+
+  <bb 15> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  restart_timer_44 = 0;
+  # DEBUG restart_timer => restart_timer_44
+
+  <bb 16> :
+  # restart_timer_35 = PHI <restart_timer_55(6), restart_timer_34(13), restart_timer_44(15), restart_timer_40(5), restart_timer_40(8), restart_timer_34(12), restart_timer_34(14)>
+  # DEBUG restart_timer => restart_timer_35
+  # DEBUG BEGIN_STMT
+  if (restart_timer_35 != 0)
+    goto <bb 17>; [INV]
+  else
+    goto <bb 18>; [INV]
+
+  <bb 17> :
+  # DEBUG BEGIN_STMT
+  sys_timeout (5000, mqtt_cyclic_timer, arg_41(D));
+
+  <bb 18> :
+  return;
+
+}
+
+
+mqtt_close (struct mqtt_client_t * client, mqtt_connection_status_t reason)
+{
+  err_t res;
+  struct tcp_pcb * _1;
+  struct tcp_pcb * _2;
+  struct tcp_pcb * _3;
+  struct tcp_pcb * _4;
+  struct tcp_pcb * _5;
+  struct tcp_pcb * _6;
+  struct mqtt_request_t * * _7;
+  unsigned char _8;
+  void (*<T643>) (struct mqtt_client_t *, void *, mqtt_connection_status_t) _9;
+  void (*<T643>) (struct mqtt_client_t *, void *, mqtt_connection_status_t) _10;
+  void * _11;
+
+  <bb 2> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  if (client_16(D) == 0B)
+    goto <bb 3>; [INV]
+  else
+    goto <bb 4>; [INV]
+
+  <bb 3> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  __asm__ __volatile__("BKPT #0
+	");
+  # DEBUG BEGIN_STMT
+  goto <bb 3>; [INV]
+
+  <bb 4> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _1 = client_16(D)->conn;
+  if (_1 != 0B)
+    goto <bb 5>; [INV]
+  else
+    goto <bb 8>; [INV]
+
+  <bb 5> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _2 = client_16(D)->conn;
+  tcp_recv (_2, 0B);
+  # DEBUG BEGIN_STMT
+  _3 = client_16(D)->conn;
+  tcp_err (_3, 0B);
+  # DEBUG BEGIN_STMT
+  _4 = client_16(D)->conn;
+  tcp_sent (_4, 0B);
+  # DEBUG BEGIN_STMT
+  _5 = client_16(D)->conn;
+  res_22 = tcp_close (_5);
+  # DEBUG res => res_22
+  # DEBUG BEGIN_STMT
+  if (res_22 != 0)
+    goto <bb 6>; [INV]
+  else
+    goto <bb 7>; [INV]
+
+  <bb 6> :
+  # DEBUG BEGIN_STMT
+  _6 = client_16(D)->conn;
+  tcp_abort (_6);
+
+  <bb 7> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  client_16(D)->conn = 0B;
+
+  <bb 8> :
+  # DEBUG BEGIN_STMT
+  _7 = &client_16(D)->pend_req_queue;
+  mqtt_clear_requests (_7);
+  # DEBUG BEGIN_STMT
+  sys_untimeout (mqtt_cyclic_timer, client_16(D));
+  # DEBUG BEGIN_STMT
+  _8 = client_16(D)->conn_state;
+  if (_8 != 0)
+    goto <bb 9>; [INV]
+  else
+    goto <bb 11>; [INV]
+
+  <bb 9> :
+  # DEBUG BEGIN_STMT
+  client_16(D)->conn_state = 0;
+  # DEBUG BEGIN_STMT
+  _9 = client_16(D)->connect_cb;
+  if (_9 != 0B)
+    goto <bb 10>; [INV]
+  else
+    goto <bb 11>; [INV]
+
+  <bb 10> :
+  # DEBUG BEGIN_STMT
+  _10 = client_16(D)->connect_cb;
+  _11 = client_16(D)->connect_arg;
+  _10 (client_16(D), _11, reason_28(D));
+
+  <bb 11> :
+  return;
+
+}
+
+
+mqtt_output_check_space (struct mqtt_ringbuf_t * rb, u16_t r_length)
+{
+  u16_t total_len;
+  short unsigned int total_len.1_1;
+  int _2;
+  short unsigned int _3;
+  int _4;
+  int _5;
+  _Bool _6;
+  u8_t _17;
+
+  <bb 2> :
+  # DEBUG BEGIN_STMT
+  total_len_11 = r_length_10(D) + 1;
+  # DEBUG total_len => total_len_11
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  if (rb_12(D) == 0B)
+    goto <bb 3>; [INV]
+  else
+    goto <bb 4>; [INV]
+
+  <bb 3> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  __asm__ __volatile__("BKPT #0
+	");
+  # DEBUG BEGIN_STMT
+  goto <bb 3>; [INV]
+
+  <bb 4> :
+  # r_length_7 = PHI <r_length_10(D)(2), r_length_15(4)>
+  # total_len_8 = PHI <total_len_11(2), total_len_14(4)>
+  # DEBUG total_len => total_len_8
+  # DEBUG r_length => r_length_7
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  total_len.1_1 = total_len_8;
+  total_len_14 = total_len.1_1 + 1;
+  # DEBUG total_len => total_len_14
+  # DEBUG BEGIN_STMT
+  r_length_15 = r_length_7 >> 7;
+  # DEBUG r_length => r_length_15
+  # DEBUG BEGIN_STMT
+  if (r_length_15 != 0)
+    goto <bb 4>; [INV]
+  else
+    goto <bb 5>; [INV]
+
+  <bb 5> :
+  # DEBUG BEGIN_STMT
+  _2 = (int) total_len_14;
+  _3 = mqtt_ringbuf_len (rb_12(D));
+  _4 = (int) _3;
+  _5 = 256 - _4;
+  _6 = _2 <= _5;
+  _17 = (u8_t) _6;
+  return _17;
+
+}
+
+
+mqtt_output_append_fixed_header (struct mqtt_ringbuf_t * rb, u8_t msg_type, u8_t fdup, u8_t fqos, u8_t fretain, u16_t r_length)
+{
+  int _1;
+  int _2;
+  signed char _3;
+  int _4;
+  int _5;
+  signed char _6;
+  signed char _7;
+  signed char _8;
+  int _9;
+  int _10;
+  signed char _11;
+  signed char _12;
+  signed char _13;
+  signed char fretain.2_14;
+  signed char _15;
+  signed char _16;
+  unsigned char _17;
+  signed char _18;
+  signed char _19;
+  signed char _20;
+  unsigned char _21;
+  signed char iftmp.3_23;
+  signed char iftmp.3_33;
+  signed char iftmp.3_34;
+
+  <bb 2> :
+  # DEBUG BEGIN_STMT
+  _1 = (int) msg_type_25(D);
+  _2 = _1 << 4;
+  _3 = (signed char) _2;
+  _4 = (int) fdup_26(D);
+  _5 = _4 << 3;
+  _6 = (signed char) _5;
+  _7 = _6 & 8;
+  _8 = _3 | _7;
+  _9 = (int) fqos_27(D);
+  _10 = _9 << 1;
+  _11 = (signed char) _10;
+  _12 = _11 & 6;
+  _13 = _8 | _12;
+  fretain.2_14 = (signed char) fretain_28(D);
+  _15 = fretain.2_14 & 1;
+  _16 = _13 | _15;
+  _17 = (unsigned char) _16;
+  mqtt_output_append_u8 (rb_30(D), _17);
+
+  <bb 3> :
+  # r_length_22 = PHI <r_length_32(D)(2), r_length_36(6)>
+  # DEBUG r_length => r_length_22
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _18 = (signed char) r_length_22;
+  _19 = _18 & 127;
+  if (r_length_22 > 127)
+    goto <bb 4>; [INV]
+  else
+    goto <bb 5>; [INV]
+
+  <bb 4> :
+  iftmp.3_34 = -128;
+  goto <bb 6>; [INV]
+
+  <bb 5> :
+  iftmp.3_33 = 0;
+
+  <bb 6> :
+  # iftmp.3_23 = PHI <iftmp.3_34(4), iftmp.3_33(5)>
+  _20 = iftmp.3_23 | _19;
+  _21 = (unsigned char) _20;
+  mqtt_output_append_u8 (rb_30(D), _21);
+  # DEBUG BEGIN_STMT
+  r_length_36 = r_length_22 >> 7;
+  # DEBUG r_length => r_length_36
+  # DEBUG BEGIN_STMT
+  if (r_length_36 != 0)
+    goto <bb 3>; [INV]
+  else
+    goto <bb 7>; [INV]
+
+  <bb 7> :
+  return;
+
+}
+
+
+mqtt_output_append_string (struct mqtt_ringbuf_t * rb, const char * str, u16_t length)
+{
+  u16_t n;
+  short unsigned int _1;
+  unsigned char _2;
+  unsigned char _3;
+  sizetype _4;
+  const char * _5;
+  char _6;
+  short unsigned int n.4_7;
+
+  <bb 2> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _1 = length_10(D) >> 8;
+  _2 = (unsigned char) _1;
+  mqtt_ringbuf_put (rb_12(D), _2);
+  # DEBUG BEGIN_STMT
+  _3 = (unsigned char) length_10(D);
+  mqtt_ringbuf_put (rb_12(D), _3);
+  # DEBUG BEGIN_STMT
+  n_15 = 0;
+  # DEBUG n => n_15
+  goto <bb 4>; [INV]
+
+  <bb 3> :
+  # DEBUG BEGIN_STMT
+  _4 = (sizetype) n_8;
+  _5 = str_16(D) + _4;
+  _6 = *_5;
+  mqtt_ringbuf_put (rb_12(D), _6);
+  # DEBUG BEGIN_STMT
+  n.4_7 = n_8;
+  n_18 = n.4_7 + 1;
+  # DEBUG n => n_18
+
+  <bb 4> :
+  # n_8 = PHI <n_15(2), n_18(3)>
+  # DEBUG n => n_8
+  # DEBUG BEGIN_STMT
+  if (n_8 < length_10(D))
+    goto <bb 3>; [INV]
+  else
+    goto <bb 5>; [INV]
+
+  <bb 5> :
+  return;
+
+}
+
+
+mqtt_output_append_buf (struct mqtt_ringbuf_t * rb, const void * data, u16_t length)
+{
+  u16_t n;
+  sizetype _1;
+  const u8_t * _2;
+  unsigned char _3;
+  short unsigned int n.5_4;
+
+  <bb 2> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  n_7 = 0;
+  # DEBUG n => n_7
+  goto <bb 4>; [INV]
+
+  <bb 3> :
+  # DEBUG BEGIN_STMT
+  _1 = (sizetype) n_5;
+  _2 = data_10(D) + _1;
+  _3 = *_2;
+  mqtt_ringbuf_put (rb_11(D), _3);
+  # DEBUG BEGIN_STMT
+  n.5_4 = n_5;
+  n_13 = n.5_4 + 1;
+  # DEBUG n => n_13
+
+  <bb 4> :
+  # n_5 = PHI <n_7(2), n_13(3)>
+  # DEBUG n => n_5
+  # DEBUG BEGIN_STMT
+  if (n_5 < length_9(D))
+    goto <bb 3>; [INV]
+  else
+    goto <bb 5>; [INV]
+
+  <bb 5> :
+  return;
+
+}
+
+
+mqtt_output_append_u16 (struct mqtt_ringbuf_t * rb, u16_t value)
+{
+  short unsigned int _1;
+  unsigned char _2;
+  unsigned char _3;
+
+  <bb 2> :
+  # DEBUG BEGIN_STMT
+  _1 = value_4(D) >> 8;
+  _2 = (unsigned char) _1;
+  mqtt_ringbuf_put (rb_6(D), _2);
+  # DEBUG BEGIN_STMT
+  _3 = (unsigned char) value_4(D);
+  mqtt_ringbuf_put (rb_6(D), _3);
+  return;
+
+}
+
+
+mqtt_output_append_u8 (struct mqtt_ringbuf_t * rb, u8_t value)
+{
+  <bb 2> :
+  # DEBUG BEGIN_STMT
+  mqtt_ringbuf_put (rb_2(D), value_3(D));
+  return;
+
+}
+
+
+mqtt_init_requests (struct mqtt_request_t * r_objs, size_t r_objs_len)
+{
+  u8_t n;
+  unsigned int _1;
+  unsigned int _2;
+  unsigned int _3;
+  unsigned int _4;
+  struct mqtt_request_t * _5;
+  struct mqtt_request_t * _6;
+  unsigned char n.25_7;
+  unsigned int _8;
+
+  <bb 2> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  if (r_objs_12(D) == 0B)
+    goto <bb 3>; [INV]
+  else
+    goto <bb 4>; [INV]
+
+  <bb 3> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  __asm__ __volatile__("BKPT #0
+	");
+  # DEBUG BEGIN_STMT
+  goto <bb 3>; [INV]
+
+  <bb 4> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  n_14 = 0;
+  # DEBUG n => n_14
+  goto <bb 6>; [INV]
+
+  <bb 5> :
+  # DEBUG BEGIN_STMT
+  _1 = (unsigned int) n_9;
+  _2 = _1 * 16;
+  _3 = (unsigned int) n_9;
+  _4 = _3 * 16;
+  _5 = r_objs_12(D) + _4;
+  _6 = r_objs_12(D) + _2;
+  _5->next = _6;
+  # DEBUG BEGIN_STMT
+  n.25_7 = n_9;
+  n_17 = n.25_7 + 1;
+  # DEBUG n => n_17
+
+  <bb 6> :
+  # n_9 = PHI <n_14(4), n_17(5)>
+  # DEBUG n => n_9
+  # DEBUG BEGIN_STMT
+  _8 = (unsigned int) n_9;
+  if (r_objs_len_15(D) > _8)
+    goto <bb 5>; [INV]
+  else
+    goto <bb 7>; [INV]
+
+  <bb 7> :
+  return;
+
+}
+
+
+mqtt_clear_requests (struct mqtt_request_t * * tail)
+{
+  struct mqtt_request_t * next;
+  struct mqtt_request_t * iter;
+
+  <bb 2> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  if (tail_4(D) == 0B)
+    goto <bb 3>; [INV]
+  else
+    goto <bb 4>; [INV]
+
+  <bb 3> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  __asm__ __volatile__("BKPT #0
+	");
+  # DEBUG BEGIN_STMT
+  goto <bb 3>; [INV]
+
+  <bb 4> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  iter_6 = *tail_4(D);
+  # DEBUG iter => iter_6
+  goto <bb 6>; [INV]
+
+  <bb 5> :
+  # DEBUG BEGIN_STMT
+  next_8 = iter_1->next;
+  # DEBUG next => next_8
+  # DEBUG BEGIN_STMT
+  mqtt_delete_request (iter_1);
+  # DEBUG BEGIN_STMT
+  iter_10 = next_8;
+  # DEBUG iter => iter_10
+
+  <bb 6> :
+  # iter_1 = PHI <iter_6(4), iter_10(5)>
+  # DEBUG iter => iter_1
+  # DEBUG BEGIN_STMT
+  if (iter_1 != 0B)
+    goto <bb 5>; [INV]
+  else
+    goto <bb 7>; [INV]
+
+  <bb 7> :
+  # DEBUG BEGIN_STMT
+  *tail_4(D) = 0B;
+  return;
+
+}
+
+
+mqtt_request_time_elapsed (struct mqtt_request_t * * tail, u8_t t)
+{
+  struct mqtt_request_t * r;
+  short unsigned int _1;
+  short unsigned int _2;
+  short unsigned int _3;
+  unsigned char _4;
+  struct mqtt_request_t * _5;
+  void (*<T655>) (void *, err_t) _6;
+  void (*<T655>) (void *, err_t) _7;
+  void * _8;
+  short unsigned int _9;
+  short unsigned int _10;
+  short unsigned int _11;
+
+  <bb 2> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  if (tail_17(D) == 0B)
+    goto <bb 3>; [INV]
+  else
+    goto <bb 4>; [INV]
+
+  <bb 3> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  __asm__ __volatile__("BKPT #0
+	");
+  # DEBUG BEGIN_STMT
+  goto <bb 3>; [INV]
+
+  <bb 4> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  r_19 = *tail_17(D);
+  # DEBUG r => r_19
+  # DEBUG BEGIN_STMT
+  goto <bb 10>; [INV]
+
+  <bb 5> :
+  # DEBUG BEGIN_STMT
+  _1 = (short unsigned int) t_12;
+  _2 = r_13->timeout_diff;
+  if (_1 >= _2)
+    goto <bb 6>; [INV]
+  else
+    goto <bb 9>; [INV]
+
+  <bb 6> :
+  # DEBUG BEGIN_STMT
+  _3 = r_13->timeout_diff;
+  _4 = (unsigned char) _3;
+  t_23 = t_12 - _4;
+  # DEBUG t => t_23
+  # DEBUG BEGIN_STMT
+  _5 = r_13->next;
+  *tail_17(D) = _5;
+  # DEBUG BEGIN_STMT
+  _6 = r_13->cb;
+  if (_6 != 0B)
+    goto <bb 7>; [INV]
+  else
+    goto <bb 8>; [INV]
+
+  <bb 7> :
+  # DEBUG BEGIN_STMT
+  _7 = r_13->cb;
+  _8 = r_13->arg;
+  _7 (_8, -3);
+
+  <bb 8> :
+  # DEBUG BEGIN_STMT
+  mqtt_delete_request (r_13);
+  # DEBUG BEGIN_STMT
+  r_27 ={v} MEM[(struct mqtt_request_t * const volatile *)tail_17(D)];
+  # DEBUG r => r_27
+  goto <bb 10>; [INV]
+
+  <bb 9> :
+  # DEBUG BEGIN_STMT
+  _9 = r_13->timeout_diff;
+  _10 = (short unsigned int) t_12;
+  _11 = _9 - _10;
+  r_13->timeout_diff = _11;
+  # DEBUG BEGIN_STMT
+  t_22 = 0;
+  # DEBUG t => t_22
+
+  <bb 10> :
+  # t_12 = PHI <t_20(D)(4), t_23(8), t_22(9)>
+  # r_13 = PHI <r_19(4), r_27(8), r_13(9)>
+  # DEBUG r => r_13
+  # DEBUG t => t_12
+  # DEBUG BEGIN_STMT
+  if (t_12 != 0)
+    goto <bb 11>; [INV]
+  else
+    goto <bb 12>; [INV]
+
+  <bb 11> :
+  if (r_13 != 0B)
+    goto <bb 5>; [INV]
+  else
+    goto <bb 12>; [INV]
+
+  <bb 12> :
+  return;
+
+}
+
+
+mqtt_take_request (struct mqtt_request_t * * tail, u16_t pkt_id)
+{
+  struct mqtt_request_t * prev;
+  struct mqtt_request_t * iter;
+  short unsigned int _1;
+  struct mqtt_request_t * _2;
+  struct mqtt_request_t * _3;
+  struct mqtt_request_t * _4;
+  struct mqtt_request_t * _5;
+  short unsigned int _6;
+  short unsigned int _7;
+  struct mqtt_request_t * _8;
+  short unsigned int _9;
+  struct mqtt_request_t * _28;
+
+  <bb 2> :
+  # DEBUG BEGIN_STMT
+  iter_16 = 0B;
+  # DEBUG iter => iter_16
+  prev_17 = 0B;
+  # DEBUG prev => prev_17
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  if (tail_18(D) == 0B)
+    goto <bb 3>; [INV]
+  else
+    goto <bb 4>; [INV]
+
+  <bb 3> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  __asm__ __volatile__("BKPT #0
+	");
+  # DEBUG BEGIN_STMT
+  goto <bb 3>; [INV]
+
+  <bb 4> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  iter_20 = *tail_18(D);
+  # DEBUG iter => iter_20
+  goto <bb 7>; [INV]
+
+  <bb 5> :
+  # DEBUG BEGIN_STMT
+  _1 = iter_10->pkt_id;
+  if (pkt_id_21(D) == _1)
+    goto <bb 8>; [INV]
+  else
+    goto <bb 6>; [INV]
+
+  <bb 6> :
+  # DEBUG BEGIN_STMT
+  prev_22 = iter_10;
+  # DEBUG prev => prev_22
+  # DEBUG BEGIN_STMT
+  iter_23 = iter_10->next;
+  # DEBUG iter => iter_23
+
+  <bb 7> :
+  # iter_10 = PHI <iter_20(4), iter_23(6)>
+  # prev_11 = PHI <prev_17(4), prev_22(6)>
+  # DEBUG prev => prev_11
+  # DEBUG iter => iter_10
+  # DEBUG BEGIN_STMT
+  if (iter_10 != 0B)
+    goto <bb 5>; [INV]
+  else
+    goto <bb 8>; [INV]
+
+  <bb 8> :
+  # DEBUG BEGIN_STMT
+  if (iter_10 != 0B)
+    goto <bb 9>; [INV]
+  else
+    goto <bb 15>; [INV]
+
+  <bb 9> :
+  # DEBUG BEGIN_STMT
+  if (prev_11 == 0B)
+    goto <bb 10>; [INV]
+  else
+    goto <bb 11>; [INV]
+
+  <bb 10> :
+  # DEBUG BEGIN_STMT
+  _2 = iter_10->next;
+  *tail_18(D) = _2;
+  goto <bb 12>; [INV]
+
+  <bb 11> :
+  # DEBUG BEGIN_STMT
+  _3 = iter_10->next;
+  prev_11->next = _3;
+
+  <bb 12> :
+  # DEBUG BEGIN_STMT
+  _4 = iter_10->next;
+  if (_4 != 0B)
+    goto <bb 13>; [INV]
+  else
+    goto <bb 14>; [INV]
+
+  <bb 13> :
+  # DEBUG BEGIN_STMT
+  _5 = iter_10->next;
+  _6 = _5->timeout_diff;
+  _7 = iter_10->timeout_diff;
+  _8 = iter_10->next;
+  _9 = _6 + _7;
+  _8->timeout_diff = _9;
+
+  <bb 14> :
+  # DEBUG BEGIN_STMT
+  iter_10->next = 0B;
+
+  <bb 15> :
+  # DEBUG BEGIN_STMT
+  _28 = iter_10;
+  return _28;
+
+}
+
+
+mqtt_delete_request (struct mqtt_request_t * r)
+{
+  <bb 2> :
+  # DEBUG BEGIN_STMT
+  if (r_2(D) != 0B)
+    goto <bb 3>; [INV]
+  else
+    goto <bb 4>; [INV]
+
+  <bb 3> :
+  # DEBUG BEGIN_STMT
+  r_2(D)->next = r_2(D);
+
+  <bb 4> :
+  return;
+
+}
+
+
+mqtt_append_request (struct mqtt_request_t * * tail, struct mqtt_request_t * r)
+{
+  struct mqtt_request_t * iter;
+  s16_t time_before;
+  struct mqtt_request_t * head;
+  short unsigned int _1;
+  unsigned short time_before.6_2;
+  unsigned short _3;
+  short unsigned int time_before.7_4;
+  short unsigned int _5;
+
+  <bb 2> :
+  # DEBUG BEGIN_STMT
+  head_12 = 0B;
+  # DEBUG head => head_12
+  # DEBUG BEGIN_STMT
+  time_before_13 = 0;
+  # DEBUG time_before => time_before_13
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  if (tail_14(D) == 0B)
+    goto <bb 3>; [INV]
+  else
+    goto <bb 4>; [INV]
+
+  <bb 3> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  __asm__ __volatile__("BKPT #0
+	");
+  # DEBUG BEGIN_STMT
+  goto <bb 3>; [INV]
+
+  <bb 4> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  iter_16 = *tail_14(D);
+  # DEBUG iter => iter_16
+  goto <bb 6>; [INV]
+
+  <bb 5> :
+  # DEBUG BEGIN_STMT
+  _1 = iter_8->timeout_diff;
+  time_before.6_2 = (unsigned short) time_before_7;
+  _3 = _1 + time_before.6_2;
+  time_before_22 = (s16_t) _3;
+  # DEBUG time_before => time_before_22
+  # DEBUG BEGIN_STMT
+  head_23 = iter_8;
+  # DEBUG head => head_23
+  # DEBUG BEGIN_STMT
+  iter_24 = iter_8->next;
+  # DEBUG iter => iter_24
+
+  <bb 6> :
+  # head_6 = PHI <head_12(4), head_23(5)>
+  # time_before_7 = PHI <time_before_13(4), time_before_22(5)>
+  # iter_8 = PHI <iter_16(4), iter_24(5)>
+  # DEBUG iter => iter_8
+  # DEBUG time_before => time_before_7
+  # DEBUG head => head_6
+  # DEBUG BEGIN_STMT
+  if (iter_8 != 0B)
+    goto <bb 5>; [INV]
+  else
+    goto <bb 7>; [INV]
+
+  <bb 7> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  if (time_before_7 > 30)
+    goto <bb 8>; [INV]
+  else
+    goto <bb 9>; [INV]
+
+  <bb 8> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  __asm__ __volatile__("BKPT #0
+	");
+  # DEBUG BEGIN_STMT
+  goto <bb 8>; [INV]
+
+  <bb 9> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  time_before.7_4 = (short unsigned int) time_before_7;
+  _5 = 30 - time_before.7_4;
+  r_17(D)->timeout_diff = _5;
+  # DEBUG BEGIN_STMT
+  if (head_6 == 0B)
+    goto <bb 10>; [INV]
+  else
+    goto <bb 11>; [INV]
+
+  <bb 10> :
+  # DEBUG BEGIN_STMT
+  *tail_14(D) = r_17(D);
+  goto <bb 12>; [INV]
+
+  <bb 11> :
+  # DEBUG BEGIN_STMT
+  head_6->next = r_17(D);
+
+  <bb 12> :
+  return;
+
+}
+
+
+mqtt_create_request (struct mqtt_request_t * r_objs, size_t r_objs_len, u16_t pkt_id, void (*mqtt_request_cb_t) (void *, err_t) cb, void * arg)
+{
+  u8_t n;
+  struct mqtt_request_t * r;
+  unsigned int _1;
+  unsigned int _2;
+  struct mqtt_request_t * _3;
+  struct mqtt_request_t * _4;
+  unsigned int _5;
+  unsigned int _6;
+  struct mqtt_request_t * _7;
+  unsigned int _8;
+  unsigned int _9;
+  unsigned char n.0_10;
+  unsigned int _11;
+  struct mqtt_request_t * _30;
+
+  <bb 2> :
+  # DEBUG BEGIN_STMT
+  r_16 = 0B;
+  # DEBUG r => r_16
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  if (r_objs_17(D) == 0B)
+    goto <bb 3>; [INV]
+  else
+    goto <bb 4>; [INV]
+
+  <bb 3> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  __asm__ __volatile__("BKPT #0
+	");
+  # DEBUG BEGIN_STMT
+  goto <bb 3>; [INV]
+
+  <bb 4> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  n_19 = 0;
+  # DEBUG n => n_19
+  goto <bb 8>; [INV]
+
+  <bb 5> :
+  # DEBUG BEGIN_STMT
+  _1 = (unsigned int) n_13;
+  _2 = _1 * 16;
+  _3 = r_objs_17(D) + _2;
+  _4 = _3->next;
+  _5 = (unsigned int) n_13;
+  _6 = _5 * 16;
+  _7 = r_objs_17(D) + _6;
+  if (_4 == _7)
+    goto <bb 6>; [INV]
+  else
+    goto <bb 7>; [INV]
+
+  <bb 6> :
+  # DEBUG BEGIN_STMT
+  _8 = (unsigned int) n_13;
+  _9 = _8 * 16;
+  r_22 = r_objs_17(D) + _9;
+  # DEBUG r => r_22
+  # DEBUG BEGIN_STMT
+  r_22->next = 0B;
+  # DEBUG BEGIN_STMT
+  r_22->cb = cb_24(D);
+  # DEBUG BEGIN_STMT
+  r_22->arg = arg_26(D);
+  # DEBUG BEGIN_STMT
+  r_22->pkt_id = pkt_id_28(D);
+  # DEBUG BEGIN_STMT
+  goto <bb 9>; [INV]
+
+  <bb 7> :
+  # DEBUG BEGIN_STMT
+  n.0_10 = n_13;
+  n_21 = n.0_10 + 1;
+  # DEBUG n => n_21
+
+  <bb 8> :
+  # n_13 = PHI <n_19(4), n_21(7)>
+  # DEBUG n => n_13
+  # DEBUG BEGIN_STMT
+  _11 = (unsigned int) n_13;
+  if (r_objs_len_20(D) > _11)
+    goto <bb 5>; [INV]
+  else
+    goto <bb 9>; [INV]
+
+  <bb 9> :
+  # r_12 = PHI <r_22(6), r_16(8)>
+  # DEBUG r => r_12
+  # DEBUG BEGIN_STMT
+  _30 = r_12;
+  return _30;
+
+}
+
+
+mqtt_output_send (struct mqtt_ringbuf_t * rb, struct tcp_pcb * tpcb)
+{
+  u16_t send_len;
+  u16_t ringbuf_lin_len;
+  u8_t wrap;
+  err_t err;
+  short unsigned int _1;
+  int _2;
+  short unsigned int _3;
+  int _4;
+  int _5;
+  short unsigned int _6;
+  short unsigned int _7;
+  _Bool _8;
+  u8_t * _9;
+  short unsigned int _10;
+  int _11;
+  short unsigned int _12;
+  int _13;
+  short unsigned int _14;
+  int _15;
+  int _16;
+  short unsigned int _17;
+  short unsigned int _18;
+  int _19;
+  short unsigned int _20;
+  int _21;
+  short unsigned int _22;
+  int _23;
+  int _24;
+  short unsigned int _25;
+  u8_t * _26;
+  u16_t iftmp.8_31;
+  u8_t iftmp.9_32;
+  u16_t iftmp.10_33;
+  int iftmp.11_34;
+  u16_t iftmp.12_35;
+  u16_t iftmp.8_48;
+  u16_t iftmp.8_50;
+  u8_t iftmp.9_58;
+  u8_t iftmp.9_59;
+  int iftmp.11_64;
+  int iftmp.11_66;
+  u16_t iftmp.12_68;
+  u16_t iftmp.12_70;
+  u16_t iftmp.10_71;
+  u16_t iftmp.10_72;
+
+  <bb 2> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  wrap_44 = 0;
+  # DEBUG wrap => wrap_44
+  # DEBUG BEGIN_STMT
+  _1 = mqtt_ringbuf_len (rb_46(D));
+  _2 = (int) _1;
+  _3 = rb_46(D)->get;
+  _4 = (int) _3;
+  _5 = 256 - _4;
+  if (_2 < _5)
+    goto <bb 3>; [INV]
+  else
+    goto <bb 4>; [INV]
+
+  <bb 3> :
+  iftmp.8_50 = mqtt_ringbuf_len (rb_46(D));
+  goto <bb 5>; [INV]
+
+  <bb 4> :
+  _6 = rb_46(D)->get;
+  iftmp.8_48 = 256 - _6;
+
+  <bb 5> :
+  # iftmp.8_31 = PHI <iftmp.8_50(3), iftmp.8_48(4)>
+  ringbuf_lin_len_51 = iftmp.8_31;
+  # DEBUG ringbuf_lin_len => ringbuf_lin_len_51
+  # DEBUG BEGIN_STMT
+  send_len_53 = tpcb_52(D)->snd_buf;
+  # DEBUG send_len => send_len_53
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  if (tpcb_52(D) == 0B)
+    goto <bb 6>; [INV]
+  else
+    goto <bb 7>; [INV]
+
+  <bb 6> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  __asm__ __volatile__("BKPT #0
+	");
+  # DEBUG BEGIN_STMT
+  goto <bb 6>; [INV]
+
+  <bb 7> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  if (send_len_53 == 0)
+    goto <bb 9>; [INV]
+  else
+    goto <bb 8>; [INV]
+
+  <bb 8> :
+  if (ringbuf_lin_len_51 == 0)
+    goto <bb 9>; [INV]
+  else
+    goto <bb 10>; [INV]
+
+  <bb 9> :
+  # DEBUG BEGIN_STMT
+  // predicted unlikely by early return (on trees) predictor.
+  goto <bb 29>; [INV]
+
+  <bb 10> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  if (send_len_53 > ringbuf_lin_len_51)
+    goto <bb 11>; [INV]
+  else
+    goto <bb 12>; [INV]
+
+  <bb 11> :
+  # DEBUG BEGIN_STMT
+  send_len_54 = ringbuf_lin_len_51;
+  # DEBUG send_len => send_len_54
+  # DEBUG BEGIN_STMT
+  _7 = mqtt_ringbuf_len (rb_46(D));
+  _8 = ringbuf_lin_len_51 < _7;
+  wrap_56 = (u8_t) _8;
+  # DEBUG wrap => wrap_56
+
+  <bb 12> :
+  # wrap_28 = PHI <wrap_44(10), wrap_56(11)>
+  # send_len_29 = PHI <send_len_53(10), send_len_54(11)>
+  # DEBUG send_len => send_len_29
+  # DEBUG wrap => wrap_28
+  # DEBUG BEGIN_STMT
+  _9 = mqtt_ringbuf_get_ptr (rb_46(D));
+  if (wrap_28 != 0)
+    goto <bb 13>; [INV]
+  else
+    goto <bb 14>; [INV]
+
+  <bb 13> :
+  iftmp.9_59 = 3;
+  goto <bb 15>; [INV]
+
+  <bb 14> :
+  iftmp.9_58 = 1;
+
+  <bb 15> :
+  # iftmp.9_32 = PHI <iftmp.9_59(13), iftmp.9_58(14)>
+  err_61 = tcp_write (tpcb_52(D), _9, send_len_29, iftmp.9_32);
+  # DEBUG err => err_61
+  # DEBUG BEGIN_STMT
+  if (err_61 == 0)
+    goto <bb 16>; [INV]
+  else
+    goto <bb 27>; [INV]
+
+  <bb 16> :
+  if (wrap_28 != 0)
+    goto <bb 17>; [INV]
+  else
+    goto <bb 27>; [INV]
+
+  <bb 17> :
+  # DEBUG BEGIN_STMT
+  mqtt_ringbuf_advance_get_idx (rb_46(D), send_len_29);
+  # DEBUG BEGIN_STMT
+  _10 = tpcb_52(D)->snd_buf;
+  _11 = (int) _10;
+  _12 = mqtt_ringbuf_len (rb_46(D));
+  _13 = (int) _12;
+  _14 = rb_46(D)->get;
+  _15 = (int) _14;
+  _16 = 256 - _15;
+  if (_13 < _16)
+    goto <bb 18>; [INV]
+  else
+    goto <bb 19>; [INV]
+
+  <bb 18> :
+  _17 = mqtt_ringbuf_len (rb_46(D));
+  iftmp.11_66 = (int) _17;
+  goto <bb 20>; [INV]
+
+  <bb 19> :
+  _18 = rb_46(D)->get;
+  _19 = (int) _18;
+  iftmp.11_64 = 256 - _19;
+
+  <bb 20> :
+  # iftmp.11_34 = PHI <iftmp.11_66(18), iftmp.11_64(19)>
+  if (iftmp.11_34 > _11)
+    goto <bb 21>; [INV]
+  else
+    goto <bb 22>; [INV]
+
+  <bb 21> :
+  iftmp.10_72 = tpcb_52(D)->snd_buf;
+  goto <bb 26>; [INV]
+
+  <bb 22> :
+  _20 = mqtt_ringbuf_len (rb_46(D));
+  _21 = (int) _20;
+  _22 = rb_46(D)->get;
+  _23 = (int) _22;
+  _24 = 256 - _23;
+  if (_21 < _24)
+    goto <bb 23>; [INV]
+  else
+    goto <bb 24>; [INV]
+
+  <bb 23> :
+  iftmp.12_70 = mqtt_ringbuf_len (rb_46(D));
+  goto <bb 25>; [INV]
+
+  <bb 24> :
+  _25 = rb_46(D)->get;
+  iftmp.12_68 = 256 - _25;
+
+  <bb 25> :
+  # iftmp.12_35 = PHI <iftmp.12_70(23), iftmp.12_68(24)>
+  iftmp.10_71 = iftmp.12_35;
+
+  <bb 26> :
+  # iftmp.10_33 = PHI <iftmp.10_72(21), iftmp.10_71(25)>
+  send_len_73 = iftmp.10_33;
+  # DEBUG send_len => send_len_73
+  # DEBUG BEGIN_STMT
+  _26 = mqtt_ringbuf_get_ptr (rb_46(D));
+  err_76 = tcp_write (tpcb_52(D), _26, send_len_73, 1);
+  # DEBUG err => err_76
+
+  <bb 27> :
+  # err_27 = PHI <err_61(15), err_61(16), err_76(26)>
+  # send_len_30 = PHI <send_len_29(15), send_len_29(16), send_len_73(26)>
+  # DEBUG send_len => send_len_30
+  # DEBUG err => err_27
+  # DEBUG BEGIN_STMT
+  if (err_27 == 0)
+    goto <bb 28>; [INV]
+  else
+    goto <bb 29>; [INV]
+
+  <bb 28> :
+  # DEBUG BEGIN_STMT
+  mqtt_ringbuf_advance_get_idx (rb_46(D), send_len_30);
+  # DEBUG BEGIN_STMT
+  tcp_output (tpcb_52(D));
+
+  <bb 29> :
+  # DEBUG BEGIN_STMT
+  return;
+
+}
+
+
+mqtt_ringbuf_len (struct mqtt_ringbuf_t * rb)
+{
+  u32_t len;
+  short unsigned int _1;
+  int _2;
+  short unsigned int _3;
+  int _4;
+  int _5;
+  u16_t _11;
+
+  <bb 2> :
+  # DEBUG BEGIN_STMT
+  _1 = rb_8(D)->put;
+  _2 = (int) _1;
+  _3 = rb_8(D)->get;
+  _4 = (int) _3;
+  _5 = _2 - _4;
+  len_9 = (u32_t) _5;
+  # DEBUG len => len_9
+  # DEBUG BEGIN_STMT
+  if (len_9 > 65535)
+    goto <bb 3>; [INV]
+  else
+    goto <bb 4>; [INV]
+
+  <bb 3> :
+  # DEBUG BEGIN_STMT
+  len_10 = len_9 + 256;
+  # DEBUG len => len_10
+
+  <bb 4> :
+  # len_6 = PHI <len_9(2), len_10(3)>
+  # DEBUG len => len_6
+  # DEBUG BEGIN_STMT
+  _11 = (u16_t) len_6;
+  return _11;
+
+}
+
+
+mqtt_ringbuf_advance_get_idx (struct mqtt_ringbuf_t * rb, u16_t len)
+{
+  short unsigned int _1;
+  short unsigned int _2;
+  short unsigned int _3;
+  short unsigned int _4;
+  short unsigned int _5;
+
+  <bb 2> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  if (len_8(D) > 255)
+    goto <bb 3>; [INV]
+  else
+    goto <bb 4>; [INV]
+
+  <bb 3> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  __asm__ __volatile__("BKPT #0
+	");
+  # DEBUG BEGIN_STMT
+  goto <bb 3>; [INV]
+
+  <bb 4> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _1 = rb_10(D)->get;
+  _2 = len_8(D) + _1;
+  rb_10(D)->get = _2;
+  # DEBUG BEGIN_STMT
+  _3 = rb_10(D)->get;
+  if (_3 > 255)
+    goto <bb 5>; [INV]
+  else
+    goto <bb 6>; [INV]
+
+  <bb 5> :
+  # DEBUG BEGIN_STMT
+  _4 = rb_10(D)->get;
+  _5 = _4 + 65280;
+  rb_10(D)->get = _5;
+
+  <bb 6> :
+  return;
+
+}
+
+
+mqtt_ringbuf_get_ptr (struct mqtt_ringbuf_t * rb)
+{
+  short unsigned int _1;
+  int _2;
+  u8_t * _5;
+
+  <bb 2> :
+  # DEBUG BEGIN_STMT
+  _1 = rb_4(D)->get;
+  _2 = (int) _1;
+  _5 = &rb_4(D)->buf[_2];
+  return _5;
+
+}
+
+
+mqtt_ringbuf_put (struct mqtt_ringbuf_t * rb, u8_t item)
+{
+  short unsigned int _1;
+  int _2;
+  short unsigned int _3;
+  short unsigned int _4;
+  short unsigned int _5;
+  short unsigned int _6;
+
+  <bb 2> :
+  # DEBUG BEGIN_STMT
+  _1 = rb_9(D)->put;
+  _2 = (int) _1;
+  rb_9(D)->buf[_2] = item_10(D);
+  # DEBUG BEGIN_STMT
+  _3 = rb_9(D)->put;
+  _4 = _3;
+  _5 = _4 + 1;
+  rb_9(D)->put = _5;
+  # DEBUG BEGIN_STMT
+  _6 = rb_9(D)->put;
+  if (_6 > 255)
+    goto <bb 3>; [INV]
+  else
+    goto <bb 4>; [INV]
+
+  <bb 3> :
+  # DEBUG BEGIN_STMT
+  rb_9(D)->put = 0;
+
+  <bb 4> :
+  return;
+
+}
+
+
+msg_generate_packet_id (struct mqtt_client_t * client)
+{
+  short unsigned int _1;
+  short unsigned int _2;
+  short unsigned int _3;
+  short unsigned int _4;
+  short unsigned int _5;
+  short unsigned int _6;
+  short unsigned int _7;
+  u16_t _13;
+
+  <bb 2> :
+  # DEBUG BEGIN_STMT
+  _1 = client_10(D)->pkt_id_seq;
+  _2 = _1;
+  _3 = _2 + 1;
+  client_10(D)->pkt_id_seq = _3;
+  # DEBUG BEGIN_STMT
+  _4 = client_10(D)->pkt_id_seq;
+  if (_4 == 0)
+    goto <bb 3>; [INV]
+  else
+    goto <bb 4>; [INV]
+
+  <bb 3> :
+  # DEBUG BEGIN_STMT
+  _5 = client_10(D)->pkt_id_seq;
+  _6 = _5;
+  _7 = _6 + 1;
+  client_10(D)->pkt_id_seq = _7;
+
+  <bb 4> :
+  # DEBUG BEGIN_STMT
+  _13 = client_10(D)->pkt_id_seq;
+  return _13;
+
+}
+
+

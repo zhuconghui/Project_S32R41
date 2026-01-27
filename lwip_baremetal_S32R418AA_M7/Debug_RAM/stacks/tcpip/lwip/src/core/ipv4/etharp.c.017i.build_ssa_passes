@@ -1,0 +1,2100 @@
+etharp_request (struct netif * netif, const struct ip4_addr_t * ipaddr)
+{
+  err_t D.7547;
+
+  <bb 2> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  D.7547 = etharp_request_dst (netif, ipaddr, &ethbroadcast);
+  return D.7547;
+
+}
+
+
+etharp_request_dst (struct netif * netif, const struct ip4_addr_t * ipaddr, const struct eth_addr * hw_dst_addr)
+{
+  err_t D.7489;
+
+  <bb 2> :
+  # DEBUG BEGIN_STMT
+  _1 = &netif->hwaddr;
+  _2 = &netif->hwaddr;
+  _3 = &netif->ip_addr.u_addr.ip4;
+  D.7489 = etharp_raw (netif, _1, hw_dst_addr, _2, _3, &ethzero, ipaddr, 1);
+  return D.7489;
+
+}
+
+
+etharp_raw (struct netif * netif, const struct eth_addr * ethsrc_addr, const struct eth_addr * ethdst_addr, const struct eth_addr * hwsrc_addr, const struct ip4_addr_t * ipsrc_addr, const struct eth_addr * hwdst_addr, const struct ip4_addr_t * ipdst_addr, const u16_t opcode)
+{
+  unsigned int D.7439;
+  unsigned int D.7438;
+  struct etharp_hdr * hdr;
+  err_t result;
+  struct pbuf * p;
+  err_t D.7432;
+
+  <bb 2> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  result = 0;
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  if (netif == 0B)
+    goto <bb 3>; [INV]
+  else
+    goto <bb 4>; [INV]
+
+  <bb 3> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  __asm__ __volatile__("BKPT #0
+	");
+  # DEBUG BEGIN_STMT
+  goto <bb 3>; [INV]
+
+  <bb 4> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  p = pbuf_alloc (14, 28, 640);
+  # DEBUG BEGIN_STMT
+  if (p == 0B)
+    goto <bb 5>; [INV]
+  else
+    goto <bb 6>; [INV]
+
+  <bb 5> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _1 = lwip_stats.etharp.memerr;
+  _2 = _1 + 1;
+  lwip_stats.etharp.memerr = _2;
+  # DEBUG BEGIN_STMT
+  D.7432 = -1;
+  // predicted unlikely by early return (on trees) predictor.
+  goto <bb 11>; [INV]
+
+  <bb 6> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _3 = p->len;
+  if (_3 <= 27)
+    goto <bb 7>; [INV]
+  else
+    goto <bb 8>; [INV]
+
+  <bb 7> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  __asm__ __volatile__("BKPT #0
+	");
+  # DEBUG BEGIN_STMT
+  goto <bb 7>; [INV]
+
+  <bb 8> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  hdr = p->payload;
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _4 = lwip_htons (opcode);
+  hdr->opcode = _4;
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _5 = netif->hwaddr_len;
+  if (_5 != 6)
+    goto <bb 9>; [INV]
+  else
+    goto <bb 10>; [INV]
+
+  <bb 9> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  __asm__ __volatile__("BKPT #0
+	");
+  # DEBUG BEGIN_STMT
+  goto <bb 9>; [INV]
+
+  <bb 10> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _6 = &hdr->shwaddr;
+  memcpy (_6, hwsrc_addr, 6);
+  # DEBUG BEGIN_STMT
+  _7 = &hdr->dhwaddr;
+  memcpy (_7, hwdst_addr, 6);
+  # DEBUG BEGIN_STMT
+  _8 = &hdr->sipaddr;
+  D.7438 = MEM[(char * {ref-all})ipsrc_addr];
+  MEM[(char * {ref-all})_8] = D.7438;
+  # DEBUG BEGIN_STMT
+  _9 = &hdr->dipaddr;
+  D.7439 = MEM[(char * {ref-all})ipdst_addr];
+  MEM[(char * {ref-all})_9] = D.7439;
+  # DEBUG BEGIN_STMT
+  hdr->hwtype = 256;
+  # DEBUG BEGIN_STMT
+  hdr->proto = 8;
+  # DEBUG BEGIN_STMT
+  hdr->hwlen = 6;
+  # DEBUG BEGIN_STMT
+  hdr->protolen = 4;
+  # DEBUG BEGIN_STMT
+  ethernet_output (netif, p, ethsrc_addr, ethdst_addr, 2054);
+  # DEBUG BEGIN_STMT
+  _10 = lwip_stats.etharp.xmit;
+  _11 = _10 + 1;
+  lwip_stats.etharp.xmit = _11;
+  # DEBUG BEGIN_STMT
+  pbuf_free (p);
+  # DEBUG BEGIN_STMT
+  p = 0B;
+  # DEBUG BEGIN_STMT
+  D.7432 = result;
+
+  <bb 11> :
+  return D.7432;
+
+}
+
+
+etharp_query (struct netif * netif, const struct ip4_addr_t * ipaddr, struct pbuf * q)
+{
+  struct etharp_q_entry * old;
+  struct etharp_q_entry * r;
+  unsigned int qlen;
+  struct etharp_q_entry * new_entry;
+  int copy_needed;
+  struct pbuf * p;
+  netif_addr_idx_t i;
+  s16_t i_err;
+  int is_new_entry;
+  err_t result;
+  struct eth_addr * srcaddr;
+  err_t D.7496;
+
+  <bb 2> :
+  # DEBUG BEGIN_STMT
+  srcaddr = &netif->hwaddr;
+  # DEBUG BEGIN_STMT
+  result = -1;
+  # DEBUG BEGIN_STMT
+  is_new_entry = 0;
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _1 = ipaddr->addr;
+  _2 = ip4_addr_isbroadcast_u32 (_1, netif);
+  if (_2 != 0)
+    goto <bb 6>; [INV]
+  else
+    goto <bb 3>; [INV]
+
+  <bb 3> :
+  _3 = ipaddr->addr;
+  _4 = _3 & 240;
+  if (_4 == 224)
+    goto <bb 6>; [INV]
+  else
+    goto <bb 4>; [INV]
+
+  <bb 4> :
+  if (ipaddr == 0B)
+    goto <bb 6>; [INV]
+  else
+    goto <bb 5>; [INV]
+
+  <bb 5> :
+  _5 = ipaddr->addr;
+  if (_5 == 0)
+    goto <bb 6>; [INV]
+  else
+    goto <bb 7>; [INV]
+
+  <bb 6> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  D.7496 = -16;
+  // predicted unlikely by early return (on trees) predictor.
+  goto <bb 55>; [INV]
+
+  <bb 7> :
+  # DEBUG BEGIN_STMT
+  i_err = etharp_find_entry (ipaddr, 1, netif);
+  # DEBUG BEGIN_STMT
+  if (i_err < 0)
+    goto <bb 8>; [INV]
+  else
+    goto <bb 11>; [INV]
+
+  <bb 8> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  if (q != 0B)
+    goto <bb 9>; [INV]
+  else
+    goto <bb 10>; [INV]
+
+  <bb 9> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _6 = lwip_stats.etharp.memerr;
+  _7 = _6 + 1;
+  lwip_stats.etharp.memerr = _7;
+
+  <bb 10> :
+  # DEBUG BEGIN_STMT
+  D.7496 = (err_t) i_err;
+  // predicted unlikely by early return (on trees) predictor.
+  goto <bb 55>; [INV]
+
+  <bb 11> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  i_err.7_8 = (short unsigned int) i_err;
+  if (i_err.7_8 > 126)
+    goto <bb 12>; [INV]
+  else
+    goto <bb 13>; [INV]
+
+  <bb 12> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  __asm__ __volatile__("BKPT #0
+	");
+  # DEBUG BEGIN_STMT
+  goto <bb 12>; [INV]
+
+  <bb 13> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  i = (netif_addr_idx_t) i_err;
+  # DEBUG BEGIN_STMT
+  _9 = (int) i;
+  _10 = arp_table[_9].state;
+  if (_10 == 0)
+    goto <bb 14>; [INV]
+  else
+    goto <bb 15>; [INV]
+
+  <bb 14> :
+  # DEBUG BEGIN_STMT
+  is_new_entry = 1;
+  # DEBUG BEGIN_STMT
+  _11 = (int) i;
+  arp_table[_11].state = 1;
+  # DEBUG BEGIN_STMT
+  _12 = (int) i;
+  arp_table[_12].netif = netif;
+
+  <bb 15> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _13 = (int) i;
+  _14 = arp_table[_13].state;
+  if (_14 == 0)
+    goto <bb 16>; [INV]
+  else
+    goto <bb 17>; [INV]
+
+  <bb 16> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  __asm__ __volatile__("BKPT #0
+	");
+  # DEBUG BEGIN_STMT
+  goto <bb 16>; [INV]
+
+  <bb 17> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  if (is_new_entry != 0)
+    goto <bb 19>; [INV]
+  else
+    goto <bb 18>; [INV]
+
+  <bb 18> :
+  if (q == 0B)
+    goto <bb 19>; [INV]
+  else
+    goto <bb 25>; [INV]
+
+  <bb 19> :
+  # DEBUG BEGIN_STMT
+  result = etharp_request (netif, ipaddr);
+  # DEBUG BEGIN_STMT
+  if (result != 0)
+    goto <bb 23>; [INV]
+  else
+    goto <bb 20>; [INV]
+
+  <bb 20> :
+  # DEBUG BEGIN_STMT
+  _15 = (int) i;
+  _16 = arp_table[_15].state;
+  if (_16 == 1)
+    goto <bb 21>; [INV]
+  else
+    goto <bb 23>; [INV]
+
+  <bb 21> :
+  if (is_new_entry == 0)
+    goto <bb 22>; [INV]
+  else
+    goto <bb 23>; [INV]
+
+  <bb 22> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _17 = (int) i;
+  arp_table[_17].ctime = 0;
+
+  <bb 23> :
+  # DEBUG BEGIN_STMT
+  if (q == 0B)
+    goto <bb 24>; [INV]
+  else
+    goto <bb 25>; [INV]
+
+  <bb 24> :
+  # DEBUG BEGIN_STMT
+  D.7496 = result;
+  // predicted unlikely by early return (on trees) predictor.
+  goto <bb 55>; [INV]
+
+  <bb 25> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  if (q == 0B)
+    goto <bb 26>; [INV]
+  else
+    goto <bb 27>; [INV]
+
+  <bb 26> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  __asm__ __volatile__("BKPT #0
+	");
+  # DEBUG BEGIN_STMT
+  goto <bb 26>; [INV]
+
+  <bb 27> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _18 = (int) i;
+  _19 = arp_table[_18].state;
+  if (_19 > 1)
+    goto <bb 28>; [INV]
+  else
+    goto <bb 29>; [INV]
+
+  <bb 28> :
+  # DEBUG BEGIN_STMT
+  etharp_cached_entry = i;
+  # DEBUG BEGIN_STMT
+  _20 = (int) i;
+  _21 = &arp_table[_20].ethaddr;
+  result = ethernet_output (netif, q, srcaddr, _21, 2048);
+  goto <bb 54>; [INV]
+
+  <bb 29> :
+  # DEBUG BEGIN_STMT
+  _22 = (int) i;
+  _23 = arp_table[_22].state;
+  if (_23 == 1)
+    goto <bb 30>; [INV]
+  else
+    goto <bb 54>; [INV]
+
+  <bb 30> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  copy_needed = 0;
+  # DEBUG BEGIN_STMT
+  p = q;
+  # DEBUG BEGIN_STMT
+  goto <bb 37>; [INV]
+
+  <bb 31> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _24 = p->len;
+  _25 = p->tot_len;
+  if (_24 == _25)
+    goto <bb 32>; [INV]
+  else
+    goto <bb 34>; [INV]
+
+  <bb 32> :
+  _26 = p->next;
+  if (_26 != 0B)
+    goto <bb 33>; [INV]
+  else
+    goto <bb 34>; [INV]
+
+  <bb 33> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  __asm__ __volatile__("BKPT #0
+	");
+  # DEBUG BEGIN_STMT
+  goto <bb 33>; [INV]
+
+  <bb 34> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _27 = p->type_internal;
+  _28 = (int) _27;
+  _29 = _28 & 64;
+  if (_29 != 0)
+    goto <bb 35>; [INV]
+  else
+    goto <bb 36>; [INV]
+
+  <bb 35> :
+  # DEBUG BEGIN_STMT
+  copy_needed = 1;
+  # DEBUG BEGIN_STMT
+  goto <bb 38>; [INV]
+
+  <bb 36> :
+  # DEBUG BEGIN_STMT
+  p = p->next;
+
+  <bb 37> :
+  # DEBUG BEGIN_STMT
+  if (p != 0B)
+    goto <bb 31>; [INV]
+  else
+    goto <bb 38>; [INV]
+
+  <bb 38> :
+  # DEBUG BEGIN_STMT
+  if (copy_needed != 0)
+    goto <bb 39>; [INV]
+  else
+    goto <bb 40>; [INV]
+
+  <bb 39> :
+  # DEBUG BEGIN_STMT
+  p = pbuf_clone (14, 640, q);
+  goto <bb 41>; [INV]
+
+  <bb 40> :
+  # DEBUG BEGIN_STMT
+  p = q;
+  # DEBUG BEGIN_STMT
+  pbuf_ref (p);
+
+  <bb 41> :
+  # DEBUG BEGIN_STMT
+  if (p != 0B)
+    goto <bb 42>; [INV]
+  else
+    goto <bb 53>; [INV]
+
+  <bb 42> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  new_entry = memp_malloc (7);
+  # DEBUG BEGIN_STMT
+  if (new_entry != 0B)
+    goto <bb 43>; [INV]
+  else
+    goto <bb 52>; [INV]
+
+  <bb 43> :
+  # DEBUG BEGIN_STMT
+  qlen = 0;
+  # DEBUG BEGIN_STMT
+  new_entry->next = 0B;
+  # DEBUG BEGIN_STMT
+  new_entry->p = p;
+  # DEBUG BEGIN_STMT
+  _30 = (int) i;
+  _31 = arp_table[_30].q;
+  if (_31 != 0B)
+    goto <bb 44>; [INV]
+  else
+    goto <bb 48>; [INV]
+
+  <bb 44> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _32 = (int) i;
+  r = arp_table[_32].q;
+  # DEBUG BEGIN_STMT
+  qlen = qlen + 1;
+  # DEBUG BEGIN_STMT
+  goto <bb 46>; [INV]
+
+  <bb 45> :
+  # DEBUG BEGIN_STMT
+  r = r->next;
+  # DEBUG BEGIN_STMT
+  qlen = qlen + 1;
+
+  <bb 46> :
+  # DEBUG BEGIN_STMT
+  _33 = r->next;
+  if (_33 != 0B)
+    goto <bb 45>; [INV]
+  else
+    goto <bb 47>; [INV]
+
+  <bb 47> :
+  # DEBUG BEGIN_STMT
+  r->next = new_entry;
+  goto <bb 49>; [INV]
+
+  <bb 48> :
+  # DEBUG BEGIN_STMT
+  _34 = (int) i;
+  arp_table[_34].q = new_entry;
+
+  <bb 49> :
+  # DEBUG BEGIN_STMT
+  if (qlen > 2)
+    goto <bb 50>; [INV]
+  else
+    goto <bb 51>; [INV]
+
+  <bb 50> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _35 = (int) i;
+  old = arp_table[_35].q;
+  # DEBUG BEGIN_STMT
+  _36 = (int) i;
+  _37 = arp_table[_36].q;
+  _38 = (int) i;
+  _39 = _37->next;
+  arp_table[_38].q = _39;
+  # DEBUG BEGIN_STMT
+  _40 = old->p;
+  pbuf_free (_40);
+  # DEBUG BEGIN_STMT
+  memp_free (7, old);
+
+  <bb 51> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  result = 0;
+  goto <bb 54>; [INV]
+
+  <bb 52> :
+  # DEBUG BEGIN_STMT
+  pbuf_free (p);
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  result = -1;
+  goto <bb 54>; [INV]
+
+  <bb 53> :
+  # DEBUG BEGIN_STMT
+  _41 = lwip_stats.etharp.memerr;
+  _42 = _41 + 1;
+  lwip_stats.etharp.memerr = _42;
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  result = -1;
+
+  <bb 54> :
+  # DEBUG BEGIN_STMT
+  D.7496 = result;
+
+  <bb 55> :
+  return D.7496;
+
+}
+
+
+etharp_output (struct netif * netif, struct pbuf * q, const struct ip4_addr_t * ipaddr)
+{
+  netif_addr_idx_t i;
+  const struct ip4_addr_t * dst_addr;
+  struct eth_addr mcastaddr;
+  const struct eth_addr * dest;
+  err_t D.7459;
+
+  <bb 2> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  dst_addr = ipaddr;
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  if (netif == 0B)
+    goto <bb 3>; [INV]
+  else
+    goto <bb 4>; [INV]
+
+  <bb 3> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  __asm__ __volatile__("BKPT #0
+	");
+  # DEBUG BEGIN_STMT
+  goto <bb 3>; [INV]
+
+  <bb 4> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  if (q == 0B)
+    goto <bb 5>; [INV]
+  else
+    goto <bb 6>; [INV]
+
+  <bb 5> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  __asm__ __volatile__("BKPT #0
+	");
+  # DEBUG BEGIN_STMT
+  goto <bb 5>; [INV]
+
+  <bb 6> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  if (ipaddr == 0B)
+    goto <bb 7>; [INV]
+  else
+    goto <bb 8>; [INV]
+
+  <bb 7> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  __asm__ __volatile__("BKPT #0
+	");
+  # DEBUG BEGIN_STMT
+  goto <bb 7>; [INV]
+
+  <bb 8> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _1 = ipaddr->addr;
+  _2 = ip4_addr_isbroadcast_u32 (_1, netif);
+  if (_2 != 0)
+    goto <bb 9>; [INV]
+  else
+    goto <bb 10>; [INV]
+
+  <bb 9> :
+  # DEBUG BEGIN_STMT
+  dest = &ethbroadcast;
+  goto <bb 29>; [INV]
+
+  <bb 10> :
+  # DEBUG BEGIN_STMT
+  _3 = ipaddr->addr;
+  _4 = _3 & 240;
+  if (_4 == 224)
+    goto <bb 11>; [INV]
+  else
+    goto <bb 12>; [INV]
+
+  <bb 11> :
+  # DEBUG BEGIN_STMT
+  mcastaddr.addr[0] = 1;
+  # DEBUG BEGIN_STMT
+  mcastaddr.addr[1] = 0;
+  # DEBUG BEGIN_STMT
+  mcastaddr.addr[2] = 94;
+  # DEBUG BEGIN_STMT
+  _5 = &ipaddr->addr;
+  _6 = _5 + 1;
+  _7 = *_6;
+  _8 = _7 & 127;
+  mcastaddr.addr[3] = _8;
+  # DEBUG BEGIN_STMT
+  _9 = &ipaddr->addr;
+  _10 = _9 + 2;
+  _11 = *_10;
+  mcastaddr.addr[4] = _11;
+  # DEBUG BEGIN_STMT
+  _12 = &ipaddr->addr;
+  _13 = _12 + 3;
+  _14 = *_13;
+  mcastaddr.addr[5] = _14;
+  # DEBUG BEGIN_STMT
+  dest = &mcastaddr;
+  goto <bb 29>; [INV]
+
+  <bb 12> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _15 = ipaddr->addr;
+  _16 = &netif->ip_addr.u_addr.ip4;
+  _17 = MEM[(const struct ip4_addr_t *)_16].addr;
+  _18 = _15 ^ _17;
+  _19 = &netif->netmask.u_addr.ip4;
+  _20 = MEM[(const struct ip4_addr_t *)_19].addr;
+  _21 = _18 & _20;
+  if (_21 != 0)
+    goto <bb 13>; [INV]
+  else
+    goto <bb 17>; [INV]
+
+  <bb 13> :
+  _22 = ipaddr->addr;
+  _23 = _22 & 65535;
+  if (_23 != 65193)
+    goto <bb 14>; [INV]
+  else
+    goto <bb 17>; [INV]
+
+  <bb 14> :
+  # DEBUG BEGIN_STMT
+  _24 = &netif->gw.u_addr.ip4;
+  _25 = MEM[(const struct ip4_addr_t *)_24].addr;
+  if (_25 != 0)
+    goto <bb 15>; [INV]
+  else
+    goto <bb 16>; [INV]
+
+  <bb 15> :
+  # DEBUG BEGIN_STMT
+  dst_addr = &netif->gw.u_addr.ip4;
+  goto <bb 17>; [INV]
+
+  <bb 16> :
+  # DEBUG BEGIN_STMT
+  D.7459 = -4;
+  // predicted unlikely by early return (on trees) predictor.
+  goto <bb 30>; [INV]
+
+  <bb 17> :
+  # DEBUG BEGIN_STMT
+  etharp_cached_entry.2_26 = etharp_cached_entry;
+  _27 = (int) etharp_cached_entry.2_26;
+  _28 = arp_table[_27].state;
+  if (_28 > 1)
+    goto <bb 18>; [INV]
+  else
+    goto <bb 21>; [INV]
+
+  <bb 18> :
+  etharp_cached_entry.3_29 = etharp_cached_entry;
+  _30 = (int) etharp_cached_entry.3_29;
+  _31 = arp_table[_30].netif;
+  if (netif == _31)
+    goto <bb 19>; [INV]
+  else
+    goto <bb 21>; [INV]
+
+  <bb 19> :
+  _32 = dst_addr->addr;
+  etharp_cached_entry.4_33 = etharp_cached_entry;
+  _34 = (int) etharp_cached_entry.4_33;
+  _35 = arp_table[_34].ipaddr.addr;
+  if (_32 == _35)
+    goto <bb 20>; [INV]
+  else
+    goto <bb 21>; [INV]
+
+  <bb 20> :
+  # DEBUG BEGIN_STMT
+  _36 = lwip_stats.etharp.cachehit;
+  _37 = _36 + 1;
+  lwip_stats.etharp.cachehit = _37;
+  # DEBUG BEGIN_STMT
+  etharp_cached_entry.5_38 = etharp_cached_entry;
+  D.7459 = etharp_output_to_arp_index (netif, q, etharp_cached_entry.5_38);
+  // predicted unlikely by early return (on trees) predictor.
+  goto <bb 30>; [INV]
+
+  <bb 21> :
+  # DEBUG BEGIN_STMT
+  i = 0;
+  goto <bb 27>; [INV]
+
+  <bb 22> :
+  # DEBUG BEGIN_STMT
+  _39 = (int) i;
+  _40 = arp_table[_39].state;
+  if (_40 > 1)
+    goto <bb 23>; [INV]
+  else
+    goto <bb 26>; [INV]
+
+  <bb 23> :
+  _41 = (int) i;
+  _42 = arp_table[_41].netif;
+  if (netif == _42)
+    goto <bb 24>; [INV]
+  else
+    goto <bb 26>; [INV]
+
+  <bb 24> :
+  _43 = dst_addr->addr;
+  _44 = (int) i;
+  _45 = arp_table[_44].ipaddr.addr;
+  if (_43 == _45)
+    goto <bb 25>; [INV]
+  else
+    goto <bb 26>; [INV]
+
+  <bb 25> :
+  # DEBUG BEGIN_STMT
+  etharp_cached_entry = i;
+  # DEBUG BEGIN_STMT
+  D.7459 = etharp_output_to_arp_index (netif, q, i);
+  // predicted unlikely by early return (on trees) predictor.
+  goto <bb 30>; [INV]
+
+  <bb 26> :
+  # DEBUG BEGIN_STMT
+  i.6_46 = i;
+  i = i.6_46 + 1;
+
+  <bb 27> :
+  # DEBUG BEGIN_STMT
+  if (i <= 9)
+    goto <bb 22>; [INV]
+  else
+    goto <bb 28>; [INV]
+
+  <bb 28> :
+  # DEBUG BEGIN_STMT
+  D.7459 = etharp_query (netif, dst_addr, q);
+  // predicted unlikely by early return (on trees) predictor.
+  goto <bb 30>; [INV]
+
+  <bb 29> :
+  # DEBUG BEGIN_STMT
+  _47 = &netif->hwaddr;
+  D.7459 = ethernet_output (netif, q, _47, dest, 2048);
+
+  <bb 30> :
+  mcastaddr = {CLOBBER};
+  return D.7459;
+
+}
+
+
+etharp_output_to_arp_index (struct netif * netif, struct pbuf * q, netif_addr_idx_t arp_idx)
+{
+  err_t D.7487;
+
+  <bb 2> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _1 = (int) arp_idx;
+  _2 = arp_table[_1].state;
+  if (_2 <= 1)
+    goto <bb 3>; [INV]
+  else
+    goto <bb 4>; [INV]
+
+  <bb 3> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  __asm__ __volatile__("BKPT #0
+	");
+  # DEBUG BEGIN_STMT
+  goto <bb 3>; [INV]
+
+  <bb 4> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _3 = (int) arp_idx;
+  _4 = arp_table[_3].state;
+  if (_4 == 2)
+    goto <bb 5>; [INV]
+  else
+    goto <bb 11>; [INV]
+
+  <bb 5> :
+  # DEBUG BEGIN_STMT
+  _5 = (int) arp_idx;
+  _6 = arp_table[_5].ctime;
+  if (_6 > 284)
+    goto <bb 6>; [INV]
+  else
+    goto <bb 8>; [INV]
+
+  <bb 6> :
+  # DEBUG BEGIN_STMT
+  _7 = (int) arp_idx;
+  _8 = &arp_table[_7].ipaddr;
+  _9 = etharp_request (netif, _8);
+  if (_9 == 0)
+    goto <bb 7>; [INV]
+  else
+    goto <bb 11>; [INV]
+
+  <bb 7> :
+  # DEBUG BEGIN_STMT
+  _10 = (int) arp_idx;
+  arp_table[_10].state = 3;
+  goto <bb 11>; [INV]
+
+  <bb 8> :
+  # DEBUG BEGIN_STMT
+  _11 = (int) arp_idx;
+  _12 = arp_table[_11].ctime;
+  if (_12 > 269)
+    goto <bb 9>; [INV]
+  else
+    goto <bb 11>; [INV]
+
+  <bb 9> :
+  # DEBUG BEGIN_STMT
+  _13 = (int) arp_idx;
+  _14 = &arp_table[_13].ipaddr;
+  _15 = (int) arp_idx;
+  _16 = &arp_table[_15].ethaddr;
+  _17 = etharp_request_dst (netif, _14, _16);
+  if (_17 == 0)
+    goto <bb 10>; [INV]
+  else
+    goto <bb 11>; [INV]
+
+  <bb 10> :
+  # DEBUG BEGIN_STMT
+  _18 = (int) arp_idx;
+  arp_table[_18].state = 3;
+
+  <bb 11> :
+  # DEBUG BEGIN_STMT
+  _19 = &netif->hwaddr;
+  _20 = (int) arp_idx;
+  _21 = &arp_table[_20].ethaddr;
+  D.7487 = ethernet_output (netif, q, _19, _21, 2048);
+  return D.7487;
+
+}
+
+
+etharp_input (struct pbuf * p, struct netif * netif)
+{
+  unsigned int D.7413;
+  unsigned int D.7412;
+  u8_t for_us;
+  struct ip4_addr_t dipaddr;
+  struct ip4_addr_t sipaddr;
+  struct etharp_hdr * hdr;
+  u8_t iftmp.1;
+
+  <bb 2> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  if (netif == 0B)
+    goto <bb 3>; [INV]
+  else
+    goto <bb 4>; [INV]
+
+  <bb 3> :
+  # DEBUG BEGIN_STMT
+  // predicted unlikely by early return (on trees) predictor.
+  goto <bb 21>; [INV]
+
+  <bb 4> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  hdr = p->payload;
+  # DEBUG BEGIN_STMT
+  _1 = hdr->hwtype;
+  if (_1 != 256)
+    goto <bb 8>; [INV]
+  else
+    goto <bb 5>; [INV]
+
+  <bb 5> :
+  _2 = hdr->hwlen;
+  if (_2 != 6)
+    goto <bb 8>; [INV]
+  else
+    goto <bb 6>; [INV]
+
+  <bb 6> :
+  _3 = hdr->protolen;
+  if (_3 != 4)
+    goto <bb 8>; [INV]
+  else
+    goto <bb 7>; [INV]
+
+  <bb 7> :
+  _4 = hdr->proto;
+  if (_4 != 8)
+    goto <bb 8>; [INV]
+  else
+    goto <bb 9>; [INV]
+
+  <bb 8> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _5 = lwip_stats.etharp.proterr;
+  _6 = _5 + 1;
+  lwip_stats.etharp.proterr = _6;
+  # DEBUG BEGIN_STMT
+  _7 = lwip_stats.etharp.drop;
+  _8 = _7 + 1;
+  lwip_stats.etharp.drop = _8;
+  # DEBUG BEGIN_STMT
+  pbuf_free (p);
+  # DEBUG BEGIN_STMT
+  // predicted unlikely by early return (on trees) predictor.
+  goto <bb 21>; [INV]
+
+  <bb 9> :
+  # DEBUG BEGIN_STMT
+  _9 = lwip_stats.etharp.recv;
+  _10 = _9 + 1;
+  lwip_stats.etharp.recv = _10;
+  # DEBUG BEGIN_STMT
+  _11 = &hdr->sipaddr;
+  D.7412 = MEM[(char * {ref-all})_11];
+  MEM[(char * {ref-all})&sipaddr] = D.7412;
+  # DEBUG BEGIN_STMT
+  _12 = &hdr->dipaddr;
+  D.7413 = MEM[(char * {ref-all})_12];
+  MEM[(char * {ref-all})&dipaddr] = D.7413;
+  # DEBUG BEGIN_STMT
+  _13 = &netif->ip_addr.u_addr.ip4;
+  _14 = MEM[(const struct ip4_addr_t *)_13].addr;
+  if (_14 == 0)
+    goto <bb 10>; [INV]
+  else
+    goto <bb 11>; [INV]
+
+  <bb 10> :
+  # DEBUG BEGIN_STMT
+  for_us = 0;
+  goto <bb 12>; [INV]
+
+  <bb 11> :
+  # DEBUG BEGIN_STMT
+  _15 = dipaddr.addr;
+  _16 = &netif->ip_addr.u_addr.ip4;
+  _17 = MEM[(const struct ip4_addr_t *)_16].addr;
+  _18 = _15 == _17;
+  for_us = (u8_t) _18;
+
+  <bb 12> :
+  # DEBUG BEGIN_STMT
+  _19 = &hdr->shwaddr;
+  if (for_us != 0)
+    goto <bb 13>; [INV]
+  else
+    goto <bb 14>; [INV]
+
+  <bb 13> :
+  iftmp.1 = 1;
+  goto <bb 15>; [INV]
+
+  <bb 14> :
+  iftmp.1 = 2;
+
+  <bb 15> :
+  etharp_update_arp_entry (netif, &sipaddr, _19, iftmp.1);
+  # DEBUG BEGIN_STMT
+  _20 = hdr->opcode;
+  _21 = (int) _20;
+  switch (_21) <default: <L21> [INV], case 256: <L13> [INV], case 512: <L26> [INV]>
+
+  <bb 16> :
+<L13>:
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  if (for_us != 0)
+    goto <bb 17>; [INV]
+  else
+    goto <bb 18>; [INV]
+
+  <bb 17> :
+  # DEBUG BEGIN_STMT
+  _22 = &netif->hwaddr;
+  _23 = &hdr->shwaddr;
+  _24 = &netif->hwaddr;
+  _25 = &netif->ip_addr.u_addr.ip4;
+  _26 = &hdr->shwaddr;
+  etharp_raw (netif, _22, _23, _24, _25, _26, &sipaddr, 2);
+  goto <bb 20>; [INV]
+
+  <bb 18> :
+  # DEBUG BEGIN_STMT
+  _27 = &netif->ip_addr.u_addr.ip4;
+  _28 = MEM[(const struct ip4_addr_t *)_27].addr;
+  goto <bb 20>; [INV]
+
+  <bb 19> :
+<L21>:
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _29 = lwip_stats.etharp.err;
+  _30 = _29 + 1;
+  lwip_stats.etharp.err = _30;
+  # DEBUG BEGIN_STMT
+
+  <bb 20> :
+<L26>:
+  # DEBUG BEGIN_STMT
+  pbuf_free (p);
+  sipaddr = {CLOBBER};
+  dipaddr = {CLOBBER};
+  goto <bb 22>; [INV]
+
+  <bb 21> :
+  sipaddr = {CLOBBER};
+  dipaddr = {CLOBBER};
+
+  <bb 22> :
+  return;
+
+}
+
+
+etharp_get_entry (size_t i, struct ip4_addr_t * * ipaddr, struct netif * * netif, struct eth_addr * * eth_ret)
+{
+  int D.7389;
+
+  <bb 2> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  if (ipaddr == 0B)
+    goto <bb 3>; [INV]
+  else
+    goto <bb 4>; [INV]
+
+  <bb 3> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  __asm__ __volatile__("BKPT #0
+	");
+  # DEBUG BEGIN_STMT
+  goto <bb 3>; [INV]
+
+  <bb 4> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  if (netif == 0B)
+    goto <bb 5>; [INV]
+  else
+    goto <bb 6>; [INV]
+
+  <bb 5> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  __asm__ __volatile__("BKPT #0
+	");
+  # DEBUG BEGIN_STMT
+  goto <bb 5>; [INV]
+
+  <bb 6> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  if (eth_ret == 0B)
+    goto <bb 7>; [INV]
+  else
+    goto <bb 8>; [INV]
+
+  <bb 7> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  __asm__ __volatile__("BKPT #0
+	");
+  # DEBUG BEGIN_STMT
+  goto <bb 7>; [INV]
+
+  <bb 8> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  if (i <= 9)
+    goto <bb 9>; [INV]
+  else
+    goto <bb 11>; [INV]
+
+  <bb 9> :
+  _1 = arp_table[i].state;
+  if (_1 > 1)
+    goto <bb 10>; [INV]
+  else
+    goto <bb 11>; [INV]
+
+  <bb 10> :
+  # DEBUG BEGIN_STMT
+  _2 = &arp_table[i].ipaddr;
+  *ipaddr = _2;
+  # DEBUG BEGIN_STMT
+  _3 = arp_table[i].netif;
+  *netif = _3;
+  # DEBUG BEGIN_STMT
+  _4 = &arp_table[i].ethaddr;
+  *eth_ret = _4;
+  # DEBUG BEGIN_STMT
+  D.7389 = 1;
+  // predicted unlikely by early return (on trees) predictor.
+  goto <bb 12>; [INV]
+
+  <bb 11> :
+  # DEBUG BEGIN_STMT
+  D.7389 = 0;
+  // predicted unlikely by early return (on trees) predictor.
+
+  <bb 12> :
+  return D.7389;
+
+}
+
+
+etharp_find_addr (struct netif * netif, const struct ip4_addr_t * ipaddr, struct eth_addr * * eth_ret, const struct ip4_addr_t * * ip_ret)
+{
+  s16_t i;
+  ssize_t D.7321;
+
+  <bb 2> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  if (eth_ret == 0B)
+    goto <bb 4>; [INV]
+  else
+    goto <bb 3>; [INV]
+
+  <bb 3> :
+  if (ip_ret == 0B)
+    goto <bb 4>; [INV]
+  else
+    goto <bb 5>; [INV]
+
+  <bb 4> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  __asm__ __volatile__("BKPT #0
+	");
+  # DEBUG BEGIN_STMT
+  goto <bb 4>; [INV]
+
+  <bb 5> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  i = etharp_find_entry (ipaddr, 2, netif);
+  # DEBUG BEGIN_STMT
+  if (i >= 0)
+    goto <bb 6>; [INV]
+  else
+    goto <bb 8>; [INV]
+
+  <bb 6> :
+  _1 = (int) i;
+  _2 = arp_table[_1].state;
+  if (_2 > 1)
+    goto <bb 7>; [INV]
+  else
+    goto <bb 8>; [INV]
+
+  <bb 7> :
+  # DEBUG BEGIN_STMT
+  _3 = (int) i;
+  _4 = &arp_table[_3].ethaddr;
+  *eth_ret = _4;
+  # DEBUG BEGIN_STMT
+  _5 = (int) i;
+  _6 = &arp_table[_5].ipaddr;
+  *ip_ret = _6;
+  # DEBUG BEGIN_STMT
+  D.7321 = (ssize_t) i;
+  // predicted unlikely by early return (on trees) predictor.
+  goto <bb 9>; [INV]
+
+  <bb 8> :
+  # DEBUG BEGIN_STMT
+  D.7321 = -1;
+
+  <bb 9> :
+  return D.7321;
+
+}
+
+
+etharp_cleanup_netif (struct netif * netif)
+{
+  u8_t state;
+  int i;
+
+  <bb 2> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  i = 0;
+  goto <bb 7>; [INV]
+
+  <bb 3> :
+  # DEBUG BEGIN_STMT
+  state = arp_table[i].state;
+  # DEBUG BEGIN_STMT
+  if (state != 0)
+    goto <bb 4>; [INV]
+  else
+    goto <bb 6>; [INV]
+
+  <bb 4> :
+  _1 = arp_table[i].netif;
+  if (netif == _1)
+    goto <bb 5>; [INV]
+  else
+    goto <bb 6>; [INV]
+
+  <bb 5> :
+  # DEBUG BEGIN_STMT
+  etharp_free_entry (i);
+
+  <bb 6> :
+  # DEBUG BEGIN_STMT
+  i = i + 1;
+
+  <bb 7> :
+  # DEBUG BEGIN_STMT
+  if (i <= 9)
+    goto <bb 3>; [INV]
+  else
+    goto <bb 8>; [INV]
+
+  <bb 8> :
+  return;
+
+}
+
+
+etharp_update_arp_entry (struct netif * netif, const struct ip4_addr_t * ipaddr, struct eth_addr * ethaddr, u8_t flags)
+{
+  struct etharp_q_entry * q;
+  struct pbuf * p;
+  s16_t i;
+  err_t D.7424;
+
+  <bb 2> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _1 = netif->hwaddr_len;
+  if (_1 != 6)
+    goto <bb 3>; [INV]
+  else
+    goto <bb 4>; [INV]
+
+  <bb 3> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  __asm__ __volatile__("BKPT #0
+	");
+  # DEBUG BEGIN_STMT
+  goto <bb 3>; [INV]
+
+  <bb 4> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  if (ipaddr == 0B)
+    goto <bb 8>; [INV]
+  else
+    goto <bb 5>; [INV]
+
+  <bb 5> :
+  _2 = ipaddr->addr;
+  if (_2 == 0)
+    goto <bb 8>; [INV]
+  else
+    goto <bb 6>; [INV]
+
+  <bb 6> :
+  _3 = ipaddr->addr;
+  _4 = ip4_addr_isbroadcast_u32 (_3, netif);
+  if (_4 != 0)
+    goto <bb 8>; [INV]
+  else
+    goto <bb 7>; [INV]
+
+  <bb 7> :
+  _5 = ipaddr->addr;
+  _6 = _5 & 240;
+  if (_6 == 224)
+    goto <bb 8>; [INV]
+  else
+    goto <bb 9>; [INV]
+
+  <bb 8> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  D.7424 = -16;
+  // predicted unlikely by early return (on trees) predictor.
+  goto <bb 15>; [INV]
+
+  <bb 9> :
+  # DEBUG BEGIN_STMT
+  i = etharp_find_entry (ipaddr, flags, netif);
+  # DEBUG BEGIN_STMT
+  if (i < 0)
+    goto <bb 10>; [INV]
+  else
+    goto <bb 11>; [INV]
+
+  <bb 10> :
+  # DEBUG BEGIN_STMT
+  D.7424 = (err_t) i;
+  // predicted unlikely by early return (on trees) predictor.
+  goto <bb 15>; [INV]
+
+  <bb 11> :
+  # DEBUG BEGIN_STMT
+  _7 = (int) i;
+  arp_table[_7].state = 2;
+  # DEBUG BEGIN_STMT
+  _8 = (int) i;
+  arp_table[_8].netif = netif;
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _9 = (int) i;
+  _10 = &arp_table[_9].ethaddr;
+  memcpy (_10, ethaddr, 6);
+  # DEBUG BEGIN_STMT
+  _11 = (int) i;
+  arp_table[_11].ctime = 0;
+  # DEBUG BEGIN_STMT
+  goto <bb 13>; [INV]
+
+  <bb 12> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _12 = (int) i;
+  q = arp_table[_12].q;
+  # DEBUG BEGIN_STMT
+  _13 = (int) i;
+  _14 = q->next;
+  arp_table[_13].q = _14;
+  # DEBUG BEGIN_STMT
+  p = q->p;
+  # DEBUG BEGIN_STMT
+  memp_free (7, q);
+  # DEBUG BEGIN_STMT
+  _15 = &netif->hwaddr;
+  ethernet_output (netif, p, _15, ethaddr, 2048);
+  # DEBUG BEGIN_STMT
+  pbuf_free (p);
+
+  <bb 13> :
+  # DEBUG BEGIN_STMT
+  _16 = (int) i;
+  _17 = arp_table[_16].q;
+  if (_17 != 0B)
+    goto <bb 12>; [INV]
+  else
+    goto <bb 14>; [INV]
+
+  <bb 14> :
+  # DEBUG BEGIN_STMT
+  D.7424 = 0;
+
+  <bb 15> :
+  return D.7424;
+
+}
+
+
+etharp_find_entry (const struct ip4_addr_t * ipaddr, u8_t flags, struct netif * netif)
+{
+  u8_t state;
+  u16_t age_stable;
+  u16_t age_pending;
+  u16_t age_queue;
+  s16_t old_queue;
+  s16_t i;
+  s16_t empty;
+  s16_t old_stable;
+  s16_t old_pending;
+  s16_t D.7338;
+
+  <bb 2> :
+  # DEBUG BEGIN_STMT
+  old_pending = 10;
+  old_stable = 10;
+  # DEBUG BEGIN_STMT
+  empty = 10;
+  # DEBUG BEGIN_STMT
+  i = 0;
+  # DEBUG BEGIN_STMT
+  old_queue = 10;
+  # DEBUG BEGIN_STMT
+  age_queue = 0;
+  age_pending = 0;
+  age_stable = 0;
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  i = 0;
+  goto <bb 24>; [INV]
+
+  <bb 3> :
+  # DEBUG BEGIN_STMT
+  _1 = (int) i;
+  state = arp_table[_1].state;
+  # DEBUG BEGIN_STMT
+  if (empty == 10)
+    goto <bb 4>; [INV]
+  else
+    goto <bb 6>; [INV]
+
+  <bb 4> :
+  if (state == 0)
+    goto <bb 5>; [INV]
+  else
+    goto <bb 6>; [INV]
+
+  <bb 5> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  empty = i;
+  goto <bb 23>; [INV]
+
+  <bb 6> :
+  # DEBUG BEGIN_STMT
+  if (state != 0)
+    goto <bb 7>; [INV]
+  else
+    goto <bb 23>; [INV]
+
+  <bb 7> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  if (state == 0)
+    goto <bb 8>; [INV]
+  else
+    goto <bb 9>; [INV]
+
+  <bb 8> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  __asm__ __volatile__("BKPT #0
+	");
+  # DEBUG BEGIN_STMT
+  goto <bb 8>; [INV]
+
+  <bb 9> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  if (ipaddr != 0B)
+    goto <bb 10>; [INV]
+  else
+    goto <bb 14>; [INV]
+
+  <bb 10> :
+  _2 = ipaddr->addr;
+  _3 = (int) i;
+  _4 = arp_table[_3].ipaddr.addr;
+  if (_2 == _4)
+    goto <bb 11>; [INV]
+  else
+    goto <bb 14>; [INV]
+
+  <bb 11> :
+  if (netif == 0B)
+    goto <bb 13>; [INV]
+  else
+    goto <bb 12>; [INV]
+
+  <bb 12> :
+  _5 = (int) i;
+  _6 = arp_table[_5].netif;
+  if (netif == _6)
+    goto <bb 13>; [INV]
+  else
+    goto <bb 14>; [INV]
+
+  <bb 13> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  D.7338 = i;
+  // predicted unlikely by early return (on trees) predictor.
+  goto <bb 49>; [INV]
+
+  <bb 14> :
+  # DEBUG BEGIN_STMT
+  if (state == 1)
+    goto <bb 15>; [INV]
+  else
+    goto <bb 20>; [INV]
+
+  <bb 15> :
+  # DEBUG BEGIN_STMT
+  _7 = (int) i;
+  _8 = arp_table[_7].q;
+  if (_8 != 0B)
+    goto <bb 16>; [INV]
+  else
+    goto <bb 18>; [INV]
+
+  <bb 16> :
+  # DEBUG BEGIN_STMT
+  _9 = (int) i;
+  _10 = arp_table[_9].ctime;
+  if (age_queue <= _10)
+    goto <bb 17>; [INV]
+  else
+    goto <bb 23>; [INV]
+
+  <bb 17> :
+  # DEBUG BEGIN_STMT
+  old_queue = i;
+  # DEBUG BEGIN_STMT
+  _11 = (int) i;
+  age_queue = arp_table[_11].ctime;
+  goto <bb 23>; [INV]
+
+  <bb 18> :
+  # DEBUG BEGIN_STMT
+  _12 = (int) i;
+  _13 = arp_table[_12].ctime;
+  if (age_pending <= _13)
+    goto <bb 19>; [INV]
+  else
+    goto <bb 23>; [INV]
+
+  <bb 19> :
+  # DEBUG BEGIN_STMT
+  old_pending = i;
+  # DEBUG BEGIN_STMT
+  _14 = (int) i;
+  age_pending = arp_table[_14].ctime;
+  goto <bb 23>; [INV]
+
+  <bb 20> :
+  # DEBUG BEGIN_STMT
+  if (state > 1)
+    goto <bb 21>; [INV]
+  else
+    goto <bb 23>; [INV]
+
+  <bb 21> :
+  # DEBUG BEGIN_STMT
+  _15 = (int) i;
+  _16 = arp_table[_15].ctime;
+  if (age_stable <= _16)
+    goto <bb 22>; [INV]
+  else
+    goto <bb 23>; [INV]
+
+  <bb 22> :
+  # DEBUG BEGIN_STMT
+  old_stable = i;
+  # DEBUG BEGIN_STMT
+  _17 = (int) i;
+  age_stable = arp_table[_17].ctime;
+
+  <bb 23> :
+  # DEBUG BEGIN_STMT
+  i.0_18 = (unsigned short) i;
+  _19 = i.0_18 + 1;
+  i = (s16_t) _19;
+
+  <bb 24> :
+  # DEBUG BEGIN_STMT
+  if (i <= 9)
+    goto <bb 3>; [INV]
+  else
+    goto <bb 25>; [INV]
+
+  <bb 25> :
+  # DEBUG BEGIN_STMT
+  _20 = (int) flags;
+  _21 = _20 & 2;
+  if (_21 != 0)
+    goto <bb 28>; [INV]
+  else
+    goto <bb 26>; [INV]
+
+  <bb 26> :
+  if (empty == 10)
+    goto <bb 27>; [INV]
+  else
+    goto <bb 29>; [INV]
+
+  <bb 27> :
+  _22 = (int) flags;
+  _23 = _22 & 1;
+  if (_23 == 0)
+    goto <bb 28>; [INV]
+  else
+    goto <bb 29>; [INV]
+
+  <bb 28> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  D.7338 = -1;
+  // predicted unlikely by early return (on trees) predictor.
+  goto <bb 49>; [INV]
+
+  <bb 29> :
+  # DEBUG BEGIN_STMT
+  if (empty <= 9)
+    goto <bb 30>; [INV]
+  else
+    goto <bb 31>; [INV]
+
+  <bb 30> :
+  # DEBUG BEGIN_STMT
+  i = empty;
+  # DEBUG BEGIN_STMT
+  goto <bb 42>; [INV]
+
+  <bb 31> :
+  # DEBUG BEGIN_STMT
+  if (old_stable <= 9)
+    goto <bb 32>; [INV]
+  else
+    goto <bb 34>; [INV]
+
+  <bb 32> :
+  # DEBUG BEGIN_STMT
+  i = old_stable;
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _24 = (int) i;
+  _25 = arp_table[_24].q;
+  if (_25 != 0B)
+    goto <bb 33>; [INV]
+  else
+    goto <bb 39>; [INV]
+
+  <bb 33> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  __asm__ __volatile__("BKPT #0
+	");
+  # DEBUG BEGIN_STMT
+  goto <bb 33>; [INV]
+
+  <bb 34> :
+  # DEBUG BEGIN_STMT
+  if (old_pending <= 9)
+    goto <bb 35>; [INV]
+  else
+    goto <bb 36>; [INV]
+
+  <bb 35> :
+  # DEBUG BEGIN_STMT
+  i = old_pending;
+  # DEBUG BEGIN_STMT
+  goto <bb 39>; [INV]
+
+  <bb 36> :
+  # DEBUG BEGIN_STMT
+  if (old_queue <= 9)
+    goto <bb 37>; [INV]
+  else
+    goto <bb 38>; [INV]
+
+  <bb 37> :
+  # DEBUG BEGIN_STMT
+  i = old_queue;
+  # DEBUG BEGIN_STMT
+  goto <bb 39>; [INV]
+
+  <bb 38> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  D.7338 = -1;
+  // predicted unlikely by early return (on trees) predictor.
+  goto <bb 49>; [INV]
+
+  <bb 39> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  if (i > 9)
+    goto <bb 40>; [INV]
+  else
+    goto <bb 41>; [INV]
+
+  <bb 40> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  __asm__ __volatile__("BKPT #0
+	");
+  # DEBUG BEGIN_STMT
+  goto <bb 40>; [INV]
+
+  <bb 41> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _26 = (int) i;
+  etharp_free_entry (_26);
+
+  <bb 42> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  if (i > 9)
+    goto <bb 43>; [INV]
+  else
+    goto <bb 44>; [INV]
+
+  <bb 43> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  __asm__ __volatile__("BKPT #0
+	");
+  # DEBUG BEGIN_STMT
+  goto <bb 43>; [INV]
+
+  <bb 44> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _27 = (int) i;
+  _28 = arp_table[_27].state;
+  if (_28 != 0)
+    goto <bb 45>; [INV]
+  else
+    goto <bb 46>; [INV]
+
+  <bb 45> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  __asm__ __volatile__("BKPT #0
+	");
+  # DEBUG BEGIN_STMT
+  goto <bb 45>; [INV]
+
+  <bb 46> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  if (ipaddr != 0B)
+    goto <bb 47>; [INV]
+  else
+    goto <bb 48>; [INV]
+
+  <bb 47> :
+  # DEBUG BEGIN_STMT
+  _29 = (int) i;
+  _30 = ipaddr->addr;
+  arp_table[_29].ipaddr.addr = _30;
+
+  <bb 48> :
+  # DEBUG BEGIN_STMT
+  _31 = (int) i;
+  arp_table[_31].ctime = 0;
+  # DEBUG BEGIN_STMT
+  _32 = (int) i;
+  arp_table[_32].netif = netif;
+  # DEBUG BEGIN_STMT
+  D.7338 = i;
+
+  <bb 49> :
+  return D.7338;
+
+}
+
+
+etharp_tmr ()
+{
+  u8_t state;
+  int i;
+
+  <bb 2> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  i = 0;
+  goto <bb 15>; [INV]
+
+  <bb 3> :
+  # DEBUG BEGIN_STMT
+  state = arp_table[i].state;
+  # DEBUG BEGIN_STMT
+  if (state != 0)
+    goto <bb 4>; [INV]
+  else
+    goto <bb 14>; [INV]
+
+  <bb 4> :
+  # DEBUG BEGIN_STMT
+  _1 = arp_table[i].ctime;
+  _2 = _1;
+  _3 = _2 + 1;
+  arp_table[i].ctime = _3;
+  # DEBUG BEGIN_STMT
+  _4 = arp_table[i].ctime;
+  if (_4 > 299)
+    goto <bb 7>; [INV]
+  else
+    goto <bb 5>; [INV]
+
+  <bb 5> :
+  _5 = arp_table[i].state;
+  if (_5 == 1)
+    goto <bb 6>; [INV]
+  else
+    goto <bb 8>; [INV]
+
+  <bb 6> :
+  _6 = arp_table[i].ctime;
+  if (_6 > 4)
+    goto <bb 7>; [INV]
+  else
+    goto <bb 8>; [INV]
+
+  <bb 7> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  etharp_free_entry (i);
+  goto <bb 14>; [INV]
+
+  <bb 8> :
+  # DEBUG BEGIN_STMT
+  _7 = arp_table[i].state;
+  if (_7 == 3)
+    goto <bb 9>; [INV]
+  else
+    goto <bb 10>; [INV]
+
+  <bb 9> :
+  # DEBUG BEGIN_STMT
+  arp_table[i].state = 4;
+  goto <bb 14>; [INV]
+
+  <bb 10> :
+  # DEBUG BEGIN_STMT
+  _8 = arp_table[i].state;
+  if (_8 == 4)
+    goto <bb 11>; [INV]
+  else
+    goto <bb 12>; [INV]
+
+  <bb 11> :
+  # DEBUG BEGIN_STMT
+  arp_table[i].state = 2;
+  goto <bb 14>; [INV]
+
+  <bb 12> :
+  # DEBUG BEGIN_STMT
+  _9 = arp_table[i].state;
+  if (_9 == 1)
+    goto <bb 13>; [INV]
+  else
+    goto <bb 14>; [INV]
+
+  <bb 13> :
+  # DEBUG BEGIN_STMT
+  _10 = arp_table[i].netif;
+  _11 = &arp_table[i].ipaddr;
+  etharp_request (_10, _11);
+
+  <bb 14> :
+  # DEBUG BEGIN_STMT
+  i = i + 1;
+
+  <bb 15> :
+  # DEBUG BEGIN_STMT
+  if (i <= 9)
+    goto <bb 3>; [INV]
+  else
+    goto <bb 16>; [INV]
+
+  <bb 16> :
+  return;
+
+}
+
+
+etharp_free_entry (int i)
+{
+  <bb 2> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _1 = arp_table[i].q;
+  if (_1 != 0B)
+    goto <bb 3>; [INV]
+  else
+    goto <bb 4>; [INV]
+
+  <bb 3> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _2 = arp_table[i].q;
+  free_etharp_q (_2);
+  # DEBUG BEGIN_STMT
+  arp_table[i].q = 0B;
+
+  <bb 4> :
+  # DEBUG BEGIN_STMT
+  arp_table[i].state = 0;
+  return;
+
+}
+
+
+free_etharp_q (struct etharp_q_entry * q)
+{
+  struct etharp_q_entry * r;
+
+  <bb 2> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  if (q == 0B)
+    goto <bb 3>; [INV]
+  else
+    goto <bb 7>; [INV]
+
+  <bb 3> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  __asm__ __volatile__("BKPT #0
+	");
+  # DEBUG BEGIN_STMT
+  goto <bb 3>; [INV]
+
+  <bb 4> :
+  # DEBUG BEGIN_STMT
+  r = q;
+  # DEBUG BEGIN_STMT
+  q = q->next;
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _1 = r->p;
+  if (_1 == 0B)
+    goto <bb 5>; [INV]
+  else
+    goto <bb 6>; [INV]
+
+  <bb 5> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  __asm__ __volatile__("BKPT #0
+	");
+  # DEBUG BEGIN_STMT
+  goto <bb 5>; [INV]
+
+  <bb 6> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _2 = r->p;
+  pbuf_free (_2);
+  # DEBUG BEGIN_STMT
+  memp_free (7, r);
+
+  <bb 7> :
+  # DEBUG BEGIN_STMT
+  if (q != 0B)
+    goto <bb 4>; [INV]
+  else
+    goto <bb 8>; [INV]
+
+  <bb 8> :
+  return;
+
+}
+
+

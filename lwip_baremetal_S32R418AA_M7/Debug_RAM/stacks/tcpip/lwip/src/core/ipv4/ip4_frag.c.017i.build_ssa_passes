@@ -1,0 +1,1881 @@
+ip4_frag (struct pbuf * p, struct netif * netif, const struct ip4_addr_t * dest)
+{
+  u16_t plen;
+  struct pbuf_custom_ref * pcr;
+  int mf_set;
+  u16_t tmp;
+  u16_t poff;
+  int last;
+  u16_t ofo;
+  u16_t fragsize;
+  u16_t left;
+  const u16_t nfb;
+  struct ip_hdr * iphdr;
+  struct ip_hdr * original_iphdr;
+  u16_t left_to_copy;
+  u16_t newpbuflen;
+  struct pbuf * newpbuf;
+  struct pbuf * rambuf;
+  err_t D.7528;
+
+  <bb 2> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  newpbuflen = 0;
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _1 = netif->mtu;
+  _2 = (int) _1;
+  _3 = _2 + -20;
+  _4 = _3 / 8;
+  nfb = (const u16_t) _4;
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  poff = 20;
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  original_iphdr = p->payload;
+  # DEBUG BEGIN_STMT
+  iphdr = original_iphdr;
+  # DEBUG BEGIN_STMT
+  _5 = iphdr->_v_hl;
+  _6 = _5 & 15;
+  _7 = _6 * 4;
+  if (_7 != 20)
+    goto <bb 3>; [INV]
+  else
+    goto <bb 4>; [INV]
+
+  <bb 3> :
+  # DEBUG BEGIN_STMT
+  D.7528 = -6;
+  // predicted unlikely by early return (on trees) predictor.
+  goto <bb 30>; [INV]
+
+  <bb 4> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _8 = p->len;
+  if (_8 <= 19)
+    goto <bb 5>; [INV]
+  else
+    goto <bb 6>; [INV]
+
+  <bb 5> :
+  # DEBUG BEGIN_STMT
+  D.7528 = -6;
+  // predicted unlikely by early return (on trees) predictor.
+  goto <bb 30>; [INV]
+
+  <bb 6> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _9 = iphdr->_offset;
+  tmp = lwip_htons (_9);
+  # DEBUG BEGIN_STMT
+  ofo = tmp & 8191;
+  # DEBUG BEGIN_STMT
+  _10 = (int) tmp;
+  mf_set = _10 & 8192;
+  # DEBUG BEGIN_STMT
+  _11 = p->tot_len;
+  left = _11 + 65516;
+  # DEBUG BEGIN_STMT
+  goto <bb 27>; [INV]
+
+  <bb 7> :
+  # DEBUG BEGIN_STMT
+  _12 = nfb * 8;
+  fragsize = MIN_EXPR <left, _12>;
+  # DEBUG BEGIN_STMT
+  rambuf = pbuf_alloc (14, 20, 640);
+  # DEBUG BEGIN_STMT
+  if (rambuf == 0B)
+    goto <bb 8>; [INV]
+  else
+    goto <bb 9>; [INV]
+
+  <bb 8> :
+  # DEBUG BEGIN_STMT
+  // predicted unlikely by goto predictor.
+  goto <bb 29>; [INV]
+
+  <bb 9> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _13 = rambuf->len;
+  if (_13 <= 19)
+    goto <bb 10>; [INV]
+  else
+    goto <bb 11>; [INV]
+
+  <bb 10> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  __asm__ __volatile__("BKPT #0
+	");
+  # DEBUG BEGIN_STMT
+  goto <bb 10>; [INV]
+
+  <bb 11> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _14 = rambuf->payload;
+  memcpy (_14, original_iphdr, 20);
+  # DEBUG BEGIN_STMT
+  iphdr = rambuf->payload;
+  # DEBUG BEGIN_STMT
+  left_to_copy = fragsize;
+  # DEBUG BEGIN_STMT
+  goto <bb 22>; [INV]
+
+  <bb 12> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _15 = p->len;
+  plen = _15 - poff;
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _16 = p->len;
+  if (poff > _16)
+    goto <bb 13>; [INV]
+  else
+    goto <bb 14>; [INV]
+
+  <bb 13> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  __asm__ __volatile__("BKPT #0
+	");
+  # DEBUG BEGIN_STMT
+  goto <bb 13>; [INV]
+
+  <bb 14> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  newpbuflen = MIN_EXPR <plen, left_to_copy>;
+  # DEBUG BEGIN_STMT
+  if (newpbuflen == 0)
+    goto <bb 15>; [INV]
+  else
+    goto <bb 16>; [INV]
+
+  <bb 15> :
+  # DEBUG BEGIN_STMT
+  poff = 0;
+  # DEBUG BEGIN_STMT
+  p = p->next;
+  # DEBUG BEGIN_STMT
+  // predicted unlikely by continue predictor.
+  goto <bb 22>; [INV]
+
+  <bb 16> :
+  # DEBUG BEGIN_STMT
+  pcr = ip_frag_alloc_pbuf_custom_ref ();
+  # DEBUG BEGIN_STMT
+  if (pcr == 0B)
+    goto <bb 17>; [INV]
+  else
+    goto <bb 18>; [INV]
+
+  <bb 17> :
+  # DEBUG BEGIN_STMT
+  pbuf_free (rambuf);
+  # DEBUG BEGIN_STMT
+  // predicted unlikely by goto predictor.
+  goto <bb 29>; [INV]
+
+  <bb 18> :
+  # DEBUG BEGIN_STMT
+  _17 = &pcr->pc;
+  _18 = p->payload;
+  _19 = (sizetype) poff;
+  _20 = _18 + _19;
+  newpbuf = pbuf_alloced_custom (0, newpbuflen, 65, _17, _20, newpbuflen);
+  # DEBUG BEGIN_STMT
+  if (newpbuf == 0B)
+    goto <bb 19>; [INV]
+  else
+    goto <bb 20>; [INV]
+
+  <bb 19> :
+  # DEBUG BEGIN_STMT
+  ip_frag_free_pbuf_custom_ref (pcr);
+  # DEBUG BEGIN_STMT
+  pbuf_free (rambuf);
+  # DEBUG BEGIN_STMT
+  // predicted unlikely by goto predictor.
+  goto <bb 29>; [INV]
+
+  <bb 20> :
+  # DEBUG BEGIN_STMT
+  pbuf_ref (p);
+  # DEBUG BEGIN_STMT
+  pcr->original = p;
+  # DEBUG BEGIN_STMT
+  pcr->pc.custom_free_function = ipfrag_free_pbuf_custom;
+  # DEBUG BEGIN_STMT
+  pbuf_cat (rambuf, newpbuf);
+  # DEBUG BEGIN_STMT
+  left_to_copy = left_to_copy - newpbuflen;
+  # DEBUG BEGIN_STMT
+  if (left_to_copy != 0)
+    goto <bb 21>; [INV]
+  else
+    goto <bb 22>; [INV]
+
+  <bb 21> :
+  # DEBUG BEGIN_STMT
+  poff = 0;
+  # DEBUG BEGIN_STMT
+  p = p->next;
+
+  <bb 22> :
+  # DEBUG BEGIN_STMT
+  if (left_to_copy != 0)
+    goto <bb 12>; [INV]
+  else
+    goto <bb 23>; [INV]
+
+  <bb 23> :
+  # DEBUG BEGIN_STMT
+  poff = poff + newpbuflen;
+  # DEBUG BEGIN_STMT
+  _21 = netif->mtu;
+  _22 = (int) _21;
+  _23 = _22 + -19;
+  _24 = (int) left;
+  _25 = _23 > _24;
+  last = (int) _25;
+  # DEBUG BEGIN_STMT
+  tmp = ofo & 8191;
+  # DEBUG BEGIN_STMT
+  if (last == 0)
+    goto <bb 25>; [INV]
+  else
+    goto <bb 24>; [INV]
+
+  <bb 24> :
+  if (mf_set != 0)
+    goto <bb 25>; [INV]
+  else
+    goto <bb 26>; [INV]
+
+  <bb 25> :
+  # DEBUG BEGIN_STMT
+  tmp = tmp | 8192;
+
+  <bb 26> :
+  # DEBUG BEGIN_STMT
+  _26 = lwip_htons (tmp);
+  iphdr->_offset = _26;
+  # DEBUG BEGIN_STMT
+  _27 = fragsize + 20;
+  _28 = lwip_htons (_27);
+  iphdr->_len = _28;
+  # DEBUG BEGIN_STMT
+  iphdr->_chksum = 0;
+  # DEBUG BEGIN_STMT
+  _29 = netif->output;
+  _29 (netif, rambuf, dest);
+  # DEBUG BEGIN_STMT
+  _30 = lwip_stats.ip_frag.xmit;
+  _31 = _30 + 1;
+  lwip_stats.ip_frag.xmit = _31;
+  # DEBUG BEGIN_STMT
+  pbuf_free (rambuf);
+  # DEBUG BEGIN_STMT
+  left = left - fragsize;
+  # DEBUG BEGIN_STMT
+  ofo = ofo + nfb;
+
+  <bb 27> :
+  # DEBUG BEGIN_STMT
+  if (left != 0)
+    goto <bb 7>; [INV]
+  else
+    goto <bb 28>; [INV]
+
+  <bb 28> :
+  # DEBUG BEGIN_STMT
+  _32 = lwip_stats.mib2.ipfragoks;
+  _33 = _32 + 1;
+  lwip_stats.mib2.ipfragoks = _33;
+  # DEBUG BEGIN_STMT
+  D.7528 = 0;
+  goto <bb 30>; [INV]
+
+  <bb 29> :
+memerr:
+  # DEBUG BEGIN_STMT
+  _34 = lwip_stats.mib2.ipfragfails;
+  _35 = _34 + 1;
+  lwip_stats.mib2.ipfragfails = _35;
+  # DEBUG BEGIN_STMT
+  D.7528 = -1;
+
+  <bb 30> :
+  return D.7528;
+
+}
+
+
+ipfrag_free_pbuf_custom (struct pbuf * p)
+{
+  struct pbuf_custom_ref * pcr;
+
+  <bb 2> :
+  # DEBUG BEGIN_STMT
+  pcr = p;
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  if (pcr == 0B)
+    goto <bb 3>; [INV]
+  else
+    goto <bb 4>; [INV]
+
+  <bb 3> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  __asm__ __volatile__("BKPT #0
+	");
+  # DEBUG BEGIN_STMT
+  goto <bb 3>; [INV]
+
+  <bb 4> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  if (pcr != p)
+    goto <bb 5>; [INV]
+  else
+    goto <bb 6>; [INV]
+
+  <bb 5> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  __asm__ __volatile__("BKPT #0
+	");
+  # DEBUG BEGIN_STMT
+  goto <bb 5>; [INV]
+
+  <bb 6> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _1 = pcr->original;
+  if (_1 != 0B)
+    goto <bb 7>; [INV]
+  else
+    goto <bb 8>; [INV]
+
+  <bb 7> :
+  # DEBUG BEGIN_STMT
+  _2 = pcr->original;
+  pbuf_free (_2);
+
+  <bb 8> :
+  # DEBUG BEGIN_STMT
+  ip_frag_free_pbuf_custom_ref (pcr);
+  return;
+
+}
+
+
+ip_frag_free_pbuf_custom_ref (struct pbuf_custom_ref * p)
+{
+  <bb 2> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  if (p == 0B)
+    goto <bb 3>; [INV]
+  else
+    goto <bb 4>; [INV]
+
+  <bb 3> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  __asm__ __volatile__("BKPT #0
+	");
+  # DEBUG BEGIN_STMT
+  goto <bb 3>; [INV]
+
+  <bb 4> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  memp_free (6, p);
+  return;
+
+}
+
+
+ip_frag_alloc_pbuf_custom_ref ()
+{
+  struct pbuf_custom_ref * D.7555;
+
+  <bb 2> :
+  # DEBUG BEGIN_STMT
+  D.7555 = memp_malloc (6);
+  return D.7555;
+
+}
+
+
+ip4_reass (struct pbuf * p)
+{
+  u16_t datagram_len;
+  struct ip_reassdata * ipr_prev;
+  u16_t datagram_len;
+  u16_t datagram_len;
+  int is_last;
+  int valid;
+  u8_t hlen;
+  u16_t clen;
+  u16_t len;
+  u16_t offset;
+  struct ip_reass_helper * iprh;
+  struct ip_reassdata * ipr;
+  struct ip_hdr * fraghdr;
+  struct pbuf * r;
+  struct pbuf * D.7436;
+
+  <bb 2> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _1 = lwip_stats.ip_frag.recv;
+  _2 = _1 + 1;
+  lwip_stats.ip_frag.recv = _2;
+  # DEBUG BEGIN_STMT
+  _3 = lwip_stats.mib2.ipreasmreqds;
+  _4 = _3 + 1;
+  lwip_stats.mib2.ipreasmreqds = _4;
+  # DEBUG BEGIN_STMT
+  fraghdr = p->payload;
+  # DEBUG BEGIN_STMT
+  _5 = fraghdr->_v_hl;
+  _6 = _5 & 15;
+  _7 = _6 * 4;
+  if (_7 != 20)
+    goto <bb 3>; [INV]
+  else
+    goto <bb 4>; [INV]
+
+  <bb 3> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _8 = lwip_stats.ip_frag.err;
+  _9 = _8 + 1;
+  lwip_stats.ip_frag.err = _9;
+  # DEBUG BEGIN_STMT
+  // predicted unlikely by goto predictor.
+  goto <bb 51>; [INV]
+
+  <bb 4> :
+  # DEBUG BEGIN_STMT
+  _10 = fraghdr->_offset;
+  _11 = lwip_htons (_10);
+  _12 = _11 & 8191;
+  offset = _12 * 8;
+  # DEBUG BEGIN_STMT
+  _13 = fraghdr->_len;
+  len = lwip_htons (_13);
+  # DEBUG BEGIN_STMT
+  _14 = fraghdr->_v_hl;
+  _15 = _14 & 15;
+  hlen = _15 * 4;
+  # DEBUG BEGIN_STMT
+  _16 = (short unsigned int) hlen;
+  if (len < _16)
+    goto <bb 5>; [INV]
+  else
+    goto <bb 6>; [INV]
+
+  <bb 5> :
+  # DEBUG BEGIN_STMT
+  // predicted unlikely by goto predictor.
+  goto <bb 51>; [INV]
+
+  <bb 6> :
+  # DEBUG BEGIN_STMT
+  _17 = (short unsigned int) hlen;
+  len = len - _17;
+  # DEBUG BEGIN_STMT
+  clen = pbuf_clen (p);
+  # DEBUG BEGIN_STMT
+  ip_reass_pbufcount.3_18 = ip_reass_pbufcount;
+  _19 = (int) ip_reass_pbufcount.3_18;
+  _20 = (int) clen;
+  _21 = _19 + _20;
+  if (_21 > 10)
+    goto <bb 7>; [INV]
+  else
+    goto <bb 10>; [INV]
+
+  <bb 7> :
+  # DEBUG BEGIN_STMT
+  _22 = (int) clen;
+  _23 = ip_reass_remove_oldest_datagram (fraghdr, _22);
+  if (_23 == 0)
+    goto <bb 9>; [INV]
+  else
+    goto <bb 8>; [INV]
+
+  <bb 8> :
+  ip_reass_pbufcount.4_24 = ip_reass_pbufcount;
+  _25 = (int) ip_reass_pbufcount.4_24;
+  _26 = (int) clen;
+  _27 = _25 + _26;
+  if (_27 > 10)
+    goto <bb 9>; [INV]
+  else
+    goto <bb 10>; [INV]
+
+  <bb 9> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _28 = lwip_stats.ip_frag.memerr;
+  _29 = _28 + 1;
+  lwip_stats.ip_frag.memerr = _29;
+  # DEBUG BEGIN_STMT
+  // predicted unlikely by goto predictor.
+  goto <bb 51>; [INV]
+
+  <bb 10> :
+  # DEBUG BEGIN_STMT
+  ipr = reassdatagrams;
+  goto <bb 16>; [INV]
+
+  <bb 11> :
+  # DEBUG BEGIN_STMT
+  _30 = ipr->iphdr.src.addr;
+  _31 = fraghdr->src.addr;
+  if (_30 == _31)
+    goto <bb 12>; [INV]
+  else
+    goto <bb 15>; [INV]
+
+  <bb 12> :
+  _32 = ipr->iphdr.dest.addr;
+  _33 = fraghdr->dest.addr;
+  if (_32 == _33)
+    goto <bb 13>; [INV]
+  else
+    goto <bb 15>; [INV]
+
+  <bb 13> :
+  _34 = ipr->iphdr._id;
+  _35 = fraghdr->_id;
+  if (_34 == _35)
+    goto <bb 14>; [INV]
+  else
+    goto <bb 15>; [INV]
+
+  <bb 14> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _36 = lwip_stats.ip_frag.cachehit;
+  _37 = _36 + 1;
+  lwip_stats.ip_frag.cachehit = _37;
+  # DEBUG BEGIN_STMT
+  goto <bb 17>; [INV]
+
+  <bb 15> :
+  # DEBUG BEGIN_STMT
+  ipr = ipr->next;
+
+  <bb 16> :
+  # DEBUG BEGIN_STMT
+  if (ipr != 0B)
+    goto <bb 11>; [INV]
+  else
+    goto <bb 17>; [INV]
+
+  <bb 17> :
+  # DEBUG BEGIN_STMT
+  if (ipr == 0B)
+    goto <bb 18>; [INV]
+  else
+    goto <bb 20>; [INV]
+
+  <bb 18> :
+  # DEBUG BEGIN_STMT
+  _38 = (int) clen;
+  ipr = ip_reass_enqueue_new_datagram (fraghdr, _38);
+  # DEBUG BEGIN_STMT
+  if (ipr == 0B)
+    goto <bb 19>; [INV]
+  else
+    goto <bb 23>; [INV]
+
+  <bb 19> :
+  # DEBUG BEGIN_STMT
+  // predicted unlikely by goto predictor.
+  goto <bb 51>; [INV]
+
+  <bb 20> :
+  # DEBUG BEGIN_STMT
+  _39 = fraghdr->_offset;
+  _40 = lwip_htons (_39);
+  _41 = (unsigned int) _40;
+  _42 = _41 & 8191;
+  if (_42 == 0)
+    goto <bb 21>; [INV]
+  else
+    goto <bb 23>; [INV]
+
+  <bb 21> :
+  _43 = ipr->iphdr._offset;
+  _44 = lwip_htons (_43);
+  _45 = (unsigned int) _44;
+  _46 = _45 & 8191;
+  if (_46 != 0)
+    goto <bb 22>; [INV]
+  else
+    goto <bb 23>; [INV]
+
+  <bb 22> :
+  # DEBUG BEGIN_STMT
+  _47 = &ipr->iphdr;
+  memcpy (_47, fraghdr, 20);
+
+  <bb 23> :
+  # DEBUG BEGIN_STMT
+  _48 = fraghdr->_offset;
+  _49 = (int) _48;
+  _50 = _49 & 32;
+  _51 = _50 == 0;
+  is_last = (int) _51;
+  # DEBUG BEGIN_STMT
+  if (is_last != 0)
+    goto <bb 24>; [INV]
+  else
+    goto <bb 27>; [INV]
+
+  <bb 24> :
+  # DEBUG BEGIN_STMT
+  datagram_len = offset + len;
+  # DEBUG BEGIN_STMT
+  if (datagram_len < offset)
+    goto <bb 26>; [INV]
+  else
+    goto <bb 25>; [INV]
+
+  <bb 25> :
+  if (datagram_len > 65515)
+    goto <bb 26>; [INV]
+  else
+    goto <bb 27>; [INV]
+
+  <bb 26> :
+  # DEBUG BEGIN_STMT
+  // predicted unlikely by goto predictor.
+  goto <bb 45>; [INV]
+
+  <bb 27> :
+  # DEBUG BEGIN_STMT
+  valid = ip_reass_chain_frag_into_datagram_and_validate (ipr, p, is_last);
+  # DEBUG BEGIN_STMT
+  if (valid == -1)
+    goto <bb 28>; [INV]
+  else
+    goto <bb 29>; [INV]
+
+  <bb 28> :
+  # DEBUG BEGIN_STMT
+  // predicted unlikely by goto predictor.
+  goto <bb 45>; [INV]
+
+  <bb 29> :
+  # DEBUG BEGIN_STMT
+  ip_reass_pbufcount.5_52 = ip_reass_pbufcount;
+  _53 = clen + ip_reass_pbufcount.5_52;
+  ip_reass_pbufcount = _53;
+  # DEBUG BEGIN_STMT
+  if (is_last != 0)
+    goto <bb 30>; [INV]
+  else
+    goto <bb 31>; [INV]
+
+  <bb 30> :
+  # DEBUG BEGIN_STMT
+  datagram_len = offset + len;
+  # DEBUG BEGIN_STMT
+  ipr->datagram_len = datagram_len;
+  # DEBUG BEGIN_STMT
+  _54 = ipr->flags;
+  _55 = _54 | 1;
+  ipr->flags = _55;
+
+  <bb 31> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  if (valid == 1)
+    goto <bb 32>; [INV]
+  else
+    goto <bb 44>; [INV]
+
+  <bb 32> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _56 = ipr->datagram_len;
+  datagram_len = _56 + 20;
+  # DEBUG BEGIN_STMT
+  _57 = ipr->p;
+  _58 = _57->payload;
+  r = MEM[(struct ip_reass_helper *)_58].next_pbuf;
+  # DEBUG BEGIN_STMT
+  _59 = ipr->p;
+  fraghdr = _59->payload;
+  # DEBUG BEGIN_STMT
+  _60 = &ipr->iphdr;
+  memcpy (fraghdr, _60, 20);
+  # DEBUG BEGIN_STMT
+  _61 = lwip_htons (datagram_len);
+  fraghdr->_len = _61;
+  # DEBUG BEGIN_STMT
+  fraghdr->_offset = 0;
+  # DEBUG BEGIN_STMT
+  fraghdr->_chksum = 0;
+  # DEBUG BEGIN_STMT
+  p = ipr->p;
+  # DEBUG BEGIN_STMT
+  goto <bb 34>; [INV]
+
+  <bb 33> :
+  # DEBUG BEGIN_STMT
+  iprh = r->payload;
+  # DEBUG BEGIN_STMT
+  pbuf_remove_header (r, 20);
+  # DEBUG BEGIN_STMT
+  pbuf_cat (p, r);
+  # DEBUG BEGIN_STMT
+  r = iprh->next_pbuf;
+
+  <bb 34> :
+  # DEBUG BEGIN_STMT
+  if (r != 0B)
+    goto <bb 33>; [INV]
+  else
+    goto <bb 35>; [INV]
+
+  <bb 35> :
+  # DEBUG BEGIN_STMT
+  reassdatagrams.6_62 = reassdatagrams;
+  if (ipr == reassdatagrams.6_62)
+    goto <bb 36>; [INV]
+  else
+    goto <bb 37>; [INV]
+
+  <bb 36> :
+  # DEBUG BEGIN_STMT
+  ipr_prev = 0B;
+  goto <bb 41>; [INV]
+
+  <bb 37> :
+  # DEBUG BEGIN_STMT
+  ipr_prev = reassdatagrams;
+  goto <bb 40>; [INV]
+
+  <bb 38> :
+  # DEBUG BEGIN_STMT
+  _63 = ipr_prev->next;
+  if (ipr == _63)
+    goto <bb 41>; [INV]
+  else
+    goto <bb 39>; [INV]
+
+  <bb 39> :
+  # DEBUG BEGIN_STMT
+  ipr_prev = ipr_prev->next;
+
+  <bb 40> :
+  # DEBUG BEGIN_STMT
+  if (ipr_prev != 0B)
+    goto <bb 38>; [INV]
+  else
+    goto <bb 41>; [INV]
+
+  <bb 41> :
+  # DEBUG BEGIN_STMT
+  ip_reass_dequeue_datagram (ipr, ipr_prev);
+  # DEBUG BEGIN_STMT
+  clen = pbuf_clen (p);
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  ip_reass_pbufcount.7_64 = ip_reass_pbufcount;
+  if (clen > ip_reass_pbufcount.7_64)
+    goto <bb 42>; [INV]
+  else
+    goto <bb 43>; [INV]
+
+  <bb 42> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  __asm__ __volatile__("BKPT #0
+	");
+  # DEBUG BEGIN_STMT
+  goto <bb 42>; [INV]
+
+  <bb 43> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  ip_reass_pbufcount.8_65 = ip_reass_pbufcount;
+  _66 = ip_reass_pbufcount.8_65 - clen;
+  ip_reass_pbufcount = _66;
+  # DEBUG BEGIN_STMT
+  _67 = lwip_stats.mib2.ipreasmoks;
+  _68 = _67 + 1;
+  lwip_stats.mib2.ipreasmoks = _68;
+  # DEBUG BEGIN_STMT
+  D.7436 = p;
+  // predicted unlikely by early return (on trees) predictor.
+  goto <bb 52>; [INV]
+
+  <bb 44> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  D.7436 = 0B;
+  goto <bb 52>; [INV]
+
+  <bb 45> :
+nullreturn_ipr:
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  if (ipr == 0B)
+    goto <bb 46>; [INV]
+  else
+    goto <bb 47>; [INV]
+
+  <bb 46> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  __asm__ __volatile__("BKPT #0
+	");
+  # DEBUG BEGIN_STMT
+  goto <bb 46>; [INV]
+
+  <bb 47> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _69 = ipr->p;
+  if (_69 == 0B)
+    goto <bb 48>; [INV]
+  else
+    goto <bb 51>; [INV]
+
+  <bb 48> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  reassdatagrams.9_70 = reassdatagrams;
+  if (ipr != reassdatagrams.9_70)
+    goto <bb 49>; [INV]
+  else
+    goto <bb 50>; [INV]
+
+  <bb 49> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  __asm__ __volatile__("BKPT #0
+	");
+  # DEBUG BEGIN_STMT
+  goto <bb 49>; [INV]
+
+  <bb 50> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  ip_reass_dequeue_datagram (ipr, 0B);
+
+  <bb 51> :
+nullreturn:
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _71 = lwip_stats.ip_frag.drop;
+  _72 = _71 + 1;
+  lwip_stats.ip_frag.drop = _72;
+  # DEBUG BEGIN_STMT
+  pbuf_free (p);
+  # DEBUG BEGIN_STMT
+  D.7436 = 0B;
+
+  <bb 52> :
+  return D.7436;
+
+}
+
+
+ip_reass_chain_frag_into_datagram_and_validate (struct ip_reassdata * ipr, struct pbuf * new_p, int is_last)
+{
+  int valid;
+  struct ip_hdr * fraghdr;
+  u8_t hlen;
+  u16_t len;
+  u16_t offset;
+  struct pbuf * q;
+  struct ip_reass_helper * iprh_prev;
+  struct ip_reass_helper * iprh_tmp;
+  struct ip_reass_helper * iprh;
+  int D.7470;
+
+  <bb 2> :
+  # DEBUG BEGIN_STMT
+  iprh_prev = 0B;
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  valid = 1;
+  # DEBUG BEGIN_STMT
+  fraghdr = new_p->payload;
+  # DEBUG BEGIN_STMT
+  _1 = fraghdr->_len;
+  len = lwip_htons (_1);
+  # DEBUG BEGIN_STMT
+  _2 = fraghdr->_v_hl;
+  _3 = _2 & 15;
+  hlen = _3 * 4;
+  # DEBUG BEGIN_STMT
+  _4 = (short unsigned int) hlen;
+  if (len < _4)
+    goto <bb 3>; [INV]
+  else
+    goto <bb 4>; [INV]
+
+  <bb 3> :
+  # DEBUG BEGIN_STMT
+  D.7470 = -1;
+  // predicted unlikely by early return (on trees) predictor.
+  goto <bb 55>; [INV]
+
+  <bb 4> :
+  # DEBUG BEGIN_STMT
+  _5 = (short unsigned int) hlen;
+  len = len - _5;
+  # DEBUG BEGIN_STMT
+  _6 = fraghdr->_offset;
+  _7 = lwip_htons (_6);
+  _8 = _7 & 8191;
+  offset = _8 * 8;
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  iprh = new_p->payload;
+  # DEBUG BEGIN_STMT
+  iprh->next_pbuf = 0B;
+  # DEBUG BEGIN_STMT
+  iprh->start = offset;
+  # DEBUG BEGIN_STMT
+  _9 = offset + len;
+  iprh->end = _9;
+  # DEBUG BEGIN_STMT
+  _10 = iprh->end;
+  if (offset > _10)
+    goto <bb 5>; [INV]
+  else
+    goto <bb 6>; [INV]
+
+  <bb 5> :
+  # DEBUG BEGIN_STMT
+  D.7470 = -1;
+  // predicted unlikely by early return (on trees) predictor.
+  goto <bb 55>; [INV]
+
+  <bb 6> :
+  # DEBUG BEGIN_STMT
+  q = ipr->p;
+  goto <bb 25>; [INV]
+
+  <bb 7> :
+  # DEBUG BEGIN_STMT
+  iprh_tmp = q->payload;
+  # DEBUG BEGIN_STMT
+  _11 = iprh->start;
+  _12 = iprh_tmp->start;
+  if (_11 < _12)
+    goto <bb 8>; [INV]
+  else
+    goto <bb 17>; [INV]
+
+  <bb 8> :
+  # DEBUG BEGIN_STMT
+  iprh->next_pbuf = q;
+  # DEBUG BEGIN_STMT
+  if (iprh_prev != 0B)
+    goto <bb 9>; [INV]
+  else
+    goto <bb 14>; [INV]
+
+  <bb 9> :
+  # DEBUG BEGIN_STMT
+  _13 = iprh->start;
+  _14 = iprh_prev->end;
+  if (_13 < _14)
+    goto <bb 11>; [INV]
+  else
+    goto <bb 10>; [INV]
+
+  <bb 10> :
+  _15 = iprh->end;
+  _16 = iprh_tmp->start;
+  if (_15 > _16)
+    goto <bb 11>; [INV]
+  else
+    goto <bb 12>; [INV]
+
+  <bb 11> :
+  # DEBUG BEGIN_STMT
+  D.7470 = -1;
+  // predicted unlikely by early return (on trees) predictor.
+  goto <bb 55>; [INV]
+
+  <bb 12> :
+  # DEBUG BEGIN_STMT
+  iprh_prev->next_pbuf = new_p;
+  # DEBUG BEGIN_STMT
+  _17 = iprh_prev->end;
+  _18 = iprh->start;
+  if (_17 != _18)
+    goto <bb 13>; [INV]
+  else
+    goto <bb 26>; [INV]
+
+  <bb 13> :
+  # DEBUG BEGIN_STMT
+  valid = 0;
+  goto <bb 26>; [INV]
+
+  <bb 14> :
+  # DEBUG BEGIN_STMT
+  _19 = iprh->end;
+  _20 = iprh_tmp->start;
+  if (_19 > _20)
+    goto <bb 15>; [INV]
+  else
+    goto <bb 16>; [INV]
+
+  <bb 15> :
+  # DEBUG BEGIN_STMT
+  D.7470 = -1;
+  // predicted unlikely by early return (on trees) predictor.
+  goto <bb 55>; [INV]
+
+  <bb 16> :
+  # DEBUG BEGIN_STMT
+  ipr->p = new_p;
+  goto <bb 26>; [INV]
+
+  <bb 17> :
+  # DEBUG BEGIN_STMT
+  _21 = iprh->start;
+  _22 = iprh_tmp->start;
+  if (_21 == _22)
+    goto <bb 18>; [INV]
+  else
+    goto <bb 19>; [INV]
+
+  <bb 18> :
+  # DEBUG BEGIN_STMT
+  D.7470 = -1;
+  // predicted unlikely by early return (on trees) predictor.
+  goto <bb 55>; [INV]
+
+  <bb 19> :
+  # DEBUG BEGIN_STMT
+  _23 = iprh->start;
+  _24 = iprh_tmp->end;
+  if (_23 < _24)
+    goto <bb 20>; [INV]
+  else
+    goto <bb 21>; [INV]
+
+  <bb 20> :
+  # DEBUG BEGIN_STMT
+  D.7470 = -1;
+  // predicted unlikely by early return (on trees) predictor.
+  goto <bb 55>; [INV]
+
+  <bb 21> :
+  # DEBUG BEGIN_STMT
+  if (iprh_prev != 0B)
+    goto <bb 22>; [INV]
+  else
+    goto <bb 24>; [INV]
+
+  <bb 22> :
+  # DEBUG BEGIN_STMT
+  _25 = iprh_prev->end;
+  _26 = iprh_tmp->start;
+  if (_25 != _26)
+    goto <bb 23>; [INV]
+  else
+    goto <bb 24>; [INV]
+
+  <bb 23> :
+  # DEBUG BEGIN_STMT
+  valid = 0;
+
+  <bb 24> :
+  # DEBUG BEGIN_STMT
+  q = iprh_tmp->next_pbuf;
+  # DEBUG BEGIN_STMT
+  iprh_prev = iprh_tmp;
+
+  <bb 25> :
+  # DEBUG BEGIN_STMT
+  if (q != 0B)
+    goto <bb 7>; [INV]
+  else
+    goto <bb 26>; [INV]
+
+  <bb 26> :
+  # DEBUG BEGIN_STMT
+  if (q == 0B)
+    goto <bb 27>; [INV]
+  else
+    goto <bb 35>; [INV]
+
+  <bb 27> :
+  # DEBUG BEGIN_STMT
+  if (iprh_prev != 0B)
+    goto <bb 28>; [INV]
+  else
+    goto <bb 32>; [INV]
+
+  <bb 28> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _27 = iprh_prev->end;
+  _28 = iprh->start;
+  if (_27 > _28)
+    goto <bb 29>; [INV]
+  else
+    goto <bb 30>; [INV]
+
+  <bb 29> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  __asm__ __volatile__("BKPT #0
+	");
+  # DEBUG BEGIN_STMT
+  goto <bb 29>; [INV]
+
+  <bb 30> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  iprh_prev->next_pbuf = new_p;
+  # DEBUG BEGIN_STMT
+  _29 = iprh_prev->end;
+  _30 = iprh->start;
+  if (_29 != _30)
+    goto <bb 31>; [INV]
+  else
+    goto <bb 35>; [INV]
+
+  <bb 31> :
+  # DEBUG BEGIN_STMT
+  valid = 0;
+  goto <bb 35>; [INV]
+
+  <bb 32> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _31 = ipr->p;
+  if (_31 != 0B)
+    goto <bb 33>; [INV]
+  else
+    goto <bb 34>; [INV]
+
+  <bb 33> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  __asm__ __volatile__("BKPT #0
+	");
+  # DEBUG BEGIN_STMT
+  goto <bb 33>; [INV]
+
+  <bb 34> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  ipr->p = new_p;
+
+  <bb 35> :
+  # DEBUG BEGIN_STMT
+  if (is_last != 0)
+    goto <bb 37>; [INV]
+  else
+    goto <bb 36>; [INV]
+
+  <bb 36> :
+  _32 = ipr->flags;
+  _33 = (int) _32;
+  _34 = _33 & 1;
+  if (_34 != 0)
+    goto <bb 37>; [INV]
+  else
+    goto <bb 54>; [INV]
+
+  <bb 37> :
+  # DEBUG BEGIN_STMT
+  if (valid != 0)
+    goto <bb 38>; [INV]
+  else
+    goto <bb 53>; [INV]
+
+  <bb 38> :
+  # DEBUG BEGIN_STMT
+  _35 = ipr->p;
+  if (_35 == 0B)
+    goto <bb 40>; [INV]
+  else
+    goto <bb 39>; [INV]
+
+  <bb 39> :
+  _36 = ipr->p;
+  _37 = _36->payload;
+  _38 = MEM[(struct ip_reass_helper *)_37].start;
+  if (_38 != 0)
+    goto <bb 40>; [INV]
+  else
+    goto <bb 41>; [INV]
+
+  <bb 40> :
+  # DEBUG BEGIN_STMT
+  valid = 0;
+  goto <bb 53>; [INV]
+
+  <bb 41> :
+  # DEBUG BEGIN_STMT
+  iprh_prev = iprh;
+  # DEBUG BEGIN_STMT
+  q = iprh->next_pbuf;
+  # DEBUG BEGIN_STMT
+  goto <bb 45>; [INV]
+
+  <bb 42> :
+  # DEBUG BEGIN_STMT
+  iprh = q->payload;
+  # DEBUG BEGIN_STMT
+  _39 = iprh_prev->end;
+  _40 = iprh->start;
+  if (_39 != _40)
+    goto <bb 43>; [INV]
+  else
+    goto <bb 44>; [INV]
+
+  <bb 43> :
+  # DEBUG BEGIN_STMT
+  valid = 0;
+  # DEBUG BEGIN_STMT
+  goto <bb 46>; [INV]
+
+  <bb 44> :
+  # DEBUG BEGIN_STMT
+  iprh_prev = iprh;
+  # DEBUG BEGIN_STMT
+  q = iprh->next_pbuf;
+
+  <bb 45> :
+  # DEBUG BEGIN_STMT
+  if (q != 0B)
+    goto <bb 42>; [INV]
+  else
+    goto <bb 46>; [INV]
+
+  <bb 46> :
+  # DEBUG BEGIN_STMT
+  if (valid != 0)
+    goto <bb 47>; [INV]
+  else
+    goto <bb 53>; [INV]
+
+  <bb 47> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _41 = ipr->p;
+  if (_41 == 0B)
+    goto <bb 48>; [INV]
+  else
+    goto <bb 49>; [INV]
+
+  <bb 48> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  __asm__ __volatile__("BKPT #0
+	");
+  # DEBUG BEGIN_STMT
+  goto <bb 48>; [INV]
+
+  <bb 49> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _42 = ipr->p;
+  _43 = _42->payload;
+  if (iprh == _43)
+    goto <bb 50>; [INV]
+  else
+    goto <bb 51>; [INV]
+
+  <bb 50> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  __asm__ __volatile__("BKPT #0
+	");
+  # DEBUG BEGIN_STMT
+  goto <bb 50>; [INV]
+
+  <bb 51> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _44 = iprh->next_pbuf;
+  if (_44 != 0B)
+    goto <bb 52>; [INV]
+  else
+    goto <bb 53>; [INV]
+
+  <bb 52> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  __asm__ __volatile__("BKPT #0
+	");
+  # DEBUG BEGIN_STMT
+  goto <bb 52>; [INV]
+
+  <bb 53> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _45 = valid != 0;
+  D.7470 = (int) _45;
+  // predicted unlikely by early return (on trees) predictor.
+  goto <bb 55>; [INV]
+
+  <bb 54> :
+  # DEBUG BEGIN_STMT
+  D.7470 = 0;
+
+  <bb 55> :
+  return D.7470;
+
+}
+
+
+ip_reass_dequeue_datagram (struct ip_reassdata * ipr, struct ip_reassdata * prev)
+{
+  <bb 2> :
+  # DEBUG BEGIN_STMT
+  reassdatagrams.2_1 = reassdatagrams;
+  if (ipr == reassdatagrams.2_1)
+    goto <bb 3>; [INV]
+  else
+    goto <bb 4>; [INV]
+
+  <bb 3> :
+  # DEBUG BEGIN_STMT
+  _2 = ipr->next;
+  reassdatagrams = _2;
+  goto <bb 7>; [INV]
+
+  <bb 4> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  if (prev == 0B)
+    goto <bb 5>; [INV]
+  else
+    goto <bb 6>; [INV]
+
+  <bb 5> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  __asm__ __volatile__("BKPT #0
+	");
+  # DEBUG BEGIN_STMT
+  goto <bb 5>; [INV]
+
+  <bb 6> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _3 = ipr->next;
+  prev->next = _3;
+
+  <bb 7> :
+  # DEBUG BEGIN_STMT
+  memp_free (5, ipr);
+  return;
+
+}
+
+
+ip_reass_enqueue_new_datagram (struct ip_hdr * fraghdr, int clen)
+{
+  struct ip_reassdata * ipr;
+  struct ip_reassdata * D.7466;
+
+  <bb 2> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  ipr = memp_malloc (5);
+  # DEBUG BEGIN_STMT
+  if (ipr == 0B)
+    goto <bb 3>; [INV]
+  else
+    goto <bb 7>; [INV]
+
+  <bb 3> :
+  # DEBUG BEGIN_STMT
+  _1 = ip_reass_remove_oldest_datagram (fraghdr, clen);
+  if (clen <= _1)
+    goto <bb 4>; [INV]
+  else
+    goto <bb 5>; [INV]
+
+  <bb 4> :
+  # DEBUG BEGIN_STMT
+  ipr = memp_malloc (5);
+
+  <bb 5> :
+  # DEBUG BEGIN_STMT
+  if (ipr == 0B)
+    goto <bb 6>; [INV]
+  else
+    goto <bb 7>; [INV]
+
+  <bb 6> :
+  # DEBUG BEGIN_STMT
+  _2 = lwip_stats.ip_frag.memerr;
+  _3 = _2 + 1;
+  lwip_stats.ip_frag.memerr = _3;
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  D.7466 = 0B;
+  // predicted unlikely by early return (on trees) predictor.
+  goto <bb 8>; [INV]
+
+  <bb 7> :
+  # DEBUG BEGIN_STMT
+  memset (ipr, 0, 32);
+  # DEBUG BEGIN_STMT
+  ipr->timer = 15;
+  # DEBUG BEGIN_STMT
+  reassdatagrams.10_4 = reassdatagrams;
+  ipr->next = reassdatagrams.10_4;
+  # DEBUG BEGIN_STMT
+  reassdatagrams = ipr;
+  # DEBUG BEGIN_STMT
+  _5 = &ipr->iphdr;
+  memcpy (_5, fraghdr, 20);
+  # DEBUG BEGIN_STMT
+  D.7466 = ipr;
+
+  <bb 8> :
+  return D.7466;
+
+}
+
+
+ip_reass_remove_oldest_datagram (struct ip_hdr * fraghdr, int pbufs_needed)
+{
+  int other_datagrams;
+  int pbufs_freed_current;
+  int pbufs_freed;
+  struct ip_reassdata * oldest_prev;
+  struct ip_reassdata * prev;
+  struct ip_reassdata * oldest;
+  struct ip_reassdata * r;
+  int D.7458;
+
+  <bb 2> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  pbufs_freed = 0;
+
+  <bb 3> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  oldest = 0B;
+  # DEBUG BEGIN_STMT
+  prev = 0B;
+  # DEBUG BEGIN_STMT
+  oldest_prev = 0B;
+  # DEBUG BEGIN_STMT
+  other_datagrams = 0;
+  # DEBUG BEGIN_STMT
+  r = reassdatagrams;
+  # DEBUG BEGIN_STMT
+  goto <bb 14>; [INV]
+
+  <bb 4> :
+  # DEBUG BEGIN_STMT
+  _1 = r->iphdr.src.addr;
+  _2 = fraghdr->src.addr;
+  if (_1 != _2)
+    goto <bb 7>; [INV]
+  else
+    goto <bb 5>; [INV]
+
+  <bb 5> :
+  _3 = r->iphdr.dest.addr;
+  _4 = fraghdr->dest.addr;
+  if (_3 != _4)
+    goto <bb 7>; [INV]
+  else
+    goto <bb 6>; [INV]
+
+  <bb 6> :
+  _5 = r->iphdr._id;
+  _6 = fraghdr->_id;
+  if (_5 != _6)
+    goto <bb 7>; [INV]
+  else
+    goto <bb 11>; [INV]
+
+  <bb 7> :
+  # DEBUG BEGIN_STMT
+  other_datagrams = other_datagrams + 1;
+  # DEBUG BEGIN_STMT
+  if (oldest == 0B)
+    goto <bb 8>; [INV]
+  else
+    goto <bb 9>; [INV]
+
+  <bb 8> :
+  # DEBUG BEGIN_STMT
+  oldest = r;
+  # DEBUG BEGIN_STMT
+  oldest_prev = prev;
+  goto <bb 11>; [INV]
+
+  <bb 9> :
+  # DEBUG BEGIN_STMT
+  _7 = r->timer;
+  _8 = oldest->timer;
+  if (_7 <= _8)
+    goto <bb 10>; [INV]
+  else
+    goto <bb 11>; [INV]
+
+  <bb 10> :
+  # DEBUG BEGIN_STMT
+  oldest = r;
+  # DEBUG BEGIN_STMT
+  oldest_prev = prev;
+
+  <bb 11> :
+  # DEBUG BEGIN_STMT
+  _9 = r->next;
+  if (_9 != 0B)
+    goto <bb 12>; [INV]
+  else
+    goto <bb 13>; [INV]
+
+  <bb 12> :
+  # DEBUG BEGIN_STMT
+  prev = r;
+
+  <bb 13> :
+  # DEBUG BEGIN_STMT
+  r = r->next;
+
+  <bb 14> :
+  # DEBUG BEGIN_STMT
+  if (r != 0B)
+    goto <bb 4>; [INV]
+  else
+    goto <bb 15>; [INV]
+
+  <bb 15> :
+  # DEBUG BEGIN_STMT
+  if (oldest != 0B)
+    goto <bb 16>; [INV]
+  else
+    goto <bb 17>; [INV]
+
+  <bb 16> :
+  # DEBUG BEGIN_STMT
+  pbufs_freed_current = ip_reass_free_complete_datagram (oldest, oldest_prev);
+  # DEBUG BEGIN_STMT
+  pbufs_freed = pbufs_freed + pbufs_freed_current;
+
+  <bb 17> :
+  # DEBUG BEGIN_STMT
+  if (pbufs_freed < pbufs_needed)
+    goto <bb 18>; [INV]
+  else
+    goto <bb 19>; [INV]
+
+  <bb 18> :
+  if (other_datagrams > 1)
+    goto <bb 3>; [INV]
+  else
+    goto <bb 19>; [INV]
+
+  <bb 19> :
+  # DEBUG BEGIN_STMT
+  D.7458 = pbufs_freed;
+  return D.7458;
+
+}
+
+
+ip_reass_free_complete_datagram (struct ip_reassdata * ipr, struct ip_reassdata * prev)
+{
+  struct pbuf * pcur;
+  struct ip_reass_helper * iprh;
+  struct pbuf * p;
+  u16_t clen;
+  u16_t pbufs_freed;
+  int D.7388;
+
+  <bb 2> :
+  # DEBUG BEGIN_STMT
+  pbufs_freed = 0;
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  if (prev == ipr)
+    goto <bb 3>; [INV]
+  else
+    goto <bb 4>; [INV]
+
+  <bb 3> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  __asm__ __volatile__("BKPT #0
+	");
+  # DEBUG BEGIN_STMT
+  goto <bb 3>; [INV]
+
+  <bb 4> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  if (prev != 0B)
+    goto <bb 5>; [INV]
+  else
+    goto <bb 7>; [INV]
+
+  <bb 5> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _1 = prev->next;
+  if (ipr != _1)
+    goto <bb 6>; [INV]
+  else
+    goto <bb 7>; [INV]
+
+  <bb 6> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  __asm__ __volatile__("BKPT #0
+	");
+  # DEBUG BEGIN_STMT
+  goto <bb 6>; [INV]
+
+  <bb 7> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _2 = lwip_stats.mib2.ipreasmfails;
+  _3 = _2 + 1;
+  lwip_stats.mib2.ipreasmfails = _3;
+  # DEBUG BEGIN_STMT
+  _4 = ipr->p;
+  iprh = _4->payload;
+  # DEBUG BEGIN_STMT
+  _5 = iprh->start;
+  if (_5 == 0)
+    goto <bb 8>; [INV]
+  else
+    goto <bb 11>; [INV]
+
+  <bb 8> :
+  # DEBUG BEGIN_STMT
+  p = ipr->p;
+  # DEBUG BEGIN_STMT
+  _6 = iprh->next_pbuf;
+  ipr->p = _6;
+  # DEBUG BEGIN_STMT
+  _7 = p->payload;
+  _8 = &ipr->iphdr;
+  memcpy (_7, _8, 20);
+  # DEBUG BEGIN_STMT
+  icmp_time_exceeded (p, 1);
+  # DEBUG BEGIN_STMT
+  clen = pbuf_clen (p);
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _9 = (int) pbufs_freed;
+  _10 = (int) clen;
+  _11 = _9 + _10;
+  if (_11 > 65535)
+    goto <bb 9>; [INV]
+  else
+    goto <bb 10>; [INV]
+
+  <bb 9> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  __asm__ __volatile__("BKPT #0
+	");
+  # DEBUG BEGIN_STMT
+  goto <bb 9>; [INV]
+
+  <bb 10> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  pbufs_freed = pbufs_freed + clen;
+  # DEBUG BEGIN_STMT
+  pbuf_free (p);
+
+  <bb 11> :
+  # DEBUG BEGIN_STMT
+  p = ipr->p;
+  # DEBUG BEGIN_STMT
+  goto <bb 15>; [INV]
+
+  <bb 12> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  iprh = p->payload;
+  # DEBUG BEGIN_STMT
+  pcur = p;
+  # DEBUG BEGIN_STMT
+  p = iprh->next_pbuf;
+  # DEBUG BEGIN_STMT
+  clen = pbuf_clen (pcur);
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _12 = (int) pbufs_freed;
+  _13 = (int) clen;
+  _14 = _12 + _13;
+  if (_14 > 65535)
+    goto <bb 13>; [INV]
+  else
+    goto <bb 14>; [INV]
+
+  <bb 13> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  __asm__ __volatile__("BKPT #0
+	");
+  # DEBUG BEGIN_STMT
+  goto <bb 13>; [INV]
+
+  <bb 14> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  pbufs_freed = pbufs_freed + clen;
+  # DEBUG BEGIN_STMT
+  pbuf_free (pcur);
+
+  <bb 15> :
+  # DEBUG BEGIN_STMT
+  if (p != 0B)
+    goto <bb 12>; [INV]
+  else
+    goto <bb 16>; [INV]
+
+  <bb 16> :
+  # DEBUG BEGIN_STMT
+  ip_reass_dequeue_datagram (ipr, prev);
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  ip_reass_pbufcount.0_15 = ip_reass_pbufcount;
+  if (pbufs_freed > ip_reass_pbufcount.0_15)
+    goto <bb 17>; [INV]
+  else
+    goto <bb 18>; [INV]
+
+  <bb 17> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  __asm__ __volatile__("BKPT #0
+	");
+  # DEBUG BEGIN_STMT
+  goto <bb 17>; [INV]
+
+  <bb 18> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  ip_reass_pbufcount.1_16 = ip_reass_pbufcount;
+  _17 = ip_reass_pbufcount.1_16 - pbufs_freed;
+  ip_reass_pbufcount = _17;
+  # DEBUG BEGIN_STMT
+  D.7388 = (int) pbufs_freed;
+  return D.7388;
+
+}
+
+
+ip_reass_tmr ()
+{
+  struct ip_reassdata * tmp;
+  struct ip_reassdata * prev;
+  struct ip_reassdata * r;
+
+  <bb 2> :
+  # DEBUG BEGIN_STMT
+  prev = 0B;
+  # DEBUG BEGIN_STMT
+  r = reassdatagrams;
+  # DEBUG BEGIN_STMT
+  goto <bb 6>; [INV]
+
+  <bb 3> :
+  # DEBUG BEGIN_STMT
+  _1 = r->timer;
+  if (_1 != 0)
+    goto <bb 4>; [INV]
+  else
+    goto <bb 5>; [INV]
+
+  <bb 4> :
+  # DEBUG BEGIN_STMT
+  _2 = r->timer;
+  _3 = _2;
+  _4 = _3 + 255;
+  r->timer = _4;
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  prev = r;
+  # DEBUG BEGIN_STMT
+  r = r->next;
+  goto <bb 6>; [INV]
+
+  <bb 5> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  tmp = r;
+  # DEBUG BEGIN_STMT
+  r = r->next;
+  # DEBUG BEGIN_STMT
+  ip_reass_free_complete_datagram (tmp, prev);
+
+  <bb 6> :
+  # DEBUG BEGIN_STMT
+  if (r != 0B)
+    goto <bb 3>; [INV]
+  else
+    goto <bb 7>; [INV]
+
+  <bb 7> :
+  return;
+
+}
+
+

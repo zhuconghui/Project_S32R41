@@ -1,0 +1,708 @@
+rfc7668_if_init (struct netif * netif)
+{
+  err_t _22;
+
+  <bb 2> :
+  # DEBUG BEGIN_STMT
+  netif_2(D)->name[0] = 98;
+  # DEBUG BEGIN_STMT
+  netif_2(D)->name[1] = 116;
+  # DEBUG BEGIN_STMT
+  netif_2(D)->output_ip6 = rfc7668_output;
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  netif_2(D)->link_type = 1;
+  # DEBUG BEGIN_STMT
+  netif_2(D)->link_speed = 0;
+  # DEBUG BEGIN_STMT
+  netif_2(D)->ts = 0;
+  # DEBUG BEGIN_STMT
+  netif_2(D)->mib2_counters.ifinoctets = 0;
+  # DEBUG BEGIN_STMT
+  netif_2(D)->mib2_counters.ifinucastpkts = 0;
+  # DEBUG BEGIN_STMT
+  netif_2(D)->mib2_counters.ifinnucastpkts = 0;
+  # DEBUG BEGIN_STMT
+  netif_2(D)->mib2_counters.ifindiscards = 0;
+  # DEBUG BEGIN_STMT
+  netif_2(D)->mib2_counters.ifinerrors = 0;
+  # DEBUG BEGIN_STMT
+  netif_2(D)->mib2_counters.ifinunknownprotos = 0;
+  # DEBUG BEGIN_STMT
+  netif_2(D)->mib2_counters.ifoutoctets = 0;
+  # DEBUG BEGIN_STMT
+  netif_2(D)->mib2_counters.ifoutucastpkts = 0;
+  # DEBUG BEGIN_STMT
+  netif_2(D)->mib2_counters.ifoutnucastpkts = 0;
+  # DEBUG BEGIN_STMT
+  netif_2(D)->mib2_counters.ifoutdiscards = 0;
+  # DEBUG BEGIN_STMT
+  netif_2(D)->mib2_counters.ifouterrors = 0;
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  netif_2(D)->mtu = 1280;
+  # DEBUG BEGIN_STMT
+  netif_2(D)->flags = 0;
+  # DEBUG BEGIN_STMT
+  _22 = 0;
+  return _22;
+
+}
+
+
+rfc7668_input (struct pbuf * p, struct netif * netif)
+{
+  u8_t * puc;
+  long unsigned int _1;
+  short unsigned int _2;
+  long unsigned int _3;
+  long unsigned int _4;
+  unsigned char _5;
+  unsigned char _6;
+  int _7;
+  int _8;
+  long unsigned int _9;
+  long unsigned int _10;
+  long unsigned int _11;
+  long unsigned int _12;
+  long unsigned int _13;
+  long unsigned int _14;
+  err_t _16;
+  err_t _26;
+  err_t _30;
+  err_t _34;
+
+  <bb 2> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _1 = netif_20(D)->mib2_counters.ifinoctets;
+  _2 = p_21(D)->tot_len;
+  _3 = (long unsigned int) _2;
+  _4 = _1 + _3;
+  netif_20(D)->mib2_counters.ifinoctets = _4;
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  puc_23 = p_21(D)->payload;
+  # DEBUG puc => puc_23
+  # DEBUG BEGIN_STMT
+  _5 = *puc_23;
+  if (_5 == 65)
+    goto <bb 3>; [INV]
+  else
+    goto <bb 4>; [INV]
+
+  <bb 3> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  pbuf_remove_header (p_21(D), 1);
+  goto <bb 8>; [INV]
+
+  <bb 4> :
+  # DEBUG BEGIN_STMT
+  _6 = *puc_23;
+  _7 = (int) _6;
+  _8 = _7 & 224;
+  if (_8 == 96)
+    goto <bb 5>; [INV]
+  else
+    goto <bb 7>; [INV]
+
+  <bb 5> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  p_28 = lowpan6_decompress (p_21(D), 0, &rfc7668_context, &rfc7668_peer_addr, &rfc7668_local_addr);
+  # DEBUG p => p_28
+  # DEBUG BEGIN_STMT
+  if (p_28 == 0B)
+    goto <bb 6>; [INV]
+  else
+    goto <bb 8>; [INV]
+
+  <bb 6> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _9 = netif_20(D)->mib2_counters.ifindiscards;
+  _10 = _9 + 1;
+  netif_20(D)->mib2_counters.ifindiscards = _10;
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _30 = 0;
+  // predicted unlikely by early return (on trees) predictor.
+  goto <bb 9>; [INV]
+
+  <bb 7> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _11 = netif_20(D)->mib2_counters.ifindiscards;
+  _12 = _11 + 1;
+  netif_20(D)->mib2_counters.ifindiscards = _12;
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  pbuf_free (p_21(D));
+  # DEBUG BEGIN_STMT
+  _26 = 0;
+  // predicted unlikely by early return (on trees) predictor.
+  goto <bb 9>; [INV]
+
+  <bb 8> :
+  # p_15 = PHI <p_21(D)(3), p_28(5)>
+  # DEBUG p => p_15
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _13 = netif_20(D)->mib2_counters.ifinucastpkts;
+  _14 = _13 + 1;
+  netif_20(D)->mib2_counters.ifinucastpkts = _14;
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _34 = ip6_input (p_15, netif_20(D));
+
+  <bb 9> :
+  # _16 = PHI <_30(6), _26(7), _34(8)>
+  return _16;
+
+}
+
+
+rfc7668_output (struct netif * netif, struct pbuf * q, const struct ip6_addr_t * ip6addr)
+{
+  err_t _5;
+
+  <bb 2> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _5 = rfc7668_compress (netif_2(D), q_3(D));
+  return _5;
+
+}
+
+
+rfc7668_set_context (u8_t idx, const struct ip6_addr_t * context)
+{
+  int _1;
+  int _2;
+  int _3;
+  int _4;
+  int _5;
+  err_t _6;
+  const long unsigned int iftmp.0_7;
+  const long unsigned int iftmp.1_8;
+  const long unsigned int iftmp.2_9;
+  const long unsigned int iftmp.3_10;
+  u8_t iftmp.4_11;
+  const long unsigned int iftmp.0_15;
+  const long unsigned int iftmp.0_17;
+  const long unsigned int iftmp.1_19;
+  const long unsigned int iftmp.1_20;
+  const long unsigned int iftmp.2_22;
+  const long unsigned int iftmp.2_23;
+  const long unsigned int iftmp.3_25;
+  const long unsigned int iftmp.3_26;
+  u8_t iftmp.4_28;
+  u8_t iftmp.4_29;
+  err_t _31;
+  err_t _32;
+
+  <bb 2> :
+  # DEBUG BEGIN_STMT
+  if (idx_13(D) > 9)
+    goto <bb 3>; [INV]
+  else
+    goto <bb 4>; [INV]
+
+  <bb 3> :
+  # DEBUG BEGIN_STMT
+  _32 = -16;
+  // predicted unlikely by early return (on trees) predictor.
+  goto <bb 20>; [INV]
+
+  <bb 4> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  if (context_14(D) != 0B)
+    goto <bb 5>; [INV]
+  else
+    goto <bb 6>; [INV]
+
+  <bb 5> :
+  iftmp.0_17 = context_14(D)->addr[0];
+  goto <bb 7>; [INV]
+
+  <bb 6> :
+  iftmp.0_15 = 0;
+
+  <bb 7> :
+  # iftmp.0_7 = PHI <iftmp.0_17(5), iftmp.0_15(6)>
+  _1 = (int) idx_13(D);
+  rfc7668_context[_1].addr[0] = iftmp.0_7;
+  # DEBUG BEGIN_STMT
+  if (context_14(D) != 0B)
+    goto <bb 8>; [INV]
+  else
+    goto <bb 9>; [INV]
+
+  <bb 8> :
+  iftmp.1_20 = context_14(D)->addr[1];
+  goto <bb 10>; [INV]
+
+  <bb 9> :
+  iftmp.1_19 = 0;
+
+  <bb 10> :
+  # iftmp.1_8 = PHI <iftmp.1_20(8), iftmp.1_19(9)>
+  _2 = (int) idx_13(D);
+  rfc7668_context[_2].addr[1] = iftmp.1_8;
+  # DEBUG BEGIN_STMT
+  if (context_14(D) != 0B)
+    goto <bb 11>; [INV]
+  else
+    goto <bb 12>; [INV]
+
+  <bb 11> :
+  iftmp.2_23 = context_14(D)->addr[2];
+  goto <bb 13>; [INV]
+
+  <bb 12> :
+  iftmp.2_22 = 0;
+
+  <bb 13> :
+  # iftmp.2_9 = PHI <iftmp.2_23(11), iftmp.2_22(12)>
+  _3 = (int) idx_13(D);
+  rfc7668_context[_3].addr[2] = iftmp.2_9;
+  # DEBUG BEGIN_STMT
+  if (context_14(D) != 0B)
+    goto <bb 14>; [INV]
+  else
+    goto <bb 15>; [INV]
+
+  <bb 14> :
+  iftmp.3_26 = context_14(D)->addr[3];
+  goto <bb 16>; [INV]
+
+  <bb 15> :
+  iftmp.3_25 = 0;
+
+  <bb 16> :
+  # iftmp.3_10 = PHI <iftmp.3_26(14), iftmp.3_25(15)>
+  _4 = (int) idx_13(D);
+  rfc7668_context[_4].addr[3] = iftmp.3_10;
+  # DEBUG BEGIN_STMT
+  if (context_14(D) != 0B)
+    goto <bb 17>; [INV]
+  else
+    goto <bb 18>; [INV]
+
+  <bb 17> :
+  iftmp.4_29 = context_14(D)->zone;
+  goto <bb 19>; [INV]
+
+  <bb 18> :
+  iftmp.4_28 = 0;
+
+  <bb 19> :
+  # iftmp.4_11 = PHI <iftmp.4_29(17), iftmp.4_28(18)>
+  _5 = (int) idx_13(D);
+  rfc7668_context[_5].zone = iftmp.4_11;
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _31 = 0;
+
+  <bb 20> :
+  # _6 = PHI <_32(3), _31(19)>
+  return _6;
+
+}
+
+
+rfc7668_compress (struct netif * netif, struct pbuf * p)
+{
+  err_t err;
+  u8_t hidden_header_len;
+  u8_t lowpan6_header_len;
+  u8_t * buffer;
+  u16_t remaining_len;
+  struct pbuf * p_frag;
+  err_t (*<T6b9>) (struct netif *, struct pbuf *) _1;
+  short unsigned int _2;
+  long unsigned int _3;
+  long unsigned int _4;
+  short unsigned int _5;
+  short unsigned int _6;
+  void * _7;
+  short unsigned int _8;
+  unsigned int _9;
+  short unsigned int _10;
+  unsigned int _11;
+  long unsigned int _12;
+  long unsigned int _13;
+  unsigned char hidden_header_len.5_14;
+  unsigned int _15;
+  unsigned char lowpan6_header_len.6_16;
+  sizetype _17;
+  u8_t * _18;
+  unsigned char lowpan6_header_len.7_19;
+  short unsigned int _20;
+  short unsigned int _21;
+  short unsigned int _22;
+  long unsigned int _23;
+  short unsigned int _24;
+  long unsigned int _25;
+  long unsigned int _26;
+  err_t (*<T6b9>) (struct netif *, struct pbuf *) _27;
+  err_t _28;
+  err_t _49;
+  err_t _52;
+  err_t _55;
+
+  <bb 2> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _1 = netif_33(D)->linkoutput;
+  if (_1 == 0B)
+    goto <bb 3>; [INV]
+  else
+    goto <bb 4>; [INV]
+
+  <bb 3> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  __asm__ __volatile__("BKPT #0
+	");
+  # DEBUG BEGIN_STMT
+  goto <bb 3>; [INV]
+
+  <bb 4> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _2 = p_34(D)->tot_len;
+  p_frag_36 = pbuf_alloc (0, _2, 640);
+  # DEBUG p_frag => p_frag_36
+  # DEBUG BEGIN_STMT
+  if (p_frag_36 == 0B)
+    goto <bb 5>; [INV]
+  else
+    goto <bb 6>; [INV]
+
+  <bb 5> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _3 = netif_33(D)->mib2_counters.ifoutdiscards;
+  _4 = _3 + 1;
+  netif_33(D)->mib2_counters.ifoutdiscards = _4;
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _55 = -1;
+  // predicted unlikely by early return (on trees) predictor.
+  goto <bb 11>; [INV]
+
+  <bb 6> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _5 = p_frag_36->len;
+  _6 = p_frag_36->tot_len;
+  if (_5 != _6)
+    goto <bb 7>; [INV]
+  else
+    goto <bb 8>; [INV]
+
+  <bb 7> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  __asm__ __volatile__("BKPT #0
+	");
+  # DEBUG BEGIN_STMT
+  goto <bb 7>; [INV]
+
+  <bb 8> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  buffer_37 = p_frag_36->payload;
+  # DEBUG buffer => buffer_37
+  # DEBUG BEGIN_STMT
+  _7 = p_34(D)->payload;
+  _8 = p_34(D)->len;
+  _9 = (unsigned int) _8;
+  _10 = p_frag_36->len;
+  _11 = (unsigned int) _10;
+  err_39 = lowpan6_compress_headers (netif_33(D), _7, _9, buffer_37, _11, &lowpan6_header_len, &hidden_header_len, &rfc7668_context, &rfc7668_local_addr, &rfc7668_peer_addr);
+  # DEBUG err => err_39
+  # DEBUG BEGIN_STMT
+  if (err_39 != 0)
+    goto <bb 9>; [INV]
+  else
+    goto <bb 10>; [INV]
+
+  <bb 9> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _12 = netif_33(D)->mib2_counters.ifoutdiscards;
+  _13 = _12 + 1;
+  netif_33(D)->mib2_counters.ifoutdiscards = _13;
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  pbuf_free (p_frag_36);
+  # DEBUG BEGIN_STMT
+  _52 = err_39;
+  // predicted unlikely by early return (on trees) predictor.
+  goto <bb 11>; [INV]
+
+  <bb 10> :
+  # DEBUG BEGIN_STMT
+  hidden_header_len.5_14 = hidden_header_len;
+  _15 = (unsigned int) hidden_header_len.5_14;
+  pbuf_remove_header (p_34(D), _15);
+  # DEBUG BEGIN_STMT
+  remaining_len_41 = p_34(D)->tot_len;
+  # DEBUG remaining_len => remaining_len_41
+  # DEBUG BEGIN_STMT
+  lowpan6_header_len.6_16 = lowpan6_header_len;
+  _17 = (sizetype) lowpan6_header_len.6_16;
+  _18 = buffer_37 + _17;
+  pbuf_copy_partial (p_34(D), _18, remaining_len_41, 0);
+  # DEBUG BEGIN_STMT
+  lowpan6_header_len.7_19 = lowpan6_header_len;
+  _20 = (short unsigned int) lowpan6_header_len.7_19;
+  _21 = remaining_len_41 + _20;
+  p_frag_36->tot_len = _21;
+  _22 = p_frag_36->tot_len;
+  p_frag_36->len = _22;
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _23 = netif_33(D)->mib2_counters.ifoutoctets;
+  _24 = p_frag_36->tot_len;
+  _25 = (long unsigned int) _24;
+  _26 = _23 + _25;
+  netif_33(D)->mib2_counters.ifoutoctets = _26;
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _27 = netif_33(D)->linkoutput;
+  err_47 = _27 (netif_33(D), p_frag_36);
+  # DEBUG err => err_47
+  # DEBUG BEGIN_STMT
+  pbuf_free (p_frag_36);
+  # DEBUG BEGIN_STMT
+  _49 = err_47;
+
+  <bb 11> :
+  # _28 = PHI <_55(5), _52(9), _49(10)>
+  lowpan6_header_len ={v} {CLOBBER};
+  hidden_header_len ={v} {CLOBBER};
+  return _28;
+
+}
+
+
+rfc7668_set_peer_addr_mac48 (struct netif * netif, const u8_t * peer_addr, size_t peer_addr_len, int is_public_addr)
+{
+  err_t _6;
+
+  <bb 2> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _6 = rfc7668_set_addr (&rfc7668_peer_addr, peer_addr_2(D), peer_addr_len_3(D), 1, is_public_addr_4(D));
+  return _6;
+
+}
+
+
+rfc7668_set_peer_addr_eui64 (struct netif * netif, const u8_t * peer_addr, size_t peer_addr_len)
+{
+  err_t _5;
+
+  <bb 2> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _5 = rfc7668_set_addr (&rfc7668_peer_addr, peer_addr_2(D), peer_addr_len_3(D), 0, 0);
+  return _5;
+
+}
+
+
+rfc7668_set_local_addr_mac48 (struct netif * netif, const u8_t * local_addr, size_t local_addr_len, int is_public_addr)
+{
+  err_t _6;
+
+  <bb 2> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _6 = rfc7668_set_addr (&rfc7668_local_addr, local_addr_2(D), local_addr_len_3(D), 1, is_public_addr_4(D));
+  return _6;
+
+}
+
+
+rfc7668_set_local_addr_eui64 (struct netif * netif, const u8_t * local_addr, size_t local_addr_len)
+{
+  err_t _5;
+
+  <bb 2> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _5 = rfc7668_set_addr (&rfc7668_local_addr, local_addr_2(D), local_addr_len_3(D), 0, 0);
+  return _5;
+
+}
+
+
+rfc7668_set_addr (struct lowpan6_link_addr * addr, const u8_t * in_addr, size_t in_addr_len, int is_mac_48, int is_public_addr)
+{
+  u8_t[8] * _1;
+  u8_t[8] * _2;
+  err_t _3;
+  err_t _13;
+  err_t _17;
+  err_t _18;
+  err_t _19;
+
+  <bb 2> :
+  # DEBUG BEGIN_STMT
+  if (in_addr_6(D) == 0B)
+    goto <bb 4>; [INV]
+  else
+    goto <bb 3>; [INV]
+
+  <bb 3> :
+  if (addr_7(D) == 0B)
+    goto <bb 4>; [INV]
+  else
+    goto <bb 5>; [INV]
+
+  <bb 4> :
+  # DEBUG BEGIN_STMT
+  _19 = -6;
+  // predicted unlikely by early return (on trees) predictor.
+  goto <bb 13>; [INV]
+
+  <bb 5> :
+  # DEBUG BEGIN_STMT
+  if (is_mac_48_8(D) != 0)
+    goto <bb 6>; [INV]
+  else
+    goto <bb 9>; [INV]
+
+  <bb 6> :
+  # DEBUG BEGIN_STMT
+  if (in_addr_len_9(D) != 6)
+    goto <bb 7>; [INV]
+  else
+    goto <bb 8>; [INV]
+
+  <bb 7> :
+  # DEBUG BEGIN_STMT
+  _17 = -6;
+  // predicted unlikely by early return (on trees) predictor.
+  goto <bb 13>; [INV]
+
+  <bb 8> :
+  # DEBUG BEGIN_STMT
+  addr_7(D)->addr_len = 8;
+  # DEBUG BEGIN_STMT
+  _1 = &addr_7(D)->addr;
+  ble_addr_to_eui64 (_1, in_addr_6(D), is_public_addr_15(D));
+  goto <bb 12>; [INV]
+
+  <bb 9> :
+  # DEBUG BEGIN_STMT
+  if (in_addr_len_9(D) != 8)
+    goto <bb 10>; [INV]
+  else
+    goto <bb 11>; [INV]
+
+  <bb 10> :
+  # DEBUG BEGIN_STMT
+  _13 = -6;
+  // predicted unlikely by early return (on trees) predictor.
+  goto <bb 13>; [INV]
+
+  <bb 11> :
+  # DEBUG BEGIN_STMT
+  addr_7(D)->addr_len = 8;
+  # DEBUG BEGIN_STMT
+  _2 = &addr_7(D)->addr;
+  memcpy (_2, in_addr_6(D), 8);
+
+  <bb 12> :
+  # DEBUG BEGIN_STMT
+  _18 = 0;
+
+  <bb 13> :
+  # _3 = PHI <_19(4), _17(7), _13(10), _18(12)>
+  return _3;
+
+}
+
+
+eui64_to_ble_addr (uint8_t * dst, const uint8_t * src)
+{
+  uint8_t * _1;
+  const uint8_t * _2;
+
+  <bb 2> :
+  # DEBUG BEGIN_STMT
+  memcpy (dst_4(D), src_5(D), 3);
+  # DEBUG BEGIN_STMT
+  _1 = dst_4(D) + 3;
+  _2 = src_5(D) + 5;
+  memcpy (_1, _2, 3);
+  return;
+
+}
+
+
+ble_addr_to_eui64 (uint8_t * dst, const uint8_t * src, int public_addr)
+{
+  uint8_t * _1;
+  uint8_t * _2;
+  uint8_t * _3;
+  const uint8_t * _4;
+  unsigned char _5;
+  unsigned char _6;
+  unsigned char _7;
+  unsigned char _8;
+
+  <bb 2> :
+  # DEBUG BEGIN_STMT
+  memcpy (dst_11(D), src_12(D), 3);
+  # DEBUG BEGIN_STMT
+  _1 = dst_11(D) + 3;
+  *_1 = 255;
+  # DEBUG BEGIN_STMT
+  _2 = dst_11(D) + 4;
+  *_2 = 254;
+  # DEBUG BEGIN_STMT
+  _3 = dst_11(D) + 5;
+  _4 = src_12(D) + 3;
+  memcpy (_3, _4, 3);
+  # DEBUG BEGIN_STMT
+  if (public_addr_17(D) != 0)
+    goto <bb 3>; [INV]
+  else
+    goto <bb 4>; [INV]
+
+  <bb 3> :
+  # DEBUG BEGIN_STMT
+  _5 = *dst_11(D);
+  _6 = _5 & 253;
+  *dst_11(D) = _6;
+  goto <bb 5>; [INV]
+
+  <bb 4> :
+  # DEBUG BEGIN_STMT
+  _7 = *dst_11(D);
+  _8 = _7 | 2;
+  *dst_11(D) = _8;
+
+  <bb 5> :
+  return;
+
+}
+
+

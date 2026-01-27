@@ -1,0 +1,4061 @@
+snmp_encode_truthvalue (s32_t * asn1_value, u32_t bool_value)
+{
+  u8_t _1;
+  u8_t _9;
+  u8_t _10;
+
+  <bb 2> :
+  # DEBUG BEGIN_STMT
+  if (asn1_value_4(D) == 0B)
+    goto <bb 3>; [INV]
+  else
+    goto <bb 4>; [INV]
+
+  <bb 3> :
+  # DEBUG BEGIN_STMT
+  _10 = 0;
+  // predicted unlikely by early return (on trees) predictor.
+  goto <bb 8>; [INV]
+
+  <bb 4> :
+  # DEBUG BEGIN_STMT
+  if (bool_value_5(D) != 0)
+    goto <bb 5>; [INV]
+  else
+    goto <bb 6>; [INV]
+
+  <bb 5> :
+  # DEBUG BEGIN_STMT
+  *asn1_value_4(D) = 1;
+  goto <bb 7>; [INV]
+
+  <bb 6> :
+  # DEBUG BEGIN_STMT
+  *asn1_value_4(D) = 2;
+
+  <bb 7> :
+  # DEBUG BEGIN_STMT
+  _9 = 4;
+
+  <bb 8> :
+  # _1 = PHI <_10(3), _9(7)>
+  return _1;
+
+}
+
+
+snmp_encode_bits (u8_t * buf, u32_t buf_len, u32_t bit_value, u8_t bit_count)
+{
+  s8_t i;
+  u8_t min_bytes;
+  u8_t len;
+  int _1;
+  int _2;
+  int _3;
+  long unsigned int _4;
+  unsigned char _5;
+  unsigned char _6;
+  unsigned char _7;
+  unsigned char _8;
+  signed char i.33_9;
+  unsigned char i.34_10;
+  unsigned char _11;
+  unsigned char len.35_12;
+  sizetype _13;
+  long unsigned int _14;
+  unsigned char len.36_15;
+  u8_t _54;
+
+  <bb 2> :
+  # DEBUG BEGIN_STMT
+  len_32 = 0;
+  # DEBUG len => len_32
+  # DEBUG BEGIN_STMT
+  _1 = (int) bit_count_33(D);
+  _2 = _1 + 7;
+  _3 = _2 >> 3;
+  min_bytes_34 = (u8_t) _3;
+  # DEBUG min_bytes => min_bytes_34
+  # DEBUG BEGIN_STMT
+  goto <bb 11>; [INV]
+
+  <bb 3> :
+  # DEBUG BEGIN_STMT
+  i_39 = 7;
+  # DEBUG i => i_39
+  # DEBUG BEGIN_STMT
+  *buf_16 = 0;
+  # DEBUG BEGIN_STMT
+  goto <bb 9>; [INV]
+
+  <bb 4> :
+  # DEBUG BEGIN_STMT
+  _4 = bit_value_20 & 1;
+  if (_4 != 0)
+    goto <bb 5>; [INV]
+  else
+    goto <bb 6>; [INV]
+
+  <bb 5> :
+  # DEBUG BEGIN_STMT
+  _5 = *buf_16;
+  _6 = _5 | 1;
+  *buf_16 = _6;
+
+  <bb 6> :
+  # DEBUG BEGIN_STMT
+  if (i_25 > 0)
+    goto <bb 7>; [INV]
+  else
+    goto <bb 8>; [INV]
+
+  <bb 7> :
+  # DEBUG BEGIN_STMT
+  _7 = *buf_16;
+  _8 = _7 << 1;
+  *buf_16 = _8;
+
+  <bb 8> :
+  # DEBUG BEGIN_STMT
+  bit_value_46 = bit_value_20 >> 1;
+  # DEBUG bit_value => bit_value_46
+  # DEBUG BEGIN_STMT
+  i.33_9 = i_25;
+  i.34_10 = (unsigned char) i.33_9;
+  _11 = i.34_10 + 255;
+  i_47 = (s8_t) _11;
+  # DEBUG i => i_47
+
+  <bb 9> :
+  # bit_value_20 = PHI <bit_value_21(3), bit_value_46(8)>
+  # i_25 = PHI <i_39(3), i_47(8)>
+  # DEBUG i => i_25
+  # DEBUG bit_value => bit_value_20
+  # DEBUG BEGIN_STMT
+  if (i_25 >= 0)
+    goto <bb 4>; [INV]
+  else
+    goto <bb 10>; [INV]
+
+  <bb 10> :
+  # DEBUG BEGIN_STMT
+  buf_41 = buf_16 + 1;
+  # DEBUG buf => buf_41
+  # DEBUG BEGIN_STMT
+  buf_len_42 = buf_len_18 + 4294967295;
+  # DEBUG buf_len => buf_len_42
+  # DEBUG BEGIN_STMT
+  len.35_12 = len_22;
+  len_43 = len.35_12 + 1;
+  # DEBUG len => len_43
+
+  <bb 11> :
+  # buf_16 = PHI <buf_35(D)(2), buf_41(10)>
+  # buf_len_18 = PHI <buf_len_36(D)(2), buf_len_42(10)>
+  # bit_value_21 = PHI <bit_value_37(D)(2), bit_value_20(10)>
+  # len_22 = PHI <len_32(2), len_43(10)>
+  # DEBUG len => len_22
+  # DEBUG bit_value => bit_value_21
+  # DEBUG buf_len => buf_len_18
+  # DEBUG buf => buf_16
+  # DEBUG BEGIN_STMT
+  if (buf_len_18 != 0)
+    goto <bb 12>; [INV]
+  else
+    goto <bb 13>; [INV]
+
+  <bb 12> :
+  if (bit_value_21 != 0)
+    goto <bb 3>; [INV]
+  else
+    goto <bb 13>; [INV]
+
+  <bb 13> :
+  # DEBUG BEGIN_STMT
+  if (len_22 < min_bytes_34)
+    goto <bb 14>; [INV]
+  else
+    goto <bb 18>; [INV]
+
+  <bb 14> :
+  # DEBUG BEGIN_STMT
+  _13 = (sizetype) len_22;
+  buf_48 = buf_16 + _13;
+  # DEBUG buf => buf_48
+  # DEBUG BEGIN_STMT
+  _14 = (long unsigned int) len_22;
+  buf_len_49 = buf_len_18 - _14;
+  # DEBUG buf_len => buf_len_49
+  # DEBUG BEGIN_STMT
+  goto <bb 16>; [INV]
+
+  <bb 15> :
+  # DEBUG BEGIN_STMT
+  *buf_17 = 0;
+  # DEBUG BEGIN_STMT
+  buf_51 = buf_17 + 1;
+  # DEBUG buf => buf_51
+  # DEBUG BEGIN_STMT
+  buf_len_52 = buf_len_19 + 4294967295;
+  # DEBUG buf_len => buf_len_52
+  # DEBUG BEGIN_STMT
+  len.36_15 = len_23;
+  len_53 = len.36_15 + 1;
+  # DEBUG len => len_53
+
+  <bb 16> :
+  # buf_17 = PHI <buf_48(14), buf_51(15)>
+  # buf_len_19 = PHI <buf_len_49(14), buf_len_52(15)>
+  # len_23 = PHI <len_22(14), len_53(15)>
+  # DEBUG len => len_23
+  # DEBUG buf_len => buf_len_19
+  # DEBUG buf => buf_17
+  # DEBUG BEGIN_STMT
+  if (len_23 < min_bytes_34)
+    goto <bb 17>; [INV]
+  else
+    goto <bb 18>; [INV]
+
+  <bb 17> :
+  if (buf_len_19 != 0)
+    goto <bb 15>; [INV]
+  else
+    goto <bb 18>; [INV]
+
+  <bb 18> :
+  # len_24 = PHI <len_22(13), len_23(16), len_23(17)>
+  # DEBUG len => len_24
+  # DEBUG BEGIN_STMT
+  _54 = len_24;
+  return _54;
+
+}
+
+
+snmp_decode_truthvalue (const s32_t * asn1_value, u8_t * bool_value)
+{
+  long int _1;
+  long int _2;
+  err_t _3;
+  err_t _9;
+  err_t _12;
+  err_t _13;
+
+  <bb 2> :
+  # DEBUG BEGIN_STMT
+  if (asn1_value_6(D) == 0B)
+    goto <bb 4>; [INV]
+  else
+    goto <bb 3>; [INV]
+
+  <bb 3> :
+  if (bool_value_7(D) == 0B)
+    goto <bb 4>; [INV]
+  else
+    goto <bb 5>; [INV]
+
+  <bb 4> :
+  # DEBUG BEGIN_STMT
+  _13 = -16;
+  // predicted unlikely by early return (on trees) predictor.
+  goto <bb 11>; [INV]
+
+  <bb 5> :
+  # DEBUG BEGIN_STMT
+  _1 = *asn1_value_6(D);
+  if (_1 == 1)
+    goto <bb 6>; [INV]
+  else
+    goto <bb 7>; [INV]
+
+  <bb 6> :
+  # DEBUG BEGIN_STMT
+  *bool_value_7(D) = 1;
+  goto <bb 10>; [INV]
+
+  <bb 7> :
+  # DEBUG BEGIN_STMT
+  _2 = *asn1_value_6(D);
+  if (_2 == 2)
+    goto <bb 8>; [INV]
+  else
+    goto <bb 9>; [INV]
+
+  <bb 8> :
+  # DEBUG BEGIN_STMT
+  *bool_value_7(D) = 0;
+  goto <bb 10>; [INV]
+
+  <bb 9> :
+  # DEBUG BEGIN_STMT
+  _9 = -6;
+  // predicted unlikely by early return (on trees) predictor.
+  goto <bb 11>; [INV]
+
+  <bb 10> :
+  # DEBUG BEGIN_STMT
+  _12 = 0;
+
+  <bb 11> :
+  # _3 = PHI <_13(4), _9(9), _12(10)>
+  return _3;
+
+}
+
+
+snmp_decode_bits (const u8_t * buf, u32_t buf_len, u32_t * bit_value)
+{
+  u8_t bits_processed;
+  u8_t b;
+  unsigned char _1;
+  signed char b.31_2;
+  long unsigned int _3;
+  int _4;
+  int _5;
+  long unsigned int _6;
+  long unsigned int _7;
+  unsigned char bits_processed.32_8;
+  int _9;
+  int _10;
+  err_t _17;
+  err_t _28;
+  err_t _34;
+
+  <bb 2> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  bits_processed_22 = 0;
+  # DEBUG bits_processed => bits_processed_22
+  # DEBUG BEGIN_STMT
+  *bit_value_24(D) = 0;
+  # DEBUG BEGIN_STMT
+  goto <bb 12>; [INV]
+
+  <bb 3> :
+  # DEBUG BEGIN_STMT
+  _1 = *buf_11;
+  if (_1 != 0)
+    goto <bb 4>; [INV]
+  else
+    goto <bb 10>; [INV]
+
+  <bb 4> :
+  # DEBUG BEGIN_STMT
+  if (bits_processed_16 > 31)
+    goto <bb 5>; [INV]
+  else
+    goto <bb 6>; [INV]
+
+  <bb 5> :
+  # DEBUG BEGIN_STMT
+  _34 = -6;
+  // predicted unlikely by early return (on trees) predictor.
+  goto <bb 14>; [INV]
+
+  <bb 6> :
+  # DEBUG BEGIN_STMT
+  b_30 = *buf_11;
+  # DEBUG b => b_30
+
+  <bb 7> :
+  # b_13 = PHI <b_30(6), b_33(9)>
+  # bits_processed_14 = PHI <bits_processed_16(6), bits_processed_32(9)>
+  # DEBUG bits_processed => bits_processed_14
+  # DEBUG b => b_13
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  b.31_2 = (signed char) b_13;
+  if (b.31_2 < 0)
+    goto <bb 8>; [INV]
+  else
+    goto <bb 9>; [INV]
+
+  <bb 8> :
+  # DEBUG BEGIN_STMT
+  _3 = *bit_value_24(D);
+  _4 = (int) bits_processed_14;
+  _5 = 1 << _4;
+  _6 = (long unsigned int) _5;
+  _7 = _3 | _6;
+  *bit_value_24(D) = _7;
+
+  <bb 9> :
+  # DEBUG BEGIN_STMT
+  bits_processed.32_8 = bits_processed_14;
+  bits_processed_32 = bits_processed.32_8 + 1;
+  # DEBUG bits_processed => bits_processed_32
+  # DEBUG BEGIN_STMT
+  b_33 = b_13 << 1;
+  # DEBUG b => b_33
+  # DEBUG BEGIN_STMT
+  _9 = (int) bits_processed_32;
+  _10 = _9 & 7;
+  if (_10 != 0)
+    goto <bb 7>; [INV]
+  else
+    goto <bb 11>; [INV]
+
+  <bb 10> :
+  # DEBUG BEGIN_STMT
+  bits_processed_29 = bits_processed_16 + 8;
+  # DEBUG bits_processed => bits_processed_29
+
+  <bb 11> :
+  # bits_processed_15 = PHI <bits_processed_32(9), bits_processed_29(10)>
+  # DEBUG bits_processed => bits_processed_15
+  # DEBUG BEGIN_STMT
+  buf_len_35 = buf_len_12 + 4294967295;
+  # DEBUG buf_len => buf_len_35
+  # DEBUG BEGIN_STMT
+  buf_36 = buf_11 + 1;
+  # DEBUG buf => buf_36
+
+  <bb 12> :
+  # buf_11 = PHI <buf_26(D)(2), buf_36(11)>
+  # buf_len_12 = PHI <buf_len_27(D)(2), buf_len_35(11)>
+  # bits_processed_16 = PHI <bits_processed_22(2), bits_processed_15(11)>
+  # DEBUG bits_processed => bits_processed_16
+  # DEBUG buf_len => buf_len_12
+  # DEBUG buf => buf_11
+  # DEBUG BEGIN_STMT
+  if (buf_len_12 != 0)
+    goto <bb 3>; [INV]
+  else
+    goto <bb 13>; [INV]
+
+  <bb 13> :
+  # DEBUG BEGIN_STMT
+  _28 = 0;
+
+  <bb 14> :
+  # _17 = PHI <_34(5), _28(13)>
+  return _17;
+
+}
+
+
+snmp_set_test_ok (struct snmp_node_instance * instance, u16_t value_len, void * value)
+{
+  snmp_err_t _1;
+
+  <bb 2> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _1 = 0;
+  return _1;
+
+}
+
+
+snmp_oid_in_range (const u32_t * oid_in, u8_t oid_len, const struct snmp_oid_range * oid_ranges, u8_t oid_ranges_len)
+{
+  u8_t i;
+  unsigned int _1;
+  unsigned int _2;
+  const u32_t * _3;
+  long unsigned int _4;
+  unsigned int _5;
+  unsigned int _6;
+  const struct snmp_oid_range * _7;
+  long unsigned int _8;
+  unsigned int _9;
+  unsigned int _10;
+  const u32_t * _11;
+  long unsigned int _12;
+  unsigned int _13;
+  unsigned int _14;
+  const struct snmp_oid_range * _15;
+  long unsigned int _16;
+  unsigned char i.30_17;
+  u8_t _19;
+  u8_t _23;
+  u8_t _28;
+  u8_t _29;
+
+  <bb 2> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  if (oid_len_20(D) != oid_ranges_len_21(D))
+    goto <bb 3>; [INV]
+  else
+    goto <bb 4>; [INV]
+
+  <bb 3> :
+  # DEBUG BEGIN_STMT
+  _29 = 0;
+  // predicted unlikely by early return (on trees) predictor.
+  goto <bb 11>; [INV]
+
+  <bb 4> :
+  # DEBUG BEGIN_STMT
+  i_22 = 0;
+  # DEBUG i => i_22
+  goto <bb 9>; [INV]
+
+  <bb 5> :
+  # DEBUG BEGIN_STMT
+  _1 = (unsigned int) i_18;
+  _2 = _1 * 4;
+  _3 = oid_in_24(D) + _2;
+  _4 = *_3;
+  _5 = (unsigned int) i_18;
+  _6 = _5 * 8;
+  _7 = oid_ranges_26(D) + _6;
+  _8 = _7->min;
+  if (_4 < _8)
+    goto <bb 7>; [INV]
+  else
+    goto <bb 6>; [INV]
+
+  <bb 6> :
+  _9 = (unsigned int) i_18;
+  _10 = _9 * 4;
+  _11 = oid_in_24(D) + _10;
+  _12 = *_11;
+  _13 = (unsigned int) i_18;
+  _14 = _13 * 8;
+  _15 = oid_ranges_26(D) + _14;
+  _16 = _15->max;
+  if (_12 > _16)
+    goto <bb 7>; [INV]
+  else
+    goto <bb 8>; [INV]
+
+  <bb 7> :
+  # DEBUG BEGIN_STMT
+  _28 = 0;
+  // predicted unlikely by early return (on trees) predictor.
+  goto <bb 11>; [INV]
+
+  <bb 8> :
+  # DEBUG BEGIN_STMT
+  i.30_17 = i_18;
+  i_27 = i.30_17 + 1;
+  # DEBUG i => i_27
+
+  <bb 9> :
+  # i_18 = PHI <i_22(4), i_27(8)>
+  # DEBUG i => i_18
+  # DEBUG BEGIN_STMT
+  if (i_18 < oid_ranges_len_21(D))
+    goto <bb 5>; [INV]
+  else
+    goto <bb 10>; [INV]
+
+  <bb 10> :
+  # DEBUG BEGIN_STMT
+  _23 = 1;
+
+  <bb 11> :
+  # _19 = PHI <_29(3), _28(7), _23(10)>
+  return _19;
+
+}
+
+
+snmp_next_oid_check (struct snmp_next_oid_state * state, const u32_t * oid, u8_t oid_len, void * reference)
+{
+  <unnamed type> _1;
+  const u32_t * _2;
+  unsigned char _3;
+  signed char _4;
+  <unnamed type> _5;
+  u32_t * _6;
+  unsigned char _7;
+  signed char _8;
+  unsigned char _9;
+  u32_t * _10;
+  unsigned int _11;
+  unsigned int _12;
+  u8_t _13;
+  u8_t _29;
+  u8_t _30;
+
+  <bb 2> :
+  # DEBUG BEGIN_STMT
+  _1 = state_18(D)->status;
+  if (_1 != 2)
+    goto <bb 3>; [INV]
+  else
+    goto <bb 9>; [INV]
+
+  <bb 3> :
+  # DEBUG BEGIN_STMT
+  _2 = state_18(D)->start_oid;
+  _3 = state_18(D)->start_oid_len;
+  _4 = snmp_oid_compare (oid_19(D), oid_len_20(D), _2, _3);
+  if (_4 > 0)
+    goto <bb 4>; [INV]
+  else
+    goto <bb 9>; [INV]
+
+  <bb 4> :
+  # DEBUG BEGIN_STMT
+  _5 = state_18(D)->status;
+  if (_5 == 1)
+    goto <bb 6>; [INV]
+  else
+    goto <bb 5>; [INV]
+
+  <bb 5> :
+  _6 = state_18(D)->next_oid;
+  _7 = state_18(D)->next_oid_len;
+  _8 = snmp_oid_compare (oid_19(D), oid_len_20(D), _6, _7);
+  if (_8 < 0)
+    goto <bb 6>; [INV]
+  else
+    goto <bb 9>; [INV]
+
+  <bb 6> :
+  # DEBUG BEGIN_STMT
+  _9 = state_18(D)->next_oid_max_len;
+  if (oid_len_20(D) <= _9)
+    goto <bb 7>; [INV]
+  else
+    goto <bb 8>; [INV]
+
+  <bb 7> :
+  # DEBUG BEGIN_STMT
+  _10 = state_18(D)->next_oid;
+  _11 = (unsigned int) oid_len_20(D);
+  _12 = _11 * 4;
+  memcpy (_10, oid_19(D), _12);
+  # DEBUG BEGIN_STMT
+  state_18(D)->next_oid_len = oid_len_20(D);
+  # DEBUG BEGIN_STMT
+  state_18(D)->status = 0;
+  # DEBUG BEGIN_STMT
+  state_18(D)->reference = reference_27(D);
+  # DEBUG BEGIN_STMT
+  _29 = 1;
+  // predicted unlikely by early return (on trees) predictor.
+  goto <bb 10>; [INV]
+
+  <bb 8> :
+  # DEBUG BEGIN_STMT
+  state_18(D)->status = 2;
+
+  <bb 9> :
+  # DEBUG BEGIN_STMT
+  _30 = 0;
+
+  <bb 10> :
+  # _13 = PHI <_29(7), _30(9)>
+  return _13;
+
+}
+
+
+snmp_next_oid_precheck (struct snmp_next_oid_state * state, const u32_t * oid, u8_t oid_len)
+{
+  u8_t start_oid_len;
+  <unnamed type> _1;
+  unsigned char _2;
+  const u32_t * _3;
+  signed char _4;
+  <unnamed type> _5;
+  u32_t * _6;
+  unsigned char _7;
+  signed char _8;
+  u8_t _9;
+  u8_t _20;
+  u8_t _21;
+
+  <bb 2> :
+  # DEBUG BEGIN_STMT
+  _1 = state_14(D)->status;
+  if (_1 != 2)
+    goto <bb 3>; [INV]
+  else
+    goto <bb 7>; [INV]
+
+  <bb 3> :
+  # DEBUG BEGIN_STMT
+  _2 = state_14(D)->start_oid_len;
+  start_oid_len_16 = MIN_EXPR <oid_len_15(D), _2>;
+  # DEBUG start_oid_len => start_oid_len_16
+  # DEBUG BEGIN_STMT
+  _3 = state_14(D)->start_oid;
+  _4 = snmp_oid_compare (oid_17(D), oid_len_15(D), _3, start_oid_len_16);
+  if (_4 >= 0)
+    goto <bb 4>; [INV]
+  else
+    goto <bb 7>; [INV]
+
+  <bb 4> :
+  # DEBUG BEGIN_STMT
+  _5 = state_14(D)->status;
+  if (_5 == 1)
+    goto <bb 6>; [INV]
+  else
+    goto <bb 5>; [INV]
+
+  <bb 5> :
+  _6 = state_14(D)->next_oid;
+  _7 = state_14(D)->next_oid_len;
+  _8 = snmp_oid_compare (oid_17(D), oid_len_15(D), _6, _7);
+  if (_8 < 0)
+    goto <bb 6>; [INV]
+  else
+    goto <bb 7>; [INV]
+
+  <bb 6> :
+  # DEBUG BEGIN_STMT
+  _20 = 1;
+  // predicted unlikely by early return (on trees) predictor.
+  goto <bb 8>; [INV]
+
+  <bb 7> :
+  # DEBUG BEGIN_STMT
+  _21 = 0;
+
+  <bb 8> :
+  # _9 = PHI <_20(6), _21(7)>
+  return _9;
+
+}
+
+
+snmp_next_oid_init (struct snmp_next_oid_state * state, const u32_t * start_oid, u8_t start_oid_len, u32_t * next_oid_buf, u8_t next_oid_max_len)
+{
+  <bb 2> :
+  # DEBUG BEGIN_STMT
+  state_2(D)->start_oid = start_oid_3(D);
+  # DEBUG BEGIN_STMT
+  state_2(D)->start_oid_len = start_oid_len_5(D);
+  # DEBUG BEGIN_STMT
+  state_2(D)->next_oid = next_oid_buf_7(D);
+  # DEBUG BEGIN_STMT
+  state_2(D)->next_oid_len = 0;
+  # DEBUG BEGIN_STMT
+  state_2(D)->next_oid_max_len = next_oid_max_len_10(D);
+  # DEBUG BEGIN_STMT
+  state_2(D)->status = 1;
+  return;
+
+}
+
+
+snmp_mib_tree_resolve_next (const struct snmp_mib * mib, const u32_t * oid, u8_t oid_len, struct snmp_obj_id * oidret)
+{
+  s32_t i;
+  const struct snmp_node * subnode;
+  u32_t i;
+  u32_t subnode_oid;
+  s32_t nsi;
+  const struct snmp_tree_node * node_stack[50];
+  const struct snmp_node * const * node;
+  u8_t oid_offset;
+  const struct snmp_node * _1;
+  unsigned char _2;
+  const struct snmp_node * _3;
+  const struct snmp_tree_node * _4;
+  short unsigned int _5;
+  const struct snmp_tree_node * _6;
+  unsigned int _7;
+  unsigned int _8;
+  const u32_t * _9;
+  const struct snmp_node * _10;
+  long unsigned int _11;
+  const struct snmp_node * _12;
+  unsigned char _13;
+  const struct snmp_node * _14;
+  unsigned char oid_offset.29_15;
+  unsigned int _16;
+  unsigned int _17;
+  const u32_t * _18;
+  long unsigned int _19;
+  const struct snmp_tree_node * _20;
+  short unsigned int _21;
+  const struct snmp_tree_node * _22;
+  const struct snmp_node * _23;
+  long unsigned int _24;
+  const struct snmp_node * _25;
+  long unsigned int _26;
+  const struct snmp_node * _27;
+  long unsigned int _28;
+  long unsigned int _29;
+  const struct snmp_tree_node * _30;
+  long unsigned int _31;
+  unsigned char _32;
+  const u32_t * _33;
+  unsigned char _34;
+  const struct snmp_tree_node * _35;
+  unsigned char _36;
+  int _37;
+  long unsigned int _38;
+  unsigned char _39;
+  unsigned char _40;
+  unsigned char _41;
+  unsigned char _42;
+  int _43;
+  long unsigned int _44;
+  unsigned char _45;
+  unsigned char _46;
+  unsigned char _47;
+  const struct snmp_node * _60;
+  const struct snmp_node * _82;
+  const struct snmp_node * _95;
+  const struct snmp_node * _104;
+
+  <bb 2> :
+  # DEBUG BEGIN_STMT
+  oid_offset_67 = mib_66(D)->base_oid_len;
+  # DEBUG oid_offset => oid_offset_67
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  nsi_68 = 0;
+  # DEBUG nsi => nsi_68
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _1 = mib_66(D)->root_node;
+  _2 = _1->node_type;
+  if (_2 != 0)
+    goto <bb 3>; [INV]
+  else
+    goto <bb 4>; [INV]
+
+  <bb 3> :
+  # DEBUG BEGIN_STMT
+  _104 = 0B;
+  // predicted unlikely by early return (on trees) predictor.
+  goto <bb 35>; [INV]
+
+  <bb 4> :
+  # DEBUG BEGIN_STMT
+  _3 = mib_66(D)->root_node;
+  node_stack[nsi_68] = _3;
+  # DEBUG BEGIN_STMT
+  goto <bb 12>; [INV]
+
+  <bb 5> :
+  # DEBUG BEGIN_STMT
+  _4 = node_stack[nsi_51];
+  _5 = _4->subnode_count;
+  i_71 = (u32_t) _5;
+  # DEBUG i => i_71
+  # DEBUG BEGIN_STMT
+  _6 = node_stack[nsi_51];
+  node_72 = _6->subnodes;
+  # DEBUG node => node_72
+  # DEBUG BEGIN_STMT
+  _7 = (unsigned int) oid_offset_48;
+  _8 = _7 * 4;
+  _9 = oid_73(D) + _8;
+  subnode_oid_74 = *_9;
+  # DEBUG subnode_oid => subnode_oid_74
+  # DEBUG BEGIN_STMT
+  goto <bb 7>; [INV]
+
+  <bb 6> :
+  # DEBUG BEGIN_STMT
+  node_75 = node_49 + 4;
+  # DEBUG node => node_75
+  # DEBUG BEGIN_STMT
+  i_76 = i_54 + 4294967295;
+  # DEBUG i => i_76
+
+  <bb 7> :
+  # node_49 = PHI <node_72(5), node_75(6)>
+  # i_54 = PHI <i_71(5), i_76(6)>
+  # DEBUG i => i_54
+  # DEBUG node => node_49
+  # DEBUG BEGIN_STMT
+  if (i_54 != 0)
+    goto <bb 8>; [INV]
+  else
+    goto <bb 9>; [INV]
+
+  <bb 8> :
+  _10 = *node_49;
+  _11 = _10->oid;
+  if (subnode_oid_74 != _11)
+    goto <bb 6>; [INV]
+  else
+    goto <bb 9>; [INV]
+
+  <bb 9> :
+  # DEBUG BEGIN_STMT
+  if (i_54 == 0)
+    goto <bb 13>; [INV]
+  else
+    goto <bb 10>; [INV]
+
+  <bb 10> :
+  _12 = *node_49;
+  _13 = _12->node_type;
+  if (_13 != 0)
+    goto <bb 13>; [INV]
+  else
+    goto <bb 11>; [INV]
+
+  <bb 11> :
+  # DEBUG BEGIN_STMT
+  nsi_77 = nsi_51 + 1;
+  # DEBUG nsi => nsi_77
+  # DEBUG BEGIN_STMT
+  _14 = *node_49;
+  node_stack[nsi_77] = _14;
+  # DEBUG BEGIN_STMT
+  oid_offset.29_15 = oid_offset_48;
+  oid_offset_79 = oid_offset.29_15 + 1;
+  # DEBUG oid_offset => oid_offset_79
+
+  <bb 12> :
+  # oid_offset_48 = PHI <oid_offset_67(4), oid_offset_79(11)>
+  # nsi_51 = PHI <nsi_68(4), nsi_77(11)>
+  # DEBUG nsi => nsi_51
+  # DEBUG oid_offset => oid_offset_48
+  # DEBUG BEGIN_STMT
+  if (oid_offset_48 < oid_len_70(D))
+    goto <bb 5>; [INV]
+  else
+    goto <bb 13>; [INV]
+
+  <bb 13> :
+  # DEBUG BEGIN_STMT
+  if (oid_offset_48 >= oid_len_70(D))
+    goto <bb 14>; [INV]
+  else
+    goto <bb 15>; [INV]
+
+  <bb 14> :
+  # DEBUG BEGIN_STMT
+  subnode_oid_81 = 0;
+  # DEBUG subnode_oid => subnode_oid_81
+  goto <bb 33>; [INV]
+
+  <bb 15> :
+  # DEBUG BEGIN_STMT
+  _16 = (unsigned int) oid_offset_48;
+  _17 = _16 * 4;
+  _18 = oid_73(D) + _17;
+  _19 = *_18;
+  subnode_oid_80 = _19 + 1;
+  # DEBUG subnode_oid => subnode_oid_80
+  goto <bb 33>; [INV]
+
+  <bb 16> :
+  # DEBUG BEGIN_STMT
+  subnode_83 = 0B;
+  # DEBUG subnode => subnode_83
+  # DEBUG BEGIN_STMT
+  _20 = node_stack[nsi_52];
+  _21 = _20->subnode_count;
+  i_84 = (s32_t) _21;
+  # DEBUG i => i_84
+  # DEBUG BEGIN_STMT
+  _22 = node_stack[nsi_52];
+  node_85 = _22->subnodes;
+  # DEBUG node => node_85
+  # DEBUG BEGIN_STMT
+  goto <bb 24>; [INV]
+
+  <bb 17> :
+  # DEBUG BEGIN_STMT
+  _23 = *node_50;
+  _24 = _23->oid;
+  if (subnode_oid_53 == _24)
+    goto <bb 18>; [INV]
+  else
+    goto <bb 19>; [INV]
+
+  <bb 18> :
+  # DEBUG BEGIN_STMT
+  subnode_89 = *node_50;
+  # DEBUG subnode => subnode_89
+  # DEBUG BEGIN_STMT
+  goto <bb 25>; [INV]
+
+  <bb 19> :
+  # DEBUG BEGIN_STMT
+  _25 = *node_50;
+  _26 = _25->oid;
+  if (subnode_oid_53 < _26)
+    goto <bb 20>; [INV]
+  else
+    goto <bb 23>; [INV]
+
+  <bb 20> :
+  if (subnode_56 == 0B)
+    goto <bb 22>; [INV]
+  else
+    goto <bb 21>; [INV]
+
+  <bb 21> :
+  _27 = *node_50;
+  _28 = _27->oid;
+  _29 = subnode_56->oid;
+  if (_28 < _29)
+    goto <bb 22>; [INV]
+  else
+    goto <bb 23>; [INV]
+
+  <bb 22> :
+  # DEBUG BEGIN_STMT
+  subnode_86 = *node_50;
+  # DEBUG subnode => subnode_86
+
+  <bb 23> :
+  # subnode_55 = PHI <subnode_56(19), subnode_56(21), subnode_86(22)>
+  # DEBUG subnode => subnode_55
+  # DEBUG BEGIN_STMT
+  node_87 = node_50 + 4;
+  # DEBUG node => node_87
+  # DEBUG BEGIN_STMT
+  i_88 = i_58 + -1;
+  # DEBUG i => i_88
+
+  <bb 24> :
+  # node_50 = PHI <node_85(16), node_87(23)>
+  # subnode_56 = PHI <subnode_83(16), subnode_55(23)>
+  # i_58 = PHI <i_84(16), i_88(23)>
+  # DEBUG i => i_58
+  # DEBUG subnode => subnode_56
+  # DEBUG node => node_50
+  # DEBUG BEGIN_STMT
+  if (i_58 > 0)
+    goto <bb 17>; [INV]
+  else
+    goto <bb 25>; [INV]
+
+  <bb 25> :
+  # subnode_57 = PHI <subnode_89(18), subnode_56(24)>
+  # DEBUG subnode => subnode_57
+  # DEBUG BEGIN_STMT
+  if (subnode_57 == 0B)
+    goto <bb 26>; [INV]
+  else
+    goto <bb 27>; [INV]
+
+  <bb 26> :
+  # DEBUG BEGIN_STMT
+  _30 = node_stack[nsi_52];
+  _31 = _30->node.oid;
+  subnode_oid_102 = _31 + 1;
+  # DEBUG subnode_oid => subnode_oid_102
+  # DEBUG BEGIN_STMT
+  nsi_103 = nsi_52 + -1;
+  # DEBUG nsi => nsi_103
+  goto <bb 33>; [INV]
+
+  <bb 27> :
+  # DEBUG BEGIN_STMT
+  _32 = subnode_57->node_type;
+  if (_32 == 0)
+    goto <bb 28>; [INV]
+  else
+    goto <bb 29>; [INV]
+
+  <bb 28> :
+  # DEBUG BEGIN_STMT
+  nsi_99 = nsi_52 + 1;
+  # DEBUG nsi => nsi_99
+  # DEBUG BEGIN_STMT
+  node_stack[nsi_99] = subnode_57;
+  # DEBUG BEGIN_STMT
+  subnode_oid_101 = 0;
+  # DEBUG subnode_oid => subnode_oid_101
+  goto <bb 33>; [INV]
+
+  <bb 29> :
+  # DEBUG BEGIN_STMT
+  _33 = mib_66(D)->base_oid;
+  _34 = mib_66(D)->base_oid_len;
+  snmp_oid_assign (oidret_90(D), _33, _34);
+  # DEBUG BEGIN_STMT
+  i_92 = 1;
+  # DEBUG i => i_92
+  # DEBUG BEGIN_STMT
+  goto <bb 31>; [INV]
+
+  <bb 30> :
+  # DEBUG BEGIN_STMT
+  _35 = node_stack[i_59];
+  _36 = oidret_90(D)->len;
+  _37 = (int) _36;
+  _38 = _35->node.oid;
+  oidret_90(D)->id[_37] = _38;
+  # DEBUG BEGIN_STMT
+  _39 = oidret_90(D)->len;
+  _40 = _39;
+  _41 = _40 + 1;
+  oidret_90(D)->len = _41;
+  # DEBUG BEGIN_STMT
+  i_98 = i_59 + 1;
+  # DEBUG i => i_98
+
+  <bb 31> :
+  # i_59 = PHI <i_92(29), i_98(30)>
+  # DEBUG i => i_59
+  # DEBUG BEGIN_STMT
+  if (i_59 <= nsi_52)
+    goto <bb 30>; [INV]
+  else
+    goto <bb 32>; [INV]
+
+  <bb 32> :
+  # DEBUG BEGIN_STMT
+  _42 = oidret_90(D)->len;
+  _43 = (int) _42;
+  _44 = subnode_57->oid;
+  oidret_90(D)->id[_43] = _44;
+  # DEBUG BEGIN_STMT
+  _45 = oidret_90(D)->len;
+  _46 = _45;
+  _47 = _46 + 1;
+  oidret_90(D)->len = _47;
+  # DEBUG BEGIN_STMT
+  _95 = subnode_57;
+  // predicted unlikely by early return (on trees) predictor.
+  goto <bb 35>; [INV]
+
+  <bb 33> :
+  # nsi_52 = PHI <nsi_51(15), nsi_103(26), nsi_99(28), nsi_51(14)>
+  # subnode_oid_53 = PHI <subnode_oid_80(15), subnode_oid_102(26), subnode_oid_101(28), subnode_oid_81(14)>
+  # DEBUG subnode_oid => subnode_oid_53
+  # DEBUG nsi => nsi_52
+  # DEBUG BEGIN_STMT
+  if (nsi_52 >= 0)
+    goto <bb 16>; [INV]
+  else
+    goto <bb 34>; [INV]
+
+  <bb 34> :
+  # DEBUG BEGIN_STMT
+  _82 = 0B;
+
+  <bb 35> :
+  # _60 = PHI <_104(3), _95(32), _82(34)>
+  node_stack ={v} {CLOBBER};
+  return _60;
+
+}
+
+
+snmp_mib_tree_resolve_exact (const struct snmp_mib * mib, const u32_t * oid, u8_t oid_len, u8_t * oid_instance_len)
+{
+  u32_t i;
+  u32_t subnode_oid;
+  u8_t oid_offset;
+  const struct snmp_node * const * node;
+  unsigned int _1;
+  unsigned int _2;
+  const u32_t * _3;
+  const struct snmp_tree_node * _4;
+  short unsigned int _5;
+  const struct snmp_tree_node * _6;
+  const struct snmp_node * _7;
+  long unsigned int _8;
+  unsigned char oid_offset.28_9;
+  const struct snmp_node * _10;
+  unsigned char _11;
+  const struct snmp_node * _12;
+  unsigned char _13;
+  unsigned char _14;
+  const struct snmp_node * _19;
+  const struct snmp_node * _33;
+  const struct snmp_node * _34;
+  const struct snmp_node * _37;
+
+  <bb 2> :
+  # DEBUG BEGIN_STMT
+  node_22 = &mib_21(D)->root_node;
+  # DEBUG node => node_22
+  # DEBUG BEGIN_STMT
+  oid_offset_24 = mib_21(D)->base_oid_len;
+  # DEBUG oid_offset => oid_offset_24
+  # DEBUG BEGIN_STMT
+  goto <bb 10>; [INV]
+
+  <bb 3> :
+  # DEBUG BEGIN_STMT
+  _1 = (unsigned int) oid_offset_17;
+  _2 = _1 * 4;
+  _3 = oid_26(D) + _2;
+  subnode_oid_27 = *_3;
+  # DEBUG subnode_oid => subnode_oid_27
+  # DEBUG BEGIN_STMT
+  _4 = MEM[(const struct snmp_tree_node * const *)node_16];
+  _5 = _4->subnode_count;
+  i_28 = (u32_t) _5;
+  # DEBUG i => i_28
+  # DEBUG BEGIN_STMT
+  _6 = MEM[(const struct snmp_tree_node * const *)node_16];
+  node_29 = _6->subnodes;
+  # DEBUG node => node_29
+  # DEBUG BEGIN_STMT
+  goto <bb 5>; [INV]
+
+  <bb 4> :
+  # DEBUG BEGIN_STMT
+  node_30 = node_15 + 4;
+  # DEBUG node => node_30
+  # DEBUG BEGIN_STMT
+  i_31 = i_18 + 4294967295;
+  # DEBUG i => i_31
+
+  <bb 5> :
+  # node_15 = PHI <node_29(3), node_30(4)>
+  # i_18 = PHI <i_28(3), i_31(4)>
+  # DEBUG i => i_18
+  # DEBUG node => node_15
+  # DEBUG BEGIN_STMT
+  if (i_18 != 0)
+    goto <bb 6>; [INV]
+  else
+    goto <bb 7>; [INV]
+
+  <bb 6> :
+  _7 = *node_15;
+  _8 = _7->oid;
+  if (subnode_oid_27 != _8)
+    goto <bb 4>; [INV]
+  else
+    goto <bb 7>; [INV]
+
+  <bb 7> :
+  # DEBUG BEGIN_STMT
+  if (i_18 == 0)
+    goto <bb 8>; [INV]
+  else
+    goto <bb 9>; [INV]
+
+  <bb 8> :
+  # DEBUG BEGIN_STMT
+  _33 = 0B;
+  // predicted unlikely by early return (on trees) predictor.
+  goto <bb 15>; [INV]
+
+  <bb 9> :
+  # DEBUG BEGIN_STMT
+  oid_offset.28_9 = oid_offset_17;
+  oid_offset_32 = oid_offset.28_9 + 1;
+  # DEBUG oid_offset => oid_offset_32
+
+  <bb 10> :
+  # node_16 = PHI <node_22(2), node_15(9)>
+  # oid_offset_17 = PHI <oid_offset_24(2), oid_offset_32(9)>
+  # DEBUG oid_offset => oid_offset_17
+  # DEBUG node => node_16
+  # DEBUG BEGIN_STMT
+  if (oid_offset_17 < oid_len_25(D))
+    goto <bb 11>; [INV]
+  else
+    goto <bb 12>; [INV]
+
+  <bb 11> :
+  _10 = *node_16;
+  _11 = _10->node_type;
+  if (_11 == 0)
+    goto <bb 3>; [INV]
+  else
+    goto <bb 12>; [INV]
+
+  <bb 12> :
+  # DEBUG BEGIN_STMT
+  _12 = *node_16;
+  _13 = _12->node_type;
+  if (_13 != 0)
+    goto <bb 13>; [INV]
+  else
+    goto <bb 14>; [INV]
+
+  <bb 13> :
+  # DEBUG BEGIN_STMT
+  _14 = oid_len_25(D) - oid_offset_17;
+  *oid_instance_len_35(D) = _14;
+  # DEBUG BEGIN_STMT
+  _37 = *node_16;
+  // predicted unlikely by early return (on trees) predictor.
+  goto <bb 15>; [INV]
+
+  <bb 14> :
+  # DEBUG BEGIN_STMT
+  _34 = 0B;
+
+  <bb 15> :
+  # _19 = PHI <_33(8), _37(13), _34(14)>
+  return _19;
+
+}
+
+
+snmp_get_next_node_instance_from_oid (const u32_t * oid, u8_t oid_len, u8_t (*snmp_validate_node_instance_method) (struct snmp_node_instance *, void *) validate_node_instance_method, void * validate_node_instance_arg, struct snmp_obj_id * node_oid, struct snmp_node_instance * node_instance)
+{
+  const struct snmp_mib * next_mib;
+  const struct snmp_mib * intermediate_mib;
+  u8_t result;
+  u8_t oid_instance_len;
+  u8_t start_oid_len;
+  const u32_t * start_oid;
+  const struct snmp_node * mn;
+  const struct snmp_mib * mib;
+  unsigned char oid_instance_len.17_1;
+  unsigned char _2;
+  struct snmp_obj_id * _3;
+  int _4;
+  unsigned char oid_instance_len.18_5;
+  int _6;
+  int _7;
+  unsigned int _8;
+  unsigned int _9;
+  const u32_t * _10;
+  unsigned char oid_instance_len.19_11;
+  snmp_err_t (*<T660>) (const u32_t *, u8_t, struct snmp_node_instance *) _12;
+  u32_t[50] * _13;
+  unsigned char _14;
+  unsigned char _15;
+  u32_t[50] * _16;
+  unsigned char _17;
+  void (*<T656>) (struct snmp_node_instance *) _18;
+  void (*<T656>) (struct snmp_node_instance *) _19;
+  void (*<T656>) (struct snmp_node_instance *) _20;
+  void (*<T656>) (struct snmp_node_instance *) _21;
+  u32_t[50] * _22;
+  unsigned char _23;
+  struct snmp_obj_id * _24;
+  u32_t[50] * _25;
+  unsigned char _26;
+  u32_t[50] * _27;
+  unsigned char _28;
+  void (*<T656>) (struct snmp_node_instance *) _29;
+  void (*<T656>) (struct snmp_node_instance *) _30;
+  unsigned char _31;
+  unsigned char _32;
+  const u32_t * _33;
+  unsigned char _34;
+  const u32_t * _35;
+  unsigned char _36;
+  signed char _37;
+  unsigned char _38;
+  const u32_t * _39;
+  unsigned char _40;
+  unsigned char _41;
+  u8_t _52;
+  u8_t _126;
+  u8_t _127;
+
+  <bb 2> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  mn_62 = 0B;
+  # DEBUG mn => mn_62
+  # DEBUG BEGIN_STMT
+  start_oid_63 = 0B;
+  # DEBUG start_oid => start_oid_63
+  # DEBUG BEGIN_STMT
+  start_oid_len_64 = 0;
+  # DEBUG start_oid_len => start_oid_len_64
+  # DEBUG BEGIN_STMT
+  mib_69 = snmp_get_mib_from_oid (oid_66(D), oid_len_67(D));
+  # DEBUG mib => mib_69
+  # DEBUG BEGIN_STMT
+  if (mib_69 == 0B)
+    goto <bb 3>; [INV]
+  else
+    goto <bb 5>; [INV]
+
+  <bb 3> :
+  # DEBUG BEGIN_STMT
+  mib_73 = snmp_get_next_mib (oid_66(D), oid_len_67(D));
+  # DEBUG mib => mib_73
+  # DEBUG BEGIN_STMT
+  if (mib_73 != 0B)
+    goto <bb 4>; [INV]
+  else
+    goto <bb 35>; [INV]
+
+  <bb 4> :
+  # DEBUG BEGIN_STMT
+  start_oid_74 = mib_73->base_oid;
+  # DEBUG start_oid => start_oid_74
+  # DEBUG BEGIN_STMT
+  start_oid_len_75 = mib_73->base_oid_len;
+  # DEBUG start_oid_len => start_oid_len_75
+  goto <bb 35>; [INV]
+
+  <bb 5> :
+  # DEBUG BEGIN_STMT
+  start_oid_70 = oid_66(D);
+  # DEBUG start_oid => start_oid_70
+  # DEBUG BEGIN_STMT
+  start_oid_len_71 = oid_len_67(D);
+  # DEBUG start_oid_len => start_oid_len_71
+  goto <bb 35>; [INV]
+
+  <bb 6> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  mn_77 = snmp_mib_tree_resolve_exact (mib_43, start_oid_49, start_oid_len_51, &oid_instance_len);
+  # DEBUG mn => mn_77
+  # DEBUG BEGIN_STMT
+  if (mn_77 != 0B)
+    goto <bb 7>; [INV]
+  else
+    goto <bb 8>; [INV]
+
+  <bb 7> :
+  # DEBUG BEGIN_STMT
+  oid_instance_len.17_1 = oid_instance_len;
+  _2 = start_oid_len_51 - oid_instance_len.17_1;
+  snmp_oid_assign (node_oid_78(D), start_oid_49, _2);
+  # DEBUG BEGIN_STMT
+  _3 = &node_instance_81(D)->instance_oid;
+  _4 = (int) start_oid_len_51;
+  oid_instance_len.18_5 = oid_instance_len;
+  _6 = (int) oid_instance_len.18_5;
+  _7 = _4 - _6;
+  _8 = (unsigned int) _7;
+  _9 = _8 * 4;
+  _10 = start_oid_49 + _9;
+  oid_instance_len.19_11 = oid_instance_len;
+  snmp_oid_assign (_3, _10, oid_instance_len.19_11);
+  goto <bb 9>; [INV]
+
+  <bb 8> :
+  # DEBUG BEGIN_STMT
+  mn_80 = snmp_mib_tree_resolve_next (mib_43, start_oid_49, start_oid_len_51, node_oid_78(D));
+  # DEBUG mn => mn_80
+  # DEBUG BEGIN_STMT
+  node_instance_81(D)->instance_oid.len = 0;
+
+  <bb 9> :
+  # mn_44 = PHI <mn_77(7), mn_80(8)>
+  # DEBUG mn => mn_44
+  # DEBUG BEGIN_STMT
+  node_instance_81(D)->node = mn_44;
+  # DEBUG BEGIN_STMT
+  goto <bb 20>; [INV]
+
+  <bb 10> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  node_instance_81(D)->asn1_type = 0;
+  # DEBUG BEGIN_STMT
+  node_instance_81(D)->access = 0;
+  # DEBUG BEGIN_STMT
+  node_instance_81(D)->get_value = 0B;
+  # DEBUG BEGIN_STMT
+  node_instance_81(D)->set_test = 0B;
+  # DEBUG BEGIN_STMT
+  node_instance_81(D)->set_value = 0B;
+  # DEBUG BEGIN_STMT
+  node_instance_81(D)->release_instance = 0B;
+  # DEBUG BEGIN_STMT
+  node_instance_81(D)->reference.ptr = 0B;
+  # DEBUG BEGIN_STMT
+  node_instance_81(D)->reference_len = 0;
+  # DEBUG BEGIN_STMT
+  _12 = MEM[(const struct snmp_leaf_node *)mn_45].get_next_instance;
+  _13 = &node_oid_78(D)->id;
+  _14 = node_oid_78(D)->len;
+  result_95 = _12 (_13, _14, node_instance_81(D));
+  # DEBUG result => result_95
+  # DEBUG BEGIN_STMT
+  if (result_95 == 0)
+    goto <bb 11>; [INV]
+  else
+    goto <bb 16>; [INV]
+
+  <bb 11> :
+  # DEBUG BEGIN_STMT
+  if (validate_node_instance_method_102(D) == 0B)
+    goto <bb 13>; [INV]
+  else
+    goto <bb 12>; [INV]
+
+  <bb 12> :
+  _15 = validate_node_instance_method_102(D) (node_instance_81(D), validate_node_instance_arg_103(D));
+  if (_15 == 0)
+    goto <bb 13>; [INV]
+  else
+    goto <bb 14>; [INV]
+
+  <bb 13> :
+  # DEBUG BEGIN_STMT
+  _16 = &node_instance_81(D)->instance_oid.id;
+  _17 = node_instance_81(D)->instance_oid.len;
+  snmp_oid_append (node_oid_78(D), _16, _17);
+  # DEBUG BEGIN_STMT
+  goto <bb 21>; [INV]
+
+  <bb 14> :
+  # DEBUG BEGIN_STMT
+  _18 = node_instance_81(D)->release_instance;
+  if (_18 != 0B)
+    goto <bb 15>; [INV]
+  else
+    goto <bb 20>; [INV]
+
+  <bb 15> :
+  # DEBUG BEGIN_STMT
+  _19 = node_instance_81(D)->release_instance;
+  _19 (node_instance_81(D));
+  goto <bb 20>; [INV]
+
+  <bb 16> :
+  # DEBUG BEGIN_STMT
+  _20 = node_instance_81(D)->release_instance;
+  if (_20 != 0B)
+    goto <bb 17>; [INV]
+  else
+    goto <bb 18>; [INV]
+
+  <bb 17> :
+  # DEBUG BEGIN_STMT
+  _21 = node_instance_81(D)->release_instance;
+  _21 (node_instance_81(D));
+
+  <bb 18> :
+  # DEBUG BEGIN_STMT
+  _22 = &node_oid_78(D)->id;
+  _23 = node_oid_78(D)->len;
+  _24 = &node_instance_81(D)->instance_oid;
+  mn_98 = snmp_mib_tree_resolve_next (mib_43, _22, _23, _24);
+  # DEBUG mn => mn_98
+  # DEBUG BEGIN_STMT
+  if (mn_98 != 0B)
+    goto <bb 19>; [INV]
+  else
+    goto <bb 20>; [INV]
+
+  <bb 19> :
+  # DEBUG BEGIN_STMT
+  _25 = &node_instance_81(D)->instance_oid.id;
+  _26 = node_instance_81(D)->instance_oid.len;
+  snmp_oid_assign (node_oid_78(D), _25, _26);
+  # DEBUG BEGIN_STMT
+  node_instance_81(D)->instance_oid.len = 0;
+  # DEBUG BEGIN_STMT
+  node_instance_81(D)->node = mn_98;
+
+  <bb 20> :
+  # mn_45 = PHI <mn_44(9), mn_45(15), mn_98(18), mn_98(19), mn_45(14)>
+  # DEBUG mn => mn_45
+  # DEBUG BEGIN_STMT
+  if (mn_45 != 0B)
+    goto <bb 10>; [INV]
+  else
+    goto <bb 21>; [INV]
+
+  <bb 21> :
+  # DEBUG BEGIN_STMT
+  if (mn_45 != 0B)
+    goto <bb 22>; [INV]
+  else
+    goto <bb 26>; [INV]
+
+  <bb 22> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _27 = &node_oid_78(D)->id;
+  _28 = node_oid_78(D)->len;
+  intermediate_mib_119 = snmp_get_mib_between (start_oid_49, start_oid_len_51, _27, _28);
+  # DEBUG intermediate_mib => intermediate_mib_119
+  # DEBUG BEGIN_STMT
+  if (intermediate_mib_119 != 0B)
+    goto <bb 23>; [INV]
+  else
+    goto <bb 34>; [INV]
+
+  <bb 23> :
+  # DEBUG BEGIN_STMT
+  _29 = node_instance_81(D)->release_instance;
+  if (_29 != 0B)
+    goto <bb 24>; [INV]
+  else
+    goto <bb 25>; [INV]
+
+  <bb 24> :
+  # DEBUG BEGIN_STMT
+  _30 = node_instance_81(D)->release_instance;
+  _30 (node_instance_81(D));
+
+  <bb 25> :
+  # DEBUG BEGIN_STMT
+  mn_121 = 0B;
+  # DEBUG mn => mn_121
+  # DEBUG BEGIN_STMT
+  mib_122 = intermediate_mib_119;
+  # DEBUG mib => mib_122
+  # DEBUG BEGIN_STMT
+  start_oid_123 = mib_122->base_oid;
+  # DEBUG start_oid => start_oid_123
+  # DEBUG BEGIN_STMT
+  start_oid_len_124 = mib_122->base_oid_len;
+  # DEBUG start_oid_len => start_oid_len_124
+  goto <bb 34>; [INV]
+
+  <bb 26> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  next_mib_108 = snmp_get_next_mib (start_oid_49, start_oid_len_51);
+  # DEBUG next_mib => next_mib_108
+  # DEBUG BEGIN_STMT
+  if (next_mib_108 != 0B)
+    goto <bb 27>; [INV]
+  else
+    goto <bb 30>; [INV]
+
+  <bb 27> :
+  _31 = next_mib_108->base_oid_len;
+  _32 = mib_43->base_oid_len;
+  if (_31 > _32)
+    goto <bb 28>; [INV]
+  else
+    goto <bb 30>; [INV]
+
+  <bb 28> :
+  _33 = next_mib_108->base_oid;
+  _34 = mib_43->base_oid_len;
+  _35 = mib_43->base_oid;
+  _36 = mib_43->base_oid_len;
+  _37 = snmp_oid_compare (_33, _34, _35, _36);
+  if (_37 == 0)
+    goto <bb 29>; [INV]
+  else
+    goto <bb 30>; [INV]
+
+  <bb 29> :
+  # DEBUG BEGIN_STMT
+  mib_110 = next_mib_108;
+  # DEBUG mib => mib_110
+  # DEBUG BEGIN_STMT
+  start_oid_111 = mib_110->base_oid;
+  # DEBUG start_oid => start_oid_111
+  # DEBUG BEGIN_STMT
+  start_oid_len_112 = mib_110->base_oid_len;
+  # DEBUG start_oid_len => start_oid_len_112
+  goto <bb 34>; [INV]
+
+  <bb 30> :
+  # DEBUG BEGIN_STMT
+  _38 = mib_43->base_oid_len;
+  if (_38 > 1)
+    goto <bb 31>; [INV]
+  else
+    goto <bb 34>; [INV]
+
+  <bb 31> :
+  # DEBUG BEGIN_STMT
+  _39 = mib_43->base_oid;
+  _40 = mib_43->base_oid_len;
+  _41 = _40 + 255;
+  mib_114 = snmp_get_mib_from_oid (_39, _41);
+  # DEBUG mib => mib_114
+  # DEBUG BEGIN_STMT
+  if (mib_114 == 0B)
+    goto <bb 32>; [INV]
+  else
+    goto <bb 34>; [INV]
+
+  <bb 32> :
+  # DEBUG BEGIN_STMT
+  mib_115 = next_mib_108;
+  # DEBUG mib => mib_115
+  # DEBUG BEGIN_STMT
+  if (mib_115 != 0B)
+    goto <bb 33>; [INV]
+  else
+    goto <bb 34>; [INV]
+
+  <bb 33> :
+  # DEBUG BEGIN_STMT
+  start_oid_116 = mib_115->base_oid;
+  # DEBUG start_oid => start_oid_116
+  # DEBUG BEGIN_STMT
+  start_oid_len_117 = mib_115->base_oid_len;
+  # DEBUG start_oid_len => start_oid_len_117
+
+  <bb 34> :
+  # mib_42 = PHI <mib_122(25), mib_110(29), mib_43(30), mib_114(31), mib_115(32), mib_115(33), mib_43(22)>
+  # mn_46 = PHI <mn_121(25), mn_45(29), mn_45(30), mn_45(31), mn_45(32), mn_45(33), mn_45(22)>
+  # start_oid_48 = PHI <start_oid_123(25), start_oid_111(29), start_oid_49(30), start_oid_49(31), start_oid_49(32), start_oid_116(33), start_oid_49(22)>
+  # start_oid_len_50 = PHI <start_oid_len_124(25), start_oid_len_112(29), start_oid_len_51(30), start_oid_len_51(31), start_oid_len_51(32), start_oid_len_117(33), start_oid_len_51(22)>
+  # DEBUG start_oid_len => start_oid_len_50
+  # DEBUG start_oid => start_oid_48
+  # DEBUG mn => mn_46
+  # DEBUG mib => mib_42
+  oid_instance_len ={v} {CLOBBER};
+
+  <bb 35> :
+  # mib_43 = PHI <mib_69(5), mib_42(34), mib_73(4), mib_73(3)>
+  # mn_47 = PHI <mn_62(5), mn_46(34), mn_62(4), mn_62(3)>
+  # start_oid_49 = PHI <start_oid_70(5), start_oid_48(34), start_oid_74(4), start_oid_63(3)>
+  # start_oid_len_51 = PHI <start_oid_len_71(5), start_oid_len_50(34), start_oid_len_75(4), start_oid_len_64(3)>
+  # DEBUG start_oid_len => start_oid_len_51
+  # DEBUG start_oid => start_oid_49
+  # DEBUG mn => mn_47
+  # DEBUG mib => mib_43
+  # DEBUG BEGIN_STMT
+  if (mib_43 != 0B)
+    goto <bb 36>; [INV]
+  else
+    goto <bb 37>; [INV]
+
+  <bb 36> :
+  if (mn_47 == 0B)
+    goto <bb 6>; [INV]
+  else
+    goto <bb 37>; [INV]
+
+  <bb 37> :
+  # DEBUG BEGIN_STMT
+  if (mib_43 == 0B)
+    goto <bb 38>; [INV]
+  else
+    goto <bb 39>; [INV]
+
+  <bb 38> :
+  # DEBUG BEGIN_STMT
+  _127 = 242;
+  // predicted unlikely by early return (on trees) predictor.
+  goto <bb 40>; [INV]
+
+  <bb 39> :
+  # DEBUG BEGIN_STMT
+  _126 = 0;
+
+  <bb 40> :
+  # _52 = PHI <_127(38), _126(39)>
+  return _52;
+
+}
+
+
+snmp_get_node_instance_from_oid (const u32_t * oid, u8_t oid_len, struct snmp_node_instance * node_instance)
+{
+  const struct snmp_leaf_node * leaf_node;
+  u8_t oid_instance_len;
+  const struct snmp_node * mn;
+  const struct snmp_mib * mib;
+  u8_t result;
+  unsigned char _1;
+  struct snmp_obj_id * _2;
+  int _3;
+  unsigned char oid_instance_len.3_4;
+  int _5;
+  int _6;
+  unsigned int _7;
+  unsigned int _8;
+  const u32_t * _9;
+  unsigned char oid_instance_len.4_10;
+  snmp_err_t (*<T660>) (const u32_t *, u8_t, struct snmp_node_instance *) _11;
+  unsigned char oid_instance_len.5_12;
+  unsigned char _13;
+  u8_t _34;
+
+  <bb 2> :
+  # DEBUG BEGIN_STMT
+  result_18 = 240;
+  # DEBUG result => result_18
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  mn_19 = 0B;
+  # DEBUG mn => mn_19
+  # DEBUG BEGIN_STMT
+  mib_24 = snmp_get_mib_from_oid (oid_21(D), oid_len_22(D));
+  # DEBUG mib => mib_24
+  # DEBUG BEGIN_STMT
+  if (mib_24 != 0B)
+    goto <bb 3>; [INV]
+  else
+    goto <bb 7>; [INV]
+
+  <bb 3> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  mn_26 = snmp_mib_tree_resolve_exact (mib_24, oid_21(D), oid_len_22(D), &oid_instance_len);
+  # DEBUG mn => mn_26
+  # DEBUG BEGIN_STMT
+  if (mn_26 != 0B)
+    goto <bb 4>; [INV]
+  else
+    goto <bb 6>; [INV]
+
+  <bb 4> :
+  _1 = mn_26->node_type;
+  if (_1 != 0)
+    goto <bb 5>; [INV]
+  else
+    goto <bb 6>; [INV]
+
+  <bb 5> :
+  # DEBUG BEGIN_STMT
+  leaf_node_27 = mn_26;
+  # DEBUG leaf_node => leaf_node_27
+  # DEBUG BEGIN_STMT
+  node_instance_28(D)->node = mn_26;
+  # DEBUG BEGIN_STMT
+  _2 = &node_instance_28(D)->instance_oid;
+  _3 = (int) oid_len_22(D);
+  oid_instance_len.3_4 = oid_instance_len;
+  _5 = (int) oid_instance_len.3_4;
+  _6 = _3 - _5;
+  _7 = (unsigned int) _6;
+  _8 = _7 * 4;
+  _9 = oid_21(D) + _8;
+  oid_instance_len.4_10 = oid_instance_len;
+  snmp_oid_assign (_2, _9, oid_instance_len.4_10);
+  # DEBUG BEGIN_STMT
+  _11 = leaf_node_27->get_instance;
+  oid_instance_len.5_12 = oid_instance_len;
+  _13 = oid_len_22(D) - oid_instance_len.5_12;
+  result_32 = _11 (oid_21(D), _13, node_instance_28(D));
+  # DEBUG result => result_32
+
+  <bb 6> :
+  # result_14 = PHI <result_18(3), result_18(4), result_32(5)>
+  # DEBUG result => result_14
+  oid_instance_len ={v} {CLOBBER};
+
+  <bb 7> :
+  # result_15 = PHI <result_18(2), result_14(6)>
+  # DEBUG result => result_15
+  # DEBUG BEGIN_STMT
+  _34 = result_15;
+  return _34;
+
+}
+
+
+snmp_get_mib_between (const u32_t * oid1, u8_t oid1_len, const u32_t * oid2, u8_t oid2_len)
+{
+  const struct snmp_mib * next_mib;
+  const u32_t * _1;
+  unsigned char _2;
+  signed char _3;
+  const struct snmp_mib * _4;
+  const struct snmp_mib * _17;
+  const struct snmp_mib * _18;
+
+  <bb 2> :
+  # DEBUG BEGIN_STMT
+  next_mib_13 = snmp_get_next_mib (oid1_10(D), oid1_len_11(D));
+  # DEBUG next_mib => next_mib_13
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  if (oid2_14(D) == 0B)
+    goto <bb 3>; [INV]
+  else
+    goto <bb 4>; [INV]
+
+  <bb 3> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  __asm__ __volatile__("BKPT #0
+	");
+  # DEBUG BEGIN_STMT
+  goto <bb 3>; [INV]
+
+  <bb 4> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  if (oid2_len_15(D) == 0)
+    goto <bb 5>; [INV]
+  else
+    goto <bb 6>; [INV]
+
+  <bb 5> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  __asm__ __volatile__("BKPT #0
+	");
+  # DEBUG BEGIN_STMT
+  goto <bb 5>; [INV]
+
+  <bb 6> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  if (next_mib_13 != 0B)
+    goto <bb 7>; [INV]
+  else
+    goto <bb 9>; [INV]
+
+  <bb 7> :
+  # DEBUG BEGIN_STMT
+  _1 = next_mib_13->base_oid;
+  _2 = next_mib_13->base_oid_len;
+  _3 = snmp_oid_compare (_1, _2, oid2_14(D), oid2_len_15(D));
+  if (_3 < 0)
+    goto <bb 8>; [INV]
+  else
+    goto <bb 9>; [INV]
+
+  <bb 8> :
+  # DEBUG BEGIN_STMT
+  _17 = next_mib_13;
+  // predicted unlikely by early return (on trees) predictor.
+  goto <bb 10>; [INV]
+
+  <bb 9> :
+  # DEBUG BEGIN_STMT
+  _18 = 0B;
+
+  <bb 10> :
+  # _4 = PHI <_17(8), _18(9)>
+  return _4;
+
+}
+
+
+snmp_get_next_mib (const u32_t * oid, u8_t oid_len)
+{
+  const struct snmp_mib * next_mib;
+  u8_t i;
+  const struct snmp_mib * const * snmp_mibs.20_1;
+  unsigned int _2;
+  unsigned int _3;
+  const struct snmp_mib * const * _4;
+  const struct snmp_mib * _5;
+  const u32_t * _6;
+  const struct snmp_mib * const * snmp_mibs.21_7;
+  unsigned int _8;
+  unsigned int _9;
+  const struct snmp_mib * const * _10;
+  const struct snmp_mib * _11;
+  const u32_t * _12;
+  const struct snmp_mib * const * snmp_mibs.22_13;
+  unsigned int _14;
+  unsigned int _15;
+  const struct snmp_mib * const * _16;
+  const struct snmp_mib * _17;
+  unsigned char _18;
+  signed char _19;
+  const struct snmp_mib * const * snmp_mibs.23_20;
+  unsigned int _21;
+  unsigned int _22;
+  const struct snmp_mib * const * _23;
+  const struct snmp_mib * _24;
+  const u32_t * _25;
+  const struct snmp_mib * const * snmp_mibs.24_26;
+  unsigned int _27;
+  unsigned int _28;
+  const struct snmp_mib * const * _29;
+  const struct snmp_mib * _30;
+  unsigned char _31;
+  const u32_t * _32;
+  unsigned char _33;
+  signed char _34;
+  const struct snmp_mib * const * snmp_mibs.25_35;
+  unsigned int _36;
+  unsigned int _37;
+  const struct snmp_mib * const * _38;
+  unsigned char i.26_39;
+  unsigned char snmp_num_mibs.27_40;
+  const struct snmp_mib * _44;
+  const struct snmp_mib * _55;
+  const struct snmp_mib * _60;
+
+  <bb 2> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  next_mib_50 = 0B;
+  # DEBUG next_mib => next_mib_50
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  if (oid_51(D) == 0B)
+    goto <bb 3>; [INV]
+  else
+    goto <bb 4>; [INV]
+
+  <bb 3> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  __asm__ __volatile__("BKPT #0
+	");
+  # DEBUG BEGIN_STMT
+  goto <bb 3>; [INV]
+
+  <bb 4> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  if (oid_len_53(D) == 0)
+    goto <bb 5>; [INV]
+  else
+    goto <bb 6>; [INV]
+
+  <bb 5> :
+  # DEBUG BEGIN_STMT
+  _60 = 0B;
+  // predicted unlikely by early return (on trees) predictor.
+  goto <bb 15>; [INV]
+
+  <bb 6> :
+  # DEBUG BEGIN_STMT
+  i_54 = 0;
+  # DEBUG i => i_54
+  goto <bb 13>; [INV]
+
+  <bb 7> :
+  # DEBUG BEGIN_STMT
+  snmp_mibs.20_1 = snmp_mibs;
+  _2 = (unsigned int) i_41;
+  _3 = _2 * 4;
+  _4 = snmp_mibs.20_1 + _3;
+  _5 = *_4;
+  _6 = _5->base_oid;
+  if (_6 != 0B)
+    goto <bb 8>; [INV]
+  else
+    goto <bb 12>; [INV]
+
+  <bb 8> :
+  # DEBUG BEGIN_STMT
+  snmp_mibs.21_7 = snmp_mibs;
+  _8 = (unsigned int) i_41;
+  _9 = _8 * 4;
+  _10 = snmp_mibs.21_7 + _9;
+  _11 = *_10;
+  _12 = _11->base_oid;
+  snmp_mibs.22_13 = snmp_mibs;
+  _14 = (unsigned int) i_41;
+  _15 = _14 * 4;
+  _16 = snmp_mibs.22_13 + _15;
+  _17 = *_16;
+  _18 = _17->base_oid_len;
+  _19 = snmp_oid_compare (_12, _18, oid_51(D), oid_len_53(D));
+  if (_19 > 0)
+    goto <bb 9>; [INV]
+  else
+    goto <bb 12>; [INV]
+
+  <bb 9> :
+  # DEBUG BEGIN_STMT
+  if (next_mib_43 == 0B)
+    goto <bb 11>; [INV]
+  else
+    goto <bb 10>; [INV]
+
+  <bb 10> :
+  snmp_mibs.23_20 = snmp_mibs;
+  _21 = (unsigned int) i_41;
+  _22 = _21 * 4;
+  _23 = snmp_mibs.23_20 + _22;
+  _24 = *_23;
+  _25 = _24->base_oid;
+  snmp_mibs.24_26 = snmp_mibs;
+  _27 = (unsigned int) i_41;
+  _28 = _27 * 4;
+  _29 = snmp_mibs.24_26 + _28;
+  _30 = *_29;
+  _31 = _30->base_oid_len;
+  _32 = next_mib_43->base_oid;
+  _33 = next_mib_43->base_oid_len;
+  _34 = snmp_oid_compare (_25, _31, _32, _33);
+  if (_34 < 0)
+    goto <bb 11>; [INV]
+  else
+    goto <bb 12>; [INV]
+
+  <bb 11> :
+  # DEBUG BEGIN_STMT
+  snmp_mibs.25_35 = snmp_mibs;
+  _36 = (unsigned int) i_41;
+  _37 = _36 * 4;
+  _38 = snmp_mibs.25_35 + _37;
+  next_mib_58 = *_38;
+  # DEBUG next_mib => next_mib_58
+
+  <bb 12> :
+  # next_mib_42 = PHI <next_mib_43(7), next_mib_43(8), next_mib_43(10), next_mib_58(11)>
+  # DEBUG next_mib => next_mib_42
+  # DEBUG BEGIN_STMT
+  i.26_39 = i_41;
+  i_59 = i.26_39 + 1;
+  # DEBUG i => i_59
+
+  <bb 13> :
+  # i_41 = PHI <i_54(6), i_59(12)>
+  # next_mib_43 = PHI <next_mib_50(6), next_mib_42(12)>
+  # DEBUG next_mib => next_mib_43
+  # DEBUG i => i_41
+  # DEBUG BEGIN_STMT
+  snmp_num_mibs.27_40 = snmp_num_mibs;
+  if (i_41 < snmp_num_mibs.27_40)
+    goto <bb 7>; [INV]
+  else
+    goto <bb 14>; [INV]
+
+  <bb 14> :
+  # DEBUG BEGIN_STMT
+  _55 = next_mib_43;
+
+  <bb 15> :
+  # _44 = PHI <_60(5), _55(14)>
+  return _44;
+
+}
+
+
+snmp_get_mib_from_oid (const u32_t * oid, u8_t oid_len)
+{
+  const struct snmp_mib * matched_mib;
+  u8_t max_match_len;
+  u8_t l;
+  u8_t i;
+  const u32_t * searched_oid;
+  const u32_t * list_oid;
+  const struct snmp_mib * const * snmp_mibs.6_1;
+  unsigned int _2;
+  unsigned int _3;
+  const struct snmp_mib * const * _4;
+  const struct snmp_mib * _5;
+  const struct snmp_mib * const * snmp_mibs.7_6;
+  unsigned int _7;
+  unsigned int _8;
+  const struct snmp_mib * const * _9;
+  const struct snmp_mib * _10;
+  const u32_t * _11;
+  const struct snmp_mib * const * snmp_mibs.8_12;
+  unsigned int _13;
+  unsigned int _14;
+  const struct snmp_mib * const * _15;
+  const struct snmp_mib * _16;
+  unsigned char _17;
+  const struct snmp_mib * const * snmp_mibs.9_18;
+  unsigned int _19;
+  unsigned int _20;
+  const struct snmp_mib * const * _21;
+  const struct snmp_mib * _22;
+  const struct snmp_mib * const * snmp_mibs.10_23;
+  unsigned int _24;
+  unsigned int _25;
+  const struct snmp_mib * const * _26;
+  const struct snmp_mib * _27;
+  long unsigned int _28;
+  long unsigned int _29;
+  unsigned char l.11_30;
+  const struct snmp_mib * const * snmp_mibs.12_31;
+  unsigned int _32;
+  unsigned int _33;
+  const struct snmp_mib * const * _34;
+  const struct snmp_mib * _35;
+  unsigned char _36;
+  const struct snmp_mib * const * snmp_mibs.13_37;
+  unsigned int _38;
+  unsigned int _39;
+  const struct snmp_mib * const * _40;
+  const struct snmp_mib * _41;
+  const struct snmp_mib * const * snmp_mibs.14_42;
+  unsigned int _43;
+  unsigned int _44;
+  const struct snmp_mib * const * _45;
+  unsigned char i.15_46;
+  unsigned char snmp_num_mibs.16_47;
+  const struct snmp_mib * _56;
+  const struct snmp_mib * _66;
+  const struct snmp_mib * _78;
+
+  <bb 2> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  max_match_len_60 = 0;
+  # DEBUG max_match_len => max_match_len_60
+  # DEBUG BEGIN_STMT
+  matched_mib_61 = 0B;
+  # DEBUG matched_mib => matched_mib_61
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  if (oid_62(D) == 0B)
+    goto <bb 3>; [INV]
+  else
+    goto <bb 4>; [INV]
+
+  <bb 3> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  __asm__ __volatile__("BKPT #0
+	");
+  # DEBUG BEGIN_STMT
+  goto <bb 3>; [INV]
+
+  <bb 4> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  if (oid_len_64(D) == 0)
+    goto <bb 5>; [INV]
+  else
+    goto <bb 6>; [INV]
+
+  <bb 5> :
+  # DEBUG BEGIN_STMT
+  _78 = 0B;
+  // predicted unlikely by early return (on trees) predictor.
+  goto <bb 22>; [INV]
+
+  <bb 6> :
+  # DEBUG BEGIN_STMT
+  i_65 = 0;
+  # DEBUG i => i_65
+  goto <bb 20>; [INV]
+
+  <bb 7> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  snmp_mibs.6_1 = snmp_mibs;
+  _2 = (unsigned int) i_50;
+  _3 = _2 * 4;
+  _4 = snmp_mibs.6_1 + _3;
+  _5 = *_4;
+  if (_5 == 0B)
+    goto <bb 8>; [INV]
+  else
+    goto <bb 9>; [INV]
+
+  <bb 8> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  __asm__ __volatile__("BKPT #0
+	");
+  # DEBUG BEGIN_STMT
+  goto <bb 8>; [INV]
+
+  <bb 9> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  snmp_mibs.7_6 = snmp_mibs;
+  _7 = (unsigned int) i_50;
+  _8 = _7 * 4;
+  _9 = snmp_mibs.7_6 + _8;
+  _10 = *_9;
+  _11 = _10->base_oid;
+  if (_11 == 0B)
+    goto <bb 10>; [INV]
+  else
+    goto <bb 11>; [INV]
+
+  <bb 10> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  __asm__ __volatile__("BKPT #0
+	");
+  # DEBUG BEGIN_STMT
+  goto <bb 10>; [INV]
+
+  <bb 11> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  snmp_mibs.8_12 = snmp_mibs;
+  _13 = (unsigned int) i_50;
+  _14 = _13 * 4;
+  _15 = snmp_mibs.8_12 + _14;
+  _16 = *_15;
+  _17 = _16->base_oid_len;
+  if (oid_len_64(D) >= _17)
+    goto <bb 12>; [INV]
+  else
+    goto <bb 19>; [INV]
+
+  <bb 12> :
+  # DEBUG BEGIN_STMT
+  snmp_mibs.9_18 = snmp_mibs;
+  _19 = (unsigned int) i_50;
+  _20 = _19 * 4;
+  _21 = snmp_mibs.9_18 + _20;
+  _22 = *_21;
+  l_67 = _22->base_oid_len;
+  # DEBUG l => l_67
+  # DEBUG BEGIN_STMT
+  snmp_mibs.10_23 = snmp_mibs;
+  _24 = (unsigned int) i_50;
+  _25 = _24 * 4;
+  _26 = snmp_mibs.10_23 + _25;
+  _27 = *_26;
+  list_oid_68 = _27->base_oid;
+  # DEBUG list_oid => list_oid_68
+  # DEBUG BEGIN_STMT
+  searched_oid_69 = oid_62(D);
+  # DEBUG searched_oid => searched_oid_69
+  # DEBUG BEGIN_STMT
+  goto <bb 15>; [INV]
+
+  <bb 13> :
+  # DEBUG BEGIN_STMT
+  _28 = *list_oid_48;
+  _29 = *searched_oid_49;
+  if (_28 != _29)
+    goto <bb 16>; [INV]
+  else
+    goto <bb 14>; [INV]
+
+  <bb 14> :
+  # DEBUG BEGIN_STMT
+  l.11_30 = l_51;
+  l_70 = l.11_30 + 255;
+  # DEBUG l => l_70
+  # DEBUG BEGIN_STMT
+  list_oid_71 = list_oid_48 + 4;
+  # DEBUG list_oid => list_oid_71
+  # DEBUG BEGIN_STMT
+  searched_oid_72 = searched_oid_49 + 4;
+  # DEBUG searched_oid => searched_oid_72
+
+  <bb 15> :
+  # list_oid_48 = PHI <list_oid_68(12), list_oid_71(14)>
+  # searched_oid_49 = PHI <searched_oid_69(12), searched_oid_72(14)>
+  # l_51 = PHI <l_67(12), l_70(14)>
+  # DEBUG l => l_51
+  # DEBUG searched_oid => searched_oid_49
+  # DEBUG list_oid => list_oid_48
+  # DEBUG BEGIN_STMT
+  if (l_51 != 0)
+    goto <bb 13>; [INV]
+  else
+    goto <bb 16>; [INV]
+
+  <bb 16> :
+  # DEBUG BEGIN_STMT
+  if (l_51 == 0)
+    goto <bb 17>; [INV]
+  else
+    goto <bb 19>; [INV]
+
+  <bb 17> :
+  snmp_mibs.12_31 = snmp_mibs;
+  _32 = (unsigned int) i_50;
+  _33 = _32 * 4;
+  _34 = snmp_mibs.12_31 + _33;
+  _35 = *_34;
+  _36 = _35->base_oid_len;
+  if (max_match_len_53 < _36)
+    goto <bb 18>; [INV]
+  else
+    goto <bb 19>; [INV]
+
+  <bb 18> :
+  # DEBUG BEGIN_STMT
+  snmp_mibs.13_37 = snmp_mibs;
+  _38 = (unsigned int) i_50;
+  _39 = _38 * 4;
+  _40 = snmp_mibs.13_37 + _39;
+  _41 = *_40;
+  max_match_len_73 = _41->base_oid_len;
+  # DEBUG max_match_len => max_match_len_73
+  # DEBUG BEGIN_STMT
+  snmp_mibs.14_42 = snmp_mibs;
+  _43 = (unsigned int) i_50;
+  _44 = _43 * 4;
+  _45 = snmp_mibs.14_42 + _44;
+  matched_mib_74 = *_45;
+  # DEBUG matched_mib => matched_mib_74
+
+  <bb 19> :
+  # max_match_len_52 = PHI <max_match_len_53(11), max_match_len_53(16), max_match_len_53(17), max_match_len_73(18)>
+  # matched_mib_54 = PHI <matched_mib_55(11), matched_mib_55(16), matched_mib_55(17), matched_mib_74(18)>
+  # DEBUG matched_mib => matched_mib_54
+  # DEBUG max_match_len => max_match_len_52
+  # DEBUG BEGIN_STMT
+  i.15_46 = i_50;
+  i_75 = i.15_46 + 1;
+  # DEBUG i => i_75
+
+  <bb 20> :
+  # i_50 = PHI <i_65(6), i_75(19)>
+  # max_match_len_53 = PHI <max_match_len_60(6), max_match_len_52(19)>
+  # matched_mib_55 = PHI <matched_mib_61(6), matched_mib_54(19)>
+  # DEBUG matched_mib => matched_mib_55
+  # DEBUG max_match_len => max_match_len_53
+  # DEBUG i => i_50
+  # DEBUG BEGIN_STMT
+  snmp_num_mibs.16_47 = snmp_num_mibs;
+  if (i_50 < snmp_num_mibs.16_47)
+    goto <bb 7>; [INV]
+  else
+    goto <bb 21>; [INV]
+
+  <bb 21> :
+  # DEBUG BEGIN_STMT
+  _66 = matched_mib_55;
+
+  <bb 22> :
+  # _56 = PHI <_78(5), _66(21)>
+  return _56;
+
+}
+
+
+netif_to_num (const struct netif * netif)
+{
+  unsigned char _1;
+  u8_t _4;
+
+  <bb 2> :
+  # DEBUG BEGIN_STMT
+  _1 = netif_3(D)->num;
+  _4 = _1 + 1;
+  return _4;
+
+}
+
+
+snmp_oid_equal (const u32_t * oid1, u8_t oid1_len, const u32_t * oid2, u8_t oid2_len)
+{
+  signed char _1;
+  _Bool _2;
+  u8_t _9;
+
+  <bb 2> :
+  # DEBUG BEGIN_STMT
+  _1 = snmp_oid_compare (oid1_4(D), oid1_len_5(D), oid2_6(D), oid2_len_7(D));
+  _2 = _1 == 0;
+  _9 = (u8_t) _2;
+  return _9;
+
+}
+
+
+snmp_oid_compare (const u32_t * oid1, u8_t oid1_len, const u32_t * oid2, u8_t oid2_len)
+{
+  u8_t level;
+  long unsigned int _1;
+  long unsigned int _2;
+  long unsigned int _3;
+  long unsigned int _4;
+  unsigned char level.2_5;
+  s8_t _9;
+  s8_t _23;
+  s8_t _24;
+  s8_t _25;
+  s8_t _26;
+  s8_t _27;
+
+  <bb 2> :
+  # DEBUG BEGIN_STMT
+  level_12 = 0;
+  # DEBUG level => level_12
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  if (oid1_13(D) == 0B)
+    goto <bb 3>; [INV]
+  else
+    goto <bb 5>; [INV]
+
+  <bb 3> :
+  if (oid1_len_14(D) != 0)
+    goto <bb 4>; [INV]
+  else
+    goto <bb 5>; [INV]
+
+  <bb 4> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  __asm__ __volatile__("BKPT #0
+	");
+  # DEBUG BEGIN_STMT
+  goto <bb 4>; [INV]
+
+  <bb 5> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  if (oid2_17(D) == 0B)
+    goto <bb 6>; [INV]
+  else
+    goto <bb 13>; [INV]
+
+  <bb 6> :
+  if (oid2_len_18(D) != 0)
+    goto <bb 7>; [INV]
+  else
+    goto <bb 13>; [INV]
+
+  <bb 7> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  __asm__ __volatile__("BKPT #0
+	");
+  # DEBUG BEGIN_STMT
+  goto <bb 7>; [INV]
+
+  <bb 8> :
+  # DEBUG BEGIN_STMT
+  _1 = *oid1_6;
+  _2 = *oid2_7;
+  if (_1 < _2)
+    goto <bb 9>; [INV]
+  else
+    goto <bb 10>; [INV]
+
+  <bb 9> :
+  # DEBUG BEGIN_STMT
+  _24 = -1;
+  // predicted unlikely by early return (on trees) predictor.
+  goto <bb 20>; [INV]
+
+  <bb 10> :
+  # DEBUG BEGIN_STMT
+  _3 = *oid1_6;
+  _4 = *oid2_7;
+  if (_3 > _4)
+    goto <bb 11>; [INV]
+  else
+    goto <bb 12>; [INV]
+
+  <bb 11> :
+  # DEBUG BEGIN_STMT
+  _23 = 1;
+  // predicted unlikely by early return (on trees) predictor.
+  goto <bb 20>; [INV]
+
+  <bb 12> :
+  # DEBUG BEGIN_STMT
+  level.2_5 = level_8;
+  level_20 = level.2_5 + 1;
+  # DEBUG level => level_20
+  # DEBUG BEGIN_STMT
+  oid1_21 = oid1_6 + 4;
+  # DEBUG oid1 => oid1_21
+  # DEBUG BEGIN_STMT
+  oid2_22 = oid2_7 + 4;
+  # DEBUG oid2 => oid2_22
+
+  <bb 13> :
+  # oid1_6 = PHI <oid1_13(D)(6), oid1_21(12), oid1_13(D)(5)>
+  # oid2_7 = PHI <oid2_17(D)(6), oid2_22(12), oid2_17(D)(5)>
+  # level_8 = PHI <level_12(6), level_20(12), level_12(5)>
+  # DEBUG level => level_8
+  # DEBUG oid2 => oid2_7
+  # DEBUG oid1 => oid1_6
+  # DEBUG BEGIN_STMT
+  if (level_8 < oid1_len_14(D))
+    goto <bb 14>; [INV]
+  else
+    goto <bb 15>; [INV]
+
+  <bb 14> :
+  if (level_8 < oid2_len_18(D))
+    goto <bb 8>; [INV]
+  else
+    goto <bb 15>; [INV]
+
+  <bb 15> :
+  # DEBUG BEGIN_STMT
+  if (oid1_len_14(D) < oid2_len_18(D))
+    goto <bb 16>; [INV]
+  else
+    goto <bb 17>; [INV]
+
+  <bb 16> :
+  # DEBUG BEGIN_STMT
+  _27 = -1;
+  // predicted unlikely by early return (on trees) predictor.
+  goto <bb 20>; [INV]
+
+  <bb 17> :
+  # DEBUG BEGIN_STMT
+  if (oid1_len_14(D) > oid2_len_18(D))
+    goto <bb 18>; [INV]
+  else
+    goto <bb 19>; [INV]
+
+  <bb 18> :
+  # DEBUG BEGIN_STMT
+  _26 = 1;
+  // predicted unlikely by early return (on trees) predictor.
+  goto <bb 20>; [INV]
+
+  <bb 19> :
+  # DEBUG BEGIN_STMT
+  _25 = 0;
+
+  <bb 20> :
+  # _9 = PHI <_24(9), _23(11), _27(16), _26(18), _25(19)>
+  return _9;
+
+}
+
+
+snmp_oid_append (struct snmp_obj_id * target, const u32_t * oid, u8_t oid_len)
+{
+  unsigned char _1;
+  int _2;
+  int _3;
+  int _4;
+  unsigned char _5;
+  int _6;
+  u32_t * _7;
+  unsigned int _8;
+  unsigned int _9;
+  unsigned char _10;
+  unsigned char _11;
+
+  <bb 2> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _1 = target_15(D)->len;
+  _2 = (int) _1;
+  _3 = (int) oid_len_16(D);
+  _4 = _2 + _3;
+  if (_4 > 50)
+    goto <bb 3>; [INV]
+  else
+    goto <bb 4>; [INV]
+
+  <bb 3> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  __asm__ __volatile__("BKPT #0
+	");
+  # DEBUG BEGIN_STMT
+  goto <bb 3>; [INV]
+
+  <bb 4> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  if (oid_len_16(D) != 0)
+    goto <bb 5>; [INV]
+  else
+    goto <bb 6>; [INV]
+
+  <bb 5> :
+  # DEBUG BEGIN_STMT
+  _5 = target_15(D)->len;
+  _6 = (int) _5;
+  _7 = &target_15(D)->id[_6];
+  _8 = (unsigned int) oid_len_16(D);
+  _9 = _8 * 4;
+  memcpy (_7, oid_17(D), _9);
+  # DEBUG BEGIN_STMT
+  _10 = target_15(D)->len;
+  _11 = oid_len_16(D) + _10;
+  target_15(D)->len = _11;
+
+  <bb 6> :
+  return;
+
+}
+
+
+snmp_oid_combine (struct snmp_obj_id * target, const u32_t * oid1, u8_t oid1_len, const u32_t * oid2, u8_t oid2_len)
+{
+  <bb 2> :
+  # DEBUG BEGIN_STMT
+  snmp_oid_assign (target_2(D), oid1_3(D), oid1_len_4(D));
+  # DEBUG BEGIN_STMT
+  snmp_oid_append (target_2(D), oid2_6(D), oid2_len_7(D));
+  return;
+
+}
+
+
+snmp_oid_prefix (struct snmp_obj_id * target, const u32_t * oid, u8_t oid_len)
+{
+  int i;
+  unsigned char _1;
+  int _2;
+  int _3;
+  int _4;
+  unsigned char _5;
+  int _6;
+  int _7;
+  int _8;
+  long unsigned int _9;
+  u32_t[50] * _10;
+  unsigned int _11;
+  unsigned int _12;
+
+  <bb 2> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _1 = target_18(D)->len;
+  _2 = (int) _1;
+  _3 = (int) oid_len_19(D);
+  _4 = _2 + _3;
+  if (_4 > 50)
+    goto <bb 3>; [INV]
+  else
+    goto <bb 4>; [INV]
+
+  <bb 3> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  __asm__ __volatile__("BKPT #0
+	");
+  # DEBUG BEGIN_STMT
+  goto <bb 3>; [INV]
+
+  <bb 4> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  if (oid_len_19(D) != 0)
+    goto <bb 5>; [INV]
+  else
+    goto <bb 9>; [INV]
+
+  <bb 5> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _5 = target_18(D)->len;
+  _6 = (int) _5;
+  i_20 = _6 + -1;
+  # DEBUG i => i_20
+  goto <bb 7>; [INV]
+
+  <bb 6> :
+  # DEBUG BEGIN_STMT
+  _7 = (int) oid_len_19(D);
+  _8 = i_13 + _7;
+  _9 = target_18(D)->id[i_13];
+  target_18(D)->id[_8] = _9;
+  # DEBUG BEGIN_STMT
+  i_24 = i_13 + -1;
+  # DEBUG i => i_24
+
+  <bb 7> :
+  # i_13 = PHI <i_20(5), i_24(6)>
+  # DEBUG i => i_13
+  # DEBUG BEGIN_STMT
+  if (i_13 >= 0)
+    goto <bb 6>; [INV]
+  else
+    goto <bb 8>; [INV]
+
+  <bb 8> :
+  # DEBUG BEGIN_STMT
+  _10 = &target_18(D)->id;
+  _11 = (unsigned int) oid_len_19(D);
+  _12 = _11 * 4;
+  memcpy (_10, oid_21(D), _12);
+
+  <bb 9> :
+  return;
+
+}
+
+
+snmp_oid_assign (struct snmp_obj_id * target, const u32_t * oid, u8_t oid_len)
+{
+  u32_t[50] * _1;
+  unsigned int _2;
+  unsigned int _3;
+
+  <bb 2> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  if (oid_len_6(D) > 50)
+    goto <bb 3>; [INV]
+  else
+    goto <bb 4>; [INV]
+
+  <bb 3> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  __asm__ __volatile__("BKPT #0
+	");
+  # DEBUG BEGIN_STMT
+  goto <bb 3>; [INV]
+
+  <bb 4> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  target_8(D)->len = oid_len_6(D);
+  # DEBUG BEGIN_STMT
+  if (oid_len_6(D) != 0)
+    goto <bb 5>; [INV]
+  else
+    goto <bb 6>; [INV]
+
+  <bb 5> :
+  # DEBUG BEGIN_STMT
+  _1 = &target_8(D)->id;
+  _2 = (unsigned int) oid_len_6(D);
+  _3 = _2 * 4;
+  memcpy (_1, oid_10(D), _3);
+
+  <bb 6> :
+  return;
+
+}
+
+
+snmp_oid_to_ip_port (const u32_t * oid, u8_t oid_len, struct ip_addr_t * ip, u16_t * port)
+{
+  u8_t idx;
+  unsigned int _1;
+  unsigned int _2;
+  const u32_t * _3;
+  long unsigned int _4;
+  unsigned int _5;
+  unsigned int _6;
+  const u32_t * _7;
+  long unsigned int _8;
+  short unsigned int _9;
+  unsigned char idx.1_10;
+  u8_t _11;
+  u8_t _22;
+  u8_t _23;
+  u8_t _24;
+  u8_t _25;
+
+  <bb 2> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  idx_18 = snmp_oid_to_ip (oid_14(D), oid_len_15(D), ip_16(D));
+  # DEBUG idx => idx_18
+  # DEBUG BEGIN_STMT
+  if (idx_18 == 0)
+    goto <bb 3>; [INV]
+  else
+    goto <bb 4>; [INV]
+
+  <bb 3> :
+  # DEBUG BEGIN_STMT
+  _25 = 0;
+  // predicted unlikely by early return (on trees) predictor.
+  goto <bb 9>; [INV]
+
+  <bb 4> :
+  # DEBUG BEGIN_STMT
+  if (idx_18 >= oid_len_15(D))
+    goto <bb 5>; [INV]
+  else
+    goto <bb 6>; [INV]
+
+  <bb 5> :
+  # DEBUG BEGIN_STMT
+  _24 = 0;
+  // predicted unlikely by early return (on trees) predictor.
+  goto <bb 9>; [INV]
+
+  <bb 6> :
+  # DEBUG BEGIN_STMT
+  _1 = (unsigned int) idx_18;
+  _2 = _1 * 4;
+  _3 = oid_14(D) + _2;
+  _4 = *_3;
+  if (_4 > 65535)
+    goto <bb 7>; [INV]
+  else
+    goto <bb 8>; [INV]
+
+  <bb 7> :
+  # DEBUG BEGIN_STMT
+  _23 = 0;
+  // predicted unlikely by early return (on trees) predictor.
+  goto <bb 9>; [INV]
+
+  <bb 8> :
+  # DEBUG BEGIN_STMT
+  _5 = (unsigned int) idx_18;
+  _6 = _5 * 4;
+  _7 = oid_14(D) + _6;
+  _8 = *_7;
+  _9 = (short unsigned int) _8;
+  *port_19(D) = _9;
+  # DEBUG BEGIN_STMT
+  idx.1_10 = idx_18;
+  idx_21 = idx.1_10 + 1;
+  # DEBUG idx => idx_21
+  # DEBUG BEGIN_STMT
+  _22 = idx_21;
+
+  <bb 9> :
+  # _11 = PHI <_25(3), _24(5), _23(7), _22(8)>
+  return _11;
+
+}
+
+
+snmp_oid_to_ip (const u32_t * oid, u8_t oid_len, struct ip_addr_t * ip)
+{
+  long unsigned int _1;
+  const u32_t * _2;
+  long unsigned int _3;
+  long unsigned int _4;
+  const u32_t * _5;
+  long unsigned int _6;
+  const u32_t * _7;
+  struct ip4_addr_t * _8;
+  unsigned char _9;
+  long unsigned int _10;
+  const u32_t * _11;
+  long unsigned int _12;
+  const u32_t * _13;
+  struct ip6_addr_t * _14;
+  unsigned char _15;
+  u8_t _16;
+  u8_t _24;
+  u8_t _28;
+  u8_t _29;
+  u8_t _30;
+  u8_t _31;
+  u8_t _34;
+  u8_t _35;
+  u8_t _36;
+  u8_t _37;
+  u8_t _40;
+  u8_t _41;
+  u8_t _42;
+  u8_t _43;
+
+  <bb 2> :
+  # DEBUG BEGIN_STMT
+  if (oid_len_21(D) == 0)
+    goto <bb 3>; [INV]
+  else
+    goto <bb 4>; [INV]
+
+  <bb 3> :
+  # DEBUG BEGIN_STMT
+  _43 = 0;
+  // predicted unlikely by early return (on trees) predictor.
+  goto <bb 33>; [INV]
+
+  <bb 4> :
+  # DEBUG BEGIN_STMT
+  _1 = *oid_23(D);
+  if (_1 == 0)
+    goto <bb 5>; [INV]
+  else
+    goto <bb 12>; [INV]
+
+  <bb 5> :
+  # DEBUG BEGIN_STMT
+  if (oid_len_21(D) <= 1)
+    goto <bb 6>; [INV]
+  else
+    goto <bb 7>; [INV]
+
+  <bb 6> :
+  # DEBUG BEGIN_STMT
+  _42 = 0;
+  // predicted unlikely by early return (on trees) predictor.
+  goto <bb 33>; [INV]
+
+  <bb 7> :
+  # DEBUG BEGIN_STMT
+  _2 = oid_23(D) + 4;
+  _3 = *_2;
+  if (_3 != 0)
+    goto <bb 8>; [INV]
+  else
+    goto <bb 9>; [INV]
+
+  <bb 8> :
+  # DEBUG BEGIN_STMT
+  _41 = 0;
+  // predicted unlikely by early return (on trees) predictor.
+  goto <bb 33>; [INV]
+
+  <bb 9> :
+  # DEBUG BEGIN_STMT
+  memset (ip_25(D), 0, 24);
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  if (ip_25(D) != 0B)
+    goto <bb 10>; [INV]
+  else
+    goto <bb 11>; [INV]
+
+  <bb 10> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  ip_25(D)->type = 46;
+
+  <bb 11> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _40 = 2;
+  // predicted unlikely by early return (on trees) predictor.
+  goto <bb 33>; [INV]
+
+  <bb 12> :
+  # DEBUG BEGIN_STMT
+  _4 = *oid_23(D);
+  if (_4 == 1)
+    goto <bb 13>; [INV]
+  else
+    goto <bb 22>; [INV]
+
+  <bb 13> :
+  # DEBUG BEGIN_STMT
+  if (oid_len_21(D) <= 5)
+    goto <bb 14>; [INV]
+  else
+    goto <bb 15>; [INV]
+
+  <bb 14> :
+  # DEBUG BEGIN_STMT
+  _37 = 0;
+  // predicted unlikely by early return (on trees) predictor.
+  goto <bb 33>; [INV]
+
+  <bb 15> :
+  # DEBUG BEGIN_STMT
+  _5 = oid_23(D) + 4;
+  _6 = *_5;
+  if (_6 != 4)
+    goto <bb 16>; [INV]
+  else
+    goto <bb 17>; [INV]
+
+  <bb 16> :
+  # DEBUG BEGIN_STMT
+  _36 = 0;
+  // predicted unlikely by early return (on trees) predictor.
+  goto <bb 33>; [INV]
+
+  <bb 17> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  if (ip_25(D) != 0B)
+    goto <bb 18>; [INV]
+  else
+    goto <bb 19>; [INV]
+
+  <bb 18> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  ip_25(D)->type = 0;
+
+  <bb 19> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _7 = oid_23(D) + 8;
+  _8 = &ip_25(D)->u_addr.ip4;
+  _9 = snmp_oid_to_ip4 (_7, _8);
+  if (_9 == 0)
+    goto <bb 20>; [INV]
+  else
+    goto <bb 21>; [INV]
+
+  <bb 20> :
+  # DEBUG BEGIN_STMT
+  _35 = 0;
+  // predicted unlikely by early return (on trees) predictor.
+  goto <bb 33>; [INV]
+
+  <bb 21> :
+  # DEBUG BEGIN_STMT
+  _34 = 6;
+  // predicted unlikely by early return (on trees) predictor.
+  goto <bb 33>; [INV]
+
+  <bb 22> :
+  # DEBUG BEGIN_STMT
+  _10 = *oid_23(D);
+  if (_10 == 2)
+    goto <bb 23>; [INV]
+  else
+    goto <bb 32>; [INV]
+
+  <bb 23> :
+  # DEBUG BEGIN_STMT
+  if (oid_len_21(D) <= 17)
+    goto <bb 24>; [INV]
+  else
+    goto <bb 25>; [INV]
+
+  <bb 24> :
+  # DEBUG BEGIN_STMT
+  _31 = 0;
+  // predicted unlikely by early return (on trees) predictor.
+  goto <bb 33>; [INV]
+
+  <bb 25> :
+  # DEBUG BEGIN_STMT
+  _11 = oid_23(D) + 4;
+  _12 = *_11;
+  if (_12 != 16)
+    goto <bb 26>; [INV]
+  else
+    goto <bb 27>; [INV]
+
+  <bb 26> :
+  # DEBUG BEGIN_STMT
+  _30 = 0;
+  // predicted unlikely by early return (on trees) predictor.
+  goto <bb 33>; [INV]
+
+  <bb 27> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  if (ip_25(D) != 0B)
+    goto <bb 28>; [INV]
+  else
+    goto <bb 29>; [INV]
+
+  <bb 28> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  ip_25(D)->type = 6;
+
+  <bb 29> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _13 = oid_23(D) + 8;
+  _14 = &ip_25(D)->u_addr.ip6;
+  _15 = snmp_oid_to_ip6 (_13, _14);
+  if (_15 == 0)
+    goto <bb 30>; [INV]
+  else
+    goto <bb 31>; [INV]
+
+  <bb 30> :
+  # DEBUG BEGIN_STMT
+  _29 = 0;
+  // predicted unlikely by early return (on trees) predictor.
+  goto <bb 33>; [INV]
+
+  <bb 31> :
+  # DEBUG BEGIN_STMT
+  _28 = 18;
+  // predicted unlikely by early return (on trees) predictor.
+  goto <bb 33>; [INV]
+
+  <bb 32> :
+  # DEBUG BEGIN_STMT
+  _24 = 0;
+  // predicted unlikely by early return (on trees) predictor.
+
+  <bb 33> :
+  # _16 = PHI <_43(3), _42(6), _41(8), _40(11), _37(14), _36(16), _35(20), _34(21), _31(24), _30(26), _29(30), _28(31), _24(32)>
+  return _16;
+
+}
+
+
+snmp_ip_to_oid (const struct ip_addr_t * ip, u32_t * oid)
+{
+  unsigned char _1;
+  u32_t * _2;
+  unsigned char _3;
+  u32_t * _4;
+  const struct ip6_addr_t * _5;
+  u32_t * _6;
+  u32_t * _7;
+  const struct ip4_addr_t * _8;
+  u32_t * _9;
+  u8_t _10;
+  u8_t _18;
+  u8_t _22;
+  u8_t _25;
+
+  <bb 2> :
+  # DEBUG BEGIN_STMT
+  _1 = ip_13(D)->type;
+  if (_1 == 46)
+    goto <bb 3>; [INV]
+  else
+    goto <bb 4>; [INV]
+
+  <bb 3> :
+  # DEBUG BEGIN_STMT
+  *oid_14(D) = 0;
+  # DEBUG BEGIN_STMT
+  _2 = oid_14(D) + 4;
+  *_2 = 0;
+  # DEBUG BEGIN_STMT
+  _25 = 2;
+  // predicted unlikely by early return (on trees) predictor.
+  goto <bb 8>; [INV]
+
+  <bb 4> :
+  # DEBUG BEGIN_STMT
+  if (ip_13(D) != 0B)
+    goto <bb 5>; [INV]
+  else
+    goto <bb 7>; [INV]
+
+  <bb 5> :
+  _3 = ip_13(D)->type;
+  if (_3 == 6)
+    goto <bb 6>; [INV]
+  else
+    goto <bb 7>; [INV]
+
+  <bb 6> :
+  # DEBUG BEGIN_STMT
+  *oid_14(D) = 2;
+  # DEBUG BEGIN_STMT
+  _4 = oid_14(D) + 4;
+  *_4 = 16;
+  # DEBUG BEGIN_STMT
+  _5 = &ip_13(D)->u_addr.ip6;
+  _6 = oid_14(D) + 8;
+  snmp_ip6_to_oid (_5, _6);
+  # DEBUG BEGIN_STMT
+  _18 = 18;
+  // predicted unlikely by early return (on trees) predictor.
+  goto <bb 8>; [INV]
+
+  <bb 7> :
+  # DEBUG BEGIN_STMT
+  *oid_14(D) = 1;
+  # DEBUG BEGIN_STMT
+  _7 = oid_14(D) + 4;
+  *_7 = 4;
+  # DEBUG BEGIN_STMT
+  _8 = &ip_13(D)->u_addr.ip4;
+  _9 = oid_14(D) + 8;
+  snmp_ip4_to_oid (_8, _9);
+  # DEBUG BEGIN_STMT
+  _22 = 6;
+  // predicted unlikely by early return (on trees) predictor.
+
+  <bb 8> :
+  # _10 = PHI <_25(3), _18(6), _22(7)>
+  return _10;
+
+}
+
+
+snmp_ip_port_to_oid (const struct ip_addr_t * ip, u16_t port, u32_t * oid)
+{
+  u8_t idx;
+  unsigned int _1;
+  unsigned int _2;
+  u32_t * _3;
+  long unsigned int _4;
+  unsigned char idx.0_5;
+  u8_t _14;
+
+  <bb 2> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  idx_10 = snmp_ip_to_oid (ip_7(D), oid_8(D));
+  # DEBUG idx => idx_10
+  # DEBUG BEGIN_STMT
+  _1 = (unsigned int) idx_10;
+  _2 = _1 * 4;
+  _3 = oid_8(D) + _2;
+  _4 = (long unsigned int) port_11(D);
+  *_3 = _4;
+  # DEBUG BEGIN_STMT
+  idx.0_5 = idx_10;
+  idx_13 = idx.0_5 + 1;
+  # DEBUG idx => idx_13
+  # DEBUG BEGIN_STMT
+  _14 = idx_13;
+  return _14;
+
+}
+
+
+snmp_ip6_to_oid (const struct ip6_addr_t * ip, u32_t * oid)
+{
+  long unsigned int _1;
+  long unsigned int _2;
+  long unsigned int _3;
+  long unsigned int _4;
+  u32_t * _5;
+  long unsigned int _6;
+  long unsigned int _7;
+  long unsigned int _8;
+  u32_t * _9;
+  long unsigned int _10;
+  long unsigned int _11;
+  u32_t * _12;
+  long unsigned int _13;
+  long unsigned int _14;
+  u32_t * _15;
+  long unsigned int _16;
+  long unsigned int _17;
+  long unsigned int _18;
+  u32_t * _19;
+  long unsigned int _20;
+  long unsigned int _21;
+  long unsigned int _22;
+  u32_t * _23;
+  long unsigned int _24;
+  long unsigned int _25;
+  u32_t * _26;
+  long unsigned int _27;
+  long unsigned int _28;
+  u32_t * _29;
+  long unsigned int _30;
+  long unsigned int _31;
+  long unsigned int _32;
+  u32_t * _33;
+  long unsigned int _34;
+  long unsigned int _35;
+  long unsigned int _36;
+  u32_t * _37;
+  long unsigned int _38;
+  long unsigned int _39;
+  u32_t * _40;
+  long unsigned int _41;
+  long unsigned int _42;
+  u32_t * _43;
+  long unsigned int _44;
+  long unsigned int _45;
+  long unsigned int _46;
+  u32_t * _47;
+  long unsigned int _48;
+  long unsigned int _49;
+  long unsigned int _50;
+  u32_t * _51;
+  long unsigned int _52;
+  long unsigned int _53;
+  u32_t * _54;
+  long unsigned int _55;
+
+  <bb 2> :
+  # DEBUG BEGIN_STMT
+  _1 = ip_57(D)->addr[0];
+  _2 = _1 >> 24;
+  *oid_58(D) = _2;
+  # DEBUG BEGIN_STMT
+  _3 = ip_57(D)->addr[0];
+  _4 = _3 >> 16;
+  _5 = oid_58(D) + 4;
+  _6 = _4 & 255;
+  *_5 = _6;
+  # DEBUG BEGIN_STMT
+  _7 = ip_57(D)->addr[0];
+  _8 = _7 >> 8;
+  _9 = oid_58(D) + 8;
+  _10 = _8 & 255;
+  *_9 = _10;
+  # DEBUG BEGIN_STMT
+  _11 = ip_57(D)->addr[0];
+  _12 = oid_58(D) + 12;
+  _13 = _11 & 255;
+  *_12 = _13;
+  # DEBUG BEGIN_STMT
+  _14 = ip_57(D)->addr[1];
+  _15 = oid_58(D) + 16;
+  _16 = _14 >> 24;
+  *_15 = _16;
+  # DEBUG BEGIN_STMT
+  _17 = ip_57(D)->addr[1];
+  _18 = _17 >> 16;
+  _19 = oid_58(D) + 20;
+  _20 = _18 & 255;
+  *_19 = _20;
+  # DEBUG BEGIN_STMT
+  _21 = ip_57(D)->addr[1];
+  _22 = _21 >> 8;
+  _23 = oid_58(D) + 24;
+  _24 = _22 & 255;
+  *_23 = _24;
+  # DEBUG BEGIN_STMT
+  _25 = ip_57(D)->addr[1];
+  _26 = oid_58(D) + 28;
+  _27 = _25 & 255;
+  *_26 = _27;
+  # DEBUG BEGIN_STMT
+  _28 = ip_57(D)->addr[2];
+  _29 = oid_58(D) + 32;
+  _30 = _28 >> 24;
+  *_29 = _30;
+  # DEBUG BEGIN_STMT
+  _31 = ip_57(D)->addr[2];
+  _32 = _31 >> 16;
+  _33 = oid_58(D) + 36;
+  _34 = _32 & 255;
+  *_33 = _34;
+  # DEBUG BEGIN_STMT
+  _35 = ip_57(D)->addr[2];
+  _36 = _35 >> 8;
+  _37 = oid_58(D) + 40;
+  _38 = _36 & 255;
+  *_37 = _38;
+  # DEBUG BEGIN_STMT
+  _39 = ip_57(D)->addr[2];
+  _40 = oid_58(D) + 44;
+  _41 = _39 & 255;
+  *_40 = _41;
+  # DEBUG BEGIN_STMT
+  _42 = ip_57(D)->addr[3];
+  _43 = oid_58(D) + 48;
+  _44 = _42 >> 24;
+  *_43 = _44;
+  # DEBUG BEGIN_STMT
+  _45 = ip_57(D)->addr[3];
+  _46 = _45 >> 16;
+  _47 = oid_58(D) + 52;
+  _48 = _46 & 255;
+  *_47 = _48;
+  # DEBUG BEGIN_STMT
+  _49 = ip_57(D)->addr[3];
+  _50 = _49 >> 8;
+  _51 = oid_58(D) + 56;
+  _52 = _50 & 255;
+  *_51 = _52;
+  # DEBUG BEGIN_STMT
+  _53 = ip_57(D)->addr[3];
+  _54 = oid_58(D) + 60;
+  _55 = _53 & 255;
+  *_54 = _55;
+  return;
+
+}
+
+
+snmp_oid_to_ip6 (const u32_t * oid, struct ip6_addr_t * ip)
+{
+  long unsigned int _1;
+  const u32_t * _2;
+  long unsigned int _3;
+  const u32_t * _4;
+  long unsigned int _5;
+  const u32_t * _6;
+  long unsigned int _7;
+  const u32_t * _8;
+  long unsigned int _9;
+  const u32_t * _10;
+  long unsigned int _11;
+  const u32_t * _12;
+  long unsigned int _13;
+  const u32_t * _14;
+  long unsigned int _15;
+  const u32_t * _16;
+  long unsigned int _17;
+  const u32_t * _18;
+  long unsigned int _19;
+  const u32_t * _20;
+  long unsigned int _21;
+  const u32_t * _22;
+  long unsigned int _23;
+  const u32_t * _24;
+  long unsigned int _25;
+  const u32_t * _26;
+  long unsigned int _27;
+  const u32_t * _28;
+  long unsigned int _29;
+  const u32_t * _30;
+  long unsigned int _31;
+  long unsigned int _32;
+  long unsigned int _33;
+  const u32_t * _34;
+  long unsigned int _35;
+  long unsigned int _36;
+  long unsigned int _37;
+  const u32_t * _38;
+  long unsigned int _39;
+  long unsigned int _40;
+  long unsigned int _41;
+  const u32_t * _42;
+  long unsigned int _43;
+  long unsigned int _44;
+  const u32_t * _45;
+  long unsigned int _46;
+  long unsigned int _47;
+  const u32_t * _48;
+  long unsigned int _49;
+  long unsigned int _50;
+  long unsigned int _51;
+  const u32_t * _52;
+  long unsigned int _53;
+  long unsigned int _54;
+  long unsigned int _55;
+  const u32_t * _56;
+  long unsigned int _57;
+  long unsigned int _58;
+  const u32_t * _59;
+  long unsigned int _60;
+  long unsigned int _61;
+  const u32_t * _62;
+  long unsigned int _63;
+  long unsigned int _64;
+  long unsigned int _65;
+  const u32_t * _66;
+  long unsigned int _67;
+  long unsigned int _68;
+  long unsigned int _69;
+  const u32_t * _70;
+  long unsigned int _71;
+  long unsigned int _72;
+  const u32_t * _73;
+  long unsigned int _74;
+  long unsigned int _75;
+  const u32_t * _76;
+  long unsigned int _77;
+  long unsigned int _78;
+  long unsigned int _79;
+  const u32_t * _80;
+  long unsigned int _81;
+  long unsigned int _82;
+  long unsigned int _83;
+  const u32_t * _84;
+  long unsigned int _85;
+  long unsigned int _86;
+  u8_t _87;
+  u8_t _96;
+  u8_t _102;
+
+  <bb 2> :
+  # DEBUG BEGIN_STMT
+  _1 = *oid_90(D);
+  if (_1 > 255)
+    goto <bb 18>; [INV]
+  else
+    goto <bb 3>; [INV]
+
+  <bb 3> :
+  _2 = oid_90(D) + 4;
+  _3 = *_2;
+  if (_3 > 255)
+    goto <bb 18>; [INV]
+  else
+    goto <bb 4>; [INV]
+
+  <bb 4> :
+  _4 = oid_90(D) + 8;
+  _5 = *_4;
+  if (_5 > 255)
+    goto <bb 18>; [INV]
+  else
+    goto <bb 5>; [INV]
+
+  <bb 5> :
+  _6 = oid_90(D) + 12;
+  _7 = *_6;
+  if (_7 > 255)
+    goto <bb 18>; [INV]
+  else
+    goto <bb 6>; [INV]
+
+  <bb 6> :
+  _8 = oid_90(D) + 16;
+  _9 = *_8;
+  if (_9 > 255)
+    goto <bb 18>; [INV]
+  else
+    goto <bb 7>; [INV]
+
+  <bb 7> :
+  _10 = oid_90(D) + 20;
+  _11 = *_10;
+  if (_11 > 255)
+    goto <bb 18>; [INV]
+  else
+    goto <bb 8>; [INV]
+
+  <bb 8> :
+  _12 = oid_90(D) + 24;
+  _13 = *_12;
+  if (_13 > 255)
+    goto <bb 18>; [INV]
+  else
+    goto <bb 9>; [INV]
+
+  <bb 9> :
+  _14 = oid_90(D) + 28;
+  _15 = *_14;
+  if (_15 > 255)
+    goto <bb 18>; [INV]
+  else
+    goto <bb 10>; [INV]
+
+  <bb 10> :
+  _16 = oid_90(D) + 32;
+  _17 = *_16;
+  if (_17 > 255)
+    goto <bb 18>; [INV]
+  else
+    goto <bb 11>; [INV]
+
+  <bb 11> :
+  _18 = oid_90(D) + 36;
+  _19 = *_18;
+  if (_19 > 255)
+    goto <bb 18>; [INV]
+  else
+    goto <bb 12>; [INV]
+
+  <bb 12> :
+  _20 = oid_90(D) + 40;
+  _21 = *_20;
+  if (_21 > 255)
+    goto <bb 18>; [INV]
+  else
+    goto <bb 13>; [INV]
+
+  <bb 13> :
+  _22 = oid_90(D) + 44;
+  _23 = *_22;
+  if (_23 > 255)
+    goto <bb 18>; [INV]
+  else
+    goto <bb 14>; [INV]
+
+  <bb 14> :
+  _24 = oid_90(D) + 48;
+  _25 = *_24;
+  if (_25 > 255)
+    goto <bb 18>; [INV]
+  else
+    goto <bb 15>; [INV]
+
+  <bb 15> :
+  _26 = oid_90(D) + 52;
+  _27 = *_26;
+  if (_27 > 255)
+    goto <bb 18>; [INV]
+  else
+    goto <bb 16>; [INV]
+
+  <bb 16> :
+  _28 = oid_90(D) + 56;
+  _29 = *_28;
+  if (_29 > 255)
+    goto <bb 18>; [INV]
+  else
+    goto <bb 17>; [INV]
+
+  <bb 17> :
+  _30 = oid_90(D) + 60;
+  _31 = *_30;
+  if (_31 > 255)
+    goto <bb 18>; [INV]
+  else
+    goto <bb 19>; [INV]
+
+  <bb 18> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  ip_91(D)->addr[0] = 0;
+  # DEBUG BEGIN_STMT
+  ip_91(D)->addr[1] = 0;
+  # DEBUG BEGIN_STMT
+  ip_91(D)->addr[2] = 0;
+  # DEBUG BEGIN_STMT
+  ip_91(D)->addr[3] = 0;
+  # DEBUG BEGIN_STMT
+  ip_91(D)->zone = 0;
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _102 = 0;
+  // predicted unlikely by early return (on trees) predictor.
+  goto <bb 20>; [INV]
+
+  <bb 19> :
+  # DEBUG BEGIN_STMT
+  _32 = *oid_90(D);
+  _33 = _32 << 24;
+  _34 = oid_90(D) + 4;
+  _35 = *_34;
+  _36 = _35 << 16;
+  _37 = _33 | _36;
+  _38 = oid_90(D) + 8;
+  _39 = *_38;
+  _40 = _39 << 8;
+  _41 = _37 | _40;
+  _42 = oid_90(D) + 12;
+  _43 = *_42;
+  _44 = _41 | _43;
+  ip_91(D)->addr[0] = _44;
+  # DEBUG BEGIN_STMT
+  _45 = oid_90(D) + 16;
+  _46 = *_45;
+  _47 = _46 << 24;
+  _48 = oid_90(D) + 20;
+  _49 = *_48;
+  _50 = _49 << 16;
+  _51 = _47 | _50;
+  _52 = oid_90(D) + 24;
+  _53 = *_52;
+  _54 = _53 << 8;
+  _55 = _51 | _54;
+  _56 = oid_90(D) + 28;
+  _57 = *_56;
+  _58 = _55 | _57;
+  ip_91(D)->addr[1] = _58;
+  # DEBUG BEGIN_STMT
+  _59 = oid_90(D) + 32;
+  _60 = *_59;
+  _61 = _60 << 24;
+  _62 = oid_90(D) + 36;
+  _63 = *_62;
+  _64 = _63 << 16;
+  _65 = _61 | _64;
+  _66 = oid_90(D) + 40;
+  _67 = *_66;
+  _68 = _67 << 8;
+  _69 = _65 | _68;
+  _70 = oid_90(D) + 44;
+  _71 = *_70;
+  _72 = _69 | _71;
+  ip_91(D)->addr[2] = _72;
+  # DEBUG BEGIN_STMT
+  _73 = oid_90(D) + 48;
+  _74 = *_73;
+  _75 = _74 << 24;
+  _76 = oid_90(D) + 52;
+  _77 = *_76;
+  _78 = _77 << 16;
+  _79 = _75 | _78;
+  _80 = oid_90(D) + 56;
+  _81 = *_80;
+  _82 = _81 << 8;
+  _83 = _79 | _82;
+  _84 = oid_90(D) + 60;
+  _85 = *_84;
+  _86 = _83 | _85;
+  ip_91(D)->addr[3] = _86;
+  # DEBUG BEGIN_STMT
+  _96 = 1;
+
+  <bb 20> :
+  # _87 = PHI <_102(18), _96(19)>
+  return _87;
+
+}
+
+
+snmp_ip4_to_oid (const struct ip4_addr_t * ip, u32_t * oid)
+{
+  const u32_t * _1;
+  unsigned char _2;
+  long unsigned int _3;
+  const u32_t * _4;
+  const u8_t * _5;
+  unsigned char _6;
+  u32_t * _7;
+  long unsigned int _8;
+  const u32_t * _9;
+  const u8_t * _10;
+  unsigned char _11;
+  u32_t * _12;
+  long unsigned int _13;
+  const u32_t * _14;
+  const u8_t * _15;
+  unsigned char _16;
+  u32_t * _17;
+  long unsigned int _18;
+
+  <bb 2> :
+  # DEBUG BEGIN_STMT
+  _1 = &ip_19(D)->addr;
+  _2 = MEM[(const u8_t *)_1];
+  _3 = (long unsigned int) _2;
+  *oid_21(D) = _3;
+  # DEBUG BEGIN_STMT
+  _4 = &ip_19(D)->addr;
+  _5 = _4 + 1;
+  _6 = *_5;
+  _7 = oid_21(D) + 4;
+  _8 = (long unsigned int) _6;
+  *_7 = _8;
+  # DEBUG BEGIN_STMT
+  _9 = &ip_19(D)->addr;
+  _10 = _9 + 2;
+  _11 = *_10;
+  _12 = oid_21(D) + 8;
+  _13 = (long unsigned int) _11;
+  *_12 = _13;
+  # DEBUG BEGIN_STMT
+  _14 = &ip_19(D)->addr;
+  _15 = _14 + 3;
+  _16 = *_15;
+  _17 = oid_21(D) + 12;
+  _18 = (long unsigned int) _16;
+  *_17 = _18;
+  return;
+
+}
+
+
+snmp_oid_to_ip4 (const u32_t * oid, struct ip4_addr_t * ip)
+{
+  long unsigned int _1;
+  const u32_t * _2;
+  long unsigned int _3;
+  const u32_t * _4;
+  long unsigned int _5;
+  const u32_t * _6;
+  long unsigned int _7;
+  long unsigned int _8;
+  long unsigned int _9;
+  long unsigned int _10;
+  const u32_t * _11;
+  long unsigned int _12;
+  long unsigned int _13;
+  long unsigned int _14;
+  long unsigned int _15;
+  const u32_t * _16;
+  long unsigned int _17;
+  long unsigned int _18;
+  long unsigned int _19;
+  long unsigned int _20;
+  const u32_t * _21;
+  long unsigned int _22;
+  long unsigned int _23;
+  long unsigned int _24;
+  long unsigned int _25;
+  long unsigned int _26;
+  long unsigned int _27;
+  const u32_t * _28;
+  long unsigned int _29;
+  long unsigned int _30;
+  long unsigned int _31;
+  long unsigned int _32;
+  const u32_t * _33;
+  long unsigned int _34;
+  long unsigned int _35;
+  long unsigned int _36;
+  long unsigned int _37;
+  const u32_t * _38;
+  long unsigned int _39;
+  long unsigned int _40;
+  long unsigned int _41;
+  long unsigned int _42;
+  long unsigned int _43;
+  long unsigned int _44;
+  long unsigned int _45;
+  long unsigned int _46;
+  const u32_t * _47;
+  long unsigned int _48;
+  long unsigned int _49;
+  long unsigned int _50;
+  long unsigned int _51;
+  const u32_t * _52;
+  long unsigned int _53;
+  long unsigned int _54;
+  long unsigned int _55;
+  long unsigned int _56;
+  const u32_t * _57;
+  long unsigned int _58;
+  long unsigned int _59;
+  long unsigned int _60;
+  long unsigned int _61;
+  long unsigned int _62;
+  long unsigned int _63;
+  long unsigned int _64;
+  long unsigned int _65;
+  const u32_t * _66;
+  long unsigned int _67;
+  long unsigned int _68;
+  long unsigned int _69;
+  long unsigned int _70;
+  const u32_t * _71;
+  long unsigned int _72;
+  long unsigned int _73;
+  long unsigned int _74;
+  long unsigned int _75;
+  const u32_t * _76;
+  long unsigned int _77;
+  long unsigned int _78;
+  long unsigned int _79;
+  long unsigned int _80;
+  long unsigned int _81;
+  u8_t _82;
+  u8_t _88;
+  u8_t _90;
+
+  <bb 2> :
+  # DEBUG BEGIN_STMT
+  _1 = *oid_85(D);
+  if (_1 > 255)
+    goto <bb 6>; [INV]
+  else
+    goto <bb 3>; [INV]
+
+  <bb 3> :
+  _2 = oid_85(D) + 4;
+  _3 = *_2;
+  if (_3 > 255)
+    goto <bb 6>; [INV]
+  else
+    goto <bb 4>; [INV]
+
+  <bb 4> :
+  _4 = oid_85(D) + 8;
+  _5 = *_4;
+  if (_5 > 255)
+    goto <bb 6>; [INV]
+  else
+    goto <bb 5>; [INV]
+
+  <bb 5> :
+  _6 = oid_85(D) + 12;
+  _7 = *_6;
+  if (_7 > 255)
+    goto <bb 6>; [INV]
+  else
+    goto <bb 7>; [INV]
+
+  <bb 6> :
+  # DEBUG BEGIN_STMT
+  _8 = ip_addr_any.u_addr.ip4.addr;
+  ip_86(D)->addr = _8;
+  # DEBUG BEGIN_STMT
+  _90 = 0;
+  // predicted unlikely by early return (on trees) predictor.
+  goto <bb 8>; [INV]
+
+  <bb 7> :
+  # DEBUG BEGIN_STMT
+  _9 = *oid_85(D);
+  _10 = _9 << 24;
+  _11 = oid_85(D) + 4;
+  _12 = *_11;
+  _13 = _12 << 16;
+  _14 = _13 & 16711680;
+  _15 = _10 | _14;
+  _16 = oid_85(D) + 8;
+  _17 = *_16;
+  _18 = _17 << 8;
+  _19 = _18 & 65535;
+  _20 = _15 | _19;
+  _21 = oid_85(D) + 12;
+  _22 = *_21;
+  _23 = _22 & 255;
+  _24 = _20 | _23;
+  _25 = _24 << 24;
+  _26 = *oid_85(D);
+  _27 = _26 << 24;
+  _28 = oid_85(D) + 4;
+  _29 = *_28;
+  _30 = _29 << 16;
+  _31 = _30 & 16711680;
+  _32 = _27 | _31;
+  _33 = oid_85(D) + 8;
+  _34 = *_33;
+  _35 = _34 << 8;
+  _36 = _35 & 65535;
+  _37 = _32 | _36;
+  _38 = oid_85(D) + 12;
+  _39 = *_38;
+  _40 = _39 & 255;
+  _41 = _37 | _40;
+  _42 = _41 << 8;
+  _43 = _42 & 16711680;
+  _44 = _25 | _43;
+  _45 = *oid_85(D);
+  _46 = _45 << 24;
+  _47 = oid_85(D) + 4;
+  _48 = *_47;
+  _49 = _48 << 16;
+  _50 = _49 & 16711680;
+  _51 = _46 | _50;
+  _52 = oid_85(D) + 8;
+  _53 = *_52;
+  _54 = _53 << 8;
+  _55 = _54 & 65535;
+  _56 = _51 | _55;
+  _57 = oid_85(D) + 12;
+  _58 = *_57;
+  _59 = _58 & 255;
+  _60 = _56 | _59;
+  _61 = _60 >> 8;
+  _62 = _61 & 65280;
+  _63 = _44 | _62;
+  _64 = *oid_85(D);
+  _65 = _64 << 24;
+  _66 = oid_85(D) + 4;
+  _67 = *_66;
+  _68 = _67 << 16;
+  _69 = _68 & 16711680;
+  _70 = _65 | _69;
+  _71 = oid_85(D) + 8;
+  _72 = *_71;
+  _73 = _72 << 8;
+  _74 = _73 & 65535;
+  _75 = _70 | _74;
+  _76 = oid_85(D) + 12;
+  _77 = *_76;
+  _78 = _77 & 255;
+  _79 = _75 | _78;
+  _80 = _79 >> 24;
+  _81 = _63 | _80;
+  ip_86(D)->addr = _81;
+  # DEBUG BEGIN_STMT
+  _88 = 1;
+
+  <bb 8> :
+  # _82 = PHI <_90(6), _88(7)>
+  return _82;
+
+}
+
+
+snmp_get_device_enterprise_oid ()
+{
+  const struct snmp_obj_id * _2;
+
+  <bb 2> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _2 = snmp_device_enterprise_oid;
+  return _2;
+
+}
+
+
+snmp_set_device_enterprise_oid (const struct snmp_obj_id * device_enterprise_oid)
+{
+  <bb 2> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  if (device_enterprise_oid_2(D) == 0B)
+    goto <bb 3>; [INV]
+  else
+    goto <bb 4>; [INV]
+
+  <bb 3> :
+  # DEBUG BEGIN_STMT
+  snmp_device_enterprise_oid = &snmp_device_enterprise_oid_default;
+  goto <bb 5>; [INV]
+
+  <bb 4> :
+  # DEBUG BEGIN_STMT
+  snmp_device_enterprise_oid = device_enterprise_oid_2(D);
+
+  <bb 5> :
+  return;
+
+}
+
+
+snmp_set_mibs (const struct snmp_mib * * mibs, u8_t num_mibs)
+{
+  <bb 2> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  if (mibs_3(D) == 0B)
+    goto <bb 3>; [INV]
+  else
+    goto <bb 4>; [INV]
+
+  <bb 3> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  __asm__ __volatile__("BKPT #0
+	");
+  # DEBUG BEGIN_STMT
+  goto <bb 3>; [INV]
+
+  <bb 4> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  if (num_mibs_5(D) == 0)
+    goto <bb 5>; [INV]
+  else
+    goto <bb 6>; [INV]
+
+  <bb 5> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  __asm__ __volatile__("BKPT #0
+	");
+  # DEBUG BEGIN_STMT
+  goto <bb 5>; [INV]
+
+  <bb 6> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  snmp_mibs = mibs_3(D);
+  # DEBUG BEGIN_STMT
+  snmp_num_mibs = num_mibs_5(D);
+  return;
+
+}
+
+

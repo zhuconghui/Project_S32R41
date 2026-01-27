@@ -1,0 +1,283 @@
+snmp_init ()
+{
+  struct udp_pcb * snmp_pcb;
+  err_t err;
+
+  <bb 2> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  snmp_pcb_4 = udp_new_ip_type (46);
+  # DEBUG snmp_pcb => snmp_pcb_4
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  if (snmp_pcb_4 == 0B)
+    goto <bb 3>; [INV]
+  else
+    goto <bb 4>; [INV]
+
+  <bb 3> :
+  # DEBUG BEGIN_STMT
+  // predicted unlikely by early return (on trees) predictor.
+  goto <bb 6>; [INV]
+
+  <bb 4> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  snmp_traps_handle = snmp_pcb_4;
+  # DEBUG BEGIN_STMT
+  udp_recv (snmp_pcb_4, snmp_recv, 0B);
+  # DEBUG BEGIN_STMT
+  err_8 = udp_bind (snmp_pcb_4, &ip_addr_any_type, 161);
+  # DEBUG err => err_8
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  if (err_8 != 0)
+    goto <bb 5>; [INV]
+  else
+    goto <bb 6>; [INV]
+
+  <bb 5> :
+  # DEBUG BEGIN_STMT
+  // predicted unlikely by early return (on trees) predictor.
+
+  <bb 6> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  return;
+
+}
+
+
+snmp_get_local_ip_for_dst (void * handle, const struct ip_addr_t * dst, struct ip_addr_t * result)
+{
+  const struct ip_addr_t * dst_ip;
+  struct netif * dst_if;
+  struct udp_pcb * udp_pcb;
+  unsigned char _1;
+  struct ip6_addr_t * _2;
+  const struct ip6_addr_t * _3;
+  const struct ip4_addr_t * _4;
+  unsigned char _5;
+  const struct ip6_addr_t * _6;
+  unsigned char _7;
+  unsigned char _8;
+  long unsigned int _9;
+  long unsigned int _10;
+  long unsigned int _11;
+  long unsigned int _12;
+  unsigned char _13;
+  long unsigned int _14;
+  long unsigned int _15;
+  long unsigned int _16;
+  struct netif * iftmp.0_17;
+  const struct ip_addr_t * iftmp.1_18;
+  const struct ip_addr_t * iftmp.2_19;
+  const struct ip_addr_t * iftmp.3_20;
+  u8_t _21;
+  struct netif * iftmp.0_32;
+  struct netif * iftmp.0_34;
+  const struct ip_addr_t * iftmp.2_36;
+  const struct ip_addr_t * iftmp.2_38;
+  const struct ip_addr_t * iftmp.1_39;
+  const struct ip_addr_t * iftmp.3_40;
+  const struct ip_addr_t * iftmp.3_41;
+  const struct ip_addr_t * iftmp.1_42;
+  u8_t _56;
+  u8_t _57;
+
+  <bb 2> :
+  # DEBUG BEGIN_STMT
+  udp_pcb_28 = handle_27(D);
+  # DEBUG udp_pcb => udp_pcb_28
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  if (dst_29(D) != 0B)
+    goto <bb 3>; [INV]
+  else
+    goto <bb 5>; [INV]
+
+  <bb 3> :
+  _1 = dst_29(D)->type;
+  if (_1 == 6)
+    goto <bb 4>; [INV]
+  else
+    goto <bb 5>; [INV]
+
+  <bb 4> :
+  _2 = &udp_pcb_28->local_ip.u_addr.ip6;
+  _3 = &dst_29(D)->u_addr.ip6;
+  iftmp.0_32 = ip6_route (_2, _3);
+  goto <bb 6>; [INV]
+
+  <bb 5> :
+  _4 = &dst_29(D)->u_addr.ip4;
+  iftmp.0_34 = ip4_route (_4);
+
+  <bb 6> :
+  # iftmp.0_17 = PHI <iftmp.0_32(4), iftmp.0_34(5)>
+  dst_if_35 = iftmp.0_17;
+  # DEBUG dst_if => dst_if_35
+  # DEBUG BEGIN_STMT
+  if (dst_29(D) != 0B)
+    goto <bb 7>; [INV]
+  else
+    goto <bb 12>; [INV]
+
+  <bb 7> :
+  _5 = dst_29(D)->type;
+  if (_5 == 6)
+    goto <bb 8>; [INV]
+  else
+    goto <bb 12>; [INV]
+
+  <bb 8> :
+  if (dst_if_35 != 0B)
+    goto <bb 9>; [INV]
+  else
+    goto <bb 10>; [INV]
+
+  <bb 9> :
+  _6 = &dst_29(D)->u_addr.ip6;
+  iftmp.2_38 = ip6_select_source_address (dst_if_35, _6);
+  goto <bb 11>; [INV]
+
+  <bb 10> :
+  iftmp.2_36 = 0B;
+
+  <bb 11> :
+  # iftmp.2_19 = PHI <iftmp.2_38(9), iftmp.2_36(10)>
+  iftmp.1_39 = iftmp.2_19;
+  goto <bb 16>; [INV]
+
+  <bb 12> :
+  if (dst_if_35 != 0B)
+    goto <bb 13>; [INV]
+  else
+    goto <bb 14>; [INV]
+
+  <bb 13> :
+  iftmp.3_41 = &dst_if_35->ip_addr;
+  goto <bb 15>; [INV]
+
+  <bb 14> :
+  iftmp.3_40 = 0B;
+
+  <bb 15> :
+  # iftmp.3_20 = PHI <iftmp.3_41(13), iftmp.3_40(14)>
+  iftmp.1_42 = iftmp.3_20;
+
+  <bb 16> :
+  # iftmp.1_18 = PHI <iftmp.1_39(11), iftmp.1_42(15)>
+  dst_ip_43 = iftmp.1_18;
+  # DEBUG dst_ip => dst_ip_43
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  if (dst_if_35 != 0B)
+    goto <bb 17>; [INV]
+  else
+    goto <bb 22>; [INV]
+
+  <bb 17> :
+  if (dst_ip_43 != 0B)
+    goto <bb 18>; [INV]
+  else
+    goto <bb 22>; [INV]
+
+  <bb 18> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _7 = dst_ip_43->type;
+  result_44(D)->type = _7;
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _8 = dst_ip_43->type;
+  if (_8 == 6)
+    goto <bb 19>; [INV]
+  else
+    goto <bb 20>; [INV]
+
+  <bb 19> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _9 = dst_ip_43->u_addr.ip6.addr[0];
+  result_44(D)->u_addr.ip6.addr[0] = _9;
+  # DEBUG BEGIN_STMT
+  _10 = dst_ip_43->u_addr.ip6.addr[1];
+  result_44(D)->u_addr.ip6.addr[1] = _10;
+  # DEBUG BEGIN_STMT
+  _11 = dst_ip_43->u_addr.ip6.addr[2];
+  result_44(D)->u_addr.ip6.addr[2] = _11;
+  # DEBUG BEGIN_STMT
+  _12 = dst_ip_43->u_addr.ip6.addr[3];
+  result_44(D)->u_addr.ip6.addr[3] = _12;
+  # DEBUG BEGIN_STMT
+  _13 = dst_ip_43->u_addr.ip6.zone;
+  result_44(D)->u_addr.ip6.zone = _13;
+  # DEBUG BEGIN_STMT
+  goto <bb 21>; [INV]
+
+  <bb 20> :
+  # DEBUG BEGIN_STMT
+  _14 = dst_ip_43->u_addr.ip4.addr;
+  result_44(D)->u_addr.ip4.addr = _14;
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  result_44(D)->u_addr.ip6.addr[3] = 0;
+  _15 = result_44(D)->u_addr.ip6.addr[3];
+  result_44(D)->u_addr.ip6.addr[2] = _15;
+  _16 = result_44(D)->u_addr.ip6.addr[2];
+  result_44(D)->u_addr.ip6.addr[1] = _16;
+  # DEBUG BEGIN_STMT
+  result_44(D)->u_addr.ip6.zone = 0;
+
+  <bb 21> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _56 = 1;
+  // predicted unlikely by early return (on trees) predictor.
+  goto <bb 23>; [INV]
+
+  <bb 22> :
+  # DEBUG BEGIN_STMT
+  _57 = 0;
+  // predicted unlikely by early return (on trees) predictor.
+
+  <bb 23> :
+  # _21 = PHI <_56(21), _57(22)>
+  return _21;
+
+}
+
+
+snmp_sendto (void * handle, struct pbuf * p, const struct ip_addr_t * dst, u16_t port)
+{
+  err_t _7;
+
+  <bb 2> :
+  # DEBUG BEGIN_STMT
+  _7 = udp_sendto (handle_2(D), p_3(D), dst_4(D), port_5(D));
+  return _7;
+
+}
+
+
+snmp_recv (void * arg, struct udp_pcb * pcb, struct pbuf * p, const struct ip_addr_t * addr, u16_t port)
+{
+  <bb 2> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  snmp_receive (pcb_2(D), p_3(D), addr_4(D), port_5(D));
+  # DEBUG BEGIN_STMT
+  pbuf_free (p_3(D));
+  return;
+
+}
+
+

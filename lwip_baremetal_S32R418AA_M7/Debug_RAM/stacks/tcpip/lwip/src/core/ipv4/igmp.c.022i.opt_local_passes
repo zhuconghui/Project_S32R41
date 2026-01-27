@@ -1,0 +1,1786 @@
+igmp_send (struct netif * netif, struct igmp_group * group, u8_t type)
+{
+  struct ip4_addr_t * dest;
+  struct ip4_addr_t src;
+  struct igmp_msg * igmp;
+  struct pbuf * p;
+  short unsigned int _1;
+  struct ip4_addr_t * _2;
+  long unsigned int _3;
+  long unsigned int _4;
+  long unsigned int _5;
+  unsigned char _6;
+  short unsigned int _7;
+  short unsigned int _8;
+  short unsigned int _9;
+
+  <bb 2> :
+  # DEBUG BEGIN_STMT
+  p_15 = 0B;
+  # DEBUG p => p_15
+  # DEBUG BEGIN_STMT
+  igmp_16 = 0B;
+  # DEBUG igmp => igmp_16
+  # DEBUG BEGIN_STMT
+  src = ip_addr_any.u_addr.ip4;
+  # DEBUG BEGIN_STMT
+  dest_19 = 0B;
+  # DEBUG dest => dest_19
+  # DEBUG BEGIN_STMT
+  p_21 = pbuf_alloc (74, 8, 640);
+  # DEBUG p => p_21
+  # DEBUG BEGIN_STMT
+  if (p_21 != 0B)
+    goto <bb 3>; [INV]
+  else
+    goto <bb 12>; [INV]
+
+  <bb 3> :
+  # DEBUG BEGIN_STMT
+  igmp_23 = p_21->payload;
+  # DEBUG igmp => igmp_23
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _1 = p_21->len;
+  if (_1 <= 7)
+    goto <bb 4>; [INV]
+  else
+    goto <bb 5>; [INV]
+
+  <bb 4> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  __asm__ __volatile__("BKPT #0
+	");
+  # DEBUG BEGIN_STMT
+  goto <bb 4>; [INV]
+
+  <bb 5> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _2 = &netif_24(D)->ip_addr.u_addr.ip4;
+  _3 = MEM[(const struct ip4_addr_t *)_2].addr;
+  src.addr = _3;
+  # DEBUG BEGIN_STMT
+  if (type_26(D) == 22)
+    goto <bb 6>; [INV]
+  else
+    goto <bb 7>; [INV]
+
+  <bb 6> :
+  # DEBUG BEGIN_STMT
+  dest_30 = &group_28(D)->group_address;
+  # DEBUG dest => dest_30
+  # DEBUG BEGIN_STMT
+  _4 = group_28(D)->group_address.addr;
+  igmp_23->igmp_group_address.addr = _4;
+  # DEBUG BEGIN_STMT
+  group_28(D)->last_reporter_flag = 1;
+  goto <bb 9>; [INV]
+
+  <bb 7> :
+  # DEBUG BEGIN_STMT
+  if (type_26(D) == 23)
+    goto <bb 8>; [INV]
+  else
+    goto <bb 9>; [INV]
+
+  <bb 8> :
+  # DEBUG BEGIN_STMT
+  dest_27 = &allrouters;
+  # DEBUG dest => dest_27
+  # DEBUG BEGIN_STMT
+  _5 = group_28(D)->group_address.addr;
+  igmp_23->igmp_group_address.addr = _5;
+
+  <bb 9> :
+  # dest_10 = PHI <dest_30(6), dest_19(7), dest_27(8)>
+  # DEBUG dest => dest_10
+  # DEBUG BEGIN_STMT
+  _6 = type_26(D) + 234;
+  if (_6 <= 1)
+    goto <bb 10>; [INV]
+  else
+    goto <bb 11>; [INV]
+
+  <bb 10> :
+  # DEBUG BEGIN_STMT
+  igmp_23->igmp_msgtype = type_26(D);
+  # DEBUG BEGIN_STMT
+  igmp_23->igmp_maxresp = 0;
+  # DEBUG BEGIN_STMT
+  igmp_23->igmp_checksum = 0;
+  # DEBUG BEGIN_STMT
+  _7 = inet_chksum (igmp_23, 8);
+  igmp_23->igmp_checksum = _7;
+  # DEBUG BEGIN_STMT
+  igmp_ip_output_if (p_21, &src, dest_10, netif_24(D));
+
+  <bb 11> :
+  # DEBUG BEGIN_STMT
+  pbuf_free (p_21);
+  goto <bb 13>; [INV]
+
+  <bb 12> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _8 = lwip_stats.igmp.memerr;
+  _9 = _8 + 1;
+  lwip_stats.igmp.memerr = _9;
+
+  <bb 13> :
+  src ={v} {CLOBBER};
+  return;
+
+}
+
+
+igmp_ip_output_if (struct pbuf * p, const struct ip4_addr_t * src, const struct ip4_addr_t * dest, struct netif * netif)
+{
+  u16_t ra[2];
+  short unsigned int _1;
+  short unsigned int _2;
+  err_t _12;
+
+  <bb 2> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  ra[0] = 1172;
+  # DEBUG BEGIN_STMT
+  ra[1] = 0;
+  # DEBUG BEGIN_STMT
+  _1 = lwip_stats.igmp.xmit;
+  _2 = _1 + 1;
+  lwip_stats.igmp.xmit = _2;
+  # DEBUG BEGIN_STMT
+  _12 = ip4_output_if_opt (p_7(D), src_8(D), dest_9(D), 1, 0, 2, netif_10(D), &ra, 4);
+  ra ={v} {CLOBBER};
+  return _12;
+
+}
+
+
+igmp_delaying_member (struct igmp_group * group, u8_t maxresp)
+{
+  unsigned char _1;
+  unsigned char _2;
+  short unsigned int _3;
+  short unsigned int _4;
+  short unsigned int _5;
+
+  <bb 2> :
+  # DEBUG BEGIN_STMT
+  _1 = group_8(D)->group_state;
+  if (_1 == 2)
+    goto <bb 6>; [INV]
+  else
+    goto <bb 3>; [INV]
+
+  <bb 3> :
+  _2 = group_8(D)->group_state;
+  if (_2 == 1)
+    goto <bb 4>; [INV]
+  else
+    goto <bb 7>; [INV]
+
+  <bb 4> :
+  _3 = group_8(D)->timer;
+  if (_3 == 0)
+    goto <bb 6>; [INV]
+  else
+    goto <bb 5>; [INV]
+
+  <bb 5> :
+  _4 = (short unsigned int) maxresp_9(D);
+  _5 = group_8(D)->timer;
+  if (_4 < _5)
+    goto <bb 6>; [INV]
+  else
+    goto <bb 7>; [INV]
+
+  <bb 6> :
+  # DEBUG BEGIN_STMT
+  igmp_start_timer (group_8(D), maxresp_9(D));
+  # DEBUG BEGIN_STMT
+  group_8(D)->group_state = 1;
+
+  <bb 7> :
+  return;
+
+}
+
+
+igmp_start_timer (struct igmp_group * group, u8_t max_time)
+{
+  int _1;
+  long unsigned int _2;
+  long unsigned int _3;
+  long unsigned int _4;
+  short unsigned int _5;
+  short unsigned int iftmp.1_6;
+  short unsigned int iftmp.1_10;
+  short unsigned int iftmp.1_13;
+
+  <bb 2> :
+  # DEBUG BEGIN_STMT
+  if (max_time_9(D) > 2)
+    goto <bb 3>; [INV]
+  else
+    goto <bb 4>; [INV]
+
+  <bb 3> :
+  _1 = rand ();
+  _2 = (long unsigned int) _1;
+  _3 = (long unsigned int) max_time_9(D);
+  _4 = _2 % _3;
+  iftmp.1_13 = (short unsigned int) _4;
+  goto <bb 5>; [INV]
+
+  <bb 4> :
+  iftmp.1_10 = 1;
+
+  <bb 5> :
+  # iftmp.1_6 = PHI <iftmp.1_13(3), iftmp.1_10(4)>
+  group_14(D)->timer = iftmp.1_6;
+  # DEBUG BEGIN_STMT
+  _5 = group_14(D)->timer;
+  if (_5 == 0)
+    goto <bb 6>; [INV]
+  else
+    goto <bb 7>; [INV]
+
+  <bb 6> :
+  # DEBUG BEGIN_STMT
+  group_14(D)->timer = 1;
+
+  <bb 7> :
+  return;
+
+}
+
+
+igmp_timeout (struct netif * netif, struct igmp_group * group)
+{
+  unsigned char _1;
+  long unsigned int _2;
+  long unsigned int _3;
+  short unsigned int _4;
+  short unsigned int _5;
+
+  <bb 2> :
+  # DEBUG BEGIN_STMT
+  _1 = group_8(D)->group_state;
+  if (_1 == 1)
+    goto <bb 3>; [INV]
+  else
+    goto <bb 5>; [INV]
+
+  <bb 3> :
+  _2 = group_8(D)->group_address.addr;
+  _3 = allsystems.addr;
+  if (_2 != _3)
+    goto <bb 4>; [INV]
+  else
+    goto <bb 5>; [INV]
+
+  <bb 4> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  group_8(D)->group_state = 2;
+  # DEBUG BEGIN_STMT
+  _4 = lwip_stats.igmp.tx_report;
+  _5 = _4 + 1;
+  lwip_stats.igmp.tx_report = _5;
+  # DEBUG BEGIN_STMT
+  igmp_send (netif_11(D), group_8(D), 22);
+
+  <bb 5> :
+  return;
+
+}
+
+
+igmp_tmr ()
+{
+  struct igmp_group * group;
+  struct netif * netif;
+  short unsigned int _1;
+  short unsigned int _2;
+  short unsigned int _3;
+  short unsigned int _4;
+  short unsigned int _5;
+
+  <bb 2> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  netif_12 = netif_list;
+  # DEBUG netif => netif_12
+  goto <bb 10>; [INV]
+
+  <bb 3> :
+  # DEBUG BEGIN_STMT
+  group_13 = netif_6->client_data[0];
+  # DEBUG group => group_13
+  # DEBUG BEGIN_STMT
+  goto <bb 8>; [INV]
+
+  <bb 4> :
+  # DEBUG BEGIN_STMT
+  _1 = group_7->timer;
+  if (_1 != 0)
+    goto <bb 5>; [INV]
+  else
+    goto <bb 7>; [INV]
+
+  <bb 5> :
+  # DEBUG BEGIN_STMT
+  _2 = group_7->timer;
+  _3 = _2;
+  _4 = _3 + 65535;
+  group_7->timer = _4;
+  # DEBUG BEGIN_STMT
+  _5 = group_7->timer;
+  if (_5 == 0)
+    goto <bb 6>; [INV]
+  else
+    goto <bb 7>; [INV]
+
+  <bb 6> :
+  # DEBUG BEGIN_STMT
+  igmp_timeout (netif_6, group_7);
+
+  <bb 7> :
+  # DEBUG BEGIN_STMT
+  group_17 = group_7->next;
+  # DEBUG group => group_17
+
+  <bb 8> :
+  # group_7 = PHI <group_13(3), group_17(7)>
+  # DEBUG group => group_7
+  # DEBUG BEGIN_STMT
+  if (group_7 != 0B)
+    goto <bb 4>; [INV]
+  else
+    goto <bb 9>; [INV]
+
+  <bb 9> :
+  # DEBUG BEGIN_STMT
+  netif_14 = netif_6->next;
+  # DEBUG netif => netif_14
+
+  <bb 10> :
+  # netif_6 = PHI <netif_12(2), netif_14(9)>
+  # DEBUG netif => netif_6
+  # DEBUG BEGIN_STMT
+  if (netif_6 != 0B)
+    goto <bb 3>; [INV]
+  else
+    goto <bb 11>; [INV]
+
+  <bb 11> :
+  return;
+
+}
+
+
+igmp_leavegroup_netif (struct netif * netif, const struct ip4_addr_t * groupaddr)
+{
+  struct igmp_group * group;
+  long unsigned int _1;
+  long unsigned int _2;
+  long unsigned int _3;
+  long unsigned int _4;
+  unsigned char _5;
+  unsigned int _6;
+  unsigned int _7;
+  unsigned char _8;
+  unsigned char _9;
+  short unsigned int _10;
+  short unsigned int _11;
+  err_t (*<T6c1>) (struct netif *, const struct ip4_addr_t *, netif_mac_filter_action) _12;
+  err_t (*<T6c1>) (struct netif *, const struct ip4_addr_t *, netif_mac_filter_action) _13;
+  unsigned char _14;
+  unsigned char _15;
+  unsigned char _16;
+  err_t _17;
+  err_t _27;
+  err_t _34;
+  err_t _35;
+  err_t _36;
+  err_t _37;
+
+  <bb 2> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _1 = groupaddr_23(D)->addr;
+  _2 = _1 & 240;
+  if (_2 != 224)
+    goto <bb 3>; [INV]
+  else
+    goto <bb 4>; [INV]
+
+  <bb 3> :
+  # DEBUG BEGIN_STMT
+  _37 = -6;
+  // predicted unlikely by early return (on trees) predictor.
+  goto <bb 18>; [INV]
+
+  <bb 4> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _3 = groupaddr_23(D)->addr;
+  _4 = allsystems.addr;
+  if (_3 == _4)
+    goto <bb 5>; [INV]
+  else
+    goto <bb 6>; [INV]
+
+  <bb 5> :
+  # DEBUG BEGIN_STMT
+  _36 = -6;
+  // predicted unlikely by early return (on trees) predictor.
+  goto <bb 18>; [INV]
+
+  <bb 6> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _5 = netif_24(D)->flags;
+  _6 = (unsigned int) _5;
+  _7 = _6 & 32;
+  if (_7 == 0)
+    goto <bb 7>; [INV]
+  else
+    goto <bb 8>; [INV]
+
+  <bb 7> :
+  # DEBUG BEGIN_STMT
+  _35 = -6;
+  // predicted unlikely by early return (on trees) predictor.
+  goto <bb 18>; [INV]
+
+  <bb 8> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  group_26 = igmp_lookfor_group (netif_24(D), groupaddr_23(D));
+  # DEBUG group => group_26
+  # DEBUG BEGIN_STMT
+  if (group_26 != 0B)
+    goto <bb 9>; [INV]
+  else
+    goto <bb 17>; [INV]
+
+  <bb 9> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _8 = group_26->use;
+  if (_8 <= 1)
+    goto <bb 10>; [INV]
+  else
+    goto <bb 15>; [INV]
+
+  <bb 10> :
+  # DEBUG BEGIN_STMT
+  igmp_remove_group (netif_24(D), group_26);
+  # DEBUG BEGIN_STMT
+  _9 = group_26->last_reporter_flag;
+  if (_9 != 0)
+    goto <bb 11>; [INV]
+  else
+    goto <bb 12>; [INV]
+
+  <bb 11> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _10 = lwip_stats.igmp.tx_leave;
+  _11 = _10 + 1;
+  lwip_stats.igmp.tx_leave = _11;
+  # DEBUG BEGIN_STMT
+  igmp_send (netif_24(D), group_26, 23);
+
+  <bb 12> :
+  # DEBUG BEGIN_STMT
+  _12 = netif_24(D)->igmp_mac_filter;
+  if (_12 != 0B)
+    goto <bb 13>; [INV]
+  else
+    goto <bb 14>; [INV]
+
+  <bb 13> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _13 = netif_24(D)->igmp_mac_filter;
+  _13 (netif_24(D), groupaddr_23(D), 0);
+
+  <bb 14> :
+  # DEBUG BEGIN_STMT
+  memp_free (8, group_26);
+  goto <bb 16>; [INV]
+
+  <bb 15> :
+  # DEBUG BEGIN_STMT
+  _14 = group_26->use;
+  _15 = _14;
+  _16 = _15 + 255;
+  group_26->use = _16;
+
+  <bb 16> :
+  # DEBUG BEGIN_STMT
+  _34 = 0;
+  // predicted unlikely by early return (on trees) predictor.
+  goto <bb 18>; [INV]
+
+  <bb 17> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _27 = -6;
+  // predicted unlikely by early return (on trees) predictor.
+
+  <bb 18> :
+  # _17 = PHI <_37(3), _36(5), _35(7), _34(16), _27(17)>
+  return _17;
+
+}
+
+
+igmp_leavegroup (const struct ip4_addr_t * ifaddr, const struct ip4_addr_t * groupaddr)
+{
+  err_t res;
+  struct netif * netif;
+  err_t err;
+  long unsigned int _1;
+  long unsigned int _2;
+  long unsigned int _3;
+  long unsigned int _4;
+  unsigned char _5;
+  unsigned int _6;
+  unsigned int _7;
+  long unsigned int _8;
+  struct ip4_addr_t * _9;
+  long unsigned int _10;
+  long unsigned int _11;
+  err_t _15;
+  err_t _23;
+  err_t _29;
+  err_t _30;
+
+  <bb 2> :
+  # DEBUG BEGIN_STMT
+  err_19 = -6;
+  # DEBUG err => err_19
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _1 = groupaddr_21(D)->addr;
+  _2 = _1 & 240;
+  if (_2 != 224)
+    goto <bb 3>; [INV]
+  else
+    goto <bb 4>; [INV]
+
+  <bb 3> :
+  # DEBUG BEGIN_STMT
+  _30 = -6;
+  // predicted unlikely by early return (on trees) predictor.
+  goto <bb 16>; [INV]
+
+  <bb 4> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _3 = groupaddr_21(D)->addr;
+  _4 = allsystems.addr;
+  if (_3 == _4)
+    goto <bb 5>; [INV]
+  else
+    goto <bb 6>; [INV]
+
+  <bb 5> :
+  # DEBUG BEGIN_STMT
+  _29 = -6;
+  // predicted unlikely by early return (on trees) predictor.
+  goto <bb 16>; [INV]
+
+  <bb 6> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  netif_22 = netif_list;
+  # DEBUG netif => netif_22
+  goto <bb 14>; [INV]
+
+  <bb 7> :
+  # DEBUG BEGIN_STMT
+  _5 = netif_14->flags;
+  _6 = (unsigned int) _5;
+  _7 = _6 & 32;
+  if (_7 != 0)
+    goto <bb 8>; [INV]
+  else
+    goto <bb 13>; [INV]
+
+  <bb 8> :
+  if (ifaddr_24(D) == 0B)
+    goto <bb 11>; [INV]
+  else
+    goto <bb 9>; [INV]
+
+  <bb 9> :
+  _8 = ifaddr_24(D)->addr;
+  if (_8 == 0)
+    goto <bb 11>; [INV]
+  else
+    goto <bb 10>; [INV]
+
+  <bb 10> :
+  _9 = &netif_14->ip_addr.u_addr.ip4;
+  _10 = MEM[(const struct ip4_addr_t *)_9].addr;
+  _11 = ifaddr_24(D)->addr;
+  if (_10 == _11)
+    goto <bb 11>; [INV]
+  else
+    goto <bb 13>; [INV]
+
+  <bb 11> :
+  # DEBUG BEGIN_STMT
+  res_26 = igmp_leavegroup_netif (netif_14, groupaddr_21(D));
+  # DEBUG res => res_26
+  # DEBUG BEGIN_STMT
+  if (err_13 != 0)
+    goto <bb 12>; [INV]
+  else
+    goto <bb 13>; [INV]
+
+  <bb 12> :
+  # DEBUG BEGIN_STMT
+  err_27 = res_26;
+  # DEBUG err => err_27
+
+  <bb 13> :
+  # err_12 = PHI <err_13(7), err_13(10), err_13(11), err_27(12)>
+  # DEBUG err => err_12
+  # DEBUG BEGIN_STMT
+  netif_28 = netif_14->next;
+  # DEBUG netif => netif_28
+
+  <bb 14> :
+  # err_13 = PHI <err_19(6), err_12(13)>
+  # netif_14 = PHI <netif_22(6), netif_28(13)>
+  # DEBUG netif => netif_14
+  # DEBUG err => err_13
+  # DEBUG BEGIN_STMT
+  if (netif_14 != 0B)
+    goto <bb 7>; [INV]
+  else
+    goto <bb 15>; [INV]
+
+  <bb 15> :
+  # DEBUG BEGIN_STMT
+  _23 = err_13;
+
+  <bb 16> :
+  # _15 = PHI <_30(3), _29(5), _23(15)>
+  return _15;
+
+}
+
+
+igmp_joingroup_netif (struct netif * netif, const struct ip4_addr_t * groupaddr)
+{
+  struct igmp_group * group;
+  long unsigned int _1;
+  long unsigned int _2;
+  long unsigned int _3;
+  long unsigned int _4;
+  unsigned char _5;
+  unsigned int _6;
+  unsigned int _7;
+  unsigned char _8;
+  unsigned char _9;
+  err_t (*<T6c1>) (struct netif *, const struct ip4_addr_t *, netif_mac_filter_action) _10;
+  err_t (*<T6c1>) (struct netif *, const struct ip4_addr_t *, netif_mac_filter_action) _11;
+  short unsigned int _12;
+  short unsigned int _13;
+  unsigned char _14;
+  unsigned char _15;
+  unsigned char _16;
+  err_t _17;
+  err_t _26;
+  err_t _33;
+  err_t _34;
+  err_t _35;
+  err_t _36;
+
+  <bb 2> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _1 = groupaddr_22(D)->addr;
+  _2 = _1 & 240;
+  if (_2 != 224)
+    goto <bb 3>; [INV]
+  else
+    goto <bb 4>; [INV]
+
+  <bb 3> :
+  # DEBUG BEGIN_STMT
+  _36 = -6;
+  // predicted unlikely by early return (on trees) predictor.
+  goto <bb 16>; [INV]
+
+  <bb 4> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _3 = groupaddr_22(D)->addr;
+  _4 = allsystems.addr;
+  if (_3 == _4)
+    goto <bb 5>; [INV]
+  else
+    goto <bb 6>; [INV]
+
+  <bb 5> :
+  # DEBUG BEGIN_STMT
+  _35 = -6;
+  // predicted unlikely by early return (on trees) predictor.
+  goto <bb 16>; [INV]
+
+  <bb 6> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _5 = netif_23(D)->flags;
+  _6 = (unsigned int) _5;
+  _7 = _6 & 32;
+  if (_7 == 0)
+    goto <bb 7>; [INV]
+  else
+    goto <bb 8>; [INV]
+
+  <bb 7> :
+  # DEBUG BEGIN_STMT
+  _34 = -6;
+  // predicted unlikely by early return (on trees) predictor.
+  goto <bb 16>; [INV]
+
+  <bb 8> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  group_25 = igmp_lookup_group (netif_23(D), groupaddr_22(D));
+  # DEBUG group => group_25
+  # DEBUG BEGIN_STMT
+  if (group_25 != 0B)
+    goto <bb 9>; [INV]
+  else
+    goto <bb 15>; [INV]
+
+  <bb 9> :
+  # DEBUG BEGIN_STMT
+  _8 = group_25->group_state;
+  if (_8 != 0)
+    goto <bb 14>; [INV]
+  else
+    goto <bb 10>; [INV]
+
+  <bb 10> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _9 = group_25->use;
+  if (_9 == 0)
+    goto <bb 11>; [INV]
+  else
+    goto <bb 13>; [INV]
+
+  <bb 11> :
+  _10 = netif_23(D)->igmp_mac_filter;
+  if (_10 != 0B)
+    goto <bb 12>; [INV]
+  else
+    goto <bb 13>; [INV]
+
+  <bb 12> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _11 = netif_23(D)->igmp_mac_filter;
+  _11 (netif_23(D), groupaddr_22(D), 1);
+
+  <bb 13> :
+  # DEBUG BEGIN_STMT
+  _12 = lwip_stats.igmp.tx_join;
+  _13 = _12 + 1;
+  lwip_stats.igmp.tx_join = _13;
+  # DEBUG BEGIN_STMT
+  igmp_send (netif_23(D), group_25, 22);
+  # DEBUG BEGIN_STMT
+  igmp_start_timer (group_25, 5);
+  # DEBUG BEGIN_STMT
+  group_25->group_state = 1;
+
+  <bb 14> :
+  # DEBUG BEGIN_STMT
+  _14 = group_25->use;
+  _15 = _14;
+  _16 = _15 + 1;
+  group_25->use = _16;
+  # DEBUG BEGIN_STMT
+  _33 = 0;
+  // predicted unlikely by early return (on trees) predictor.
+  goto <bb 16>; [INV]
+
+  <bb 15> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _26 = -1;
+  // predicted unlikely by early return (on trees) predictor.
+
+  <bb 16> :
+  # _17 = PHI <_36(3), _35(5), _34(7), _33(14), _26(15)>
+  return _17;
+
+}
+
+
+igmp_joingroup (const struct ip4_addr_t * ifaddr, const struct ip4_addr_t * groupaddr)
+{
+  struct netif * netif;
+  err_t err;
+  long unsigned int _1;
+  long unsigned int _2;
+  long unsigned int _3;
+  long unsigned int _4;
+  unsigned char _5;
+  unsigned int _6;
+  unsigned int _7;
+  long unsigned int _8;
+  struct ip4_addr_t * _9;
+  long unsigned int _10;
+  long unsigned int _11;
+  err_t _15;
+  err_t _23;
+  err_t _27;
+  err_t _29;
+  err_t _30;
+
+  <bb 2> :
+  # DEBUG BEGIN_STMT
+  err_19 = -6;
+  # DEBUG err => err_19
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _1 = groupaddr_21(D)->addr;
+  _2 = _1 & 240;
+  if (_2 != 224)
+    goto <bb 3>; [INV]
+  else
+    goto <bb 4>; [INV]
+
+  <bb 3> :
+  # DEBUG BEGIN_STMT
+  _30 = -6;
+  // predicted unlikely by early return (on trees) predictor.
+  goto <bb 16>; [INV]
+
+  <bb 4> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _3 = groupaddr_21(D)->addr;
+  _4 = allsystems.addr;
+  if (_3 == _4)
+    goto <bb 5>; [INV]
+  else
+    goto <bb 6>; [INV]
+
+  <bb 5> :
+  # DEBUG BEGIN_STMT
+  _29 = -6;
+  // predicted unlikely by early return (on trees) predictor.
+  goto <bb 16>; [INV]
+
+  <bb 6> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  netif_22 = netif_list;
+  # DEBUG netif => netif_22
+  goto <bb 14>; [INV]
+
+  <bb 7> :
+  # DEBUG BEGIN_STMT
+  _5 = netif_14->flags;
+  _6 = (unsigned int) _5;
+  _7 = _6 & 32;
+  if (_7 != 0)
+    goto <bb 8>; [INV]
+  else
+    goto <bb 13>; [INV]
+
+  <bb 8> :
+  if (ifaddr_24(D) == 0B)
+    goto <bb 11>; [INV]
+  else
+    goto <bb 9>; [INV]
+
+  <bb 9> :
+  _8 = ifaddr_24(D)->addr;
+  if (_8 == 0)
+    goto <bb 11>; [INV]
+  else
+    goto <bb 10>; [INV]
+
+  <bb 10> :
+  _9 = &netif_14->ip_addr.u_addr.ip4;
+  _10 = MEM[(const struct ip4_addr_t *)_9].addr;
+  _11 = ifaddr_24(D)->addr;
+  if (_10 == _11)
+    goto <bb 11>; [INV]
+  else
+    goto <bb 13>; [INV]
+
+  <bb 11> :
+  # DEBUG BEGIN_STMT
+  err_26 = igmp_joingroup_netif (netif_14, groupaddr_21(D));
+  # DEBUG err => err_26
+  # DEBUG BEGIN_STMT
+  if (err_26 != 0)
+    goto <bb 12>; [INV]
+  else
+    goto <bb 13>; [INV]
+
+  <bb 12> :
+  # DEBUG BEGIN_STMT
+  _27 = err_26;
+  // predicted unlikely by early return (on trees) predictor.
+  goto <bb 16>; [INV]
+
+  <bb 13> :
+  # err_12 = PHI <err_13(7), err_13(10), err_26(11)>
+  # DEBUG err => err_12
+  # DEBUG BEGIN_STMT
+  netif_28 = netif_14->next;
+  # DEBUG netif => netif_28
+
+  <bb 14> :
+  # err_13 = PHI <err_19(6), err_12(13)>
+  # netif_14 = PHI <netif_22(6), netif_28(13)>
+  # DEBUG netif => netif_14
+  # DEBUG err => err_13
+  # DEBUG BEGIN_STMT
+  if (netif_14 != 0B)
+    goto <bb 7>; [INV]
+  else
+    goto <bb 15>; [INV]
+
+  <bb 15> :
+  # DEBUG BEGIN_STMT
+  _23 = err_13;
+
+  <bb 16> :
+  # _15 = PHI <_30(3), _29(5), _27(12), _23(15)>
+  return _15;
+
+}
+
+
+igmp_input (struct pbuf * p, struct netif * inp, const struct ip4_addr_t * dest)
+{
+  struct ip4_addr_t groupaddr;
+  struct igmp_group * groupref;
+  struct igmp_group * group;
+  struct igmp_msg * igmp;
+  short unsigned int _1;
+  short unsigned int _2;
+  short unsigned int _3;
+  short unsigned int _4;
+  short unsigned int _5;
+  short unsigned int _6;
+  short unsigned int _7;
+  short unsigned int _8;
+  short unsigned int _9;
+  short unsigned int _10;
+  short unsigned int _11;
+  unsigned char _12;
+  int _13;
+  long unsigned int _14;
+  long unsigned int _15;
+  struct ip4_addr_p_t * _16;
+  long unsigned int _17;
+  unsigned char _18;
+  short unsigned int _19;
+  short unsigned int _20;
+  short unsigned int _21;
+  short unsigned int _22;
+  unsigned char _23;
+  struct ip4_addr_p_t * _24;
+  long unsigned int _25;
+  long unsigned int _26;
+  long unsigned int _27;
+  long unsigned int _28;
+  short unsigned int _29;
+  short unsigned int _30;
+  unsigned char _31;
+  short unsigned int _32;
+  short unsigned int _33;
+  short unsigned int _34;
+  short unsigned int _35;
+  short unsigned int _36;
+  short unsigned int _37;
+  unsigned char _38;
+  short unsigned int _39;
+  short unsigned int _40;
+
+  <bb 2> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _1 = lwip_stats.igmp.recv;
+  _2 = _1 + 1;
+  lwip_stats.igmp.recv = _2;
+  # DEBUG BEGIN_STMT
+  _3 = p_50(D)->len;
+  if (_3 <= 7)
+    goto <bb 3>; [INV]
+  else
+    goto <bb 4>; [INV]
+
+  <bb 3> :
+  # DEBUG BEGIN_STMT
+  pbuf_free (p_50(D));
+  # DEBUG BEGIN_STMT
+  _4 = lwip_stats.igmp.lenerr;
+  _5 = _4 + 1;
+  lwip_stats.igmp.lenerr = _5;
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  // predicted unlikely by early return (on trees) predictor.
+  goto <bb 31>; [INV]
+
+  <bb 4> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  igmp_51 = p_50(D)->payload;
+  # DEBUG igmp => igmp_51
+  # DEBUG BEGIN_STMT
+  _6 = p_50(D)->len;
+  _7 = inet_chksum (igmp_51, _6);
+  if (_7 != 0)
+    goto <bb 5>; [INV]
+  else
+    goto <bb 6>; [INV]
+
+  <bb 5> :
+  # DEBUG BEGIN_STMT
+  pbuf_free (p_50(D));
+  # DEBUG BEGIN_STMT
+  _8 = lwip_stats.igmp.chkerr;
+  _9 = _8 + 1;
+  lwip_stats.igmp.chkerr = _9;
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  // predicted unlikely by early return (on trees) predictor.
+  goto <bb 31>; [INV]
+
+  <bb 6> :
+  # DEBUG BEGIN_STMT
+  group_56 = igmp_lookfor_group (inp_53(D), dest_54(D));
+  # DEBUG group => group_56
+  # DEBUG BEGIN_STMT
+  if (group_56 == 0B)
+    goto <bb 7>; [INV]
+  else
+    goto <bb 8>; [INV]
+
+  <bb 7> :
+  # DEBUG BEGIN_STMT
+  pbuf_free (p_50(D));
+  # DEBUG BEGIN_STMT
+  _10 = lwip_stats.igmp.drop;
+  _11 = _10 + 1;
+  lwip_stats.igmp.drop = _11;
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  // predicted unlikely by early return (on trees) predictor.
+  goto <bb 31>; [INV]
+
+  <bb 8> :
+  # DEBUG BEGIN_STMT
+  _12 = igmp_51->igmp_msgtype;
+  _13 = (int) _12;
+  switch (_13) <default: <L33> [INV], case 17: <L6> [INV], case 22: <L30> [INV]>
+
+  <bb 9> :
+<L6>:
+  # DEBUG BEGIN_STMT
+  _14 = dest_54(D)->addr;
+  _15 = allsystems.addr;
+  if (_14 == _15)
+    goto <bb 10>; [INV]
+  else
+    goto <bb 19>; [INV]
+
+  <bb 10> :
+  _16 = &igmp_51->igmp_group_address;
+  if (_16 == 0B)
+    goto <bb 12>; [INV]
+  else
+    goto <bb 11>; [INV]
+
+  <bb 11> :
+  _17 = igmp_51->igmp_group_address.addr;
+  if (_17 == 0)
+    goto <bb 12>; [INV]
+  else
+    goto <bb 19>; [INV]
+
+  <bb 12> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _18 = igmp_51->igmp_maxresp;
+  if (_18 == 0)
+    goto <bb 13>; [INV]
+  else
+    goto <bb 14>; [INV]
+
+  <bb 13> :
+  # DEBUG BEGIN_STMT
+  _19 = lwip_stats.igmp.rx_v1;
+  _20 = _19 + 1;
+  lwip_stats.igmp.rx_v1 = _20;
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  igmp_51->igmp_maxresp = 10;
+  goto <bb 15>; [INV]
+
+  <bb 14> :
+  # DEBUG BEGIN_STMT
+  _21 = lwip_stats.igmp.rx_general;
+  _22 = _21 + 1;
+  lwip_stats.igmp.rx_general = _22;
+
+  <bb 15> :
+  # DEBUG BEGIN_STMT
+  groupref_64 = inp_53(D)->client_data[0];
+  # DEBUG groupref => groupref_64
+  # DEBUG BEGIN_STMT
+  if (groupref_64 != 0B)
+    goto <bb 16>; [INV]
+  else
+    goto <bb 18>; [INV]
+
+  <bb 16> :
+  # DEBUG BEGIN_STMT
+  groupref_65 = groupref_64->next;
+  # DEBUG groupref => groupref_65
+  goto <bb 18>; [INV]
+
+  <bb 17> :
+  # DEBUG BEGIN_STMT
+  _23 = igmp_51->igmp_maxresp;
+  igmp_delaying_member (groupref_42, _23);
+  # DEBUG BEGIN_STMT
+  groupref_67 = groupref_42->next;
+  # DEBUG groupref => groupref_67
+
+  <bb 18> :
+  # groupref_42 = PHI <groupref_65(16), groupref_67(17), groupref_64(15)>
+  # DEBUG groupref => groupref_42
+  # DEBUG BEGIN_STMT
+  if (groupref_42 != 0B)
+    goto <bb 17>; [INV]
+  else
+    goto <bb 30>; [INV]
+
+  <bb 19> :
+  # DEBUG BEGIN_STMT
+  _24 = &igmp_51->igmp_group_address;
+  if (_24 != 0B)
+    goto <bb 20>; [INV]
+  else
+    goto <bb 26>; [INV]
+
+  <bb 20> :
+  _25 = igmp_51->igmp_group_address.addr;
+  if (_25 != 0)
+    goto <bb 21>; [INV]
+  else
+    goto <bb 26>; [INV]
+
+  <bb 21> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _26 = dest_54(D)->addr;
+  _27 = allsystems.addr;
+  if (_26 == _27)
+    goto <bb 22>; [INV]
+  else
+    goto <bb 23>; [INV]
+
+  <bb 22> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _28 = igmp_51->igmp_group_address.addr;
+  groupaddr.addr = _28;
+  # DEBUG BEGIN_STMT
+  group_70 = igmp_lookfor_group (inp_53(D), &groupaddr);
+  # DEBUG group => group_70
+  groupaddr ={v} {CLOBBER};
+
+  <bb 23> :
+  # group_41 = PHI <group_56(21), group_70(22)>
+  # DEBUG group => group_41
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  if (group_41 != 0B)
+    goto <bb 24>; [INV]
+  else
+    goto <bb 25>; [INV]
+
+  <bb 24> :
+  # DEBUG BEGIN_STMT
+  _29 = lwip_stats.igmp.rx_group;
+  _30 = _29 + 1;
+  lwip_stats.igmp.rx_group = _30;
+  # DEBUG BEGIN_STMT
+  _31 = igmp_51->igmp_maxresp;
+  igmp_delaying_member (group_41, _31);
+  goto <bb 30>; [INV]
+
+  <bb 25> :
+  # DEBUG BEGIN_STMT
+  _32 = lwip_stats.igmp.drop;
+  _33 = _32 + 1;
+  lwip_stats.igmp.drop = _33;
+  goto <bb 30>; [INV]
+
+  <bb 26> :
+  # DEBUG BEGIN_STMT
+  _34 = lwip_stats.igmp.proterr;
+  _35 = _34 + 1;
+  lwip_stats.igmp.proterr = _35;
+  goto <bb 30>; [INV]
+
+  <bb 27> :
+<L30>:
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _36 = lwip_stats.igmp.rx_report;
+  _37 = _36 + 1;
+  lwip_stats.igmp.rx_report = _37;
+  # DEBUG BEGIN_STMT
+  _38 = group_56->group_state;
+  if (_38 == 1)
+    goto <bb 28>; [INV]
+  else
+    goto <bb 30>; [INV]
+
+  <bb 28> :
+  # DEBUG BEGIN_STMT
+  group_56->timer = 0;
+  # DEBUG BEGIN_STMT
+  group_56->group_state = 2;
+  # DEBUG BEGIN_STMT
+  group_56->last_reporter_flag = 0;
+  goto <bb 30>; [INV]
+
+  <bb 29> :
+<L33>:
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _39 = lwip_stats.igmp.proterr;
+  _40 = _39 + 1;
+  lwip_stats.igmp.proterr = _40;
+  # DEBUG BEGIN_STMT
+
+  <bb 30> :
+  # DEBUG BEGIN_STMT
+  pbuf_free (p_50(D));
+  # DEBUG BEGIN_STMT
+
+  <bb 31> :
+  return;
+
+}
+
+
+igmp_remove_group (struct netif * netif, struct igmp_group * group)
+{
+  struct igmp_group * tmp_group;
+  err_t err;
+  struct igmp_group * _1;
+  struct igmp_group * _2;
+  err_t _14;
+
+  <bb 2> :
+  # DEBUG BEGIN_STMT
+  err_6 = 0;
+  # DEBUG err => err_6
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  tmp_group_9 = netif_8(D)->client_data[0];
+  # DEBUG tmp_group => tmp_group_9
+  goto <bb 6>; [INV]
+
+  <bb 3> :
+  # DEBUG BEGIN_STMT
+  _1 = tmp_group_4->next;
+  if (group_10(D) == _1)
+    goto <bb 4>; [INV]
+  else
+    goto <bb 5>; [INV]
+
+  <bb 4> :
+  # DEBUG BEGIN_STMT
+  _2 = group_10(D)->next;
+  tmp_group_4->next = _2;
+  # DEBUG BEGIN_STMT
+  goto <bb 7>; [INV]
+
+  <bb 5> :
+  # DEBUG BEGIN_STMT
+  tmp_group_11 = tmp_group_4->next;
+  # DEBUG tmp_group => tmp_group_11
+
+  <bb 6> :
+  # tmp_group_4 = PHI <tmp_group_9(2), tmp_group_11(5)>
+  # DEBUG tmp_group => tmp_group_4
+  # DEBUG BEGIN_STMT
+  if (tmp_group_4 != 0B)
+    goto <bb 3>; [INV]
+  else
+    goto <bb 7>; [INV]
+
+  <bb 7> :
+  # DEBUG BEGIN_STMT
+  if (tmp_group_4 == 0B)
+    goto <bb 8>; [INV]
+  else
+    goto <bb 9>; [INV]
+
+  <bb 8> :
+  # DEBUG BEGIN_STMT
+  err_13 = -16;
+  # DEBUG err => err_13
+
+  <bb 9> :
+  # err_3 = PHI <err_6(7), err_13(8)>
+  # DEBUG err => err_3
+  # DEBUG BEGIN_STMT
+  _14 = err_3;
+  return _14;
+
+}
+
+
+igmp_lookup_group (struct netif * ifp, const struct ip4_addr_t * addr)
+{
+  struct igmp_group * list_head;
+  struct igmp_group * group;
+  long unsigned int _1;
+  long unsigned int _2;
+  long unsigned int _3;
+  long unsigned int _4;
+  struct igmp_group * _5;
+  struct igmp_group * _6;
+  const long unsigned int iftmp.0_7;
+  const long unsigned int iftmp.0_20;
+  const long unsigned int iftmp.0_21;
+  struct igmp_group * _33;
+  struct igmp_group * _34;
+
+  <bb 2> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  list_head_14 = ifp_13(D)->client_data[0];
+  # DEBUG list_head => list_head_14
+  # DEBUG BEGIN_STMT
+  group_17 = igmp_lookfor_group (ifp_13(D), addr_15(D));
+  # DEBUG group => group_17
+  # DEBUG BEGIN_STMT
+  if (group_17 != 0B)
+    goto <bb 3>; [INV]
+  else
+    goto <bb 4>; [INV]
+
+  <bb 3> :
+  # DEBUG BEGIN_STMT
+  _34 = group_17;
+  // predicted unlikely by early return (on trees) predictor.
+  goto <bb 16>; [INV]
+
+  <bb 4> :
+  # DEBUG BEGIN_STMT
+  group_19 = memp_malloc (8);
+  # DEBUG group => group_19
+  # DEBUG BEGIN_STMT
+  if (group_19 != 0B)
+    goto <bb 5>; [INV]
+  else
+    goto <bb 15>; [INV]
+
+  <bb 5> :
+  # DEBUG BEGIN_STMT
+  if (addr_15(D) != 0B)
+    goto <bb 6>; [INV]
+  else
+    goto <bb 7>; [INV]
+
+  <bb 6> :
+  iftmp.0_21 = addr_15(D)->addr;
+  goto <bb 8>; [INV]
+
+  <bb 7> :
+  iftmp.0_20 = 0;
+
+  <bb 8> :
+  # iftmp.0_7 = PHI <iftmp.0_21(6), iftmp.0_20(7)>
+  group_19->group_address.addr = iftmp.0_7;
+  # DEBUG BEGIN_STMT
+  group_19->timer = 0;
+  # DEBUG BEGIN_STMT
+  group_19->group_state = 0;
+  # DEBUG BEGIN_STMT
+  group_19->last_reporter_flag = 0;
+  # DEBUG BEGIN_STMT
+  group_19->use = 0;
+  # DEBUG BEGIN_STMT
+  if (list_head_14 == 0B)
+    goto <bb 9>; [INV]
+  else
+    goto <bb 12>; [INV]
+
+  <bb 9> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _1 = addr_15(D)->addr;
+  _2 = allsystems.addr;
+  if (_1 != _2)
+    goto <bb 10>; [INV]
+  else
+    goto <bb 11>; [INV]
+
+  <bb 10> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  __asm__ __volatile__("BKPT #0
+	");
+  # DEBUG BEGIN_STMT
+  goto <bb 10>; [INV]
+
+  <bb 11> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  group_19->next = 0B;
+  # DEBUG BEGIN_STMT
+  ifp_13(D)->client_data[0] = group_19;
+  goto <bb 15>; [INV]
+
+  <bb 12> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _3 = addr_15(D)->addr;
+  _4 = allsystems.addr;
+  if (_3 == _4)
+    goto <bb 13>; [INV]
+  else
+    goto <bb 14>; [INV]
+
+  <bb 13> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  __asm__ __volatile__("BKPT #0
+	");
+  # DEBUG BEGIN_STMT
+  goto <bb 13>; [INV]
+
+  <bb 14> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _5 = list_head_14->next;
+  group_19->next = _5;
+  # DEBUG BEGIN_STMT
+  list_head_14->next = group_19;
+
+  <bb 15> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _33 = group_19;
+
+  <bb 16> :
+  # _6 = PHI <_34(3), _33(15)>
+  return _6;
+
+}
+
+
+igmp_lookfor_group (struct netif * ifp, const struct ip4_addr_t * addr)
+{
+  struct igmp_group * group;
+  long unsigned int _1;
+  long unsigned int _2;
+  struct igmp_group * _4;
+  struct igmp_group * _8;
+  struct igmp_group * _11;
+
+  <bb 2> :
+  # DEBUG BEGIN_STMT
+  group_7 = ifp_6(D)->client_data[0];
+  # DEBUG group => group_7
+  # DEBUG BEGIN_STMT
+  goto <bb 6>; [INV]
+
+  <bb 3> :
+  # DEBUG BEGIN_STMT
+  _1 = group_3->group_address.addr;
+  _2 = addr_9(D)->addr;
+  if (_1 == _2)
+    goto <bb 4>; [INV]
+  else
+    goto <bb 5>; [INV]
+
+  <bb 4> :
+  # DEBUG BEGIN_STMT
+  _11 = group_3;
+  // predicted unlikely by early return (on trees) predictor.
+  goto <bb 8>; [INV]
+
+  <bb 5> :
+  # DEBUG BEGIN_STMT
+  group_10 = group_3->next;
+  # DEBUG group => group_10
+
+  <bb 6> :
+  # group_3 = PHI <group_7(2), group_10(5)>
+  # DEBUG group => group_3
+  # DEBUG BEGIN_STMT
+  if (group_3 != 0B)
+    goto <bb 3>; [INV]
+  else
+    goto <bb 7>; [INV]
+
+  <bb 7> :
+  # DEBUG BEGIN_STMT
+  _8 = 0B;
+
+  <bb 8> :
+  # _4 = PHI <_11(4), _8(7)>
+  return _4;
+
+}
+
+
+igmp_report_groups (struct netif * netif)
+{
+  struct igmp_group * group;
+
+  <bb 2> :
+  # DEBUG BEGIN_STMT
+  group_5 = netif_4(D)->client_data[0];
+  # DEBUG group => group_5
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  if (group_5 != 0B)
+    goto <bb 3>; [INV]
+  else
+    goto <bb 5>; [INV]
+
+  <bb 3> :
+  # DEBUG BEGIN_STMT
+  group_6 = group_5->next;
+  # DEBUG group => group_6
+  goto <bb 5>; [INV]
+
+  <bb 4> :
+  # DEBUG BEGIN_STMT
+  igmp_delaying_member (group_1, 5);
+  # DEBUG BEGIN_STMT
+  group_8 = group_1->next;
+  # DEBUG group => group_8
+
+  <bb 5> :
+  # group_1 = PHI <group_6(3), group_8(4), group_5(2)>
+  # DEBUG group => group_1
+  # DEBUG BEGIN_STMT
+  if (group_1 != 0B)
+    goto <bb 4>; [INV]
+  else
+    goto <bb 6>; [INV]
+
+  <bb 6> :
+  return;
+
+}
+
+
+igmp_stop (struct netif * netif)
+{
+  struct igmp_group * next;
+  struct igmp_group * group;
+  err_t (*<T6c1>) (struct netif *, const struct ip4_addr_t *, netif_mac_filter_action) _1;
+  err_t (*<T6c1>) (struct netif *, const struct ip4_addr_t *, netif_mac_filter_action) _2;
+  struct ip4_addr_t * _3;
+  err_t _11;
+
+  <bb 2> :
+  # DEBUG BEGIN_STMT
+  group_9 = netif_8(D)->client_data[0];
+  # DEBUG group => group_9
+  # DEBUG BEGIN_STMT
+  netif_8(D)->client_data[0] = 0B;
+  # DEBUG BEGIN_STMT
+  goto <bb 6>; [INV]
+
+  <bb 3> :
+  # DEBUG BEGIN_STMT
+  next_12 = group_4->next;
+  # DEBUG next => next_12
+  # DEBUG BEGIN_STMT
+  _1 = netif_8(D)->igmp_mac_filter;
+  if (_1 != 0B)
+    goto <bb 4>; [INV]
+  else
+    goto <bb 5>; [INV]
+
+  <bb 4> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _2 = netif_8(D)->igmp_mac_filter;
+  _3 = &group_4->group_address;
+  _2 (netif_8(D), _3, 0);
+
+  <bb 5> :
+  # DEBUG BEGIN_STMT
+  memp_free (8, group_4);
+  # DEBUG BEGIN_STMT
+  group_15 = next_12;
+  # DEBUG group => group_15
+
+  <bb 6> :
+  # group_4 = PHI <group_9(2), group_15(5)>
+  # DEBUG group => group_4
+  # DEBUG BEGIN_STMT
+  if (group_4 != 0B)
+    goto <bb 3>; [INV]
+  else
+    goto <bb 7>; [INV]
+
+  <bb 7> :
+  # DEBUG BEGIN_STMT
+  _11 = 0;
+  return _11;
+
+}
+
+
+igmp_start (struct netif * netif)
+{
+  struct igmp_group * group;
+  unsigned char _1;
+  unsigned char _2;
+  unsigned char _3;
+  err_t (*<T6c1>) (struct netif *, const struct ip4_addr_t *, netif_mac_filter_action) _4;
+  err_t (*<T6c1>) (struct netif *, const struct ip4_addr_t *, netif_mac_filter_action) _5;
+  err_t _6;
+  err_t _13;
+  err_t _17;
+
+  <bb 2> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  group_12 = igmp_lookup_group (netif_10(D), &allsystems);
+  # DEBUG group => group_12
+  # DEBUG BEGIN_STMT
+  if (group_12 != 0B)
+    goto <bb 3>; [INV]
+  else
+    goto <bb 6>; [INV]
+
+  <bb 3> :
+  # DEBUG BEGIN_STMT
+  group_12->group_state = 2;
+  # DEBUG BEGIN_STMT
+  _1 = group_12->use;
+  _2 = _1;
+  _3 = _2 + 1;
+  group_12->use = _3;
+  # DEBUG BEGIN_STMT
+  _4 = netif_10(D)->igmp_mac_filter;
+  if (_4 != 0B)
+    goto <bb 4>; [INV]
+  else
+    goto <bb 5>; [INV]
+
+  <bb 4> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _5 = netif_10(D)->igmp_mac_filter;
+  _5 (netif_10(D), &allsystems, 1);
+
+  <bb 5> :
+  # DEBUG BEGIN_STMT
+  _17 = 0;
+  // predicted unlikely by early return (on trees) predictor.
+  goto <bb 7>; [INV]
+
+  <bb 6> :
+  # DEBUG BEGIN_STMT
+  _13 = -1;
+
+  <bb 7> :
+  # _6 = PHI <_17(5), _13(6)>
+  return _6;
+
+}
+
+
+igmp_init ()
+{
+  <bb 2> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  allsystems.addr = 16777440;
+  # DEBUG BEGIN_STMT
+  allrouters.addr = 33554656;
+  return;
+
+}
+
+

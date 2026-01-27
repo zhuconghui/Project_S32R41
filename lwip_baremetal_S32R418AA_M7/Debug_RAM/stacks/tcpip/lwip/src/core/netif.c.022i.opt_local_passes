@@ -1,0 +1,3202 @@
+netif_find (const char * name)
+{
+  u8_t num;
+  struct netif * netif;
+  const char * _1;
+  int _2;
+  const char * _3;
+  char _4;
+  unsigned char _5;
+  char _6;
+  char _7;
+  const char * _8;
+  char _9;
+  char _10;
+  struct netif * _12;
+  struct netif * _18;
+  struct netif * _20;
+  struct netif * _21;
+  struct netif * _23;
+
+  <bb 2> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  if (name_14(D) == 0B)
+    goto <bb 3>; [INV]
+  else
+    goto <bb 4>; [INV]
+
+  <bb 3> :
+  # DEBUG BEGIN_STMT
+  _23 = 0B;
+  // predicted unlikely by early return (on trees) predictor.
+  goto <bb 15>; [INV]
+
+  <bb 4> :
+  # DEBUG BEGIN_STMT
+  _1 = name_14(D) + 2;
+  _2 = atoi (_1);
+  num_17 = (u8_t) _2;
+  # DEBUG num => num_17
+  # DEBUG BEGIN_STMT
+  if (num_17 == 0)
+    goto <bb 5>; [INV]
+  else
+    goto <bb 7>; [INV]
+
+  <bb 5> :
+  _3 = name_14(D) + 2;
+  _4 = *_3;
+  if (_4 != 48)
+    goto <bb 6>; [INV]
+  else
+    goto <bb 7>; [INV]
+
+  <bb 6> :
+  # DEBUG BEGIN_STMT
+  _18 = 0B;
+  // predicted unlikely by early return (on trees) predictor.
+  goto <bb 15>; [INV]
+
+  <bb 7> :
+  # DEBUG BEGIN_STMT
+  netif_19 = netif_list;
+  # DEBUG netif => netif_19
+  goto <bb 13>; [INV]
+
+  <bb 8> :
+  # DEBUG BEGIN_STMT
+  _5 = netif_11->num;
+  if (num_17 == _5)
+    goto <bb 9>; [INV]
+  else
+    goto <bb 12>; [INV]
+
+  <bb 9> :
+  _6 = *name_14(D);
+  _7 = netif_11->name[0];
+  if (_6 == _7)
+    goto <bb 10>; [INV]
+  else
+    goto <bb 12>; [INV]
+
+  <bb 10> :
+  _8 = name_14(D) + 1;
+  _9 = *_8;
+  _10 = netif_11->name[1];
+  if (_9 == _10)
+    goto <bb 11>; [INV]
+  else
+    goto <bb 12>; [INV]
+
+  <bb 11> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _21 = netif_11;
+  // predicted unlikely by early return (on trees) predictor.
+  goto <bb 15>; [INV]
+
+  <bb 12> :
+  # DEBUG BEGIN_STMT
+  netif_22 = netif_11->next;
+  # DEBUG netif => netif_22
+
+  <bb 13> :
+  # netif_11 = PHI <netif_19(7), netif_22(12)>
+  # DEBUG netif => netif_11
+  # DEBUG BEGIN_STMT
+  if (netif_11 != 0B)
+    goto <bb 8>; [INV]
+  else
+    goto <bb 14>; [INV]
+
+  <bb 14> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _20 = 0B;
+
+  <bb 15> :
+  # _12 = PHI <_23(3), _18(6), _21(11), _20(14)>
+  return _12;
+
+}
+
+
+netif_get_by_index (u8_t idx)
+{
+  struct netif * netif;
+  unsigned char _1;
+  unsigned char _2;
+  struct netif * _4;
+  struct netif * _9;
+  struct netif * _10;
+
+  <bb 2> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  if (idx_5(D) != 0)
+    goto <bb 3>; [INV]
+  else
+    goto <bb 8>; [INV]
+
+  <bb 3> :
+  # DEBUG BEGIN_STMT
+  netif_7 = netif_list;
+  # DEBUG netif => netif_7
+  goto <bb 7>; [INV]
+
+  <bb 4> :
+  # DEBUG BEGIN_STMT
+  _1 = netif_3->num;
+  _2 = _1 + 1;
+  if (idx_5(D) == _2)
+    goto <bb 5>; [INV]
+  else
+    goto <bb 6>; [INV]
+
+  <bb 5> :
+  # DEBUG BEGIN_STMT
+  _9 = netif_3;
+  // predicted unlikely by early return (on trees) predictor.
+  goto <bb 9>; [INV]
+
+  <bb 6> :
+  # DEBUG BEGIN_STMT
+  netif_8 = netif_3->next;
+  # DEBUG netif => netif_8
+
+  <bb 7> :
+  # netif_3 = PHI <netif_7(3), netif_8(6)>
+  # DEBUG netif => netif_3
+  # DEBUG BEGIN_STMT
+  if (netif_3 != 0B)
+    goto <bb 4>; [INV]
+  else
+    goto <bb 8>; [INV]
+
+  <bb 8> :
+  # DEBUG BEGIN_STMT
+  _10 = 0B;
+
+  <bb 9> :
+  # _4 = PHI <_9(5), _10(8)>
+  return _4;
+
+}
+
+
+netif_index_to_name (u8_t idx, char * name)
+{
+  struct netif * netif;
+  char _1;
+  char * _2;
+  char _3;
+  char * _4;
+  int _5;
+  int _6;
+  char * _7;
+  char * _13;
+  char * _18;
+
+  <bb 2> :
+  # DEBUG BEGIN_STMT
+  netif_12 = netif_get_by_index (idx_10(D));
+  # DEBUG netif => netif_12
+  # DEBUG BEGIN_STMT
+  if (netif_12 != 0B)
+    goto <bb 3>; [INV]
+  else
+    goto <bb 4>; [INV]
+
+  <bb 3> :
+  # DEBUG BEGIN_STMT
+  _1 = netif_12->name[0];
+  *name_14(D) = _1;
+  # DEBUG BEGIN_STMT
+  _2 = name_14(D) + 1;
+  _3 = netif_12->name[1];
+  *_2 = _3;
+  # DEBUG BEGIN_STMT
+  _4 = name_14(D) + 2;
+  _5 = (int) idx_10(D);
+  _6 = _5 + -1;
+  lwip_itoa (_4, 4, _6);
+  # DEBUG BEGIN_STMT
+  _18 = name_14(D);
+  // predicted unlikely by early return (on trees) predictor.
+  goto <bb 5>; [INV]
+
+  <bb 4> :
+  # DEBUG BEGIN_STMT
+  _13 = 0B;
+
+  <bb 5> :
+  # _7 = PHI <_18(3), _13(4)>
+  return _7;
+
+}
+
+
+netif_name_to_index (const char * name)
+{
+  struct netif * netif;
+  unsigned char _1;
+  u8_t _2;
+  u8_t _7;
+  u8_t _8;
+
+  <bb 2> :
+  # DEBUG BEGIN_STMT
+  netif_6 = netif_find (name_4(D));
+  # DEBUG netif => netif_6
+  # DEBUG BEGIN_STMT
+  if (netif_6 != 0B)
+    goto <bb 3>; [INV]
+  else
+    goto <bb 4>; [INV]
+
+  <bb 3> :
+  # DEBUG BEGIN_STMT
+  _1 = netif_6->num;
+  _8 = _1 + 1;
+  // predicted unlikely by early return (on trees) predictor.
+  goto <bb 5>; [INV]
+
+  <bb 4> :
+  # DEBUG BEGIN_STMT
+  _7 = 0;
+
+  <bb 5> :
+  # _2 = PHI <_8(3), _7(4)>
+  return _2;
+
+}
+
+
+netif_null_output_ip4 (struct netif * netif, struct pbuf * p, const struct ip4_addr_t * ipaddr)
+{
+  err_t _1;
+
+  <bb 2> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _1 = -12;
+  return _1;
+
+}
+
+
+netif_null_output_ip6 (struct netif * netif, struct pbuf * p, const struct ip6_addr_t * ipaddr)
+{
+  err_t _1;
+
+  <bb 2> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _1 = -12;
+  return _1;
+
+}
+
+
+netif_add_ip6_address (struct netif * netif, const struct ip6_addr_t * ip6addr, s8_t * chosen_idx)
+{
+  s8_t i;
+  long unsigned int _1;
+  long unsigned int _2;
+  _Bool _3;
+  int _4;
+  unsigned char _5;
+  int _6;
+  long unsigned int _7;
+  int _8;
+  long unsigned int _9;
+  int _10;
+  long unsigned int _11;
+  int _12;
+  long unsigned int _13;
+  int _14;
+  unsigned char _15;
+  int _16;
+  int _17;
+  long unsigned int _18;
+  long unsigned int _19;
+  unsigned char _20;
+  int _21;
+  signed char i.19_22;
+  unsigned char i.20_23;
+  unsigned char _24;
+  err_t _26;
+  u8_t iftmp.18_27;
+  err_t _42;
+  u8_t iftmp.18_50;
+  u8_t iftmp.18_51;
+  err_t _55;
+  err_t _57;
+
+  <bb 2> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  if (netif_34(D) == 0B)
+    goto <bb 3>; [INV]
+  else
+    goto <bb 4>; [INV]
+
+  <bb 3> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  __asm__ __volatile__("BKPT #0
+	");
+  # DEBUG BEGIN_STMT
+  goto <bb 3>; [INV]
+
+  <bb 4> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  if (ip6addr_36(D) == 0B)
+    goto <bb 5>; [INV]
+  else
+    goto <bb 6>; [INV]
+
+  <bb 5> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  __asm__ __volatile__("BKPT #0
+	");
+  # DEBUG BEGIN_STMT
+  goto <bb 5>; [INV]
+
+  <bb 6> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  i_38 = netif_get_ip6_addr_match (netif_34(D), ip6addr_36(D));
+  # DEBUG i => i_38
+  # DEBUG BEGIN_STMT
+  if (i_38 >= 0)
+    goto <bb 7>; [INV]
+  else
+    goto <bb 10>; [INV]
+
+  <bb 7> :
+  # DEBUG BEGIN_STMT
+  if (chosen_idx_40(D) != 0B)
+    goto <bb 8>; [INV]
+  else
+    goto <bb 9>; [INV]
+
+  <bb 8> :
+  # DEBUG BEGIN_STMT
+  *chosen_idx_40(D) = i_38;
+
+  <bb 9> :
+  # DEBUG BEGIN_STMT
+  _57 = 0;
+  // predicted unlikely by early return (on trees) predictor.
+  goto <bb 23>; [INV]
+
+  <bb 10> :
+  # DEBUG BEGIN_STMT
+  _1 = ip6addr_36(D)->addr[0];
+  _2 = _1 & 49407;
+  _3 = _2 != 33022;
+  i_39 = (s8_t) _3;
+  # DEBUG i => i_39
+  goto <bb 19>; [INV]
+
+  <bb 11> :
+  # DEBUG BEGIN_STMT
+  _4 = (int) i_25;
+  _5 = netif_34(D)->ip6_addr_state[_4];
+  if (_5 == 0)
+    goto <bb 12>; [INV]
+  else
+    goto <bb 18>; [INV]
+
+  <bb 12> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _6 = (int) i_25;
+  _7 = ip6addr_36(D)->addr[0];
+  netif_34(D)->ip6_addr[_6].u_addr.ip6.addr[0] = _7;
+  # DEBUG BEGIN_STMT
+  _8 = (int) i_25;
+  _9 = ip6addr_36(D)->addr[1];
+  netif_34(D)->ip6_addr[_8].u_addr.ip6.addr[1] = _9;
+  # DEBUG BEGIN_STMT
+  _10 = (int) i_25;
+  _11 = ip6addr_36(D)->addr[2];
+  netif_34(D)->ip6_addr[_10].u_addr.ip6.addr[2] = _11;
+  # DEBUG BEGIN_STMT
+  _12 = (int) i_25;
+  _13 = ip6addr_36(D)->addr[3];
+  netif_34(D)->ip6_addr[_12].u_addr.ip6.addr[3] = _13;
+  # DEBUG BEGIN_STMT
+  _14 = (int) i_25;
+  _15 = ip6addr_36(D)->zone;
+  netif_34(D)->ip6_addr[_14].u_addr.ip6.zone = _15;
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _16 = (int) i_25;
+  netif_34(D)->ip6_addr[_16].type = 6;
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _17 = (int) i_25;
+  _18 = netif_34(D)->ip6_addr[_17].u_addr.ip6.addr[0];
+  _19 = _18 & 49407;
+  if (_19 == 33022)
+    goto <bb 13>; [INV]
+  else
+    goto <bb 14>; [INV]
+
+  <bb 13> :
+  _20 = netif_34(D)->num;
+  iftmp.18_51 = _20 + 1;
+  goto <bb 15>; [INV]
+
+  <bb 14> :
+  iftmp.18_50 = 0;
+
+  <bb 15> :
+  # iftmp.18_27 = PHI <iftmp.18_51(13), iftmp.18_50(14)>
+  _21 = (int) i_25;
+  netif_34(D)->ip6_addr[_21].u_addr.ip6.zone = iftmp.18_27;
+  # DEBUG BEGIN_STMT
+  netif_ip6_addr_set_state (netif_34(D), i_25, 8);
+  # DEBUG BEGIN_STMT
+  if (chosen_idx_40(D) != 0B)
+    goto <bb 16>; [INV]
+  else
+    goto <bb 17>; [INV]
+
+  <bb 16> :
+  # DEBUG BEGIN_STMT
+  *chosen_idx_40(D) = i_25;
+
+  <bb 17> :
+  # DEBUG BEGIN_STMT
+  _55 = 0;
+  // predicted unlikely by early return (on trees) predictor.
+  goto <bb 23>; [INV]
+
+  <bb 18> :
+  # DEBUG BEGIN_STMT
+  i.19_22 = i_25;
+  i.20_23 = (unsigned char) i.19_22;
+  _24 = i.20_23 + 1;
+  i_43 = (s8_t) _24;
+  # DEBUG i => i_43
+
+  <bb 19> :
+  # i_25 = PHI <i_39(10), i_43(18)>
+  # DEBUG i => i_25
+  # DEBUG BEGIN_STMT
+  if (i_25 <= 2)
+    goto <bb 11>; [INV]
+  else
+    goto <bb 20>; [INV]
+
+  <bb 20> :
+  # DEBUG BEGIN_STMT
+  if (chosen_idx_40(D) != 0B)
+    goto <bb 21>; [INV]
+  else
+    goto <bb 22>; [INV]
+
+  <bb 21> :
+  # DEBUG BEGIN_STMT
+  *chosen_idx_40(D) = -1;
+
+  <bb 22> :
+  # DEBUG BEGIN_STMT
+  _42 = -6;
+
+  <bb 23> :
+  # _26 = PHI <_57(9), _55(17), _42(22)>
+  return _26;
+
+}
+
+
+netif_create_ip6_linklocal_address (struct netif * netif, u8_t from_mac_48bit)
+{
+  u8_t addr_index;
+  u8_t i;
+  unsigned char _1;
+  unsigned char _2;
+  long unsigned int _3;
+  long unsigned int _4;
+  unsigned char _5;
+  long unsigned int _6;
+  long unsigned int _7;
+  long unsigned int _8;
+  unsigned char _9;
+  long unsigned int _10;
+  long unsigned int _11;
+  long unsigned int _12;
+  long unsigned int _13;
+  long unsigned int _14;
+  unsigned char _15;
+  long unsigned int _16;
+  long unsigned int _17;
+  unsigned char _18;
+  long unsigned int _19;
+  long unsigned int _20;
+  long unsigned int _21;
+  unsigned char _22;
+  long unsigned int _23;
+  long unsigned int _24;
+  long unsigned int _25;
+  long unsigned int _26;
+  unsigned char addr_index.15_27;
+  unsigned char _28;
+  int _29;
+  int _30;
+  int _31;
+  int _32;
+  unsigned char _33;
+  long unsigned int _34;
+  int _35;
+  int _36;
+  int _37;
+  long unsigned int _38;
+  int _39;
+  long unsigned int _40;
+  int _41;
+  long unsigned int _42;
+  unsigned char i.16_43;
+  unsigned char _44;
+  long unsigned int _45;
+  long unsigned int _46;
+  unsigned char _47;
+  u8_t iftmp.17_51;
+  long unsigned int _66;
+  u8_t iftmp.17_73;
+  u8_t iftmp.17_74;
+
+  <bb 2> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  if (netif_55(D) == 0B)
+    goto <bb 3>; [INV]
+  else
+    goto <bb 4>; [INV]
+
+  <bb 3> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  __asm__ __volatile__("BKPT #0
+	");
+  # DEBUG BEGIN_STMT
+  goto <bb 3>; [INV]
+
+  <bb 4> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  netif_55(D)->ip6_addr[0].u_addr.ip6.addr[0] = 33022;
+  # DEBUG BEGIN_STMT
+  netif_55(D)->ip6_addr[0].u_addr.ip6.addr[1] = 0;
+  # DEBUG BEGIN_STMT
+  if (from_mac_48bit_59(D) != 0)
+    goto <bb 5>; [INV]
+  else
+    goto <bb 6>; [INV]
+
+  <bb 5> :
+  # DEBUG BEGIN_STMT
+  _1 = netif_55(D)->hwaddr[0];
+  _2 = _1 ^ 2;
+  _3 = (long unsigned int) _2;
+  _4 = _3 << 24;
+  _5 = netif_55(D)->hwaddr[1];
+  _6 = (long unsigned int) _5;
+  _7 = _6 << 16;
+  _8 = _4 | _7;
+  _9 = netif_55(D)->hwaddr[2];
+  _10 = (long unsigned int) _9;
+  _11 = _10 << 8;
+  _12 = _8 | _11;
+  _13 = _12 | 255;
+  _14 = lwip_htonl (_13);
+  netif_55(D)->ip6_addr[0].u_addr.ip6.addr[2] = _14;
+  # DEBUG BEGIN_STMT
+  _15 = netif_55(D)->hwaddr[3];
+  _16 = (long unsigned int) _15;
+  _17 = _16 << 16;
+  _18 = netif_55(D)->hwaddr[4];
+  _19 = (long unsigned int) _18;
+  _20 = _19 << 8;
+  _21 = _17 | _20;
+  _22 = netif_55(D)->hwaddr[5];
+  _23 = (long unsigned int) _22;
+  _24 = _21 | _23;
+  _25 = _24 | 4261412864;
+  _26 = lwip_htonl (_25);
+  netif_55(D)->ip6_addr[0].u_addr.ip6.addr[3] = _26;
+  goto <bb 12>; [INV]
+
+  <bb 6> :
+  # DEBUG BEGIN_STMT
+  netif_55(D)->ip6_addr[0].u_addr.ip6.addr[2] = 0;
+  # DEBUG BEGIN_STMT
+  netif_55(D)->ip6_addr[0].u_addr.ip6.addr[3] = 0;
+  # DEBUG BEGIN_STMT
+  addr_index_62 = 3;
+  # DEBUG addr_index => addr_index_62
+  # DEBUG BEGIN_STMT
+  i_63 = 0;
+  # DEBUG i => i_63
+  goto <bb 10>; [INV]
+
+  <bb 7> :
+  # DEBUG BEGIN_STMT
+  if (i_48 == 4)
+    goto <bb 8>; [INV]
+  else
+    goto <bb 9>; [INV]
+
+  <bb 8> :
+  # DEBUG BEGIN_STMT
+  addr_index.15_27 = addr_index_50;
+  addr_index_64 = addr_index.15_27 + 255;
+  # DEBUG addr_index => addr_index_64
+
+  <bb 9> :
+  # addr_index_49 = PHI <addr_index_50(7), addr_index_64(8)>
+  # DEBUG addr_index => addr_index_49
+  # DEBUG BEGIN_STMT
+  _28 = netif_55(D)->hwaddr_len;
+  _29 = (int) _28;
+  _30 = (int) i_48;
+  _31 = _29 - _30;
+  _32 = _31 + -1;
+  _33 = netif_55(D)->hwaddr[_32];
+  _34 = (long unsigned int) _33;
+  _35 = (int) i_48;
+  _36 = _35 & 3;
+  _37 = _36 * 8;
+  _38 = _34 << _37;
+  _66 = lwip_htonl (_38);
+  _39 = (int) addr_index_49;
+  _40 = netif_55(D)->ip6_addr[0].u_addr.ip6.addr[_39];
+  _41 = (int) addr_index_49;
+  _42 = _66 | _40;
+  netif_55(D)->ip6_addr[0].u_addr.ip6.addr[_41] = _42;
+  # DEBUG BEGIN_STMT
+  i.16_43 = i_48;
+  i_68 = i.16_43 + 1;
+  # DEBUG i => i_68
+
+  <bb 10> :
+  # i_48 = PHI <i_63(6), i_68(9)>
+  # addr_index_50 = PHI <addr_index_62(6), addr_index_49(9)>
+  # DEBUG addr_index => addr_index_50
+  # DEBUG i => i_48
+  # DEBUG BEGIN_STMT
+  if (i_48 <= 7)
+    goto <bb 11>; [INV]
+  else
+    goto <bb 12>; [INV]
+
+  <bb 11> :
+  _44 = netif_55(D)->hwaddr_len;
+  if (i_48 < _44)
+    goto <bb 7>; [INV]
+  else
+    goto <bb 12>; [INV]
+
+  <bb 12> :
+  # DEBUG BEGIN_STMT
+  _45 = netif_55(D)->ip6_addr[0].u_addr.ip6.addr[0];
+  _46 = _45 & 49407;
+  if (_46 == 33022)
+    goto <bb 13>; [INV]
+  else
+    goto <bb 14>; [INV]
+
+  <bb 13> :
+  _47 = netif_55(D)->num;
+  iftmp.17_74 = _47 + 1;
+  goto <bb 15>; [INV]
+
+  <bb 14> :
+  iftmp.17_73 = 0;
+
+  <bb 15> :
+  # iftmp.17_51 = PHI <iftmp.17_74(13), iftmp.17_73(14)>
+  netif_55(D)->ip6_addr[0].u_addr.ip6.zone = iftmp.17_51;
+  # DEBUG BEGIN_STMT
+  netif_ip6_addr_set_state (netif_55(D), 0, 8);
+  return;
+
+}
+
+
+netif_get_ip6_addr_match (struct netif * netif, const struct ip6_addr_t * ip6addr)
+{
+  s8_t i;
+  unsigned char _1;
+  unsigned char _2;
+  unsigned char _3;
+  unsigned char _4;
+  int _5;
+  unsigned char _6;
+  int _7;
+  struct ip6_addr_t * _8;
+  long unsigned int _9;
+  long unsigned int _10;
+  int _11;
+  struct ip6_addr_t * _12;
+  long unsigned int _13;
+  long unsigned int _14;
+  int _15;
+  struct ip6_addr_t * _16;
+  long unsigned int _17;
+  long unsigned int _18;
+  int _19;
+  struct ip6_addr_t * _20;
+  long unsigned int _21;
+  long unsigned int _22;
+  signed char i.13_23;
+  unsigned char i.14_24;
+  unsigned char _25;
+  s8_t _27;
+  s8_t _33;
+  s8_t _35;
+  s8_t _36;
+
+  <bb 2> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  if (netif_30(D) == 0B)
+    goto <bb 3>; [INV]
+  else
+    goto <bb 4>; [INV]
+
+  <bb 3> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  __asm__ __volatile__("BKPT #0
+	");
+  # DEBUG BEGIN_STMT
+  goto <bb 3>; [INV]
+
+  <bb 4> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  if (ip6addr_32(D) == 0B)
+    goto <bb 5>; [INV]
+  else
+    goto <bb 6>; [INV]
+
+  <bb 5> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  __asm__ __volatile__("BKPT #0
+	");
+  # DEBUG BEGIN_STMT
+  goto <bb 5>; [INV]
+
+  <bb 6> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _1 = ip6addr_32(D)->zone;
+  if (_1 != 0)
+    goto <bb 7>; [INV]
+  else
+    goto <bb 9>; [INV]
+
+  <bb 7> :
+  _2 = ip6addr_32(D)->zone;
+  _3 = netif_30(D)->num;
+  _4 = _3 + 1;
+  if (_2 != _4)
+    goto <bb 8>; [INV]
+  else
+    goto <bb 9>; [INV]
+
+  <bb 8> :
+  # DEBUG BEGIN_STMT
+  _33 = -1;
+  // predicted unlikely by early return (on trees) predictor.
+  goto <bb 19>; [INV]
+
+  <bb 9> :
+  # DEBUG BEGIN_STMT
+  i_34 = 0;
+  # DEBUG i => i_34
+  goto <bb 17>; [INV]
+
+  <bb 10> :
+  # DEBUG BEGIN_STMT
+  _5 = (int) i_26;
+  _6 = netif_30(D)->ip6_addr_state[_5];
+  if (_6 != 0)
+    goto <bb 11>; [INV]
+  else
+    goto <bb 16>; [INV]
+
+  <bb 11> :
+  _7 = (int) i_26;
+  _8 = &netif_30(D)->ip6_addr[_7].u_addr.ip6;
+  _9 = MEM[(const struct ip6_addr_t *)_8].addr[0];
+  _10 = ip6addr_32(D)->addr[0];
+  if (_9 == _10)
+    goto <bb 12>; [INV]
+  else
+    goto <bb 16>; [INV]
+
+  <bb 12> :
+  _11 = (int) i_26;
+  _12 = &netif_30(D)->ip6_addr[_11].u_addr.ip6;
+  _13 = MEM[(const struct ip6_addr_t *)_12].addr[1];
+  _14 = ip6addr_32(D)->addr[1];
+  if (_13 == _14)
+    goto <bb 13>; [INV]
+  else
+    goto <bb 16>; [INV]
+
+  <bb 13> :
+  _15 = (int) i_26;
+  _16 = &netif_30(D)->ip6_addr[_15].u_addr.ip6;
+  _17 = MEM[(const struct ip6_addr_t *)_16].addr[2];
+  _18 = ip6addr_32(D)->addr[2];
+  if (_17 == _18)
+    goto <bb 14>; [INV]
+  else
+    goto <bb 16>; [INV]
+
+  <bb 14> :
+  _19 = (int) i_26;
+  _20 = &netif_30(D)->ip6_addr[_19].u_addr.ip6;
+  _21 = MEM[(const struct ip6_addr_t *)_20].addr[3];
+  _22 = ip6addr_32(D)->addr[3];
+  if (_21 == _22)
+    goto <bb 15>; [INV]
+  else
+    goto <bb 16>; [INV]
+
+  <bb 15> :
+  # DEBUG BEGIN_STMT
+  _36 = i_26;
+  // predicted unlikely by early return (on trees) predictor.
+  goto <bb 19>; [INV]
+
+  <bb 16> :
+  # DEBUG BEGIN_STMT
+  i.13_23 = i_26;
+  i.14_24 = (unsigned char) i.13_23;
+  _25 = i.14_24 + 1;
+  i_37 = (s8_t) _25;
+  # DEBUG i => i_37
+
+  <bb 17> :
+  # i_26 = PHI <i_34(9), i_37(16)>
+  # DEBUG i => i_26
+  # DEBUG BEGIN_STMT
+  if (i_26 <= 2)
+    goto <bb 10>; [INV]
+  else
+    goto <bb 18>; [INV]
+
+  <bb 18> :
+  # DEBUG BEGIN_STMT
+  _35 = -1;
+
+  <bb 19> :
+  # _27 = PHI <_33(8), _36(15), _35(18)>
+  return _27;
+
+}
+
+
+netif_ip6_addr_set_state (struct netif * netif, s8_t addr_idx, u8_t state)
+{
+  u8_t new_valid;
+  u8_t old_valid;
+  u8_t old_state;
+  int _1;
+  unsigned char _2;
+  unsigned int _3;
+  unsigned int _4;
+  int _5;
+  struct ip_addr_t * _6;
+  int _7;
+  unsigned char _8;
+  int _9;
+  int _10;
+
+  <bb 2> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  if (netif_17(D) == 0B)
+    goto <bb 3>; [INV]
+  else
+    goto <bb 4>; [INV]
+
+  <bb 3> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  __asm__ __volatile__("BKPT #0
+	");
+  # DEBUG BEGIN_STMT
+  goto <bb 3>; [INV]
+
+  <bb 4> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  if (addr_idx_19(D) > 2)
+    goto <bb 5>; [INV]
+  else
+    goto <bb 6>; [INV]
+
+  <bb 5> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  __asm__ __volatile__("BKPT #0
+	");
+  # DEBUG BEGIN_STMT
+  goto <bb 5>; [INV]
+
+  <bb 6> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _1 = (int) addr_idx_19(D);
+  old_state_20 = netif_17(D)->ip6_addr_state[_1];
+  # DEBUG old_state => old_state_20
+  # DEBUG BEGIN_STMT
+  if (old_state_20 != state_21(D))
+    goto <bb 7>; [INV]
+  else
+    goto <bb 16>; [INV]
+
+  <bb 7> :
+  # DEBUG BEGIN_STMT
+  old_valid_22 = old_state_20 & 16;
+  # DEBUG old_valid => old_valid_22
+  # DEBUG BEGIN_STMT
+  new_valid_23 = state_21(D) & 16;
+  # DEBUG new_valid => new_valid_23
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _2 = netif_17(D)->flags;
+  _3 = (unsigned int) _2;
+  _4 = _3 & 64;
+  if (_4 != 0)
+    goto <bb 8>; [INV]
+  else
+    goto <bb 9>; [INV]
+
+  <bb 8> :
+  # DEBUG BEGIN_STMT
+  nd6_adjust_mld_membership (netif_17(D), addr_idx_19(D), state_21(D));
+
+  <bb 9> :
+  # DEBUG BEGIN_STMT
+  if (old_valid_22 != 0)
+    goto <bb 10>; [INV]
+  else
+    goto <bb 12>; [INV]
+
+  <bb 10> :
+  if (new_valid_23 == 0)
+    goto <bb 11>; [INV]
+  else
+    goto <bb 12>; [INV]
+
+  <bb 11> :
+  # DEBUG BEGIN_STMT
+  _5 = (int) addr_idx_19(D);
+  _6 = &netif_17(D)->ip6_addr[_5];
+  netif_do_ip_addr_changed (_6, 0B);
+
+  <bb 12> :
+  # DEBUG BEGIN_STMT
+  _7 = (int) addr_idx_19(D);
+  netif_17(D)->ip6_addr_state[_7] = state_21(D);
+  # DEBUG BEGIN_STMT
+  if (old_valid_22 == 0)
+    goto <bb 13>; [INV]
+  else
+    goto <bb 15>; [INV]
+
+  <bb 13> :
+  if (new_valid_23 != 0)
+    goto <bb 14>; [INV]
+  else
+    goto <bb 15>; [INV]
+
+  <bb 14> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  netif_issue_reports (netif_17(D), 2);
+
+  <bb 15> :
+  # DEBUG BEGIN_STMT
+  _8 = old_state_20 ^ state_21(D);
+  _9 = (int) _8;
+  _10 = _9 & -8;
+
+  <bb 16> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  return;
+
+}
+
+
+netif_ip6_addr_set_parts (struct netif * netif, s8_t addr_idx, u32_t i0, u32_t i1, u32_t i2, u32_t i3)
+{
+  struct ip_addr_t new_ipaddr;
+  struct ip_addr_t old_addr;
+  int _1;
+  struct ip6_addr_t * _2;
+  long unsigned int _3;
+  int _4;
+  struct ip6_addr_t * _5;
+  long unsigned int _6;
+  int _7;
+  struct ip6_addr_t * _8;
+  long unsigned int _9;
+  int _10;
+  struct ip6_addr_t * _11;
+  long unsigned int _12;
+  int _13;
+  struct ip6_addr_t * _14;
+  unsigned char _15;
+  long unsigned int _16;
+  long unsigned int _17;
+  long unsigned int _18;
+  long unsigned int _19;
+  long unsigned int _20;
+  long unsigned int _21;
+  unsigned char _22;
+  int _23;
+  unsigned char _24;
+  int _25;
+  int _26;
+  int _27;
+  struct ip_addr_t * _28;
+  int _29;
+  unsigned char _30;
+  unsigned char _31;
+  int _32;
+  long unsigned int _33;
+  int _34;
+  long unsigned int _35;
+  int _36;
+  long unsigned int _37;
+  int _38;
+  long unsigned int _39;
+  int _40;
+  unsigned char _41;
+  int _42;
+  long unsigned int _43;
+  int _44;
+  int _45;
+  long unsigned int _46;
+  int _47;
+  long unsigned int _48;
+  int _49;
+  int _50;
+  unsigned char _51;
+  int _52;
+  int _53;
+  u8_t iftmp.12_54;
+  u8_t iftmp.12_79;
+  u8_t iftmp.12_80;
+
+  <bb 2> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  if (netif_60(D) == 0B)
+    goto <bb 3>; [INV]
+  else
+    goto <bb 4>; [INV]
+
+  <bb 3> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  __asm__ __volatile__("BKPT #0
+	");
+  # DEBUG BEGIN_STMT
+  goto <bb 3>; [INV]
+
+  <bb 4> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  if (addr_idx_62(D) > 2)
+    goto <bb 5>; [INV]
+  else
+    goto <bb 6>; [INV]
+
+  <bb 5> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  __asm__ __volatile__("BKPT #0
+	");
+  # DEBUG BEGIN_STMT
+  goto <bb 5>; [INV]
+
+  <bb 6> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _1 = (int) addr_idx_62(D);
+  _2 = &netif_60(D)->ip6_addr[_1].u_addr.ip6;
+  _3 = MEM[(const struct ip6_addr_t *)_2].addr[0];
+  old_addr.u_addr.ip6.addr[0] = _3;
+  # DEBUG BEGIN_STMT
+  _4 = (int) addr_idx_62(D);
+  _5 = &netif_60(D)->ip6_addr[_4].u_addr.ip6;
+  _6 = MEM[(const struct ip6_addr_t *)_5].addr[1];
+  old_addr.u_addr.ip6.addr[1] = _6;
+  # DEBUG BEGIN_STMT
+  _7 = (int) addr_idx_62(D);
+  _8 = &netif_60(D)->ip6_addr[_7].u_addr.ip6;
+  _9 = MEM[(const struct ip6_addr_t *)_8].addr[2];
+  old_addr.u_addr.ip6.addr[2] = _9;
+  # DEBUG BEGIN_STMT
+  _10 = (int) addr_idx_62(D);
+  _11 = &netif_60(D)->ip6_addr[_10].u_addr.ip6;
+  _12 = MEM[(const struct ip6_addr_t *)_11].addr[3];
+  old_addr.u_addr.ip6.addr[3] = _12;
+  # DEBUG BEGIN_STMT
+  _13 = (int) addr_idx_62(D);
+  _14 = &netif_60(D)->ip6_addr[_13].u_addr.ip6;
+  _15 = MEM[(const struct ip6_addr_t *)_14].zone;
+  old_addr.u_addr.ip6.zone = _15;
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  old_addr.type = 6;
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _16 = old_addr.u_addr.ip6.addr[0];
+  if (i0_69(D) != _16)
+    goto <bb 10>; [INV]
+  else
+    goto <bb 7>; [INV]
+
+  <bb 7> :
+  _17 = old_addr.u_addr.ip6.addr[1];
+  if (i1_70(D) != _17)
+    goto <bb 10>; [INV]
+  else
+    goto <bb 8>; [INV]
+
+  <bb 8> :
+  _18 = old_addr.u_addr.ip6.addr[2];
+  if (i2_71(D) != _18)
+    goto <bb 10>; [INV]
+  else
+    goto <bb 9>; [INV]
+
+  <bb 9> :
+  _19 = old_addr.u_addr.ip6.addr[3];
+  if (i3_72(D) != _19)
+    goto <bb 10>; [INV]
+  else
+    goto <bb 20>; [INV]
+
+  <bb 10> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  new_ipaddr.u_addr.ip6.addr[0] = i0_69(D);
+  # DEBUG BEGIN_STMT
+  new_ipaddr.u_addr.ip6.addr[1] = i1_70(D);
+  # DEBUG BEGIN_STMT
+  new_ipaddr.u_addr.ip6.addr[2] = i2_71(D);
+  # DEBUG BEGIN_STMT
+  new_ipaddr.u_addr.ip6.addr[3] = i3_72(D);
+  # DEBUG BEGIN_STMT
+  new_ipaddr.u_addr.ip6.zone = 0;
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  new_ipaddr.type = 6;
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _20 = new_ipaddr.u_addr.ip6.addr[0];
+  _21 = _20 & 49407;
+  if (_21 == 33022)
+    goto <bb 11>; [INV]
+  else
+    goto <bb 12>; [INV]
+
+  <bb 11> :
+  _22 = netif_60(D)->num;
+  iftmp.12_80 = _22 + 1;
+  goto <bb 13>; [INV]
+
+  <bb 12> :
+  iftmp.12_79 = 0;
+
+  <bb 13> :
+  # iftmp.12_54 = PHI <iftmp.12_80(11), iftmp.12_79(12)>
+  new_ipaddr.u_addr.ip6.zone = iftmp.12_54;
+  # DEBUG BEGIN_STMT
+  _23 = (int) addr_idx_62(D);
+  _24 = netif_60(D)->ip6_addr_state[_23];
+  _25 = (int) _24;
+  _26 = _25 & 16;
+  if (_26 != 0)
+    goto <bb 14>; [INV]
+  else
+    goto <bb 15>; [INV]
+
+  <bb 14> :
+  # DEBUG BEGIN_STMT
+  _27 = (int) addr_idx_62(D);
+  _28 = &netif_60(D)->ip6_addr[_27];
+  netif_do_ip_addr_changed (_28, &new_ipaddr);
+
+  <bb 15> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _29 = (int) addr_idx_62(D);
+  _30 = new_ipaddr.type;
+  netif_60(D)->ip6_addr[_29].type = _30;
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _31 = new_ipaddr.type;
+  if (_31 == 6)
+    goto <bb 16>; [INV]
+  else
+    goto <bb 17>; [INV]
+
+  <bb 16> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _32 = (int) addr_idx_62(D);
+  _33 = new_ipaddr.u_addr.ip6.addr[0];
+  netif_60(D)->ip6_addr[_32].u_addr.ip6.addr[0] = _33;
+  # DEBUG BEGIN_STMT
+  _34 = (int) addr_idx_62(D);
+  _35 = new_ipaddr.u_addr.ip6.addr[1];
+  netif_60(D)->ip6_addr[_34].u_addr.ip6.addr[1] = _35;
+  # DEBUG BEGIN_STMT
+  _36 = (int) addr_idx_62(D);
+  _37 = new_ipaddr.u_addr.ip6.addr[2];
+  netif_60(D)->ip6_addr[_36].u_addr.ip6.addr[2] = _37;
+  # DEBUG BEGIN_STMT
+  _38 = (int) addr_idx_62(D);
+  _39 = new_ipaddr.u_addr.ip6.addr[3];
+  netif_60(D)->ip6_addr[_38].u_addr.ip6.addr[3] = _39;
+  # DEBUG BEGIN_STMT
+  _40 = (int) addr_idx_62(D);
+  _41 = new_ipaddr.u_addr.ip6.zone;
+  netif_60(D)->ip6_addr[_40].u_addr.ip6.zone = _41;
+  # DEBUG BEGIN_STMT
+  goto <bb 18>; [INV]
+
+  <bb 17> :
+  # DEBUG BEGIN_STMT
+  _42 = (int) addr_idx_62(D);
+  _43 = new_ipaddr.u_addr.ip4.addr;
+  netif_60(D)->ip6_addr[_42].u_addr.ip4.addr = _43;
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _44 = (int) addr_idx_62(D);
+  netif_60(D)->ip6_addr[_44].u_addr.ip6.addr[3] = 0;
+  _45 = (int) addr_idx_62(D);
+  _46 = netif_60(D)->ip6_addr[_44].u_addr.ip6.addr[3];
+  netif_60(D)->ip6_addr[_45].u_addr.ip6.addr[2] = _46;
+  _47 = (int) addr_idx_62(D);
+  _48 = netif_60(D)->ip6_addr[_45].u_addr.ip6.addr[2];
+  netif_60(D)->ip6_addr[_47].u_addr.ip6.addr[1] = _48;
+  # DEBUG BEGIN_STMT
+  _49 = (int) addr_idx_62(D);
+  netif_60(D)->ip6_addr[_49].u_addr.ip6.zone = 0;
+
+  <bb 18> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _50 = (int) addr_idx_62(D);
+  _51 = netif_60(D)->ip6_addr_state[_50];
+  _52 = (int) _51;
+  _53 = _52 & 16;
+  if (_53 != 0)
+    goto <bb 19>; [INV]
+  else
+    goto <bb 20>; [INV]
+
+  <bb 19> :
+  # DEBUG BEGIN_STMT
+  netif_issue_reports (netif_60(D), 2);
+
+  <bb 20> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  old_addr ={v} {CLOBBER};
+  new_ipaddr ={v} {CLOBBER};
+  return;
+
+}
+
+
+netif_ip6_addr_set (struct netif * netif, s8_t addr_idx, const struct ip6_addr_t * addr6)
+{
+  long unsigned int _1;
+  long unsigned int _2;
+  long unsigned int _3;
+  long unsigned int _4;
+
+  <bb 2> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  if (netif_7(D) == 0B)
+    goto <bb 3>; [INV]
+  else
+    goto <bb 4>; [INV]
+
+  <bb 3> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  __asm__ __volatile__("BKPT #0
+	");
+  # DEBUG BEGIN_STMT
+  goto <bb 3>; [INV]
+
+  <bb 4> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  if (addr6_9(D) == 0B)
+    goto <bb 5>; [INV]
+  else
+    goto <bb 6>; [INV]
+
+  <bb 5> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  __asm__ __volatile__("BKPT #0
+	");
+  # DEBUG BEGIN_STMT
+  goto <bb 5>; [INV]
+
+  <bb 6> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _1 = addr6_9(D)->addr[0];
+  _2 = addr6_9(D)->addr[1];
+  _3 = addr6_9(D)->addr[2];
+  _4 = addr6_9(D)->addr[3];
+  netif_ip6_addr_set_parts (netif_7(D), addr_idx_10(D), _1, _2, _3, _4);
+  return;
+
+}
+
+
+netif_alloc_client_data_id ()
+{
+  u8_t result;
+  unsigned char netif_client_id.10_1;
+  unsigned char netif_client_id.11_2;
+  unsigned char _3;
+  u8_t _8;
+
+  <bb 2> :
+  # DEBUG BEGIN_STMT
+  result_6 = netif_client_id;
+  # DEBUG result => result_6
+  # DEBUG BEGIN_STMT
+  netif_client_id.10_1 = netif_client_id;
+  netif_client_id.11_2 = netif_client_id.10_1;
+  _3 = netif_client_id.11_2 + 1;
+  netif_client_id = _3;
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  if (result_6 != 0)
+    goto <bb 3>; [INV]
+  else
+    goto <bb 4>; [INV]
+
+  <bb 3> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  __asm__ __volatile__("BKPT #0
+	");
+  # DEBUG BEGIN_STMT
+  goto <bb 3>; [INV]
+
+  <bb 4> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _8 = result_6 + 2;
+  return _8;
+
+}
+
+
+netif_set_link_down (struct netif * netif)
+{
+  unsigned char _1;
+  unsigned int _2;
+  unsigned int _3;
+  unsigned char _4;
+  unsigned char _5;
+  short unsigned int _6;
+
+  <bb 2> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  if (netif_8(D) == 0B)
+    goto <bb 3>; [INV]
+  else
+    goto <bb 4>; [INV]
+
+  <bb 3> :
+  # DEBUG BEGIN_STMT
+  // predicted unlikely by early return (on trees) predictor.
+  goto <bb 6>; [INV]
+
+  <bb 4> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _1 = netif_8(D)->flags;
+  _2 = (unsigned int) _1;
+  _3 = _2 & 4;
+  if (_3 != 0)
+    goto <bb 5>; [INV]
+  else
+    goto <bb 6>; [INV]
+
+  <bb 5> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _4 = netif_8(D)->flags;
+  _5 = _4 & 251;
+  netif_8(D)->flags = _5;
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _6 = netif_8(D)->mtu;
+  netif_8(D)->mtu6 = _6;
+
+  <bb 6> :
+  # DEBUG BEGIN_STMT
+  return;
+
+}
+
+
+netif_set_link_up (struct netif * netif)
+{
+  unsigned char _1;
+  unsigned int _2;
+  unsigned int _3;
+  unsigned char _4;
+  unsigned char _5;
+
+  <bb 2> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  if (netif_7(D) == 0B)
+    goto <bb 3>; [INV]
+  else
+    goto <bb 4>; [INV]
+
+  <bb 3> :
+  # DEBUG BEGIN_STMT
+  // predicted unlikely by early return (on trees) predictor.
+  goto <bb 6>; [INV]
+
+  <bb 4> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _1 = netif_7(D)->flags;
+  _2 = (unsigned int) _1;
+  _3 = _2 & 4;
+  if (_3 == 0)
+    goto <bb 5>; [INV]
+  else
+    goto <bb 6>; [INV]
+
+  <bb 5> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _4 = netif_7(D)->flags;
+  _5 = _4 | 4;
+  netif_7(D)->flags = _5;
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  netif_issue_reports (netif_7(D), 3);
+  # DEBUG BEGIN_STMT
+  nd6_restart_netif (netif_7(D));
+
+  <bb 6> :
+  # DEBUG BEGIN_STMT
+  return;
+
+}
+
+
+netif_set_down (struct netif * netif)
+{
+  unsigned char _1;
+  unsigned int _2;
+  unsigned int _3;
+  unsigned char _4;
+  unsigned char _5;
+  long unsigned int _6;
+  long unsigned int _7;
+  unsigned char _8;
+  unsigned int _9;
+  unsigned int _10;
+
+  <bb 2> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  if (netif_13(D) == 0B)
+    goto <bb 3>; [INV]
+  else
+    goto <bb 4>; [INV]
+
+  <bb 3> :
+  # DEBUG BEGIN_STMT
+  // predicted unlikely by early return (on trees) predictor.
+  goto <bb 8>; [INV]
+
+  <bb 4> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _1 = netif_13(D)->flags;
+  _2 = (unsigned int) _1;
+  _3 = _2 & 1;
+  if (_3 != 0)
+    goto <bb 5>; [INV]
+  else
+    goto <bb 8>; [INV]
+
+  <bb 5> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _4 = netif_13(D)->flags;
+  _5 = _4 & 254;
+  netif_13(D)->flags = _5;
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _6 = sys_now ();
+  _7 = _6 / 10;
+  netif_13(D)->ts = _7;
+  # DEBUG BEGIN_STMT
+  _8 = netif_13(D)->flags;
+  _9 = (unsigned int) _8;
+  _10 = _9 & 8;
+  if (_10 != 0)
+    goto <bb 6>; [INV]
+  else
+    goto <bb 7>; [INV]
+
+  <bb 6> :
+  # DEBUG BEGIN_STMT
+  etharp_cleanup_netif (netif_13(D));
+
+  <bb 7> :
+  # DEBUG BEGIN_STMT
+  nd6_cleanup_netif (netif_13(D));
+
+  <bb 8> :
+  # DEBUG BEGIN_STMT
+  return;
+
+}
+
+
+netif_issue_reports (struct netif * netif, u8_t report_type)
+{
+  unsigned char _1;
+  unsigned int _2;
+  unsigned int _3;
+  int _4;
+  int _5;
+  struct ip4_addr_t * _6;
+  long unsigned int _7;
+  unsigned char _8;
+  unsigned int _9;
+  unsigned int _10;
+  struct ip4_addr_t * _11;
+  unsigned char _12;
+  unsigned int _13;
+  unsigned int _14;
+  int _15;
+  int _16;
+
+  <bb 2> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  if (netif_21(D) == 0B)
+    goto <bb 3>; [INV]
+  else
+    goto <bb 4>; [INV]
+
+  <bb 3> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  __asm__ __volatile__("BKPT #0
+	");
+  # DEBUG BEGIN_STMT
+  goto <bb 3>; [INV]
+
+  <bb 4> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _1 = netif_21(D)->flags;
+  _2 = (unsigned int) _1;
+  _3 = _2 & 5;
+  if (_3 != 5)
+    goto <bb 5>; [INV]
+  else
+    goto <bb 6>; [INV]
+
+  <bb 5> :
+  # DEBUG BEGIN_STMT
+  // predicted unlikely by early return (on trees) predictor.
+  goto <bb 14>; [INV]
+
+  <bb 6> :
+  # DEBUG BEGIN_STMT
+  _4 = (int) report_type_23(D);
+  _5 = _4 & 1;
+  if (_5 != 0)
+    goto <bb 7>; [INV]
+  else
+    goto <bb 12>; [INV]
+
+  <bb 7> :
+  _6 = &netif_21(D)->ip_addr.u_addr.ip4;
+  _7 = MEM[(const struct ip4_addr_t *)_6].addr;
+  if (_7 != 0)
+    goto <bb 8>; [INV]
+  else
+    goto <bb 12>; [INV]
+
+  <bb 8> :
+  # DEBUG BEGIN_STMT
+  _8 = netif_21(D)->flags;
+  _9 = (unsigned int) _8;
+  _10 = _9 & 8;
+  if (_10 != 0)
+    goto <bb 9>; [INV]
+  else
+    goto <bb 10>; [INV]
+
+  <bb 9> :
+  # DEBUG BEGIN_STMT
+  _11 = &netif_21(D)->ip_addr.u_addr.ip4;
+  etharp_request (netif_21(D), _11);
+
+  <bb 10> :
+  # DEBUG BEGIN_STMT
+  _12 = netif_21(D)->flags;
+  _13 = (unsigned int) _12;
+  _14 = _13 & 32;
+  if (_14 != 0)
+    goto <bb 11>; [INV]
+  else
+    goto <bb 12>; [INV]
+
+  <bb 11> :
+  # DEBUG BEGIN_STMT
+  igmp_report_groups (netif_21(D));
+
+  <bb 12> :
+  # DEBUG BEGIN_STMT
+  _15 = (int) report_type_23(D);
+  _16 = _15 & 2;
+  if (_16 != 0)
+    goto <bb 13>; [INV]
+  else
+    goto <bb 14>; [INV]
+
+  <bb 13> :
+  # DEBUG BEGIN_STMT
+  mld6_report_groups (netif_21(D));
+
+  <bb 14> :
+  return;
+
+}
+
+
+netif_set_up (struct netif * netif)
+{
+  unsigned char _1;
+  unsigned int _2;
+  unsigned int _3;
+  unsigned char _4;
+  unsigned char _5;
+  long unsigned int _6;
+  long unsigned int _7;
+
+  <bb 2> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  if (netif_9(D) == 0B)
+    goto <bb 3>; [INV]
+  else
+    goto <bb 4>; [INV]
+
+  <bb 3> :
+  # DEBUG BEGIN_STMT
+  // predicted unlikely by early return (on trees) predictor.
+  goto <bb 6>; [INV]
+
+  <bb 4> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _1 = netif_9(D)->flags;
+  _2 = (unsigned int) _1;
+  _3 = _2 & 1;
+  if (_3 == 0)
+    goto <bb 5>; [INV]
+  else
+    goto <bb 6>; [INV]
+
+  <bb 5> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _4 = netif_9(D)->flags;
+  _5 = _4 | 1;
+  netif_9(D)->flags = _5;
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _6 = sys_now ();
+  _7 = _6 / 10;
+  netif_9(D)->ts = _7;
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  netif_issue_reports (netif_9(D), 3);
+  # DEBUG BEGIN_STMT
+  nd6_restart_netif (netif_9(D));
+
+  <bb 6> :
+  return;
+
+}
+
+
+netif_set_default (struct netif * netif)
+{
+  <bb 2> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  netif_default = netif_2(D);
+  # DEBUG BEGIN_STMT
+  return;
+
+}
+
+
+netif_remove (struct netif * netif)
+{
+  struct netif * tmp_netif;
+  int i;
+  struct ip4_addr_t * _1;
+  long unsigned int _2;
+  struct ip_addr_t * _3;
+  unsigned char _4;
+  unsigned int _5;
+  unsigned int _6;
+  unsigned char _7;
+  int _8;
+  int _9;
+  struct ip_addr_t * _10;
+  unsigned char _11;
+  _Bool _12;
+  struct netif * netif_default.8_13;
+  struct netif * netif_list.9_14;
+  struct netif * _15;
+  struct netif * _16;
+  struct netif * _17;
+
+  <bb 2> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  if (netif_28(D) == 0B)
+    goto <bb 3>; [INV]
+  else
+    goto <bb 4>; [INV]
+
+  <bb 3> :
+  # DEBUG BEGIN_STMT
+  // predicted unlikely by early return (on trees) predictor.
+  goto <bb 26>; [INV]
+
+  <bb 4> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _1 = &netif_28(D)->ip_addr.u_addr.ip4;
+  _2 = MEM[(const struct ip4_addr_t *)_1].addr;
+  if (_2 != 0)
+    goto <bb 5>; [INV]
+  else
+    goto <bb 6>; [INV]
+
+  <bb 5> :
+  # DEBUG BEGIN_STMT
+  _3 = &netif_28(D)->ip_addr;
+  netif_do_ip_addr_changed (_3, 0B);
+
+  <bb 6> :
+  # DEBUG BEGIN_STMT
+  _4 = netif_28(D)->flags;
+  _5 = (unsigned int) _4;
+  _6 = _5 & 32;
+  if (_6 != 0)
+    goto <bb 7>; [INV]
+  else
+    goto <bb 8>; [INV]
+
+  <bb 7> :
+  # DEBUG BEGIN_STMT
+  igmp_stop (netif_28(D));
+
+  <bb 8> :
+  # DEBUG BEGIN_STMT
+  i_32 = 0;
+  # DEBUG i => i_32
+  goto <bb 12>; [INV]
+
+  <bb 9> :
+  # DEBUG BEGIN_STMT
+  _7 = netif_28(D)->ip6_addr_state[i_18];
+  _8 = (int) _7;
+  _9 = _8 & 16;
+  if (_9 != 0)
+    goto <bb 10>; [INV]
+  else
+    goto <bb 11>; [INV]
+
+  <bb 10> :
+  # DEBUG BEGIN_STMT
+  _10 = &netif_28(D)->ip6_addr[i_18];
+  netif_do_ip_addr_changed (_10, 0B);
+
+  <bb 11> :
+  # DEBUG BEGIN_STMT
+  i_41 = i_18 + 1;
+  # DEBUG i => i_41
+
+  <bb 12> :
+  # i_18 = PHI <i_32(8), i_41(11)>
+  # DEBUG i => i_18
+  # DEBUG BEGIN_STMT
+  if (i_18 <= 2)
+    goto <bb 9>; [INV]
+  else
+    goto <bb 13>; [INV]
+
+  <bb 13> :
+  # DEBUG BEGIN_STMT
+  mld6_stop (netif_28(D));
+  # DEBUG BEGIN_STMT
+  _11 = netif_28(D)->flags;
+  _12 = (_Bool) _11;
+  if (_12 != 0)
+    goto <bb 14>; [INV]
+  else
+    goto <bb 15>; [INV]
+
+  <bb 14> :
+  # DEBUG BEGIN_STMT
+  netif_set_down (netif_28(D));
+
+  <bb 15> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  netif_default.8_13 = netif_default;
+  if (netif_28(D) == netif_default.8_13)
+    goto <bb 16>; [INV]
+  else
+    goto <bb 17>; [INV]
+
+  <bb 16> :
+  # DEBUG BEGIN_STMT
+  netif_set_default (0B);
+
+  <bb 17> :
+  # DEBUG BEGIN_STMT
+  netif_list.9_14 = netif_list;
+  if (netif_28(D) == netif_list.9_14)
+    goto <bb 18>; [INV]
+  else
+    goto <bb 19>; [INV]
+
+  <bb 18> :
+  # DEBUG BEGIN_STMT
+  _15 = netif_28(D)->next;
+  netif_list = _15;
+  goto <bb 26>; [INV]
+
+  <bb 19> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  tmp_netif_36 = netif_list;
+  # DEBUG tmp_netif => tmp_netif_36
+  goto <bb 23>; [INV]
+
+  <bb 20> :
+  # DEBUG BEGIN_STMT
+  _16 = tmp_netif_19->next;
+  if (netif_28(D) == _16)
+    goto <bb 21>; [INV]
+  else
+    goto <bb 22>; [INV]
+
+  <bb 21> :
+  # DEBUG BEGIN_STMT
+  _17 = netif_28(D)->next;
+  tmp_netif_19->next = _17;
+  # DEBUG BEGIN_STMT
+  goto <bb 24>; [INV]
+
+  <bb 22> :
+  # DEBUG BEGIN_STMT
+  tmp_netif_37 = tmp_netif_19->next;
+  # DEBUG tmp_netif => tmp_netif_37
+
+  <bb 23> :
+  # tmp_netif_19 = PHI <tmp_netif_36(19), tmp_netif_37(22)>
+  # DEBUG tmp_netif => tmp_netif_19
+  # DEBUG BEGIN_STMT
+  if (tmp_netif_19 != 0B)
+    goto <bb 20>; [INV]
+  else
+    goto <bb 24>; [INV]
+
+  <bb 24> :
+  # DEBUG BEGIN_STMT
+  if (tmp_netif_19 == 0B)
+    goto <bb 25>; [INV]
+  else
+    goto <bb 26>; [INV]
+
+  <bb 25> :
+  # DEBUG BEGIN_STMT
+  // predicted unlikely by early return (on trees) predictor.
+
+  <bb 26> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  return;
+
+}
+
+
+netif_set_addr (struct netif * netif, const struct ip4_addr_t * ipaddr, const struct ip4_addr_t * netmask, const struct ip4_addr_t * gw)
+{
+  int remove;
+  struct ip_addr_t old_addr;
+  struct ip_addr_t * old_gw;
+  struct ip_addr_t * old_nm;
+  long unsigned int _1;
+  int _2;
+  int _3;
+  int _4;
+  int _5;
+  int iftmp.7_9;
+  int iftmp.7_21;
+  int iftmp.7_22;
+
+  <bb 2> :
+  # DEBUG BEGIN_STMT
+  old_nm_12 = 0B;
+  # DEBUG old_nm => old_nm_12
+  # DEBUG BEGIN_STMT
+  old_gw_13 = 0B;
+  # DEBUG old_gw => old_gw_13
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  if (ipaddr_14(D) == 0B)
+    goto <bb 3>; [INV]
+  else
+    goto <bb 4>; [INV]
+
+  <bb 3> :
+  # DEBUG BEGIN_STMT
+  ipaddr_15 = &ip_addr_any.u_addr.ip4;
+  # DEBUG ipaddr => ipaddr_15
+
+  <bb 4> :
+  # ipaddr_6 = PHI <ipaddr_14(D)(2), ipaddr_15(3)>
+  # DEBUG ipaddr => ipaddr_6
+  # DEBUG BEGIN_STMT
+  if (netmask_16(D) == 0B)
+    goto <bb 5>; [INV]
+  else
+    goto <bb 6>; [INV]
+
+  <bb 5> :
+  # DEBUG BEGIN_STMT
+  netmask_17 = &ip_addr_any.u_addr.ip4;
+  # DEBUG netmask => netmask_17
+
+  <bb 6> :
+  # netmask_7 = PHI <netmask_16(D)(4), netmask_17(5)>
+  # DEBUG netmask => netmask_7
+  # DEBUG BEGIN_STMT
+  if (gw_18(D) == 0B)
+    goto <bb 7>; [INV]
+  else
+    goto <bb 8>; [INV]
+
+  <bb 7> :
+  # DEBUG BEGIN_STMT
+  gw_19 = &ip_addr_any.u_addr.ip4;
+  # DEBUG gw => gw_19
+
+  <bb 8> :
+  # gw_8 = PHI <gw_18(D)(6), gw_19(7)>
+  # DEBUG gw => gw_8
+  # DEBUG BEGIN_STMT
+  if (ipaddr_6 == 0B)
+    goto <bb 10>; [INV]
+  else
+    goto <bb 9>; [INV]
+
+  <bb 9> :
+  _1 = ipaddr_6->addr;
+  if (_1 == 0)
+    goto <bb 10>; [INV]
+  else
+    goto <bb 11>; [INV]
+
+  <bb 10> :
+  iftmp.7_22 = 1;
+  goto <bb 12>; [INV]
+
+  <bb 11> :
+  iftmp.7_21 = 0;
+
+  <bb 12> :
+  # iftmp.7_9 = PHI <iftmp.7_22(10), iftmp.7_21(11)>
+  remove_23 = iftmp.7_9;
+  # DEBUG remove => remove_23
+  # DEBUG BEGIN_STMT
+  if (remove_23 != 0)
+    goto <bb 13>; [INV]
+  else
+    goto <bb 14>; [INV]
+
+  <bb 13> :
+  # DEBUG BEGIN_STMT
+  _2 = netif_do_set_ipaddr (netif_24(D), ipaddr_6, &old_addr);
+
+  <bb 14> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _3 = netif_do_set_netmask (netif_24(D), netmask_7, old_nm_12);
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _4 = netif_do_set_gw (netif_24(D), gw_8, old_gw_13);
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  if (remove_23 == 0)
+    goto <bb 15>; [INV]
+  else
+    goto <bb 16>; [INV]
+
+  <bb 15> :
+  # DEBUG BEGIN_STMT
+  _5 = netif_do_set_ipaddr (netif_24(D), ipaddr_6, &old_addr);
+
+  <bb 16> :
+  # DEBUG BEGIN_STMT
+  old_addr ={v} {CLOBBER};
+  return;
+
+}
+
+
+netif_set_gw (struct netif * netif, const struct ip4_addr_t * gw)
+{
+  struct ip_addr_t * old_gw;
+  int _1;
+
+  <bb 2> :
+  # DEBUG BEGIN_STMT
+  old_gw_4 = 0B;
+  # DEBUG old_gw => old_gw_4
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  if (netif_5(D) == 0B)
+    goto <bb 3>; [INV]
+  else
+    goto <bb 4>; [INV]
+
+  <bb 3> :
+  # DEBUG BEGIN_STMT
+  // predicted unlikely by early return (on trees) predictor.
+  goto <bb 7>; [INV]
+
+  <bb 4> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  if (gw_6(D) == 0B)
+    goto <bb 5>; [INV]
+  else
+    goto <bb 6>; [INV]
+
+  <bb 5> :
+  # DEBUG BEGIN_STMT
+  gw_7 = &ip_addr_any.u_addr.ip4;
+  # DEBUG gw => gw_7
+
+  <bb 6> :
+  # gw_2 = PHI <gw_6(D)(4), gw_7(5)>
+  # DEBUG gw => gw_2
+  # DEBUG BEGIN_STMT
+  _1 = netif_do_set_gw (netif_5(D), gw_2, old_gw_4);
+
+  <bb 7> :
+  # DEBUG BEGIN_STMT
+  return;
+
+}
+
+
+netif_do_set_gw (struct netif * netif, const struct ip4_addr_t * gw, struct ip_addr_t * old_gw)
+{
+  long unsigned int _1;
+  struct ip4_addr_t * _2;
+  long unsigned int _3;
+  const long unsigned int iftmp.6_4;
+  int _5;
+  int _10;
+  const long unsigned int iftmp.6_11;
+  const long unsigned int iftmp.6_12;
+  int _15;
+
+  <bb 2> :
+  # DEBUG BEGIN_STMT
+  _1 = gw_8(D)->addr;
+  _2 = &netif_9(D)->gw.u_addr.ip4;
+  _3 = MEM[(const struct ip4_addr_t *)_2].addr;
+  if (_1 != _3)
+    goto <bb 3>; [INV]
+  else
+    goto <bb 7>; [INV]
+
+  <bb 3> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  if (gw_8(D) != 0B)
+    goto <bb 4>; [INV]
+  else
+    goto <bb 5>; [INV]
+
+  <bb 4> :
+  iftmp.6_12 = gw_8(D)->addr;
+  goto <bb 6>; [INV]
+
+  <bb 5> :
+  iftmp.6_11 = 0;
+
+  <bb 6> :
+  # iftmp.6_4 = PHI <iftmp.6_12(4), iftmp.6_11(5)>
+  netif_9(D)->gw.u_addr.ip4.addr = iftmp.6_4;
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  netif_9(D)->gw.type = 0;
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _15 = 1;
+  // predicted unlikely by early return (on trees) predictor.
+  goto <bb 8>; [INV]
+
+  <bb 7> :
+  # DEBUG BEGIN_STMT
+  _10 = 0;
+
+  <bb 8> :
+  # _5 = PHI <_15(6), _10(7)>
+  return _5;
+
+}
+
+
+netif_set_netmask (struct netif * netif, const struct ip4_addr_t * netmask)
+{
+  struct ip_addr_t * old_nm;
+  int _1;
+
+  <bb 2> :
+  # DEBUG BEGIN_STMT
+  old_nm_4 = 0B;
+  # DEBUG old_nm => old_nm_4
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  if (netif_5(D) == 0B)
+    goto <bb 3>; [INV]
+  else
+    goto <bb 4>; [INV]
+
+  <bb 3> :
+  # DEBUG BEGIN_STMT
+  // predicted unlikely by early return (on trees) predictor.
+  goto <bb 7>; [INV]
+
+  <bb 4> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  if (netmask_6(D) == 0B)
+    goto <bb 5>; [INV]
+  else
+    goto <bb 6>; [INV]
+
+  <bb 5> :
+  # DEBUG BEGIN_STMT
+  netmask_7 = &ip_addr_any.u_addr.ip4;
+  # DEBUG netmask => netmask_7
+
+  <bb 6> :
+  # netmask_2 = PHI <netmask_6(D)(4), netmask_7(5)>
+  # DEBUG netmask => netmask_2
+  # DEBUG BEGIN_STMT
+  _1 = netif_do_set_netmask (netif_5(D), netmask_2, old_nm_4);
+
+  <bb 7> :
+  # DEBUG BEGIN_STMT
+  return;
+
+}
+
+
+netif_do_set_netmask (struct netif * netif, const struct ip4_addr_t * netmask, struct ip_addr_t * old_nm)
+{
+  long unsigned int _1;
+  struct ip4_addr_t * _2;
+  long unsigned int _3;
+  const long unsigned int iftmp.5_4;
+  int _5;
+  int _10;
+  const long unsigned int iftmp.5_11;
+  const long unsigned int iftmp.5_12;
+  int _15;
+
+  <bb 2> :
+  # DEBUG BEGIN_STMT
+  _1 = netmask_8(D)->addr;
+  _2 = &netif_9(D)->netmask.u_addr.ip4;
+  _3 = MEM[(const struct ip4_addr_t *)_2].addr;
+  if (_1 != _3)
+    goto <bb 3>; [INV]
+  else
+    goto <bb 7>; [INV]
+
+  <bb 3> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  if (netmask_8(D) != 0B)
+    goto <bb 4>; [INV]
+  else
+    goto <bb 5>; [INV]
+
+  <bb 4> :
+  iftmp.5_12 = netmask_8(D)->addr;
+  goto <bb 6>; [INV]
+
+  <bb 5> :
+  iftmp.5_11 = 0;
+
+  <bb 6> :
+  # iftmp.5_4 = PHI <iftmp.5_12(4), iftmp.5_11(5)>
+  netif_9(D)->netmask.u_addr.ip4.addr = iftmp.5_4;
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  netif_9(D)->netmask.type = 0;
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _15 = 1;
+  // predicted unlikely by early return (on trees) predictor.
+  goto <bb 8>; [INV]
+
+  <bb 7> :
+  # DEBUG BEGIN_STMT
+  _10 = 0;
+
+  <bb 8> :
+  # _5 = PHI <_15(6), _10(7)>
+  return _5;
+
+}
+
+
+netif_set_ipaddr (struct netif * netif, const struct ip4_addr_t * ipaddr)
+{
+  struct ip_addr_t old_addr;
+  int _1;
+
+  <bb 2> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  if (netif_4(D) == 0B)
+    goto <bb 3>; [INV]
+  else
+    goto <bb 4>; [INV]
+
+  <bb 3> :
+  # DEBUG BEGIN_STMT
+  // predicted unlikely by early return (on trees) predictor.
+  old_addr ={v} {CLOBBER};
+  goto <bb 7>; [INV]
+
+  <bb 4> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  if (ipaddr_5(D) == 0B)
+    goto <bb 5>; [INV]
+  else
+    goto <bb 6>; [INV]
+
+  <bb 5> :
+  # DEBUG BEGIN_STMT
+  ipaddr_6 = &ip_addr_any.u_addr.ip4;
+  # DEBUG ipaddr => ipaddr_6
+
+  <bb 6> :
+  # ipaddr_2 = PHI <ipaddr_5(D)(4), ipaddr_6(5)>
+  # DEBUG ipaddr => ipaddr_2
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _1 = netif_do_set_ipaddr (netif_4(D), ipaddr_2, &old_addr);
+  # DEBUG BEGIN_STMT
+  old_addr ={v} {CLOBBER};
+
+  <bb 7> :
+  return;
+
+}
+
+
+netif_do_set_ipaddr (struct netif * netif, const struct ip4_addr_t * ipaddr, struct ip_addr_t * old_addr)
+{
+  struct ip_addr_t new_addr;
+  long unsigned int _1;
+  struct ip4_addr_t * _2;
+  long unsigned int _3;
+  struct ip_addr_t * _4;
+  unsigned char _5;
+  struct ip_addr_t * _6;
+  unsigned char _7;
+  struct ip_addr_t * _8;
+  long unsigned int _9;
+  struct ip_addr_t * _10;
+  long unsigned int _11;
+  struct ip_addr_t * _12;
+  long unsigned int _13;
+  struct ip_addr_t * _14;
+  long unsigned int _15;
+  struct ip_addr_t * _16;
+  unsigned char _17;
+  struct ip_addr_t * _18;
+  long unsigned int _19;
+  long unsigned int _20;
+  long unsigned int _21;
+  const long unsigned int iftmp.4_22;
+  int _23;
+  int _32;
+  const long unsigned int iftmp.4_47;
+  const long unsigned int iftmp.4_48;
+  int _52;
+
+  <bb 2> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  if (ipaddr_28(D) == 0B)
+    goto <bb 3>; [INV]
+  else
+    goto <bb 4>; [INV]
+
+  <bb 3> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  __asm__ __volatile__("BKPT #0
+	");
+  # DEBUG BEGIN_STMT
+  goto <bb 3>; [INV]
+
+  <bb 4> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  if (old_addr_30(D) == 0B)
+    goto <bb 5>; [INV]
+  else
+    goto <bb 6>; [INV]
+
+  <bb 5> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  __asm__ __volatile__("BKPT #0
+	");
+  # DEBUG BEGIN_STMT
+  goto <bb 5>; [INV]
+
+  <bb 6> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _1 = ipaddr_28(D)->addr;
+  _2 = &netif_31(D)->ip_addr.u_addr.ip4;
+  _3 = MEM[(const struct ip4_addr_t *)_2].addr;
+  if (_1 != _3)
+    goto <bb 7>; [INV]
+  else
+    goto <bb 14>; [INV]
+
+  <bb 7> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  new_addr.u_addr.ip4 = *ipaddr_28(D);
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  new_addr.type = 0;
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _4 = &netif_31(D)->ip_addr;
+  _5 = MEM[(const struct ip_addr_t *)_4].type;
+  old_addr_30(D)->type = _5;
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _6 = &netif_31(D)->ip_addr;
+  _7 = MEM[(const struct ip_addr_t *)_6].type;
+  if (_7 == 6)
+    goto <bb 8>; [INV]
+  else
+    goto <bb 9>; [INV]
+
+  <bb 8> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _8 = &netif_31(D)->ip_addr;
+  _9 = MEM[(const struct ip_addr_t *)_8].u_addr.ip6.addr[0];
+  old_addr_30(D)->u_addr.ip6.addr[0] = _9;
+  # DEBUG BEGIN_STMT
+  _10 = &netif_31(D)->ip_addr;
+  _11 = MEM[(const struct ip_addr_t *)_10].u_addr.ip6.addr[1];
+  old_addr_30(D)->u_addr.ip6.addr[1] = _11;
+  # DEBUG BEGIN_STMT
+  _12 = &netif_31(D)->ip_addr;
+  _13 = MEM[(const struct ip_addr_t *)_12].u_addr.ip6.addr[2];
+  old_addr_30(D)->u_addr.ip6.addr[2] = _13;
+  # DEBUG BEGIN_STMT
+  _14 = &netif_31(D)->ip_addr;
+  _15 = MEM[(const struct ip_addr_t *)_14].u_addr.ip6.addr[3];
+  old_addr_30(D)->u_addr.ip6.addr[3] = _15;
+  # DEBUG BEGIN_STMT
+  _16 = &netif_31(D)->ip_addr;
+  _17 = MEM[(const struct ip_addr_t *)_16].u_addr.ip6.zone;
+  old_addr_30(D)->u_addr.ip6.zone = _17;
+  # DEBUG BEGIN_STMT
+  goto <bb 10>; [INV]
+
+  <bb 9> :
+  # DEBUG BEGIN_STMT
+  _18 = &netif_31(D)->ip_addr;
+  _19 = MEM[(const struct ip_addr_t *)_18].u_addr.ip4.addr;
+  old_addr_30(D)->u_addr.ip4.addr = _19;
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  old_addr_30(D)->u_addr.ip6.addr[3] = 0;
+  _20 = old_addr_30(D)->u_addr.ip6.addr[3];
+  old_addr_30(D)->u_addr.ip6.addr[2] = _20;
+  _21 = old_addr_30(D)->u_addr.ip6.addr[2];
+  old_addr_30(D)->u_addr.ip6.addr[1] = _21;
+  # DEBUG BEGIN_STMT
+  old_addr_30(D)->u_addr.ip6.zone = 0;
+
+  <bb 10> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  netif_do_ip_addr_changed (old_addr_30(D), &new_addr);
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  if (ipaddr_28(D) != 0B)
+    goto <bb 11>; [INV]
+  else
+    goto <bb 12>; [INV]
+
+  <bb 11> :
+  iftmp.4_48 = ipaddr_28(D)->addr;
+  goto <bb 13>; [INV]
+
+  <bb 12> :
+  iftmp.4_47 = 0;
+
+  <bb 13> :
+  # iftmp.4_22 = PHI <iftmp.4_48(11), iftmp.4_47(12)>
+  netif_31(D)->ip_addr.u_addr.ip4.addr = iftmp.4_22;
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  netif_31(D)->ip_addr.type = 0;
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  netif_issue_reports (netif_31(D), 1);
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _52 = 1;
+  // predicted unlikely by early return (on trees) predictor.
+  new_addr ={v} {CLOBBER};
+  goto <bb 15>; [INV]
+
+  <bb 14> :
+  # DEBUG BEGIN_STMT
+  _32 = 0;
+
+  <bb 15> :
+  # _23 = PHI <_52(13), _32(14)>
+  return _23;
+
+}
+
+
+netif_do_ip_addr_changed (const struct ip_addr_t * old_addr, const struct ip_addr_t * new_addr)
+{
+  <bb 2> :
+  # DEBUG BEGIN_STMT
+  tcp_netif_ip_addr_changed (old_addr_2(D), new_addr_3(D));
+  # DEBUG BEGIN_STMT
+  udp_netif_ip_addr_changed (old_addr_2(D), new_addr_3(D));
+  # DEBUG BEGIN_STMT
+  raw_netif_ip_addr_changed (old_addr_2(D), new_addr_3(D));
+  return;
+
+}
+
+
+netif_add (struct netif * netif, const struct ip4_addr_t * ipaddr, const struct ip4_addr_t * netmask, const struct ip4_addr_t * gw, void * state, err_t (*netif_init_fn) (struct netif *) init, err_t (*netif_input_fn) (struct pbuf *, struct netif *) input)
+{
+  int num_netifs;
+  struct netif * netif2;
+  s8_t i;
+  struct ip_addr_t * _1;
+  struct ip_addr_t * _2;
+  struct ip_addr_t * _3;
+  int _4;
+  int _5;
+  int _6;
+  int _7;
+  int _8;
+  int _9;
+  struct ip_addr_t * _10;
+  int _11;
+  int _12;
+  int _13;
+  int _14;
+  signed char i.0_15;
+  unsigned char i.1_16;
+  unsigned char _17;
+  void *[3] * _18;
+  unsigned char netif_num.2_19;
+  signed char _20;
+  short unsigned int _21;
+  unsigned char _22;
+  unsigned char _23;
+  unsigned char _24;
+  unsigned char _25;
+  unsigned char _26;
+  unsigned char _27;
+  unsigned char _28;
+  unsigned char _29;
+  unsigned char _30;
+  struct netif * netif_list.3_31;
+  unsigned char _32;
+  unsigned int _33;
+  unsigned int _34;
+  struct netif * _41;
+  struct netif * _113;
+  struct netif * _114;
+  struct netif * _125;
+  struct netif * _126;
+
+  <bb 2> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  if (netif_55(D) == 0B)
+    goto <bb 3>; [INV]
+  else
+    goto <bb 4>; [INV]
+
+  <bb 3> :
+  # DEBUG BEGIN_STMT
+  _126 = 0B;
+  // predicted unlikely by early return (on trees) predictor.
+  goto <bb 44>; [INV]
+
+  <bb 4> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  if (init_56(D) == 0B)
+    goto <bb 5>; [INV]
+  else
+    goto <bb 6>; [INV]
+
+  <bb 5> :
+  # DEBUG BEGIN_STMT
+  _125 = 0B;
+  // predicted unlikely by early return (on trees) predictor.
+  goto <bb 44>; [INV]
+
+  <bb 6> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  if (ipaddr_57(D) == 0B)
+    goto <bb 7>; [INV]
+  else
+    goto <bb 8>; [INV]
+
+  <bb 7> :
+  # DEBUG BEGIN_STMT
+  ipaddr_58 = &ip_addr_any.u_addr.ip4;
+  # DEBUG ipaddr => ipaddr_58
+
+  <bb 8> :
+  # ipaddr_35 = PHI <ipaddr_57(D)(6), ipaddr_58(7)>
+  # DEBUG ipaddr => ipaddr_35
+  # DEBUG BEGIN_STMT
+  if (netmask_59(D) == 0B)
+    goto <bb 9>; [INV]
+  else
+    goto <bb 10>; [INV]
+
+  <bb 9> :
+  # DEBUG BEGIN_STMT
+  netmask_60 = &ip_addr_any.u_addr.ip4;
+  # DEBUG netmask => netmask_60
+
+  <bb 10> :
+  # netmask_36 = PHI <netmask_59(D)(8), netmask_60(9)>
+  # DEBUG netmask => netmask_36
+  # DEBUG BEGIN_STMT
+  if (gw_61(D) == 0B)
+    goto <bb 11>; [INV]
+  else
+    goto <bb 12>; [INV]
+
+  <bb 11> :
+  # DEBUG BEGIN_STMT
+  gw_62 = &ip_addr_any.u_addr.ip4;
+  # DEBUG gw => gw_62
+
+  <bb 12> :
+  # gw_37 = PHI <gw_61(D)(10), gw_62(11)>
+  # DEBUG gw => gw_37
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  netif_55(D)->ip_addr.u_addr.ip6.addr[0] = 0;
+  # DEBUG BEGIN_STMT
+  netif_55(D)->ip_addr.u_addr.ip6.addr[1] = 0;
+  # DEBUG BEGIN_STMT
+  netif_55(D)->ip_addr.u_addr.ip6.addr[2] = 0;
+  # DEBUG BEGIN_STMT
+  netif_55(D)->ip_addr.u_addr.ip6.addr[3] = 0;
+  # DEBUG BEGIN_STMT
+  netif_55(D)->ip_addr.u_addr.ip6.zone = 0;
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _1 = &netif_55(D)->ip_addr;
+  if (_1 != 0B)
+    goto <bb 13>; [INV]
+  else
+    goto <bb 14>; [INV]
+
+  <bb 13> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  netif_55(D)->ip_addr.type = 0;
+
+  <bb 14> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  netif_55(D)->netmask.u_addr.ip6.addr[0] = 0;
+  # DEBUG BEGIN_STMT
+  netif_55(D)->netmask.u_addr.ip6.addr[1] = 0;
+  # DEBUG BEGIN_STMT
+  netif_55(D)->netmask.u_addr.ip6.addr[2] = 0;
+  # DEBUG BEGIN_STMT
+  netif_55(D)->netmask.u_addr.ip6.addr[3] = 0;
+  # DEBUG BEGIN_STMT
+  netif_55(D)->netmask.u_addr.ip6.zone = 0;
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _2 = &netif_55(D)->netmask;
+  if (_2 != 0B)
+    goto <bb 15>; [INV]
+  else
+    goto <bb 16>; [INV]
+
+  <bb 15> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  netif_55(D)->netmask.type = 0;
+
+  <bb 16> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  netif_55(D)->gw.u_addr.ip6.addr[0] = 0;
+  # DEBUG BEGIN_STMT
+  netif_55(D)->gw.u_addr.ip6.addr[1] = 0;
+  # DEBUG BEGIN_STMT
+  netif_55(D)->gw.u_addr.ip6.addr[2] = 0;
+  # DEBUG BEGIN_STMT
+  netif_55(D)->gw.u_addr.ip6.addr[3] = 0;
+  # DEBUG BEGIN_STMT
+  netif_55(D)->gw.u_addr.ip6.zone = 0;
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _3 = &netif_55(D)->gw;
+  if (_3 != 0B)
+    goto <bb 17>; [INV]
+  else
+    goto <bb 18>; [INV]
+
+  <bb 17> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  netif_55(D)->gw.type = 0;
+
+  <bb 18> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  netif_55(D)->output = netif_null_output_ip4;
+  # DEBUG BEGIN_STMT
+  i_83 = 0;
+  # DEBUG i => i_83
+  goto <bb 22>; [INV]
+
+  <bb 19> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _4 = (int) i_38;
+  netif_55(D)->ip6_addr[_4].u_addr.ip6.addr[0] = 0;
+  # DEBUG BEGIN_STMT
+  _5 = (int) i_38;
+  netif_55(D)->ip6_addr[_5].u_addr.ip6.addr[1] = 0;
+  # DEBUG BEGIN_STMT
+  _6 = (int) i_38;
+  netif_55(D)->ip6_addr[_6].u_addr.ip6.addr[2] = 0;
+  # DEBUG BEGIN_STMT
+  _7 = (int) i_38;
+  netif_55(D)->ip6_addr[_7].u_addr.ip6.addr[3] = 0;
+  # DEBUG BEGIN_STMT
+  _8 = (int) i_38;
+  netif_55(D)->ip6_addr[_8].u_addr.ip6.zone = 0;
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _9 = (int) i_38;
+  _10 = &netif_55(D)->ip6_addr[_9];
+  if (_10 != 0B)
+    goto <bb 20>; [INV]
+  else
+    goto <bb 21>; [INV]
+
+  <bb 20> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _11 = (int) i_38;
+  netif_55(D)->ip6_addr[_11].type = 6;
+
+  <bb 21> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _12 = (int) i_38;
+  netif_55(D)->ip6_addr_state[_12] = 0;
+  # DEBUG BEGIN_STMT
+  _13 = (int) i_38;
+  netif_55(D)->ip6_addr_valid_life[_13] = 0;
+  # DEBUG BEGIN_STMT
+  _14 = (int) i_38;
+  netif_55(D)->ip6_addr_pref_life[_14] = 0;
+  # DEBUG BEGIN_STMT
+  i.0_15 = i_38;
+  i.1_16 = (unsigned char) i.0_15;
+  _17 = i.1_16 + 1;
+  i_124 = (s8_t) _17;
+  # DEBUG i => i_124
+
+  <bb 22> :
+  # i_38 = PHI <i_83(18), i_124(21)>
+  # DEBUG i => i_38
+  # DEBUG BEGIN_STMT
+  if (i_38 <= 2)
+    goto <bb 19>; [INV]
+  else
+    goto <bb 23>; [INV]
+
+  <bb 23> :
+  # DEBUG BEGIN_STMT
+  netif_55(D)->output_ip6 = netif_null_output_ip6;
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  netif_55(D)->mtu = 0;
+  # DEBUG BEGIN_STMT
+  netif_55(D)->flags = 0;
+  # DEBUG BEGIN_STMT
+  _18 = &netif_55(D)->client_data;
+  memset (_18, 0, 12);
+  # DEBUG BEGIN_STMT
+  netif_55(D)->ip6_autoconfig_enabled = 0;
+  # DEBUG BEGIN_STMT
+  nd6_restart_netif (netif_55(D));
+  # DEBUG BEGIN_STMT
+  netif_55(D)->igmp_mac_filter = 0B;
+  # DEBUG BEGIN_STMT
+  netif_55(D)->mld_mac_filter = 0B;
+  # DEBUG BEGIN_STMT
+  netif_55(D)->state = state_92(D);
+  # DEBUG BEGIN_STMT
+  netif_num.2_19 = netif_num;
+  netif_55(D)->num = netif_num.2_19;
+  # DEBUG BEGIN_STMT
+  netif_55(D)->input = input_95(D);
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  netif_set_addr (netif_55(D), ipaddr_35, netmask_36, gw_37);
+  # DEBUG BEGIN_STMT
+  _20 = init_56(D) (netif_55(D));
+  if (_20 != 0)
+    goto <bb 24>; [INV]
+  else
+    goto <bb 25>; [INV]
+
+  <bb 24> :
+  # DEBUG BEGIN_STMT
+  _114 = 0B;
+  // predicted unlikely by early return (on trees) predictor.
+  goto <bb 44>; [INV]
+
+  <bb 25> :
+  # DEBUG BEGIN_STMT
+  _21 = netif_55(D)->mtu;
+  netif_55(D)->mtu6 = _21;
+
+  <bb 26> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _22 = netif_55(D)->num;
+  if (_22 == 255)
+    goto <bb 27>; [INV]
+  else
+    goto <bb 28>; [INV]
+
+  <bb 27> :
+  # DEBUG BEGIN_STMT
+  netif_55(D)->num = 0;
+
+  <bb 28> :
+  # DEBUG BEGIN_STMT
+  num_netifs_101 = 0;
+  # DEBUG num_netifs => num_netifs_101
+  # DEBUG BEGIN_STMT
+  netif2_102 = netif_list;
+  # DEBUG netif2 => netif2_102
+  goto <bb 36>; [INV]
+
+  <bb 29> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  if (netif2_39 == netif_55(D))
+    goto <bb 30>; [INV]
+  else
+    goto <bb 31>; [INV]
+
+  <bb 30> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  __asm__ __volatile__("BKPT #0
+	");
+  # DEBUG BEGIN_STMT
+  goto <bb 30>; [INV]
+
+  <bb 31> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  num_netifs_103 = num_netifs_40 + 1;
+  # DEBUG num_netifs => num_netifs_103
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  if (num_netifs_103 > 255)
+    goto <bb 32>; [INV]
+  else
+    goto <bb 33>; [INV]
+
+  <bb 32> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  __asm__ __volatile__("BKPT #0
+	");
+  # DEBUG BEGIN_STMT
+  goto <bb 32>; [INV]
+
+  <bb 33> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _23 = netif2_39->num;
+  _24 = netif_55(D)->num;
+  if (_23 == _24)
+    goto <bb 34>; [INV]
+  else
+    goto <bb 35>; [INV]
+
+  <bb 34> :
+  # DEBUG BEGIN_STMT
+  _25 = netif_55(D)->num;
+  _26 = _25;
+  _27 = _26 + 1;
+  netif_55(D)->num = _27;
+  # DEBUG BEGIN_STMT
+  goto <bb 37>; [INV]
+
+  <bb 35> :
+  # DEBUG BEGIN_STMT
+  netif2_104 = netif2_39->next;
+  # DEBUG netif2 => netif2_104
+
+  <bb 36> :
+  # netif2_39 = PHI <netif2_102(28), netif2_104(35)>
+  # num_netifs_40 = PHI <num_netifs_101(28), num_netifs_103(35)>
+  # DEBUG num_netifs => num_netifs_40
+  # DEBUG netif2 => netif2_39
+  # DEBUG BEGIN_STMT
+  if (netif2_39 != 0B)
+    goto <bb 29>; [INV]
+  else
+    goto <bb 37>; [INV]
+
+  <bb 37> :
+  # DEBUG BEGIN_STMT
+  if (netif2_39 != 0B)
+    goto <bb 26>; [INV]
+  else
+    goto <bb 38>; [INV]
+
+  <bb 38> :
+  # DEBUG BEGIN_STMT
+  _28 = netif_55(D)->num;
+  if (_28 == 254)
+    goto <bb 39>; [INV]
+  else
+    goto <bb 40>; [INV]
+
+  <bb 39> :
+  # DEBUG BEGIN_STMT
+  netif_num = 0;
+  goto <bb 41>; [INV]
+
+  <bb 40> :
+  # DEBUG BEGIN_STMT
+  _29 = netif_55(D)->num;
+  _30 = _29 + 1;
+  netif_num = _30;
+
+  <bb 41> :
+  # DEBUG BEGIN_STMT
+  netif_list.3_31 = netif_list;
+  netif_55(D)->next = netif_list.3_31;
+  # DEBUG BEGIN_STMT
+  netif_list = netif_55(D);
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _32 = netif_55(D)->flags;
+  _33 = (unsigned int) _32;
+  _34 = _33 & 32;
+  if (_34 != 0)
+    goto <bb 42>; [INV]
+  else
+    goto <bb 43>; [INV]
+
+  <bb 42> :
+  # DEBUG BEGIN_STMT
+  igmp_start (netif_55(D));
+
+  <bb 43> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _113 = netif_55(D);
+
+  <bb 44> :
+  # _41 = PHI <_126(3), _125(5), _114(24), _113(43)>
+  return _41;
+
+}
+
+
+netif_add_noaddr (struct netif * netif, void * state, err_t (*netif_init_fn) (struct netif *) init, err_t (*netif_input_fn) (struct pbuf *, struct netif *) input)
+{
+  struct netif * _7;
+
+  <bb 2> :
+  # DEBUG BEGIN_STMT
+  _7 = netif_add (netif_2(D), 0B, 0B, 0B, state_3(D), init_4(D), input_5(D));
+  return _7;
+
+}
+
+
+netif_input (struct pbuf * p, struct netif * inp)
+{
+  unsigned char _1;
+  unsigned int _2;
+  unsigned int _3;
+  err_t _4;
+  err_t _12;
+  err_t _14;
+
+  <bb 2> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  if (p_8(D) == 0B)
+    goto <bb 3>; [INV]
+  else
+    goto <bb 4>; [INV]
+
+  <bb 3> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  __asm__ __volatile__("BKPT #0
+	");
+  # DEBUG BEGIN_STMT
+  goto <bb 3>; [INV]
+
+  <bb 4> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  if (inp_10(D) == 0B)
+    goto <bb 5>; [INV]
+  else
+    goto <bb 6>; [INV]
+
+  <bb 5> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  __asm__ __volatile__("BKPT #0
+	");
+  # DEBUG BEGIN_STMT
+  goto <bb 5>; [INV]
+
+  <bb 6> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _1 = inp_10(D)->flags;
+  _2 = (unsigned int) _1;
+  _3 = _2 & 24;
+  if (_3 != 0)
+    goto <bb 7>; [INV]
+  else
+    goto <bb 8>; [INV]
+
+  <bb 7> :
+  # DEBUG BEGIN_STMT
+  _14 = ethernet_input (p_8(D), inp_10(D));
+  // predicted unlikely by early return (on trees) predictor.
+  goto <bb 9>; [INV]
+
+  <bb 8> :
+  # DEBUG BEGIN_STMT
+  _12 = ip_input (p_8(D), inp_10(D));
+  // predicted unlikely by early return (on trees) predictor.
+
+  <bb 9> :
+  # _4 = PHI <_14(7), _12(8)>
+  return _4;
+
+}
+
+
+netif_init ()
+{
+  <bb 2> :
+  # DEBUG BEGIN_STMT
+  return;
+
+}
+
+

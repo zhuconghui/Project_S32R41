@@ -1,0 +1,696 @@
+
+
+ local analysis of Clock_Ip_ClockUpdateGateMcMePartitionCollectionClockRequest
+   scanning: Config.Name = ClockName_3(D);
+  scanning: if (Gate_5(D) != 0)
+  scanning: Config.Enable = 0;
+  scanning: Config.Enable = 1;
+  scanning: Clock_Ip_ClockSetGateMcMePartitionCollectionClockRequest (&Config);
+  scanning: return;
+Function is locally const.
+
+
+ local analysis of Clock_Ip_ClockSetGateMcMePartitionCollectionClockRequest
+   scanning: if (Config_44(D) != 0B)
+  scanning: _1 = Config_44(D)->Name;
+    Indirect ref read is not const
+  scanning: _2 = (int) _1;
+  scanning: _3 = Clock_Ip_au8ClockFeatures[_2][6];
+  scanning: _4 = (int) _3;
+  scanning: _5 = MEM[(const struct Clock_Ip_GateInfoType *)&Clock_Ip_axGateInfo][_4].PartitionValue;
+    Indirect ref read is not const
+  scanning: Partition_46 = (uint32) _5;
+  scanning: _6 = MEM[(const struct Clock_Ip_GateInfoType *)&Clock_Ip_axGateInfo][_4].ColectionValue;
+    Indirect ref read is not const
+  scanning: Collection_47 = (uint32) _6;
+  scanning: EnableRequest_48 = MEM[(const struct Clock_Ip_GateInfoType *)&Clock_Ip_axGateInfo][_4].RequestValueMask;
+    Indirect ref read is not const
+  scanning: _7 = Config_44(D)->Enable;
+    Indirect ref read is not const
+  scanning: if (_7 != 0)
+  scanning: _8 = Clock_Ip_apxMcMeSetPartitions[Partition_46];
+  scanning: _9 ={v} _8->PRTN_COFB_CLKEN[Collection_47];
+    Volatile stmt is not const/pure
+    Volatile indirect ref is not const/pure
+  scanning: _10 = _9 & EnableRequest_48;
+  scanning: if (_10 == 0)
+  scanning: _11 ={v} _8->PRTN_COFB_CLKEN[Collection_47];
+    Volatile stmt is not const/pure
+    Volatile indirect ref is not const/pure
+  scanning: _12 = _11 | EnableRequest_48;
+  scanning: _8->PRTN_COFB_CLKEN[Collection_47] ={v} _12;
+    Volatile stmt is not const/pure
+    Volatile indirect ref is not const/pure
+  scanning: _13 = Clock_Ip_apxMcMeTriggerPartitions[Partition_46];
+  scanning: _14 ={v} _13->PRTN_PCONF;
+    Volatile stmt is not const/pure
+    Volatile indirect ref is not const/pure
+  scanning: _15 = _14 | 1;
+  scanning: _13->PRTN_PCONF ={v} _15;
+    Volatile stmt is not const/pure
+    Volatile indirect ref is not const/pure
+  scanning: _16 ={v} _13->PRTN_PUPD;
+    Volatile stmt is not const/pure
+    Volatile indirect ref is not const/pure
+  scanning: _17 = _16 | 1;
+  scanning: _13->PRTN_PUPD ={v} _17;
+    Volatile stmt is not const/pure
+    Volatile indirect ref is not const/pure
+  scanning: Clock_Ip_McMeEnterKey ();
+  scanning: Clock_Ip_StartTimeout (&StartTime, &ElapsedTime, &TimeoutTicks, 50000);
+  scanning: TimeoutTicks.0_18 = TimeoutTicks;
+  scanning: TimeoutOccurred_63 = Clock_Ip_TimeoutExpired (&StartTime, &ElapsedTime, TimeoutTicks.0_18);
+  scanning: _19 = Clock_Ip_apxMcMeGetPartitions[Partition_46];
+  scanning: _20 ={v} _19->PRTN_COFB_STAT[Collection_47];
+    Volatile stmt is not const/pure
+    Volatile indirect ref is not const/pure
+  scanning: _21 = _20 & EnableRequest_48;
+  scanning: if (_21 == 0)
+  scanning: if (TimeoutOccurred_63 != 0)
+  scanning: if (TimeoutOccurred_29 != 0)
+  scanning: _22 = Config_44(D)->Name;
+    Indirect ref read is not const
+  scanning: Clock_Ip_ReportClockErrors (1, _22);
+  scanning: _23 = Clock_Ip_apxMcMeSetPartitions[Partition_46];
+  scanning: _24 ={v} _23->PRTN_COFB_CLKEN[Collection_47];
+    Volatile stmt is not const/pure
+    Volatile indirect ref is not const/pure
+  scanning: _25 = _24 & EnableRequest_48;
+  scanning: if (_25 != 0)
+  scanning: _27 ={v} _23->PRTN_COFB_CLKEN[Collection_47];
+    Volatile stmt is not const/pure
+    Volatile indirect ref is not const/pure
+  scanning: _28 = ~EnableRequest_48;
+  scanning: _30 = _27 & _28;
+  scanning: _23->PRTN_COFB_CLKEN[Collection_47] ={v} _30;
+    Volatile stmt is not const/pure
+    Volatile indirect ref is not const/pure
+  scanning: _31 = Clock_Ip_apxMcMeTriggerPartitions[Partition_46];
+  scanning: _32 ={v} _31->PRTN_PCONF;
+    Volatile stmt is not const/pure
+    Volatile indirect ref is not const/pure
+  scanning: _33 = _32 | 1;
+  scanning: _31->PRTN_PCONF ={v} _33;
+    Volatile stmt is not const/pure
+    Volatile indirect ref is not const/pure
+  scanning: _34 ={v} _31->PRTN_PUPD;
+    Volatile stmt is not const/pure
+    Volatile indirect ref is not const/pure
+  scanning: _35 = _34 | 1;
+  scanning: _31->PRTN_PUPD ={v} _35;
+    Volatile stmt is not const/pure
+    Volatile indirect ref is not const/pure
+  scanning: Clock_Ip_McMeEnterKey ();
+  scanning: Clock_Ip_StartTimeout (&StartTime, &ElapsedTime, &TimeoutTicks, 50000);
+  scanning: TimeoutTicks.1_36 = TimeoutTicks;
+  scanning: TimeoutOccurred_55 = Clock_Ip_TimeoutExpired (&StartTime, &ElapsedTime, TimeoutTicks.1_36);
+  scanning: _37 = Clock_Ip_apxMcMeGetPartitions[Partition_46];
+  scanning: _38 ={v} _37->PRTN_COFB_STAT[Collection_47];
+    Volatile stmt is not const/pure
+    Volatile indirect ref is not const/pure
+  scanning: _39 = _38 & EnableRequest_48;
+  scanning: if (_39 != 0)
+  scanning: if (TimeoutOccurred_55 != 0)
+  scanning: if (TimeoutOccurred_26 != 0)
+  scanning: _40 = Config_44(D)->Name;
+    Indirect ref read is not const
+  scanning: Clock_Ip_ReportClockErrors (1, _40);
+  scanning: return;
+
+
+ local analysis of Clock_Ip_ClockUpdateGateEmpty
+   scanning: return;
+Function is locally const.
+
+
+ local analysis of Clock_Ip_ClockSetGateEmpty
+   scanning: return;
+Function is locally const.
+callgraph:
+
+Clock_Ip_ReportClockErrors/13 (Clock_Ip_ReportClockErrors) @062f5b60
+  Type: function
+  Visibility: external public
+  References: 
+  Referring: 
+  Availability: not_available
+  Function flags: optimize_size
+  Called by: Clock_Ip_ClockSetGateMcMePartitionCollectionClockRequest/2 (37904965 (estimated locally),0.04 per call) Clock_Ip_ClockSetGateMcMePartitionCollectionClockRequest/2 (37904965 (estimated locally),0.04 per call) 
+  Calls: 
+Clock_Ip_TimeoutExpired/11 (Clock_Ip_TimeoutExpired) @062f5a80
+  Type: function
+  Visibility: external public
+  References: 
+  Referring: 
+  Availability: not_available
+  Function flags: optimize_size
+  Called by: Clock_Ip_ClockSetGateMcMePartitionCollectionClockRequest/2 (1073741824 (estimated locally),1.08 per call) Clock_Ip_ClockSetGateMcMePartitionCollectionClockRequest/2 (1073741824 (estimated locally),1.08 per call) 
+  Calls: 
+Clock_Ip_StartTimeout/10 (Clock_Ip_StartTimeout) @062f59a0
+  Type: function
+  Visibility: external public
+  References: 
+  Referring: 
+  Availability: not_available
+  Function flags: optimize_size
+  Called by: Clock_Ip_ClockSetGateMcMePartitionCollectionClockRequest/2 (114863532 (estimated locally),0.12 per call) Clock_Ip_ClockSetGateMcMePartitionCollectionClockRequest/2 (114863532 (estimated locally),0.12 per call) 
+  Calls: 
+Clock_Ip_McMeEnterKey/9 (Clock_Ip_McMeEnterKey) @062f58c0
+  Type: function
+  Visibility: external public
+  References: 
+  Referring: 
+  Availability: not_available
+  Function flags: optimize_size
+  Called by: Clock_Ip_ClockSetGateMcMePartitionCollectionClockRequest/2 (114863532 (estimated locally),0.12 per call) Clock_Ip_ClockSetGateMcMePartitionCollectionClockRequest/2 (114863532 (estimated locally),0.12 per call) 
+  Calls: 
+Clock_Ip_ClockUpdateGateMcMePartitionCollectionClockRequest/3 (Clock_Ip_ClockUpdateGateMcMePartitionCollectionClockRequest) @062f51c0
+  Type: function definition analyzed
+  Visibility: prevailing_def_ironly
+  Address is taken.
+  Aux: @05ee5f90
+  References: 
+  Referring: Clock_Ip_axGateCallbacks/4 (addr)
+  Availability: available
+  Function flags: count:1073741824 (estimated locally) body optimize_size
+  Called by: 
+  Calls: Clock_Ip_ClockSetGateMcMePartitionCollectionClockRequest/2 (1073741824 (estimated locally),1.00 per call) 
+Clock_Ip_ClockSetGateMcMePartitionCollectionClockRequest/2 (Clock_Ip_ClockSetGateMcMePartitionCollectionClockRequest) @062e9e00
+  Type: function definition analyzed
+  Visibility: prevailing_def_ironly
+  Address is taken.
+  Aux: @05ee5fb0
+  References: Clock_Ip_au8ClockFeatures/5 (read)Clock_Ip_axGateInfo/6 (read)Clock_Ip_axGateInfo/6 (read)Clock_Ip_axGateInfo/6 (read)Clock_Ip_apxMcMeSetPartitions/7 (read)Clock_Ip_apxMcMeTriggerPartitions/8 (read)Clock_Ip_apxMcMeGetPartitions/12 (read)Clock_Ip_apxMcMeSetPartitions/7 (read)Clock_Ip_apxMcMeTriggerPartitions/8 (read)Clock_Ip_apxMcMeGetPartitions/12 (read)
+  Referring: Clock_Ip_axGateCallbacks/4 (addr)
+  Availability: available
+  Function flags: count:994489456 (estimated locally) body optimize_size
+  Called by: Clock_Ip_ClockUpdateGateMcMePartitionCollectionClockRequest/3 (1073741824 (estimated locally),1.00 per call) 
+  Calls: Clock_Ip_ReportClockErrors/13 (37904965 (estimated locally),0.04 per call) Clock_Ip_TimeoutExpired/11 (1073741824 (estimated locally),1.08 per call) Clock_Ip_StartTimeout/10 (114863532 (estimated locally),0.12 per call) Clock_Ip_McMeEnterKey/9 (114863532 (estimated locally),0.12 per call) Clock_Ip_ReportClockErrors/13 (37904965 (estimated locally),0.04 per call) Clock_Ip_TimeoutExpired/11 (1073741824 (estimated locally),1.08 per call) Clock_Ip_StartTimeout/10 (114863532 (estimated locally),0.12 per call) Clock_Ip_McMeEnterKey/9 (114863532 (estimated locally),0.12 per call) 
+Clock_Ip_ClockUpdateGateEmpty/1 (Clock_Ip_ClockUpdateGateEmpty) @062e9000
+  Type: function definition analyzed
+  Visibility: prevailing_def_ironly
+  Address is taken.
+  Aux: @05ee6050
+  References: 
+  Referring: Clock_Ip_axGateCallbacks/4 (addr)
+  Availability: available
+  Function flags: count:1073741824 (estimated locally) body optimize_size
+  Called by: 
+  Calls: 
+Clock_Ip_ClockSetGateEmpty/0 (Clock_Ip_ClockSetGateEmpty) @062e9d20
+  Type: function definition analyzed
+  Visibility: prevailing_def_ironly
+  Address is taken.
+  Aux: @05ee5ed0
+  References: 
+  Referring: Clock_Ip_axGateCallbacks/4 (addr)
+  Availability: available
+  Function flags: count:1073741824 (estimated locally) body optimize_size
+  Called by: 
+  Calls: 
+
+
+ ordered call graph: reduced for nothrow
+Clock_Ip_ClockUpdateGateMcMePartitionCollectionClockRequest/3 (Clock_Ip_ClockUpdateGateMcMePartitionCollectionClockRequest) @062f51c0
+  Type: function definition analyzed
+  Visibility: prevailing_def_ironly
+  Address is taken.
+  Aux: @05ee5f90
+  References: 
+  Referring: Clock_Ip_axGateCallbacks/4 (addr)
+  Availability: available
+  Function flags: count:1073741824 (estimated locally) body optimize_size
+  Called by: 
+  Calls: Clock_Ip_ClockSetGateMcMePartitionCollectionClockRequest/2 (1073741824 (estimated locally),1.00 per call) 
+Clock_Ip_ClockSetGateMcMePartitionCollectionClockRequest/2 (Clock_Ip_ClockSetGateMcMePartitionCollectionClockRequest) @062e9e00
+  Type: function definition analyzed
+  Visibility: prevailing_def_ironly
+  Address is taken.
+  Aux: @05ee5fb0
+  References: Clock_Ip_au8ClockFeatures/5 (read)Clock_Ip_axGateInfo/6 (read)Clock_Ip_axGateInfo/6 (read)Clock_Ip_axGateInfo/6 (read)Clock_Ip_apxMcMeSetPartitions/7 (read)Clock_Ip_apxMcMeTriggerPartitions/8 (read)Clock_Ip_apxMcMeGetPartitions/12 (read)Clock_Ip_apxMcMeSetPartitions/7 (read)Clock_Ip_apxMcMeTriggerPartitions/8 (read)Clock_Ip_apxMcMeGetPartitions/12 (read)
+  Referring: Clock_Ip_axGateCallbacks/4 (addr)
+  Availability: available
+  Function flags: count:994489456 (estimated locally) body optimize_size
+  Called by: Clock_Ip_ClockUpdateGateMcMePartitionCollectionClockRequest/3 (1073741824 (estimated locally),1.00 per call) 
+  Calls: Clock_Ip_ReportClockErrors/13 (37904965 (estimated locally),0.04 per call) Clock_Ip_TimeoutExpired/11 (1073741824 (estimated locally),1.08 per call) Clock_Ip_StartTimeout/10 (114863532 (estimated locally),0.12 per call) Clock_Ip_McMeEnterKey/9 (114863532 (estimated locally),0.12 per call) Clock_Ip_ReportClockErrors/13 (37904965 (estimated locally),0.04 per call) Clock_Ip_TimeoutExpired/11 (1073741824 (estimated locally),1.08 per call) Clock_Ip_StartTimeout/10 (114863532 (estimated locally),0.12 per call) Clock_Ip_McMeEnterKey/9 (114863532 (estimated locally),0.12 per call) 
+Clock_Ip_ClockUpdateGateEmpty/1 (Clock_Ip_ClockUpdateGateEmpty) @062e9000
+  Type: function definition analyzed
+  Visibility: prevailing_def_ironly
+  Address is taken.
+  Aux: @05ee6050
+  References: 
+  Referring: Clock_Ip_axGateCallbacks/4 (addr)
+  Availability: available
+  Function flags: count:1073741824 (estimated locally) body optimize_size
+  Called by: 
+  Calls: 
+Clock_Ip_ClockSetGateEmpty/0 (Clock_Ip_ClockSetGateEmpty) @062e9d20
+  Type: function definition analyzed
+  Visibility: prevailing_def_ironly
+  Address is taken.
+  Aux: @05ee5ed0
+  References: 
+  Referring: Clock_Ip_axGateCallbacks/4 (addr)
+  Availability: available
+  Function flags: count:1073741824 (estimated locally) body optimize_size
+  Called by: 
+  Calls: 
+
+
+
+MALLOC LATTICE Initial:
+Clock_Ip_ClockUpdateGateMcMePartitionCollectionClockRequest: malloc_bottom
+Clock_Ip_ClockSetGateMcMePartitionCollectionClockRequest: malloc_bottom
+Clock_Ip_ClockUpdateGateEmpty: malloc_bottom
+Clock_Ip_ClockSetGateEmpty: malloc_bottom
+
+
+MALLOC LATTICE after propagation:
+Clock_Ip_ClockUpdateGateMcMePartitionCollectionClockRequest: malloc_bottom
+Clock_Ip_ClockSetGateMcMePartitionCollectionClockRequest: malloc_bottom
+Clock_Ip_ClockUpdateGateEmpty: malloc_bottom
+Clock_Ip_ClockSetGateEmpty: malloc_bottom
+callgraph:
+
+Clock_Ip_ReportClockErrors/13 (Clock_Ip_ReportClockErrors) @062f5b60
+  Type: function
+  Visibility: external public
+  References: 
+  Referring: 
+  Availability: not_available
+  Function flags: optimize_size
+  Called by: Clock_Ip_ClockSetGateMcMePartitionCollectionClockRequest/2 (37904965 (estimated locally),0.04 per call) Clock_Ip_ClockSetGateMcMePartitionCollectionClockRequest/2 (37904965 (estimated locally),0.04 per call) 
+  Calls: 
+Clock_Ip_TimeoutExpired/11 (Clock_Ip_TimeoutExpired) @062f5a80
+  Type: function
+  Visibility: external public
+  References: 
+  Referring: 
+  Availability: not_available
+  Function flags: optimize_size
+  Called by: Clock_Ip_ClockSetGateMcMePartitionCollectionClockRequest/2 (1073741824 (estimated locally),1.08 per call) Clock_Ip_ClockSetGateMcMePartitionCollectionClockRequest/2 (1073741824 (estimated locally),1.08 per call) 
+  Calls: 
+Clock_Ip_StartTimeout/10 (Clock_Ip_StartTimeout) @062f59a0
+  Type: function
+  Visibility: external public
+  References: 
+  Referring: 
+  Availability: not_available
+  Function flags: optimize_size
+  Called by: Clock_Ip_ClockSetGateMcMePartitionCollectionClockRequest/2 (114863532 (estimated locally),0.12 per call) Clock_Ip_ClockSetGateMcMePartitionCollectionClockRequest/2 (114863532 (estimated locally),0.12 per call) 
+  Calls: 
+Clock_Ip_McMeEnterKey/9 (Clock_Ip_McMeEnterKey) @062f58c0
+  Type: function
+  Visibility: external public
+  References: 
+  Referring: 
+  Availability: not_available
+  Function flags: optimize_size
+  Called by: Clock_Ip_ClockSetGateMcMePartitionCollectionClockRequest/2 (114863532 (estimated locally),0.12 per call) Clock_Ip_ClockSetGateMcMePartitionCollectionClockRequest/2 (114863532 (estimated locally),0.12 per call) 
+  Calls: 
+Clock_Ip_ClockUpdateGateMcMePartitionCollectionClockRequest/3 (Clock_Ip_ClockUpdateGateMcMePartitionCollectionClockRequest) @062f51c0
+  Type: function definition analyzed
+  Visibility: prevailing_def_ironly
+  Address is taken.
+  Aux: @05ee5ed0
+  References: 
+  Referring: Clock_Ip_axGateCallbacks/4 (addr)
+  Availability: available
+  Function flags: count:1073741824 (estimated locally) body optimize_size
+  Called by: 
+  Calls: Clock_Ip_ClockSetGateMcMePartitionCollectionClockRequest/2 (1073741824 (estimated locally),1.00 per call) 
+Clock_Ip_ClockSetGateMcMePartitionCollectionClockRequest/2 (Clock_Ip_ClockSetGateMcMePartitionCollectionClockRequest) @062e9e00
+  Type: function definition analyzed
+  Visibility: prevailing_def_ironly
+  Address is taken.
+  Aux: @05ee5f90
+  References: Clock_Ip_au8ClockFeatures/5 (read)Clock_Ip_axGateInfo/6 (read)Clock_Ip_axGateInfo/6 (read)Clock_Ip_axGateInfo/6 (read)Clock_Ip_apxMcMeSetPartitions/7 (read)Clock_Ip_apxMcMeTriggerPartitions/8 (read)Clock_Ip_apxMcMeGetPartitions/12 (read)Clock_Ip_apxMcMeSetPartitions/7 (read)Clock_Ip_apxMcMeTriggerPartitions/8 (read)Clock_Ip_apxMcMeGetPartitions/12 (read)
+  Referring: Clock_Ip_axGateCallbacks/4 (addr)
+  Availability: available
+  Function flags: count:994489456 (estimated locally) body optimize_size
+  Called by: Clock_Ip_ClockUpdateGateMcMePartitionCollectionClockRequest/3 (1073741824 (estimated locally),1.00 per call) 
+  Calls: Clock_Ip_ReportClockErrors/13 (37904965 (estimated locally),0.04 per call) Clock_Ip_TimeoutExpired/11 (1073741824 (estimated locally),1.08 per call) Clock_Ip_StartTimeout/10 (114863532 (estimated locally),0.12 per call) Clock_Ip_McMeEnterKey/9 (114863532 (estimated locally),0.12 per call) Clock_Ip_ReportClockErrors/13 (37904965 (estimated locally),0.04 per call) Clock_Ip_TimeoutExpired/11 (1073741824 (estimated locally),1.08 per call) Clock_Ip_StartTimeout/10 (114863532 (estimated locally),0.12 per call) Clock_Ip_McMeEnterKey/9 (114863532 (estimated locally),0.12 per call) 
+Clock_Ip_ClockUpdateGateEmpty/1 (Clock_Ip_ClockUpdateGateEmpty) @062e9000
+  Type: function definition analyzed
+  Visibility: prevailing_def_ironly
+  Address is taken.
+  Aux: @05ee60f0
+  References: 
+  Referring: Clock_Ip_axGateCallbacks/4 (addr)
+  Availability: available
+  Function flags: count:1073741824 (estimated locally) body optimize_size
+  Called by: 
+  Calls: 
+Clock_Ip_ClockSetGateEmpty/0 (Clock_Ip_ClockSetGateEmpty) @062e9d20
+  Type: function definition analyzed
+  Visibility: prevailing_def_ironly
+  Address is taken.
+  Aux: @05ee6010
+  References: 
+  Referring: Clock_Ip_axGateCallbacks/4 (addr)
+  Availability: available
+  Function flags: count:1073741824 (estimated locally) body optimize_size
+  Called by: 
+  Calls: 
+
+
+ ordered call graph: reduced
+Clock_Ip_ClockUpdateGateMcMePartitionCollectionClockRequest/3 (Clock_Ip_ClockUpdateGateMcMePartitionCollectionClockRequest) @062f51c0
+  Type: function definition analyzed
+  Visibility: prevailing_def_ironly
+  Address is taken.
+  Aux: @05ee5ed0
+  References: 
+  Referring: Clock_Ip_axGateCallbacks/4 (addr)
+  Availability: available
+  Function flags: count:1073741824 (estimated locally) body optimize_size
+  Called by: 
+  Calls: Clock_Ip_ClockSetGateMcMePartitionCollectionClockRequest/2 (1073741824 (estimated locally),1.00 per call) 
+Clock_Ip_ClockSetGateMcMePartitionCollectionClockRequest/2 (Clock_Ip_ClockSetGateMcMePartitionCollectionClockRequest) @062e9e00
+  Type: function definition analyzed
+  Visibility: prevailing_def_ironly
+  Address is taken.
+  Aux: @05ee5f90
+  References: Clock_Ip_au8ClockFeatures/5 (read)Clock_Ip_axGateInfo/6 (read)Clock_Ip_axGateInfo/6 (read)Clock_Ip_axGateInfo/6 (read)Clock_Ip_apxMcMeSetPartitions/7 (read)Clock_Ip_apxMcMeTriggerPartitions/8 (read)Clock_Ip_apxMcMeGetPartitions/12 (read)Clock_Ip_apxMcMeSetPartitions/7 (read)Clock_Ip_apxMcMeTriggerPartitions/8 (read)Clock_Ip_apxMcMeGetPartitions/12 (read)
+  Referring: Clock_Ip_axGateCallbacks/4 (addr)
+  Availability: available
+  Function flags: count:994489456 (estimated locally) body optimize_size
+  Called by: Clock_Ip_ClockUpdateGateMcMePartitionCollectionClockRequest/3 (1073741824 (estimated locally),1.00 per call) 
+  Calls: Clock_Ip_ReportClockErrors/13 (37904965 (estimated locally),0.04 per call) Clock_Ip_TimeoutExpired/11 (1073741824 (estimated locally),1.08 per call) Clock_Ip_StartTimeout/10 (114863532 (estimated locally),0.12 per call) Clock_Ip_McMeEnterKey/9 (114863532 (estimated locally),0.12 per call) Clock_Ip_ReportClockErrors/13 (37904965 (estimated locally),0.04 per call) Clock_Ip_TimeoutExpired/11 (1073741824 (estimated locally),1.08 per call) Clock_Ip_StartTimeout/10 (114863532 (estimated locally),0.12 per call) Clock_Ip_McMeEnterKey/9 (114863532 (estimated locally),0.12 per call) 
+Clock_Ip_ClockUpdateGateEmpty/1 (Clock_Ip_ClockUpdateGateEmpty) @062e9000
+  Type: function definition analyzed
+  Visibility: prevailing_def_ironly
+  Address is taken.
+  Aux: @05ee60f0
+  References: 
+  Referring: Clock_Ip_axGateCallbacks/4 (addr)
+  Availability: available
+  Function flags: count:1073741824 (estimated locally) body optimize_size
+  Called by: 
+  Calls: 
+Clock_Ip_ClockSetGateEmpty/0 (Clock_Ip_ClockSetGateEmpty) @062e9d20
+  Type: function definition analyzed
+  Visibility: prevailing_def_ironly
+  Address is taken.
+  Aux: @05ee6010
+  References: 
+  Referring: Clock_Ip_axGateCallbacks/4 (addr)
+  Availability: available
+  Function flags: count:1073741824 (estimated locally) body optimize_size
+  Called by: 
+  Calls: 
+
+Function found not to call free: Clock_Ip_ClockSetGateEmpty
+Function found not to call free: Clock_Ip_ClockUpdateGateEmpty
+Clock_Ip_ClockUpdateGateMcMePartitionCollectionClockRequest (Clock_Ip_NameType ClockName, boolean Gate)
+{
+  struct Clock_Ip_GateConfigType Config;
+
+  <bb 2> [local count: 1073741824]:
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  Config.Name = ClockName_3(D);
+  # DEBUG BEGIN_STMT
+  if (Gate_5(D) != 0)
+    goto <bb 3>; [50.00%]
+  else
+    goto <bb 4>; [50.00%]
+
+  <bb 3> [local count: 536870913]:
+  # DEBUG BEGIN_STMT
+  Config.Enable = 0;
+  goto <bb 5>; [100.00%]
+
+  <bb 4> [local count: 536870913]:
+  # DEBUG BEGIN_STMT
+  Config.Enable = 1;
+
+  <bb 5> [local count: 1073741824]:
+  # DEBUG BEGIN_STMT
+  Clock_Ip_ClockSetGateMcMePartitionCollectionClockRequest (&Config);
+  Config ={v} {CLOBBER};
+  return;
+
+}
+
+
+Clock_Ip_ClockSetGateMcMePartitionCollectionClockRequest (const struct Clock_Ip_GateConfigType * Config)
+{
+  uint32 EnableRequest;
+  uint32 Collection;
+  uint32 Partition;
+  uint32 TimeoutTicks;
+  uint32 ElapsedTime;
+  uint32 StartTime;
+  boolean TimeoutOccurred;
+  <unnamed type> _1;
+  int _2;
+  unsigned char _3;
+  int _4;
+  unsigned char _5;
+  unsigned char _6;
+  short unsigned int _7;
+  volatile struct Clock_Ip_McmePartitionSetType * _8;
+  long unsigned int _9;
+  long unsigned int _10;
+  long unsigned int _11;
+  long unsigned int _12;
+  volatile struct Clock_Ip_McmePartitionTriggerType * _13;
+  long unsigned int _14;
+  long unsigned int _15;
+  long unsigned int _16;
+  long unsigned int _17;
+  long unsigned int TimeoutTicks.0_18;
+  const volatile struct Clock_Ip_McmePartitionGetType * _19;
+  long unsigned int _20;
+  long unsigned int _21;
+  <unnamed type> _22;
+  volatile struct Clock_Ip_McmePartitionSetType * _23;
+  long unsigned int _24;
+  long unsigned int _25;
+  long unsigned int _27;
+  long unsigned int _28;
+  long unsigned int _30;
+  volatile struct Clock_Ip_McmePartitionTriggerType * _31;
+  long unsigned int _32;
+  long unsigned int _33;
+  long unsigned int _34;
+  long unsigned int _35;
+  long unsigned int TimeoutTicks.1_36;
+  const volatile struct Clock_Ip_McmePartitionGetType * _37;
+  long unsigned int _38;
+  long unsigned int _39;
+  <unnamed type> _40;
+
+  <bb 2> [local count: 994489456]:
+  # DEBUG BEGIN_STMT
+  # DEBUG TimeoutOccurred => 0
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  if (Config_44(D) != 0B)
+    goto <bb 3>; [70.00%]
+  else
+    goto <bb 16>; [30.00%]
+
+  <bb 3> [local count: 696142620]:
+  # DEBUG BEGIN_STMT
+  _1 = Config_44(D)->Name;
+  _2 = (int) _1;
+  _3 = Clock_Ip_au8ClockFeatures[_2][6];
+  _4 = (int) _3;
+  # DEBUG D#1 => &Clock_Ip_axGateInfo[_4]
+  # DEBUG GateInformation => D#1
+  # DEBUG BEGIN_STMT
+  _5 = MEM[(const struct Clock_Ip_GateInfoType *)&Clock_Ip_axGateInfo][_4].PartitionValue;
+  Partition_46 = (uint32) _5;
+  # DEBUG Partition => Partition_46
+  # DEBUG BEGIN_STMT
+  _6 = MEM[(const struct Clock_Ip_GateInfoType *)&Clock_Ip_axGateInfo][_4].ColectionValue;
+  Collection_47 = (uint32) _6;
+  # DEBUG Collection => Collection_47
+  # DEBUG BEGIN_STMT
+  EnableRequest_48 = MEM[(const struct Clock_Ip_GateInfoType *)&Clock_Ip_axGateInfo][_4].RequestValueMask;
+  # DEBUG EnableRequest => EnableRequest_48
+  # DEBUG BEGIN_STMT
+  _7 = Config_44(D)->Enable;
+  if (_7 != 0)
+    goto <bb 4>; [50.00%]
+  else
+    goto <bb 10>; [50.00%]
+
+  <bb 4> [local count: 348071310]:
+  # DEBUG BEGIN_STMT
+  _8 = Clock_Ip_apxMcMeSetPartitions[Partition_46];
+  _9 ={v} _8->PRTN_COFB_CLKEN[Collection_47];
+  _10 = _9 & EnableRequest_48;
+  if (_10 == 0)
+    goto <bb 5>; [33.00%]
+  else
+    goto <bb 16>; [67.00%]
+
+  <bb 5> [local count: 114863532]:
+  # DEBUG BEGIN_STMT
+  _11 ={v} _8->PRTN_COFB_CLKEN[Collection_47];
+  _12 = _11 | EnableRequest_48;
+  _8->PRTN_COFB_CLKEN[Collection_47] ={v} _12;
+  # DEBUG BEGIN_STMT
+  _13 = Clock_Ip_apxMcMeTriggerPartitions[Partition_46];
+  _14 ={v} _13->PRTN_PCONF;
+  _15 = _14 | 1;
+  _13->PRTN_PCONF ={v} _15;
+  # DEBUG BEGIN_STMT
+  _16 ={v} _13->PRTN_PUPD;
+  _17 = _16 | 1;
+  _13->PRTN_PUPD ={v} _17;
+  # DEBUG BEGIN_STMT
+  Clock_Ip_McMeEnterKey ();
+  # DEBUG BEGIN_STMT
+  Clock_Ip_StartTimeout (&StartTime, &ElapsedTime, &TimeoutTicks, 50000);
+
+  <bb 6> [local count: 1073741824]:
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  TimeoutTicks.0_18 = TimeoutTicks;
+  TimeoutOccurred_63 = Clock_Ip_TimeoutExpired (&StartTime, &ElapsedTime, TimeoutTicks.0_18);
+  # DEBUG TimeoutOccurred => TimeoutOccurred_63
+  # DEBUG BEGIN_STMT
+  _19 = Clock_Ip_apxMcMeGetPartitions[Partition_46];
+  _20 ={v} _19->PRTN_COFB_STAT[Collection_47];
+  _21 = _20 & EnableRequest_48;
+  if (_21 == 0)
+    goto <bb 7>; [94.50%]
+  else
+    goto <bb 8>; [5.50%]
+
+  <bb 7> [local count: 1014686025]:
+  if (TimeoutOccurred_63 != 0)
+    goto <bb 8>; [5.50%]
+  else
+    goto <bb 17>; [94.50%]
+
+  <bb 17> [local count: 958878293]:
+  goto <bb 6>; [100.00%]
+
+  <bb 8> [local count: 114863532]:
+  # TimeoutOccurred_29 = PHI <TimeoutOccurred_63(6), TimeoutOccurred_63(7)>
+  # DEBUG BEGIN_STMT
+  if (TimeoutOccurred_29 != 0)
+    goto <bb 9>; [33.00%]
+  else
+    goto <bb 16>; [67.00%]
+
+  <bb 9> [local count: 37904965]:
+  # DEBUG BEGIN_STMT
+  _22 = Config_44(D)->Name;
+  Clock_Ip_ReportClockErrors (1, _22);
+  goto <bb 16>; [100.00%]
+
+  <bb 10> [local count: 348071310]:
+  # DEBUG BEGIN_STMT
+  _23 = Clock_Ip_apxMcMeSetPartitions[Partition_46];
+  _24 ={v} _23->PRTN_COFB_CLKEN[Collection_47];
+  _25 = _24 & EnableRequest_48;
+  if (_25 != 0)
+    goto <bb 11>; [33.00%]
+  else
+    goto <bb 16>; [67.00%]
+
+  <bb 11> [local count: 114863532]:
+  # DEBUG BEGIN_STMT
+  _27 ={v} _23->PRTN_COFB_CLKEN[Collection_47];
+  _28 = ~EnableRequest_48;
+  _30 = _27 & _28;
+  _23->PRTN_COFB_CLKEN[Collection_47] ={v} _30;
+  # DEBUG BEGIN_STMT
+  _31 = Clock_Ip_apxMcMeTriggerPartitions[Partition_46];
+  _32 ={v} _31->PRTN_PCONF;
+  _33 = _32 | 1;
+  _31->PRTN_PCONF ={v} _33;
+  # DEBUG BEGIN_STMT
+  _34 ={v} _31->PRTN_PUPD;
+  _35 = _34 | 1;
+  _31->PRTN_PUPD ={v} _35;
+  # DEBUG BEGIN_STMT
+  Clock_Ip_McMeEnterKey ();
+  # DEBUG BEGIN_STMT
+  Clock_Ip_StartTimeout (&StartTime, &ElapsedTime, &TimeoutTicks, 50000);
+
+  <bb 12> [local count: 1073741824]:
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  TimeoutTicks.1_36 = TimeoutTicks;
+  TimeoutOccurred_55 = Clock_Ip_TimeoutExpired (&StartTime, &ElapsedTime, TimeoutTicks.1_36);
+  # DEBUG TimeoutOccurred => TimeoutOccurred_55
+  # DEBUG BEGIN_STMT
+  _37 = Clock_Ip_apxMcMeGetPartitions[Partition_46];
+  _38 ={v} _37->PRTN_COFB_STAT[Collection_47];
+  _39 = _38 & EnableRequest_48;
+  if (_39 != 0)
+    goto <bb 13>; [94.50%]
+  else
+    goto <bb 14>; [5.50%]
+
+  <bb 13> [local count: 1014686025]:
+  if (TimeoutOccurred_55 != 0)
+    goto <bb 14>; [5.50%]
+  else
+    goto <bb 18>; [94.50%]
+
+  <bb 18> [local count: 958878293]:
+  goto <bb 12>; [100.00%]
+
+  <bb 14> [local count: 114863532]:
+  # TimeoutOccurred_26 = PHI <TimeoutOccurred_55(12), TimeoutOccurred_55(13)>
+  # DEBUG BEGIN_STMT
+  if (TimeoutOccurred_26 != 0)
+    goto <bb 15>; [33.00%]
+  else
+    goto <bb 16>; [67.00%]
+
+  <bb 15> [local count: 37904965]:
+  # DEBUG BEGIN_STMT
+  _40 = Config_44(D)->Name;
+  Clock_Ip_ReportClockErrors (1, _40);
+
+  <bb 16> [local count: 994489455]:
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  StartTime ={v} {CLOBBER};
+  ElapsedTime ={v} {CLOBBER};
+  TimeoutTicks ={v} {CLOBBER};
+  return;
+
+}
+
+
+Clock_Ip_ClockUpdateGateEmpty (Clock_Ip_NameType ClockName, boolean Gate)
+{
+  <bb 2> [local count: 1073741824]:
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  return;
+
+}
+
+
+Clock_Ip_ClockSetGateEmpty (const struct Clock_Ip_GateConfigType * Config)
+{
+  <bb 2> [local count: 1073741824]:
+  # DEBUG BEGIN_STMT
+  return;
+
+}
+
+

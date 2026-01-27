@@ -1,0 +1,2847 @@
+pbuf_strstr (const struct pbuf * p, const char * substr)
+{
+  size_t substr_len;
+  u16_t D.7534;
+
+  <bb 2> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  if (substr == 0B)
+    goto <bb 5>; [INV]
+  else
+    goto <bb 3>; [INV]
+
+  <bb 3> :
+  _1 = *substr;
+  if (_1 == 0)
+    goto <bb 5>; [INV]
+  else
+    goto <bb 4>; [INV]
+
+  <bb 4> :
+  _2 = p->tot_len;
+  if (_2 == 65535)
+    goto <bb 5>; [INV]
+  else
+    goto <bb 6>; [INV]
+
+  <bb 5> :
+  # DEBUG BEGIN_STMT
+  D.7534 = 65535;
+  // predicted unlikely by early return (on trees) predictor.
+  goto <bb 9>; [INV]
+
+  <bb 6> :
+  # DEBUG BEGIN_STMT
+  substr_len = strlen (substr);
+  # DEBUG BEGIN_STMT
+  if (substr_len > 65534)
+    goto <bb 7>; [INV]
+  else
+    goto <bb 8>; [INV]
+
+  <bb 7> :
+  # DEBUG BEGIN_STMT
+  D.7534 = 65535;
+  // predicted unlikely by early return (on trees) predictor.
+  goto <bb 9>; [INV]
+
+  <bb 8> :
+  # DEBUG BEGIN_STMT
+  _3 = (short unsigned int) substr_len;
+  D.7534 = pbuf_memfind (p, substr, _3, 0);
+
+  <bb 9> :
+  return D.7534;
+
+}
+
+
+pbuf_memfind (const struct pbuf * p, const void * mem, u16_t mem_len, u16_t start_offset)
+{
+  u16_t plus;
+  u16_t max_cmp_start;
+  u16_t i;
+  u16_t D.7528;
+
+  <bb 2> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _1 = p->tot_len;
+  max_cmp_start = _1 - mem_len;
+  # DEBUG BEGIN_STMT
+  _2 = p->tot_len;
+  _3 = (int) _2;
+  _4 = (int) mem_len;
+  _5 = (int) start_offset;
+  _6 = _4 + _5;
+  if (_3 >= _6)
+    goto <bb 3>; [INV]
+  else
+    goto <bb 8>; [INV]
+
+  <bb 3> :
+  # DEBUG BEGIN_STMT
+  i = start_offset;
+  goto <bb 7>; [INV]
+
+  <bb 4> :
+  # DEBUG BEGIN_STMT
+  plus = pbuf_memcmp (p, i, mem, mem_len);
+  # DEBUG BEGIN_STMT
+  if (plus == 0)
+    goto <bb 5>; [INV]
+  else
+    goto <bb 6>; [INV]
+
+  <bb 5> :
+  # DEBUG BEGIN_STMT
+  D.7528 = i;
+  // predicted unlikely by early return (on trees) predictor.
+  goto <bb 9>; [INV]
+
+  <bb 6> :
+  # DEBUG BEGIN_STMT
+  i.17_7 = i;
+  i = i.17_7 + 1;
+
+  <bb 7> :
+  # DEBUG BEGIN_STMT
+  if (i <= max_cmp_start)
+    goto <bb 4>; [INV]
+  else
+    goto <bb 8>; [INV]
+
+  <bb 8> :
+  # DEBUG BEGIN_STMT
+  D.7528 = 65535;
+
+  <bb 9> :
+  return D.7528;
+
+}
+
+
+pbuf_memcmp (const struct pbuf * p, u16_t offset, const void * s2, u16_t n)
+{
+  u8_t b;
+  u8_t a;
+  u16_t i;
+  const struct pbuf * q;
+  u16_t start;
+  u16_t D.7519;
+
+  <bb 2> :
+  # DEBUG BEGIN_STMT
+  start = offset;
+  # DEBUG BEGIN_STMT
+  q = p;
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _1 = p->tot_len;
+  _2 = (int) _1;
+  _3 = (int) offset;
+  _4 = (int) n;
+  _5 = _3 + _4;
+  if (_2 < _5)
+    goto <bb 3>; [INV]
+  else
+    goto <bb 5>; [INV]
+
+  <bb 3> :
+  # DEBUG BEGIN_STMT
+  D.7519 = 65535;
+  // predicted unlikely by early return (on trees) predictor.
+  goto <bb 13>; [INV]
+
+  <bb 4> :
+  # DEBUG BEGIN_STMT
+  _6 = q->len;
+  start = start - _6;
+  # DEBUG BEGIN_STMT
+  q = q->next;
+
+  <bb 5> :
+  # DEBUG BEGIN_STMT
+  if (q != 0B)
+    goto <bb 6>; [INV]
+  else
+    goto <bb 7>; [INV]
+
+  <bb 6> :
+  _7 = q->len;
+  if (start >= _7)
+    goto <bb 4>; [INV]
+  else
+    goto <bb 7>; [INV]
+
+  <bb 7> :
+  # DEBUG BEGIN_STMT
+  i = 0;
+  goto <bb 11>; [INV]
+
+  <bb 8> :
+  # DEBUG BEGIN_STMT
+  _8 = start + i;
+  a = pbuf_get_at (q, _8);
+  # DEBUG BEGIN_STMT
+  _9 = (sizetype) i;
+  _10 = s2 + _9;
+  b = *_10;
+  # DEBUG BEGIN_STMT
+  if (a != b)
+    goto <bb 9>; [INV]
+  else
+    goto <bb 10>; [INV]
+
+  <bb 9> :
+  # DEBUG BEGIN_STMT
+  _11 = MIN_EXPR <i, 65534>;
+  D.7519 = _11 + 1;
+  // predicted unlikely by early return (on trees) predictor.
+  goto <bb 13>; [INV]
+
+  <bb 10> :
+  # DEBUG BEGIN_STMT
+  i.16_12 = i;
+  i = i.16_12 + 1;
+
+  <bb 11> :
+  # DEBUG BEGIN_STMT
+  if (i < n)
+    goto <bb 8>; [INV]
+  else
+    goto <bb 12>; [INV]
+
+  <bb 12> :
+  # DEBUG BEGIN_STMT
+  D.7519 = 0;
+
+  <bb 13> :
+  return D.7519;
+
+}
+
+
+pbuf_put_at (struct pbuf * p, u16_t offset, u8_t data)
+{
+  struct pbuf * q;
+  u16_t q_idx;
+
+  <bb 2> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  q = pbuf_skip (p, offset, &q_idx);
+  # DEBUG BEGIN_STMT
+  if (q != 0B)
+    goto <bb 3>; [INV]
+  else
+    goto <bb 5>; [INV]
+
+  <bb 3> :
+  _1 = q->len;
+  q_idx.14_2 = q_idx;
+  if (_1 > q_idx.14_2)
+    goto <bb 4>; [INV]
+  else
+    goto <bb 5>; [INV]
+
+  <bb 4> :
+  # DEBUG BEGIN_STMT
+  _3 = q->payload;
+  q_idx.15_4 = q_idx;
+  _5 = (sizetype) q_idx.15_4;
+  _6 = _3 + _5;
+  *_6 = data;
+
+  <bb 5> :
+  q_idx = {CLOBBER};
+  return;
+
+}
+
+
+pbuf_try_get_at (const struct pbuf * p, u16_t offset)
+{
+  const struct pbuf * q;
+  u16_t q_idx;
+  int D.7510;
+
+  <bb 2> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  q = pbuf_skip_const (p, offset, &q_idx);
+  # DEBUG BEGIN_STMT
+  if (q != 0B)
+    goto <bb 3>; [INV]
+  else
+    goto <bb 5>; [INV]
+
+  <bb 3> :
+  _1 = q->len;
+  q_idx.12_2 = q_idx;
+  if (_1 > q_idx.12_2)
+    goto <bb 4>; [INV]
+  else
+    goto <bb 5>; [INV]
+
+  <bb 4> :
+  # DEBUG BEGIN_STMT
+  _3 = q->payload;
+  q_idx.13_4 = q_idx;
+  _5 = (sizetype) q_idx.13_4;
+  _6 = _3 + _5;
+  _7 = *_6;
+  D.7510 = (int) _7;
+  // predicted unlikely by early return (on trees) predictor.
+  goto <bb 6>; [INV]
+
+  <bb 5> :
+  # DEBUG BEGIN_STMT
+  D.7510 = -1;
+
+  <bb 6> :
+  q_idx = {CLOBBER};
+  return D.7510;
+
+}
+
+
+pbuf_get_at (const struct pbuf * p, u16_t offset)
+{
+  int ret;
+  u8_t D.7504;
+
+  <bb 2> :
+  # DEBUG BEGIN_STMT
+  ret = pbuf_try_get_at (p, offset);
+  # DEBUG BEGIN_STMT
+  if (ret >= 0)
+    goto <bb 3>; [INV]
+  else
+    goto <bb 4>; [INV]
+
+  <bb 3> :
+  # DEBUG BEGIN_STMT
+  D.7504 = (u8_t) ret;
+  // predicted unlikely by early return (on trees) predictor.
+  goto <bb 5>; [INV]
+
+  <bb 4> :
+  # DEBUG BEGIN_STMT
+  D.7504 = 0;
+
+  <bb 5> :
+  return D.7504;
+
+}
+
+
+pbuf_clone (pbuf_layer layer, pbuf_type type, struct pbuf * p)
+{
+  err_t err;
+  struct pbuf * q;
+  struct pbuf * D.7498;
+
+  <bb 2> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _1 = p->tot_len;
+  q = pbuf_alloc (layer, _1, type);
+  # DEBUG BEGIN_STMT
+  if (q == 0B)
+    goto <bb 3>; [INV]
+  else
+    goto <bb 4>; [INV]
+
+  <bb 3> :
+  # DEBUG BEGIN_STMT
+  D.7498 = 0B;
+  // predicted unlikely by early return (on trees) predictor.
+  goto <bb 7>; [INV]
+
+  <bb 4> :
+  # DEBUG BEGIN_STMT
+  err = pbuf_copy (q, p);
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  if (err != 0)
+    goto <bb 5>; [INV]
+  else
+    goto <bb 6>; [INV]
+
+  <bb 5> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  __asm__ __volatile__("BKPT #0
+	");
+  # DEBUG BEGIN_STMT
+  goto <bb 5>; [INV]
+
+  <bb 6> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  D.7498 = q;
+
+  <bb 7> :
+  return D.7498;
+
+}
+
+
+pbuf_coalesce (struct pbuf * p, pbuf_layer layer)
+{
+  struct pbuf * q;
+  struct pbuf * D.7492;
+
+  <bb 2> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _1 = p->next;
+  if (_1 == 0B)
+    goto <bb 3>; [INV]
+  else
+    goto <bb 4>; [INV]
+
+  <bb 3> :
+  # DEBUG BEGIN_STMT
+  D.7492 = p;
+  // predicted unlikely by early return (on trees) predictor.
+  goto <bb 7>; [INV]
+
+  <bb 4> :
+  # DEBUG BEGIN_STMT
+  q = pbuf_clone (layer, 640, p);
+  # DEBUG BEGIN_STMT
+  if (q == 0B)
+    goto <bb 5>; [INV]
+  else
+    goto <bb 6>; [INV]
+
+  <bb 5> :
+  # DEBUG BEGIN_STMT
+  D.7492 = p;
+  // predicted unlikely by early return (on trees) predictor.
+  goto <bb 7>; [INV]
+
+  <bb 6> :
+  # DEBUG BEGIN_STMT
+  pbuf_free (p);
+  # DEBUG BEGIN_STMT
+  D.7492 = q;
+
+  <bb 7> :
+  return D.7492;
+
+}
+
+
+pbuf_take_at (struct pbuf * buf, const void * dataptr, u16_t len, u16_t offset)
+{
+  u16_t first_copy_len;
+  const u8_t * src_ptr;
+  u16_t remaining_len;
+  struct pbuf * q;
+  u16_t target_offset;
+  err_t D.7487;
+  short unsigned int iftmp.8;
+
+  <bb 2> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  q = pbuf_skip (buf, offset, &target_offset);
+  # DEBUG BEGIN_STMT
+  if (q != 0B)
+    goto <bb 3>; [INV]
+  else
+    goto <bb 12>; [INV]
+
+  <bb 3> :
+  _1 = q->tot_len;
+  _2 = (int) _1;
+  target_offset.6_3 = target_offset;
+  _4 = (int) target_offset.6_3;
+  _5 = (int) len;
+  _6 = _4 + _5;
+  if (_2 >= _6)
+    goto <bb 4>; [INV]
+  else
+    goto <bb 12>; [INV]
+
+  <bb 4> :
+  # DEBUG BEGIN_STMT
+  remaining_len = len;
+  # DEBUG BEGIN_STMT
+  src_ptr = dataptr;
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _7 = q->len;
+  target_offset.7_8 = target_offset;
+  if (_7 <= target_offset.7_8)
+    goto <bb 5>; [INV]
+  else
+    goto <bb 6>; [INV]
+
+  <bb 5> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  __asm__ __volatile__("BKPT #0
+	");
+  # DEBUG BEGIN_STMT
+  goto <bb 5>; [INV]
+
+  <bb 6> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _9 = q->len;
+  _10 = (int) _9;
+  target_offset.9_11 = target_offset;
+  _12 = (int) target_offset.9_11;
+  _13 = _10 - _12;
+  _14 = (int) len;
+  if (_13 < _14)
+    goto <bb 7>; [INV]
+  else
+    goto <bb 8>; [INV]
+
+  <bb 7> :
+  _15 = q->len;
+  target_offset.10_16 = target_offset;
+  iftmp.8 = _15 - target_offset.10_16;
+  goto <bb 9>; [INV]
+
+  <bb 8> :
+  iftmp.8 = len;
+
+  <bb 9> :
+  first_copy_len = iftmp.8;
+  # DEBUG BEGIN_STMT
+  _17 = q->payload;
+  target_offset.11_18 = target_offset;
+  _19 = (sizetype) target_offset.11_18;
+  _20 = _17 + _19;
+  _21 = (unsigned int) first_copy_len;
+  memcpy (_20, dataptr, _21);
+  # DEBUG BEGIN_STMT
+  remaining_len = remaining_len - first_copy_len;
+  # DEBUG BEGIN_STMT
+  _22 = (sizetype) first_copy_len;
+  src_ptr = src_ptr + _22;
+  # DEBUG BEGIN_STMT
+  if (remaining_len != 0)
+    goto <bb 10>; [INV]
+  else
+    goto <bb 11>; [INV]
+
+  <bb 10> :
+  # DEBUG BEGIN_STMT
+  _23 = q->next;
+  D.7487 = pbuf_take (_23, src_ptr, remaining_len);
+  // predicted unlikely by early return (on trees) predictor.
+  goto <bb 13>; [INV]
+
+  <bb 11> :
+  # DEBUG BEGIN_STMT
+  D.7487 = 0;
+  // predicted unlikely by early return (on trees) predictor.
+  goto <bb 13>; [INV]
+
+  <bb 12> :
+  # DEBUG BEGIN_STMT
+  D.7487 = -1;
+
+  <bb 13> :
+  target_offset = {CLOBBER};
+  return D.7487;
+
+}
+
+
+pbuf_take (struct pbuf * buf, const void * dataptr, u16_t len)
+{
+  size_t copied_total;
+  size_t total_copy_len;
+  size_t buf_copy_len;
+  struct pbuf * p;
+  err_t D.7458;
+
+  <bb 2> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  total_copy_len = (size_t) len;
+  # DEBUG BEGIN_STMT
+  copied_total = 0;
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  if (buf == 0B)
+    goto <bb 3>; [INV]
+  else
+    goto <bb 4>; [INV]
+
+  <bb 3> :
+  # DEBUG BEGIN_STMT
+  D.7458 = -16;
+  // predicted unlikely by early return (on trees) predictor.
+  goto <bb 23>; [INV]
+
+  <bb 4> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  if (dataptr == 0B)
+    goto <bb 5>; [INV]
+  else
+    goto <bb 6>; [INV]
+
+  <bb 5> :
+  # DEBUG BEGIN_STMT
+  D.7458 = -16;
+  // predicted unlikely by early return (on trees) predictor.
+  goto <bb 23>; [INV]
+
+  <bb 6> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _1 = buf->tot_len;
+  if (len > _1)
+    goto <bb 7>; [INV]
+  else
+    goto <bb 8>; [INV]
+
+  <bb 7> :
+  # DEBUG BEGIN_STMT
+  D.7458 = -1;
+  // predicted unlikely by early return (on trees) predictor.
+  goto <bb 23>; [INV]
+
+  <bb 8> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  if (buf == 0B)
+    goto <bb 11>; [INV]
+  else
+    goto <bb 9>; [INV]
+
+  <bb 9> :
+  if (dataptr == 0B)
+    goto <bb 11>; [INV]
+  else
+    goto <bb 10>; [INV]
+
+  <bb 10> :
+  _2 = buf->tot_len;
+  if (len > _2)
+    goto <bb 11>; [INV]
+  else
+    goto <bb 12>; [INV]
+
+  <bb 11> :
+  # DEBUG BEGIN_STMT
+  D.7458 = -16;
+  // predicted unlikely by early return (on trees) predictor.
+  goto <bb 23>; [INV]
+
+  <bb 12> :
+  # DEBUG BEGIN_STMT
+  p = buf;
+  goto <bb 18>; [INV]
+
+  <bb 13> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  if (p == 0B)
+    goto <bb 14>; [INV]
+  else
+    goto <bb 15>; [INV]
+
+  <bb 14> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  __asm__ __volatile__("BKPT #0
+	");
+  # DEBUG BEGIN_STMT
+  goto <bb 14>; [INV]
+
+  <bb 15> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  buf_copy_len = total_copy_len;
+  # DEBUG BEGIN_STMT
+  _3 = p->len;
+  _4 = (unsigned int) _3;
+  if (buf_copy_len > _4)
+    goto <bb 16>; [INV]
+  else
+    goto <bb 17>; [INV]
+
+  <bb 16> :
+  # DEBUG BEGIN_STMT
+  _5 = p->len;
+  buf_copy_len = (size_t) _5;
+
+  <bb 17> :
+  # DEBUG BEGIN_STMT
+  _6 = p->payload;
+  _7 = dataptr + copied_total;
+  memcpy (_6, _7, buf_copy_len);
+  # DEBUG BEGIN_STMT
+  total_copy_len = total_copy_len - buf_copy_len;
+  # DEBUG BEGIN_STMT
+  copied_total = copied_total + buf_copy_len;
+  # DEBUG BEGIN_STMT
+  p = p->next;
+
+  <bb 18> :
+  # DEBUG BEGIN_STMT
+  if (total_copy_len != 0)
+    goto <bb 13>; [INV]
+  else
+    goto <bb 19>; [INV]
+
+  <bb 19> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  if (total_copy_len != 0)
+    goto <bb 21>; [INV]
+  else
+    goto <bb 20>; [INV]
+
+  <bb 20> :
+  _8 = (unsigned int) len;
+  if (copied_total != _8)
+    goto <bb 21>; [INV]
+  else
+    goto <bb 22>; [INV]
+
+  <bb 21> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  __asm__ __volatile__("BKPT #0
+	");
+  # DEBUG BEGIN_STMT
+  goto <bb 21>; [INV]
+
+  <bb 22> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  D.7458 = 0;
+
+  <bb 23> :
+  return D.7458;
+
+}
+
+
+pbuf_skip (struct pbuf * in, u16_t in_offset, u16_t * out_offset)
+{
+  const struct pbuf * out;
+  struct pbuf * D.7454;
+
+  <bb 2> :
+  # DEBUG BEGIN_STMT
+  out = pbuf_skip_const (in, in_offset, out_offset);
+  # DEBUG BEGIN_STMT
+  D.7454 = out;
+  return D.7454;
+
+}
+
+
+pbuf_skip_const (const struct pbuf * in, u16_t in_offset, u16_t * out_offset)
+{
+  const struct pbuf * q;
+  u16_t offset_left;
+  const struct pbuf * D.7452;
+
+  <bb 2> :
+  # DEBUG BEGIN_STMT
+  offset_left = in_offset;
+  # DEBUG BEGIN_STMT
+  q = in;
+  # DEBUG BEGIN_STMT
+  goto <bb 4>; [INV]
+
+  <bb 3> :
+  # DEBUG BEGIN_STMT
+  _1 = q->len;
+  offset_left = offset_left - _1;
+  # DEBUG BEGIN_STMT
+  q = q->next;
+
+  <bb 4> :
+  # DEBUG BEGIN_STMT
+  if (q != 0B)
+    goto <bb 5>; [INV]
+  else
+    goto <bb 6>; [INV]
+
+  <bb 5> :
+  _2 = q->len;
+  if (offset_left >= _2)
+    goto <bb 3>; [INV]
+  else
+    goto <bb 6>; [INV]
+
+  <bb 6> :
+  # DEBUG BEGIN_STMT
+  if (out_offset != 0B)
+    goto <bb 7>; [INV]
+  else
+    goto <bb 8>; [INV]
+
+  <bb 7> :
+  # DEBUG BEGIN_STMT
+  *out_offset = offset_left;
+
+  <bb 8> :
+  # DEBUG BEGIN_STMT
+  D.7452 = q;
+  return D.7452;
+
+}
+
+
+pbuf_get_contiguous (const struct pbuf * p, void * buffer, size_t bufsize, u16_t len, u16_t offset)
+{
+  u16_t out_offset;
+  const struct pbuf * q;
+  void * D.7436;
+
+  <bb 2> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  if (p == 0B)
+    goto <bb 3>; [INV]
+  else
+    goto <bb 4>; [INV]
+
+  <bb 3> :
+  # DEBUG BEGIN_STMT
+  D.7436 = 0B;
+  // predicted unlikely by early return (on trees) predictor.
+  goto <bb 15>; [INV]
+
+  <bb 4> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  if (buffer == 0B)
+    goto <bb 5>; [INV]
+  else
+    goto <bb 6>; [INV]
+
+  <bb 5> :
+  # DEBUG BEGIN_STMT
+  D.7436 = 0B;
+  // predicted unlikely by early return (on trees) predictor.
+  goto <bb 15>; [INV]
+
+  <bb 6> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _1 = (unsigned int) len;
+  if (bufsize < _1)
+    goto <bb 7>; [INV]
+  else
+    goto <bb 8>; [INV]
+
+  <bb 7> :
+  # DEBUG BEGIN_STMT
+  D.7436 = 0B;
+  // predicted unlikely by early return (on trees) predictor.
+  goto <bb 15>; [INV]
+
+  <bb 8> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  q = pbuf_skip_const (p, offset, &out_offset);
+  # DEBUG BEGIN_STMT
+  if (q != 0B)
+    goto <bb 9>; [INV]
+  else
+    goto <bb 14>; [INV]
+
+  <bb 9> :
+  # DEBUG BEGIN_STMT
+  _2 = q->len;
+  _3 = (int) _2;
+  out_offset.3_4 = out_offset;
+  _5 = (int) out_offset.3_4;
+  _6 = (int) len;
+  _7 = _5 + _6;
+  if (_3 >= _7)
+    goto <bb 10>; [INV]
+  else
+    goto <bb 11>; [INV]
+
+  <bb 10> :
+  # DEBUG BEGIN_STMT
+  _8 = q->payload;
+  out_offset.4_9 = out_offset;
+  _10 = (sizetype) out_offset.4_9;
+  D.7436 = _8 + _10;
+  // predicted unlikely by early return (on trees) predictor.
+  goto <bb 15>; [INV]
+
+  <bb 11> :
+  # DEBUG BEGIN_STMT
+  out_offset.5_11 = out_offset;
+  _12 = pbuf_copy_partial (q, buffer, len, out_offset.5_11);
+  if (len != _12)
+    goto <bb 12>; [INV]
+  else
+    goto <bb 13>; [INV]
+
+  <bb 12> :
+  # DEBUG BEGIN_STMT
+  D.7436 = 0B;
+  // predicted unlikely by early return (on trees) predictor.
+  goto <bb 15>; [INV]
+
+  <bb 13> :
+  # DEBUG BEGIN_STMT
+  D.7436 = buffer;
+  // predicted unlikely by early return (on trees) predictor.
+  goto <bb 15>; [INV]
+
+  <bb 14> :
+  # DEBUG BEGIN_STMT
+  D.7436 = 0B;
+
+  <bb 15> :
+  out_offset = {CLOBBER};
+  return D.7436;
+
+}
+
+
+pbuf_copy_partial (const struct pbuf * buf, void * dataptr, u16_t len, u16_t offset)
+{
+  u16_t copied_total;
+  u16_t buf_copy_len;
+  u16_t left;
+  const struct pbuf * p;
+  u16_t D.7423;
+
+  <bb 2> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  left = 0;
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  copied_total = 0;
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  if (buf == 0B)
+    goto <bb 3>; [INV]
+  else
+    goto <bb 4>; [INV]
+
+  <bb 3> :
+  # DEBUG BEGIN_STMT
+  D.7423 = 0;
+  // predicted unlikely by early return (on trees) predictor.
+  goto <bb 17>; [INV]
+
+  <bb 4> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  if (dataptr == 0B)
+    goto <bb 5>; [INV]
+  else
+    goto <bb 6>; [INV]
+
+  <bb 5> :
+  # DEBUG BEGIN_STMT
+  D.7423 = 0;
+  // predicted unlikely by early return (on trees) predictor.
+  goto <bb 17>; [INV]
+
+  <bb 6> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  p = buf;
+  goto <bb 14>; [INV]
+
+  <bb 7> :
+  # DEBUG BEGIN_STMT
+  if (offset != 0)
+    goto <bb 8>; [INV]
+  else
+    goto <bb 10>; [INV]
+
+  <bb 8> :
+  _1 = p->len;
+  if (offset >= _1)
+    goto <bb 9>; [INV]
+  else
+    goto <bb 10>; [INV]
+
+  <bb 9> :
+  # DEBUG BEGIN_STMT
+  _2 = p->len;
+  offset = offset - _2;
+  goto <bb 13>; [INV]
+
+  <bb 10> :
+  # DEBUG BEGIN_STMT
+  _3 = p->len;
+  buf_copy_len = _3 - offset;
+  # DEBUG BEGIN_STMT
+  if (buf_copy_len > len)
+    goto <bb 11>; [INV]
+  else
+    goto <bb 12>; [INV]
+
+  <bb 11> :
+  # DEBUG BEGIN_STMT
+  buf_copy_len = len;
+
+  <bb 12> :
+  # DEBUG BEGIN_STMT
+  _4 = (sizetype) left;
+  _5 = dataptr + _4;
+  _6 = p->payload;
+  _7 = (sizetype) offset;
+  _8 = _6 + _7;
+  _9 = (unsigned int) buf_copy_len;
+  memcpy (_5, _8, _9);
+  # DEBUG BEGIN_STMT
+  copied_total = copied_total + buf_copy_len;
+  # DEBUG BEGIN_STMT
+  left = left + buf_copy_len;
+  # DEBUG BEGIN_STMT
+  len = len - buf_copy_len;
+  # DEBUG BEGIN_STMT
+  offset = 0;
+
+  <bb 13> :
+  # DEBUG BEGIN_STMT
+  p = p->next;
+
+  <bb 14> :
+  # DEBUG BEGIN_STMT
+  if (len != 0)
+    goto <bb 15>; [INV]
+  else
+    goto <bb 16>; [INV]
+
+  <bb 15> :
+  if (p != 0B)
+    goto <bb 7>; [INV]
+  else
+    goto <bb 16>; [INV]
+
+  <bb 16> :
+  # DEBUG BEGIN_STMT
+  D.7423 = copied_total;
+
+  <bb 17> :
+  return D.7423;
+
+}
+
+
+pbuf_copy_partial_pbuf (struct pbuf * p_to, const struct pbuf * p_from, u16_t copy_len, u16_t offset)
+{
+  u16_t len;
+  size_t len_calc;
+  size_t offset_from;
+  size_t offset_to;
+  short unsigned int iftmp.2;
+  err_t D.7381;
+
+  <bb 2> :
+  # DEBUG BEGIN_STMT
+  offset_to = (size_t) offset;
+  offset_from = 0;
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  if (p_from == 0B)
+    goto <bb 4>; [INV]
+  else
+    goto <bb 3>; [INV]
+
+  <bb 3> :
+  _1 = p_from->tot_len;
+  if (copy_len > _1)
+    goto <bb 4>; [INV]
+  else
+    goto <bb 5>; [INV]
+
+  <bb 4> :
+  # DEBUG BEGIN_STMT
+  D.7381 = -16;
+  // predicted unlikely by early return (on trees) predictor.
+  goto <bb 36>; [INV]
+
+  <bb 5> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  if (p_to == 0B)
+    goto <bb 7>; [INV]
+  else
+    goto <bb 6>; [INV]
+
+  <bb 6> :
+  _2 = p_to->tot_len;
+  _3 = (int) _2;
+  _4 = (int) offset;
+  _5 = (int) copy_len;
+  _6 = _4 + _5;
+  if (_3 < _6)
+    goto <bb 7>; [INV]
+  else
+    goto <bb 8>; [INV]
+
+  <bb 7> :
+  # DEBUG BEGIN_STMT
+  D.7381 = -16;
+  // predicted unlikely by early return (on trees) predictor.
+  goto <bb 36>; [INV]
+
+  <bb 8> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _7 = p_to->len;
+  _8 = (unsigned int) _7;
+  _9 = _8 - offset_to;
+  _10 = p_from->len;
+  _11 = (unsigned int) _10;
+  _12 = _11 - offset_from;
+  if (_9 >= _12)
+    goto <bb 9>; [INV]
+  else
+    goto <bb 10>; [INV]
+
+  <bb 9> :
+  # DEBUG BEGIN_STMT
+  _13 = p_from->len;
+  _14 = (unsigned int) _13;
+  len_calc = _14 - offset_from;
+  goto <bb 11>; [INV]
+
+  <bb 10> :
+  # DEBUG BEGIN_STMT
+  _15 = p_to->len;
+  _16 = (unsigned int) _15;
+  len_calc = _16 - offset_to;
+
+  <bb 11> :
+  # DEBUG BEGIN_STMT
+  _17 = (unsigned int) copy_len;
+  if (len_calc <= _17)
+    goto <bb 12>; [INV]
+  else
+    goto <bb 13>; [INV]
+
+  <bb 12> :
+  iftmp.2 = (short unsigned int) len_calc;
+  goto <bb 14>; [INV]
+
+  <bb 13> :
+  iftmp.2 = copy_len;
+
+  <bb 14> :
+  len = iftmp.2;
+  # DEBUG BEGIN_STMT
+  _18 = p_to->payload;
+  _19 = _18 + offset_to;
+  _20 = p_from->payload;
+  _21 = _20 + offset_from;
+  _22 = (unsigned int) len;
+  memcpy (_19, _21, _22);
+  # DEBUG BEGIN_STMT
+  _23 = (unsigned int) len;
+  offset_to = offset_to + _23;
+  # DEBUG BEGIN_STMT
+  _24 = (unsigned int) len;
+  offset_from = offset_from + _24;
+  # DEBUG BEGIN_STMT
+  copy_len = copy_len - len;
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _25 = p_to->len;
+  _26 = (unsigned int) _25;
+  if (offset_to > _26)
+    goto <bb 15>; [INV]
+  else
+    goto <bb 16>; [INV]
+
+  <bb 15> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  __asm__ __volatile__("BKPT #0
+	");
+  # DEBUG BEGIN_STMT
+  goto <bb 15>; [INV]
+
+  <bb 16> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _27 = p_from->len;
+  _28 = (unsigned int) _27;
+  if (offset_from > _28)
+    goto <bb 17>; [INV]
+  else
+    goto <bb 18>; [INV]
+
+  <bb 17> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  __asm__ __volatile__("BKPT #0
+	");
+  # DEBUG BEGIN_STMT
+  goto <bb 17>; [INV]
+
+  <bb 18> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _29 = p_from->len;
+  _30 = (unsigned int) _29;
+  if (offset_from >= _30)
+    goto <bb 19>; [INV]
+  else
+    goto <bb 22>; [INV]
+
+  <bb 19> :
+  # DEBUG BEGIN_STMT
+  offset_from = 0;
+  # DEBUG BEGIN_STMT
+  p_from = p_from->next;
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  if (p_from == 0B)
+    goto <bb 20>; [INV]
+  else
+    goto <bb 22>; [INV]
+
+  <bb 20> :
+  if (copy_len != 0)
+    goto <bb 21>; [INV]
+  else
+    goto <bb 22>; [INV]
+
+  <bb 21> :
+  # DEBUG BEGIN_STMT
+  D.7381 = -16;
+  // predicted unlikely by early return (on trees) predictor.
+  goto <bb 36>; [INV]
+
+  <bb 22> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _31 = p_to->len;
+  _32 = (unsigned int) _31;
+  if (offset_to == _32)
+    goto <bb 23>; [INV]
+  else
+    goto <bb 26>; [INV]
+
+  <bb 23> :
+  # DEBUG BEGIN_STMT
+  offset_to = 0;
+  # DEBUG BEGIN_STMT
+  p_to = p_to->next;
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  if (p_to == 0B)
+    goto <bb 24>; [INV]
+  else
+    goto <bb 26>; [INV]
+
+  <bb 24> :
+  if (copy_len != 0)
+    goto <bb 25>; [INV]
+  else
+    goto <bb 26>; [INV]
+
+  <bb 25> :
+  # DEBUG BEGIN_STMT
+  D.7381 = -16;
+  // predicted unlikely by early return (on trees) predictor.
+  goto <bb 36>; [INV]
+
+  <bb 26> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  if (p_from != 0B)
+    goto <bb 27>; [INV]
+  else
+    goto <bb 30>; [INV]
+
+  <bb 27> :
+  _33 = p_from->len;
+  _34 = p_from->tot_len;
+  if (_33 == _34)
+    goto <bb 28>; [INV]
+  else
+    goto <bb 30>; [INV]
+
+  <bb 28> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _35 = p_from->next;
+  if (_35 != 0B)
+    goto <bb 29>; [INV]
+  else
+    goto <bb 30>; [INV]
+
+  <bb 29> :
+  # DEBUG BEGIN_STMT
+  D.7381 = -6;
+  // predicted unlikely by early return (on trees) predictor.
+  goto <bb 36>; [INV]
+
+  <bb 30> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  if (p_to != 0B)
+    goto <bb 31>; [INV]
+  else
+    goto <bb 34>; [INV]
+
+  <bb 31> :
+  _36 = p_to->len;
+  _37 = p_to->tot_len;
+  if (_36 == _37)
+    goto <bb 32>; [INV]
+  else
+    goto <bb 34>; [INV]
+
+  <bb 32> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _38 = p_to->next;
+  if (_38 != 0B)
+    goto <bb 33>; [INV]
+  else
+    goto <bb 34>; [INV]
+
+  <bb 33> :
+  # DEBUG BEGIN_STMT
+  D.7381 = -6;
+  // predicted unlikely by early return (on trees) predictor.
+  goto <bb 36>; [INV]
+
+  <bb 34> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  if (copy_len != 0)
+    goto <bb 8>; [INV]
+  else
+    goto <bb 35>; [INV]
+
+  <bb 35> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  D.7381 = 0;
+
+  <bb 36> :
+  return D.7381;
+
+}
+
+
+pbuf_copy (struct pbuf * p_to, const struct pbuf * p_from)
+{
+  err_t D.7376;
+
+  <bb 2> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  if (p_from == 0B)
+    goto <bb 3>; [INV]
+  else
+    goto <bb 4>; [INV]
+
+  <bb 3> :
+  # DEBUG BEGIN_STMT
+  D.7376 = -16;
+  // predicted unlikely by early return (on trees) predictor.
+  goto <bb 5>; [INV]
+
+  <bb 4> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _1 = p_from->tot_len;
+  D.7376 = pbuf_copy_partial_pbuf (p_to, p_from, _1, 0);
+
+  <bb 5> :
+  return D.7376;
+
+}
+
+
+pbuf_dechain (struct pbuf * p)
+{
+  u8_t tail_gone;
+  struct pbuf * q;
+  struct pbuf * iftmp.1;
+  struct pbuf * D.7368;
+
+  <bb 2> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  tail_gone = 1;
+  # DEBUG BEGIN_STMT
+  q = p->next;
+  # DEBUG BEGIN_STMT
+  if (q != 0B)
+    goto <bb 3>; [INV]
+  else
+    goto <bb 6>; [INV]
+
+  <bb 3> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _1 = q->tot_len;
+  _2 = (int) _1;
+  _3 = p->tot_len;
+  _4 = (int) _3;
+  _5 = p->len;
+  _6 = (int) _5;
+  _7 = _4 - _6;
+  if (_2 != _7)
+    goto <bb 4>; [INV]
+  else
+    goto <bb 5>; [INV]
+
+  <bb 4> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  __asm__ __volatile__("BKPT #0
+	");
+  # DEBUG BEGIN_STMT
+  goto <bb 4>; [INV]
+
+  <bb 5> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _8 = p->tot_len;
+  _9 = p->len;
+  _10 = _8 - _9;
+  q->tot_len = _10;
+  # DEBUG BEGIN_STMT
+  p->next = 0B;
+  # DEBUG BEGIN_STMT
+  _11 = p->len;
+  p->tot_len = _11;
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  tail_gone = pbuf_free (q);
+  # DEBUG BEGIN_STMT
+
+  <bb 6> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _12 = p->tot_len;
+  _13 = p->len;
+  if (_12 != _13)
+    goto <bb 7>; [INV]
+  else
+    goto <bb 8>; [INV]
+
+  <bb 7> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  __asm__ __volatile__("BKPT #0
+	");
+  # DEBUG BEGIN_STMT
+  goto <bb 7>; [INV]
+
+  <bb 8> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  if (tail_gone == 0)
+    goto <bb 9>; [INV]
+  else
+    goto <bb 10>; [INV]
+
+  <bb 9> :
+  iftmp.1 = q;
+  goto <bb 11>; [INV]
+
+  <bb 10> :
+  iftmp.1 = 0B;
+
+  <bb 11> :
+  D.7368 = iftmp.1;
+  return D.7368;
+
+}
+
+
+pbuf_chain (struct pbuf * h, struct pbuf * t)
+{
+  <bb 2> :
+  # DEBUG BEGIN_STMT
+  pbuf_cat (h, t);
+  # DEBUG BEGIN_STMT
+  pbuf_ref (t);
+  # DEBUG BEGIN_STMT
+  return;
+
+}
+
+
+pbuf_cat (struct pbuf * h, struct pbuf * t)
+{
+  struct pbuf * p;
+
+  <bb 2> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  if (h == 0B)
+    goto <bb 4>; [INV]
+  else
+    goto <bb 3>; [INV]
+
+  <bb 3> :
+  if (t == 0B)
+    goto <bb 4>; [INV]
+  else
+    goto <bb 5>; [INV]
+
+  <bb 4> :
+  # DEBUG BEGIN_STMT
+  // predicted unlikely by early return (on trees) predictor.
+  goto <bb 13>; [INV]
+
+  <bb 5> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  p = h;
+  goto <bb 7>; [INV]
+
+  <bb 6> :
+  # DEBUG BEGIN_STMT
+  _1 = p->tot_len;
+  _2 = t->tot_len;
+  _3 = _1 + _2;
+  p->tot_len = _3;
+  # DEBUG BEGIN_STMT
+  p = p->next;
+
+  <bb 7> :
+  # DEBUG BEGIN_STMT
+  _4 = p->next;
+  if (_4 != 0B)
+    goto <bb 6>; [INV]
+  else
+    goto <bb 8>; [INV]
+
+  <bb 8> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _5 = p->tot_len;
+  _6 = p->len;
+  if (_5 != _6)
+    goto <bb 9>; [INV]
+  else
+    goto <bb 10>; [INV]
+
+  <bb 9> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  __asm__ __volatile__("BKPT #0
+	");
+  # DEBUG BEGIN_STMT
+  goto <bb 9>; [INV]
+
+  <bb 10> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _7 = p->next;
+  if (_7 != 0B)
+    goto <bb 11>; [INV]
+  else
+    goto <bb 12>; [INV]
+
+  <bb 11> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  __asm__ __volatile__("BKPT #0
+	");
+  # DEBUG BEGIN_STMT
+  goto <bb 11>; [INV]
+
+  <bb 12> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _8 = p->tot_len;
+  _9 = t->tot_len;
+  _10 = _8 + _9;
+  p->tot_len = _10;
+  # DEBUG BEGIN_STMT
+  p->next = t;
+
+  <bb 13> :
+  return;
+
+}
+
+
+pbuf_ref (struct pbuf * p)
+{
+  <bb 2> :
+  # DEBUG BEGIN_STMT
+  if (p != 0B)
+    goto <bb 3>; [INV]
+  else
+    goto <bb 5>; [INV]
+
+  <bb 3> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _1 = p->ref;
+  _2 = _1 + 1;
+  p->ref = _2;
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _3 = p->ref;
+  if (_3 == 0)
+    goto <bb 4>; [INV]
+  else
+    goto <bb 5>; [INV]
+
+  <bb 4> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  __asm__ __volatile__("BKPT #0
+	");
+  # DEBUG BEGIN_STMT
+  goto <bb 4>; [INV]
+
+  <bb 5> :
+  # DEBUG BEGIN_STMT
+  return;
+
+}
+
+
+pbuf_clen (const struct pbuf * p)
+{
+  u16_t len;
+  u16_t D.7346;
+
+  <bb 2> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  len = 0;
+  # DEBUG BEGIN_STMT
+  goto <bb 4>; [INV]
+
+  <bb 3> :
+  # DEBUG BEGIN_STMT
+  len = len + 1;
+  # DEBUG BEGIN_STMT
+  p = p->next;
+
+  <bb 4> :
+  # DEBUG BEGIN_STMT
+  if (p != 0B)
+    goto <bb 3>; [INV]
+  else
+    goto <bb 5>; [INV]
+
+  <bb 5> :
+  # DEBUG BEGIN_STMT
+  D.7346 = len;
+  return D.7346;
+
+}
+
+
+pbuf_free (struct pbuf * p)
+{
+  struct pbuf_custom * pc;
+  u8_t ref;
+  u8_t count;
+  struct pbuf * q;
+  u8_t alloc_src;
+  u8_t D.7323;
+
+  <bb 2> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  if (p == 0B)
+    goto <bb 3>; [INV]
+  else
+    goto <bb 6>; [INV]
+
+  <bb 3> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  if (p == 0B)
+    goto <bb 4>; [INV]
+  else
+    goto <bb 5>; [INV]
+
+  <bb 4> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  __asm__ __volatile__("BKPT #0
+	");
+  # DEBUG BEGIN_STMT
+  goto <bb 4>; [INV]
+
+  <bb 5> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  D.7323 = 0;
+  // predicted unlikely by early return (on trees) predictor.
+  goto <bb 25>; [INV]
+
+  <bb 6> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  count = 0;
+  # DEBUG BEGIN_STMT
+  goto <bb 23>; [INV]
+
+  <bb 7> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _1 = p->ref;
+  if (_1 == 0)
+    goto <bb 8>; [INV]
+  else
+    goto <bb 9>; [INV]
+
+  <bb 8> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  __asm__ __volatile__("BKPT #0
+	");
+  # DEBUG BEGIN_STMT
+  goto <bb 8>; [INV]
+
+  <bb 9> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _2 = p->ref;
+  _3 = _2 + 255;
+  p->ref = _3;
+  ref = p->ref;
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  if (ref == 0)
+    goto <bb 10>; [INV]
+  else
+    goto <bb 22>; [INV]
+
+  <bb 10> :
+  # DEBUG BEGIN_STMT
+  q = p->next;
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _4 = p->type_internal;
+  alloc_src = _4 & 15;
+  # DEBUG BEGIN_STMT
+  _5 = p->flags;
+  _6 = (unsigned int) _5;
+  _7 = _6 & 2;
+  if (_7 != 0)
+    goto <bb 11>; [INV]
+  else
+    goto <bb 14>; [INV]
+
+  <bb 11> :
+  # DEBUG BEGIN_STMT
+  pc = p;
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _8 = pc->custom_free_function;
+  if (_8 == 0B)
+    goto <bb 12>; [INV]
+  else
+    goto <bb 13>; [INV]
+
+  <bb 12> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  __asm__ __volatile__("BKPT #0
+	");
+  # DEBUG BEGIN_STMT
+  goto <bb 12>; [INV]
+
+  <bb 13> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _9 = pc->custom_free_function;
+  _9 (p);
+  goto <bb 21>; [INV]
+
+  <bb 14> :
+  # DEBUG BEGIN_STMT
+  if (alloc_src == 2)
+    goto <bb 15>; [INV]
+  else
+    goto <bb 16>; [INV]
+
+  <bb 15> :
+  # DEBUG BEGIN_STMT
+  memp_free (14, p);
+  goto <bb 21>; [INV]
+
+  <bb 16> :
+  # DEBUG BEGIN_STMT
+  if (alloc_src == 1)
+    goto <bb 17>; [INV]
+  else
+    goto <bb 18>; [INV]
+
+  <bb 17> :
+  # DEBUG BEGIN_STMT
+  memp_free (13, p);
+  goto <bb 21>; [INV]
+
+  <bb 18> :
+  # DEBUG BEGIN_STMT
+  if (alloc_src == 0)
+    goto <bb 19>; [INV]
+  else
+    goto <bb 20>; [INV]
+
+  <bb 19> :
+  # DEBUG BEGIN_STMT
+  mem_free (p);
+  goto <bb 21>; [INV]
+
+  <bb 20> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  __asm__ __volatile__("BKPT #0
+	");
+  # DEBUG BEGIN_STMT
+  goto <bb 20>; [INV]
+
+  <bb 21> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  count.0_10 = count;
+  count = count.0_10 + 1;
+  # DEBUG BEGIN_STMT
+  p = q;
+  goto <bb 23>; [INV]
+
+  <bb 22> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  p = 0B;
+
+  <bb 23> :
+  # DEBUG BEGIN_STMT
+  if (p != 0B)
+    goto <bb 7>; [INV]
+  else
+    goto <bb 24>; [INV]
+
+  <bb 24> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  D.7323 = count;
+
+  <bb 25> :
+  return D.7323;
+
+}
+
+
+pbuf_free_header (struct pbuf * q, u16_t size)
+{
+  struct pbuf * f;
+  u16_t free_left;
+  struct pbuf * p;
+  struct pbuf * D.7317;
+
+  <bb 2> :
+  # DEBUG BEGIN_STMT
+  p = q;
+  # DEBUG BEGIN_STMT
+  free_left = size;
+  # DEBUG BEGIN_STMT
+  goto <bb 6>; [INV]
+
+  <bb 3> :
+  # DEBUG BEGIN_STMT
+  _1 = p->len;
+  if (free_left >= _1)
+    goto <bb 4>; [INV]
+  else
+    goto <bb 5>; [INV]
+
+  <bb 4> :
+  # DEBUG BEGIN_STMT
+  f = p;
+  # DEBUG BEGIN_STMT
+  _2 = p->len;
+  free_left = free_left - _2;
+  # DEBUG BEGIN_STMT
+  p = p->next;
+  # DEBUG BEGIN_STMT
+  f->next = 0B;
+  # DEBUG BEGIN_STMT
+  pbuf_free (f);
+  goto <bb 6>; [INV]
+
+  <bb 5> :
+  # DEBUG BEGIN_STMT
+  _3 = (unsigned int) free_left;
+  pbuf_remove_header (p, _3);
+  # DEBUG BEGIN_STMT
+  free_left = 0;
+
+  <bb 6> :
+  # DEBUG BEGIN_STMT
+  if (free_left != 0)
+    goto <bb 7>; [INV]
+  else
+    goto <bb 8>; [INV]
+
+  <bb 7> :
+  if (p != 0B)
+    goto <bb 3>; [INV]
+  else
+    goto <bb 8>; [INV]
+
+  <bb 8> :
+  # DEBUG BEGIN_STMT
+  D.7317 = p;
+  return D.7317;
+
+}
+
+
+pbuf_header_force (struct pbuf * p, s16_t header_size_increment)
+{
+  u8_t D.7311;
+
+  <bb 2> :
+  # DEBUG BEGIN_STMT
+  D.7311 = pbuf_header_impl (p, header_size_increment, 1);
+  return D.7311;
+
+}
+
+
+pbuf_header (struct pbuf * p, s16_t header_size_increment)
+{
+  u8_t D.7305;
+
+  <bb 2> :
+  # DEBUG BEGIN_STMT
+  D.7305 = pbuf_header_impl (p, header_size_increment, 0);
+  return D.7305;
+
+}
+
+
+pbuf_header_impl (struct pbuf * p, s16_t header_size_increment, u8_t force)
+{
+  u8_t D.7309;
+
+  <bb 2> :
+  # DEBUG BEGIN_STMT
+  if (header_size_increment < 0)
+    goto <bb 3>; [INV]
+  else
+    goto <bb 4>; [INV]
+
+  <bb 3> :
+  # DEBUG BEGIN_STMT
+  _1 = (int) header_size_increment;
+  _2 = -_1;
+  _3 = (unsigned int) _2;
+  D.7309 = pbuf_remove_header (p, _3);
+  // predicted unlikely by early return (on trees) predictor.
+  goto <bb 5>; [INV]
+
+  <bb 4> :
+  # DEBUG BEGIN_STMT
+  _4 = (unsigned int) header_size_increment;
+  D.7309 = pbuf_add_header_impl (p, _4, force);
+  // predicted unlikely by early return (on trees) predictor.
+
+  <bb 5> :
+  return D.7309;
+
+}
+
+
+pbuf_remove_header (struct pbuf * p, size_t header_size_decrement)
+{
+  u16_t increment_magnitude;
+  void * payload;
+  u8_t D.7299;
+
+  <bb 2> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  if (p == 0B)
+    goto <bb 3>; [INV]
+  else
+    goto <bb 4>; [INV]
+
+  <bb 3> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  __asm__ __volatile__("BKPT #0
+	");
+  # DEBUG BEGIN_STMT
+  goto <bb 3>; [INV]
+
+  <bb 4> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  if (p == 0B)
+    goto <bb 6>; [INV]
+  else
+    goto <bb 5>; [INV]
+
+  <bb 5> :
+  if (header_size_decrement > 65535)
+    goto <bb 6>; [INV]
+  else
+    goto <bb 7>; [INV]
+
+  <bb 6> :
+  # DEBUG BEGIN_STMT
+  D.7299 = 1;
+  // predicted unlikely by early return (on trees) predictor.
+  goto <bb 12>; [INV]
+
+  <bb 7> :
+  # DEBUG BEGIN_STMT
+  if (header_size_decrement == 0)
+    goto <bb 8>; [INV]
+  else
+    goto <bb 9>; [INV]
+
+  <bb 8> :
+  # DEBUG BEGIN_STMT
+  D.7299 = 0;
+  // predicted unlikely by early return (on trees) predictor.
+  goto <bb 12>; [INV]
+
+  <bb 9> :
+  # DEBUG BEGIN_STMT
+  increment_magnitude = (u16_t) header_size_decrement;
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _1 = p->len;
+  if (increment_magnitude > _1)
+    goto <bb 10>; [INV]
+  else
+    goto <bb 11>; [INV]
+
+  <bb 10> :
+  # DEBUG BEGIN_STMT
+  D.7299 = 1;
+  // predicted unlikely by early return (on trees) predictor.
+  goto <bb 12>; [INV]
+
+  <bb 11> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  payload = p->payload;
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _2 = p->payload;
+  _3 = _2 + header_size_decrement;
+  p->payload = _3;
+  # DEBUG BEGIN_STMT
+  _4 = p->len;
+  _5 = _4 - increment_magnitude;
+  p->len = _5;
+  # DEBUG BEGIN_STMT
+  _6 = p->tot_len;
+  _7 = _6 - increment_magnitude;
+  p->tot_len = _7;
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  D.7299 = 0;
+
+  <bb 12> :
+  return D.7299;
+
+}
+
+
+pbuf_add_header_force (struct pbuf * p, size_t header_size_increment)
+{
+  u8_t D.7292;
+
+  <bb 2> :
+  # DEBUG BEGIN_STMT
+  D.7292 = pbuf_add_header_impl (p, header_size_increment, 1);
+  return D.7292;
+
+}
+
+
+pbuf_add_header (struct pbuf * p, size_t header_size_increment)
+{
+  u8_t D.7271;
+
+  <bb 2> :
+  # DEBUG BEGIN_STMT
+  D.7271 = pbuf_add_header_impl (p, header_size_increment, 0);
+  return D.7271;
+
+}
+
+
+pbuf_add_header_impl (struct pbuf * p, size_t header_size_increment, u8_t force)
+{
+  u16_t increment_magnitude;
+  void * payload;
+  u16_t type_internal;
+  u8_t D.7278;
+
+  <bb 2> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  if (p == 0B)
+    goto <bb 3>; [INV]
+  else
+    goto <bb 4>; [INV]
+
+  <bb 3> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  __asm__ __volatile__("BKPT #0
+	");
+  # DEBUG BEGIN_STMT
+  goto <bb 3>; [INV]
+
+  <bb 4> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  if (p == 0B)
+    goto <bb 6>; [INV]
+  else
+    goto <bb 5>; [INV]
+
+  <bb 5> :
+  if (header_size_increment > 65535)
+    goto <bb 6>; [INV]
+  else
+    goto <bb 7>; [INV]
+
+  <bb 6> :
+  # DEBUG BEGIN_STMT
+  D.7278 = 1;
+  // predicted unlikely by early return (on trees) predictor.
+  goto <bb 18>; [INV]
+
+  <bb 7> :
+  # DEBUG BEGIN_STMT
+  if (header_size_increment == 0)
+    goto <bb 8>; [INV]
+  else
+    goto <bb 9>; [INV]
+
+  <bb 8> :
+  # DEBUG BEGIN_STMT
+  D.7278 = 0;
+  // predicted unlikely by early return (on trees) predictor.
+  goto <bb 18>; [INV]
+
+  <bb 9> :
+  # DEBUG BEGIN_STMT
+  increment_magnitude = (u16_t) header_size_increment;
+  # DEBUG BEGIN_STMT
+  _1 = p->tot_len;
+  _2 = increment_magnitude + _1;
+  if (increment_magnitude > _2)
+    goto <bb 10>; [INV]
+  else
+    goto <bb 11>; [INV]
+
+  <bb 10> :
+  # DEBUG BEGIN_STMT
+  D.7278 = 1;
+  // predicted unlikely by early return (on trees) predictor.
+  goto <bb 18>; [INV]
+
+  <bb 11> :
+  # DEBUG BEGIN_STMT
+  _3 = p->type_internal;
+  type_internal = (u16_t) _3;
+  # DEBUG BEGIN_STMT
+  _4 = (int) type_internal;
+  _5 = _4 & 128;
+  if (_5 != 0)
+    goto <bb 12>; [INV]
+  else
+    goto <bb 14>; [INV]
+
+  <bb 12> :
+  # DEBUG BEGIN_STMT
+  _6 = p->payload;
+  _7 = -header_size_increment;
+  payload = _6 + _7;
+  # DEBUG BEGIN_STMT
+  _8 = p + 32;
+  if (payload < _8)
+    goto <bb 13>; [INV]
+  else
+    goto <bb 17>; [INV]
+
+  <bb 13> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  D.7278 = 1;
+  // predicted unlikely by early return (on trees) predictor.
+  goto <bb 18>; [INV]
+
+  <bb 14> :
+  # DEBUG BEGIN_STMT
+  if (force != 0)
+    goto <bb 15>; [INV]
+  else
+    goto <bb 16>; [INV]
+
+  <bb 15> :
+  # DEBUG BEGIN_STMT
+  _9 = p->payload;
+  _10 = -header_size_increment;
+  payload = _9 + _10;
+  goto <bb 17>; [INV]
+
+  <bb 16> :
+  # DEBUG BEGIN_STMT
+  D.7278 = 1;
+  // predicted unlikely by early return (on trees) predictor.
+  goto <bb 18>; [INV]
+
+  <bb 17> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  p->payload = payload;
+  # DEBUG BEGIN_STMT
+  _11 = p->len;
+  _12 = increment_magnitude + _11;
+  p->len = _12;
+  # DEBUG BEGIN_STMT
+  _13 = p->tot_len;
+  _14 = increment_magnitude + _13;
+  p->tot_len = _14;
+  # DEBUG BEGIN_STMT
+  D.7278 = 0;
+
+  <bb 18> :
+  return D.7278;
+
+}
+
+
+pbuf_realloc (struct pbuf * p, u16_t new_len)
+{
+  u16_t shrink;
+  u16_t rem_len;
+  struct pbuf * q;
+
+  <bb 2> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  if (p == 0B)
+    goto <bb 3>; [INV]
+  else
+    goto <bb 4>; [INV]
+
+  <bb 3> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  __asm__ __volatile__("BKPT #0
+	");
+  # DEBUG BEGIN_STMT
+  goto <bb 3>; [INV]
+
+  <bb 4> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _1 = p->tot_len;
+  if (new_len >= _1)
+    goto <bb 5>; [INV]
+  else
+    goto <bb 6>; [INV]
+
+  <bb 5> :
+  # DEBUG BEGIN_STMT
+  // predicted unlikely by early return (on trees) predictor.
+  goto <bb 18>; [INV]
+
+  <bb 6> :
+  # DEBUG BEGIN_STMT
+  _2 = p->tot_len;
+  shrink = _2 - new_len;
+  # DEBUG BEGIN_STMT
+  rem_len = new_len;
+  # DEBUG BEGIN_STMT
+  q = p;
+  # DEBUG BEGIN_STMT
+  goto <bb 9>; [INV]
+
+  <bb 7> :
+  # DEBUG BEGIN_STMT
+  _3 = q->len;
+  rem_len = rem_len - _3;
+  # DEBUG BEGIN_STMT
+  _4 = q->tot_len;
+  _5 = _4 - shrink;
+  q->tot_len = _5;
+  # DEBUG BEGIN_STMT
+  q = q->next;
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  if (q == 0B)
+    goto <bb 8>; [INV]
+  else
+    goto <bb 9>; [INV]
+
+  <bb 8> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  __asm__ __volatile__("BKPT #0
+	");
+  # DEBUG BEGIN_STMT
+  goto <bb 8>; [INV]
+
+  <bb 9> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _6 = q->len;
+  if (rem_len > _6)
+    goto <bb 7>; [INV]
+  else
+    goto <bb 10>; [INV]
+
+  <bb 10> :
+  # DEBUG BEGIN_STMT
+  _7 = q->type_internal;
+  _8 = (int) _7;
+  _9 = _8 & 15;
+  if (_9 == 0)
+    goto <bb 11>; [INV]
+  else
+    goto <bb 15>; [INV]
+
+  <bb 11> :
+  _10 = q->len;
+  if (rem_len != _10)
+    goto <bb 12>; [INV]
+  else
+    goto <bb 15>; [INV]
+
+  <bb 12> :
+  _11 = q->flags;
+  _12 = (unsigned int) _11;
+  _13 = _12 & 2;
+  if (_13 == 0)
+    goto <bb 13>; [INV]
+  else
+    goto <bb 15>; [INV]
+
+  <bb 13> :
+  # DEBUG BEGIN_STMT
+  _14 = q->payload;
+  _15 = _14 - q;
+  _16 = (int) rem_len;
+  _17 = _15 + _16;
+  _18 = (long unsigned int) _17;
+  q = mem_trim (q, _18);
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  if (q == 0B)
+    goto <bb 14>; [INV]
+  else
+    goto <bb 15>; [INV]
+
+  <bb 14> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  __asm__ __volatile__("BKPT #0
+	");
+  # DEBUG BEGIN_STMT
+  goto <bb 14>; [INV]
+
+  <bb 15> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  q->len = rem_len;
+  # DEBUG BEGIN_STMT
+  _19 = q->len;
+  q->tot_len = _19;
+  # DEBUG BEGIN_STMT
+  _20 = q->next;
+  if (_20 != 0B)
+    goto <bb 16>; [INV]
+  else
+    goto <bb 17>; [INV]
+
+  <bb 16> :
+  # DEBUG BEGIN_STMT
+  _21 = q->next;
+  pbuf_free (_21);
+
+  <bb 17> :
+  # DEBUG BEGIN_STMT
+  q->next = 0B;
+
+  <bb 18> :
+  return;
+
+}
+
+
+pbuf_alloced_custom (pbuf_layer l, u16_t length, pbuf_type type, struct pbuf_custom * p, void * payload_mem, u16_t payload_mem_len)
+{
+  void * payload;
+  u16_t offset;
+  struct pbuf * D.7249;
+
+  <bb 2> :
+  # DEBUG BEGIN_STMT
+  offset = (u16_t) l;
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _1 = (unsigned int) offset;
+  _2 = _1 + 15;
+  _3 = _2 & 4294967280;
+  _4 = (unsigned int) length;
+  _5 = _3 + _4;
+  _6 = (unsigned int) payload_mem_len;
+  if (_5 > _6)
+    goto <bb 3>; [INV]
+  else
+    goto <bb 4>; [INV]
+
+  <bb 3> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  D.7249 = 0B;
+  // predicted unlikely by early return (on trees) predictor.
+  goto <bb 8>; [INV]
+
+  <bb 4> :
+  # DEBUG BEGIN_STMT
+  if (payload_mem != 0B)
+    goto <bb 5>; [INV]
+  else
+    goto <bb 6>; [INV]
+
+  <bb 5> :
+  # DEBUG BEGIN_STMT
+  _7 = (unsigned int) offset;
+  _8 = _7 + 15;
+  _9 = _8 & 4294967280;
+  payload = payload_mem + _9;
+  goto <bb 7>; [INV]
+
+  <bb 6> :
+  # DEBUG BEGIN_STMT
+  payload = 0B;
+
+  <bb 7> :
+  # DEBUG BEGIN_STMT
+  _10 = &p->pbuf;
+  pbuf_init_alloced_pbuf (_10, payload, length, length, type, 2);
+  # DEBUG BEGIN_STMT
+  D.7249 = &p->pbuf;
+
+  <bb 8> :
+  return D.7249;
+
+}
+
+
+pbuf_alloc_reference (void * payload, u16_t length, pbuf_type type)
+{
+  struct pbuf * p;
+  struct pbuf * D.7245;
+
+  <bb 2> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  if (type != 65)
+    goto <bb 3>; [INV]
+  else
+    goto <bb 5>; [INV]
+
+  <bb 3> :
+  if (type != 1)
+    goto <bb 4>; [INV]
+  else
+    goto <bb 5>; [INV]
+
+  <bb 4> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  __asm__ __volatile__("BKPT #0
+	");
+  # DEBUG BEGIN_STMT
+  goto <bb 4>; [INV]
+
+  <bb 5> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  p = memp_malloc (13);
+  # DEBUG BEGIN_STMT
+  if (p == 0B)
+    goto <bb 6>; [INV]
+  else
+    goto <bb 7>; [INV]
+
+  <bb 6> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  D.7245 = 0B;
+  // predicted unlikely by early return (on trees) predictor.
+  goto <bb 8>; [INV]
+
+  <bb 7> :
+  # DEBUG BEGIN_STMT
+  pbuf_init_alloced_pbuf (p, payload, length, length, type, 0);
+  # DEBUG BEGIN_STMT
+  D.7245 = p;
+
+  <bb 8> :
+  return D.7245;
+
+}
+
+
+pbuf_alloc (pbuf_layer layer, u16_t length, pbuf_type type)
+{
+  mem_size_t alloc_len;
+  mem_size_t payload_len;
+  u16_t qlen;
+  u16_t rem_len;
+  struct pbuf * last;
+  struct pbuf * q;
+  u16_t offset;
+  struct pbuf * p;
+  struct pbuf * D.7220;
+
+  <bb 2> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  offset = (u16_t) layer;
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _1 = (int) type;
+  switch (_1) <default: <L33> [INV], case 1: <L0> [INV], case 65: <L0> [INV], case 386: <L2> [INV], case 640: <L18> [INV]>
+
+  <bb 3> :
+<L0>:
+  # DEBUG BEGIN_STMT
+  p = pbuf_alloc_reference (0B, length, type);
+  # DEBUG BEGIN_STMT
+  goto <bb 25>; [INV]
+
+  <bb 4> :
+<L2>:
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  p = 0B;
+  # DEBUG BEGIN_STMT
+  last = 0B;
+  # DEBUG BEGIN_STMT
+  rem_len = length;
+
+  <bb 5> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  q = memp_malloc (14);
+  # DEBUG BEGIN_STMT
+  if (q == 0B)
+    goto <bb 6>; [INV]
+  else
+    goto <bb 9>; [INV]
+
+  <bb 6> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  if (p != 0B)
+    goto <bb 7>; [INV]
+  else
+    goto <bb 8>; [INV]
+
+  <bb 7> :
+  # DEBUG BEGIN_STMT
+  pbuf_free (p);
+
+  <bb 8> :
+  # DEBUG BEGIN_STMT
+  D.7220 = 0B;
+  // predicted unlikely by early return (on trees) predictor.
+  goto <bb 26>; [INV]
+
+  <bb 9> :
+  # DEBUG BEGIN_STMT
+  _2 = offset + 15;
+  _3 = _2 & 65520;
+  _4 = 1536 - _3;
+  qlen = MIN_EXPR <rem_len, _4>;
+  # DEBUG BEGIN_STMT
+  _5 = (sizetype) offset;
+  _6 = _5 + 32;
+  _7 = q + _6;
+  _8 = (unsigned int) _7;
+  _9 = _8 + 15;
+  _10 = _9 & 4294967280;
+  _11 = (void *) _10;
+  pbuf_init_alloced_pbuf (q, _11, rem_len, qlen, type, 0);
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _12 = q->payload;
+  _13 = (unsigned int) _12;
+  _14 = _13 & 15;
+  if (_14 != 0)
+    goto <bb 10>; [INV]
+  else
+    goto <bb 11>; [INV]
+
+  <bb 10> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  __asm__ __volatile__("BKPT #0
+	");
+  # DEBUG BEGIN_STMT
+  goto <bb 10>; [INV]
+
+  <bb 11> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _15 = (unsigned int) offset;
+  _16 = _15 + 15;
+  _17 = _16 & 4294967280;
+  if (_17 == 1536)
+    goto <bb 12>; [INV]
+  else
+    goto <bb 13>; [INV]
+
+  <bb 12> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  __asm__ __volatile__("BKPT #0
+	");
+  # DEBUG BEGIN_STMT
+  goto <bb 12>; [INV]
+
+  <bb 13> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  if (p == 0B)
+    goto <bb 14>; [INV]
+  else
+    goto <bb 15>; [INV]
+
+  <bb 14> :
+  # DEBUG BEGIN_STMT
+  p = q;
+  goto <bb 16>; [INV]
+
+  <bb 15> :
+  # DEBUG BEGIN_STMT
+  last->next = q;
+
+  <bb 16> :
+  # DEBUG BEGIN_STMT
+  last = q;
+  # DEBUG BEGIN_STMT
+  rem_len = rem_len - qlen;
+  # DEBUG BEGIN_STMT
+  offset = 0;
+  # DEBUG BEGIN_STMT
+  if (rem_len != 0)
+    goto <bb 5>; [INV]
+  else
+    goto <bb 25>; [INV]
+
+  <bb 17> :
+<L18>:
+  # DEBUG BEGIN_STMT
+  _18 = (unsigned int) offset;
+  _19 = _18 + 15;
+  _20 = _19 & 4294967280;
+  _21 = (unsigned int) length;
+  _22 = _21 + 15;
+  _23 = _22 & 4294967280;
+  payload_len = _20 + _23;
+  # DEBUG BEGIN_STMT
+  alloc_len = payload_len + 32;
+  # DEBUG BEGIN_STMT
+  _24 = (unsigned int) length;
+  _25 = _24 + 15;
+  _26 = _25 & 4294967280;
+  if (payload_len < _26)
+    goto <bb 19>; [INV]
+  else
+    goto <bb 18>; [INV]
+
+  <bb 18> :
+  _27 = (unsigned int) length;
+  _28 = _27 + 15;
+  _29 = _28 & 4294967280;
+  if (alloc_len < _29)
+    goto <bb 19>; [INV]
+  else
+    goto <bb 20>; [INV]
+
+  <bb 19> :
+  # DEBUG BEGIN_STMT
+  D.7220 = 0B;
+  // predicted unlikely by early return (on trees) predictor.
+  goto <bb 26>; [INV]
+
+  <bb 20> :
+  # DEBUG BEGIN_STMT
+  p = mem_malloc (alloc_len);
+  # DEBUG BEGIN_STMT
+  if (p == 0B)
+    goto <bb 21>; [INV]
+  else
+    goto <bb 22>; [INV]
+
+  <bb 21> :
+  # DEBUG BEGIN_STMT
+  D.7220 = 0B;
+  // predicted unlikely by early return (on trees) predictor.
+  goto <bb 26>; [INV]
+
+  <bb 22> :
+  # DEBUG BEGIN_STMT
+  _30 = (sizetype) offset;
+  _31 = _30 + 32;
+  _32 = p + _31;
+  _33 = (unsigned int) _32;
+  _34 = _33 + 15;
+  _35 = _34 & 4294967280;
+  _36 = (void *) _35;
+  pbuf_init_alloced_pbuf (p, _36, length, length, type, 0);
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _37 = p->payload;
+  _38 = (unsigned int) _37;
+  _39 = _38 & 15;
+  if (_39 != 0)
+    goto <bb 23>; [INV]
+  else
+    goto <bb 25>; [INV]
+
+  <bb 23> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  __asm__ __volatile__("BKPT #0
+	");
+  # DEBUG BEGIN_STMT
+  goto <bb 23>; [INV]
+
+  <bb 24> :
+<L33>:
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  __asm__ __volatile__("BKPT #0
+	");
+  # DEBUG BEGIN_STMT
+  goto <bb 24>; [INV]
+
+  <bb 25> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  D.7220 = p;
+
+  <bb 26> :
+  return D.7220;
+
+}
+
+
+pbuf_init_alloced_pbuf (struct pbuf * p, void * payload, u16_t tot_len, u16_t len, pbuf_type type, u8_t flags)
+{
+  <bb 2> :
+  # DEBUG BEGIN_STMT
+  p->next = 0B;
+  # DEBUG BEGIN_STMT
+  p->payload = payload;
+  # DEBUG BEGIN_STMT
+  p->tot_len = tot_len;
+  # DEBUG BEGIN_STMT
+  p->len = len;
+  # DEBUG BEGIN_STMT
+  _1 = (unsigned char) type;
+  p->type_internal = _1;
+  # DEBUG BEGIN_STMT
+  p->flags = flags;
+  # DEBUG BEGIN_STMT
+  p->ref = 1;
+  # DEBUG BEGIN_STMT
+  p->if_idx = 0;
+  return;
+
+}
+
+

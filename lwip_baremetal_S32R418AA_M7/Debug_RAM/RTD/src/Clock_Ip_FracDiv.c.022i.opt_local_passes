@@ -1,0 +1,276 @@
+Clock_Ip_CompleteDfsMfiMfn (Clock_Ip_NameType DfsName)
+{
+  uint32 DividerIndex;
+  uint32 Instance;
+  Clock_Ip_DfsStatusType Status;
+  uint32 DfsPortStatus;
+  uint32 TimeoutTicks;
+  uint32 ElapsedTime;
+  uint32 StartTime;
+  boolean TimeoutOccurred;
+  int _1;
+  unsigned char _2;
+  int _3;
+  unsigned char _4;
+  struct DFS_Type * _5;
+  long unsigned int _6;
+  long unsigned int _7;
+  long unsigned int _8;
+  struct DFS_Type * _9;
+  long unsigned int _10;
+  long unsigned int _11;
+  long unsigned int _12;
+  long unsigned int TimeoutTicks.0_13;
+  _Bool _14;
+  Clock_Ip_DfsStatusType _31;
+
+  <bb 2> :
+  # DEBUG BEGIN_STMT
+  TimeoutOccurred_18 = 0;
+  # DEBUG TimeoutOccurred => TimeoutOccurred_18
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  Status_19 = 2;
+  # DEBUG Status => Status_19
+  # DEBUG BEGIN_STMT
+  _1 = (int) DfsName_20(D);
+  _2 = Clock_Ip_au8ClockFeatures[_1][0];
+  Instance_22 = (uint32) _2;
+  # DEBUG Instance => Instance_22
+  # DEBUG BEGIN_STMT
+  _3 = (int) DfsName_20(D);
+  _4 = Clock_Ip_au8ClockFeatures[_3][5];
+  DividerIndex_23 = (uint32) _4;
+  # DEBUG DividerIndex => DividerIndex_23
+  # DEBUG BEGIN_STMT
+  _5 = Clock_Ip_apxDfs[Instance_22];
+  _6 ={v} _5->PORTRESET;
+  _7 = _6 >> DividerIndex_23;
+  _8 = _7 & 1;
+  if (_8 == 0)
+    goto <bb 3>; [INV]
+  else
+    goto <bb 8>; [INV]
+
+  <bb 3> :
+  # DEBUG BEGIN_STMT
+  Clock_Ip_StartTimeout (&StartTime, &ElapsedTime, &TimeoutTicks, 50000);
+
+  <bb 4> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _9 = Clock_Ip_apxDfs[Instance_22];
+  _10 ={v} _9->PORTSR;
+  _11 = 1 << DividerIndex_23;
+  _12 = _10 & _11;
+  DfsPortStatus_26 = _12 & 3;
+  # DEBUG DfsPortStatus => DfsPortStatus_26
+  # DEBUG BEGIN_STMT
+  TimeoutTicks.0_13 = TimeoutTicks;
+  TimeoutOccurred_28 = Clock_Ip_TimeoutExpired (&StartTime, &ElapsedTime, TimeoutTicks.0_13);
+  # DEBUG TimeoutOccurred => TimeoutOccurred_28
+  # DEBUG BEGIN_STMT
+  if (DfsPortStatus_26 == 0)
+    goto <bb 5>; [INV]
+  else
+    goto <bb 6>; [INV]
+
+  <bb 5> :
+  _14 = ~TimeoutOccurred_28;
+  if (_14 != 0)
+    goto <bb 4>; [INV]
+  else
+    goto <bb 6>; [INV]
+
+  <bb 6> :
+  # DEBUG BEGIN_STMT
+  if (TimeoutOccurred_28 != 0)
+    goto <bb 7>; [INV]
+  else
+    goto <bb 9>; [INV]
+
+  <bb 7> :
+  # DEBUG BEGIN_STMT
+  Status_29 = 1;
+  # DEBUG Status => Status_29
+  # DEBUG BEGIN_STMT
+  Clock_Ip_ReportClockErrors (1, DfsName_20(D));
+  goto <bb 9>; [INV]
+
+  <bb 8> :
+  # DEBUG BEGIN_STMT
+  Status_24 = 0;
+  # DEBUG Status => Status_24
+
+  <bb 9> :
+  # Status_15 = PHI <Status_29(7), Status_24(8), Status_19(6)>
+  # DEBUG Status => Status_15
+  # DEBUG BEGIN_STMT
+  _31 = Status_15;
+  StartTime ={v} {CLOBBER};
+  ElapsedTime ={v} {CLOBBER};
+  TimeoutTicks ={v} {CLOBBER};
+  return _31;
+
+}
+
+
+Clock_Ip_SetDfsMfiMfn (const struct Clock_Ip_FracDivConfigType * Config)
+{
+  uint32 Value;
+  uint32 FractionalPart;
+  uint32 IntegerPart;
+  uint32 DividerIndex;
+  uint32 Instance;
+  <unnamed type> _1;
+  int _2;
+  unsigned char _3;
+  <unnamed type> _4;
+  int _5;
+  unsigned char _6;
+  unsigned char _7;
+  long unsigned int _8;
+  long unsigned int _9;
+  long unsigned int _10;
+  struct DFS_Type * _11;
+  struct DFS_Type * _12;
+  long unsigned int _13;
+  long unsigned int _14;
+  long unsigned int _15;
+  struct DFS_Type * _16;
+  long unsigned int _17;
+
+  <bb 2> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  Value_19 = 0;
+  # DEBUG Value => Value_19
+  # DEBUG BEGIN_STMT
+  if (Config_20(D) != 0B)
+    goto <bb 3>; [INV]
+  else
+    goto <bb 5>; [INV]
+
+  <bb 3> :
+  # DEBUG BEGIN_STMT
+  _1 = Config_20(D)->Name;
+  _2 = (int) _1;
+  _3 = Clock_Ip_au8ClockFeatures[_2][0];
+  Instance_22 = (uint32) _3;
+  # DEBUG Instance => Instance_22
+  # DEBUG BEGIN_STMT
+  _4 = Config_20(D)->Name;
+  _5 = (int) _4;
+  _6 = Clock_Ip_au8ClockFeatures[_5][5];
+  DividerIndex_23 = (uint32) _6;
+  # DEBUG DividerIndex => DividerIndex_23
+  # DEBUG BEGIN_STMT
+  IntegerPart_24 = Config_20(D)->Value[0];
+  # DEBUG IntegerPart => IntegerPart_24
+  # DEBUG BEGIN_STMT
+  FractionalPart_25 = Config_20(D)->Value[1];
+  # DEBUG FractionalPart => FractionalPart_25
+  # DEBUG BEGIN_STMT
+  _7 = Config_20(D)->Enable;
+  if (_7 != 0)
+    goto <bb 4>; [INV]
+  else
+    goto <bb 5>; [INV]
+
+  <bb 4> :
+  # DEBUG BEGIN_STMT
+  _8 = FractionalPart_25 & 63;
+  Value_26 = Value_19 | _8;
+  # DEBUG Value => Value_26
+  # DEBUG BEGIN_STMT
+  _9 = IntegerPart_24 << 8;
+  _10 = _9 & 65535;
+  Value_27 = Value_26 | _10;
+  # DEBUG Value => Value_27
+  # DEBUG BEGIN_STMT
+  _11 = Clock_Ip_apxDfs[Instance_22];
+  _11->DVPORT[DividerIndex_23] ={v} Value_27;
+  # DEBUG BEGIN_STMT
+  _12 = Clock_Ip_apxDfs[Instance_22];
+  _13 ={v} _12->PORTRESET;
+  _14 = 1 << DividerIndex_23;
+  _15 = ~_14;
+  _16 = Clock_Ip_apxDfs[Instance_22];
+  _17 = _13 & _15;
+  _16->PORTRESET ={v} _17;
+
+  <bb 5> :
+  return;
+
+}
+
+
+Clock_Ip_ResetDfsMfiMfn (const struct Clock_Ip_FracDivConfigType * Config)
+{
+  uint32 DividerIndex;
+  uint32 Instance;
+  <unnamed type> _1;
+  int _2;
+  unsigned char _3;
+  <unnamed type> _4;
+  int _5;
+  unsigned char _6;
+  struct DFS_Type * _7;
+  long unsigned int _8;
+  long unsigned int _9;
+  struct DFS_Type * _10;
+  long unsigned int _11;
+
+  <bb 2> :
+  # DEBUG BEGIN_STMT
+  _1 = Config_13(D)->Name;
+  _2 = (int) _1;
+  _3 = Clock_Ip_au8ClockFeatures[_2][0];
+  Instance_14 = (uint32) _3;
+  # DEBUG Instance => Instance_14
+  # DEBUG BEGIN_STMT
+  _4 = Config_13(D)->Name;
+  _5 = (int) _4;
+  _6 = Clock_Ip_au8ClockFeatures[_5][5];
+  DividerIndex_15 = (uint32) _6;
+  # DEBUG DividerIndex => DividerIndex_15
+  # DEBUG BEGIN_STMT
+  _7 = Clock_Ip_apxDfs[Instance_14];
+  _8 ={v} _7->PORTRESET;
+  _9 = 1 << DividerIndex_15;
+  _10 = Clock_Ip_apxDfs[Instance_14];
+  _11 = _8 | _9;
+  _10->PORTRESET ={v} _11;
+  return;
+
+}
+
+
+Clock_Ip_CallbackFracDivEmptyComplete (Clock_Ip_NameType DfsName)
+{
+  Clock_Ip_DfsStatusType _1;
+
+  <bb 2> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _1 = 0;
+  return _1;
+
+}
+
+
+Clock_Ip_CallbackFracDivEmpty (const struct Clock_Ip_FracDivConfigType * Config)
+{
+  <bb 2> :
+  # DEBUG BEGIN_STMT
+  return;
+
+}
+
+

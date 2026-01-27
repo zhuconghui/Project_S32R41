@@ -1,0 +1,1349 @@
+ip_NetToMediaTable_get_next_cell_instance_and_value (const u32_t * column, struct snmp_obj_id * row_oid, union snmp_variant_value * value, u32_t * value_len)
+{
+  u32_t test_oid[5];
+  struct eth_addr * ethaddr;
+  struct netif * netif;
+  struct ip4_addr_t * ip;
+  u32_t result_temp[5];
+  struct snmp_next_oid_state state;
+  size_t i;
+  u32_t[50] * _1;
+  unsigned char _2;
+  int _3;
+  struct netif * netif.0_4;
+  unsigned char _5;
+  long unsigned int _6;
+  struct ip4_addr_t * ip.1_7;
+  void * i.2_8;
+  <unnamed type> _9;
+  u32_t * _10;
+  unsigned char _11;
+  void * _12;
+  unsigned int _13;
+  snmp_err_t _15;
+  snmp_err_t _23;
+  snmp_err_t _29;
+
+  <bb 2> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _1 = &row_oid_19(D)->id;
+  _2 = row_oid_19(D)->len;
+  snmp_next_oid_init (&state, _1, _2, &result_temp, 5);
+  # DEBUG BEGIN_STMT
+  i_22 = 0;
+  # DEBUG i => i_22
+  goto <bb 6>; [INV]
+
+  <bb 3> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _3 = etharp_get_entry (i_14, &ip, &netif, &ethaddr);
+  if (_3 != 0)
+    goto <bb 4>; [INV]
+  else
+    goto <bb 5>; [INV]
+
+  <bb 4> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  netif.0_4 = netif;
+  _5 = netif_to_num (netif.0_4);
+  _6 = (long unsigned int) _5;
+  test_oid[0] = _6;
+  # DEBUG BEGIN_STMT
+  ip.1_7 = ip;
+  snmp_ip4_to_oid (ip.1_7, &test_oid[1]);
+  # DEBUG BEGIN_STMT
+  i.2_8 = (void *) i_14;
+  snmp_next_oid_check (&state, &test_oid, 5, i.2_8);
+  test_oid ={v} {CLOBBER};
+
+  <bb 5> :
+  ip ={v} {CLOBBER};
+  netif ={v} {CLOBBER};
+  ethaddr ={v} {CLOBBER};
+  # DEBUG BEGIN_STMT
+  i_41 = i_14 + 1;
+  # DEBUG i => i_41
+
+  <bb 6> :
+  # i_14 = PHI <i_22(2), i_41(5)>
+  # DEBUG i => i_14
+  # DEBUG BEGIN_STMT
+  if (i_14 <= 9)
+    goto <bb 3>; [INV]
+  else
+    goto <bb 7>; [INV]
+
+  <bb 7> :
+  # DEBUG BEGIN_STMT
+  _9 = state.status;
+  if (_9 == 0)
+    goto <bb 8>; [INV]
+  else
+    goto <bb 9>; [INV]
+
+  <bb 8> :
+  # DEBUG BEGIN_STMT
+  _10 = state.next_oid;
+  _11 = state.next_oid_len;
+  snmp_oid_assign (row_oid_19(D), _10, _11);
+  # DEBUG BEGIN_STMT
+  _12 = state.reference;
+  _13 = (unsigned int) _12;
+  _29 = ip_NetToMediaTable_get_cell_value_core (_13, column_25(D), value_26(D), value_len_27(D));
+  // predicted unlikely by early return (on trees) predictor.
+  goto <bb 10>; [INV]
+
+  <bb 9> :
+  # DEBUG BEGIN_STMT
+  _23 = 241;
+
+  <bb 10> :
+  # _15 = PHI <_29(8), _23(9)>
+  state ={v} {CLOBBER};
+  result_temp ={v} {CLOBBER};
+  return _15;
+
+}
+
+
+ip_NetToMediaTable_get_cell_value (const u32_t * column, const u32_t * row_oid, u8_t row_oid_len, union snmp_variant_value * value, u32_t * value_len)
+{
+  struct eth_addr * ethaddr;
+  struct netif * netif;
+  struct ip4_addr_t * ip;
+  size_t i;
+  u8_t netif_index;
+  struct ip4_addr_t ip_in;
+  unsigned char _1;
+  long unsigned int _2;
+  const u32_t * _3;
+  int _4;
+  struct netif * netif.6_5;
+  unsigned char _6;
+  long unsigned int _7;
+  struct ip4_addr_t * ip.7_8;
+  long unsigned int _9;
+  snmp_err_t _11;
+  snmp_err_t _22;
+  snmp_err_t _29;
+  snmp_err_t _37;
+
+  <bb 2> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _1 = snmp_oid_in_range (row_oid_16(D), row_oid_len_17(D), &ip_NetToMediaTable_oid_ranges, 5);
+  if (_1 == 0)
+    goto <bb 3>; [INV]
+  else
+    goto <bb 4>; [INV]
+
+  <bb 3> :
+  # DEBUG BEGIN_STMT
+  _37 = 241;
+  // predicted unlikely by early return (on trees) predictor.
+  goto <bb 12>; [INV]
+
+  <bb 4> :
+  # DEBUG BEGIN_STMT
+  _2 = *row_oid_16(D);
+  netif_index_19 = (u8_t) _2;
+  # DEBUG netif_index => netif_index_19
+  # DEBUG BEGIN_STMT
+  _3 = row_oid_16(D) + 4;
+  snmp_oid_to_ip4 (_3, &ip_in);
+  # DEBUG BEGIN_STMT
+  i_21 = 0;
+  # DEBUG i => i_21
+  goto <bb 10>; [INV]
+
+  <bb 5> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _4 = etharp_get_entry (i_10, &ip, &netif, &ethaddr);
+  if (_4 != 0)
+    goto <bb 6>; [INV]
+  else
+    goto <bb 9>; [INV]
+
+  <bb 6> :
+  # DEBUG BEGIN_STMT
+  netif.6_5 = netif;
+  _6 = netif_to_num (netif.6_5);
+  if (netif_index_19 == _6)
+    goto <bb 7>; [INV]
+  else
+    goto <bb 9>; [INV]
+
+  <bb 7> :
+  _7 = ip_in.addr;
+  ip.7_8 = ip;
+  _9 = ip.7_8->addr;
+  if (_7 == _9)
+    goto <bb 8>; [INV]
+  else
+    goto <bb 9>; [INV]
+
+  <bb 8> :
+  # DEBUG BEGIN_STMT
+  _29 = ip_NetToMediaTable_get_cell_value_core (i_10, column_25(D), value_26(D), value_len_27(D));
+  // predicted unlikely by early return (on trees) predictor.
+  ip ={v} {CLOBBER};
+  netif ={v} {CLOBBER};
+  ethaddr ={v} {CLOBBER};
+  goto <bb 12>; [INV]
+
+  <bb 9> :
+  ip ={v} {CLOBBER};
+  netif ={v} {CLOBBER};
+  ethaddr ={v} {CLOBBER};
+  # DEBUG BEGIN_STMT
+  i_36 = i_10 + 1;
+  # DEBUG i => i_36
+
+  <bb 10> :
+  # i_10 = PHI <i_21(4), i_36(9)>
+  # DEBUG i => i_10
+  # DEBUG BEGIN_STMT
+  if (i_10 <= 9)
+    goto <bb 5>; [INV]
+  else
+    goto <bb 11>; [INV]
+
+  <bb 11> :
+  # DEBUG BEGIN_STMT
+  _22 = 241;
+
+  <bb 12> :
+  # _11 = PHI <_37(3), _29(8), _22(11)>
+  ip_in ={v} {CLOBBER};
+  return _11;
+
+}
+
+
+ip_NetToMediaTable_get_cell_value_core (size_t arp_table_index, const u32_t * column, union snmp_variant_value * value, u32_t * value_len)
+{
+  struct eth_addr * ethaddr;
+  struct netif * netif;
+  struct ip4_addr_t * ip;
+  long unsigned int _1;
+  struct netif * netif.3_2;
+  unsigned char _3;
+  long unsigned int _4;
+  struct eth_addr * ethaddr.4_5;
+  struct ip4_addr_t * ip.5_6;
+  long unsigned int _7;
+  snmp_err_t _8;
+  snmp_err_t _23;
+  snmp_err_t _24;
+
+  <bb 2> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  etharp_get_entry (arp_table_index_12(D), &ip, &netif, &ethaddr);
+  # DEBUG BEGIN_STMT
+  _1 = *column_14(D);
+  switch (_1) <default: <L4> [INV], case 1: <L0> [INV], case 2: <L1> [INV], case 3: <L2> [INV], case 4: <L3> [INV]>
+
+  <bb 3> :
+<L0>:
+  # DEBUG BEGIN_STMT
+  netif.3_2 = netif;
+  _3 = netif_to_num (netif.3_2);
+  _4 = (long unsigned int) _3;
+  value_15(D)->u32 = _4;
+  # DEBUG BEGIN_STMT
+  goto <bb 8>; [INV]
+
+  <bb 4> :
+<L1>:
+  # DEBUG BEGIN_STMT
+  ethaddr.4_5 = ethaddr;
+  value_15(D)->ptr = ethaddr.4_5;
+  # DEBUG BEGIN_STMT
+  *value_len_19(D) = 6;
+  # DEBUG BEGIN_STMT
+  goto <bb 8>; [INV]
+
+  <bb 5> :
+<L2>:
+  # DEBUG BEGIN_STMT
+  ip.5_6 = ip;
+  _7 = ip.5_6->addr;
+  value_15(D)->u32 = _7;
+  # DEBUG BEGIN_STMT
+  goto <bb 8>; [INV]
+
+  <bb 6> :
+<L3>:
+  # DEBUG BEGIN_STMT
+  value_15(D)->u32 = 3;
+  # DEBUG BEGIN_STMT
+  goto <bb 8>; [INV]
+
+  <bb 7> :
+<L4>:
+  # DEBUG BEGIN_STMT
+  _24 = 241;
+  goto <bb 9>; [INV]
+
+  <bb 8> :
+  # DEBUG BEGIN_STMT
+  _23 = 0;
+
+  <bb 9> :
+  # _8 = PHI <_24(7), _23(8)>
+  ip ={v} {CLOBBER};
+  netif ={v} {CLOBBER};
+  ethaddr ={v} {CLOBBER};
+  return _8;
+
+}
+
+
+ip_RouteTable_get_next_cell_instance_and_value (const u32_t * column, struct snmp_obj_id * row_oid, union snmp_variant_value * value, u32_t * value_len)
+{
+  struct ip4_addr_t dst;
+  struct ip4_addr_t dst;
+  u32_t test_oid[4];
+  u32_t result_temp[4];
+  struct snmp_next_oid_state state;
+  struct netif * netif;
+  u32_t[50] * _1;
+  unsigned char _2;
+  struct netif * netif_default.8_3;
+  struct netif * netif_default.9_4;
+  struct ip4_addr_t * _5;
+  long unsigned int _6;
+  struct ip4_addr_t * _7;
+  long unsigned int _8;
+  long unsigned int _9;
+  long unsigned int _10;
+  <unnamed type> _11;
+  u32_t * _12;
+  unsigned char _13;
+  void * _14;
+  long unsigned int _15;
+  _Bool _16;
+  unsigned char _17;
+  snmp_err_t _19;
+  snmp_err_t _30;
+  snmp_err_t _37;
+
+  <bb 2> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _1 = &row_oid_24(D)->id;
+  _2 = row_oid_24(D)->len;
+  snmp_next_oid_init (&state, _1, _2, &result_temp, 4);
+  # DEBUG BEGIN_STMT
+  netif_default.8_3 = netif_default;
+  if (netif_default.8_3 != 0B)
+    goto <bb 3>; [INV]
+  else
+    goto <bb 4>; [INV]
+
+  <bb 3> :
+  # DEBUG BEGIN_STMT
+  snmp_ip4_to_oid (&ip_addr_any.u_addr.ip4, &test_oid[0]);
+  # DEBUG BEGIN_STMT
+  netif_default.9_4 = netif_default;
+  snmp_next_oid_check (&state, &test_oid, 4, netif_default.9_4);
+
+  <bb 4> :
+  # DEBUG BEGIN_STMT
+  netif_29 = netif_list;
+  # DEBUG netif => netif_29
+  goto <bb 8>; [INV]
+
+  <bb 5> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _5 = &netif_18->ip_addr.u_addr.ip4;
+  _6 = MEM[(const struct ip4_addr_t *)_5].addr;
+  _7 = &netif_18->netmask.u_addr.ip4;
+  _8 = MEM[(const struct ip4_addr_t *)_7].addr;
+  _9 = _6 & _8;
+  dst.addr = _9;
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _10 = dst.addr;
+  if (_10 != 0)
+    goto <bb 6>; [INV]
+  else
+    goto <bb 7>; [INV]
+
+  <bb 6> :
+  # DEBUG BEGIN_STMT
+  snmp_ip4_to_oid (&dst, &test_oid[0]);
+  # DEBUG BEGIN_STMT
+  snmp_next_oid_check (&state, &test_oid, 4, netif_18);
+
+  <bb 7> :
+  dst ={v} {CLOBBER};
+  # DEBUG BEGIN_STMT
+  netif_46 = netif_18->next;
+  # DEBUG netif => netif_46
+
+  <bb 8> :
+  # netif_18 = PHI <netif_29(4), netif_46(7)>
+  # DEBUG netif => netif_18
+  # DEBUG BEGIN_STMT
+  if (netif_18 != 0B)
+    goto <bb 5>; [INV]
+  else
+    goto <bb 9>; [INV]
+
+  <bb 9> :
+  # DEBUG BEGIN_STMT
+  _11 = state.status;
+  if (_11 == 0)
+    goto <bb 10>; [INV]
+  else
+    goto <bb 11>; [INV]
+
+  <bb 10> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  snmp_oid_to_ip4 (&result_temp[0], &dst);
+  # DEBUG BEGIN_STMT
+  _12 = state.next_oid;
+  _13 = state.next_oid_len;
+  snmp_oid_assign (row_oid_24(D), _12, _13);
+  # DEBUG BEGIN_STMT
+  _14 = state.reference;
+  _15 = dst.addr;
+  _16 = _15 == 0;
+  _17 = (unsigned char) _16;
+  _37 = ip_RouteTable_get_cell_value_core (_14, _17, column_33(D), value_34(D), value_len_35(D));
+  // predicted unlikely by early return (on trees) predictor.
+  dst ={v} {CLOBBER};
+  goto <bb 12>; [INV]
+
+  <bb 11> :
+  # DEBUG BEGIN_STMT
+  _30 = 241;
+  // predicted unlikely by early return (on trees) predictor.
+
+  <bb 12> :
+  # _19 = PHI <_37(10), _30(11)>
+  state ={v} {CLOBBER};
+  result_temp ={v} {CLOBBER};
+  test_oid ={v} {CLOBBER};
+  return _19;
+
+}
+
+
+ip_RouteTable_get_cell_value (const u32_t * column, const u32_t * row_oid, u8_t row_oid_len, union snmp_variant_value * value, u32_t * value_len)
+{
+  struct ip4_addr_t dst;
+  struct netif * netif;
+  struct ip4_addr_t test_ip;
+  unsigned char _1;
+  long unsigned int _2;
+  struct netif * netif_default.10_3;
+  struct netif * netif_default.11_4;
+  struct ip4_addr_t * _5;
+  long unsigned int _6;
+  struct ip4_addr_t * _7;
+  long unsigned int _8;
+  long unsigned int _9;
+  long unsigned int _10;
+  long unsigned int _11;
+  snmp_err_t _13;
+  snmp_err_t _25;
+  snmp_err_t _27;
+  snmp_err_t _32;
+  snmp_err_t _34;
+
+  <bb 2> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _1 = snmp_oid_in_range (row_oid_17(D), row_oid_len_18(D), &ip_RouteTable_oid_ranges, 4);
+  if (_1 == 0)
+    goto <bb 3>; [INV]
+  else
+    goto <bb 4>; [INV]
+
+  <bb 3> :
+  # DEBUG BEGIN_STMT
+  _34 = 241;
+  // predicted unlikely by early return (on trees) predictor.
+  goto <bb 13>; [INV]
+
+  <bb 4> :
+  # DEBUG BEGIN_STMT
+  snmp_oid_to_ip4 (row_oid_17(D), &test_ip);
+  # DEBUG BEGIN_STMT
+  _2 = test_ip.addr;
+  if (_2 == 0)
+    goto <bb 5>; [INV]
+  else
+    goto <bb 7>; [INV]
+
+  <bb 5> :
+  netif_default.10_3 = netif_default;
+  if (netif_default.10_3 != 0B)
+    goto <bb 6>; [INV]
+  else
+    goto <bb 7>; [INV]
+
+  <bb 6> :
+  # DEBUG BEGIN_STMT
+  netif_default.11_4 = netif_default;
+  _25 = ip_RouteTable_get_cell_value_core (netif_default.11_4, 1, column_21(D), value_22(D), value_len_23(D));
+  // predicted unlikely by early return (on trees) predictor.
+  goto <bb 13>; [INV]
+
+  <bb 7> :
+  # DEBUG BEGIN_STMT
+  netif_26 = netif_list;
+  # DEBUG netif => netif_26
+  goto <bb 11>; [INV]
+
+  <bb 8> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _5 = &netif_12->ip_addr.u_addr.ip4;
+  _6 = MEM[(const struct ip4_addr_t *)_5].addr;
+  _7 = &netif_12->netmask.u_addr.ip4;
+  _8 = MEM[(const struct ip4_addr_t *)_7].addr;
+  _9 = _6 & _8;
+  dst.addr = _9;
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _10 = dst.addr;
+  _11 = test_ip.addr;
+  if (_10 == _11)
+    goto <bb 9>; [INV]
+  else
+    goto <bb 10>; [INV]
+
+  <bb 9> :
+  # DEBUG BEGIN_STMT
+  _32 = ip_RouteTable_get_cell_value_core (netif_12, 0, column_21(D), value_22(D), value_len_23(D));
+  // predicted unlikely by early return (on trees) predictor.
+  dst ={v} {CLOBBER};
+  goto <bb 13>; [INV]
+
+  <bb 10> :
+  dst ={v} {CLOBBER};
+  # DEBUG BEGIN_STMT
+  netif_30 = netif_12->next;
+  # DEBUG netif => netif_30
+
+  <bb 11> :
+  # netif_12 = PHI <netif_26(7), netif_30(10)>
+  # DEBUG netif => netif_12
+  # DEBUG BEGIN_STMT
+  if (netif_12 != 0B)
+    goto <bb 8>; [INV]
+  else
+    goto <bb 12>; [INV]
+
+  <bb 12> :
+  # DEBUG BEGIN_STMT
+  _27 = 241;
+
+  <bb 13> :
+  # _13 = PHI <_34(3), _25(6), _32(9), _27(12)>
+  test_ip ={v} {CLOBBER};
+  return _13;
+
+}
+
+
+ip_RouteTable_get_cell_value_core (struct netif * netif, u8_t default_route, const u32_t * column, union snmp_variant_value * value, u32_t * value_len)
+{
+  struct ip4_addr_t tmp;
+  long unsigned int _1;
+  long unsigned int _2;
+  struct ip4_addr_t * _3;
+  long unsigned int _4;
+  struct ip4_addr_t * _5;
+  long unsigned int _6;
+  long unsigned int _7;
+  long unsigned int _8;
+  unsigned char _9;
+  long unsigned int _10;
+  struct ip4_addr_t * _11;
+  long unsigned int _12;
+  struct ip4_addr_t * _13;
+  long unsigned int _14;
+  long unsigned int _15;
+  struct ip4_addr_t * _16;
+  long unsigned int _17;
+  const u32_t * _18;
+  unsigned char _19;
+  unsigned int _20;
+  unsigned int _21;
+  snmp_err_t _22;
+  snmp_err_t _51;
+  snmp_err_t _52;
+
+  <bb 2> :
+  # DEBUG BEGIN_STMT
+  _1 = *column_26(D);
+  switch (_1) <default: <L28> [INV], case 1: <L0> [INV], case 2: <L4> [INV], case 3: <L5> [INV], case 4 ... 6: <L9> [INV], case 7: <L12> [INV], case 8: <L16> [INV], case 9: <L20> [INV], case 10: <L21> [INV], case 11: <L22> [INV], case 12: <L26> [INV], case 13: <L27> [INV]>
+
+  <bb 3> :
+<L0>:
+  # DEBUG BEGIN_STMT
+  if (default_route_32(D) != 0)
+    goto <bb 4>; [INV]
+  else
+    goto <bb 5>; [INV]
+
+  <bb 4> :
+  # DEBUG BEGIN_STMT
+  _2 = ip_addr_any.u_addr.ip4.addr;
+  value_27(D)->u32 = _2;
+  goto <bb 25>; [INV]
+
+  <bb 5> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _3 = &netif_33(D)->ip_addr.u_addr.ip4;
+  _4 = MEM[(const struct ip4_addr_t *)_3].addr;
+  _5 = &netif_33(D)->netmask.u_addr.ip4;
+  _6 = MEM[(const struct ip4_addr_t *)_5].addr;
+  _7 = _4 & _6;
+  tmp.addr = _7;
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _8 = tmp.addr;
+  value_27(D)->u32 = _8;
+  tmp ={v} {CLOBBER};
+  goto <bb 25>; [INV]
+
+  <bb 6> :
+<L4>:
+  # DEBUG BEGIN_STMT
+  _9 = netif_to_num (netif_33(D));
+  _10 = (long unsigned int) _9;
+  value_27(D)->u32 = _10;
+  # DEBUG BEGIN_STMT
+  goto <bb 25>; [INV]
+
+  <bb 7> :
+<L5>:
+  # DEBUG BEGIN_STMT
+  if (default_route_32(D) != 0)
+    goto <bb 8>; [INV]
+  else
+    goto <bb 9>; [INV]
+
+  <bb 8> :
+  # DEBUG BEGIN_STMT
+  value_27(D)->s32 = 1;
+  goto <bb 25>; [INV]
+
+  <bb 9> :
+  # DEBUG BEGIN_STMT
+  value_27(D)->s32 = 0;
+  goto <bb 25>; [INV]
+
+  <bb 10> :
+<L9>:
+  # DEBUG BEGIN_STMT
+  value_27(D)->s32 = -1;
+  # DEBUG BEGIN_STMT
+  goto <bb 25>; [INV]
+
+  <bb 11> :
+<L12>:
+  # DEBUG BEGIN_STMT
+  if (default_route_32(D) != 0)
+    goto <bb 12>; [INV]
+  else
+    goto <bb 13>; [INV]
+
+  <bb 12> :
+  # DEBUG BEGIN_STMT
+  _11 = &netif_33(D)->gw.u_addr.ip4;
+  _12 = MEM[(const struct ip4_addr_t *)_11].addr;
+  value_27(D)->u32 = _12;
+  goto <bb 25>; [INV]
+
+  <bb 13> :
+  # DEBUG BEGIN_STMT
+  _13 = &netif_33(D)->ip_addr.u_addr.ip4;
+  _14 = MEM[(const struct ip4_addr_t *)_13].addr;
+  value_27(D)->u32 = _14;
+  goto <bb 25>; [INV]
+
+  <bb 14> :
+<L16>:
+  # DEBUG BEGIN_STMT
+  if (default_route_32(D) != 0)
+    goto <bb 15>; [INV]
+  else
+    goto <bb 16>; [INV]
+
+  <bb 15> :
+  # DEBUG BEGIN_STMT
+  value_27(D)->u32 = 4;
+  goto <bb 25>; [INV]
+
+  <bb 16> :
+  # DEBUG BEGIN_STMT
+  value_27(D)->u32 = 3;
+  goto <bb 25>; [INV]
+
+  <bb 17> :
+<L20>:
+  # DEBUG BEGIN_STMT
+  value_27(D)->u32 = 2;
+  # DEBUG BEGIN_STMT
+  goto <bb 25>; [INV]
+
+  <bb 18> :
+<L21>:
+  # DEBUG BEGIN_STMT
+  value_27(D)->u32 = 0;
+  # DEBUG BEGIN_STMT
+  goto <bb 25>; [INV]
+
+  <bb 19> :
+<L22>:
+  # DEBUG BEGIN_STMT
+  if (default_route_32(D) != 0)
+    goto <bb 20>; [INV]
+  else
+    goto <bb 21>; [INV]
+
+  <bb 20> :
+  # DEBUG BEGIN_STMT
+  _15 = ip_addr_any.u_addr.ip4.addr;
+  value_27(D)->u32 = _15;
+  goto <bb 25>; [INV]
+
+  <bb 21> :
+  # DEBUG BEGIN_STMT
+  _16 = &netif_33(D)->netmask.u_addr.ip4;
+  _17 = MEM[(const struct ip4_addr_t *)_16].addr;
+  value_27(D)->u32 = _17;
+  goto <bb 25>; [INV]
+
+  <bb 22> :
+<L26>:
+  # DEBUG BEGIN_STMT
+  value_27(D)->s32 = -1;
+  # DEBUG BEGIN_STMT
+  goto <bb 25>; [INV]
+
+  <bb 23> :
+<L27>:
+  # DEBUG BEGIN_STMT
+  _18 = snmp_zero_dot_zero.id;
+  value_27(D)->const_ptr = _18;
+  # DEBUG BEGIN_STMT
+  _19 = snmp_zero_dot_zero.len;
+  _20 = (unsigned int) _19;
+  _21 = _20 * 4;
+  *value_len_29(D) = _21;
+  # DEBUG BEGIN_STMT
+  goto <bb 25>; [INV]
+
+  <bb 24> :
+<L28>:
+  # DEBUG BEGIN_STMT
+  _52 = 241;
+  goto <bb 26>; [INV]
+
+  <bb 25> :
+  # DEBUG BEGIN_STMT
+  _51 = 0;
+
+  <bb 26> :
+  # _22 = PHI <_52(24), _51(25)>
+  return _22;
+
+}
+
+
+ip_AddrTable_get_next_cell_instance_and_value (const u32_t * column, struct snmp_obj_id * row_oid, union snmp_variant_value * value, u32_t * value_len)
+{
+  u32_t test_oid[4];
+  u32_t result_temp[4];
+  struct snmp_next_oid_state state;
+  struct netif * netif;
+  u32_t[50] * _1;
+  unsigned char _2;
+  struct ip4_addr_t * _3;
+  <unnamed type> _4;
+  u32_t * _5;
+  unsigned char _6;
+  void * _7;
+  snmp_err_t _9;
+  snmp_err_t _16;
+  snmp_err_t _22;
+
+  <bb 2> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _1 = &row_oid_12(D)->id;
+  _2 = row_oid_12(D)->len;
+  snmp_next_oid_init (&state, _1, _2, &result_temp, 4);
+  # DEBUG BEGIN_STMT
+  netif_15 = netif_list;
+  # DEBUG netif => netif_15
+  goto <bb 4>; [INV]
+
+  <bb 3> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _3 = &netif_8->ip_addr.u_addr.ip4;
+  snmp_ip4_to_oid (_3, &test_oid[0]);
+  # DEBUG BEGIN_STMT
+  snmp_next_oid_check (&state, &test_oid, 4, netif_8);
+  test_oid ={v} {CLOBBER};
+  # DEBUG BEGIN_STMT
+  netif_28 = netif_8->next;
+  # DEBUG netif => netif_28
+
+  <bb 4> :
+  # netif_8 = PHI <netif_15(2), netif_28(3)>
+  # DEBUG netif => netif_8
+  # DEBUG BEGIN_STMT
+  if (netif_8 != 0B)
+    goto <bb 3>; [INV]
+  else
+    goto <bb 5>; [INV]
+
+  <bb 5> :
+  # DEBUG BEGIN_STMT
+  _4 = state.status;
+  if (_4 == 0)
+    goto <bb 6>; [INV]
+  else
+    goto <bb 7>; [INV]
+
+  <bb 6> :
+  # DEBUG BEGIN_STMT
+  _5 = state.next_oid;
+  _6 = state.next_oid_len;
+  snmp_oid_assign (row_oid_12(D), _5, _6);
+  # DEBUG BEGIN_STMT
+  _7 = state.reference;
+  _22 = ip_AddrTable_get_cell_value_core (_7, column_18(D), value_19(D), value_len_20(D));
+  // predicted unlikely by early return (on trees) predictor.
+  goto <bb 8>; [INV]
+
+  <bb 7> :
+  # DEBUG BEGIN_STMT
+  _16 = 241;
+
+  <bb 8> :
+  # _9 = PHI <_22(6), _16(7)>
+  state ={v} {CLOBBER};
+  result_temp ={v} {CLOBBER};
+  return _9;
+
+}
+
+
+ip_AddrTable_get_cell_value (const u32_t * column, const u32_t * row_oid, u8_t row_oid_len, union snmp_variant_value * value, u32_t * value_len)
+{
+  struct netif * netif;
+  struct ip4_addr_t ip;
+  unsigned char _1;
+  long unsigned int _2;
+  struct ip4_addr_t * _3;
+  long unsigned int _4;
+  snmp_err_t _6;
+  snmp_err_t _14;
+  snmp_err_t _20;
+  snmp_err_t _21;
+
+  <bb 2> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _1 = snmp_oid_in_range (row_oid_9(D), row_oid_len_10(D), &ip_AddrTable_oid_ranges, 4);
+  if (_1 == 0)
+    goto <bb 3>; [INV]
+  else
+    goto <bb 4>; [INV]
+
+  <bb 3> :
+  # DEBUG BEGIN_STMT
+  _21 = 241;
+  // predicted unlikely by early return (on trees) predictor.
+  goto <bb 10>; [INV]
+
+  <bb 4> :
+  # DEBUG BEGIN_STMT
+  snmp_oid_to_ip4 (row_oid_9(D), &ip);
+  # DEBUG BEGIN_STMT
+  netif_13 = netif_list;
+  # DEBUG netif => netif_13
+  goto <bb 8>; [INV]
+
+  <bb 5> :
+  # DEBUG BEGIN_STMT
+  _2 = ip.addr;
+  _3 = &netif_5->ip_addr.u_addr.ip4;
+  _4 = MEM[(const struct ip4_addr_t *)_3].addr;
+  if (_2 == _4)
+    goto <bb 6>; [INV]
+  else
+    goto <bb 7>; [INV]
+
+  <bb 6> :
+  # DEBUG BEGIN_STMT
+  _20 = ip_AddrTable_get_cell_value_core (netif_5, column_16(D), value_17(D), value_len_18(D));
+  // predicted unlikely by early return (on trees) predictor.
+  goto <bb 10>; [INV]
+
+  <bb 7> :
+  # DEBUG BEGIN_STMT
+  netif_15 = netif_5->next;
+  # DEBUG netif => netif_15
+
+  <bb 8> :
+  # netif_5 = PHI <netif_13(4), netif_15(7)>
+  # DEBUG netif => netif_5
+  # DEBUG BEGIN_STMT
+  if (netif_5 != 0B)
+    goto <bb 5>; [INV]
+  else
+    goto <bb 9>; [INV]
+
+  <bb 9> :
+  # DEBUG BEGIN_STMT
+  _14 = 241;
+
+  <bb 10> :
+  # _6 = PHI <_21(3), _20(6), _14(9)>
+  ip ={v} {CLOBBER};
+  return _6;
+
+}
+
+
+ip_AddrTable_get_cell_value_core (struct netif * netif, const u32_t * column, union snmp_variant_value * value, u32_t * value_len)
+{
+  long unsigned int _1;
+  struct ip4_addr_t * _2;
+  long unsigned int _3;
+  unsigned char _4;
+  long unsigned int _5;
+  struct ip4_addr_t * _6;
+  long unsigned int _7;
+  snmp_err_t _8;
+  snmp_err_t _21;
+  snmp_err_t _22;
+
+  <bb 2> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _1 = *column_12(D);
+  switch (_1) <default: <L5> [INV], case 1: <L0> [INV], case 2: <L1> [INV], case 3: <L2> [INV], case 4: <L3> [INV], case 5: <L4> [INV]>
+
+  <bb 3> :
+<L0>:
+  # DEBUG BEGIN_STMT
+  _2 = &netif_16(D)->ip_addr.u_addr.ip4;
+  _3 = MEM[(const struct ip4_addr_t *)_2].addr;
+  value_13(D)->u32 = _3;
+  # DEBUG BEGIN_STMT
+  goto <bb 9>; [INV]
+
+  <bb 4> :
+<L1>:
+  # DEBUG BEGIN_STMT
+  _4 = netif_to_num (netif_16(D));
+  _5 = (long unsigned int) _4;
+  value_13(D)->u32 = _5;
+  # DEBUG BEGIN_STMT
+  goto <bb 9>; [INV]
+
+  <bb 5> :
+<L2>:
+  # DEBUG BEGIN_STMT
+  _6 = &netif_16(D)->netmask.u_addr.ip4;
+  _7 = MEM[(const struct ip4_addr_t *)_6].addr;
+  value_13(D)->u32 = _7;
+  # DEBUG BEGIN_STMT
+  goto <bb 9>; [INV]
+
+  <bb 6> :
+<L3>:
+  # DEBUG BEGIN_STMT
+  value_13(D)->u32 = 1;
+  # DEBUG BEGIN_STMT
+  goto <bb 9>; [INV]
+
+  <bb 7> :
+<L4>:
+  # DEBUG BEGIN_STMT
+  value_13(D)->u32 = 7530;
+  # DEBUG BEGIN_STMT
+  goto <bb 9>; [INV]
+
+  <bb 8> :
+<L5>:
+  # DEBUG BEGIN_STMT
+  _22 = 241;
+  goto <bb 10>; [INV]
+
+  <bb 9> :
+  # DEBUG BEGIN_STMT
+  _21 = 0;
+
+  <bb 10> :
+  # _8 = PHI <_22(8), _21(9)>
+  return _8;
+
+}
+
+
+ip_set_value (struct snmp_node_instance * instance, u16_t len, void * value)
+{
+  snmp_err_t _1;
+
+  <bb 2> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _1 = 0;
+  return _1;
+
+}
+
+
+ip_set_test (struct snmp_node_instance * instance, u16_t len, void * value)
+{
+  s32_t * sint_ptr;
+  snmp_err_t ret;
+  const struct snmp_node * _1;
+  long unsigned int _2;
+  long int _3;
+  long int _4;
+  snmp_err_t _13;
+
+  <bb 2> :
+  # DEBUG BEGIN_STMT
+  ret_6 = 10;
+  # DEBUG ret => ret_6
+  # DEBUG BEGIN_STMT
+  sint_ptr_8 = value_7(D);
+  # DEBUG sint_ptr => sint_ptr_8
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _1 = instance_10(D)->node;
+  _2 = _1->oid;
+  switch (_2) <default: <L9> [INV], case 1: <L0> [INV], case 2: <L3> [INV]>
+
+  <bb 3> :
+<L0>:
+  # DEBUG BEGIN_STMT
+  _3 = *sint_ptr_8;
+  if (_3 == 2)
+    goto <bb 4>; [INV]
+  else
+    goto <bb 7>; [INV]
+
+  <bb 4> :
+  # DEBUG BEGIN_STMT
+  ret_12 = 0;
+  # DEBUG ret => ret_12
+  goto <bb 7>; [INV]
+
+  <bb 5> :
+<L3>:
+  # DEBUG BEGIN_STMT
+  _4 = *sint_ptr_8;
+  if (_4 == 255)
+    goto <bb 6>; [INV]
+  else
+    goto <bb 7>; [INV]
+
+  <bb 6> :
+  # DEBUG BEGIN_STMT
+  ret_11 = 0;
+  # DEBUG ret => ret_11
+
+  <bb 7> :
+  # ret_5 = PHI <ret_12(4), ret_11(6), ret_6(2), ret_6(3), ret_6(5)>
+<L9>:
+  # DEBUG ret => ret_5
+  # DEBUG BEGIN_STMT
+  _13 = ret_5;
+  return _13;
+
+}
+
+
+ip_get_value (struct snmp_node_instance * instance, void * value)
+{
+  u32_t * uint_ptr;
+  s32_t * sint_ptr;
+  const struct snmp_node * _1;
+  long unsigned int _2;
+  long unsigned int _3;
+  long unsigned int _4;
+  long unsigned int _5;
+  long unsigned int _6;
+  long unsigned int _7;
+  long unsigned int _8;
+  long unsigned int _9;
+  long unsigned int _10;
+  long unsigned int _11;
+  long unsigned int _12;
+  long unsigned int _13;
+  long unsigned int _14;
+  long unsigned int _15;
+  long unsigned int _16;
+  long unsigned int _17;
+  long unsigned int _18;
+  s16_t _19;
+  s16_t _27;
+  s16_t _29;
+  s16_t _31;
+  s16_t _33;
+  s16_t _35;
+  s16_t _37;
+  s16_t _39;
+  s16_t _41;
+  s16_t _43;
+  s16_t _45;
+  s16_t _47;
+  s16_t _49;
+  s16_t _51;
+  s16_t _53;
+  s16_t _55;
+  s16_t _57;
+  s16_t _59;
+  s16_t _61;
+  s16_t _63;
+  s16_t _65;
+  s16_t _66;
+
+  <bb 2> :
+  # DEBUG BEGIN_STMT
+  sint_ptr_22 = value_21(D);
+  # DEBUG sint_ptr => sint_ptr_22
+  # DEBUG BEGIN_STMT
+  uint_ptr_23 = value_21(D);
+  # DEBUG uint_ptr => uint_ptr_23
+  # DEBUG BEGIN_STMT
+  _1 = instance_25(D)->node;
+  _2 = _1->oid;
+  switch (_2) <default: <L23> [INV], case 1: <L0> [INV], case 2: <L1> [INV], case 3: <L2> [INV], case 4: <L3> [INV], case 5: <L4> [INV], case 6: <L5> [INV], case 7: <L6> [INV], case 8: <L7> [INV], case 9: <L8> [INV], case 10: <L9> [INV], case 11: <L10> [INV], case 12: <L11> [INV], case 13: <L12> [INV], case 14: <L13> [INV], case 15: <L14> [INV], case 16: <L15> [INV], case 17: <L16> [INV], case 18: <L17> [INV], case 19: <L18> [INV], case 23: <L19> [INV]>
+
+  <bb 3> :
+<L0>:
+  # DEBUG BEGIN_STMT
+  *sint_ptr_22 = 2;
+  # DEBUG BEGIN_STMT
+  _65 = 4;
+  goto <bb 24>; [INV]
+
+  <bb 4> :
+<L1>:
+  # DEBUG BEGIN_STMT
+  *sint_ptr_22 = 255;
+  # DEBUG BEGIN_STMT
+  _63 = 4;
+  goto <bb 24>; [INV]
+
+  <bb 5> :
+<L2>:
+  # DEBUG BEGIN_STMT
+  _3 = lwip_stats.mib2.ipinreceives;
+  *uint_ptr_23 = _3;
+  # DEBUG BEGIN_STMT
+  _61 = 4;
+  goto <bb 24>; [INV]
+
+  <bb 6> :
+<L3>:
+  # DEBUG BEGIN_STMT
+  _4 = lwip_stats.mib2.ipinhdrerrors;
+  *uint_ptr_23 = _4;
+  # DEBUG BEGIN_STMT
+  _59 = 4;
+  goto <bb 24>; [INV]
+
+  <bb 7> :
+<L4>:
+  # DEBUG BEGIN_STMT
+  _5 = lwip_stats.mib2.ipinaddrerrors;
+  *uint_ptr_23 = _5;
+  # DEBUG BEGIN_STMT
+  _57 = 4;
+  goto <bb 24>; [INV]
+
+  <bb 8> :
+<L5>:
+  # DEBUG BEGIN_STMT
+  _6 = lwip_stats.mib2.ipforwdatagrams;
+  *uint_ptr_23 = _6;
+  # DEBUG BEGIN_STMT
+  _55 = 4;
+  goto <bb 24>; [INV]
+
+  <bb 9> :
+<L6>:
+  # DEBUG BEGIN_STMT
+  _7 = lwip_stats.mib2.ipinunknownprotos;
+  *uint_ptr_23 = _7;
+  # DEBUG BEGIN_STMT
+  _53 = 4;
+  goto <bb 24>; [INV]
+
+  <bb 10> :
+<L7>:
+  # DEBUG BEGIN_STMT
+  _8 = lwip_stats.mib2.ipindiscards;
+  *uint_ptr_23 = _8;
+  # DEBUG BEGIN_STMT
+  _51 = 4;
+  goto <bb 24>; [INV]
+
+  <bb 11> :
+<L8>:
+  # DEBUG BEGIN_STMT
+  _9 = lwip_stats.mib2.ipindelivers;
+  *uint_ptr_23 = _9;
+  # DEBUG BEGIN_STMT
+  _49 = 4;
+  goto <bb 24>; [INV]
+
+  <bb 12> :
+<L9>:
+  # DEBUG BEGIN_STMT
+  _10 = lwip_stats.mib2.ipoutrequests;
+  *uint_ptr_23 = _10;
+  # DEBUG BEGIN_STMT
+  _47 = 4;
+  goto <bb 24>; [INV]
+
+  <bb 13> :
+<L10>:
+  # DEBUG BEGIN_STMT
+  _11 = lwip_stats.mib2.ipoutdiscards;
+  *uint_ptr_23 = _11;
+  # DEBUG BEGIN_STMT
+  _45 = 4;
+  goto <bb 24>; [INV]
+
+  <bb 14> :
+<L11>:
+  # DEBUG BEGIN_STMT
+  _12 = lwip_stats.mib2.ipoutnoroutes;
+  *uint_ptr_23 = _12;
+  # DEBUG BEGIN_STMT
+  _43 = 4;
+  goto <bb 24>; [INV]
+
+  <bb 15> :
+<L12>:
+  # DEBUG BEGIN_STMT
+  *sint_ptr_22 = 15;
+  # DEBUG BEGIN_STMT
+  _41 = 4;
+  goto <bb 24>; [INV]
+
+  <bb 16> :
+<L13>:
+  # DEBUG BEGIN_STMT
+  _13 = lwip_stats.mib2.ipreasmreqds;
+  *uint_ptr_23 = _13;
+  # DEBUG BEGIN_STMT
+  _39 = 4;
+  goto <bb 24>; [INV]
+
+  <bb 17> :
+<L14>:
+  # DEBUG BEGIN_STMT
+  _14 = lwip_stats.mib2.ipreasmoks;
+  *uint_ptr_23 = _14;
+  # DEBUG BEGIN_STMT
+  _37 = 4;
+  goto <bb 24>; [INV]
+
+  <bb 18> :
+<L15>:
+  # DEBUG BEGIN_STMT
+  _15 = lwip_stats.mib2.ipreasmfails;
+  *uint_ptr_23 = _15;
+  # DEBUG BEGIN_STMT
+  _35 = 4;
+  goto <bb 24>; [INV]
+
+  <bb 19> :
+<L16>:
+  # DEBUG BEGIN_STMT
+  _16 = lwip_stats.mib2.ipfragoks;
+  *uint_ptr_23 = _16;
+  # DEBUG BEGIN_STMT
+  _33 = 4;
+  goto <bb 24>; [INV]
+
+  <bb 20> :
+<L17>:
+  # DEBUG BEGIN_STMT
+  _17 = lwip_stats.mib2.ipfragfails;
+  *uint_ptr_23 = _17;
+  # DEBUG BEGIN_STMT
+  _31 = 4;
+  goto <bb 24>; [INV]
+
+  <bb 21> :
+<L18>:
+  # DEBUG BEGIN_STMT
+  _18 = lwip_stats.mib2.ipfragcreates;
+  *uint_ptr_23 = _18;
+  # DEBUG BEGIN_STMT
+  _29 = 4;
+  goto <bb 24>; [INV]
+
+  <bb 22> :
+<L19>:
+  # DEBUG BEGIN_STMT
+  *uint_ptr_23 = 0;
+  # DEBUG BEGIN_STMT
+  _27 = 4;
+  goto <bb 24>; [INV]
+
+  <bb 23> :
+<L23>:
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _66 = 0;
+
+  <bb 24> :
+  # _19 = PHI <_65(3), _63(4), _61(5), _59(6), _57(7), _55(8), _53(9), _51(10), _49(11), _47(12), _45(13), _43(14), _41(15), _39(16), _37(17), _35(18), _33(19), _31(20), _29(21), _27(22), _66(23)>
+  return _19;
+
+}
+
+

@@ -1,0 +1,3571 @@
+lowpan6_decompress (struct pbuf * p, u16_t datagram_size, struct ip6_addr_t * lowpan6_contexts, struct lowpan6_link_addr * src, struct lowpan6_link_addr * dest)
+{
+  err_t err;
+  u16_t ip6_offset;
+  u16_t lowpan6_offset;
+  struct pbuf * q;
+  short unsigned int _1;
+  short unsigned int _2;
+  short unsigned int _3;
+  void * _4;
+  short unsigned int _5;
+  unsigned int _6;
+  void * _7;
+  unsigned int _8;
+  short unsigned int _9;
+  short unsigned int lowpan6_offset.41_10;
+  unsigned int _11;
+  short unsigned int ip6_offset.42_12;
+  unsigned int _13;
+  short unsigned int ip6_offset.43_14;
+  unsigned int _15;
+  short unsigned int _16;
+  short unsigned int ip6_offset.44_17;
+  short unsigned int _18;
+  struct pbuf * _19;
+  struct pbuf * _20;
+
+  <bb 2> [local count: 1073741824]:
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _1 = p_24(D)->len;
+  _2 = _1 + 48;
+  q_26 = pbuf_alloc (54, _2, 386);
+  # DEBUG q => q_26
+  # DEBUG BEGIN_STMT
+  if (q_26 == 0B)
+    goto <bb 3>; [4.25%]
+  else
+    goto <bb 4>; [95.75%]
+
+  <bb 3> [local count: 45634028]:
+  # DEBUG BEGIN_STMT
+  pbuf_free (p_24(D));
+  # DEBUG BEGIN_STMT
+  goto <bb 11>; [100.00%]
+
+  <bb 4> [local count: 1028107797]:
+  # DEBUG BEGIN_STMT
+  _3 = q_26->len;
+  if (_3 <= 47)
+    goto <bb 5>; [17.38%]
+  else
+    goto <bb 6>; [82.62%]
+
+  <bb 5> [local count: 178685135]:
+  # DEBUG BEGIN_STMT
+  pbuf_free (p_24(D));
+  # DEBUG BEGIN_STMT
+  pbuf_free (q_26);
+  # DEBUG BEGIN_STMT
+  goto <bb 11>; [100.00%]
+
+  <bb 6> [local count: 849422662]:
+  # DEBUG BEGIN_STMT
+  _4 = p_24(D)->payload;
+  _5 = p_24(D)->len;
+  _6 = (unsigned int) _5;
+  _7 = q_26->payload;
+  _8 = (unsigned int) _3;
+  _9 = p_24(D)->tot_len;
+  err_32 = lowpan6_decompress_hdr (_4, _6, _7, _8, &lowpan6_offset, &ip6_offset, datagram_size_27(D), _9, lowpan6_contexts_28(D), src_29(D), dest_30(D));
+  # DEBUG err => err_32
+  # DEBUG BEGIN_STMT
+  if (err_32 != 0)
+    goto <bb 7>; [17.38%]
+  else
+    goto <bb 8>; [82.62%]
+
+  <bb 7> [local count: 147629659]:
+  # DEBUG BEGIN_STMT
+  pbuf_free (p_24(D));
+  # DEBUG BEGIN_STMT
+  pbuf_free (q_26);
+  # DEBUG BEGIN_STMT
+  goto <bb 11>; [100.00%]
+
+  <bb 8> [local count: 701793003]:
+  # DEBUG BEGIN_STMT
+  lowpan6_offset.41_10 = lowpan6_offset;
+  _11 = (unsigned int) lowpan6_offset.41_10;
+  pbuf_remove_header (p_24(D), _11);
+  # DEBUG BEGIN_STMT
+  ip6_offset.42_12 = ip6_offset;
+  _13 = (unsigned int) ip6_offset.42_12;
+  pbuf_remove_header (q_26, _13);
+  # DEBUG BEGIN_STMT
+  pbuf_copy (q_26, p_24(D));
+  # DEBUG BEGIN_STMT
+  ip6_offset.43_14 = ip6_offset;
+  _15 = (unsigned int) ip6_offset.43_14;
+  pbuf_add_header_force (q_26, _15);
+  # DEBUG BEGIN_STMT
+  _16 = p_24(D)->len;
+  ip6_offset.44_17 = ip6_offset;
+  _18 = _16 + ip6_offset.44_17;
+  pbuf_realloc (q_26, _18);
+  # DEBUG BEGIN_STMT
+  _19 = p_24(D)->next;
+  if (_19 != 0B)
+    goto <bb 9>; [53.47%]
+  else
+    goto <bb 10>; [46.53%]
+
+  <bb 9> [local count: 375248718]:
+  # DEBUG BEGIN_STMT
+  pbuf_cat (q_26, _19);
+
+  <bb 10> [local count: 701793002]:
+  # DEBUG BEGIN_STMT
+  p_24(D)->next = 0B;
+  # DEBUG BEGIN_STMT
+  pbuf_free (p_24(D));
+  # DEBUG BEGIN_STMT
+
+  <bb 11> [local count: 1073741822]:
+  # _20 = PHI <0B(3), 0B(5), 0B(7), q_26(10)>
+  lowpan6_offset ={v} {CLOBBER};
+  ip6_offset ={v} {CLOBBER};
+  return _20;
+
+}
+
+
+lowpan6_decompress_hdr (u8_t * lowpan6_buffer, size_t lowpan6_bufsize, u8_t * decomp_buffer, size_t decomp_bufsize, u16_t * hdr_size_comp, u16_t * hdr_size_decomp, u16_t datagram_size, u16_t compressed_size, struct ip6_addr_t * lowpan6_contexts, struct lowpan6_link_addr * src, struct lowpan6_link_addr * dest)
+{
+  u16_t ip6_offset;
+  u32_t header_temp;
+  s8_t i;
+  u16_t lowpan6_offset;
+  unsigned char _1;
+  signed char _2;
+  unsigned char _3;
+  sizetype _4;
+  sizetype _5;
+  u8_t * _6;
+  unsigned char _7;
+  int _8;
+  int _9;
+  int _10;
+  sizetype _11;
+  u8_t * _12;
+  unsigned char _13;
+  int _14;
+  int _15;
+  int _16;
+  sizetype _17;
+  u8_t * _18;
+  unsigned char _19;
+  int _20;
+  int _21;
+  u8_t * _22;
+  unsigned char _23;
+  long unsigned int _24;
+  long unsigned int _25;
+  long unsigned int _26;
+  long unsigned int _27;
+  long unsigned int _28;
+  sizetype _29;
+  u8_t * _30;
+  unsigned char _31;
+  int _32;
+  int _33;
+  int _34;
+  sizetype _35;
+  u8_t * _36;
+  unsigned char _37;
+  int _38;
+  int _39;
+  int _40;
+  sizetype _41;
+  u8_t * _42;
+  unsigned char _43;
+  int _44;
+  int _45;
+  long unsigned int _46;
+  long unsigned int _47;
+  long unsigned int _48;
+  long unsigned int _49;
+  long unsigned int _50;
+  long unsigned int _51;
+  sizetype _52;
+  u8_t * _53;
+  unsigned char _54;
+  long unsigned int _55;
+  long unsigned int _56;
+  long unsigned int _57;
+  long unsigned int _58;
+  long unsigned int _59;
+  unsigned char _60;
+  sizetype _61;
+  u8_t * _62;
+  unsigned char _63;
+  unsigned char _64;
+  sizetype _65;
+  u8_t * _66;
+  unsigned char _67;
+  unsigned char _68;
+  u32_t * _69;
+  sizetype _70;
+  u8_t * _71;
+  u32_t * _72;
+  sizetype _73;
+  u8_t * _74;
+  sizetype _75;
+  u8_t * _76;
+  unsigned char _77;
+  int _78;
+  int _79;
+  long unsigned int _80;
+  sizetype _81;
+  u8_t * _82;
+  unsigned char _83;
+  long unsigned int _84;
+  long unsigned int _85;
+  long unsigned int _86;
+  long unsigned int _87;
+  unsigned char _88;
+  unsigned char _89;
+  int _90;
+  int _91;
+  long unsigned int _92;
+  unsigned char _93;
+  long unsigned int _94;
+  long unsigned int _95;
+  long unsigned int _96;
+  long unsigned int _97;
+  unsigned char _98;
+  unsigned char _99;
+  int _100;
+  int _101;
+  unsigned char _102;
+  int _103;
+  int _104;
+  int _105;
+  unsigned char _106;
+  int _107;
+  int _108;
+  int _109;
+  unsigned char _110;
+  int _111;
+  int _112;
+  long unsigned int _113;
+  long unsigned int _114;
+  unsigned char _115;
+  int _116;
+  int _117;
+  unsigned char _118;
+  int _119;
+  int _120;
+  int _121;
+  unsigned char _122;
+  int _123;
+  int _124;
+  int _125;
+  unsigned char _126;
+  int _127;
+  int _128;
+  long unsigned int _129;
+  long unsigned int _130;
+  signed char _131;
+  unsigned char _132;
+  unsigned char _133;
+  unsigned int _134;
+  unsigned int _135;
+  struct ip6_addr_t * _136;
+  long unsigned int _137;
+  long unsigned int _138;
+  unsigned char _139;
+  u32_t * _140;
+  sizetype _141;
+  u8_t * _142;
+  sizetype _143;
+  u8_t * _144;
+  unsigned char _145;
+  int _146;
+  int _147;
+  long unsigned int _148;
+  sizetype _149;
+  u8_t * _150;
+  unsigned char _151;
+  long unsigned int _152;
+  long unsigned int _153;
+  long unsigned int _154;
+  long unsigned int _155;
+  unsigned char _156;
+  unsigned char _157;
+  int _158;
+  int _159;
+  long unsigned int _160;
+  unsigned char _161;
+  long unsigned int _162;
+  long unsigned int _163;
+  long unsigned int _164;
+  long unsigned int _165;
+  unsigned char _166;
+  unsigned char _167;
+  int _168;
+  int _169;
+  unsigned char _170;
+  int _171;
+  int _172;
+  int _173;
+  unsigned char _174;
+  int _175;
+  int _176;
+  int _177;
+  unsigned char _178;
+  int _179;
+  int _180;
+  long unsigned int _181;
+  long unsigned int _182;
+  unsigned char _183;
+  int _184;
+  int _185;
+  unsigned char _186;
+  int _187;
+  int _188;
+  int _189;
+  unsigned char _190;
+  int _191;
+  int _192;
+  int _193;
+  unsigned char _194;
+  int _195;
+  int _196;
+  long unsigned int _197;
+  long unsigned int _198;
+  unsigned char _199;
+  u32_t * _201;
+  sizetype _202;
+  u8_t * _203;
+  sizetype _205;
+  u8_t * _206;
+  unsigned char _207;
+  int _208;
+  int _209;
+  long unsigned int _210;
+  long unsigned int _211;
+  long unsigned int _212;
+  sizetype _213;
+  u8_t * _214;
+  unsigned char _215;
+  long unsigned int _216;
+  long unsigned int _217;
+  sizetype _218;
+  u8_t * _219;
+  unsigned char _220;
+  int _221;
+  int _222;
+  sizetype _223;
+  u8_t * _224;
+  unsigned char _225;
+  int _226;
+  int _227;
+  int _228;
+  sizetype _229;
+  u8_t * _230;
+  unsigned char _231;
+  int _232;
+  int _233;
+  int _234;
+  sizetype _235;
+  u8_t * _236;
+  unsigned char _237;
+  int _238;
+  int _239;
+  long unsigned int _240;
+  long unsigned int _241;
+  sizetype _242;
+  u8_t * _243;
+  unsigned char _244;
+  int _245;
+  int _246;
+  long unsigned int _247;
+  long unsigned int _248;
+  long unsigned int _249;
+  sizetype _250;
+  u8_t * _251;
+  unsigned char _252;
+  int _253;
+  int _254;
+  sizetype _255;
+  u8_t * _256;
+  unsigned char _257;
+  int _258;
+  int _259;
+  int _260;
+  sizetype _261;
+  u8_t * _262;
+  unsigned char _263;
+  int _264;
+  int _265;
+  long unsigned int _266;
+  long unsigned int _267;
+  sizetype _268;
+  u8_t * _269;
+  unsigned char _270;
+  long unsigned int _271;
+  long unsigned int _272;
+  signed char _273;
+  unsigned char _274;
+  signed char _275;
+  unsigned int _276;
+  unsigned int _277;
+  struct ip6_addr_t * _278;
+  long unsigned int _279;
+  long unsigned int _280;
+  unsigned char _281;
+  u32_t * _282;
+  sizetype _283;
+  u8_t * _284;
+  u32_t * _285;
+  sizetype _286;
+  u8_t * _287;
+  sizetype _288;
+  u8_t * _289;
+  unsigned char _290;
+  int _291;
+  int _292;
+  long unsigned int _293;
+  sizetype _294;
+  u8_t * _295;
+  unsigned char _296;
+  long unsigned int _297;
+  long unsigned int _298;
+  long unsigned int _299;
+  long unsigned int _300;
+  unsigned char _301;
+  unsigned char _302;
+  int _303;
+  int _304;
+  long unsigned int _305;
+  unsigned char _306;
+  long unsigned int _307;
+  long unsigned int _308;
+  long unsigned int _309;
+  long unsigned int _310;
+  unsigned char _311;
+  unsigned char _312;
+  int _313;
+  int _314;
+  unsigned char _315;
+  int _316;
+  int _317;
+  int _318;
+  unsigned char _319;
+  int _320;
+  int _321;
+  int _322;
+  unsigned char _323;
+  int _324;
+  int _325;
+  long unsigned int _326;
+  long unsigned int _327;
+  unsigned char _328;
+  int _329;
+  int _330;
+  unsigned char _331;
+  int _332;
+  int _333;
+  int _334;
+  unsigned char _335;
+  int _336;
+  int _337;
+  int _338;
+  unsigned char _339;
+  int _340;
+  int _341;
+  long unsigned int _342;
+  long unsigned int _343;
+  unsigned char _344;
+  sizetype _345;
+  u8_t * _346;
+  unsigned char _347;
+  unsigned char _348;
+  unsigned char _349;
+  signed char _350;
+  sizetype _351;
+  u8_t * _352;
+  unsigned char _353;
+  int _354;
+  int _355;
+  signed short _356;
+  sizetype _357;
+  u8_t * _358;
+  unsigned char _359;
+  signed short _360;
+  signed short _361;
+  short unsigned int _362;
+  short unsigned int _363;
+  sizetype _364;
+  u8_t * _365;
+  unsigned char _366;
+  int _367;
+  int _368;
+  signed short _369;
+  sizetype _370;
+  u8_t * _371;
+  unsigned char _372;
+  signed short _373;
+  signed short _374;
+  short unsigned int _375;
+  short unsigned int _376;
+  sizetype _377;
+  u8_t * _378;
+  unsigned char _379;
+  int _380;
+  int _381;
+  signed short _382;
+  sizetype _383;
+  u8_t * _384;
+  unsigned char _385;
+  signed short _386;
+  signed short _387;
+  short unsigned int _388;
+  short unsigned int _389;
+  sizetype _390;
+  u8_t * _391;
+  unsigned char _392;
+  signed short _393;
+  signed short _394;
+  short unsigned int _395;
+  short unsigned int _396;
+  sizetype _397;
+  u8_t * _398;
+  unsigned char _399;
+  signed short _400;
+  signed short _401;
+  short unsigned int _402;
+  short unsigned int _403;
+  sizetype _404;
+  u8_t * _405;
+  unsigned char _406;
+  int _407;
+  int _408;
+  signed short _409;
+  sizetype _410;
+  u8_t * _411;
+  unsigned char _412;
+  signed short _413;
+  signed short _414;
+  short unsigned int _415;
+  short unsigned int _416;
+  sizetype _417;
+  u8_t * _418;
+  unsigned char _419;
+  unsigned char _420;
+  signed short _421;
+  signed short _422;
+  short unsigned int _423;
+  short unsigned int _424;
+  unsigned char _425;
+  signed short _426;
+  signed short _427;
+  short unsigned int _428;
+  short unsigned int _429;
+  sizetype _430;
+  u8_t * _431;
+  unsigned char _432;
+  int _433;
+  int _434;
+  signed short _435;
+  sizetype _436;
+  u8_t * _437;
+  unsigned char _438;
+  signed short _439;
+  signed short _440;
+  short unsigned int _441;
+  short unsigned int _442;
+  short unsigned int _443;
+  short unsigned int _444;
+  short unsigned int _445;
+  short unsigned int _446;
+  short unsigned int _447;
+  short unsigned int _448;
+  unsigned int _449;
+  err_t _462;
+  unsigned char _479;
+  unsigned char _488;
+  unsigned char _510;
+  unsigned char _555;
+  unsigned char _559;
+  unsigned char _560;
+  unsigned char _639;
+  unsigned char _640;
+  unsigned char _641;
+  unsigned char _648;
+  unsigned char _649;
+  unsigned char _650;
+  unsigned char _651;
+  unsigned char _652;
+  unsigned char _653;
+
+  <bb 2> [local count: 357913]:
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG ip6_offset => 40
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  if (lowpan6_buffer_480(D) == 0B)
+    goto <bb 3>; [30.00%]
+  else
+    goto <bb 4>; [70.00%]
+
+  <bb 3> [local count: 1073741824]:
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  __asm__ __volatile__("BKPT #0
+	");
+  # DEBUG BEGIN_STMT
+  goto <bb 3>; [100.00%]
+
+  <bb 4> [local count: 250539]:
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  if (decomp_buffer_482(D) == 0B)
+    goto <bb 5>; [30.00%]
+  else
+    goto <bb 6>; [70.00%]
+
+  <bb 5> [local count: 751619279]:
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  __asm__ __volatile__("BKPT #0
+	");
+  # DEBUG BEGIN_STMT
+  goto <bb 5>; [100.00%]
+
+  <bb 6> [local count: 175378]:
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  if (src_483(D) == 0B)
+    goto <bb 7>; [30.00%]
+  else
+    goto <bb 8>; [70.00%]
+
+  <bb 7> [local count: 526133495]:
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  __asm__ __volatile__("BKPT #0
+	");
+  # DEBUG BEGIN_STMT
+  goto <bb 7>; [100.00%]
+
+  <bb 8> [local count: 122764]:
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  if (dest_484(D) == 0B)
+    goto <bb 9>; [30.00%]
+  else
+    goto <bb 10>; [70.00%]
+
+  <bb 9> [local count: 368293446]:
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  __asm__ __volatile__("BKPT #0
+	");
+  # DEBUG BEGIN_STMT
+  goto <bb 9>; [100.00%]
+
+  <bb 10> [local count: 85935]:
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  if (hdr_size_comp_485(D) == 0B)
+    goto <bb 11>; [30.00%]
+  else
+    goto <bb 12>; [70.00%]
+
+  <bb 11> [local count: 257805413]:
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  __asm__ __volatile__("BKPT #0
+	");
+  # DEBUG BEGIN_STMT
+  goto <bb 11>; [100.00%]
+
+  <bb 12> [local count: 60154]:
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  if (hdr_size_decomp_486(D) == 0B)
+    goto <bb 13>; [30.00%]
+  else
+    goto <bb 14>; [70.00%]
+
+  <bb 13> [local count: 180463789]:
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  __asm__ __volatile__("BKPT #0
+	");
+  # DEBUG BEGIN_STMT
+  goto <bb 13>; [100.00%]
+
+  <bb 14> [local count: 42108]:
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG ip6hdr => decomp_buffer_482(D)
+  # DEBUG BEGIN_STMT
+  if (decomp_bufsize_487(D) <= 39)
+    goto <bb 103>; [1.04%]
+  else
+    goto <bb 15>; [98.96%]
+
+  <bb 15> [local count: 41670]:
+  # DEBUG BEGIN_STMT
+  # DEBUG lowpan6_offset => 2
+  # DEBUG BEGIN_STMT
+  _1 = MEM[(u8_t *)lowpan6_buffer_480(D) + 1B];
+  _2 = (signed char) _1;
+  if (_2 < 0)
+    goto <bb 16>; [41.00%]
+  else
+    goto <bb 17>; [59.00%]
+
+  <bb 16> [local count: 17085]:
+  # DEBUG BEGIN_STMT
+  # DEBUG lowpan6_offset => 3
+
+  <bb 17> [local count: 41670]:
+  # lowpan6_offset_453 = PHI <2(15), 3(16)>
+  # DEBUG lowpan6_offset => lowpan6_offset_453
+  # DEBUG BEGIN_STMT
+  _3 = *lowpan6_buffer_480(D);
+  _479 = _3 & 24;
+  if (_479 == 0)
+    goto <bb 18>; [33.00%]
+  else
+    goto <bb 19>; [67.00%]
+
+  <bb 18> [local count: 13751]:
+  # DEBUG BEGIN_STMT
+  _4 = (sizetype) lowpan6_offset_453;
+  _5 = _4 + 1;
+  _6 = lowpan6_buffer_480(D) + _5;
+  _7 = *_6;
+  _8 = (int) _7;
+  _9 = _8 << 16;
+  _10 = _9 & 983040;
+  _11 = _4 + 2;
+  _12 = lowpan6_buffer_480(D) + _11;
+  _13 = *_12;
+  _14 = (int) _13;
+  _15 = _14 << 8;
+  _16 = _10 | _15;
+  _17 = _4 + 3;
+  _18 = lowpan6_buffer_480(D) + _17;
+  _19 = *_18;
+  _20 = (int) _19;
+  _21 = _16 | _20;
+  header_temp_498 = (u32_t) _21;
+  # DEBUG header_temp => header_temp_498
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _22 = lowpan6_buffer_480(D) + _4;
+  _23 = *_22;
+  _24 = (long unsigned int) _23;
+  _25 = _24 << 20;
+  _26 = _25 | header_temp_498;
+  _27 = _26 | 1610612736;
+  _28 = lwip_htonl (_27);
+  MEM[(struct ip6_hdr *)decomp_buffer_482(D)]._v_tc_fl = _28;
+  # DEBUG BEGIN_STMT
+  lowpan6_offset_501 = lowpan6_offset_453 + 4;
+  # DEBUG lowpan6_offset => lowpan6_offset_501
+  goto <bb 25>; [100.00%]
+
+  <bb 19> [local count: 27919]:
+  # DEBUG BEGIN_STMT
+  if (_479 == 8)
+    goto <bb 20>; [20.24%]
+  else
+    goto <bb 21>; [79.76%]
+
+  <bb 20> [local count: 5651]:
+  # DEBUG BEGIN_STMT
+  _29 = (sizetype) lowpan6_offset_453;
+  _30 = lowpan6_buffer_480(D) + _29;
+  _31 = *_30;
+  _32 = (int) _31;
+  _33 = _32 << 16;
+  _34 = _33 & 983040;
+  _35 = _29 + 1;
+  _36 = lowpan6_buffer_480(D) + _35;
+  _37 = *_36;
+  _38 = (int) _37;
+  _39 = _38 << 8;
+  _40 = _34 | _39;
+  _41 = _29 + 2;
+  _42 = lowpan6_buffer_480(D) + _41;
+  _43 = *_42;
+  _44 = (int) _43;
+  _45 = _40 | _44;
+  header_temp_494 = (u32_t) _45;
+  # DEBUG header_temp => header_temp_494
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _46 = (long unsigned int) _31;
+  _47 = _46 << 20;
+  _48 = _47 & 201326592;
+  _49 = _48 | header_temp_494;
+  _50 = _49 | 1610612736;
+  _51 = lwip_htonl (_50);
+  MEM[(struct ip6_hdr *)decomp_buffer_482(D)]._v_tc_fl = _51;
+  # DEBUG BEGIN_STMT
+  lowpan6_offset_497 = lowpan6_offset_453 + 3;
+  # DEBUG lowpan6_offset => lowpan6_offset_497
+  goto <bb 25>; [100.00%]
+
+  <bb 21> [local count: 22268]:
+  # DEBUG BEGIN_STMT
+  if (_479 == 16)
+    goto <bb 22>; [20.24%]
+  else
+    goto <bb 23>; [79.76%]
+
+  <bb 22> [local count: 4507]:
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _52 = (sizetype) lowpan6_offset_453;
+  _53 = lowpan6_buffer_480(D) + _52;
+  _54 = *_53;
+  _55 = (long unsigned int) _54;
+  _56 = _55 << 20;
+  _57 = _56 | 1610612736;
+  _58 = lwip_htonl (_57);
+  MEM[(struct ip6_hdr *)decomp_buffer_482(D)]._v_tc_fl = _58;
+  # DEBUG BEGIN_STMT
+  lowpan6_offset_493 = lowpan6_offset_453 + 1;
+  # DEBUG lowpan6_offset => lowpan6_offset_493
+  goto <bb 25>; [100.00%]
+
+  <bb 23> [local count: 17761]:
+  # DEBUG BEGIN_STMT
+  if (_479 == 24)
+    goto <bb 24>; [20.24%]
+  else
+    goto <bb 25>; [79.76%]
+
+  <bb 24> [local count: 3595]:
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _59 = lwip_htonl (1610612736);
+  MEM[(struct ip6_hdr *)decomp_buffer_482(D)]._v_tc_fl = _59;
+
+  <bb 25> [local count: 41670]:
+  # lowpan6_offset_454 = PHI <lowpan6_offset_501(18), lowpan6_offset_497(20), lowpan6_offset_493(22), lowpan6_offset_453(23), lowpan6_offset_453(24)>
+  # DEBUG lowpan6_offset => lowpan6_offset_454
+  # DEBUG BEGIN_STMT
+  _60 = *lowpan6_buffer_480(D);
+  _488 = _60 & 4;
+  if (_488 == 0)
+    goto <bb 26>; [50.00%]
+  else
+    goto <bb 27>; [50.00%]
+
+  <bb 26> [local count: 20835]:
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  lowpan6_offset_503 = lowpan6_offset_454 + 1;
+  # DEBUG lowpan6_offset => lowpan6_offset_503
+  _61 = (sizetype) lowpan6_offset_454;
+  _62 = lowpan6_buffer_480(D) + _61;
+  _63 = *_62;
+  MEM[(struct ip6_hdr *)decomp_buffer_482(D)]._nexth = _63;
+  goto <bb 28>; [100.00%]
+
+  <bb 27> [local count: 20835]:
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  MEM[(struct ip6_hdr *)decomp_buffer_482(D)]._nexth = 0;
+
+  <bb 28> [local count: 41670]:
+  # lowpan6_offset_455 = PHI <lowpan6_offset_503(26), lowpan6_offset_454(27)>
+  # DEBUG lowpan6_offset => lowpan6_offset_455
+  # DEBUG BEGIN_STMT
+  _64 = *lowpan6_buffer_480(D);
+  _510 = _64 & 3;
+  if (_510 == 0)
+    goto <bb 29>; [50.00%]
+  else
+    goto <bb 30>; [50.00%]
+
+  <bb 29> [local count: 20835]:
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  lowpan6_offset_508 = lowpan6_offset_455 + 1;
+  # DEBUG lowpan6_offset => lowpan6_offset_508
+  _65 = (sizetype) lowpan6_offset_455;
+  _66 = lowpan6_buffer_480(D) + _65;
+  _67 = *_66;
+  MEM[(struct ip6_hdr *)decomp_buffer_482(D)]._hoplim = _67;
+  goto <bb 35>; [100.00%]
+
+  <bb 30> [local count: 20835]:
+  # DEBUG BEGIN_STMT
+  if (_510 == 1)
+    goto <bb 31>; [34.00%]
+  else
+    goto <bb 32>; [66.00%]
+
+  <bb 31> [local count: 7084]:
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  MEM[(struct ip6_hdr *)decomp_buffer_482(D)]._hoplim = 1;
+  goto <bb 35>; [100.00%]
+
+  <bb 32> [local count: 13751]:
+  # DEBUG BEGIN_STMT
+  if (_510 == 2)
+    goto <bb 33>; [34.00%]
+  else
+    goto <bb 34>; [66.00%]
+
+  <bb 33> [local count: 4675]:
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  MEM[(struct ip6_hdr *)decomp_buffer_482(D)]._hoplim = 64;
+  goto <bb 35>; [100.00%]
+
+  <bb 34> [local count: 9076]:
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  MEM[(struct ip6_hdr *)decomp_buffer_482(D)]._hoplim = 255;
+
+  <bb 35> [local count: 41670]:
+  # lowpan6_offset_456 = PHI <lowpan6_offset_508(29), lowpan6_offset_455(31), lowpan6_offset_455(33), lowpan6_offset_455(34)>
+  # DEBUG lowpan6_offset => lowpan6_offset_456
+  # DEBUG BEGIN_STMT
+  _68 = MEM[(u8_t *)lowpan6_buffer_480(D) + 1B];
+  _555 = _68 & 64;
+  if (_555 == 0)
+    goto <bb 36>; [50.00%]
+  else
+    goto <bb 47>; [50.00%]
+
+  <bb 36> [local count: 20835]:
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _348 = _68 & 48;
+  if (_348 == 0)
+    goto <bb 37>; [33.00%]
+  else
+    goto <bb 38>; [67.00%]
+
+  <bb 37> [local count: 6876]:
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _69 = &MEM[(struct ip6_hdr *)decomp_buffer_482(D)].src.addr[0];
+  _70 = (sizetype) lowpan6_offset_456;
+  _71 = lowpan6_buffer_480(D) + _70;
+  memcpy (_69, _71, 16);
+  # DEBUG BEGIN_STMT
+  lowpan6_offset_552 = lowpan6_offset_456 + 16;
+  # DEBUG lowpan6_offset => lowpan6_offset_552
+  goto <bb 61>; [100.00%]
+
+  <bb 38> [local count: 13960]:
+  # DEBUG BEGIN_STMT
+  if (_348 == 16)
+    goto <bb 39>; [20.24%]
+  else
+    goto <bb 40>; [79.76%]
+
+  <bb 39> [local count: 2825]:
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  MEM[(struct ip6_hdr *)decomp_buffer_482(D)].src.addr[0] = 33022;
+  # DEBUG BEGIN_STMT
+  MEM[(struct ip6_hdr *)decomp_buffer_482(D)].src.addr[1] = 0;
+  # DEBUG BEGIN_STMT
+  _72 = &MEM[(struct ip6_hdr *)decomp_buffer_482(D)].src.addr[2];
+  _73 = (sizetype) lowpan6_offset_456;
+  _74 = lowpan6_buffer_480(D) + _73;
+  memcpy (_72, _74, 8);
+  # DEBUG BEGIN_STMT
+  lowpan6_offset_550 = lowpan6_offset_456 + 8;
+  # DEBUG lowpan6_offset => lowpan6_offset_550
+  goto <bb 61>; [100.00%]
+
+  <bb 40> [local count: 11134]:
+  # DEBUG BEGIN_STMT
+  if (_348 == 32)
+    goto <bb 41>; [20.24%]
+  else
+    goto <bb 42>; [79.76%]
+
+  <bb 41> [local count: 2254]:
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  MEM[(struct ip6_hdr *)decomp_buffer_482(D)].src.addr[0] = 33022;
+  # DEBUG BEGIN_STMT
+  MEM[(struct ip6_hdr *)decomp_buffer_482(D)].src.addr[1] = 0;
+  # DEBUG BEGIN_STMT
+  MEM[(struct ip6_hdr *)decomp_buffer_482(D)].src.addr[2] = 4278190080;
+  # DEBUG BEGIN_STMT
+  _75 = (sizetype) lowpan6_offset_456;
+  _76 = lowpan6_buffer_480(D) + _75;
+  _77 = *_76;
+  _78 = (int) _77;
+  _79 = _78 << 8;
+  _80 = (long unsigned int) _79;
+  _81 = _75 + 1;
+  _82 = lowpan6_buffer_480(D) + _81;
+  _83 = *_82;
+  _84 = (long unsigned int) _83;
+  _85 = _80 | _84;
+  _86 = _85 | 4261412864;
+  _87 = lwip_htonl (_86);
+  MEM[(struct ip6_hdr *)decomp_buffer_482(D)].src.addr[3] = _87;
+  # DEBUG BEGIN_STMT
+  lowpan6_offset_546 = lowpan6_offset_456 + 2;
+  # DEBUG lowpan6_offset => lowpan6_offset_546
+  goto <bb 61>; [100.00%]
+
+  <bb 42> [local count: 8881]:
+  # DEBUG BEGIN_STMT
+  if (_348 == 48)
+    goto <bb 43>; [34.00%]
+  else
+    goto <bb 61>; [66.00%]
+
+  <bb 43> [local count: 3019]:
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  MEM[(struct ip6_hdr *)decomp_buffer_482(D)].src.addr[0] = 33022;
+  # DEBUG BEGIN_STMT
+  MEM[(struct ip6_hdr *)decomp_buffer_482(D)].src.addr[1] = 0;
+  # DEBUG BEGIN_STMT
+  _88 = src_483(D)->addr_len;
+  if (_88 == 2)
+    goto <bb 44>; [20.24%]
+  else
+    goto <bb 45>; [79.76%]
+
+  <bb 44> [local count: 611]:
+  # DEBUG BEGIN_STMT
+  MEM[(struct ip6_hdr *)decomp_buffer_482(D)].src.addr[2] = 4278190080;
+  # DEBUG BEGIN_STMT
+  _89 = src_483(D)->addr[0];
+  _90 = (int) _89;
+  _91 = _90 << 8;
+  _92 = (long unsigned int) _91;
+  _93 = src_483(D)->addr[1];
+  _94 = (long unsigned int) _93;
+  _95 = _92 | _94;
+  _96 = _95 | 4261412864;
+  _97 = lwip_htonl (_96);
+  MEM[(struct ip6_hdr *)decomp_buffer_482(D)].src.addr[3] = _97;
+  goto <bb 61>; [100.00%]
+
+  <bb 45> [local count: 2408]:
+  # DEBUG BEGIN_STMT
+  if (_88 == 8)
+    goto <bb 46>; [96.02%]
+  else
+    goto <bb 103>; [3.98%]
+
+  <bb 46> [local count: 2312]:
+  # DEBUG BEGIN_STMT
+  _98 = src_483(D)->addr[0];
+  _99 = _98 ^ 2;
+  _100 = (int) _99;
+  _101 = _100 << 24;
+  _102 = src_483(D)->addr[1];
+  _103 = (int) _102;
+  _104 = _103 << 16;
+  _105 = _101 | _104;
+  _106 = src_483(D)->addr[2];
+  _107 = (int) _106;
+  _108 = _107 << 8;
+  _109 = _105 | _108;
+  _110 = src_483(D)->addr[3];
+  _111 = (int) _110;
+  _112 = _109 | _111;
+  _113 = (long unsigned int) _112;
+  _114 = lwip_htonl (_113);
+  MEM[(struct ip6_hdr *)decomp_buffer_482(D)].src.addr[2] = _114;
+  # DEBUG BEGIN_STMT
+  _115 = src_483(D)->addr[4];
+  _116 = (int) _115;
+  _117 = _116 << 24;
+  _118 = src_483(D)->addr[5];
+  _119 = (int) _118;
+  _120 = _119 << 16;
+  _121 = _117 | _120;
+  _122 = src_483(D)->addr[6];
+  _123 = (int) _122;
+  _124 = _123 << 8;
+  _125 = _121 | _124;
+  _126 = src_483(D)->addr[7];
+  _127 = (int) _126;
+  _128 = _125 | _127;
+  _129 = (long unsigned int) _128;
+  _130 = lwip_htonl (_129);
+  MEM[(struct ip6_hdr *)decomp_buffer_482(D)].src.addr[3] = _130;
+  goto <bb 61>; [100.00%]
+
+  <bb 47> [local count: 20835]:
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _559 = _68 & 48;
+  if (_559 == 0)
+    goto <bb 48>; [50.00%]
+  else
+    goto <bb 49>; [50.00%]
+
+  <bb 48> [local count: 10418]:
+  # DEBUG BEGIN_STMT
+  MEM[(struct ip6_hdr *)decomp_buffer_482(D)].src.addr[0] = 0;
+  # DEBUG BEGIN_STMT
+  MEM[(struct ip6_hdr *)decomp_buffer_482(D)].src.addr[1] = 0;
+  # DEBUG BEGIN_STMT
+  MEM[(struct ip6_hdr *)decomp_buffer_482(D)].src.addr[2] = 0;
+  # DEBUG BEGIN_STMT
+  MEM[(struct ip6_hdr *)decomp_buffer_482(D)].src.addr[3] = 0;
+  # DEBUG BEGIN_STMT
+  goto <bb 52>; [100.00%]
+
+  <bb 49> [local count: 10418]:
+  # DEBUG BEGIN_STMT
+  _131 = (signed char) _68;
+  if (_131 < 0)
+    goto <bb 50>; [41.00%]
+  else
+    goto <bb 51>; [59.00%]
+
+  <bb 50> [local count: 4271]:
+  # DEBUG BEGIN_STMT
+  _132 = MEM[(u8_t *)lowpan6_buffer_480(D) + 2B];
+  _133 = _132 >> 4;
+  i_511 = (s8_t) _133;
+  # DEBUG i => i_511
+  # DEBUG BEGIN_STMT
+  if (i_511 > 9)
+    goto <bb 103>; [1.04%]
+  else
+    goto <bb 51>; [98.96%]
+
+  <bb 51> [local count: 10373]:
+  # i_204 = PHI <i_511(50), 0(49)>
+  # DEBUG i => NULL
+  # DEBUG BEGIN_STMT
+  _134 = (unsigned int) i_204;
+  _135 = _134 * 20;
+  _136 = lowpan6_contexts_512(D) + _135;
+  _137 = _136->addr[0];
+  MEM[(struct ip6_hdr *)decomp_buffer_482(D)].src.addr[0] = _137;
+  # DEBUG BEGIN_STMT
+  _138 = _136->addr[1];
+  MEM[(struct ip6_hdr *)decomp_buffer_482(D)].src.addr[1] = _138;
+
+  <bb 52> [local count: 20791]:
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _139 = MEM[(u8_t *)lowpan6_buffer_480(D) + 1B];
+  _560 = _139 & 48;
+  if (_560 == 16)
+    goto <bb 53>; [20.24%]
+  else
+    goto <bb 54>; [79.76%]
+
+  <bb 53> [local count: 4208]:
+  # DEBUG BEGIN_STMT
+  _140 = &MEM[(struct ip6_hdr *)decomp_buffer_482(D)].src.addr[2];
+  _141 = (sizetype) lowpan6_offset_456;
+  _142 = lowpan6_buffer_480(D) + _141;
+  memcpy (_140, _142, 8);
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  lowpan6_offset_531 = lowpan6_offset_456 + 8;
+  # DEBUG lowpan6_offset => lowpan6_offset_531
+  goto <bb 61>; [100.00%]
+
+  <bb 54> [local count: 16583]:
+  # DEBUG BEGIN_STMT
+  if (_560 == 32)
+    goto <bb 55>; [20.24%]
+  else
+    goto <bb 56>; [79.76%]
+
+  <bb 55> [local count: 3356]:
+  # DEBUG BEGIN_STMT
+  MEM[(struct ip6_hdr *)decomp_buffer_482(D)].src.addr[2] = 4278190080;
+  # DEBUG BEGIN_STMT
+  _143 = (sizetype) lowpan6_offset_456;
+  _144 = lowpan6_buffer_480(D) + _143;
+  _145 = *_144;
+  _146 = (int) _145;
+  _147 = _146 << 8;
+  _148 = (long unsigned int) _147;
+  _149 = _143 + 1;
+  _150 = lowpan6_buffer_480(D) + _149;
+  _151 = *_150;
+  _152 = (long unsigned int) _151;
+  _153 = _148 | _152;
+  _154 = _153 | 4261412864;
+  _155 = lwip_htonl (_154);
+  MEM[(struct ip6_hdr *)decomp_buffer_482(D)].src.addr[3] = _155;
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  lowpan6_offset_529 = lowpan6_offset_456 + 2;
+  # DEBUG lowpan6_offset => lowpan6_offset_529
+  goto <bb 61>; [100.00%]
+
+  <bb 56> [local count: 13226]:
+  # DEBUG BEGIN_STMT
+  if (_560 == 48)
+    goto <bb 57>; [34.00%]
+  else
+    goto <bb 61>; [66.00%]
+
+  <bb 57> [local count: 4497]:
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _156 = src_483(D)->addr_len;
+  if (_156 == 2)
+    goto <bb 58>; [20.24%]
+  else
+    goto <bb 59>; [79.76%]
+
+  <bb 58> [local count: 910]:
+  # DEBUG BEGIN_STMT
+  MEM[(struct ip6_hdr *)decomp_buffer_482(D)].src.addr[2] = 4278190080;
+  # DEBUG BEGIN_STMT
+  _157 = src_483(D)->addr[0];
+  _158 = (int) _157;
+  _159 = _158 << 8;
+  _160 = (long unsigned int) _159;
+  _161 = src_483(D)->addr[1];
+  _162 = (long unsigned int) _161;
+  _163 = _160 | _162;
+  _164 = _163 | 4261412864;
+  _165 = lwip_htonl (_164);
+  MEM[(struct ip6_hdr *)decomp_buffer_482(D)].src.addr[3] = _165;
+  goto <bb 61>; [100.00%]
+
+  <bb 59> [local count: 3587]:
+  # DEBUG BEGIN_STMT
+  if (_156 == 8)
+    goto <bb 60>; [96.02%]
+  else
+    goto <bb 103>; [3.98%]
+
+  <bb 60> [local count: 3444]:
+  # DEBUG BEGIN_STMT
+  _166 = src_483(D)->addr[0];
+  _167 = _166 ^ 2;
+  _168 = (int) _167;
+  _169 = _168 << 24;
+  _170 = src_483(D)->addr[1];
+  _171 = (int) _170;
+  _172 = _171 << 16;
+  _173 = _169 | _172;
+  _174 = src_483(D)->addr[2];
+  _175 = (int) _174;
+  _176 = _175 << 8;
+  _177 = _173 | _176;
+  _178 = src_483(D)->addr[3];
+  _179 = (int) _178;
+  _180 = _177 | _179;
+  _181 = (long unsigned int) _180;
+  _182 = lwip_htonl (_181);
+  MEM[(struct ip6_hdr *)decomp_buffer_482(D)].src.addr[2] = _182;
+  # DEBUG BEGIN_STMT
+  _183 = src_483(D)->addr[4];
+  _184 = (int) _183;
+  _185 = _184 << 24;
+  _186 = src_483(D)->addr[5];
+  _187 = (int) _186;
+  _188 = _187 << 16;
+  _189 = _185 | _188;
+  _190 = src_483(D)->addr[6];
+  _191 = (int) _190;
+  _192 = _191 << 8;
+  _193 = _189 | _192;
+  _194 = src_483(D)->addr[7];
+  _195 = (int) _194;
+  _196 = _193 | _195;
+  _197 = (long unsigned int) _196;
+  _198 = lwip_htonl (_197);
+  MEM[(struct ip6_hdr *)decomp_buffer_482(D)].src.addr[3] = _198;
+
+  <bb 61> [local count: 41387]:
+  # lowpan6_offset_457 = PHI <lowpan6_offset_550(39), lowpan6_offset_531(53), lowpan6_offset_529(55), lowpan6_offset_456(56), lowpan6_offset_456(58), lowpan6_offset_456(60), lowpan6_offset_552(37), lowpan6_offset_456(46), lowpan6_offset_456(44), lowpan6_offset_456(42), lowpan6_offset_546(41)>
+  # DEBUG lowpan6_offset => lowpan6_offset_457
+  # DEBUG BEGIN_STMT
+  _199 = MEM[(u8_t *)lowpan6_buffer_480(D) + 1B];
+  _639 = _199 & 8;
+  if (_639 != 0)
+    goto <bb 62>; [50.00%]
+  else
+    goto <bb 70>; [50.00%]
+
+  <bb 62> [local count: 20694]:
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _648 = _199 & 4;
+  if (_648 != 0)
+    goto <bb 103>; [1.04%]
+  else
+    goto <bb 63>; [98.96%]
+
+  <bb 63> [local count: 20478]:
+  # DEBUG BEGIN_STMT
+  _649 = _199 & 3;
+  if (_649 == 0)
+    goto <bb 64>; [33.00%]
+  else
+    goto <bb 65>; [67.00%]
+
+  <bb 64> [local count: 6758]:
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _201 = &MEM[(struct ip6_hdr *)decomp_buffer_482(D)].dest.addr[0];
+  _202 = (sizetype) lowpan6_offset_457;
+  _203 = lowpan6_buffer_480(D) + _202;
+  memcpy (_201, _203, 16);
+  # DEBUG BEGIN_STMT
+  lowpan6_offset_601 = lowpan6_offset_457 + 16;
+  # DEBUG lowpan6_offset => lowpan6_offset_601
+  goto <bb 85>; [100.00%]
+
+  <bb 65> [local count: 13721]:
+  # DEBUG BEGIN_STMT
+  if (_649 == 1)
+    goto <bb 66>; [20.24%]
+  else
+    goto <bb 67>; [79.76%]
+
+  <bb 66> [local count: 2777]:
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  lowpan6_offset_590 = lowpan6_offset_457 + 1;
+  # DEBUG lowpan6_offset => lowpan6_offset_590
+  _205 = (sizetype) lowpan6_offset_457;
+  _206 = lowpan6_buffer_480(D) + _205;
+  _207 = *_206;
+  _208 = (int) _207;
+  _209 = _208 << 16;
+  _210 = (long unsigned int) _209;
+  _211 = _210 | 4278190080;
+  _212 = lwip_htonl (_211);
+  MEM[(struct ip6_hdr *)decomp_buffer_482(D)].dest.addr[0] = _212;
+  # DEBUG BEGIN_STMT
+  MEM[(struct ip6_hdr *)decomp_buffer_482(D)].dest.addr[1] = 0;
+  # DEBUG BEGIN_STMT
+  lowpan6_offset_594 = lowpan6_offset_457 + 2;
+  # DEBUG lowpan6_offset => lowpan6_offset_594
+  _213 = (sizetype) lowpan6_offset_590;
+  _214 = lowpan6_buffer_480(D) + _213;
+  _215 = *_214;
+  _216 = (long unsigned int) _215;
+  _217 = lwip_htonl (_216);
+  MEM[(struct ip6_hdr *)decomp_buffer_482(D)].dest.addr[2] = _217;
+  # DEBUG BEGIN_STMT
+  _218 = (sizetype) lowpan6_offset_594;
+  _219 = lowpan6_buffer_480(D) + _218;
+  _220 = *_219;
+  _221 = (int) _220;
+  _222 = _221 << 24;
+  _223 = _218 + 1;
+  _224 = lowpan6_buffer_480(D) + _223;
+  _225 = *_224;
+  _226 = (int) _225;
+  _227 = _226 << 16;
+  _228 = _222 | _227;
+  _229 = _218 + 2;
+  _230 = lowpan6_buffer_480(D) + _229;
+  _231 = *_230;
+  _232 = (int) _231;
+  _233 = _232 << 8;
+  _234 = _228 | _233;
+  _235 = _218 + 3;
+  _236 = lowpan6_buffer_480(D) + _235;
+  _237 = *_236;
+  _238 = (int) _237;
+  _239 = _234 | _238;
+  _240 = (long unsigned int) _239;
+  _241 = lwip_htonl (_240);
+  MEM[(struct ip6_hdr *)decomp_buffer_482(D)].dest.addr[3] = _241;
+  # DEBUG BEGIN_STMT
+  lowpan6_offset_599 = lowpan6_offset_457 + 6;
+  # DEBUG lowpan6_offset => lowpan6_offset_599
+  goto <bb 85>; [100.00%]
+
+  <bb 67> [local count: 10943]:
+  # DEBUG BEGIN_STMT
+  if (_649 == 2)
+    goto <bb 68>; [34.00%]
+  else
+    goto <bb 69>; [66.00%]
+
+  <bb 68> [local count: 3721]:
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  lowpan6_offset_582 = lowpan6_offset_457 + 1;
+  # DEBUG lowpan6_offset => lowpan6_offset_582
+  _242 = (sizetype) lowpan6_offset_457;
+  _243 = lowpan6_buffer_480(D) + _242;
+  _244 = *_243;
+  _245 = (int) _244;
+  _246 = _245 << 16;
+  _247 = (long unsigned int) _246;
+  _248 = _247 | 4278190080;
+  _249 = lwip_htonl (_248);
+  MEM[(struct ip6_hdr *)decomp_buffer_482(D)].dest.addr[0] = _249;
+  # DEBUG BEGIN_STMT
+  MEM[(struct ip6_hdr *)decomp_buffer_482(D)].dest.addr[1] = 0;
+  # DEBUG BEGIN_STMT
+  MEM[(struct ip6_hdr *)decomp_buffer_482(D)].dest.addr[2] = 0;
+  # DEBUG BEGIN_STMT
+  _250 = (sizetype) lowpan6_offset_582;
+  _251 = lowpan6_buffer_480(D) + _250;
+  _252 = *_251;
+  _253 = (int) _252;
+  _254 = _253 << 16;
+  _255 = _250 + 1;
+  _256 = lowpan6_buffer_480(D) + _255;
+  _257 = *_256;
+  _258 = (int) _257;
+  _259 = _258 << 8;
+  _260 = _254 | _259;
+  _261 = _250 + 2;
+  _262 = lowpan6_buffer_480(D) + _261;
+  _263 = *_262;
+  _264 = (int) _263;
+  _265 = _260 | _264;
+  _266 = (long unsigned int) _265;
+  _267 = lwip_htonl (_266);
+  MEM[(struct ip6_hdr *)decomp_buffer_482(D)].dest.addr[3] = _267;
+  # DEBUG BEGIN_STMT
+  lowpan6_offset_589 = lowpan6_offset_457 + 4;
+  # DEBUG lowpan6_offset => lowpan6_offset_589
+  goto <bb 85>; [100.00%]
+
+  <bb 69> [local count: 7223]:
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  MEM[(struct ip6_hdr *)decomp_buffer_482(D)].dest.addr[0] = 767;
+  # DEBUG BEGIN_STMT
+  MEM[(struct ip6_hdr *)decomp_buffer_482(D)].dest.addr[1] = 0;
+  # DEBUG BEGIN_STMT
+  MEM[(struct ip6_hdr *)decomp_buffer_482(D)].dest.addr[2] = 0;
+  # DEBUG BEGIN_STMT
+  lowpan6_offset_579 = lowpan6_offset_457 + 1;
+  # DEBUG lowpan6_offset => lowpan6_offset_579
+  _268 = (sizetype) lowpan6_offset_457;
+  _269 = lowpan6_buffer_480(D) + _268;
+  _270 = *_269;
+  _271 = (long unsigned int) _270;
+  _272 = lwip_htonl (_271);
+  MEM[(struct ip6_hdr *)decomp_buffer_482(D)].dest.addr[3] = _272;
+  goto <bb 85>; [100.00%]
+
+  <bb 70> [local count: 20694]:
+  # DEBUG BEGIN_STMT
+  _640 = _199 & 4;
+  if (_640 != 0)
+    goto <bb 71>; [50.00%]
+  else
+    goto <bb 74>; [50.00%]
+
+  <bb 71> [local count: 10347]:
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _273 = (signed char) _199;
+  if (_273 < 0)
+    goto <bb 72>; [41.00%]
+  else
+    goto <bb 73>; [59.00%]
+
+  <bb 72> [local count: 4242]:
+  # DEBUG BEGIN_STMT
+  _274 = MEM[(u8_t *)lowpan6_buffer_480(D) + 2B];
+  _275 = (signed char) _274;
+  i_556 = _275 & 15;
+  # DEBUG i => i_556
+  # DEBUG BEGIN_STMT
+  if (i_556 > 9)
+    goto <bb 103>; [1.04%]
+  else
+    goto <bb 73>; [98.96%]
+
+  <bb 73> [local count: 10303]:
+  # i_200 = PHI <i_556(72), 0(71)>
+  # DEBUG i => NULL
+  # DEBUG BEGIN_STMT
+  _276 = (unsigned int) i_200;
+  _277 = _276 * 20;
+  _278 = lowpan6_contexts_512(D) + _277;
+  _279 = _278->addr[0];
+  MEM[(struct ip6_hdr *)decomp_buffer_482(D)].dest.addr[0] = _279;
+  # DEBUG BEGIN_STMT
+  _280 = _278->addr[1];
+  MEM[(struct ip6_hdr *)decomp_buffer_482(D)].dest.addr[1] = _280;
+  goto <bb 75>; [100.00%]
+
+  <bb 74> [local count: 10347]:
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  MEM[(struct ip6_hdr *)decomp_buffer_482(D)].dest.addr[0] = 33022;
+  # DEBUG BEGIN_STMT
+  MEM[(struct ip6_hdr *)decomp_buffer_482(D)].dest.addr[1] = 0;
+
+  <bb 75> [local count: 20649]:
+  # DEBUG BEGIN_STMT
+  _281 = MEM[(u8_t *)lowpan6_buffer_480(D) + 1B];
+  _641 = _281 & 3;
+  if (_641 == 0)
+    goto <bb 76>; [33.00%]
+  else
+    goto <bb 77>; [67.00%]
+
+  <bb 76> [local count: 6814]:
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _282 = &MEM[(struct ip6_hdr *)decomp_buffer_482(D)].dest.addr[0];
+  _283 = (sizetype) lowpan6_offset_457;
+  _284 = lowpan6_buffer_480(D) + _283;
+  memcpy (_282, _284, 16);
+  # DEBUG BEGIN_STMT
+  lowpan6_offset_575 = lowpan6_offset_457 + 16;
+  # DEBUG lowpan6_offset => lowpan6_offset_575
+  goto <bb 85>; [100.00%]
+
+  <bb 77> [local count: 13835]:
+  # DEBUG BEGIN_STMT
+  if (_641 == 1)
+    goto <bb 78>; [20.24%]
+  else
+    goto <bb 79>; [79.76%]
+
+  <bb 78> [local count: 2800]:
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _285 = &MEM[(struct ip6_hdr *)decomp_buffer_482(D)].dest.addr[2];
+  _286 = (sizetype) lowpan6_offset_457;
+  _287 = lowpan6_buffer_480(D) + _286;
+  memcpy (_285, _287, 8);
+  # DEBUG BEGIN_STMT
+  lowpan6_offset_573 = lowpan6_offset_457 + 8;
+  # DEBUG lowpan6_offset => lowpan6_offset_573
+  goto <bb 85>; [100.00%]
+
+  <bb 79> [local count: 11035]:
+  # DEBUG BEGIN_STMT
+  if (_641 == 2)
+    goto <bb 80>; [20.24%]
+  else
+    goto <bb 81>; [79.76%]
+
+  <bb 80> [local count: 2233]:
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  MEM[(struct ip6_hdr *)decomp_buffer_482(D)].dest.addr[2] = 4278190080;
+  # DEBUG BEGIN_STMT
+  _288 = (sizetype) lowpan6_offset_457;
+  _289 = lowpan6_buffer_480(D) + _288;
+  _290 = *_289;
+  _291 = (int) _290;
+  _292 = _291 << 8;
+  _293 = (long unsigned int) _292;
+  _294 = _288 + 1;
+  _295 = lowpan6_buffer_480(D) + _294;
+  _296 = *_295;
+  _297 = (long unsigned int) _296;
+  _298 = _293 | _297;
+  _299 = _298 | 4261412864;
+  _300 = lwip_htonl (_299);
+  MEM[(struct ip6_hdr *)decomp_buffer_482(D)].dest.addr[3] = _300;
+  # DEBUG BEGIN_STMT
+  lowpan6_offset_571 = lowpan6_offset_457 + 2;
+  # DEBUG lowpan6_offset => lowpan6_offset_571
+  goto <bb 85>; [100.00%]
+
+  <bb 81> [local count: 8801]:
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _301 = dest_484(D)->addr_len;
+  if (_301 == 2)
+    goto <bb 82>; [20.24%]
+  else
+    goto <bb 83>; [79.76%]
+
+  <bb 82> [local count: 1781]:
+  # DEBUG BEGIN_STMT
+  MEM[(struct ip6_hdr *)decomp_buffer_482(D)].dest.addr[2] = 4278190080;
+  # DEBUG BEGIN_STMT
+  _302 = dest_484(D)->addr[0];
+  _303 = (int) _302;
+  _304 = _303 << 8;
+  _305 = (long unsigned int) _304;
+  _306 = dest_484(D)->addr[1];
+  _307 = (long unsigned int) _306;
+  _308 = _305 | _307;
+  _309 = _308 | 4261412864;
+  _310 = lwip_htonl (_309);
+  MEM[(struct ip6_hdr *)decomp_buffer_482(D)].dest.addr[3] = _310;
+  goto <bb 85>; [100.00%]
+
+  <bb 83> [local count: 7020]:
+  # DEBUG BEGIN_STMT
+  if (_301 == 8)
+    goto <bb 84>; [96.02%]
+  else
+    goto <bb 103>; [3.98%]
+
+  <bb 84> [local count: 6741]:
+  # DEBUG BEGIN_STMT
+  _311 = dest_484(D)->addr[0];
+  _312 = _311 ^ 2;
+  _313 = (int) _312;
+  _314 = _313 << 24;
+  _315 = dest_484(D)->addr[1];
+  _316 = (int) _315;
+  _317 = _316 << 16;
+  _318 = _314 | _317;
+  _319 = dest_484(D)->addr[2];
+  _320 = (int) _319;
+  _321 = _320 << 8;
+  _322 = _318 | _321;
+  _323 = dest_484(D)->addr[3];
+  _324 = (int) _323;
+  _325 = _322 | _324;
+  _326 = (long unsigned int) _325;
+  _327 = lwip_htonl (_326);
+  MEM[(struct ip6_hdr *)decomp_buffer_482(D)].dest.addr[2] = _327;
+  # DEBUG BEGIN_STMT
+  _328 = dest_484(D)->addr[4];
+  _329 = (int) _328;
+  _330 = _329 << 24;
+  _331 = dest_484(D)->addr[5];
+  _332 = (int) _331;
+  _333 = _332 << 16;
+  _334 = _330 | _333;
+  _335 = dest_484(D)->addr[6];
+  _336 = (int) _335;
+  _337 = _336 << 8;
+  _338 = _334 | _337;
+  _339 = dest_484(D)->addr[7];
+  _340 = (int) _339;
+  _341 = _338 | _340;
+  _342 = (long unsigned int) _341;
+  _343 = lwip_htonl (_342);
+  MEM[(struct ip6_hdr *)decomp_buffer_482(D)].dest.addr[3] = _343;
+
+  <bb 85> [local count: 40848]:
+  # lowpan6_offset_458 = PHI <lowpan6_offset_599(66), lowpan6_offset_575(76), lowpan6_offset_573(78), lowpan6_offset_571(80), lowpan6_offset_589(68), lowpan6_offset_457(82), lowpan6_offset_457(84), lowpan6_offset_601(64), lowpan6_offset_579(69)>
+  # DEBUG lowpan6_offset => lowpan6_offset_458
+  # DEBUG BEGIN_STMT
+  _344 = *lowpan6_buffer_480(D);
+  _650 = _344 & 4;
+  if (_650 != 0)
+    goto <bb 86>; [50.00%]
+  else
+    goto <bb 99>; [50.00%]
+
+  <bb 86> [local count: 20424]:
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _345 = (sizetype) lowpan6_offset_458;
+  _346 = lowpan6_buffer_480(D) + _345;
+  _347 = *_346;
+  _651 = _347 & 248;
+  if (_651 == 240)
+    goto <bb 87>; [98.00%]
+  else
+    goto <bb 103>; [2.00%]
+
+  <bb 87> [local count: 20016]:
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  MEM[(struct ip6_hdr *)decomp_buffer_482(D)]._nexth = 17;
+  # DEBUG BEGIN_STMT
+  # DEBUG udphdr => decomp_buffer_482(D) + 40
+  # DEBUG BEGIN_STMT
+  if (decomp_bufsize_487(D) <= 47)
+    goto <bb 103>; [1.04%]
+  else
+    goto <bb 88>; [98.96%]
+
+  <bb 88> [local count: 19808]:
+  # DEBUG BEGIN_STMT
+  _349 = *_346;
+  _652 = _349 & 4;
+  if (_652 != 0)
+    goto <bb 103>; [1.04%]
+  else
+    goto <bb 89>; [98.96%]
+
+  <bb 89> [local count: 19602]:
+  # DEBUG BEGIN_STMT
+  lowpan6_offset_604 = lowpan6_offset_458 + 1;
+  # DEBUG lowpan6_offset => lowpan6_offset_604
+  _350 = (signed char) _349;
+  i_605 = _350 & 3;
+  # DEBUG i => i_605
+  # DEBUG BEGIN_STMT
+  if (i_605 == 0)
+    goto <bb 90>; [33.00%]
+  else
+    goto <bb 91>; [67.00%]
+
+  <bb 90> [local count: 6469]:
+  # DEBUG BEGIN_STMT
+  _351 = (sizetype) lowpan6_offset_604;
+  _352 = lowpan6_buffer_480(D) + _351;
+  _353 = *_352;
+  _354 = (int) _353;
+  _355 = _354 << 8;
+  _356 = (signed short) _355;
+  _357 = _351 + 1;
+  _358 = lowpan6_buffer_480(D) + _357;
+  _359 = *_358;
+  _360 = (signed short) _359;
+  _361 = _356 | _360;
+  _362 = (short unsigned int) _361;
+  _363 = lwip_htons (_362);
+  MEM[(struct udp_hdr *)decomp_buffer_482(D) + 40B].src = _363;
+  # DEBUG BEGIN_STMT
+  _364 = _351 + 2;
+  _365 = lowpan6_buffer_480(D) + _364;
+  _366 = *_365;
+  _367 = (int) _366;
+  _368 = _367 << 8;
+  _369 = (signed short) _368;
+  _370 = _351 + 3;
+  _371 = lowpan6_buffer_480(D) + _370;
+  _372 = *_371;
+  _373 = (signed short) _372;
+  _374 = _369 | _373;
+  _375 = (short unsigned int) _374;
+  _376 = lwip_htons (_375);
+  MEM[(struct udp_hdr *)decomp_buffer_482(D) + 40B].dest = _376;
+  # DEBUG BEGIN_STMT
+  lowpan6_offset_625 = lowpan6_offset_458 + 5;
+  # DEBUG lowpan6_offset => lowpan6_offset_625
+  goto <bb 96>; [100.00%]
+
+  <bb 91> [local count: 13133]:
+  # DEBUG BEGIN_STMT
+  if (i_605 == 1)
+    goto <bb 92>; [20.24%]
+  else
+    goto <bb 93>; [79.76%]
+
+  <bb 92> [local count: 2658]:
+  # DEBUG BEGIN_STMT
+  _377 = (sizetype) lowpan6_offset_604;
+  _378 = lowpan6_buffer_480(D) + _377;
+  _379 = *_378;
+  _380 = (int) _379;
+  _381 = _380 << 8;
+  _382 = (signed short) _381;
+  _383 = _377 + 1;
+  _384 = lowpan6_buffer_480(D) + _383;
+  _385 = *_384;
+  _386 = (signed short) _385;
+  _387 = _382 | _386;
+  _388 = (short unsigned int) _387;
+  _389 = lwip_htons (_388);
+  MEM[(struct udp_hdr *)decomp_buffer_482(D) + 40B].src = _389;
+  # DEBUG BEGIN_STMT
+  _390 = _377 + 2;
+  _391 = lowpan6_buffer_480(D) + _390;
+  _392 = *_391;
+  _393 = (signed short) _392;
+  _394 = _393 | -4096;
+  _395 = (short unsigned int) _394;
+  _396 = lwip_htons (_395);
+  MEM[(struct udp_hdr *)decomp_buffer_482(D) + 40B].dest = _396;
+  # DEBUG BEGIN_STMT
+  lowpan6_offset_620 = lowpan6_offset_458 + 4;
+  # DEBUG lowpan6_offset => lowpan6_offset_620
+  goto <bb 96>; [100.00%]
+
+  <bb 93> [local count: 10475]:
+  # DEBUG BEGIN_STMT
+  if (i_605 == 2)
+    goto <bb 94>; [34.00%]
+  else
+    goto <bb 95>; [66.00%]
+
+  <bb 94> [local count: 3561]:
+  # DEBUG BEGIN_STMT
+  _397 = (sizetype) lowpan6_offset_604;
+  _398 = lowpan6_buffer_480(D) + _397;
+  _399 = *_398;
+  _400 = (signed short) _399;
+  _401 = _400 | -4096;
+  _402 = (short unsigned int) _401;
+  _403 = lwip_htons (_402);
+  MEM[(struct udp_hdr *)decomp_buffer_482(D) + 40B].src = _403;
+  # DEBUG BEGIN_STMT
+  _404 = _397 + 1;
+  _405 = lowpan6_buffer_480(D) + _404;
+  _406 = *_405;
+  _407 = (int) _406;
+  _408 = _407 << 8;
+  _409 = (signed short) _408;
+  _410 = _397 + 2;
+  _411 = lowpan6_buffer_480(D) + _410;
+  _412 = *_411;
+  _413 = (signed short) _412;
+  _414 = _409 | _413;
+  _415 = (short unsigned int) _414;
+  _416 = lwip_htons (_415);
+  MEM[(struct udp_hdr *)decomp_buffer_482(D) + 40B].dest = _416;
+  # DEBUG BEGIN_STMT
+  lowpan6_offset_615 = lowpan6_offset_458 + 4;
+  # DEBUG lowpan6_offset => lowpan6_offset_615
+  goto <bb 96>; [100.00%]
+
+  <bb 95> [local count: 6913]:
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _417 = (sizetype) lowpan6_offset_604;
+  _418 = lowpan6_buffer_480(D) + _417;
+  _419 = *_418;
+  _420 = _419 >> 4;
+  _421 = (signed short) _420;
+  _422 = _421 | -3920;
+  _423 = (short unsigned int) _422;
+  _424 = lwip_htons (_423);
+  MEM[(struct udp_hdr *)decomp_buffer_482(D) + 40B].src = _424;
+  # DEBUG BEGIN_STMT
+  _425 = *_418;
+  _653 = _425 & 15;
+  _426 = (signed short) _653;
+  _427 = _426 | -3920;
+  _428 = (short unsigned int) _427;
+  _429 = lwip_htons (_428);
+  MEM[(struct udp_hdr *)decomp_buffer_482(D) + 40B].dest = _429;
+  # DEBUG BEGIN_STMT
+  lowpan6_offset_610 = lowpan6_offset_458 + 2;
+  # DEBUG lowpan6_offset => lowpan6_offset_610
+
+  <bb 96> [local count: 19602]:
+  # lowpan6_offset_459 = PHI <lowpan6_offset_625(90), lowpan6_offset_620(92), lowpan6_offset_615(94), lowpan6_offset_610(95)>
+  # DEBUG lowpan6_offset => lowpan6_offset_459
+  # DEBUG BEGIN_STMT
+  _430 = (sizetype) lowpan6_offset_459;
+  _431 = lowpan6_buffer_480(D) + _430;
+  _432 = *_431;
+  _433 = (int) _432;
+  _434 = _433 << 8;
+  _435 = (signed short) _434;
+  _436 = _430 + 1;
+  _437 = lowpan6_buffer_480(D) + _436;
+  _438 = *_437;
+  _439 = (signed short) _438;
+  _440 = _435 | _439;
+  _441 = (short unsigned int) _440;
+  _442 = lwip_htons (_441);
+  MEM[(struct udp_hdr *)decomp_buffer_482(D) + 40B].chksum = _442;
+  # DEBUG BEGIN_STMT
+  lowpan6_offset_628 = lowpan6_offset_459 + 2;
+  # DEBUG lowpan6_offset => lowpan6_offset_628
+  # DEBUG BEGIN_STMT
+  # DEBUG ip6_offset => 48
+  # DEBUG BEGIN_STMT
+  if (datagram_size_602(D) == 0)
+    goto <bb 97>; [50.00%]
+  else
+    goto <bb 98>; [50.00%]
+
+  <bb 97> [local count: 9801]:
+  # DEBUG BEGIN_STMT
+  _443 = compressed_size_629(D) - lowpan6_offset_628;
+  datagram_size_630 = _443 + 48;
+  # DEBUG datagram_size => datagram_size_630
+
+  <bb 98> [local count: 19602]:
+  # datagram_size_450 = PHI <datagram_size_602(D)(96), datagram_size_630(97)>
+  # DEBUG datagram_size => datagram_size_450
+  # DEBUG BEGIN_STMT
+  _444 = datagram_size_450 + 65496;
+  _445 = lwip_htons (_444);
+  MEM[(struct udp_hdr *)decomp_buffer_482(D) + 40B].len = _445;
+
+  <bb 99> [local count: 40026]:
+  # datagram_size_451 = PHI <datagram_size_602(D)(85), datagram_size_450(98)>
+  # lowpan6_offset_460 = PHI <lowpan6_offset_458(85), lowpan6_offset_628(98)>
+  # ip6_offset_461 = PHI <40(85), 48(98)>
+  # DEBUG ip6_offset => ip6_offset_461
+  # DEBUG lowpan6_offset => lowpan6_offset_460
+  # DEBUG datagram_size => datagram_size_451
+  # DEBUG BEGIN_STMT
+  if (datagram_size_451 == 0)
+    goto <bb 100>; [50.00%]
+  else
+    goto <bb 101>; [50.00%]
+
+  <bb 100> [local count: 20013]:
+  # DEBUG BEGIN_STMT
+  _446 = compressed_size_629(D) - lowpan6_offset_460;
+  datagram_size_633 = _446 + ip6_offset_461;
+  # DEBUG datagram_size => datagram_size_633
+
+  <bb 101> [local count: 40026]:
+  # datagram_size_452 = PHI <datagram_size_451(99), datagram_size_633(100)>
+  # DEBUG datagram_size => datagram_size_452
+  # DEBUG BEGIN_STMT
+  _447 = datagram_size_452 + 65496;
+  _448 = lwip_htons (_447);
+  MEM[(struct ip6_hdr *)decomp_buffer_482(D)]._plen = _448;
+  # DEBUG BEGIN_STMT
+  _449 = (unsigned int) lowpan6_offset_460;
+  if (_449 > lowpan6_bufsize_636(D))
+    goto <bb 103>; [1.04%]
+  else
+    goto <bb 102>; [98.96%]
+
+  <bb 102> [local count: 39610]:
+  # DEBUG BEGIN_STMT
+  *hdr_size_comp_485(D) = lowpan6_offset_460;
+  # DEBUG BEGIN_STMT
+  *hdr_size_decomp_486(D) = ip6_offset_461;
+  # DEBUG BEGIN_STMT
+
+  <bb 103> [local count: 42108]:
+  # _462 = PHI <-1(14), -6(45), -6(50), -6(59), -6(62), -6(72), -6(83), -1(87), -6(88), -6(86), -6(101), 0(102)>
+  return _462;
+
+}
+
+
+lowpan6_compress_headers (struct netif * netif, u8_t * inbuf, size_t inbuf_size, u8_t * outbuf, size_t outbuf_size, u8_t * lowpan6_header_len_out, u8_t * hidden_header_len_out, struct ip6_addr_t * lowpan6_contexts, const struct lowpan6_link_addr * src, const struct lowpan6_link_addr * dst)
+{
+  struct ip_addr_t ip6dst;
+  struct ip_addr_t ip6src;
+  s8_t i;
+  u8_t hidden_header_len;
+  u8_t lowpan6_header_len;
+  long unsigned int _1;
+  long unsigned int _2;
+  long unsigned int _3;
+  long unsigned int _4;
+  long unsigned int _5;
+  long unsigned int _6;
+  unsigned char _7;
+  long unsigned int _8;
+  long unsigned int _9;
+  long unsigned int _10;
+  long unsigned int _11;
+  long unsigned int _12;
+  long unsigned int _13;
+  unsigned char _14;
+  unsigned char i.2_15;
+  int _16;
+  int _17;
+  unsigned char _18;
+  unsigned char _19;
+  unsigned char _20;
+  unsigned char _21;
+  signed char _22;
+  signed char _23;
+  signed char _24;
+  unsigned char _25;
+  unsigned char _26;
+  unsigned char _27;
+  unsigned char _28;
+  long unsigned int _29;
+  long unsigned int _30;
+  long unsigned int _31;
+  unsigned char _32;
+  unsigned char _33;
+  long unsigned int _34;
+  long unsigned int _35;
+  long unsigned int _36;
+  long unsigned int _37;
+  unsigned char _38;
+  unsigned char _39;
+  long unsigned int _40;
+  long unsigned int _41;
+  long unsigned int _42;
+  sizetype _43;
+  u8_t * _44;
+  unsigned char _45;
+  long unsigned int _46;
+  long unsigned int _47;
+  long unsigned int _48;
+  long unsigned int _49;
+  unsigned char _50;
+  unsigned char _51;
+  long unsigned int _52;
+  long unsigned int _53;
+  long unsigned int _54;
+  unsigned char _55;
+  sizetype _56;
+  u8_t * _57;
+  unsigned char _58;
+  long unsigned int _59;
+  long unsigned int _60;
+  long unsigned int _61;
+  unsigned char _62;
+  unsigned char _63;
+  unsigned char _64;
+  long unsigned int _65;
+  long unsigned int _66;
+  long unsigned int _67;
+  sizetype _68;
+  u8_t * _69;
+  unsigned char _70;
+  long unsigned int _71;
+  long unsigned int _72;
+  sizetype _73;
+  u8_t * _74;
+  unsigned char _75;
+  long unsigned int _76;
+  long unsigned int _77;
+  long unsigned int _78;
+  sizetype _79;
+  u8_t * _80;
+  unsigned char _81;
+  long unsigned int _82;
+  long unsigned int _83;
+  long unsigned int _84;
+  unsigned char _85;
+  sizetype _86;
+  u8_t * _87;
+  unsigned char _88;
+  long unsigned int _89;
+  long unsigned int _90;
+  long unsigned int _91;
+  sizetype _92;
+  u8_t * _93;
+  unsigned char _94;
+  long unsigned int _95;
+  long unsigned int _96;
+  sizetype _97;
+  u8_t * _98;
+  unsigned char _99;
+  unsigned char _100;
+  unsigned char _101;
+  unsigned char _102;
+  sizetype _103;
+  u8_t * _104;
+  unsigned char _105;
+  unsigned char _106;
+  unsigned char _107;
+  unsigned char _108;
+  unsigned char _109;
+  unsigned char _110;
+  unsigned char _111;
+  sizetype _112;
+  u8_t * _113;
+  unsigned char _114;
+  long unsigned int _115;
+  long unsigned int _116;
+  unsigned char _117;
+  signed char _118;
+  unsigned char i.15_119;
+  int _120;
+  int _121;
+  signed char _122;
+  signed char _123;
+  signed char _124;
+  unsigned char _125;
+  sizetype _126;
+  u8_t * _127;
+  u8_t * _128;
+  sizetype _129;
+  u8_t * _130;
+  long unsigned int _131;
+  long unsigned int _132;
+  long unsigned int _133;
+  unsigned char _134;
+  sizetype _135;
+  u8_t * _136;
+  u8_t * _137;
+  long unsigned int _138;
+  long unsigned int _139;
+  unsigned char _140;
+  unsigned char _141;
+  signed char _142;
+  signed char _143;
+  signed char _144;
+  unsigned char _145;
+  sizetype _146;
+  u8_t * _147;
+  u8_t * _148;
+  sizetype _149;
+  u8_t * _150;
+  unsigned char _151;
+  sizetype _152;
+  u8_t * _153;
+  u8_t * _154;
+  sizetype _155;
+  u8_t * _156;
+  unsigned char _157;
+  sizetype _158;
+  u8_t * _159;
+  u8_t * _160;
+  sizetype _161;
+  u8_t * _162;
+  unsigned char _163;
+  unsigned char _164;
+  long unsigned int _165;
+  unsigned char _166;
+  signed char _167;
+  signed char _168;
+  signed char _169;
+  unsigned char _170;
+  sizetype _171;
+  u8_t * _172;
+  u8_t * _173;
+  sizetype _174;
+  u8_t * _175;
+  sizetype _176;
+  u8_t * _177;
+  u8_t * _178;
+  unsigned char _179;
+  sizetype _180;
+  u8_t * _181;
+  unsigned char _182;
+  unsigned char _183;
+  unsigned char _184;
+  unsigned char _185;
+  unsigned char _186;
+  int _187;
+  int _188;
+  signed char _189;
+  unsigned char _190;
+  signed char _191;
+  signed char _192;
+  signed char _193;
+  sizetype _194;
+  u8_t * _195;
+  unsigned char _196;
+  sizetype _197;
+  u8_t * _198;
+  unsigned char _199;
+  sizetype _200;
+  u8_t * _201;
+  unsigned char _202;
+  sizetype _203;
+  u8_t * _204;
+  unsigned char _205;
+  unsigned char _206;
+  sizetype _207;
+  u8_t * _208;
+  unsigned char _209;
+  sizetype _210;
+  u8_t * _211;
+  unsigned char _212;
+  sizetype _213;
+  u8_t * _214;
+  unsigned char _215;
+  sizetype _216;
+  u8_t * _217;
+  sizetype _218;
+  u8_t * _219;
+  unsigned char _220;
+  sizetype _221;
+  u8_t * _222;
+  unsigned char _223;
+  sizetype _224;
+  u8_t * _225;
+  unsigned char _226;
+  sizetype _227;
+  u8_t * _228;
+  unsigned char _229;
+  sizetype _230;
+  u8_t * _231;
+  unsigned char _232;
+  err_t _242;
+  u8_t iftmp.0_243;
+  u8_t iftmp.1_244;
+  unsigned char _261;
+  unsigned char _268;
+  unsigned char _269;
+  unsigned char _272;
+  u8_t iftmp.0_278;
+  u8_t iftmp.1_285;
+  long unsigned int _316;
+  short unsigned int _346;
+  short unsigned int _357;
+
+  <bb 2> [local count: 357913]:
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG hidden_header_len => 0
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  if (netif_262(D) == 0B)
+    goto <bb 3>; [30.00%]
+  else
+    goto <bb 4>; [70.00%]
+
+  <bb 3> [local count: 1073741824]:
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  __asm__ __volatile__("BKPT #0
+	");
+  # DEBUG BEGIN_STMT
+  goto <bb 3>; [100.00%]
+
+  <bb 4> [local count: 250539]:
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  if (inbuf_264(D) == 0B)
+    goto <bb 5>; [30.00%]
+  else
+    goto <bb 6>; [70.00%]
+
+  <bb 5> [local count: 751619279]:
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  __asm__ __volatile__("BKPT #0
+	");
+  # DEBUG BEGIN_STMT
+  goto <bb 5>; [100.00%]
+
+  <bb 6> [local count: 175378]:
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  if (outbuf_265(D) == 0B)
+    goto <bb 7>; [30.00%]
+  else
+    goto <bb 8>; [70.00%]
+
+  <bb 7> [local count: 526133495]:
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  __asm__ __volatile__("BKPT #0
+	");
+  # DEBUG BEGIN_STMT
+  goto <bb 7>; [100.00%]
+
+  <bb 8> [local count: 122764]:
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  if (lowpan6_header_len_out_266(D) == 0B)
+    goto <bb 9>; [30.00%]
+  else
+    goto <bb 10>; [70.00%]
+
+  <bb 9> [local count: 368293446]:
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  __asm__ __volatile__("BKPT #0
+	");
+  # DEBUG BEGIN_STMT
+  goto <bb 9>; [100.00%]
+
+  <bb 10> [local count: 85935]:
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  if (hidden_header_len_out_267(D) == 0B)
+    goto <bb 11>; [30.00%]
+  else
+    goto <bb 12>; [70.00%]
+
+  <bb 11> [local count: 257805413]:
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  __asm__ __volatile__("BKPT #0
+	");
+  # DEBUG BEGIN_STMT
+  goto <bb 11>; [100.00%]
+
+  <bb 12> [local count: 60154]:
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG buffer => outbuf_265(D)
+  # DEBUG BEGIN_STMT
+  # DEBUG inptr => inbuf_264(D)
+  # DEBUG BEGIN_STMT
+  if (inbuf_size_270(D) <= 39)
+    goto <bb 88>; [1.04%]
+  else
+    goto <bb 13>; [98.96%]
+
+  <bb 13> [local count: 59529]:
+  # DEBUG BEGIN_STMT
+  if (outbuf_size_271(D) <= 39)
+    goto <bb 88>; [1.04%]
+  else
+    goto <bb 14>; [98.96%]
+
+  <bb 14> [local count: 58910]:
+  # DEBUG BEGIN_STMT
+  # DEBUG ip6hdr => inbuf_264(D)
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _1 = MEM[(struct ip6_hdr *)inbuf_264(D)].dest.addr[0];
+  ip6dst.u_addr.ip6.addr[0] = _1;
+  # DEBUG BEGIN_STMT
+  _2 = MEM[(struct ip6_hdr *)inbuf_264(D)].dest.addr[1];
+  ip6dst.u_addr.ip6.addr[1] = _2;
+  # DEBUG BEGIN_STMT
+  _3 = MEM[(struct ip6_hdr *)inbuf_264(D)].dest.addr[2];
+  ip6dst.u_addr.ip6.addr[2] = _3;
+  # DEBUG BEGIN_STMT
+  _4 = MEM[(struct ip6_hdr *)inbuf_264(D)].dest.addr[3];
+  ip6dst.u_addr.ip6.addr[3] = _4;
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  ip6dst.type = 6;
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _5 = _1 & 49407;
+  if (_5 == 33022)
+    goto <bb 17>; [34.00%]
+  else
+    goto <bb 15>; [66.00%]
+
+  <bb 15> [local count: 38880]:
+  _6 = _1 & 36863;
+  if (_6 == 511)
+    goto <bb 17>; [34.00%]
+  else
+    goto <bb 16>; [66.00%]
+
+  <bb 16> [local count: 25661]:
+  if (_6 == 767)
+    goto <bb 17>; [34.00%]
+  else
+    goto <bb 18>; [66.00%]
+
+  <bb 17> [local count: 41973]:
+  _7 = netif_262(D)->num;
+  iftmp.0_278 = _7 + 1;
+
+  <bb 18> [local count: 58910]:
+  # iftmp.0_243 = PHI <iftmp.0_278(17), 0(16)>
+  ip6dst.u_addr.ip6.zone = iftmp.0_243;
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _8 = MEM[(struct ip6_hdr *)inbuf_264(D)].src.addr[0];
+  ip6src.u_addr.ip6.addr[0] = _8;
+  # DEBUG BEGIN_STMT
+  _9 = MEM[(struct ip6_hdr *)inbuf_264(D)].src.addr[1];
+  ip6src.u_addr.ip6.addr[1] = _9;
+  # DEBUG BEGIN_STMT
+  _10 = MEM[(struct ip6_hdr *)inbuf_264(D)].src.addr[2];
+  ip6src.u_addr.ip6.addr[2] = _10;
+  # DEBUG BEGIN_STMT
+  _11 = MEM[(struct ip6_hdr *)inbuf_264(D)].src.addr[3];
+  ip6src.u_addr.ip6.addr[3] = _11;
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  ip6src.type = 6;
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _12 = _8 & 49407;
+  if (_12 == 33022)
+    goto <bb 21>; [34.00%]
+  else
+    goto <bb 19>; [66.00%]
+
+  <bb 19> [local count: 38880]:
+  _13 = _8 & 36863;
+  if (_13 == 511)
+    goto <bb 21>; [34.00%]
+  else
+    goto <bb 20>; [66.00%]
+
+  <bb 20> [local count: 25661]:
+  if (_13 == 767)
+    goto <bb 21>; [34.00%]
+  else
+    goto <bb 22>; [66.00%]
+
+  <bb 21> [local count: 41973]:
+  _14 = netif_262(D)->num;
+  iftmp.1_285 = _14 + 1;
+
+  <bb 22> [local count: 58910]:
+  # iftmp.1_244 = PHI <iftmp.1_285(21), 0(20)>
+  ip6src.u_addr.ip6.zone = iftmp.1_244;
+  # DEBUG BEGIN_STMT
+  # DEBUG lowpan6_header_len => 2
+  # DEBUG BEGIN_STMT
+  *outbuf_265(D) = 96;
+  # DEBUG BEGIN_STMT
+  MEM[(u8_t *)outbuf_265(D) + 1B] = 0;
+  # DEBUG BEGIN_STMT
+  MEM[(u8_t *)outbuf_265(D) + 2B] = 0;
+  # DEBUG BEGIN_STMT
+  i_291 = lowpan6_context_lookup (lowpan6_contexts_290(D), &ip6src.u_addr.ip6);
+  # DEBUG i => i_291
+  # DEBUG BEGIN_STMT
+  if (i_291 >= 0)
+    goto <bb 23>; [59.00%]
+  else
+    goto <bb 24>; [41.00%]
+
+  <bb 23> [local count: 34757]:
+  # DEBUG BEGIN_STMT
+  MEM[(u8_t *)outbuf_265(D) + 1B] = 64;
+  # DEBUG BEGIN_STMT
+  i.2_15 = (unsigned char) i_291;
+  _16 = (int) i.2_15;
+  _17 = _16 << 4;
+  _18 = (unsigned char) _17;
+  MEM[(u8_t *)outbuf_265(D) + 2B] = _18;
+
+  <bb 24> [local count: 58910]:
+  # DEBUG BEGIN_STMT
+  i_294 = lowpan6_context_lookup (lowpan6_contexts_290(D), &ip6dst.u_addr.ip6);
+  # DEBUG i => i_294
+  # DEBUG BEGIN_STMT
+  if (i_294 >= 0)
+    goto <bb 25>; [59.00%]
+  else
+    goto <bb 26>; [41.00%]
+
+  <bb 25> [local count: 34757]:
+  # DEBUG BEGIN_STMT
+  _19 = MEM[(u8_t *)outbuf_265(D) + 1B];
+  _20 = _19 | 4;
+  MEM[(u8_t *)outbuf_265(D) + 1B] = _20;
+  # DEBUG BEGIN_STMT
+  _21 = MEM[(u8_t *)outbuf_265(D) + 2B];
+  _22 = (signed char) _21;
+  _23 = i_294 & 15;
+  _24 = _22 | _23;
+  _25 = (unsigned char) _24;
+  MEM[(u8_t *)outbuf_265(D) + 2B] = _25;
+
+  <bb 26> [local count: 58910]:
+  # DEBUG BEGIN_STMT
+  _26 = MEM[(u8_t *)outbuf_265(D) + 2B];
+  if (_26 != 0)
+    goto <bb 27>; [50.00%]
+  else
+    goto <bb 28>; [50.00%]
+
+  <bb 27> [local count: 29455]:
+  # DEBUG BEGIN_STMT
+  _27 = MEM[(u8_t *)outbuf_265(D) + 1B];
+  _28 = _27 | 128;
+  MEM[(u8_t *)outbuf_265(D) + 1B] = _28;
+  # DEBUG BEGIN_STMT
+  # DEBUG lowpan6_header_len => 3
+
+  <bb 28> [local count: 58910]:
+  # lowpan6_header_len_233 = PHI <2(26), 3(27)>
+  # DEBUG lowpan6_header_len => lowpan6_header_len_233
+  # DEBUG BEGIN_STMT
+  _29 = MEM[(struct ip6_hdr *)inbuf_264(D)]._v_tc_fl;
+  _30 = lwip_htonl (_29);
+  _31 = _30 & 1048575;
+  if (_31 == 0)
+    goto <bb 29>; [50.00%]
+  else
+    goto <bb 32>; [50.00%]
+
+  <bb 29> [local count: 29455]:
+  # DEBUG BEGIN_STMT
+  _32 = *outbuf_265(D);
+  _33 = _32 | 16;
+  *outbuf_265(D) = _33;
+  # DEBUG BEGIN_STMT
+  _34 = MEM[(struct ip6_hdr *)inbuf_264(D)]._v_tc_fl;
+  _35 = lwip_htonl (_34);
+  _36 = _35 >> 20;
+  _37 = _36 & 255;
+  if (_37 == 0)
+    goto <bb 30>; [67.00%]
+  else
+    goto <bb 31>; [33.00%]
+
+  <bb 30> [local count: 19735]:
+  # DEBUG BEGIN_STMT
+  _38 = *outbuf_265(D);
+  _39 = _38 | 8;
+  *outbuf_265(D) = _39;
+  goto <bb 35>; [100.00%]
+
+  <bb 31> [local count: 9720]:
+  # DEBUG BEGIN_STMT
+  _40 = MEM[(struct ip6_hdr *)inbuf_264(D)]._v_tc_fl;
+  _41 = lwip_htonl (_40);
+  _42 = _41 >> 20;
+  lowpan6_header_len_328 = lowpan6_header_len_233 + 1;
+  # DEBUG lowpan6_header_len => lowpan6_header_len_328
+  _43 = (sizetype) lowpan6_header_len_233;
+  _44 = outbuf_265(D) + _43;
+  _45 = (unsigned char) _42;
+  *_44 = _45;
+  goto <bb 35>; [100.00%]
+
+  <bb 32> [local count: 29455]:
+  # DEBUG BEGIN_STMT
+  _46 = MEM[(struct ip6_hdr *)inbuf_264(D)]._v_tc_fl;
+  _47 = lwip_htonl (_46);
+  _48 = _47 >> 20;
+  _49 = _48 & 63;
+  if (_49 == 0)
+    goto <bb 33>; [50.00%]
+  else
+    goto <bb 34>; [50.00%]
+
+  <bb 33> [local count: 14727]:
+  # DEBUG BEGIN_STMT
+  _50 = *outbuf_265(D);
+  _51 = _50 | 8;
+  *outbuf_265(D) = _51;
+  # DEBUG BEGIN_STMT
+  _52 = MEM[(struct ip6_hdr *)inbuf_264(D)]._v_tc_fl;
+  _53 = lwip_htonl (_52);
+  _54 = _53 >> 20;
+  _55 = (unsigned char) _54;
+  _56 = (sizetype) lowpan6_header_len_233;
+  _57 = outbuf_265(D) + _56;
+  _58 = _55 & 192;
+  *_57 = _58;
+  # DEBUG BEGIN_STMT
+  _59 = MEM[(struct ip6_hdr *)inbuf_264(D)]._v_tc_fl;
+  _60 = lwip_htonl (_59);
+  _61 = _60 >> 16;
+  _316 = _61 & 15;
+  lowpan6_header_len_317 = lowpan6_header_len_233 + 1;
+  # DEBUG lowpan6_header_len => lowpan6_header_len_317
+  _62 = *_57;
+  _63 = (unsigned char) _316;
+  _64 = _62 | _63;
+  *_57 = _64;
+  # DEBUG BEGIN_STMT
+  _65 = MEM[(struct ip6_hdr *)inbuf_264(D)]._v_tc_fl;
+  _66 = lwip_htonl (_65);
+  _67 = _66 >> 8;
+  lowpan6_header_len_320 = lowpan6_header_len_233 + 2;
+  # DEBUG lowpan6_header_len => lowpan6_header_len_320
+  _68 = (sizetype) lowpan6_header_len_317;
+  _69 = outbuf_265(D) + _68;
+  _70 = (unsigned char) _67;
+  *_69 = _70;
+  # DEBUG BEGIN_STMT
+  _71 = MEM[(struct ip6_hdr *)inbuf_264(D)]._v_tc_fl;
+  _72 = lwip_htonl (_71);
+  lowpan6_header_len_323 = lowpan6_header_len_233 + 3;
+  # DEBUG lowpan6_header_len => lowpan6_header_len_323
+  _73 = (sizetype) lowpan6_header_len_320;
+  _74 = outbuf_265(D) + _73;
+  _75 = (unsigned char) _72;
+  *_74 = _75;
+  goto <bb 35>; [100.00%]
+
+  <bb 34> [local count: 14727]:
+  # DEBUG BEGIN_STMT
+  _76 = MEM[(struct ip6_hdr *)inbuf_264(D)]._v_tc_fl;
+  _77 = lwip_htonl (_76);
+  _78 = _77 >> 20;
+  lowpan6_header_len_301 = lowpan6_header_len_233 + 1;
+  # DEBUG lowpan6_header_len => lowpan6_header_len_301
+  _79 = (sizetype) lowpan6_header_len_233;
+  _80 = outbuf_265(D) + _79;
+  _81 = (unsigned char) _78;
+  *_80 = _81;
+  # DEBUG BEGIN_STMT
+  _82 = MEM[(struct ip6_hdr *)inbuf_264(D)]._v_tc_fl;
+  _83 = lwip_htonl (_82);
+  _84 = _83 >> 16;
+  _85 = (unsigned char) _84;
+  lowpan6_header_len_304 = lowpan6_header_len_233 + 2;
+  # DEBUG lowpan6_header_len => lowpan6_header_len_304
+  _86 = (sizetype) lowpan6_header_len_301;
+  _87 = outbuf_265(D) + _86;
+  _88 = _85 & 15;
+  *_87 = _88;
+  # DEBUG BEGIN_STMT
+  _89 = MEM[(struct ip6_hdr *)inbuf_264(D)]._v_tc_fl;
+  _90 = lwip_htonl (_89);
+  _91 = _90 >> 8;
+  lowpan6_header_len_307 = lowpan6_header_len_233 + 3;
+  # DEBUG lowpan6_header_len => lowpan6_header_len_307
+  _92 = (sizetype) lowpan6_header_len_304;
+  _93 = outbuf_265(D) + _92;
+  _94 = (unsigned char) _91;
+  *_93 = _94;
+  # DEBUG BEGIN_STMT
+  _95 = MEM[(struct ip6_hdr *)inbuf_264(D)]._v_tc_fl;
+  _96 = lwip_htonl (_95);
+  lowpan6_header_len_310 = lowpan6_header_len_233 + 4;
+  # DEBUG lowpan6_header_len => lowpan6_header_len_310
+  _97 = (sizetype) lowpan6_header_len_307;
+  _98 = outbuf_265(D) + _97;
+  _99 = (unsigned char) _96;
+  *_98 = _99;
+
+  <bb 35> [local count: 58910]:
+  # lowpan6_header_len_234 = PHI <lowpan6_header_len_328(31), lowpan6_header_len_323(33), lowpan6_header_len_310(34), lowpan6_header_len_233(30)>
+  # DEBUG lowpan6_header_len => lowpan6_header_len_234
+  # DEBUG BEGIN_STMT
+  _100 = MEM[(struct ip6_hdr *)inbuf_264(D)]._nexth;
+  if (_100 == 17)
+    goto <bb 36>; [34.00%]
+  else
+    goto <bb 37>; [66.00%]
+
+  <bb 36> [local count: 20029]:
+  # DEBUG BEGIN_STMT
+  _101 = *outbuf_265(D);
+  _102 = _101 | 4;
+  *outbuf_265(D) = _102;
+  goto <bb 38>; [100.00%]
+
+  <bb 37> [local count: 38880]:
+  # DEBUG BEGIN_STMT
+  lowpan6_header_len_331 = lowpan6_header_len_234 + 1;
+  # DEBUG lowpan6_header_len => lowpan6_header_len_331
+  _103 = (sizetype) lowpan6_header_len_234;
+  _104 = outbuf_265(D) + _103;
+  *_104 = _100;
+
+  <bb 38> [local count: 58910]:
+  # lowpan6_header_len_235 = PHI <lowpan6_header_len_234(36), lowpan6_header_len_331(37)>
+  # DEBUG lowpan6_header_len => lowpan6_header_len_235
+  # DEBUG BEGIN_STMT
+  _105 = MEM[(struct ip6_hdr *)inbuf_264(D)]._hoplim;
+  if (_105 == 255)
+    goto <bb 39>; [34.00%]
+  else
+    goto <bb 40>; [66.00%]
+
+  <bb 39> [local count: 20029]:
+  # DEBUG BEGIN_STMT
+  _106 = *outbuf_265(D);
+  _107 = _106 | 3;
+  *outbuf_265(D) = _107;
+  goto <bb 45>; [100.00%]
+
+  <bb 40> [local count: 38880]:
+  # DEBUG BEGIN_STMT
+  if (_105 == 64)
+    goto <bb 41>; [34.00%]
+  else
+    goto <bb 42>; [66.00%]
+
+  <bb 41> [local count: 13219]:
+  # DEBUG BEGIN_STMT
+  _108 = *outbuf_265(D);
+  _109 = _108 | 2;
+  *outbuf_265(D) = _109;
+  goto <bb 45>; [100.00%]
+
+  <bb 42> [local count: 25661]:
+  # DEBUG BEGIN_STMT
+  if (_105 == 1)
+    goto <bb 43>; [34.00%]
+  else
+    goto <bb 44>; [66.00%]
+
+  <bb 43> [local count: 8725]:
+  # DEBUG BEGIN_STMT
+  _110 = *outbuf_265(D);
+  _111 = _110 | 1;
+  *outbuf_265(D) = _111;
+  goto <bb 45>; [100.00%]
+
+  <bb 44> [local count: 16936]:
+  # DEBUG BEGIN_STMT
+  lowpan6_header_len_334 = lowpan6_header_len_235 + 1;
+  # DEBUG lowpan6_header_len => lowpan6_header_len_334
+  _112 = (sizetype) lowpan6_header_len_235;
+  _113 = outbuf_265(D) + _112;
+  *_113 = _105;
+
+  <bb 45> [local count: 58910]:
+  # lowpan6_header_len_236 = PHI <lowpan6_header_len_235(39), lowpan6_header_len_235(41), lowpan6_header_len_235(43), lowpan6_header_len_334(44)>
+  # DEBUG lowpan6_header_len => lowpan6_header_len_236
+  # DEBUG BEGIN_STMT
+  _114 = MEM[(u8_t *)outbuf_265(D) + 1B];
+  _261 = _114 & 64;
+  if (_261 != 0)
+    goto <bb 47>; [33.00%]
+  else
+    goto <bb 46>; [67.00%]
+
+  <bb 46> [local count: 39470]:
+  _115 = ip6src.u_addr.ip6.addr[0];
+  _116 = _115 & 49407;
+  if (_116 == 33022)
+    goto <bb 47>; [34.00%]
+  else
+    goto <bb 51>; [66.00%]
+
+  <bb 47> [local count: 32860]:
+  # DEBUG BEGIN_STMT
+  i_344 = lowpan6_get_address_mode (&ip6src.u_addr.ip6, src_342(D));
+  # DEBUG i => i_344
+  # DEBUG BEGIN_STMT
+  _117 = MEM[(u8_t *)outbuf_265(D) + 1B];
+  _118 = (signed char) _117;
+  i.15_119 = (unsigned char) i_344;
+  _120 = (int) i.15_119;
+  _121 = _120 << 4;
+  _122 = (signed char) _121;
+  _123 = _122 & 48;
+  _124 = _118 | _123;
+  _125 = (unsigned char) _124;
+  MEM[(u8_t *)outbuf_265(D) + 1B] = _125;
+  # DEBUG BEGIN_STMT
+  if (i_344 == 1)
+    goto <bb 48>; [20.24%]
+  else
+    goto <bb 49>; [79.76%]
+
+  <bb 48> [local count: 6651]:
+  # DEBUG BEGIN_STMT
+  _126 = (sizetype) lowpan6_header_len_236;
+  _127 = outbuf_265(D) + _126;
+  _128 = inbuf_264(D) + 16;
+  memcpy (_127, _128, 8);
+  # DEBUG BEGIN_STMT
+  lowpan6_header_len_350 = lowpan6_header_len_236 + 8;
+  # DEBUG lowpan6_header_len => lowpan6_header_len_350
+  goto <bb 57>; [100.00%]
+
+  <bb 49> [local count: 26209]:
+  # DEBUG BEGIN_STMT
+  if (i_344 == 2)
+    goto <bb 50>; [34.00%]
+  else
+    goto <bb 57>; [66.00%]
+
+  <bb 50> [local count: 8911]:
+  # DEBUG BEGIN_STMT
+  _129 = (sizetype) lowpan6_header_len_236;
+  _130 = outbuf_265(D) + _129;
+  _346 = MEM[(char * {ref-all})inbuf_264(D) + 22B];
+  MEM[(char * {ref-all})_130] = _346;
+  # DEBUG BEGIN_STMT
+  lowpan6_header_len_348 = lowpan6_header_len_236 + 2;
+  # DEBUG lowpan6_header_len => lowpan6_header_len_348
+  goto <bb 57>; [100.00%]
+
+  <bb 51> [local count: 26050]:
+  # DEBUG BEGIN_STMT
+  if (_115 == 0)
+    goto <bb 52>; [67.00%]
+  else
+    goto <bb 56>; [33.00%]
+
+  <bb 52> [local count: 17453]:
+  _131 = ip6src.u_addr.ip6.addr[1];
+  if (_131 == 0)
+    goto <bb 53>; [50.00%]
+  else
+    goto <bb 56>; [50.00%]
+
+  <bb 53> [local count: 8727]:
+  _132 = ip6src.u_addr.ip6.addr[2];
+  if (_132 == 0)
+    goto <bb 54>; [50.00%]
+  else
+    goto <bb 56>; [50.00%]
+
+  <bb 54> [local count: 4363]:
+  _133 = ip6src.u_addr.ip6.addr[3];
+  if (_133 == 0)
+    goto <bb 55>; [50.00%]
+  else
+    goto <bb 56>; [50.00%]
+
+  <bb 55> [local count: 2182]:
+  # DEBUG BEGIN_STMT
+  _134 = _114 | 64;
+  MEM[(u8_t *)outbuf_265(D) + 1B] = _134;
+  goto <bb 57>; [100.00%]
+
+  <bb 56> [local count: 23868]:
+  # DEBUG BEGIN_STMT
+  _135 = (sizetype) lowpan6_header_len_236;
+  _136 = outbuf_265(D) + _135;
+  _137 = inbuf_264(D) + 8;
+  memcpy (_136, _137, 16);
+  # DEBUG BEGIN_STMT
+  lowpan6_header_len_341 = lowpan6_header_len_236 + 16;
+  # DEBUG lowpan6_header_len => lowpan6_header_len_341
+
+  <bb 57> [local count: 58910]:
+  # lowpan6_header_len_237 = PHI <lowpan6_header_len_236(49), lowpan6_header_len_236(55), lowpan6_header_len_341(56), lowpan6_header_len_350(48), lowpan6_header_len_348(50)>
+  # DEBUG lowpan6_header_len => lowpan6_header_len_237
+  # DEBUG BEGIN_STMT
+  _138 = ip6dst.u_addr.ip6.addr[0];
+  _139 = _138 & 255;
+  if (_139 == 255)
+    goto <bb 58>; [34.00%]
+  else
+    goto <bb 66>; [66.00%]
+
+  <bb 58> [local count: 20029]:
+  # DEBUG BEGIN_STMT
+  _140 = MEM[(u8_t *)outbuf_265(D) + 1B];
+  _141 = _140 | 8;
+  MEM[(u8_t *)outbuf_265(D) + 1B] = _141;
+  # DEBUG BEGIN_STMT
+  i_363 = lowpan6_get_address_mode_mc (&ip6dst.u_addr.ip6);
+  # DEBUG i => i_363
+  # DEBUG BEGIN_STMT
+  _142 = (signed char) _141;
+  _143 = i_363 & 3;
+  _144 = _142 | _143;
+  _145 = (unsigned char) _144;
+  MEM[(u8_t *)outbuf_265(D) + 1B] = _145;
+  # DEBUG BEGIN_STMT
+  if (i_363 == 0)
+    goto <bb 59>; [33.00%]
+  else
+    goto <bb 60>; [67.00%]
+
+  <bb 59> [local count: 6610]:
+  # DEBUG BEGIN_STMT
+  _146 = (sizetype) lowpan6_header_len_237;
+  _147 = outbuf_265(D) + _146;
+  _148 = inbuf_264(D) + 24;
+  memcpy (_147, _148, 16);
+  # DEBUG BEGIN_STMT
+  lowpan6_header_len_376 = lowpan6_header_len_237 + 16;
+  # DEBUG lowpan6_header_len => lowpan6_header_len_376
+  goto <bb 73>; [100.00%]
+
+  <bb 60> [local count: 13420]:
+  # DEBUG BEGIN_STMT
+  if (i_363 == 1)
+    goto <bb 61>; [20.24%]
+  else
+    goto <bb 62>; [79.76%]
+
+  <bb 61> [local count: 2716]:
+  # DEBUG BEGIN_STMT
+  lowpan6_header_len_371 = lowpan6_header_len_237 + 1;
+  # DEBUG lowpan6_header_len => lowpan6_header_len_371
+  _149 = (sizetype) lowpan6_header_len_237;
+  _150 = outbuf_265(D) + _149;
+  _151 = MEM[(u8_t *)inbuf_264(D) + 25B];
+  *_150 = _151;
+  # DEBUG BEGIN_STMT
+  _152 = (sizetype) lowpan6_header_len_371;
+  _153 = outbuf_265(D) + _152;
+  _154 = inbuf_264(D) + 35;
+  memcpy (_153, _154, 5);
+  # DEBUG BEGIN_STMT
+  lowpan6_header_len_374 = lowpan6_header_len_237 + 6;
+  # DEBUG lowpan6_header_len => lowpan6_header_len_374
+  goto <bb 73>; [100.00%]
+
+  <bb 62> [local count: 10704]:
+  # DEBUG BEGIN_STMT
+  if (i_363 == 2)
+    goto <bb 63>; [20.24%]
+  else
+    goto <bb 64>; [79.76%]
+
+  <bb 63> [local count: 2166]:
+  # DEBUG BEGIN_STMT
+  lowpan6_header_len_367 = lowpan6_header_len_237 + 1;
+  # DEBUG lowpan6_header_len => lowpan6_header_len_367
+  _155 = (sizetype) lowpan6_header_len_237;
+  _156 = outbuf_265(D) + _155;
+  _157 = MEM[(u8_t *)inbuf_264(D) + 25B];
+  *_156 = _157;
+  # DEBUG BEGIN_STMT
+  _158 = (sizetype) lowpan6_header_len_367;
+  _159 = outbuf_265(D) + _158;
+  _160 = inbuf_264(D) + 37;
+  memcpy (_159, _160, 3);
+  # DEBUG BEGIN_STMT
+  lowpan6_header_len_370 = lowpan6_header_len_237 + 4;
+  # DEBUG lowpan6_header_len => lowpan6_header_len_370
+  goto <bb 73>; [100.00%]
+
+  <bb 64> [local count: 8537]:
+  # DEBUG BEGIN_STMT
+  if (i_363 == 3)
+    goto <bb 65>; [34.00%]
+  else
+    goto <bb 73>; [66.00%]
+
+  <bb 65> [local count: 2903]:
+  # DEBUG BEGIN_STMT
+  lowpan6_header_len_365 = lowpan6_header_len_237 + 1;
+  # DEBUG lowpan6_header_len => lowpan6_header_len_365
+  _161 = (sizetype) lowpan6_header_len_237;
+  _162 = outbuf_265(D) + _161;
+  _163 = MEM[(u8_t *)inbuf_264(D) + 39B];
+  *_162 = _163;
+  goto <bb 73>; [100.00%]
+
+  <bb 66> [local count: 38880]:
+  # DEBUG BEGIN_STMT
+  _164 = MEM[(u8_t *)outbuf_265(D) + 1B];
+  _268 = _164 & 4;
+  if (_268 != 0)
+    goto <bb 68>; [33.00%]
+  else
+    goto <bb 67>; [67.00%]
+
+  <bb 67> [local count: 26050]:
+  _165 = _138 & 49407;
+  if (_165 == 33022)
+    goto <bb 68>; [51.12%]
+  else
+    goto <bb 72>; [48.88%]
+
+  <bb 68> [local count: 26147]:
+  # DEBUG BEGIN_STMT
+  i_355 = lowpan6_get_address_mode (&ip6dst.u_addr.ip6, dst_353(D));
+  # DEBUG i => i_355
+  # DEBUG BEGIN_STMT
+  _166 = MEM[(u8_t *)outbuf_265(D) + 1B];
+  _167 = (signed char) _166;
+  _168 = i_355 & 3;
+  _169 = _167 | _168;
+  _170 = (unsigned char) _169;
+  MEM[(u8_t *)outbuf_265(D) + 1B] = _170;
+  # DEBUG BEGIN_STMT
+  if (i_355 == 1)
+    goto <bb 69>; [20.24%]
+  else
+    goto <bb 70>; [79.76%]
+
+  <bb 69> [local count: 5292]:
+  # DEBUG BEGIN_STMT
+  _171 = (sizetype) lowpan6_header_len_237;
+  _172 = outbuf_265(D) + _171;
+  _173 = inbuf_264(D) + 32;
+  memcpy (_172, _173, 8);
+  # DEBUG BEGIN_STMT
+  lowpan6_header_len_361 = lowpan6_header_len_237 + 8;
+  # DEBUG lowpan6_header_len => lowpan6_header_len_361
+  goto <bb 73>; [100.00%]
+
+  <bb 70> [local count: 20855]:
+  # DEBUG BEGIN_STMT
+  if (i_355 == 2)
+    goto <bb 71>; [34.00%]
+  else
+    goto <bb 73>; [66.00%]
+
+  <bb 71> [local count: 7091]:
+  # DEBUG BEGIN_STMT
+  _174 = (sizetype) lowpan6_header_len_237;
+  _175 = outbuf_265(D) + _174;
+  _357 = MEM[(char * {ref-all})inbuf_264(D) + 38B];
+  MEM[(char * {ref-all})_175] = _357;
+  # DEBUG BEGIN_STMT
+  lowpan6_header_len_359 = lowpan6_header_len_237 + 2;
+  # DEBUG lowpan6_header_len => lowpan6_header_len_359
+  goto <bb 73>; [100.00%]
+
+  <bb 72> [local count: 12733]:
+  # DEBUG BEGIN_STMT
+  _176 = (sizetype) lowpan6_header_len_237;
+  _177 = outbuf_265(D) + _176;
+  _178 = inbuf_264(D) + 24;
+  memcpy (_177, _178, 16);
+  # DEBUG BEGIN_STMT
+  lowpan6_header_len_352 = lowpan6_header_len_237 + 16;
+  # DEBUG lowpan6_header_len => lowpan6_header_len_352
+
+  <bb 73> [local count: 58910]:
+  # lowpan6_header_len_238 = PHI <lowpan6_header_len_374(61), lowpan6_header_len_237(70), lowpan6_header_len_352(72), lowpan6_header_len_376(59), lowpan6_header_len_365(65), lowpan6_header_len_237(64), lowpan6_header_len_370(63), lowpan6_header_len_361(69), lowpan6_header_len_359(71)>
+  # DEBUG lowpan6_header_len => lowpan6_header_len_238
+  # DEBUG BEGIN_STMT
+  # DEBUG inptr => inbuf_264(D) + 40
+  # DEBUG BEGIN_STMT
+  # DEBUG hidden_header_len => 40
+  # DEBUG BEGIN_STMT
+  _179 = MEM[(struct ip6_hdr *)inbuf_264(D)]._nexth;
+  if (_179 == 17)
+    goto <bb 74>; [34.00%]
+  else
+    goto <bb 87>; [66.00%]
+
+  <bb 74> [local count: 20029]:
+  # DEBUG BEGIN_STMT
+  if (inbuf_size_270(D) <= 47)
+    goto <bb 88>; [1.04%]
+  else
+    goto <bb 75>; [98.96%]
+
+  <bb 75> [local count: 19821]:
+  # DEBUG BEGIN_STMT
+  if (outbuf_size_271(D) <= 46)
+    goto <bb 88>; [1.04%]
+  else
+    goto <bb 76>; [98.96%]
+
+  <bb 76> [local count: 19615]:
+  # DEBUG BEGIN_STMT
+  _180 = (sizetype) lowpan6_header_len_238;
+  _181 = outbuf_265(D) + _180;
+  *_181 = 240;
+  # DEBUG BEGIN_STMT
+  _182 = MEM[(u8_t *)inbuf_264(D) + 40B];
+  if (_182 == 240)
+    goto <bb 77>; [34.00%]
+  else
+    goto <bb 81>; [66.00%]
+
+  <bb 77> [local count: 6669]:
+  _183 = MEM[(u8_t *)inbuf_264(D) + 41B];
+  _269 = _183 & 240;
+  if (_269 == 176)
+    goto <bb 78>; [34.00%]
+  else
+    goto <bb 81>; [66.00%]
+
+  <bb 78> [local count: 2267]:
+  _184 = MEM[(u8_t *)inbuf_264(D) + 42B];
+  if (_184 == 240)
+    goto <bb 79>; [34.00%]
+  else
+    goto <bb 81>; [66.00%]
+
+  <bb 79> [local count: 771]:
+  _185 = MEM[(u8_t *)inbuf_264(D) + 43B];
+  _272 = _185 & 240;
+  if (_272 == 176)
+    goto <bb 80>; [34.00%]
+  else
+    goto <bb 81>; [66.00%]
+
+  <bb 80> [local count: 262]:
+  # DEBUG BEGIN_STMT
+  lowpan6_header_len_378 = lowpan6_header_len_238 + 1;
+  # DEBUG lowpan6_header_len => lowpan6_header_len_378
+  *_181 = 243;
+  # DEBUG BEGIN_STMT
+  _186 = MEM[(u8_t *)inbuf_264(D) + 41B];
+  _187 = (int) _186;
+  _188 = _187 << 4;
+  _189 = (signed char) _188;
+  _190 = MEM[(u8_t *)inbuf_264(D) + 43B];
+  _191 = (signed char) _190;
+  _192 = _191 & 15;
+  _193 = _189 | _192;
+  lowpan6_header_len_380 = lowpan6_header_len_238 + 2;
+  # DEBUG lowpan6_header_len => lowpan6_header_len_380
+  _194 = (sizetype) lowpan6_header_len_378;
+  _195 = outbuf_265(D) + _194;
+  _196 = (unsigned char) _193;
+  *_195 = _196;
+  goto <bb 86>; [100.00%]
+
+  <bb 81> [local count: 19353]:
+  # DEBUG BEGIN_STMT
+  if (_182 == 240)
+    goto <bb 82>; [34.00%]
+  else
+    goto <bb 83>; [66.00%]
+
+  <bb 82> [local count: 6580]:
+  # DEBUG BEGIN_STMT
+  lowpan6_header_len_399 = lowpan6_header_len_238 + 1;
+  # DEBUG lowpan6_header_len => lowpan6_header_len_399
+  *_181 = 242;
+  # DEBUG BEGIN_STMT
+  lowpan6_header_len_401 = lowpan6_header_len_238 + 2;
+  # DEBUG lowpan6_header_len => lowpan6_header_len_401
+  _197 = (sizetype) lowpan6_header_len_399;
+  _198 = outbuf_265(D) + _197;
+  _199 = MEM[(u8_t *)inbuf_264(D) + 41B];
+  *_198 = _199;
+  # DEBUG BEGIN_STMT
+  lowpan6_header_len_403 = lowpan6_header_len_238 + 3;
+  # DEBUG lowpan6_header_len => lowpan6_header_len_403
+  _200 = (sizetype) lowpan6_header_len_401;
+  _201 = outbuf_265(D) + _200;
+  _202 = MEM[(u8_t *)inbuf_264(D) + 42B];
+  *_201 = _202;
+  # DEBUG BEGIN_STMT
+  lowpan6_header_len_405 = lowpan6_header_len_238 + 4;
+  # DEBUG lowpan6_header_len => lowpan6_header_len_405
+  _203 = (sizetype) lowpan6_header_len_403;
+  _204 = outbuf_265(D) + _203;
+  _205 = MEM[(u8_t *)inbuf_264(D) + 43B];
+  *_204 = _205;
+  goto <bb 86>; [100.00%]
+
+  <bb 83> [local count: 12773]:
+  # DEBUG BEGIN_STMT
+  _206 = MEM[(u8_t *)inbuf_264(D) + 42B];
+  if (_206 == 240)
+    goto <bb 84>; [34.00%]
+  else
+    goto <bb 85>; [66.00%]
+
+  <bb 84> [local count: 4343]:
+  # DEBUG BEGIN_STMT
+  lowpan6_header_len_391 = lowpan6_header_len_238 + 1;
+  # DEBUG lowpan6_header_len => lowpan6_header_len_391
+  *_181 = 241;
+  # DEBUG BEGIN_STMT
+  lowpan6_header_len_393 = lowpan6_header_len_238 + 2;
+  # DEBUG lowpan6_header_len => lowpan6_header_len_393
+  _207 = (sizetype) lowpan6_header_len_391;
+  _208 = outbuf_265(D) + _207;
+  _209 = MEM[(u8_t *)inbuf_264(D) + 40B];
+  *_208 = _209;
+  # DEBUG BEGIN_STMT
+  lowpan6_header_len_395 = lowpan6_header_len_238 + 3;
+  # DEBUG lowpan6_header_len => lowpan6_header_len_395
+  _210 = (sizetype) lowpan6_header_len_393;
+  _211 = outbuf_265(D) + _210;
+  _212 = MEM[(u8_t *)inbuf_264(D) + 41B];
+  *_211 = _212;
+  # DEBUG BEGIN_STMT
+  lowpan6_header_len_397 = lowpan6_header_len_238 + 4;
+  # DEBUG lowpan6_header_len => lowpan6_header_len_397
+  _213 = (sizetype) lowpan6_header_len_395;
+  _214 = outbuf_265(D) + _213;
+  _215 = MEM[(u8_t *)inbuf_264(D) + 43B];
+  *_214 = _215;
+  goto <bb 86>; [100.00%]
+
+  <bb 85> [local count: 8430]:
+  # DEBUG BEGIN_STMT
+  lowpan6_header_len_382 = lowpan6_header_len_238 + 1;
+  # DEBUG lowpan6_header_len => lowpan6_header_len_382
+  # DEBUG BEGIN_STMT
+  lowpan6_header_len_383 = lowpan6_header_len_238 + 2;
+  # DEBUG lowpan6_header_len => lowpan6_header_len_383
+  _216 = (sizetype) lowpan6_header_len_382;
+  _217 = outbuf_265(D) + _216;
+  *_217 = _182;
+  # DEBUG BEGIN_STMT
+  lowpan6_header_len_385 = lowpan6_header_len_238 + 3;
+  # DEBUG lowpan6_header_len => lowpan6_header_len_385
+  _218 = (sizetype) lowpan6_header_len_383;
+  _219 = outbuf_265(D) + _218;
+  _220 = MEM[(u8_t *)inbuf_264(D) + 41B];
+  *_219 = _220;
+  # DEBUG BEGIN_STMT
+  lowpan6_header_len_387 = lowpan6_header_len_238 + 4;
+  # DEBUG lowpan6_header_len => lowpan6_header_len_387
+  _221 = (sizetype) lowpan6_header_len_385;
+  _222 = outbuf_265(D) + _221;
+  _223 = MEM[(u8_t *)inbuf_264(D) + 42B];
+  *_222 = _223;
+  # DEBUG BEGIN_STMT
+  lowpan6_header_len_389 = lowpan6_header_len_238 + 5;
+  # DEBUG lowpan6_header_len => lowpan6_header_len_389
+  _224 = (sizetype) lowpan6_header_len_387;
+  _225 = outbuf_265(D) + _224;
+  _226 = MEM[(u8_t *)inbuf_264(D) + 43B];
+  *_225 = _226;
+
+  <bb 86> [local count: 19615]:
+  # lowpan6_header_len_239 = PHI <lowpan6_header_len_380(80), lowpan6_header_len_405(82), lowpan6_header_len_397(84), lowpan6_header_len_389(85)>
+  # DEBUG lowpan6_header_len => lowpan6_header_len_239
+  # DEBUG BEGIN_STMT
+  lowpan6_header_len_407 = lowpan6_header_len_239 + 1;
+  # DEBUG lowpan6_header_len => lowpan6_header_len_407
+  _227 = (sizetype) lowpan6_header_len_239;
+  _228 = outbuf_265(D) + _227;
+  _229 = MEM[(u8_t *)inbuf_264(D) + 46B];
+  *_228 = _229;
+  # DEBUG BEGIN_STMT
+  lowpan6_header_len_409 = lowpan6_header_len_239 + 2;
+  # DEBUG lowpan6_header_len => lowpan6_header_len_409
+  _230 = (sizetype) lowpan6_header_len_407;
+  _231 = outbuf_265(D) + _230;
+  _232 = MEM[(u8_t *)inbuf_264(D) + 47B];
+  *_231 = _232;
+  # DEBUG BEGIN_STMT
+  # DEBUG hidden_header_len => 48
+
+  <bb 87> [local count: 58495]:
+  # lowpan6_header_len_240 = PHI <lowpan6_header_len_238(73), lowpan6_header_len_409(86)>
+  # hidden_header_len_241 = PHI <40(73), 48(86)>
+  # DEBUG hidden_header_len => hidden_header_len_241
+  # DEBUG lowpan6_header_len => lowpan6_header_len_240
+  # DEBUG BEGIN_STMT
+  *lowpan6_header_len_out_266(D) = lowpan6_header_len_240;
+  # DEBUG BEGIN_STMT
+  *hidden_header_len_out_267(D) = hidden_header_len_241;
+  # DEBUG BEGIN_STMT
+
+  <bb 88> [local count: 60154]:
+  # _242 = PHI <-6(12), -1(13), -6(74), -1(75), 0(87)>
+  ip6src ={v} {CLOBBER};
+  ip6dst ={v} {CLOBBER};
+  return _242;
+
+}
+
+
+lowpan6_context_lookup (const struct ip6_addr_t * lowpan6_contexts, const struct ip6_addr_t * ip6addr)
+{
+  s8_t i;
+  unsigned int _1;
+  unsigned int _2;
+  const struct ip6_addr_t * _3;
+  long unsigned int _4;
+  long unsigned int _5;
+  long unsigned int _7;
+  long unsigned int _8;
+  unsigned char _9;
+  unsigned char _10;
+  unsigned char i.40_11;
+  unsigned char _12;
+  s8_t _14;
+
+  <bb 2> [local count: 103809424]:
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG i => 0
+  goto <bb 8>; [100.00%]
+
+  <bb 3> [local count: 976138693]:
+  # DEBUG BEGIN_STMT
+  _1 = (unsigned int) i_13;
+  _2 = _1 * 20;
+  _3 = lowpan6_contexts_15(D) + _2;
+  _4 = _3->addr[0];
+  _5 = ip6addr_17(D)->addr[0];
+  if (_4 == _5)
+    goto <bb 4>; [34.00%]
+  else
+    goto <bb 7>; [66.00%]
+
+  <bb 4> [local count: 331887155]:
+  _7 = _3->addr[1];
+  _8 = ip6addr_17(D)->addr[1];
+  if (_7 == _8)
+    goto <bb 5>; [34.00%]
+  else
+    goto <bb 7>; [66.00%]
+
+  <bb 5> [local count: 112841633]:
+  _9 = _3->zone;
+  _10 = ip6addr_17(D)->zone;
+  if (_9 == _10)
+    goto <bb 6>; [5.50%]
+  else
+    goto <bb 7>; [94.50%]
+
+  <bb 6> [local count: 6206290]:
+  # i_6 = PHI <i_13(5)>
+  # DEBUG BEGIN_STMT
+  goto <bb 9>; [100.00%]
+
+  <bb 7> [local count: 969932404]:
+  # DEBUG BEGIN_STMT
+  i.40_11 = (unsigned char) i_13;
+  _12 = i.40_11 + 1;
+  i_18 = (s8_t) _12;
+  # DEBUG i => i_18
+
+  <bb 8> [local count: 1073741824]:
+  # i_13 = PHI <0(2), i_18(7)>
+  # DEBUG i => i_13
+  # DEBUG BEGIN_STMT
+  if (i_13 != 10)
+    goto <bb 3>; [90.91%]
+  else
+    goto <bb 9>; [9.09%]
+
+  <bb 9> [local count: 103809422]:
+  # _14 = PHI <i_6(6), -1(8)>
+  return _14;
+
+}
+
+
+lowpan6_get_address_mode_mc (const struct ip6_addr_t * ip6addr)
+{
+  long unsigned int _1;
+  long unsigned int _2;
+  long unsigned int _3;
+  long unsigned int _4;
+  long unsigned int _5;
+  long unsigned int _6;
+  long unsigned int _7;
+  long unsigned int _8;
+  long unsigned int _9;
+  long unsigned int _10;
+  long unsigned int _11;
+  s8_t _12;
+
+  <bb 2> [local count: 1073741823]:
+  # DEBUG BEGIN_STMT
+  _1 = ip6addr_14(D)->addr[0];
+  if (_1 == 767)
+    goto <bb 3>; [34.00%]
+  else
+    goto <bb 6>; [66.00%]
+
+  <bb 3> [local count: 365072220]:
+  _2 = ip6addr_14(D)->addr[1];
+  if (_2 == 0)
+    goto <bb 4>; [50.00%]
+  else
+    goto <bb 6>; [50.00%]
+
+  <bb 4> [local count: 182536110]:
+  _3 = ip6addr_14(D)->addr[2];
+  if (_3 == 0)
+    goto <bb 5>; [50.00%]
+  else
+    goto <bb 6>; [50.00%]
+
+  <bb 5> [local count: 91268055]:
+  _4 = ip6addr_14(D)->addr[3];
+  _5 = _4 & 16777215;
+  if (_5 == 0)
+    goto <bb 12>; [21.72%]
+  else
+    goto <bb 6>; [78.28%]
+
+  <bb 6> [local count: 1053918402]:
+  # DEBUG BEGIN_STMT
+  _6 = _1 & 4294902015;
+  if (_6 == 255)
+    goto <bb 7>; [34.00%]
+  else
+    goto <bb 12>; [66.00%]
+
+  <bb 7> [local count: 358332257]:
+  _7 = ip6addr_14(D)->addr[1];
+  if (_7 == 0)
+    goto <bb 8>; [50.00%]
+  else
+    goto <bb 12>; [50.00%]
+
+  <bb 8> [local count: 179166128]:
+  # DEBUG BEGIN_STMT
+  _8 = ip6addr_14(D)->addr[2];
+  if (_8 == 0)
+    goto <bb 9>; [50.00%]
+  else
+    goto <bb 10>; [50.00%]
+
+  <bb 9> [local count: 89583064]:
+  _9 = ip6addr_14(D)->addr[3];
+  _10 = _9 & 255;
+  if (_10 == 0)
+    goto <bb 12>; [21.72%]
+  else
+    goto <bb 10>; [78.28%]
+
+  <bb 10> [local count: 159708687]:
+  # DEBUG BEGIN_STMT
+  _11 = _8 & 16777215;
+  if (_11 == 0)
+    goto <bb 11>; [34.00%]
+  else
+    goto <bb 12>; [66.00%]
+
+  <bb 11> [local count: 54300953]:
+  # DEBUG BEGIN_STMT
+
+  <bb 12> [local count: 1073741824]:
+  # _12 = PHI <3(5), 2(9), 1(11), 0(7), 0(6), 0(10)>
+  return _12;
+
+}
+
+
+lowpan6_get_address_mode (const struct ip6_addr_t * ip6addr, const struct lowpan6_link_addr * mac_addr)
+{
+  unsigned char _1;
+  long unsigned int _2;
+  long unsigned int _3;
+  long unsigned int _4;
+  long unsigned int _5;
+  unsigned char _6;
+  int _7;
+  int _8;
+  unsigned char _9;
+  int _10;
+  int _11;
+  long unsigned int _12;
+  long unsigned int _13;
+  long unsigned int _14;
+  unsigned char _15;
+  unsigned char _16;
+  int _17;
+  int _18;
+  unsigned char _19;
+  int _20;
+  int _21;
+  int _22;
+  unsigned char _23;
+  int _24;
+  int _25;
+  int _26;
+  unsigned char _27;
+  int _28;
+  int _29;
+  long unsigned int _30;
+  long unsigned int _31;
+  long unsigned int _32;
+  unsigned char _33;
+  int _34;
+  int _35;
+  unsigned char _36;
+  int _37;
+  int _38;
+  int _39;
+  unsigned char _40;
+  int _41;
+  int _42;
+  int _43;
+  unsigned char _44;
+  int _45;
+  int _46;
+  long unsigned int _47;
+  long unsigned int _48;
+  long unsigned int _49;
+  long unsigned int _50;
+  long unsigned int _51;
+  s8_t _52;
+
+  <bb 2> [local count: 1073741824]:
+  # DEBUG BEGIN_STMT
+  _1 = mac_addr_56(D)->addr_len;
+  if (_1 == 2)
+    goto <bb 3>; [34.00%]
+  else
+    goto <bb 6>; [66.00%]
+
+  <bb 3> [local count: 365072220]:
+  # DEBUG BEGIN_STMT
+  _2 = ip6addr_57(D)->addr[2];
+  if (_2 == 4278190080)
+    goto <bb 4>; [34.00%]
+  else
+    goto <bb 9>; [66.00%]
+
+  <bb 4> [local count: 124124555]:
+  _3 = ip6addr_57(D)->addr[3];
+  _4 = _3 & 65535;
+  if (_4 == 254)
+    goto <bb 5>; [20.24%]
+  else
+    goto <bb 9>; [79.76%]
+
+  <bb 5> [local count: 25122810]:
+  # DEBUG BEGIN_STMT
+  _5 = _3 & 4294901760;
+  _6 = mac_addr_56(D)->addr[0];
+  _7 = (int) _6;
+  _8 = _7 << 8;
+  _9 = mac_addr_56(D)->addr[1];
+  _10 = (int) _9;
+  _11 = _8 | _10;
+  _12 = (long unsigned int) _11;
+  _13 = lwip_htonl (_12);
+  if (_5 == _13)
+    goto <bb 12>; [12.50%]
+  else
+    goto <bb 9>; [87.50%]
+
+  <bb 6> [local count: 708669605]:
+  # DEBUG BEGIN_STMT
+  if (_1 == 8)
+    goto <bb 7>; [20.24%]
+  else
+    goto <bb 9>; [79.76%]
+
+  <bb 7> [local count: 143434728]:
+  # DEBUG BEGIN_STMT
+  _14 = ip6addr_57(D)->addr[2];
+  _15 = mac_addr_56(D)->addr[0];
+  _16 = _15 ^ 2;
+  _17 = (int) _16;
+  _18 = _17 << 24;
+  _19 = mac_addr_56(D)->addr[1];
+  _20 = (int) _19;
+  _21 = _20 << 16;
+  _22 = _18 | _21;
+  _23 = mac_addr_56(D)->addr[2];
+  _24 = (int) _23;
+  _25 = _24 << 8;
+  _26 = _22 | _25;
+  _27 = mac_addr_56(D)->addr[3];
+  _28 = (int) _27;
+  _29 = _26 | _28;
+  _30 = (long unsigned int) _29;
+  _31 = lwip_htonl (_30);
+  if (_14 == _31)
+    goto <bb 8>; [20.24%]
+  else
+    goto <bb 9>; [79.76%]
+
+  <bb 8> [local count: 29031189]:
+  _32 = ip6addr_57(D)->addr[3];
+  _33 = mac_addr_56(D)->addr[4];
+  _34 = (int) _33;
+  _35 = _34 << 24;
+  _36 = mac_addr_56(D)->addr[5];
+  _37 = (int) _36;
+  _38 = _37 << 16;
+  _39 = _35 | _38;
+  _40 = mac_addr_56(D)->addr[6];
+  _41 = (int) _40;
+  _42 = _41 << 8;
+  _43 = _39 | _42;
+  _44 = mac_addr_56(D)->addr[7];
+  _45 = (int) _44;
+  _46 = _43 | _45;
+  _47 = (long unsigned int) _46;
+  _48 = lwip_htonl (_47);
+  if (_32 == _48)
+    goto <bb 12>; [12.50%]
+  else
+    goto <bb 9>; [87.50%]
+
+  <bb 9> [local count: 1066972575]:
+  # DEBUG BEGIN_STMT
+  _49 = ip6addr_57(D)->addr[2];
+  if (_49 == 4278190080)
+    goto <bb 10>; [34.00%]
+  else
+    goto <bb 12>; [66.00%]
+
+  <bb 10> [local count: 362770675]:
+  _50 = ip6addr_57(D)->addr[3];
+  _51 = _50 & 65535;
+  if (_51 == 254)
+    goto <bb 11>; [12.50%]
+  else
+    goto <bb 12>; [87.50%]
+
+  <bb 11> [local count: 45346334]:
+  # DEBUG BEGIN_STMT
+
+  <bb 12> [local count: 1073741824]:
+  # _52 = PHI <3(5), 3(8), 2(11), 1(10), 1(9)>
+  return _52;
+
+}
+
+

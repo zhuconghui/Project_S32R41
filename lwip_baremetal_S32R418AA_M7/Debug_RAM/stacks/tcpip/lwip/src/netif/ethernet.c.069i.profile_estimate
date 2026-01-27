@@ -1,0 +1,401 @@
+Histogram:
+1 indirect calls trained.
+0 (0.00%) have common target.
+0 (0.00%) targets was not found.
+0 (0.00%) targets had parameter count mismatch.
+0 (0.00%) targets was not in polymorphic call target list.
+0 (0.00%) speculations seems useless.
+0 (0.00%) speculations produced.
+ethernet_output (struct netif * netif, struct pbuf * p, const struct eth_addr * src, const struct eth_addr * dst, u16_t eth_type)
+{
+  u16_t eth_type_be;
+  struct eth_hdr * ethhdr;
+  unsigned char _1;
+  struct eth_addr * _2;
+  struct eth_addr * _3;
+  unsigned char _4;
+  err_t (*<T6b9>) (struct netif *, struct pbuf *) _5;
+  short unsigned int _6;
+  short unsigned int _7;
+  err_t _8;
+  err_t _25;
+
+  <bb 2> [local count: 166161]:
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  eth_type_be_14 = lwip_htons (eth_type_12(D));
+  # DEBUG eth_type_be => eth_type_be_14
+  # DEBUG BEGIN_STMT
+  _1 = pbuf_add_header (p_15(D), 14);
+  if (_1 != 0)
+    goto <bb 3>; [2.09%]
+  else
+    goto <bb 4>; [97.91%]
+
+  <bb 3> [local count: 3473]:
+  # DEBUG BEGIN_STMT
+  // predicted unlikely by goto predictor.
+  # DEBUG pbuf_header_failed => NULL
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _6 = lwip_stats.link.lenerr;
+  _7 = _6 + 1;
+  lwip_stats.link.lenerr = _7;
+  # DEBUG BEGIN_STMT
+  goto <bb 7>; [100.00%]
+
+  <bb 4> [local count: 162688]:
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  ethhdr_17 = p_15(D)->payload;
+  # DEBUG ethhdr => ethhdr_17
+  # DEBUG BEGIN_STMT
+  ethhdr_17->type = eth_type_be_14;
+  # DEBUG BEGIN_STMT
+  _2 = &ethhdr_17->dest;
+  memcpy (_2, dst_19(D), 6);
+  # DEBUG BEGIN_STMT
+  _3 = &ethhdr_17->src;
+  memcpy (_3, src_21(D), 6);
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _4 = netif_23(D)->hwaddr_len;
+  if (_4 != 6)
+    goto <bb 8>; [66.00%]
+  else
+    goto <bb 6>; [34.00%]
+
+  <bb 8> [local count: 107374]:
+
+  <bb 5> [local count: 1073741824]:
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  __asm__ __volatile__("BKPT #0
+	");
+  # DEBUG BEGIN_STMT
+
+  <bb 9> [local count: 1073741824]:
+  goto <bb 5>; [100.00%]
+
+  <bb 6> [local count: 55314]:
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _5 = netif_23(D)->linkoutput;
+  _25 = _5 (netif_23(D), p_15(D));
+
+  <bb 7> [local count: 58787]:
+  # _8 = PHI <_25(6), -2(3)>
+  return _8;
+
+}
+
+
+ethernet_input (struct pbuf * p, struct netif * netif)
+{
+  u16_t type;
+  struct eth_hdr * ethhdr;
+  short unsigned int _1;
+  short unsigned int _2;
+  short unsigned int _3;
+  short unsigned int _4;
+  short unsigned int _5;
+  long unsigned int _6;
+  long unsigned int _7;
+  unsigned char _8;
+  unsigned char _9;
+  unsigned char _10;
+  unsigned char _11;
+  unsigned char _12;
+  unsigned char _13;
+  unsigned char _14;
+  unsigned char _15;
+  unsigned char _16;
+  unsigned char _17;
+  unsigned char _18;
+  u8_t[6] * _19;
+  int _20;
+  unsigned char _21;
+  unsigned char _22;
+  unsigned char _23;
+  unsigned char _24;
+  unsigned char _25;
+  unsigned char _26;
+  unsigned char _27;
+  short unsigned int _28;
+  short unsigned int _29;
+  short unsigned int _30;
+  short unsigned int _31;
+  unsigned char _32;
+  unsigned char _33;
+  short unsigned int _34;
+  short unsigned int _35;
+  short unsigned int _36;
+  short unsigned int _37;
+  long unsigned int _38;
+  long unsigned int _39;
+  unsigned char _44;
+
+  <bb 2> [local count: 1073741824]:
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG next_hdr_offset => 14
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _1 = p_46(D)->len;
+  if (_1 <= 14)
+    goto <bb 3>; [34.00%]
+  else
+    goto <bb 4>; [66.00%]
+
+  <bb 3> [local count: 365072220]:
+  # DEBUG BEGIN_STMT
+  _2 = lwip_stats.etharp.proterr;
+  _3 = _2 + 1;
+  lwip_stats.etharp.proterr = _3;
+  # DEBUG BEGIN_STMT
+  _4 = lwip_stats.etharp.drop;
+  _5 = _4 + 1;
+  lwip_stats.etharp.drop = _5;
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _6 = netif_47(D)->mib2_counters.ifinerrors;
+  _7 = _6 + 1;
+  netif_47(D)->mib2_counters.ifinerrors = _7;
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  // predicted unlikely by goto predictor.
+  goto <bb 31>; [100.00%]
+
+  <bb 4> [local count: 708669605]:
+  # DEBUG BEGIN_STMT
+  _8 = p_46(D)->if_idx;
+  if (_8 == 0)
+    goto <bb 5>; [50.00%]
+  else
+    goto <bb 6>; [50.00%]
+
+  <bb 5> [local count: 354334802]:
+  # DEBUG BEGIN_STMT
+  _9 = netif_47(D)->num;
+  _10 = _9 + 1;
+  p_46(D)->if_idx = _10;
+
+  <bb 6> [local count: 708669605]:
+  # DEBUG BEGIN_STMT
+  ethhdr_49 = p_46(D)->payload;
+  # DEBUG ethhdr => ethhdr_49
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  type_50 = ethhdr_49->type;
+  # DEBUG type => type_50
+  # DEBUG BEGIN_STMT
+  _11 = ethhdr_49->dest.addr[0];
+  _44 = _11 & 1;
+  if (_44 != 0)
+    goto <bb 7>; [50.00%]
+  else
+    goto <bb 16>; [50.00%]
+
+  <bb 7> [local count: 354334802]:
+  # DEBUG BEGIN_STMT
+  if (_11 == 1)
+    goto <bb 8>; [34.00%]
+  else
+    goto <bb 11>; [66.00%]
+
+  <bb 8> [local count: 120473833]:
+  # DEBUG BEGIN_STMT
+  _12 = ethhdr_49->dest.addr[1];
+  if (_12 == 0)
+    goto <bb 9>; [50.00%]
+  else
+    goto <bb 16>; [50.00%]
+
+  <bb 9> [local count: 60236916]:
+  _13 = ethhdr_49->dest.addr[2];
+  if (_13 == 94)
+    goto <bb 10>; [34.00%]
+  else
+    goto <bb 16>; [66.00%]
+
+  <bb 10> [local count: 20480552]:
+  # DEBUG BEGIN_STMT
+  _14 = p_46(D)->flags;
+  _15 = _14 | 16;
+  p_46(D)->flags = _15;
+  goto <bb 16>; [100.00%]
+
+  <bb 11> [local count: 233860969]:
+  # DEBUG BEGIN_STMT
+  if (_11 == 51)
+    goto <bb 12>; [34.00%]
+  else
+    goto <bb 14>; [66.00%]
+
+  <bb 12> [local count: 79512730]:
+  _16 = ethhdr_49->dest.addr[1];
+  if (_16 == 51)
+    goto <bb 13>; [34.00%]
+  else
+    goto <bb 14>; [66.00%]
+
+  <bb 13> [local count: 27034328]:
+  # DEBUG BEGIN_STMT
+  _17 = p_46(D)->flags;
+  _18 = _17 | 16;
+  p_46(D)->flags = _18;
+  goto <bb 16>; [100.00%]
+
+  <bb 14> [local count: 206826641]:
+  # DEBUG BEGIN_STMT
+  _19 = &ethhdr_49->dest.addr;
+  _20 = memcmp (_19, &ethbroadcast.addr, 6);
+  if (_20 == 0)
+    goto <bb 15>; [50.00%]
+  else
+    goto <bb 16>; [50.00%]
+
+  <bb 15> [local count: 103413321]:
+  # DEBUG BEGIN_STMT
+  _21 = p_46(D)->flags;
+  _22 = _21 | 8;
+  p_46(D)->flags = _22;
+
+  <bb 16> [local count: 708669605]:
+  # DEBUG BEGIN_STMT
+  switch (type_50) <default: <L33> [25.00%], case 8: <L19> [25.00%], case 1544: <L24> [25.00%], case 56710: <L37> [25.00%]>
+
+  <bb 17> [local count: 177167401]:
+<L19>:
+  # DEBUG BEGIN_STMT
+  _23 = netif_47(D)->flags;
+  _26 = _23 & 8;
+  if (_26 == 0)
+    goto <bb 18>; [51.12%]
+  else
+    goto <bb 19>; [48.88%]
+
+  <bb 18> [local count: 90567975]:
+  # DEBUG BEGIN_STMT
+  // predicted unlikely by goto predictor.
+  goto <bb 31>; [100.00%]
+
+  <bb 19> [local count: 86599426]:
+  # DEBUG BEGIN_STMT
+  _24 = pbuf_remove_header (p_46(D), 14);
+  if (_24 != 0)
+    goto <bb 20>; [51.12%]
+  else
+    goto <bb 21>; [48.88%]
+
+  <bb 20> [local count: 44269626]:
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  // predicted unlikely by goto predictor.
+  goto <bb 31>; [100.00%]
+
+  <bb 21> [local count: 42329799]:
+  # DEBUG BEGIN_STMT
+  ip4_input (p_46(D), netif_47(D));
+  # DEBUG BEGIN_STMT
+  goto <bb 32>; [100.00%]
+
+  <bb 22> [local count: 177167401]:
+<L24>:
+  # DEBUG BEGIN_STMT
+  _25 = netif_47(D)->flags;
+  _32 = _25 & 8;
+  if (_32 == 0)
+    goto <bb 23>; [51.12%]
+  else
+    goto <bb 24>; [48.88%]
+
+  <bb 23> [local count: 90567975]:
+  # DEBUG BEGIN_STMT
+  // predicted unlikely by goto predictor.
+  goto <bb 31>; [100.00%]
+
+  <bb 24> [local count: 86599426]:
+  # DEBUG BEGIN_STMT
+  _27 = pbuf_remove_header (p_46(D), 14);
+  if (_27 != 0)
+    goto <bb 25>; [51.12%]
+  else
+    goto <bb 26>; [48.88%]
+
+  <bb 25> [local count: 44269626]:
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _28 = lwip_stats.etharp.lenerr;
+  _29 = _28 + 1;
+  lwip_stats.etharp.lenerr = _29;
+  # DEBUG BEGIN_STMT
+  _30 = lwip_stats.etharp.drop;
+  _31 = _30 + 1;
+  lwip_stats.etharp.drop = _31;
+  # DEBUG BEGIN_STMT
+  // predicted unlikely by goto predictor.
+  goto <bb 31>; [100.00%]
+
+  <bb 26> [local count: 42329799]:
+  # DEBUG BEGIN_STMT
+  etharp_input (p_46(D), netif_47(D));
+  # DEBUG BEGIN_STMT
+  goto <bb 32>; [100.00%]
+
+  <bb 27> [local count: 177167401]:
+<L37>:
+  # DEBUG BEGIN_STMT
+  _33 = pbuf_remove_header (p_46(D), 14);
+  if (_33 != 0)
+    goto <bb 28>; [51.12%]
+  else
+    goto <bb 29>; [48.88%]
+
+  <bb 28> [local count: 90567975]:
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  // predicted unlikely by goto predictor.
+  goto <bb 31>; [100.00%]
+
+  <bb 29> [local count: 86599426]:
+  # DEBUG BEGIN_STMT
+  ip6_input (p_46(D), netif_47(D));
+  # DEBUG BEGIN_STMT
+  goto <bb 32>; [100.00%]
+
+  <bb 30> [local count: 177167401]:
+<L33>:
+  # DEBUG BEGIN_STMT
+  _34 = lwip_stats.etharp.proterr;
+  _35 = _34 + 1;
+  lwip_stats.etharp.proterr = _35;
+  # DEBUG BEGIN_STMT
+  _36 = lwip_stats.etharp.drop;
+  _37 = _36 + 1;
+  lwip_stats.etharp.drop = _37;
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _38 = netif_47(D)->mib2_counters.ifinunknownprotos;
+  _39 = _38 + 1;
+  netif_47(D)->mib2_counters.ifinunknownprotos = _39;
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  // predicted unlikely by goto predictor.
+
+  <bb 31> [local count: 902482801]:
+free_and_return:
+  # DEBUG BEGIN_STMT
+  pbuf_free (p_46(D));
+  # DEBUG BEGIN_STMT
+
+  <bb 32> [local count: 1073741824]:
+  return 0;
+
+}
+
+

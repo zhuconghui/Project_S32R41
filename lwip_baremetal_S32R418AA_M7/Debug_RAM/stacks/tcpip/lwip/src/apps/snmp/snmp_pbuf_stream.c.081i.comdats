@@ -1,0 +1,334 @@
+snmp_pbuf_stream_seek_abs (struct snmp_pbuf_stream * pbuf_stream, u32_t offset)
+{
+  s32_t rel_offset;
+  short unsigned int _1;
+  long unsigned int _2;
+  long unsigned int _3;
+  err_t _9;
+
+  <bb 2> [local count: 1073741824]:
+  # DEBUG BEGIN_STMT
+  _1 = pbuf_stream_5(D)->offset;
+  _2 = (long unsigned int) _1;
+  _3 = offset_6(D) - _2;
+  rel_offset_7 = (s32_t) _3;
+  # DEBUG rel_offset => rel_offset_7
+  # DEBUG BEGIN_STMT
+  _9 = snmp_pbuf_stream_seek (pbuf_stream_5(D), rel_offset_7);
+  return _9;
+
+}
+
+
+snmp_pbuf_stream_seek (struct snmp_pbuf_stream * pbuf_stream, s32_t offset)
+{
+  short unsigned int _1;
+  long int _2;
+  short unsigned int _3;
+  short unsigned int _4;
+  short unsigned int _5;
+  short unsigned int _6;
+  err_t _7;
+
+  <bb 2> [local count: 1073741824]:
+  # DEBUG BEGIN_STMT
+  if (offset_9(D) < 0)
+    goto <bb 5>; [0.73%]
+  else
+    goto <bb 3>; [99.27%]
+
+  <bb 3> [local count: 1065903509]:
+  _1 = pbuf_stream_11(D)->length;
+  _2 = (long int) _1;
+  if (_2 < offset_9(D))
+    goto <bb 5>; [1.04%]
+  else
+    goto <bb 4>; [98.96%]
+
+  <bb 4> [local count: 1054818113]:
+  # DEBUG BEGIN_STMT
+  _3 = pbuf_stream_11(D)->offset;
+  _4 = (short unsigned int) offset_9(D);
+  _5 = _3 + _4;
+  pbuf_stream_11(D)->offset = _5;
+  # DEBUG BEGIN_STMT
+  _6 = _1 - _4;
+  pbuf_stream_11(D)->length = _6;
+  # DEBUG BEGIN_STMT
+
+  <bb 5> [local count: 1073741824]:
+  # _7 = PHI <-16(3), 0(4), -16(2)>
+  return _7;
+
+}
+
+
+snmp_pbuf_stream_writeto (struct snmp_pbuf_stream * pbuf_stream, struct snmp_pbuf_stream * target_pbuf_stream, u16_t len)
+{
+  struct pbuf * pbuf;
+  u16_t target_offset;
+  err_t err;
+  u16_t chunk_len;
+  short unsigned int _1;
+  short unsigned int _2;
+  struct pbuf * _4;
+  short unsigned int _5;
+  short unsigned int _6;
+  void * _7;
+  short unsigned int target_offset.0_8;
+  sizetype _9;
+  const void * _10;
+  short unsigned int _11;
+  short unsigned int _12;
+  short unsigned int _13;
+  short unsigned int _14;
+  err_t _16;
+  err_t _17;
+
+  <bb 2> [local count: 116771297]:
+  # DEBUG BEGIN_STMT
+  if (pbuf_stream_21(D) == 0B)
+    goto <bb 16>; [0.45%]
+  else
+    goto <bb 3>; [99.55%]
+
+  <bb 3> [local count: 116245826]:
+  if (target_pbuf_stream_22(D) == 0B)
+    goto <bb 16>; [0.45%]
+  else
+    goto <bb 4>; [99.55%]
+
+  <bb 4> [local count: 115722720]:
+  # DEBUG BEGIN_STMT
+  _1 = pbuf_stream_21(D)->length;
+  if (_1 < len_24(D))
+    goto <bb 16>; [1.04%]
+  else
+    goto <bb 5>; [98.96%]
+
+  <bb 5> [local count: 114519204]:
+  _2 = target_pbuf_stream_22(D)->length;
+  if (_2 < len_24(D))
+    goto <bb 16>; [1.04%]
+  else
+    goto <bb 6>; [98.96%]
+
+  <bb 6> [local count: 113328204]:
+  # DEBUG BEGIN_STMT
+  if (len_24(D) == 0)
+    goto <bb 7>; [50.00%]
+  else
+    goto <bb 8>; [50.00%]
+
+  <bb 7> [local count: 56664102]:
+  # DEBUG BEGIN_STMT
+  len_25 = MIN_EXPR <_1, _2>;
+  # DEBUG len => len_25
+
+  <bb 8> [local count: 113328204]:
+  # len_36 = PHI <len_24(D)(6), len_25(7)>
+  goto <bb 15>; [100.00%]
+
+  <bb 9> [local count: 1044213926]:
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _4 = pbuf_stream_21(D)->pbuf;
+  _5 = pbuf_stream_21(D)->offset;
+  pbuf_27 = pbuf_skip (_4, _5, &target_offset);
+  # DEBUG pbuf => pbuf_27
+  # DEBUG BEGIN_STMT
+  if (pbuf_27 == 0B)
+    goto <bb 14>; [2.75%]
+  else
+    goto <bb 10>; [97.25%]
+
+  <bb 10> [local count: 1015498043]:
+  _6 = pbuf_27->len;
+  if (_6 == 0)
+    goto <bb 14>; [2.75%]
+  else
+    goto <bb 11>; [97.25%]
+
+  <bb 11> [local count: 987571846]:
+  # DEBUG BEGIN_STMT
+  chunk_len_28 = MIN_EXPR <_6, len_15>;
+  # DEBUG chunk_len => chunk_len_28
+  # DEBUG BEGIN_STMT
+  _7 = pbuf_27->payload;
+  target_offset.0_8 = target_offset;
+  _9 = (sizetype) target_offset.0_8;
+  _10 = _7 + _9;
+  err_30 = snmp_pbuf_stream_writebuf (target_pbuf_stream_22(D), _10, chunk_len_28);
+  # DEBUG err => err_30
+  # DEBUG BEGIN_STMT
+  if (err_30 != 0)
+    goto <bb 12>; [2.75%]
+  else
+    goto <bb 13>; [97.25%]
+
+  <bb 12> [local count: 27158226]:
+  # err_3 = PHI <err_30(11)>
+  # DEBUG BEGIN_STMT
+  goto <bb 14>; [100.00%]
+
+  <bb 13> [local count: 960413619]:
+  # DEBUG BEGIN_STMT
+  _11 = pbuf_stream_21(D)->offset;
+  _12 = _11 + chunk_len_28;
+  pbuf_stream_21(D)->offset = _12;
+  # DEBUG BEGIN_STMT
+  _13 = pbuf_stream_21(D)->length;
+  _14 = _13 - chunk_len_28;
+  pbuf_stream_21(D)->length = _14;
+  # DEBUG BEGIN_STMT
+  len_33 = len_15 - chunk_len_28;
+  # DEBUG len => len_33
+  target_offset ={v} {CLOBBER};
+  goto <bb 15>; [100.00%]
+
+  <bb 14> [local count: 83800305]:
+  # _16 = PHI <-2(10), err_3(12), -2(9)>
+  target_offset ={v} {CLOBBER};
+  goto <bb 16>; [100.00%]
+
+  <bb 15> [local count: 1073741824]:
+  # len_15 = PHI <len_36(8), len_33(13)>
+  # DEBUG len => len_15
+  # DEBUG BEGIN_STMT
+  if (len_15 != 0)
+    goto <bb 9>; [97.25%]
+  else
+    goto <bb 16>; [2.75%]
+
+  <bb 16> [local count: 116771298]:
+  # _17 = PHI <-16(3), -16(5), _16(14), 0(15), -16(2), -16(4)>
+  return _17;
+
+}
+
+
+snmp_pbuf_stream_writebuf (struct snmp_pbuf_stream * pbuf_stream, const void * buf, u16_t buf_len)
+{
+  short unsigned int _1;
+  struct pbuf * _2;
+  short unsigned int _3;
+  signed char _4;
+  short unsigned int _5;
+  short unsigned int _6;
+  short unsigned int _7;
+  short unsigned int _8;
+  err_t _9;
+
+  <bb 2> [local count: 1073741824]:
+  # DEBUG BEGIN_STMT
+  _1 = pbuf_stream_12(D)->length;
+  if (_1 < buf_len_13(D))
+    goto <bb 5>; [2.09%]
+  else
+    goto <bb 3>; [97.91%]
+
+  <bb 3> [local count: 1051300621]:
+  # DEBUG BEGIN_STMT
+  _2 = pbuf_stream_12(D)->pbuf;
+  _3 = pbuf_stream_12(D)->offset;
+  _4 = pbuf_take_at (_2, buf_14(D), buf_len_13(D), _3);
+  if (_4 != 0)
+    goto <bb 5>; [1.04%]
+  else
+    goto <bb 4>; [98.96%]
+
+  <bb 4> [local count: 1040367094]:
+  # DEBUG BEGIN_STMT
+  _5 = pbuf_stream_12(D)->offset;
+  _6 = _5 + buf_len_13(D);
+  pbuf_stream_12(D)->offset = _6;
+  # DEBUG BEGIN_STMT
+  _7 = pbuf_stream_12(D)->length;
+  _8 = _7 - buf_len_13(D);
+  pbuf_stream_12(D)->length = _8;
+  # DEBUG BEGIN_STMT
+
+  <bb 5> [local count: 1073741824]:
+  # _9 = PHI <-2(2), -2(3), 0(4)>
+  return _9;
+
+}
+
+
+snmp_pbuf_stream_write (struct snmp_pbuf_stream * pbuf_stream, u8_t data)
+{
+  err_t _4;
+
+  <bb 2> [local count: 1073741824]:
+  # DEBUG BEGIN_STMT
+  _4 = snmp_pbuf_stream_writebuf (pbuf_stream_2(D), &data, 1);
+  return _4;
+
+}
+
+
+snmp_pbuf_stream_read (struct snmp_pbuf_stream * pbuf_stream, u8_t * data)
+{
+  short unsigned int _1;
+  struct pbuf * _2;
+  short unsigned int _3;
+  short unsigned int _4;
+  short unsigned int _5;
+  short unsigned int _6;
+  short unsigned int _7;
+  short unsigned int _8;
+  err_t _9;
+
+  <bb 2> [local count: 1073741824]:
+  # DEBUG BEGIN_STMT
+  _1 = pbuf_stream_12(D)->length;
+  if (_1 == 0)
+    goto <bb 5>; [2.09%]
+  else
+    goto <bb 3>; [97.91%]
+
+  <bb 3> [local count: 1051300621]:
+  # DEBUG BEGIN_STMT
+  _2 = pbuf_stream_12(D)->pbuf;
+  _3 = pbuf_stream_12(D)->offset;
+  _4 = pbuf_copy_partial (_2, data_13(D), 1, _3);
+  if (_4 == 0)
+    goto <bb 5>; [1.04%]
+  else
+    goto <bb 4>; [98.96%]
+
+  <bb 4> [local count: 1040367094]:
+  # DEBUG BEGIN_STMT
+  _5 = pbuf_stream_12(D)->offset;
+  _6 = _5 + 1;
+  pbuf_stream_12(D)->offset = _6;
+  # DEBUG BEGIN_STMT
+  _7 = pbuf_stream_12(D)->length;
+  _8 = _7 + 65535;
+  pbuf_stream_12(D)->length = _8;
+  # DEBUG BEGIN_STMT
+
+  <bb 5> [local count: 1073741824]:
+  # _9 = PHI <-2(2), -2(3), 0(4)>
+  return _9;
+
+}
+
+
+snmp_pbuf_stream_init (struct snmp_pbuf_stream * pbuf_stream, struct pbuf * p, u16_t offset, u16_t length)
+{
+  <bb 2> [local count: 1073741824]:
+  # DEBUG BEGIN_STMT
+  pbuf_stream_2(D)->offset = offset_3(D);
+  # DEBUG BEGIN_STMT
+  pbuf_stream_2(D)->length = length_5(D);
+  # DEBUG BEGIN_STMT
+  pbuf_stream_2(D)->pbuf = p_7(D);
+  # DEBUG BEGIN_STMT
+  return 0;
+
+}
+
+

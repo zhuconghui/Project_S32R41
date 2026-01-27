@@ -1,0 +1,273 @@
+ip_input (struct pbuf * p, struct netif * inp)
+{
+  void * _1;
+  unsigned char _2;
+  unsigned char _3;
+  err_t _4;
+  err_t _7;
+  err_t _11;
+  err_t _13;
+
+  <bb 2> :
+  # DEBUG BEGIN_STMT
+  if (p_6(D) != 0B)
+    goto <bb 3>; [INV]
+  else
+    goto <bb 6>; [INV]
+
+  <bb 3> :
+  # DEBUG BEGIN_STMT
+  _1 = p_6(D)->payload;
+  _2 = MEM[(u8_t *)_1];
+  _3 = _2 >> 4;
+  if (_3 == 6)
+    goto <bb 4>; [INV]
+  else
+    goto <bb 5>; [INV]
+
+  <bb 4> :
+  # DEBUG BEGIN_STMT
+  _13 = ip6_input (p_6(D), inp_9(D));
+  // predicted unlikely by early return (on trees) predictor.
+  goto <bb 7>; [INV]
+
+  <bb 5> :
+  # DEBUG BEGIN_STMT
+  _11 = ip4_input (p_6(D), inp_9(D));
+  // predicted unlikely by early return (on trees) predictor.
+  goto <bb 7>; [INV]
+
+  <bb 6> :
+  # DEBUG BEGIN_STMT
+  _7 = -6;
+
+  <bb 7> :
+  # _4 = PHI <_13(4), _11(5), _7(6)>
+  return _4;
+
+}
+
+
+ipaddr_aton (const char * cp, struct ip_addr_t * addr)
+{
+  const char * c;
+  char _1;
+  struct ip6_addr_t * _2;
+  char _3;
+  char _4;
+  struct ip4_addr_t * _5;
+  int _7;
+  int _12;
+  int _19;
+  int _22;
+
+  <bb 2> :
+  # DEBUG BEGIN_STMT
+  if (cp_11(D) != 0B)
+    goto <bb 3>; [INV]
+  else
+    goto <bb 14>; [INV]
+
+  <bb 3> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  c_14 = cp_11(D);
+  # DEBUG c => c_14
+  goto <bb 10>; [INV]
+
+  <bb 4> :
+  # DEBUG BEGIN_STMT
+  _1 = *c_6;
+  if (_1 == 58)
+    goto <bb 5>; [INV]
+  else
+    goto <bb 8>; [INV]
+
+  <bb 5> :
+  # DEBUG BEGIN_STMT
+  if (addr_16(D) != 0B)
+    goto <bb 6>; [INV]
+  else
+    goto <bb 7>; [INV]
+
+  <bb 6> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  addr_16(D)->type = 6;
+
+  <bb 7> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _2 = &addr_16(D)->u_addr.ip6;
+  _19 = ip6addr_aton (cp_11(D), _2);
+  // predicted unlikely by early return (on trees) predictor.
+  goto <bb 15>; [INV]
+
+  <bb 8> :
+  # DEBUG BEGIN_STMT
+  _3 = *c_6;
+  if (_3 == 46)
+    goto <bb 11>; [INV]
+  else
+    goto <bb 9>; [INV]
+
+  <bb 9> :
+  # DEBUG BEGIN_STMT
+  c_15 = c_6 + 1;
+  # DEBUG c => c_15
+
+  <bb 10> :
+  # c_6 = PHI <c_14(3), c_15(9)>
+  # DEBUG c => c_6
+  # DEBUG BEGIN_STMT
+  _4 = *c_6;
+  if (_4 != 0)
+    goto <bb 4>; [INV]
+  else
+    goto <bb 11>; [INV]
+
+  <bb 11> :
+  # DEBUG BEGIN_STMT
+  if (addr_16(D) != 0B)
+    goto <bb 12>; [INV]
+  else
+    goto <bb 13>; [INV]
+
+  <bb 12> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  addr_16(D)->type = 0;
+
+  <bb 13> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _5 = &addr_16(D)->u_addr.ip4;
+  _22 = ip4addr_aton (cp_11(D), _5);
+  // predicted unlikely by early return (on trees) predictor.
+  goto <bb 15>; [INV]
+
+  <bb 14> :
+  # DEBUG BEGIN_STMT
+  _12 = 0;
+
+  <bb 15> :
+  # _7 = PHI <_19(7), _22(13), _12(14)>
+  return _7;
+
+}
+
+
+ipaddr_ntoa_r (const struct ip_addr_t * addr, char * buf, int buflen)
+{
+  unsigned char _1;
+  const struct ip6_addr_t * _2;
+  const struct ip4_addr_t * _3;
+  char * _4;
+  char * _11;
+  char * _13;
+  char * _14;
+
+  <bb 2> :
+  # DEBUG BEGIN_STMT
+  if (addr_6(D) == 0B)
+    goto <bb 3>; [INV]
+  else
+    goto <bb 4>; [INV]
+
+  <bb 3> :
+  # DEBUG BEGIN_STMT
+  _14 = 0B;
+  // predicted unlikely by early return (on trees) predictor.
+  goto <bb 8>; [INV]
+
+  <bb 4> :
+  # DEBUG BEGIN_STMT
+  if (addr_6(D) != 0B)
+    goto <bb 5>; [INV]
+  else
+    goto <bb 7>; [INV]
+
+  <bb 5> :
+  _1 = addr_6(D)->type;
+  if (_1 == 6)
+    goto <bb 6>; [INV]
+  else
+    goto <bb 7>; [INV]
+
+  <bb 6> :
+  # DEBUG BEGIN_STMT
+  _2 = &addr_6(D)->u_addr.ip6;
+  _11 = ip6addr_ntoa_r (_2, buf_8(D), buflen_9(D));
+  // predicted unlikely by early return (on trees) predictor.
+  goto <bb 8>; [INV]
+
+  <bb 7> :
+  # DEBUG BEGIN_STMT
+  _3 = &addr_6(D)->u_addr.ip4;
+  _13 = ip4addr_ntoa_r (_3, buf_8(D), buflen_9(D));
+  // predicted unlikely by early return (on trees) predictor.
+
+  <bb 8> :
+  # _4 = PHI <_14(3), _11(6), _13(7)>
+  return _4;
+
+}
+
+
+ipaddr_ntoa (const struct ip_addr_t * addr)
+{
+  unsigned char _1;
+  const struct ip6_addr_t * _2;
+  const struct ip4_addr_t * _3;
+  char * _4;
+  char * _9;
+  char * _11;
+  char * _12;
+
+  <bb 2> :
+  # DEBUG BEGIN_STMT
+  if (addr_6(D) == 0B)
+    goto <bb 3>; [INV]
+  else
+    goto <bb 4>; [INV]
+
+  <bb 3> :
+  # DEBUG BEGIN_STMT
+  _12 = 0B;
+  // predicted unlikely by early return (on trees) predictor.
+  goto <bb 8>; [INV]
+
+  <bb 4> :
+  # DEBUG BEGIN_STMT
+  if (addr_6(D) != 0B)
+    goto <bb 5>; [INV]
+  else
+    goto <bb 7>; [INV]
+
+  <bb 5> :
+  _1 = addr_6(D)->type;
+  if (_1 == 6)
+    goto <bb 6>; [INV]
+  else
+    goto <bb 7>; [INV]
+
+  <bb 6> :
+  # DEBUG BEGIN_STMT
+  _2 = &addr_6(D)->u_addr.ip6;
+  _9 = ip6addr_ntoa (_2);
+  // predicted unlikely by early return (on trees) predictor.
+  goto <bb 8>; [INV]
+
+  <bb 7> :
+  # DEBUG BEGIN_STMT
+  _3 = &addr_6(D)->u_addr.ip4;
+  _11 = ip4addr_ntoa (_3);
+  // predicted unlikely by early return (on trees) predictor.
+
+  <bb 8> :
+  # _4 = PHI <_12(3), _9(6), _11(7)>
+  return _4;
+
+}
+
+

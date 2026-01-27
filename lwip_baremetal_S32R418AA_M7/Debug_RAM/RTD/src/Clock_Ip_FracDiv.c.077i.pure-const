@@ -1,0 +1,645 @@
+
+
+ local analysis of Clock_Ip_CompleteDfsMfiMfn
+   scanning: _1 = (int) DfsName_16(D);
+  scanning: _2 = Clock_Ip_au8ClockFeatures[_1][0];
+  scanning: Instance_18 = (uint32) _2;
+  scanning: _4 = Clock_Ip_au8ClockFeatures[_1][5];
+  scanning: DividerIndex_19 = (uint32) _4;
+  scanning: _5 = Clock_Ip_apxDfs[Instance_18];
+  scanning: _6 ={v} _5->PORTRESET;
+    Volatile stmt is not const/pure
+    Indirect ref read is not const
+  scanning: _7 = _6 >> DividerIndex_19;
+  scanning: _8 = _7 & 1;
+  scanning: if (_8 == 0)
+  scanning: Clock_Ip_StartTimeout (&StartTime, &ElapsedTime, &TimeoutTicks, 50000);
+  scanning: _9 ={v} _5->PORTSR;
+    Volatile stmt is not const/pure
+    Indirect ref read is not const
+  scanning: _10 = 1 << DividerIndex_19;
+  scanning: _11 = _9 & _10;
+  scanning: DfsPortStatus_21 = _11 & 3;
+  scanning: TimeoutTicks.0_12 = TimeoutTicks;
+  scanning: TimeoutOccurred_23 = Clock_Ip_TimeoutExpired (&StartTime, &ElapsedTime, TimeoutTicks.0_12);
+  scanning: if (DfsPortStatus_21 == 0)
+  scanning: if (TimeoutOccurred_23 != 0)
+  scanning: if (TimeoutOccurred_3 != 0)
+  scanning: Clock_Ip_ReportClockErrors (1, DfsName_16(D));
+  scanning: return Status_13;
+
+
+ local analysis of Clock_Ip_SetDfsMfiMfn
+   scanning: if (Config_15(D) != 0B)
+  scanning: _1 = Config_15(D)->Name;
+    Indirect ref read is not const
+  scanning: _2 = (int) _1;
+  scanning: _3 = Clock_Ip_au8ClockFeatures[_2][0];
+  scanning: Instance_17 = (uint32) _3;
+  scanning: _4 = Clock_Ip_au8ClockFeatures[_2][5];
+  scanning: DividerIndex_18 = (uint32) _4;
+  scanning: IntegerPart_19 = Config_15(D)->Value[0];
+    Indirect ref read is not const
+  scanning: FractionalPart_20 = Config_15(D)->Value[1];
+    Indirect ref read is not const
+  scanning: _5 = Config_15(D)->Enable;
+    Indirect ref read is not const
+  scanning: if (_5 != 0)
+  scanning: _6 = FractionalPart_20 & 63;
+  scanning: _7 = IntegerPart_19 << 8;
+  scanning: _8 = _7 & 65535;
+  scanning: Value_21 = _6 | _8;
+  scanning: _9 = Clock_Ip_apxDfs[Instance_17];
+  scanning: _9->DVPORT[DividerIndex_18] ={v} Value_21;
+    Volatile stmt is not const/pure
+    Indirect ref write is not const/pure
+  scanning: _10 ={v} _9->PORTRESET;
+    Volatile stmt is not const/pure
+    Indirect ref read is not const
+  scanning: _11 = 1 << DividerIndex_18;
+  scanning: _12 = ~_11;
+  scanning: _13 = _10 & _12;
+  scanning: _9->PORTRESET ={v} _13;
+    Volatile stmt is not const/pure
+    Indirect ref write is not const/pure
+  scanning: return;
+
+
+ local analysis of Clock_Ip_ResetDfsMfiMfn
+   scanning: _1 = Config_10(D)->Name;
+    Indirect ref read is not const
+  scanning: _2 = (int) _1;
+  scanning: _3 = Clock_Ip_au8ClockFeatures[_2][0];
+  scanning: Instance_11 = (uint32) _3;
+  scanning: _4 = Clock_Ip_au8ClockFeatures[_2][5];
+  scanning: DividerIndex_12 = (uint32) _4;
+  scanning: _5 = Clock_Ip_apxDfs[Instance_11];
+  scanning: _6 ={v} _5->PORTRESET;
+    Volatile stmt is not const/pure
+    Indirect ref read is not const
+  scanning: _7 = 1 << DividerIndex_12;
+  scanning: _8 = _6 | _7;
+  scanning: _5->PORTRESET ={v} _8;
+    Volatile stmt is not const/pure
+    Indirect ref write is not const/pure
+  scanning: return;
+
+
+ local analysis of Clock_Ip_CallbackFracDivEmptyComplete
+   scanning: return 0;
+Function is locally const.
+
+
+ local analysis of Clock_Ip_CallbackFracDivEmpty
+   scanning: return;
+Function is locally const.
+callgraph:
+
+Clock_Ip_ReportClockErrors/10 (Clock_Ip_ReportClockErrors) @06f2bee0
+  Type: function
+  Visibility: external public
+  References: 
+  Referring: 
+  Availability: not_available
+  Function flags: optimize_size
+  Called by: Clock_Ip_CompleteDfsMfiMfn/4 (54870309 (estimated locally),0.16 per call) 
+  Calls: 
+Clock_Ip_TimeoutExpired/9 (Clock_Ip_TimeoutExpired) @06f2be00
+  Type: function
+  Visibility: external public
+  References: 
+  Referring: 
+  Availability: not_available
+  Function flags: optimize_size
+  Called by: Clock_Ip_CompleteDfsMfiMfn/4 (1073741824 (estimated locally),3.08 per call) 
+  Calls: 
+Clock_Ip_StartTimeout/8 (Clock_Ip_StartTimeout) @06f2bd20
+  Type: function
+  Visibility: external public
+  References: 
+  Referring: 
+  Availability: not_available
+  Function flags: optimize_size
+  Called by: Clock_Ip_CompleteDfsMfiMfn/4 (114863532 (estimated locally),0.33 per call) 
+  Calls: 
+Clock_Ip_CompleteDfsMfiMfn/4 (Clock_Ip_CompleteDfsMfiMfn) @06f2b700
+  Type: function definition analyzed
+  Visibility: prevailing_def_ironly
+  Address is taken.
+  Aux: @04e84f30
+  References: Clock_Ip_au8ClockFeatures/6 (read)Clock_Ip_au8ClockFeatures/6 (read)Clock_Ip_apxDfs/7 (read)
+  Referring: Clock_Ip_axFracDivCallbacks/5 (addr)
+  Availability: available
+  Function flags: count:348071309 (estimated locally) body optimize_size
+  Called by: 
+  Calls: Clock_Ip_ReportClockErrors/10 (54870309 (estimated locally),0.16 per call) Clock_Ip_TimeoutExpired/9 (1073741824 (estimated locally),3.08 per call) Clock_Ip_StartTimeout/8 (114863532 (estimated locally),0.33 per call) 
+Clock_Ip_SetDfsMfiMfn/3 (Clock_Ip_SetDfsMfiMfn) @06f2b460
+  Type: function definition analyzed
+  Visibility: prevailing_def_ironly
+  Address is taken.
+  Aux: @04e85030
+  References: Clock_Ip_au8ClockFeatures/6 (read)Clock_Ip_au8ClockFeatures/6 (read)Clock_Ip_apxDfs/7 (read)
+  Referring: Clock_Ip_axFracDivCallbacks/5 (addr)
+  Availability: available
+  Function flags: count:1073741823 (estimated locally) body optimize_size
+  Called by: 
+  Calls: 
+Clock_Ip_ResetDfsMfiMfn/2 (Clock_Ip_ResetDfsMfiMfn) @06f2b000
+  Type: function definition analyzed
+  Visibility: prevailing_def_ironly
+  Address is taken.
+  Aux: @04e84cb0
+  References: Clock_Ip_au8ClockFeatures/6 (read)Clock_Ip_au8ClockFeatures/6 (read)Clock_Ip_apxDfs/7 (read)
+  Referring: Clock_Ip_axFracDivCallbacks/5 (addr)
+  Availability: available
+  Function flags: count:1073741824 (estimated locally) body optimize_size
+  Called by: 
+  Calls: 
+Clock_Ip_CallbackFracDivEmptyComplete/1 (Clock_Ip_CallbackFracDivEmptyComplete) @06f27c40
+  Type: function definition analyzed
+  Visibility: prevailing_def_ironly
+  Address is taken.
+  Aux: @04e84e90
+  References: 
+  Referring: Clock_Ip_axFracDivCallbacks/5 (addr)
+  Availability: available
+  Function flags: count:1073741824 (estimated locally) body optimize_size
+  Called by: 
+  Calls: 
+Clock_Ip_CallbackFracDivEmpty/0 (Clock_Ip_CallbackFracDivEmpty) @06f27e00
+  Type: function definition analyzed
+  Visibility: prevailing_def_ironly
+  Address is taken.
+  Aux: @04e84eb0
+  References: 
+  Referring: Clock_Ip_axFracDivCallbacks/5 (addr)Clock_Ip_axFracDivCallbacks/5 (addr)
+  Availability: available
+  Function flags: count:1073741824 (estimated locally) body optimize_size
+  Called by: 
+  Calls: 
+
+
+ ordered call graph: reduced for nothrow
+Clock_Ip_CompleteDfsMfiMfn/4 (Clock_Ip_CompleteDfsMfiMfn) @06f2b700
+  Type: function definition analyzed
+  Visibility: prevailing_def_ironly
+  Address is taken.
+  Aux: @04e84f30
+  References: Clock_Ip_au8ClockFeatures/6 (read)Clock_Ip_au8ClockFeatures/6 (read)Clock_Ip_apxDfs/7 (read)
+  Referring: Clock_Ip_axFracDivCallbacks/5 (addr)
+  Availability: available
+  Function flags: count:348071309 (estimated locally) body optimize_size
+  Called by: 
+  Calls: Clock_Ip_ReportClockErrors/10 (54870309 (estimated locally),0.16 per call) Clock_Ip_TimeoutExpired/9 (1073741824 (estimated locally),3.08 per call) Clock_Ip_StartTimeout/8 (114863532 (estimated locally),0.33 per call) 
+Clock_Ip_SetDfsMfiMfn/3 (Clock_Ip_SetDfsMfiMfn) @06f2b460
+  Type: function definition analyzed
+  Visibility: prevailing_def_ironly
+  Address is taken.
+  Aux: @04e85030
+  References: Clock_Ip_au8ClockFeatures/6 (read)Clock_Ip_au8ClockFeatures/6 (read)Clock_Ip_apxDfs/7 (read)
+  Referring: Clock_Ip_axFracDivCallbacks/5 (addr)
+  Availability: available
+  Function flags: count:1073741823 (estimated locally) body optimize_size
+  Called by: 
+  Calls: 
+Clock_Ip_ResetDfsMfiMfn/2 (Clock_Ip_ResetDfsMfiMfn) @06f2b000
+  Type: function definition analyzed
+  Visibility: prevailing_def_ironly
+  Address is taken.
+  Aux: @04e84cb0
+  References: Clock_Ip_au8ClockFeatures/6 (read)Clock_Ip_au8ClockFeatures/6 (read)Clock_Ip_apxDfs/7 (read)
+  Referring: Clock_Ip_axFracDivCallbacks/5 (addr)
+  Availability: available
+  Function flags: count:1073741824 (estimated locally) body optimize_size
+  Called by: 
+  Calls: 
+Clock_Ip_CallbackFracDivEmptyComplete/1 (Clock_Ip_CallbackFracDivEmptyComplete) @06f27c40
+  Type: function definition analyzed
+  Visibility: prevailing_def_ironly
+  Address is taken.
+  Aux: @04e84e90
+  References: 
+  Referring: Clock_Ip_axFracDivCallbacks/5 (addr)
+  Availability: available
+  Function flags: count:1073741824 (estimated locally) body optimize_size
+  Called by: 
+  Calls: 
+Clock_Ip_CallbackFracDivEmpty/0 (Clock_Ip_CallbackFracDivEmpty) @06f27e00
+  Type: function definition analyzed
+  Visibility: prevailing_def_ironly
+  Address is taken.
+  Aux: @04e84eb0
+  References: 
+  Referring: Clock_Ip_axFracDivCallbacks/5 (addr)Clock_Ip_axFracDivCallbacks/5 (addr)
+  Availability: available
+  Function flags: count:1073741824 (estimated locally) body optimize_size
+  Called by: 
+  Calls: 
+
+
+
+MALLOC LATTICE Initial:
+Clock_Ip_CompleteDfsMfiMfn: malloc_bottom
+Clock_Ip_SetDfsMfiMfn: malloc_bottom
+Clock_Ip_ResetDfsMfiMfn: malloc_bottom
+Clock_Ip_CallbackFracDivEmptyComplete: malloc_bottom
+Clock_Ip_CallbackFracDivEmpty: malloc_bottom
+
+
+MALLOC LATTICE after propagation:
+Clock_Ip_CompleteDfsMfiMfn: malloc_bottom
+Clock_Ip_SetDfsMfiMfn: malloc_bottom
+Clock_Ip_ResetDfsMfiMfn: malloc_bottom
+Clock_Ip_CallbackFracDivEmptyComplete: malloc_bottom
+Clock_Ip_CallbackFracDivEmpty: malloc_bottom
+callgraph:
+
+Clock_Ip_ReportClockErrors/10 (Clock_Ip_ReportClockErrors) @06f2bee0
+  Type: function
+  Visibility: external public
+  References: 
+  Referring: 
+  Availability: not_available
+  Function flags: optimize_size
+  Called by: Clock_Ip_CompleteDfsMfiMfn/4 (54870309 (estimated locally),0.16 per call) 
+  Calls: 
+Clock_Ip_TimeoutExpired/9 (Clock_Ip_TimeoutExpired) @06f2be00
+  Type: function
+  Visibility: external public
+  References: 
+  Referring: 
+  Availability: not_available
+  Function flags: optimize_size
+  Called by: Clock_Ip_CompleteDfsMfiMfn/4 (1073741824 (estimated locally),3.08 per call) 
+  Calls: 
+Clock_Ip_StartTimeout/8 (Clock_Ip_StartTimeout) @06f2bd20
+  Type: function
+  Visibility: external public
+  References: 
+  Referring: 
+  Availability: not_available
+  Function flags: optimize_size
+  Called by: Clock_Ip_CompleteDfsMfiMfn/4 (114863532 (estimated locally),0.33 per call) 
+  Calls: 
+Clock_Ip_CompleteDfsMfiMfn/4 (Clock_Ip_CompleteDfsMfiMfn) @06f2b700
+  Type: function definition analyzed
+  Visibility: prevailing_def_ironly
+  Address is taken.
+  Aux: @04e85030
+  References: Clock_Ip_au8ClockFeatures/6 (read)Clock_Ip_au8ClockFeatures/6 (read)Clock_Ip_apxDfs/7 (read)
+  Referring: Clock_Ip_axFracDivCallbacks/5 (addr)
+  Availability: available
+  Function flags: count:348071309 (estimated locally) body optimize_size
+  Called by: 
+  Calls: Clock_Ip_ReportClockErrors/10 (54870309 (estimated locally),0.16 per call) Clock_Ip_TimeoutExpired/9 (1073741824 (estimated locally),3.08 per call) Clock_Ip_StartTimeout/8 (114863532 (estimated locally),0.33 per call) 
+Clock_Ip_SetDfsMfiMfn/3 (Clock_Ip_SetDfsMfiMfn) @06f2b460
+  Type: function definition analyzed
+  Visibility: prevailing_def_ironly
+  Address is taken.
+  Aux: @04e84e90
+  References: Clock_Ip_au8ClockFeatures/6 (read)Clock_Ip_au8ClockFeatures/6 (read)Clock_Ip_apxDfs/7 (read)
+  Referring: Clock_Ip_axFracDivCallbacks/5 (addr)
+  Availability: available
+  Function flags: count:1073741823 (estimated locally) body optimize_size
+  Called by: 
+  Calls: 
+Clock_Ip_ResetDfsMfiMfn/2 (Clock_Ip_ResetDfsMfiMfn) @06f2b000
+  Type: function definition analyzed
+  Visibility: prevailing_def_ironly
+  Address is taken.
+  Aux: @04e84f30
+  References: Clock_Ip_au8ClockFeatures/6 (read)Clock_Ip_au8ClockFeatures/6 (read)Clock_Ip_apxDfs/7 (read)
+  Referring: Clock_Ip_axFracDivCallbacks/5 (addr)
+  Availability: available
+  Function flags: count:1073741824 (estimated locally) body optimize_size
+  Called by: 
+  Calls: 
+Clock_Ip_CallbackFracDivEmptyComplete/1 (Clock_Ip_CallbackFracDivEmptyComplete) @06f27c40
+  Type: function definition analyzed
+  Visibility: prevailing_def_ironly
+  Address is taken.
+  Aux: @04e84eb0
+  References: 
+  Referring: Clock_Ip_axFracDivCallbacks/5 (addr)
+  Availability: available
+  Function flags: count:1073741824 (estimated locally) body optimize_size
+  Called by: 
+  Calls: 
+Clock_Ip_CallbackFracDivEmpty/0 (Clock_Ip_CallbackFracDivEmpty) @06f27e00
+  Type: function definition analyzed
+  Visibility: prevailing_def_ironly
+  Address is taken.
+  Aux: @04e84cb0
+  References: 
+  Referring: Clock_Ip_axFracDivCallbacks/5 (addr)Clock_Ip_axFracDivCallbacks/5 (addr)
+  Availability: available
+  Function flags: count:1073741824 (estimated locally) body optimize_size
+  Called by: 
+  Calls: 
+
+
+ ordered call graph: reduced
+Clock_Ip_CompleteDfsMfiMfn/4 (Clock_Ip_CompleteDfsMfiMfn) @06f2b700
+  Type: function definition analyzed
+  Visibility: prevailing_def_ironly
+  Address is taken.
+  Aux: @04e85030
+  References: Clock_Ip_au8ClockFeatures/6 (read)Clock_Ip_au8ClockFeatures/6 (read)Clock_Ip_apxDfs/7 (read)
+  Referring: Clock_Ip_axFracDivCallbacks/5 (addr)
+  Availability: available
+  Function flags: count:348071309 (estimated locally) body optimize_size
+  Called by: 
+  Calls: Clock_Ip_ReportClockErrors/10 (54870309 (estimated locally),0.16 per call) Clock_Ip_TimeoutExpired/9 (1073741824 (estimated locally),3.08 per call) Clock_Ip_StartTimeout/8 (114863532 (estimated locally),0.33 per call) 
+Clock_Ip_SetDfsMfiMfn/3 (Clock_Ip_SetDfsMfiMfn) @06f2b460
+  Type: function definition analyzed
+  Visibility: prevailing_def_ironly
+  Address is taken.
+  Aux: @04e84e90
+  References: Clock_Ip_au8ClockFeatures/6 (read)Clock_Ip_au8ClockFeatures/6 (read)Clock_Ip_apxDfs/7 (read)
+  Referring: Clock_Ip_axFracDivCallbacks/5 (addr)
+  Availability: available
+  Function flags: count:1073741823 (estimated locally) body optimize_size
+  Called by: 
+  Calls: 
+Clock_Ip_ResetDfsMfiMfn/2 (Clock_Ip_ResetDfsMfiMfn) @06f2b000
+  Type: function definition analyzed
+  Visibility: prevailing_def_ironly
+  Address is taken.
+  Aux: @04e84f30
+  References: Clock_Ip_au8ClockFeatures/6 (read)Clock_Ip_au8ClockFeatures/6 (read)Clock_Ip_apxDfs/7 (read)
+  Referring: Clock_Ip_axFracDivCallbacks/5 (addr)
+  Availability: available
+  Function flags: count:1073741824 (estimated locally) body optimize_size
+  Called by: 
+  Calls: 
+Clock_Ip_CallbackFracDivEmptyComplete/1 (Clock_Ip_CallbackFracDivEmptyComplete) @06f27c40
+  Type: function definition analyzed
+  Visibility: prevailing_def_ironly
+  Address is taken.
+  Aux: @04e84eb0
+  References: 
+  Referring: Clock_Ip_axFracDivCallbacks/5 (addr)
+  Availability: available
+  Function flags: count:1073741824 (estimated locally) body optimize_size
+  Called by: 
+  Calls: 
+Clock_Ip_CallbackFracDivEmpty/0 (Clock_Ip_CallbackFracDivEmpty) @06f27e00
+  Type: function definition analyzed
+  Visibility: prevailing_def_ironly
+  Address is taken.
+  Aux: @04e84cb0
+  References: 
+  Referring: Clock_Ip_axFracDivCallbacks/5 (addr)Clock_Ip_axFracDivCallbacks/5 (addr)
+  Availability: available
+  Function flags: count:1073741824 (estimated locally) body optimize_size
+  Called by: 
+  Calls: 
+
+Function found not to call free: Clock_Ip_CallbackFracDivEmpty
+Function found not to call free: Clock_Ip_CallbackFracDivEmptyComplete
+Function found not to call free: Clock_Ip_ResetDfsMfiMfn
+Function found not to call free: Clock_Ip_SetDfsMfiMfn
+Clock_Ip_CompleteDfsMfiMfn (Clock_Ip_NameType DfsName)
+{
+  uint32 DividerIndex;
+  uint32 Instance;
+  Clock_Ip_DfsStatusType Status;
+  uint32 DfsPortStatus;
+  uint32 TimeoutTicks;
+  uint32 ElapsedTime;
+  uint32 StartTime;
+  boolean TimeoutOccurred;
+  int _1;
+  unsigned char _2;
+  unsigned char _4;
+  struct DFS_Type * _5;
+  long unsigned int _6;
+  long unsigned int _7;
+  long unsigned int _8;
+  long unsigned int _9;
+  long unsigned int _10;
+  long unsigned int _11;
+  long unsigned int TimeoutTicks.0_12;
+
+  <bb 2> [local count: 348071309]:
+  # DEBUG BEGIN_STMT
+  # DEBUG TimeoutOccurred => 0
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG Status => 2
+  # DEBUG BEGIN_STMT
+  _1 = (int) DfsName_16(D);
+  _2 = Clock_Ip_au8ClockFeatures[_1][0];
+  Instance_18 = (uint32) _2;
+  # DEBUG Instance => Instance_18
+  # DEBUG BEGIN_STMT
+  _4 = Clock_Ip_au8ClockFeatures[_1][5];
+  DividerIndex_19 = (uint32) _4;
+  # DEBUG DividerIndex => DividerIndex_19
+  # DEBUG BEGIN_STMT
+  _5 = Clock_Ip_apxDfs[Instance_18];
+  _6 ={v} _5->PORTRESET;
+  _7 = _6 >> DividerIndex_19;
+  _8 = _7 & 1;
+  if (_8 == 0)
+    goto <bb 3>; [33.00%]
+  else
+    goto <bb 8>; [67.00%]
+
+  <bb 3> [local count: 114863532]:
+  # DEBUG BEGIN_STMT
+  Clock_Ip_StartTimeout (&StartTime, &ElapsedTime, &TimeoutTicks, 50000);
+
+  <bb 4> [local count: 1073741824]:
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _9 ={v} _5->PORTSR;
+  _10 = 1 << DividerIndex_19;
+  _11 = _9 & _10;
+  DfsPortStatus_21 = _11 & 3;
+  # DEBUG DfsPortStatus => DfsPortStatus_21
+  # DEBUG BEGIN_STMT
+  TimeoutTicks.0_12 = TimeoutTicks;
+  TimeoutOccurred_23 = Clock_Ip_TimeoutExpired (&StartTime, &ElapsedTime, TimeoutTicks.0_12);
+  # DEBUG TimeoutOccurred => TimeoutOccurred_23
+  # DEBUG BEGIN_STMT
+  if (DfsPortStatus_21 == 0)
+    goto <bb 5>; [94.50%]
+  else
+    goto <bb 6>; [5.50%]
+
+  <bb 5> [local count: 1014686025]:
+  if (TimeoutOccurred_23 != 0)
+    goto <bb 6>; [5.50%]
+  else
+    goto <bb 9>; [94.50%]
+
+  <bb 9> [local count: 958878292]:
+  goto <bb 4>; [100.00%]
+
+  <bb 6> [local count: 114863532]:
+  # TimeoutOccurred_3 = PHI <TimeoutOccurred_23(4), TimeoutOccurred_23(5)>
+  # DEBUG BEGIN_STMT
+  if (TimeoutOccurred_3 != 0)
+    goto <bb 7>; [47.77%]
+  else
+    goto <bb 8>; [52.23%]
+
+  <bb 7> [local count: 54870309]:
+  # DEBUG BEGIN_STMT
+  # DEBUG Status => 1
+  # DEBUG BEGIN_STMT
+  Clock_Ip_ReportClockErrors (1, DfsName_16(D));
+
+  <bb 8> [local count: 348071309]:
+  # Status_13 = PHI <1(7), 0(2), 2(6)>
+  # DEBUG Status => Status_13
+  # DEBUG BEGIN_STMT
+  StartTime ={v} {CLOBBER};
+  ElapsedTime ={v} {CLOBBER};
+  TimeoutTicks ={v} {CLOBBER};
+  return Status_13;
+
+}
+
+
+Clock_Ip_SetDfsMfiMfn (const struct Clock_Ip_FracDivConfigType * Config)
+{
+  uint32 Value;
+  uint32 FractionalPart;
+  uint32 IntegerPart;
+  uint32 DividerIndex;
+  uint32 Instance;
+  <unnamed type> _1;
+  int _2;
+  unsigned char _3;
+  unsigned char _4;
+  unsigned char _5;
+  long unsigned int _6;
+  long unsigned int _7;
+  long unsigned int _8;
+  struct DFS_Type * _9;
+  long unsigned int _10;
+  long unsigned int _11;
+  long unsigned int _12;
+  long unsigned int _13;
+
+  <bb 2> [local count: 1073741823]:
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG Value => 0
+  # DEBUG BEGIN_STMT
+  if (Config_15(D) != 0B)
+    goto <bb 3>; [70.00%]
+  else
+    goto <bb 5>; [30.00%]
+
+  <bb 3> [local count: 751619277]:
+  # DEBUG BEGIN_STMT
+  _1 = Config_15(D)->Name;
+  _2 = (int) _1;
+  _3 = Clock_Ip_au8ClockFeatures[_2][0];
+  Instance_17 = (uint32) _3;
+  # DEBUG Instance => Instance_17
+  # DEBUG BEGIN_STMT
+  _4 = Clock_Ip_au8ClockFeatures[_2][5];
+  DividerIndex_18 = (uint32) _4;
+  # DEBUG DividerIndex => DividerIndex_18
+  # DEBUG BEGIN_STMT
+  IntegerPart_19 = Config_15(D)->Value[0];
+  # DEBUG IntegerPart => IntegerPart_19
+  # DEBUG BEGIN_STMT
+  FractionalPart_20 = Config_15(D)->Value[1];
+  # DEBUG FractionalPart => FractionalPart_20
+  # DEBUG BEGIN_STMT
+  _5 = Config_15(D)->Enable;
+  if (_5 != 0)
+    goto <bb 4>; [50.00%]
+  else
+    goto <bb 5>; [50.00%]
+
+  <bb 4> [local count: 375809638]:
+  # DEBUG BEGIN_STMT
+  _6 = FractionalPart_20 & 63;
+  # DEBUG Value => _6
+  # DEBUG BEGIN_STMT
+  _7 = IntegerPart_19 << 8;
+  _8 = _7 & 65535;
+  Value_21 = _6 | _8;
+  # DEBUG Value => Value_21
+  # DEBUG BEGIN_STMT
+  _9 = Clock_Ip_apxDfs[Instance_17];
+  _9->DVPORT[DividerIndex_18] ={v} Value_21;
+  # DEBUG BEGIN_STMT
+  _10 ={v} _9->PORTRESET;
+  _11 = 1 << DividerIndex_18;
+  _12 = ~_11;
+  _13 = _10 & _12;
+  _9->PORTRESET ={v} _13;
+
+  <bb 5> [local count: 1073741824]:
+  return;
+
+}
+
+
+Clock_Ip_ResetDfsMfiMfn (const struct Clock_Ip_FracDivConfigType * Config)
+{
+  uint32 DividerIndex;
+  uint32 Instance;
+  <unnamed type> _1;
+  int _2;
+  unsigned char _3;
+  unsigned char _4;
+  struct DFS_Type * _5;
+  long unsigned int _6;
+  long unsigned int _7;
+  long unsigned int _8;
+
+  <bb 2> [local count: 1073741824]:
+  # DEBUG BEGIN_STMT
+  _1 = Config_10(D)->Name;
+  _2 = (int) _1;
+  _3 = Clock_Ip_au8ClockFeatures[_2][0];
+  Instance_11 = (uint32) _3;
+  # DEBUG Instance => Instance_11
+  # DEBUG BEGIN_STMT
+  _4 = Clock_Ip_au8ClockFeatures[_2][5];
+  DividerIndex_12 = (uint32) _4;
+  # DEBUG DividerIndex => DividerIndex_12
+  # DEBUG BEGIN_STMT
+  _5 = Clock_Ip_apxDfs[Instance_11];
+  _6 ={v} _5->PORTRESET;
+  _7 = 1 << DividerIndex_12;
+  _8 = _6 | _7;
+  _5->PORTRESET ={v} _8;
+  return;
+
+}
+
+
+Clock_Ip_CallbackFracDivEmptyComplete (Clock_Ip_NameType DfsName)
+{
+  <bb 2> [local count: 1073741824]:
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  return 0;
+
+}
+
+
+Clock_Ip_CallbackFracDivEmpty (const struct Clock_Ip_FracDivConfigType * Config)
+{
+  <bb 2> [local count: 1073741824]:
+  # DEBUG BEGIN_STMT
+  return;
+
+}
+
+

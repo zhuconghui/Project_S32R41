@@ -1,0 +1,1189 @@
+Clock_Ip_SetCgmXCscCssCsGrip (const struct Clock_Ip_SelectorConfigType * Config)
+{
+  uint32 TimeoutTicks;
+  uint32 ElapsedTime;
+  uint32 StartTime;
+  boolean TimeoutOccurred;
+  uint32 RegValue;
+  uint32 SelectorShift;
+  uint32 SelectorMask;
+  uint32 SelectorValue;
+  uint32 SelectorIndex;
+  uint32 Instance;
+  <unnamed type> _1;
+  int _2;
+  unsigned char _3;
+  <unnamed type> _4;
+  int _5;
+  unsigned char _6;
+  <unnamed type> _7;
+  int _8;
+  short unsigned int _9;
+  <unnamed type> _10;
+  int _11;
+  unsigned char _12;
+  int _13;
+  <unnamed type> _14;
+  int _15;
+  unsigned char _16;
+  int _17;
+  volatile struct Clock_Ip_CgmMuxType * _18;
+  long unsigned int _19;
+  volatile struct Clock_Ip_CgmMuxType * _20;
+  long unsigned int _21;
+  long unsigned int TimeoutTicks.0_22;
+  volatile struct Clock_Ip_CgmMuxType * _23;
+  long unsigned int _24;
+  long unsigned int _25;
+  _Bool _26;
+  _Bool _27;
+  volatile struct Clock_Ip_CgmMuxType * _28;
+  long unsigned int _29;
+  long unsigned int _30;
+  long unsigned int _31;
+  volatile struct Clock_Ip_CgmMuxType * _32;
+  volatile struct Clock_Ip_CgmMuxType * _33;
+  long unsigned int _34;
+  volatile struct Clock_Ip_CgmMuxType * _35;
+  long unsigned int _36;
+  long unsigned int TimeoutTicks.1_37;
+  volatile struct Clock_Ip_CgmMuxType * _38;
+  long unsigned int _39;
+  long unsigned int _40;
+  _Bool _41;
+  <unnamed type> _42;
+  <unnamed type> _43;
+
+  <bb 2> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  TimeoutOccurred_47 = 0;
+  # DEBUG TimeoutOccurred => TimeoutOccurred_47
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  if (Config_48(D) != 0B)
+    goto <bb 3>; [INV]
+  else
+    goto <bb 13>; [INV]
+
+  <bb 3> :
+  # DEBUG BEGIN_STMT
+  _1 = Config_48(D)->Name;
+  _2 = (int) _1;
+  _3 = Clock_Ip_au8ClockFeatures[_2][0];
+  Instance_50 = (uint32) _3;
+  # DEBUG Instance => Instance_50
+  # DEBUG BEGIN_STMT
+  _4 = Config_48(D)->Name;
+  _5 = (int) _4;
+  _6 = Clock_Ip_au8ClockFeatures[_5][4];
+  SelectorIndex_51 = (uint32) _6;
+  # DEBUG SelectorIndex => SelectorIndex_51
+  # DEBUG BEGIN_STMT
+  _7 = Config_48(D)->Value;
+  _8 = (int) _7;
+  _9 = Clock_Ip_au16SelectorEntryHardwareValue[_8];
+  SelectorValue_52 = (uint32) _9;
+  # DEBUG SelectorValue => SelectorValue_52
+  # DEBUG BEGIN_STMT
+  _10 = Config_48(D)->Name;
+  _11 = (int) _10;
+  _12 = Clock_Ip_au8ClockFeatures[_11][2];
+  _13 = (int) _12;
+  SelectorMask_53 = Clock_Ip_axFeatureExtensions[_13].SelectorValueMask;
+  # DEBUG SelectorMask => SelectorMask_53
+  # DEBUG BEGIN_STMT
+  _14 = Config_48(D)->Name;
+  _15 = (int) _14;
+  _16 = Clock_Ip_au8ClockFeatures[_15][2];
+  _17 = (int) _16;
+  SelectorShift_54 = Clock_Ip_axFeatureExtensions[_17].SelectorValueShift;
+  # DEBUG SelectorShift => SelectorShift_54
+  # DEBUG BEGIN_STMT
+  _18 = Clock_Ip_apxCgm[Instance_50][SelectorIndex_51];
+  _19 ={v} _18->CSC;
+  _20 = Clock_Ip_apxCgm[Instance_50][SelectorIndex_51];
+  _21 = _19 | 4;
+  _20->CSC ={v} _21;
+  # DEBUG BEGIN_STMT
+  Clock_Ip_StartTimeout (&StartTime, &ElapsedTime, &TimeoutTicks, 50000);
+
+  <bb 4> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  TimeoutTicks.0_22 = TimeoutTicks;
+  TimeoutOccurred_58 = Clock_Ip_TimeoutExpired (&StartTime, &ElapsedTime, TimeoutTicks.0_22);
+  # DEBUG TimeoutOccurred => TimeoutOccurred_58
+  # DEBUG BEGIN_STMT
+  _23 = Clock_Ip_apxCgm[Instance_50][SelectorIndex_51];
+  _24 ={v} _23->CSS;
+  _25 = _24 & 131072;
+  if (_25 == 131072)
+    goto <bb 5>; [INV]
+  else
+    goto <bb 6>; [INV]
+
+  <bb 5> :
+  _26 = ~TimeoutOccurred_58;
+  if (_26 != 0)
+    goto <bb 4>; [INV]
+  else
+    goto <bb 6>; [INV]
+
+  <bb 6> :
+  # DEBUG BEGIN_STMT
+  _27 = ~TimeoutOccurred_58;
+  if (_27 != 0)
+    goto <bb 7>; [INV]
+  else
+    goto <bb 12>; [INV]
+
+  <bb 7> :
+  # DEBUG BEGIN_STMT
+  _28 = Clock_Ip_apxCgm[Instance_50][SelectorIndex_51];
+  RegValue_60 ={v} _28->CSC;
+  # DEBUG RegValue => RegValue_60
+  # DEBUG BEGIN_STMT
+  _29 = ~SelectorMask_53;
+  RegValue_61 = RegValue_60 & _29;
+  # DEBUG RegValue => RegValue_61
+  # DEBUG BEGIN_STMT
+  _30 = SelectorValue_52 << SelectorShift_54;
+  _31 = SelectorMask_53 & _30;
+  RegValue_62 = RegValue_61 | _31;
+  # DEBUG RegValue => RegValue_62
+  # DEBUG BEGIN_STMT
+  _32 = Clock_Ip_apxCgm[Instance_50][SelectorIndex_51];
+  _32->CSC ={v} RegValue_62;
+  # DEBUG BEGIN_STMT
+  _33 = Clock_Ip_apxCgm[Instance_50][SelectorIndex_51];
+  _34 ={v} _33->CSC;
+  _35 = Clock_Ip_apxCgm[Instance_50][SelectorIndex_51];
+  _36 = _34 & 4294967283;
+  _35->CSC ={v} _36;
+  # DEBUG BEGIN_STMT
+  Clock_Ip_StartTimeout (&StartTime, &ElapsedTime, &TimeoutTicks, 50000);
+
+  <bb 8> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  TimeoutTicks.1_37 = TimeoutTicks;
+  TimeoutOccurred_67 = Clock_Ip_TimeoutExpired (&StartTime, &ElapsedTime, TimeoutTicks.1_37);
+  # DEBUG TimeoutOccurred => TimeoutOccurred_67
+  # DEBUG BEGIN_STMT
+  _38 = Clock_Ip_apxCgm[Instance_50][SelectorIndex_51];
+  _39 ={v} _38->CSS;
+  _40 = _39 & 131072;
+  if (_40 != 131072)
+    goto <bb 9>; [INV]
+  else
+    goto <bb 10>; [INV]
+
+  <bb 9> :
+  _41 = ~TimeoutOccurred_67;
+  if (_41 != 0)
+    goto <bb 8>; [INV]
+  else
+    goto <bb 10>; [INV]
+
+  <bb 10> :
+  # DEBUG BEGIN_STMT
+  if (TimeoutOccurred_67 != 0)
+    goto <bb 11>; [INV]
+  else
+    goto <bb 13>; [INV]
+
+  <bb 11> :
+  # DEBUG BEGIN_STMT
+  _42 = Config_48(D)->Name;
+  Clock_Ip_ReportClockErrors (3, _42);
+  goto <bb 13>; [INV]
+
+  <bb 12> :
+  # DEBUG BEGIN_STMT
+  _43 = Config_48(D)->Name;
+  Clock_Ip_ReportClockErrors (1, _43);
+
+  <bb 13> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  StartTime ={v} {CLOBBER};
+  ElapsedTime ={v} {CLOBBER};
+  TimeoutTicks ={v} {CLOBBER};
+  return;
+
+}
+
+
+Clock_Ip_ResetCgmXCscCssCsGrip (const struct Clock_Ip_SelectorConfigType * Config)
+{
+  uint32 TimeoutTicks;
+  uint32 ElapsedTime;
+  uint32 StartTime;
+  boolean TimeoutOccurred;
+  uint32 RegValue;
+  uint32 SelectorShift;
+  uint32 SelectorMask;
+  uint32 SelectorResetValue;
+  uint32 SelectorIndex;
+  uint32 Instance;
+  <unnamed type> _1;
+  int _2;
+  unsigned char _3;
+  <unnamed type> _4;
+  int _5;
+  unsigned char _6;
+  <unnamed type> _7;
+  int _8;
+  unsigned char _9;
+  <unnamed type> _10;
+  int _11;
+  unsigned char _12;
+  int _13;
+  <unnamed type> _14;
+  int _15;
+  unsigned char _16;
+  int _17;
+  volatile struct Clock_Ip_CgmMuxType * _18;
+  long unsigned int _19;
+  volatile struct Clock_Ip_CgmMuxType * _20;
+  long unsigned int _21;
+  long unsigned int TimeoutTicks.2_22;
+  volatile struct Clock_Ip_CgmMuxType * _23;
+  long unsigned int _24;
+  long unsigned int _25;
+  _Bool _26;
+  _Bool _27;
+  volatile struct Clock_Ip_CgmMuxType * _28;
+  long unsigned int _29;
+  long unsigned int _30;
+  long unsigned int _31;
+  volatile struct Clock_Ip_CgmMuxType * _32;
+  volatile struct Clock_Ip_CgmMuxType * _33;
+  long unsigned int _34;
+  volatile struct Clock_Ip_CgmMuxType * _35;
+  long unsigned int _36;
+  <unnamed type> _37;
+
+  <bb 2> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  TimeoutOccurred_40 = 0;
+  # DEBUG TimeoutOccurred => TimeoutOccurred_40
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  if (Config_41(D) != 0B)
+    goto <bb 3>; [INV]
+  else
+    goto <bb 9>; [INV]
+
+  <bb 3> :
+  # DEBUG BEGIN_STMT
+  _1 = Config_41(D)->Name;
+  _2 = (int) _1;
+  _3 = Clock_Ip_au8ClockFeatures[_2][0];
+  Instance_43 = (uint32) _3;
+  # DEBUG Instance => Instance_43
+  # DEBUG BEGIN_STMT
+  _4 = Config_41(D)->Name;
+  _5 = (int) _4;
+  _6 = Clock_Ip_au8ClockFeatures[_5][4];
+  SelectorIndex_44 = (uint32) _6;
+  # DEBUG SelectorIndex => SelectorIndex_44
+  # DEBUG BEGIN_STMT
+  _7 = Config_41(D)->Name;
+  _8 = (int) _7;
+  _9 = Clock_Ip_au8SoftwareMuxResetValue[_8];
+  SelectorResetValue_45 = (uint32) _9;
+  # DEBUG SelectorResetValue => SelectorResetValue_45
+  # DEBUG BEGIN_STMT
+  _10 = Config_41(D)->Name;
+  _11 = (int) _10;
+  _12 = Clock_Ip_au8ClockFeatures[_11][2];
+  _13 = (int) _12;
+  SelectorMask_46 = Clock_Ip_axFeatureExtensions[_13].SelectorValueMask;
+  # DEBUG SelectorMask => SelectorMask_46
+  # DEBUG BEGIN_STMT
+  _14 = Config_41(D)->Name;
+  _15 = (int) _14;
+  _16 = Clock_Ip_au8ClockFeatures[_15][2];
+  _17 = (int) _16;
+  SelectorShift_47 = Clock_Ip_axFeatureExtensions[_17].SelectorValueShift;
+  # DEBUG SelectorShift => SelectorShift_47
+  # DEBUG BEGIN_STMT
+  _18 = Clock_Ip_apxCgm[Instance_43][SelectorIndex_44];
+  _19 ={v} _18->CSC;
+  _20 = Clock_Ip_apxCgm[Instance_43][SelectorIndex_44];
+  _21 = _19 | 12;
+  _20->CSC ={v} _21;
+  # DEBUG BEGIN_STMT
+  Clock_Ip_StartTimeout (&StartTime, &ElapsedTime, &TimeoutTicks, 50000);
+
+  <bb 4> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  TimeoutTicks.2_22 = TimeoutTicks;
+  TimeoutOccurred_51 = Clock_Ip_TimeoutExpired (&StartTime, &ElapsedTime, TimeoutTicks.2_22);
+  # DEBUG TimeoutOccurred => TimeoutOccurred_51
+  # DEBUG BEGIN_STMT
+  _23 = Clock_Ip_apxCgm[Instance_43][SelectorIndex_44];
+  _24 ={v} _23->CSS;
+  _25 = _24 & 131072;
+  if (_25 == 131072)
+    goto <bb 5>; [INV]
+  else
+    goto <bb 6>; [INV]
+
+  <bb 5> :
+  _26 = ~TimeoutOccurred_51;
+  if (_26 != 0)
+    goto <bb 4>; [INV]
+  else
+    goto <bb 6>; [INV]
+
+  <bb 6> :
+  # DEBUG BEGIN_STMT
+  _27 = ~TimeoutOccurred_51;
+  if (_27 != 0)
+    goto <bb 7>; [INV]
+  else
+    goto <bb 8>; [INV]
+
+  <bb 7> :
+  # DEBUG BEGIN_STMT
+  _28 = Clock_Ip_apxCgm[Instance_43][SelectorIndex_44];
+  RegValue_53 ={v} _28->CSC;
+  # DEBUG RegValue => RegValue_53
+  # DEBUG BEGIN_STMT
+  _29 = ~SelectorMask_46;
+  RegValue_54 = RegValue_53 & _29;
+  # DEBUG RegValue => RegValue_54
+  # DEBUG BEGIN_STMT
+  _30 = SelectorResetValue_45 << SelectorShift_47;
+  _31 = SelectorMask_46 & _30;
+  RegValue_55 = RegValue_54 | _31;
+  # DEBUG RegValue => RegValue_55
+  # DEBUG BEGIN_STMT
+  _32 = Clock_Ip_apxCgm[Instance_43][SelectorIndex_44];
+  _32->CSC ={v} RegValue_55;
+  # DEBUG BEGIN_STMT
+  _33 = Clock_Ip_apxCgm[Instance_43][SelectorIndex_44];
+  _34 ={v} _33->CSC;
+  _35 = Clock_Ip_apxCgm[Instance_43][SelectorIndex_44];
+  _36 = _34 & 4294967283;
+  _35->CSC ={v} _36;
+  goto <bb 9>; [INV]
+
+  <bb 8> :
+  # DEBUG BEGIN_STMT
+  _37 = Config_41(D)->Name;
+  Clock_Ip_ReportClockErrors (1, _37);
+
+  <bb 9> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  StartTime ={v} {CLOBBER};
+  ElapsedTime ={v} {CLOBBER};
+  TimeoutTicks ={v} {CLOBBER};
+  return;
+
+}
+
+
+Clock_Ip_SetCgmXCscCssClkswRampupRampdownSwip (const struct Clock_Ip_SelectorConfigType * Config)
+{
+  uint32 TimeoutTicks;
+  uint32 ElapsedTime;
+  uint32 StartTime;
+  boolean TimeoutOccurred;
+  uint32 RegValue;
+  uint32 SelectorShift;
+  uint32 SelectorMask;
+  uint32 SelectorValue;
+  uint32 SelectorIndex;
+  uint32 Instance;
+  <unnamed type> _1;
+  int _2;
+  unsigned char _3;
+  <unnamed type> _4;
+  int _5;
+  unsigned char _6;
+  <unnamed type> _7;
+  int _8;
+  short unsigned int _9;
+  <unnamed type> _10;
+  int _11;
+  unsigned char _12;
+  int _13;
+  <unnamed type> _14;
+  int _15;
+  unsigned char _16;
+  int _17;
+  volatile struct Clock_Ip_CgmMuxType * _18;
+  long unsigned int _19;
+  long unsigned int _20;
+  long unsigned int _21;
+  long unsigned int TimeoutTicks.3_22;
+  volatile struct Clock_Ip_CgmMuxType * _23;
+  long unsigned int _24;
+  long unsigned int _25;
+  _Bool _26;
+  _Bool _27;
+  volatile struct Clock_Ip_CgmMuxType * _28;
+  long unsigned int _29;
+  long unsigned int _30;
+  long unsigned int _31;
+  volatile struct Clock_Ip_CgmMuxType * _32;
+  long unsigned int TimeoutTicks.4_33;
+  volatile struct Clock_Ip_CgmMuxType * _34;
+  long unsigned int _35;
+  long unsigned int _36;
+  _Bool _37;
+  _Bool _38;
+  long unsigned int TimeoutTicks.5_39;
+  volatile struct Clock_Ip_CgmMuxType * _40;
+  long unsigned int _41;
+  long unsigned int _42;
+  _Bool _43;
+  _Bool _44;
+  volatile struct Clock_Ip_CgmMuxType * _45;
+  long unsigned int _46;
+  long unsigned int _47;
+  long unsigned int _48;
+  <unnamed type> _49;
+  <unnamed type> _50;
+  <unnamed type> _51;
+  <unnamed type> _52;
+
+  <bb 2> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  TimeoutOccurred_57 = 0;
+  # DEBUG TimeoutOccurred => TimeoutOccurred_57
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  if (Config_58(D) != 0B)
+    goto <bb 3>; [INV]
+  else
+    goto <bb 21>; [INV]
+
+  <bb 3> :
+  # DEBUG BEGIN_STMT
+  _1 = Config_58(D)->Name;
+  _2 = (int) _1;
+  _3 = Clock_Ip_au8ClockFeatures[_2][0];
+  Instance_60 = (uint32) _3;
+  # DEBUG Instance => Instance_60
+  # DEBUG BEGIN_STMT
+  _4 = Config_58(D)->Name;
+  _5 = (int) _4;
+  _6 = Clock_Ip_au8ClockFeatures[_5][4];
+  SelectorIndex_61 = (uint32) _6;
+  # DEBUG SelectorIndex => SelectorIndex_61
+  # DEBUG BEGIN_STMT
+  _7 = Config_58(D)->Value;
+  _8 = (int) _7;
+  _9 = Clock_Ip_au16SelectorEntryHardwareValue[_8];
+  SelectorValue_62 = (uint32) _9;
+  # DEBUG SelectorValue => SelectorValue_62
+  # DEBUG BEGIN_STMT
+  _10 = Config_58(D)->Name;
+  _11 = (int) _10;
+  _12 = Clock_Ip_au8ClockFeatures[_11][2];
+  _13 = (int) _12;
+  SelectorMask_63 = Clock_Ip_axFeatureExtensions[_13].SelectorValueMask;
+  # DEBUG SelectorMask => SelectorMask_63
+  # DEBUG BEGIN_STMT
+  _14 = Config_58(D)->Name;
+  _15 = (int) _14;
+  _16 = Clock_Ip_au8ClockFeatures[_15][2];
+  _17 = (int) _16;
+  SelectorShift_64 = Clock_Ip_axFeatureExtensions[_17].SelectorValueShift;
+  # DEBUG SelectorShift => SelectorShift_64
+  # DEBUG BEGIN_STMT
+  _18 = Clock_Ip_apxCgm[Instance_60][SelectorIndex_61];
+  _19 ={v} _18->CSS;
+  _20 = SelectorMask_63 & _19;
+  _21 = _20 >> SelectorShift_64;
+  if (SelectorValue_62 != _21)
+    goto <bb 4>; [INV]
+  else
+    goto <bb 21>; [INV]
+
+  <bb 4> :
+  # DEBUG BEGIN_STMT
+  Clock_Ip_StartTimeout (&StartTime, &ElapsedTime, &TimeoutTicks, 50000);
+
+  <bb 5> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  TimeoutTicks.3_22 = TimeoutTicks;
+  TimeoutOccurred_67 = Clock_Ip_TimeoutExpired (&StartTime, &ElapsedTime, TimeoutTicks.3_22);
+  # DEBUG TimeoutOccurred => TimeoutOccurred_67
+  # DEBUG BEGIN_STMT
+  _23 = Clock_Ip_apxCgm[Instance_60][SelectorIndex_61];
+  _24 ={v} _23->CSS;
+  _25 = _24 & 65536;
+  if (_25 == 65536)
+    goto <bb 6>; [INV]
+  else
+    goto <bb 7>; [INV]
+
+  <bb 6> :
+  _26 = ~TimeoutOccurred_67;
+  if (_26 != 0)
+    goto <bb 5>; [INV]
+  else
+    goto <bb 7>; [INV]
+
+  <bb 7> :
+  # DEBUG BEGIN_STMT
+  _27 = ~TimeoutOccurred_67;
+  if (_27 != 0)
+    goto <bb 8>; [INV]
+  else
+    goto <bb 20>; [INV]
+
+  <bb 8> :
+  # DEBUG BEGIN_STMT
+  _28 = Clock_Ip_apxCgm[Instance_60][SelectorIndex_61];
+  RegValue_69 ={v} _28->CSC;
+  # DEBUG RegValue => RegValue_69
+  # DEBUG BEGIN_STMT
+  _29 = ~SelectorMask_63;
+  RegValue_70 = RegValue_69 & _29;
+  # DEBUG RegValue => RegValue_70
+  # DEBUG BEGIN_STMT
+  _30 = SelectorValue_62 << SelectorShift_64;
+  _31 = SelectorMask_63 & _30;
+  RegValue_71 = RegValue_70 | _31;
+  # DEBUG RegValue => RegValue_71
+  # DEBUG BEGIN_STMT
+  RegValue_72 = RegValue_71 | 7;
+  # DEBUG RegValue => RegValue_72
+  # DEBUG BEGIN_STMT
+  _32 = Clock_Ip_apxCgm[Instance_60][SelectorIndex_61];
+  _32->CSC ={v} RegValue_72;
+  # DEBUG BEGIN_STMT
+  Clock_Ip_StartTimeout (&StartTime, &ElapsedTime, &TimeoutTicks, 50000);
+
+  <bb 9> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  TimeoutTicks.4_33 = TimeoutTicks;
+  TimeoutOccurred_76 = Clock_Ip_TimeoutExpired (&StartTime, &ElapsedTime, TimeoutTicks.4_33);
+  # DEBUG TimeoutOccurred => TimeoutOccurred_76
+  # DEBUG BEGIN_STMT
+  _34 = Clock_Ip_apxCgm[Instance_60][SelectorIndex_61];
+  _35 ={v} _34->CSS;
+  _36 = _35 & 4;
+  if (_36 == 0)
+    goto <bb 10>; [INV]
+  else
+    goto <bb 11>; [INV]
+
+  <bb 10> :
+  _37 = ~TimeoutOccurred_76;
+  if (_37 != 0)
+    goto <bb 9>; [INV]
+  else
+    goto <bb 11>; [INV]
+
+  <bb 11> :
+  # DEBUG BEGIN_STMT
+  _38 = ~TimeoutOccurred_76;
+  if (_38 != 0)
+    goto <bb 12>; [INV]
+  else
+    goto <bb 19>; [INV]
+
+  <bb 12> :
+  # DEBUG BEGIN_STMT
+  Clock_Ip_StartTimeout (&StartTime, &ElapsedTime, &TimeoutTicks, 50000);
+
+  <bb 13> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  TimeoutTicks.5_39 = TimeoutTicks;
+  TimeoutOccurred_80 = Clock_Ip_TimeoutExpired (&StartTime, &ElapsedTime, TimeoutTicks.5_39);
+  # DEBUG TimeoutOccurred => TimeoutOccurred_80
+  # DEBUG BEGIN_STMT
+  _40 = Clock_Ip_apxCgm[Instance_60][SelectorIndex_61];
+  _41 ={v} _40->CSS;
+  _42 = _41 & 65536;
+  if (_42 == 65536)
+    goto <bb 14>; [INV]
+  else
+    goto <bb 15>; [INV]
+
+  <bb 14> :
+  _43 = ~TimeoutOccurred_80;
+  if (_43 != 0)
+    goto <bb 13>; [INV]
+  else
+    goto <bb 15>; [INV]
+
+  <bb 15> :
+  # DEBUG BEGIN_STMT
+  _44 = ~TimeoutOccurred_80;
+  if (_44 != 0)
+    goto <bb 16>; [INV]
+  else
+    goto <bb 18>; [INV]
+
+  <bb 16> :
+  # DEBUG BEGIN_STMT
+  _45 = Clock_Ip_apxCgm[Instance_60][SelectorIndex_61];
+  _46 ={v} _45->CSS;
+  _47 = _46 >> 17;
+  _48 = _47 & 7;
+  if (_48 != 1)
+    goto <bb 17>; [INV]
+  else
+    goto <bb 21>; [INV]
+
+  <bb 17> :
+  # DEBUG BEGIN_STMT
+  _49 = Config_58(D)->Name;
+  Clock_Ip_ReportClockErrors (3, _49);
+  goto <bb 21>; [INV]
+
+  <bb 18> :
+  # DEBUG BEGIN_STMT
+  _50 = Config_58(D)->Name;
+  Clock_Ip_ReportClockErrors (1, _50);
+  goto <bb 21>; [INV]
+
+  <bb 19> :
+  # DEBUG BEGIN_STMT
+  _51 = Config_58(D)->Name;
+  Clock_Ip_ReportClockErrors (1, _51);
+  goto <bb 21>; [INV]
+
+  <bb 20> :
+  # DEBUG BEGIN_STMT
+  _52 = Config_58(D)->Name;
+  Clock_Ip_ReportClockErrors (1, _52);
+
+  <bb 21> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  StartTime ={v} {CLOBBER};
+  ElapsedTime ={v} {CLOBBER};
+  TimeoutTicks ={v} {CLOBBER};
+  return;
+
+}
+
+
+Clock_Ip_ResetCgmXCscCssClkswRampupRampdownSwip (const struct Clock_Ip_SelectorConfigType * Config)
+{
+  uint32 SelectorMask;
+  uint32 SelectorIndex;
+  uint32 Instance;
+  <unnamed type> _1;
+  int _2;
+  unsigned char _3;
+  <unnamed type> _4;
+  int _5;
+  unsigned char _6;
+  <unnamed type> _7;
+  int _8;
+  unsigned char _9;
+  int _10;
+  volatile struct Clock_Ip_CgmMuxType * _11;
+  long unsigned int _12;
+  volatile struct Clock_Ip_CgmMuxType * _13;
+  long unsigned int _14;
+  volatile struct Clock_Ip_CgmMuxType * _15;
+  long unsigned int _16;
+  long unsigned int _17;
+  volatile struct Clock_Ip_CgmMuxType * _18;
+  long unsigned int _19;
+
+  <bb 2> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  if (Config_21(D) != 0B)
+    goto <bb 3>; [INV]
+  else
+    goto <bb 4>; [INV]
+
+  <bb 3> :
+  # DEBUG BEGIN_STMT
+  _1 = Config_21(D)->Name;
+  _2 = (int) _1;
+  _3 = Clock_Ip_au8ClockFeatures[_2][0];
+  Instance_23 = (uint32) _3;
+  # DEBUG Instance => Instance_23
+  # DEBUG BEGIN_STMT
+  _4 = Config_21(D)->Name;
+  _5 = (int) _4;
+  _6 = Clock_Ip_au8ClockFeatures[_5][4];
+  SelectorIndex_24 = (uint32) _6;
+  # DEBUG SelectorIndex => SelectorIndex_24
+  # DEBUG BEGIN_STMT
+  _7 = Config_21(D)->Name;
+  _8 = (int) _7;
+  _9 = Clock_Ip_au8ClockFeatures[_8][2];
+  _10 = (int) _9;
+  SelectorMask_25 = Clock_Ip_axFeatureExtensions[_10].SelectorValueMask;
+  # DEBUG SelectorMask => SelectorMask_25
+  # DEBUG BEGIN_STMT
+  _11 = Clock_Ip_apxCgm[Instance_23][SelectorIndex_24];
+  _12 ={v} _11->CSC;
+  _13 = Clock_Ip_apxCgm[Instance_23][SelectorIndex_24];
+  _14 = _12 | 8;
+  _13->CSC ={v} _14;
+  # DEBUG BEGIN_STMT
+  _15 = Clock_Ip_apxCgm[Instance_23][SelectorIndex_24];
+  _16 ={v} _15->CSC;
+  _17 = ~SelectorMask_25;
+  _18 = Clock_Ip_apxCgm[Instance_23][SelectorIndex_24];
+  _19 = _16 & _17;
+  _18->CSC ={v} _19;
+
+  <bb 4> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  return;
+
+}
+
+
+Clock_Ip_SetCgmXCscCssClkswSwip (const struct Clock_Ip_SelectorConfigType * Config)
+{
+  uint32 TimeoutTicks;
+  uint32 ElapsedTime;
+  uint32 StartTime;
+  boolean TimeoutOccurred;
+  uint32 RegValue;
+  uint32 SelectorShift;
+  uint32 SelectorMask;
+  uint32 SelectorValue;
+  uint32 SelectorIndex;
+  uint32 Instance;
+  <unnamed type> _1;
+  int _2;
+  unsigned char _3;
+  <unnamed type> _4;
+  int _5;
+  unsigned char _6;
+  <unnamed type> _7;
+  int _8;
+  short unsigned int _9;
+  <unnamed type> _10;
+  int _11;
+  unsigned char _12;
+  int _13;
+  <unnamed type> _14;
+  int _15;
+  unsigned char _16;
+  int _17;
+  volatile struct Clock_Ip_CgmMuxType * _18;
+  long unsigned int _19;
+  long unsigned int _20;
+  long unsigned int _21;
+  long unsigned int TimeoutTicks.6_22;
+  volatile struct Clock_Ip_CgmMuxType * _23;
+  long unsigned int _24;
+  long unsigned int _25;
+  _Bool _26;
+  _Bool _27;
+  volatile struct Clock_Ip_CgmMuxType * _28;
+  long unsigned int _29;
+  long unsigned int _30;
+  long unsigned int _31;
+  volatile struct Clock_Ip_CgmMuxType * _32;
+  long unsigned int TimeoutTicks.7_33;
+  volatile struct Clock_Ip_CgmMuxType * _34;
+  long unsigned int _35;
+  long unsigned int _36;
+  _Bool _37;
+  _Bool _38;
+  long unsigned int TimeoutTicks.8_39;
+  volatile struct Clock_Ip_CgmMuxType * _40;
+  long unsigned int _41;
+  long unsigned int _42;
+  _Bool _43;
+  _Bool _44;
+  volatile struct Clock_Ip_CgmMuxType * _45;
+  long unsigned int _46;
+  long unsigned int _47;
+  long unsigned int _48;
+  <unnamed type> _49;
+  <unnamed type> _50;
+  <unnamed type> _51;
+  <unnamed type> _52;
+
+  <bb 2> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  TimeoutOccurred_57 = 0;
+  # DEBUG TimeoutOccurred => TimeoutOccurred_57
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  if (Config_58(D) != 0B)
+    goto <bb 3>; [INV]
+  else
+    goto <bb 21>; [INV]
+
+  <bb 3> :
+  # DEBUG BEGIN_STMT
+  _1 = Config_58(D)->Name;
+  _2 = (int) _1;
+  _3 = Clock_Ip_au8ClockFeatures[_2][0];
+  Instance_60 = (uint32) _3;
+  # DEBUG Instance => Instance_60
+  # DEBUG BEGIN_STMT
+  _4 = Config_58(D)->Name;
+  _5 = (int) _4;
+  _6 = Clock_Ip_au8ClockFeatures[_5][4];
+  SelectorIndex_61 = (uint32) _6;
+  # DEBUG SelectorIndex => SelectorIndex_61
+  # DEBUG BEGIN_STMT
+  _7 = Config_58(D)->Value;
+  _8 = (int) _7;
+  _9 = Clock_Ip_au16SelectorEntryHardwareValue[_8];
+  SelectorValue_62 = (uint32) _9;
+  # DEBUG SelectorValue => SelectorValue_62
+  # DEBUG BEGIN_STMT
+  _10 = Config_58(D)->Name;
+  _11 = (int) _10;
+  _12 = Clock_Ip_au8ClockFeatures[_11][2];
+  _13 = (int) _12;
+  SelectorMask_63 = Clock_Ip_axFeatureExtensions[_13].SelectorValueMask;
+  # DEBUG SelectorMask => SelectorMask_63
+  # DEBUG BEGIN_STMT
+  _14 = Config_58(D)->Name;
+  _15 = (int) _14;
+  _16 = Clock_Ip_au8ClockFeatures[_15][2];
+  _17 = (int) _16;
+  SelectorShift_64 = Clock_Ip_axFeatureExtensions[_17].SelectorValueShift;
+  # DEBUG SelectorShift => SelectorShift_64
+  # DEBUG BEGIN_STMT
+  _18 = Clock_Ip_apxCgm[Instance_60][SelectorIndex_61];
+  _19 ={v} _18->CSS;
+  _20 = SelectorMask_63 & _19;
+  _21 = _20 >> SelectorShift_64;
+  if (SelectorValue_62 != _21)
+    goto <bb 4>; [INV]
+  else
+    goto <bb 21>; [INV]
+
+  <bb 4> :
+  # DEBUG BEGIN_STMT
+  Clock_Ip_StartTimeout (&StartTime, &ElapsedTime, &TimeoutTicks, 50000);
+
+  <bb 5> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  TimeoutTicks.6_22 = TimeoutTicks;
+  TimeoutOccurred_67 = Clock_Ip_TimeoutExpired (&StartTime, &ElapsedTime, TimeoutTicks.6_22);
+  # DEBUG TimeoutOccurred => TimeoutOccurred_67
+  # DEBUG BEGIN_STMT
+  _23 = Clock_Ip_apxCgm[Instance_60][SelectorIndex_61];
+  _24 ={v} _23->CSS;
+  _25 = _24 & 65536;
+  if (_25 == 65536)
+    goto <bb 6>; [INV]
+  else
+    goto <bb 7>; [INV]
+
+  <bb 6> :
+  _26 = ~TimeoutOccurred_67;
+  if (_26 != 0)
+    goto <bb 5>; [INV]
+  else
+    goto <bb 7>; [INV]
+
+  <bb 7> :
+  # DEBUG BEGIN_STMT
+  _27 = ~TimeoutOccurred_67;
+  if (_27 != 0)
+    goto <bb 8>; [INV]
+  else
+    goto <bb 20>; [INV]
+
+  <bb 8> :
+  # DEBUG BEGIN_STMT
+  _28 = Clock_Ip_apxCgm[Instance_60][SelectorIndex_61];
+  RegValue_69 ={v} _28->CSC;
+  # DEBUG RegValue => RegValue_69
+  # DEBUG BEGIN_STMT
+  _29 = ~SelectorMask_63;
+  RegValue_70 = RegValue_69 & _29;
+  # DEBUG RegValue => RegValue_70
+  # DEBUG BEGIN_STMT
+  _30 = SelectorValue_62 << SelectorShift_64;
+  _31 = SelectorMask_63 & _30;
+  RegValue_71 = RegValue_70 | _31;
+  # DEBUG RegValue => RegValue_71
+  # DEBUG BEGIN_STMT
+  RegValue_72 = RegValue_71 | 4;
+  # DEBUG RegValue => RegValue_72
+  # DEBUG BEGIN_STMT
+  _32 = Clock_Ip_apxCgm[Instance_60][SelectorIndex_61];
+  _32->CSC ={v} RegValue_72;
+  # DEBUG BEGIN_STMT
+  Clock_Ip_StartTimeout (&StartTime, &ElapsedTime, &TimeoutTicks, 50000);
+
+  <bb 9> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  TimeoutTicks.7_33 = TimeoutTicks;
+  TimeoutOccurred_76 = Clock_Ip_TimeoutExpired (&StartTime, &ElapsedTime, TimeoutTicks.7_33);
+  # DEBUG TimeoutOccurred => TimeoutOccurred_76
+  # DEBUG BEGIN_STMT
+  _34 = Clock_Ip_apxCgm[Instance_60][SelectorIndex_61];
+  _35 ={v} _34->CSS;
+  _36 = _35 & 4;
+  if (_36 == 0)
+    goto <bb 10>; [INV]
+  else
+    goto <bb 11>; [INV]
+
+  <bb 10> :
+  _37 = ~TimeoutOccurred_76;
+  if (_37 != 0)
+    goto <bb 9>; [INV]
+  else
+    goto <bb 11>; [INV]
+
+  <bb 11> :
+  # DEBUG BEGIN_STMT
+  _38 = ~TimeoutOccurred_76;
+  if (_38 != 0)
+    goto <bb 12>; [INV]
+  else
+    goto <bb 19>; [INV]
+
+  <bb 12> :
+  # DEBUG BEGIN_STMT
+  Clock_Ip_StartTimeout (&StartTime, &ElapsedTime, &TimeoutTicks, 50000);
+
+  <bb 13> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  TimeoutTicks.8_39 = TimeoutTicks;
+  TimeoutOccurred_80 = Clock_Ip_TimeoutExpired (&StartTime, &ElapsedTime, TimeoutTicks.8_39);
+  # DEBUG TimeoutOccurred => TimeoutOccurred_80
+  # DEBUG BEGIN_STMT
+  _40 = Clock_Ip_apxCgm[Instance_60][SelectorIndex_61];
+  _41 ={v} _40->CSS;
+  _42 = _41 & 65536;
+  if (_42 == 65536)
+    goto <bb 14>; [INV]
+  else
+    goto <bb 15>; [INV]
+
+  <bb 14> :
+  _43 = ~TimeoutOccurred_80;
+  if (_43 != 0)
+    goto <bb 13>; [INV]
+  else
+    goto <bb 15>; [INV]
+
+  <bb 15> :
+  # DEBUG BEGIN_STMT
+  _44 = ~TimeoutOccurred_80;
+  if (_44 != 0)
+    goto <bb 16>; [INV]
+  else
+    goto <bb 18>; [INV]
+
+  <bb 16> :
+  # DEBUG BEGIN_STMT
+  _45 = Clock_Ip_apxCgm[Instance_60][SelectorIndex_61];
+  _46 ={v} _45->CSS;
+  _47 = _46 >> 17;
+  _48 = _47 & 7;
+  if (_48 != 1)
+    goto <bb 17>; [INV]
+  else
+    goto <bb 21>; [INV]
+
+  <bb 17> :
+  # DEBUG BEGIN_STMT
+  _49 = Config_58(D)->Name;
+  Clock_Ip_ReportClockErrors (3, _49);
+  goto <bb 21>; [INV]
+
+  <bb 18> :
+  # DEBUG BEGIN_STMT
+  _50 = Config_58(D)->Name;
+  Clock_Ip_ReportClockErrors (1, _50);
+  goto <bb 21>; [INV]
+
+  <bb 19> :
+  # DEBUG BEGIN_STMT
+  _51 = Config_58(D)->Name;
+  Clock_Ip_ReportClockErrors (1, _51);
+  goto <bb 21>; [INV]
+
+  <bb 20> :
+  # DEBUG BEGIN_STMT
+  _52 = Config_58(D)->Name;
+  Clock_Ip_ReportClockErrors (1, _52);
+
+  <bb 21> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  StartTime ={v} {CLOBBER};
+  ElapsedTime ={v} {CLOBBER};
+  TimeoutTicks ={v} {CLOBBER};
+  return;
+
+}
+
+
+Clock_Ip_ResetCgmXCscCssClkswSwip (const struct Clock_Ip_SelectorConfigType * Config)
+{
+  uint32 SelectorMask;
+  uint32 SelectorIndex;
+  uint32 Instance;
+  <unnamed type> _1;
+  int _2;
+  unsigned char _3;
+  <unnamed type> _4;
+  int _5;
+  unsigned char _6;
+  <unnamed type> _7;
+  int _8;
+  unsigned char _9;
+  int _10;
+  volatile struct Clock_Ip_CgmMuxType * _11;
+  long unsigned int _12;
+  volatile struct Clock_Ip_CgmMuxType * _13;
+  long unsigned int _14;
+  volatile struct Clock_Ip_CgmMuxType * _15;
+  long unsigned int _16;
+  long unsigned int _17;
+  volatile struct Clock_Ip_CgmMuxType * _18;
+  long unsigned int _19;
+
+  <bb 2> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  if (Config_21(D) != 0B)
+    goto <bb 3>; [INV]
+  else
+    goto <bb 4>; [INV]
+
+  <bb 3> :
+  # DEBUG BEGIN_STMT
+  _1 = Config_21(D)->Name;
+  _2 = (int) _1;
+  _3 = Clock_Ip_au8ClockFeatures[_2][0];
+  Instance_23 = (uint32) _3;
+  # DEBUG Instance => Instance_23
+  # DEBUG BEGIN_STMT
+  _4 = Config_21(D)->Name;
+  _5 = (int) _4;
+  _6 = Clock_Ip_au8ClockFeatures[_5][4];
+  SelectorIndex_24 = (uint32) _6;
+  # DEBUG SelectorIndex => SelectorIndex_24
+  # DEBUG BEGIN_STMT
+  _7 = Config_21(D)->Name;
+  _8 = (int) _7;
+  _9 = Clock_Ip_au8ClockFeatures[_8][2];
+  _10 = (int) _9;
+  SelectorMask_25 = Clock_Ip_axFeatureExtensions[_10].SelectorValueMask;
+  # DEBUG SelectorMask => SelectorMask_25
+  # DEBUG BEGIN_STMT
+  _11 = Clock_Ip_apxCgm[Instance_23][SelectorIndex_24];
+  _12 ={v} _11->CSC;
+  _13 = Clock_Ip_apxCgm[Instance_23][SelectorIndex_24];
+  _14 = _12 | 8;
+  _13->CSC ={v} _14;
+  # DEBUG BEGIN_STMT
+  _15 = Clock_Ip_apxCgm[Instance_23][SelectorIndex_24];
+  _16 ={v} _15->CSC;
+  _17 = ~SelectorMask_25;
+  _18 = Clock_Ip_apxCgm[Instance_23][SelectorIndex_24];
+  _19 = _16 & _17;
+  _18->CSC ={v} _19;
+
+  <bb 4> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  return;
+
+}
+
+
+Clock_Ip_CallbackSelectorEmpty (const struct Clock_Ip_SelectorConfigType * Config)
+{
+  <bb 2> :
+  # DEBUG BEGIN_STMT
+  return;
+
+}
+
+

@@ -1,0 +1,109 @@
+netio_init ()
+{
+  struct tcp_pcb * pcb;
+
+  <bb 2> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  pcb = tcp_new_ip_type (46);
+  # DEBUG BEGIN_STMT
+  tcp_bind (pcb, &ip_addr_any_type, 18767);
+  # DEBUG BEGIN_STMT
+  pcb = tcp_listen_with_backlog (pcb, 255);
+  # DEBUG BEGIN_STMT
+  tcp_accept (pcb, netio_accept);
+  return;
+
+}
+
+
+netio_accept (void * arg, struct tcp_pcb * pcb, err_t err)
+{
+  err_t D.7271;
+
+  <bb 2> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  if (pcb != 0B)
+    goto <bb 3>; [INV]
+  else
+    goto <bb 4>; [INV]
+
+  <bb 3> :
+  # DEBUG BEGIN_STMT
+  tcp_arg (pcb, 0B);
+  # DEBUG BEGIN_STMT
+  tcp_sent (pcb, 0B);
+  # DEBUG BEGIN_STMT
+  tcp_recv (pcb, netio_recv);
+
+  <bb 4> :
+  # DEBUG BEGIN_STMT
+  D.7271 = 0;
+  return D.7271;
+
+}
+
+
+netio_recv (void * arg, struct tcp_pcb * pcb, struct pbuf * p, err_t err)
+{
+  err_t D.7281;
+
+  <bb 2> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  if (err == 0)
+    goto <bb 3>; [INV]
+  else
+    goto <bb 5>; [INV]
+
+  <bb 3> :
+  if (p != 0B)
+    goto <bb 4>; [INV]
+  else
+    goto <bb 5>; [INV]
+
+  <bb 4> :
+  # DEBUG BEGIN_STMT
+  _1 = p->tot_len;
+  tcp_recved (pcb, _1);
+  # DEBUG BEGIN_STMT
+  pbuf_free (p);
+  goto <bb 6>; [INV]
+
+  <bb 5> :
+  # DEBUG BEGIN_STMT
+  pbuf_free (p);
+
+  <bb 6> :
+  # DEBUG BEGIN_STMT
+  if (err == 0)
+    goto <bb 7>; [INV]
+  else
+    goto <bb 9>; [INV]
+
+  <bb 7> :
+  if (p == 0B)
+    goto <bb 8>; [INV]
+  else
+    goto <bb 9>; [INV]
+
+  <bb 8> :
+  # DEBUG BEGIN_STMT
+  tcp_arg (pcb, 0B);
+  # DEBUG BEGIN_STMT
+  tcp_sent (pcb, 0B);
+  # DEBUG BEGIN_STMT
+  tcp_recv (pcb, 0B);
+  # DEBUG BEGIN_STMT
+  tcp_close (pcb);
+
+  <bb 9> :
+  # DEBUG BEGIN_STMT
+  D.7281 = 0;
+  return D.7281;
+
+}
+
+

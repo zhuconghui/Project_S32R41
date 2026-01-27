@@ -1,0 +1,247 @@
+snmp_init ()
+{
+  struct udp_pcb * snmp_pcb;
+  err_t err;
+
+  <bb 2> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  snmp_pcb = udp_new_ip_type (46);
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  if (snmp_pcb == 0B)
+    goto <bb 3>; [INV]
+  else
+    goto <bb 4>; [INV]
+
+  <bb 3> :
+  # DEBUG BEGIN_STMT
+  // predicted unlikely by early return (on trees) predictor.
+  goto <bb 6>; [INV]
+
+  <bb 4> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  snmp_traps_handle = snmp_pcb;
+  # DEBUG BEGIN_STMT
+  udp_recv (snmp_pcb, snmp_recv, 0B);
+  # DEBUG BEGIN_STMT
+  err = udp_bind (snmp_pcb, &ip_addr_any_type, 161);
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  if (err != 0)
+    goto <bb 5>; [INV]
+  else
+    goto <bb 6>; [INV]
+
+  <bb 5> :
+  # DEBUG BEGIN_STMT
+  // predicted unlikely by early return (on trees) predictor.
+
+  <bb 6> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  return;
+
+}
+
+
+snmp_get_local_ip_for_dst (void * handle, const struct ip_addr_t * dst, struct ip_addr_t * result)
+{
+  const struct ip_addr_t * dst_ip;
+  struct netif * dst_if;
+  struct udp_pcb * udp_pcb;
+  u8_t D.7509;
+  const struct ip_addr_t * iftmp.3;
+  const struct ip_addr_t * iftmp.2;
+  const struct ip_addr_t * iftmp.1;
+  struct netif * iftmp.0;
+
+  <bb 2> :
+  # DEBUG BEGIN_STMT
+  udp_pcb = handle;
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  if (dst != 0B)
+    goto <bb 3>; [INV]
+  else
+    goto <bb 5>; [INV]
+
+  <bb 3> :
+  _1 = dst->type;
+  if (_1 == 6)
+    goto <bb 4>; [INV]
+  else
+    goto <bb 5>; [INV]
+
+  <bb 4> :
+  _2 = &udp_pcb->local_ip.u_addr.ip6;
+  _3 = &dst->u_addr.ip6;
+  iftmp.0 = ip6_route (_2, _3);
+  goto <bb 6>; [INV]
+
+  <bb 5> :
+  _4 = &dst->u_addr.ip4;
+  iftmp.0 = ip4_route (_4);
+
+  <bb 6> :
+  dst_if = iftmp.0;
+  # DEBUG BEGIN_STMT
+  if (dst != 0B)
+    goto <bb 7>; [INV]
+  else
+    goto <bb 12>; [INV]
+
+  <bb 7> :
+  _5 = dst->type;
+  if (_5 == 6)
+    goto <bb 8>; [INV]
+  else
+    goto <bb 12>; [INV]
+
+  <bb 8> :
+  if (dst_if != 0B)
+    goto <bb 9>; [INV]
+  else
+    goto <bb 10>; [INV]
+
+  <bb 9> :
+  _6 = &dst->u_addr.ip6;
+  iftmp.2 = ip6_select_source_address (dst_if, _6);
+  goto <bb 11>; [INV]
+
+  <bb 10> :
+  iftmp.2 = 0B;
+
+  <bb 11> :
+  iftmp.1 = iftmp.2;
+  goto <bb 16>; [INV]
+
+  <bb 12> :
+  if (dst_if != 0B)
+    goto <bb 13>; [INV]
+  else
+    goto <bb 14>; [INV]
+
+  <bb 13> :
+  iftmp.3 = &dst_if->ip_addr;
+  goto <bb 15>; [INV]
+
+  <bb 14> :
+  iftmp.3 = 0B;
+
+  <bb 15> :
+  iftmp.1 = iftmp.3;
+
+  <bb 16> :
+  dst_ip = iftmp.1;
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  if (dst_if != 0B)
+    goto <bb 17>; [INV]
+  else
+    goto <bb 22>; [INV]
+
+  <bb 17> :
+  if (dst_ip != 0B)
+    goto <bb 18>; [INV]
+  else
+    goto <bb 22>; [INV]
+
+  <bb 18> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _7 = dst_ip->type;
+  result->type = _7;
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _8 = dst_ip->type;
+  if (_8 == 6)
+    goto <bb 19>; [INV]
+  else
+    goto <bb 20>; [INV]
+
+  <bb 19> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _9 = dst_ip->u_addr.ip6.addr[0];
+  result->u_addr.ip6.addr[0] = _9;
+  # DEBUG BEGIN_STMT
+  _10 = dst_ip->u_addr.ip6.addr[1];
+  result->u_addr.ip6.addr[1] = _10;
+  # DEBUG BEGIN_STMT
+  _11 = dst_ip->u_addr.ip6.addr[2];
+  result->u_addr.ip6.addr[2] = _11;
+  # DEBUG BEGIN_STMT
+  _12 = dst_ip->u_addr.ip6.addr[3];
+  result->u_addr.ip6.addr[3] = _12;
+  # DEBUG BEGIN_STMT
+  _13 = dst_ip->u_addr.ip6.zone;
+  result->u_addr.ip6.zone = _13;
+  # DEBUG BEGIN_STMT
+  goto <bb 21>; [INV]
+
+  <bb 20> :
+  # DEBUG BEGIN_STMT
+  _14 = dst_ip->u_addr.ip4.addr;
+  result->u_addr.ip4.addr = _14;
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  result->u_addr.ip6.addr[3] = 0;
+  _15 = result->u_addr.ip6.addr[3];
+  result->u_addr.ip6.addr[2] = _15;
+  _16 = result->u_addr.ip6.addr[2];
+  result->u_addr.ip6.addr[1] = _16;
+  # DEBUG BEGIN_STMT
+  result->u_addr.ip6.zone = 0;
+
+  <bb 21> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  D.7509 = 1;
+  // predicted unlikely by early return (on trees) predictor.
+  goto <bb 23>; [INV]
+
+  <bb 22> :
+  # DEBUG BEGIN_STMT
+  D.7509 = 0;
+  // predicted unlikely by early return (on trees) predictor.
+
+  <bb 23> :
+  return D.7509;
+
+}
+
+
+snmp_sendto (void * handle, struct pbuf * p, const struct ip_addr_t * dst, u16_t port)
+{
+  err_t D.7483;
+
+  <bb 2> :
+  # DEBUG BEGIN_STMT
+  D.7483 = udp_sendto (handle, p, dst, port);
+  return D.7483;
+
+}
+
+
+snmp_recv (void * arg, struct udp_pcb * pcb, struct pbuf * p, const struct ip_addr_t * addr, u16_t port)
+{
+  <bb 2> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  snmp_receive (pcb, p, addr, port);
+  # DEBUG BEGIN_STMT
+  pbuf_free (p);
+  return;
+
+}
+
+

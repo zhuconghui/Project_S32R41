@@ -1,0 +1,867 @@
+
+Marking local functions:
+
+
+Marking externally visible functions: snmp_table_extract_value_from_refconstptr snmp_table_extract_value_from_u32ref snmp_table_extract_value_from_s32ref snmp_table_simple_get_next_instance snmp_table_simple_get_instance snmp_table_get_next_instance snmp_table_get_instance
+
+
+Marking externally visible variables:
+
+
+Reclaiming functions:
+Reclaiming variables:
+Clearing address taken flags:
+Symbol table:
+
+memcpy/10 (memcpy) @0612f620
+  Type: function
+  Visibility: external public
+  References: 
+  Referring: 
+  Availability: not_available
+  Function flags: optimize_size
+  Called by: snmp_table_extract_value_from_refconstptr/7 
+  Calls: 
+snmp_oid_append/9 (snmp_oid_append) @0610d7e0
+  Type: function
+  Visibility: external public
+  References: 
+  Referring: 
+  Availability: not_available
+  Function flags: optimize_size
+  Called by: snmp_table_simple_get_next_instance/4 snmp_table_get_next_instance/2 
+  Calls: 
+snmp_oid_assign/8 (snmp_oid_assign) @0610d540
+  Type: function
+  Visibility: external public
+  References: 
+  Referring: 
+  Availability: not_available
+  Function flags: optimize_size
+  Called by: snmp_table_simple_get_next_instance/4 snmp_table_get_next_instance/2 
+  Calls: 
+snmp_table_extract_value_from_refconstptr/7 (snmp_table_extract_value_from_refconstptr) @0610da80
+  Type: function definition analyzed
+  Visibility: externally_visible public
+  Address is taken.
+  References: 
+  Referring: snmp_table_simple_get_instance/3 (addr)snmp_table_simple_get_next_instance/4 (addr)
+  Availability: available
+  Function flags: body optimize_size
+  Called by: 
+  Calls: memcpy/10 
+snmp_table_extract_value_from_u32ref/6 (snmp_table_extract_value_from_u32ref) @0610d700
+  Type: function definition analyzed
+  Visibility: externally_visible public
+  Address is taken.
+  References: 
+  Referring: snmp_table_simple_get_instance/3 (addr)snmp_table_simple_get_next_instance/4 (addr)
+  Availability: available
+  Function flags: body optimize_size
+  Called by: 
+  Calls: 
+snmp_table_extract_value_from_s32ref/5 (snmp_table_extract_value_from_s32ref) @0610d460
+  Type: function definition analyzed
+  Visibility: externally_visible public
+  Address is taken.
+  References: 
+  Referring: snmp_table_simple_get_instance/3 (addr)snmp_table_simple_get_next_instance/4 (addr)
+  Availability: available
+  Function flags: body optimize_size
+  Called by: 
+  Calls: 
+snmp_table_simple_get_next_instance/4 (snmp_table_simple_get_next_instance) @0610d1c0
+  Type: function definition analyzed
+  Visibility: externally_visible public
+  References: snmp_table_extract_value_from_u32ref/6 (addr)snmp_table_extract_value_from_s32ref/5 (addr)snmp_table_extract_value_from_refconstptr/7 (addr)
+  Referring: 
+  Availability: available
+  Function flags: body optimize_size
+  Called by: 
+  Calls: snmp_oid_append/9 snmp_oid_assign/8 
+   Indirect call
+snmp_table_simple_get_instance/3 (snmp_table_simple_get_instance) @060ebe00
+  Type: function definition analyzed
+  Visibility: externally_visible public
+  References: snmp_table_extract_value_from_u32ref/6 (addr)snmp_table_extract_value_from_s32ref/5 (addr)snmp_table_extract_value_from_refconstptr/7 (addr)
+  Referring: 
+  Availability: available
+  Function flags: body optimize_size
+  Called by: 
+  Calls: 
+   Indirect call
+snmp_table_get_next_instance/2 (snmp_table_get_next_instance) @060ebb60
+  Type: function definition analyzed
+  Visibility: externally_visible public
+  References: 
+  Referring: 
+  Availability: available
+  Function flags: body optimize_size
+  Called by: 
+  Calls: snmp_oid_append/9 snmp_oid_assign/8 
+   Indirect call
+snmp_table_get_instance/1 (snmp_table_get_instance) @060eb700
+  Type: function definition analyzed
+  Visibility: externally_visible public
+  References: 
+  Referring: 
+  Availability: available
+  Function flags: body optimize_size
+  Called by: 
+  Calls: 
+   Indirect call
+snmp_table_extract_value_from_refconstptr (struct snmp_node_instance * instance, void * value)
+{
+  s16_t D.6855;
+
+  <bb 2> :
+  # DEBUG BEGIN_STMT
+  _1 = instance->reference.const_ptr;
+  _2 = instance->reference_len;
+  memcpy (value, _1, _2);
+  # DEBUG BEGIN_STMT
+  _3 = instance->reference_len;
+  D.6855 = (s16_t) _3;
+  return D.6855;
+
+}
+
+
+snmp_table_extract_value_from_u32ref (struct snmp_node_instance * instance, void * value)
+{
+  u32_t * dst;
+  s16_t D.6853;
+
+  <bb 2> :
+  # DEBUG BEGIN_STMT
+  dst = value;
+  # DEBUG BEGIN_STMT
+  _1 = instance->reference.u32;
+  *dst = _1;
+  # DEBUG BEGIN_STMT
+  D.6853 = 4;
+  return D.6853;
+
+}
+
+
+snmp_table_extract_value_from_s32ref (struct snmp_node_instance * instance, void * value)
+{
+  s32_t * dst;
+  s16_t D.6851;
+
+  <bb 2> :
+  # DEBUG BEGIN_STMT
+  dst = value;
+  # DEBUG BEGIN_STMT
+  _1 = instance->reference.s32;
+  *dst = _1;
+  # DEBUG BEGIN_STMT
+  D.6851 = 4;
+  return D.6851;
+
+}
+
+
+snmp_table_simple_get_next_instance (const u32_t * root_oid, u8_t root_oid_len, struct snmp_node_instance * instance)
+{
+  const struct snmp_table_simple_col_def * next_col_def;
+  u32_t i;
+  snmp_err_t result;
+  u32_t column;
+  struct snmp_obj_id row_oid;
+  const struct snmp_table_simple_col_def * col_def;
+  const struct snmp_table_simple_node * table_node;
+  snmp_err_t D.6832;
+
+  <bb 2> :
+  # DEBUG BEGIN_STMT
+  table_node = instance->node;
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  column = 0;
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _1 = instance->instance_oid.len;
+  if (_1 != 0)
+    goto <bb 3>; [INV]
+  else
+    goto <bb 5>; [INV]
+
+  <bb 3> :
+  _2 = instance->instance_oid.id[0];
+  if (_2 > 1)
+    goto <bb 4>; [INV]
+  else
+    goto <bb 5>; [INV]
+
+  <bb 4> :
+  # DEBUG BEGIN_STMT
+  D.6832 = 241;
+  // predicted unlikely by early return (on trees) predictor.
+  goto <bb 29>; [INV]
+
+  <bb 5> :
+  # DEBUG BEGIN_STMT
+  _3 = instance->instance_oid.len;
+  if (_3 > 1)
+    goto <bb 6>; [INV]
+  else
+    goto <bb 7>; [INV]
+
+  <bb 6> :
+  # DEBUG BEGIN_STMT
+  column = instance->instance_oid.id[1];
+
+  <bb 7> :
+  # DEBUG BEGIN_STMT
+  _4 = instance->instance_oid.len;
+  if (_4 > 2)
+    goto <bb 8>; [INV]
+  else
+    goto <bb 9>; [INV]
+
+  <bb 8> :
+  # DEBUG BEGIN_STMT
+  _5 = &instance->instance_oid.id[2];
+  _6 = instance->instance_oid.len;
+  _7 = _6 + 254;
+  snmp_oid_assign (&row_oid, _5, _7);
+  goto <bb 10>; [INV]
+
+  <bb 9> :
+  # DEBUG BEGIN_STMT
+  row_oid.len = 0;
+
+  <bb 10> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  next_col_def = 0B;
+  # DEBUG BEGIN_STMT
+  col_def = table_node->columns;
+  # DEBUG BEGIN_STMT
+  i = 0;
+  goto <bb 18>; [INV]
+
+  <bb 11> :
+  # DEBUG BEGIN_STMT
+  _8 = col_def->index;
+  if (column == _8)
+    goto <bb 12>; [INV]
+  else
+    goto <bb 13>; [INV]
+
+  <bb 12> :
+  # DEBUG BEGIN_STMT
+  next_col_def = col_def;
+  # DEBUG BEGIN_STMT
+  goto <bb 19>; [INV]
+
+  <bb 13> :
+  # DEBUG BEGIN_STMT
+  _9 = col_def->index;
+  if (column < _9)
+    goto <bb 14>; [INV]
+  else
+    goto <bb 17>; [INV]
+
+  <bb 14> :
+  if (next_col_def == 0B)
+    goto <bb 16>; [INV]
+  else
+    goto <bb 15>; [INV]
+
+  <bb 15> :
+  _10 = col_def->index;
+  _11 = next_col_def->index;
+  if (_10 < _11)
+    goto <bb 16>; [INV]
+  else
+    goto <bb 17>; [INV]
+
+  <bb 16> :
+  # DEBUG BEGIN_STMT
+  next_col_def = col_def;
+
+  <bb 17> :
+  # DEBUG BEGIN_STMT
+  col_def = col_def + 8;
+  # DEBUG BEGIN_STMT
+  i = i + 1;
+
+  <bb 18> :
+  # DEBUG BEGIN_STMT
+  _12 = table_node->column_count;
+  _13 = (long unsigned int) _12;
+  if (i < _13)
+    goto <bb 11>; [INV]
+  else
+    goto <bb 19>; [INV]
+
+  <bb 19> :
+  # DEBUG BEGIN_STMT
+  if (next_col_def == 0B)
+    goto <bb 20>; [INV]
+  else
+    goto <bb 21>; [INV]
+
+  <bb 20> :
+  # DEBUG BEGIN_STMT
+  D.6832 = 241;
+  // predicted unlikely by early return (on trees) predictor.
+  goto <bb 29>; [INV]
+
+  <bb 21> :
+  # DEBUG BEGIN_STMT
+  _14 = table_node->get_next_cell_instance_and_value;
+  _15 = &next_col_def->index;
+  _16 = &instance->reference;
+  _17 = &instance->reference_len;
+  result = _14 (_15, &row_oid, _16, _17);
+  # DEBUG BEGIN_STMT
+  if (result == 0)
+    goto <bb 22>; [INV]
+  else
+    goto <bb 23>; [INV]
+
+  <bb 22> :
+  # DEBUG BEGIN_STMT
+  col_def = next_col_def;
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _19 = col_def->asn1_type;
+  instance->asn1_type = _19;
+  # DEBUG BEGIN_STMT
+  instance->access = 1;
+  # DEBUG BEGIN_STMT
+  instance->set_test = 0B;
+  # DEBUG BEGIN_STMT
+  instance->set_value = 0B;
+  # DEBUG BEGIN_STMT
+  _20 = col_def->data_type;
+  _21 = (int) _20;
+  switch (_21) <default: <L29> [INV], case 0: <L25> [INV], case 1: <L26> [INV], case 2 ... 3: <L27> [INV]>
+
+  <bb 23> :
+  # DEBUG BEGIN_STMT
+  row_oid.len = 0;
+  # DEBUG BEGIN_STMT
+  _18 = next_col_def->index;
+  column = _18 + 1;
+  # DEBUG BEGIN_STMT
+  goto <bb 10>; [INV]
+
+  <bb 24> :
+<L25>:
+  # DEBUG BEGIN_STMT
+  instance->get_value = snmp_table_extract_value_from_u32ref;
+  # DEBUG BEGIN_STMT
+  goto <bb 28>; [INV]
+
+  <bb 25> :
+<L26>:
+  # DEBUG BEGIN_STMT
+  instance->get_value = snmp_table_extract_value_from_s32ref;
+  # DEBUG BEGIN_STMT
+  goto <bb 28>; [INV]
+
+  <bb 26> :
+<L27>:
+  # DEBUG BEGIN_STMT
+  instance->get_value = snmp_table_extract_value_from_refconstptr;
+  # DEBUG BEGIN_STMT
+  goto <bb 28>; [INV]
+
+  <bb 27> :
+<L29>:
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  D.6832 = 5;
+  goto <bb 29>; [INV]
+
+  <bb 28> :
+  # DEBUG BEGIN_STMT
+  instance->instance_oid.len = 2;
+  # DEBUG BEGIN_STMT
+  instance->instance_oid.id[0] = 1;
+  # DEBUG BEGIN_STMT
+  _22 = col_def->index;
+  instance->instance_oid.id[1] = _22;
+  # DEBUG BEGIN_STMT
+  _23 = &instance->instance_oid;
+  _24 = row_oid.len;
+  snmp_oid_append (_23, &row_oid.id, _24);
+  # DEBUG BEGIN_STMT
+  D.6832 = 0;
+
+  <bb 29> :
+  row_oid = {CLOBBER};
+  return D.6832;
+
+}
+
+
+snmp_table_simple_get_instance (const u32_t * root_oid, u8_t root_oid_len, struct snmp_node_instance * instance)
+{
+  u32_t i;
+  const struct snmp_table_simple_col_def * col_def;
+  const struct snmp_table_simple_node * table_node;
+  snmp_err_t ret;
+  snmp_err_t D.6825;
+
+  <bb 2> :
+  # DEBUG BEGIN_STMT
+  ret = 241;
+  # DEBUG BEGIN_STMT
+  table_node = instance->node;
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _1 = instance->instance_oid.len;
+  if (_1 > 2)
+    goto <bb 3>; [INV]
+  else
+    goto <bb 17>; [INV]
+
+  <bb 3> :
+  _2 = instance->instance_oid.id[0];
+  if (_2 == 1)
+    goto <bb 4>; [INV]
+  else
+    goto <bb 17>; [INV]
+
+  <bb 4> :
+  # DEBUG BEGIN_STMT
+  _3 = table_node->get_cell_value;
+  _4 = &instance->instance_oid.id[1];
+  _5 = &instance->instance_oid.id[2];
+  _6 = instance->instance_oid.len;
+  _7 = _6 + 254;
+  _8 = &instance->reference;
+  _9 = &instance->reference_len;
+  ret = _3 (_4, _5, _7, _8, _9);
+  # DEBUG BEGIN_STMT
+  if (ret == 0)
+    goto <bb 5>; [INV]
+  else
+    goto <bb 17>; [INV]
+
+  <bb 5> :
+  # DEBUG BEGIN_STMT
+  col_def = table_node->columns;
+  # DEBUG BEGIN_STMT
+  _10 = table_node->column_count;
+  i = (u32_t) _10;
+  # DEBUG BEGIN_STMT
+  goto <bb 8>; [INV]
+
+  <bb 6> :
+  # DEBUG BEGIN_STMT
+  _11 = col_def->index;
+  _12 = instance->instance_oid.id[1];
+  if (_11 == _12)
+    goto <bb 9>; [INV]
+  else
+    goto <bb 7>; [INV]
+
+  <bb 7> :
+  # DEBUG BEGIN_STMT
+  col_def = col_def + 8;
+  # DEBUG BEGIN_STMT
+  i = i + 4294967295;
+
+  <bb 8> :
+  # DEBUG BEGIN_STMT
+  if (i != 0)
+    goto <bb 6>; [INV]
+  else
+    goto <bb 9>; [INV]
+
+  <bb 9> :
+  # DEBUG BEGIN_STMT
+  if (i != 0)
+    goto <bb 10>; [INV]
+  else
+    goto <bb 16>; [INV]
+
+  <bb 10> :
+  # DEBUG BEGIN_STMT
+  _13 = col_def->asn1_type;
+  instance->asn1_type = _13;
+  # DEBUG BEGIN_STMT
+  instance->access = 1;
+  # DEBUG BEGIN_STMT
+  instance->set_test = 0B;
+  # DEBUG BEGIN_STMT
+  instance->set_value = 0B;
+  # DEBUG BEGIN_STMT
+  _14 = col_def->data_type;
+  _15 = (int) _14;
+  switch (_15) <default: <L12> [INV], case 0: <L8> [INV], case 1: <L9> [INV], case 2 ... 3: <L10> [INV]>
+
+  <bb 11> :
+<L8>:
+  # DEBUG BEGIN_STMT
+  instance->get_value = snmp_table_extract_value_from_u32ref;
+  # DEBUG BEGIN_STMT
+  goto <bb 15>; [INV]
+
+  <bb 12> :
+<L9>:
+  # DEBUG BEGIN_STMT
+  instance->get_value = snmp_table_extract_value_from_s32ref;
+  # DEBUG BEGIN_STMT
+  goto <bb 15>; [INV]
+
+  <bb 13> :
+<L10>:
+  # DEBUG BEGIN_STMT
+  instance->get_value = snmp_table_extract_value_from_refconstptr;
+  # DEBUG BEGIN_STMT
+  goto <bb 15>; [INV]
+
+  <bb 14> :
+<L12>:
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  D.6825 = 5;
+  // predicted unlikely by early return (on trees) predictor.
+  goto <bb 18>; [INV]
+
+  <bb 15> :
+  # DEBUG BEGIN_STMT
+  ret = 0;
+  goto <bb 17>; [INV]
+
+  <bb 16> :
+  # DEBUG BEGIN_STMT
+  ret = 241;
+
+  <bb 17> :
+  # DEBUG BEGIN_STMT
+  D.6825 = ret;
+
+  <bb 18> :
+  return D.6825;
+
+}
+
+
+snmp_table_get_next_instance (const u32_t * root_oid, u8_t root_oid_len, struct snmp_node_instance * instance)
+{
+  const struct snmp_table_col_def * next_col_def;
+  u16_t i;
+  snmp_err_t result;
+  u32_t column;
+  struct snmp_obj_id row_oid;
+  const struct snmp_table_col_def * col_def;
+  const struct snmp_table_node * table_node;
+  snmp_err_t D.6797;
+
+  <bb 2> :
+  # DEBUG BEGIN_STMT
+  table_node = instance->node;
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  column = 0;
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _1 = instance->instance_oid.len;
+  if (_1 != 0)
+    goto <bb 3>; [INV]
+  else
+    goto <bb 5>; [INV]
+
+  <bb 3> :
+  _2 = instance->instance_oid.id[0];
+  if (_2 > 1)
+    goto <bb 4>; [INV]
+  else
+    goto <bb 5>; [INV]
+
+  <bb 4> :
+  # DEBUG BEGIN_STMT
+  D.6797 = 241;
+  // predicted unlikely by early return (on trees) predictor.
+  goto <bb 25>; [INV]
+
+  <bb 5> :
+  # DEBUG BEGIN_STMT
+  _3 = instance->instance_oid.len;
+  if (_3 > 1)
+    goto <bb 6>; [INV]
+  else
+    goto <bb 7>; [INV]
+
+  <bb 6> :
+  # DEBUG BEGIN_STMT
+  column = instance->instance_oid.id[1];
+
+  <bb 7> :
+  # DEBUG BEGIN_STMT
+  _4 = instance->instance_oid.len;
+  if (_4 > 2)
+    goto <bb 8>; [INV]
+  else
+    goto <bb 9>; [INV]
+
+  <bb 8> :
+  # DEBUG BEGIN_STMT
+  _5 = &instance->instance_oid.id[2];
+  _6 = instance->instance_oid.len;
+  _7 = _6 + 254;
+  snmp_oid_assign (&row_oid, _5, _7);
+  goto <bb 10>; [INV]
+
+  <bb 9> :
+  # DEBUG BEGIN_STMT
+  row_oid.len = 0;
+
+  <bb 10> :
+  # DEBUG BEGIN_STMT
+  _8 = table_node->get_value;
+  instance->get_value = _8;
+  # DEBUG BEGIN_STMT
+  _9 = table_node->set_test;
+  instance->set_test = _9;
+  # DEBUG BEGIN_STMT
+  _10 = table_node->set_value;
+  instance->set_value = _10;
+
+  <bb 11> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  next_col_def = 0B;
+  # DEBUG BEGIN_STMT
+  col_def = table_node->columns;
+  # DEBUG BEGIN_STMT
+  i = 0;
+  goto <bb 19>; [INV]
+
+  <bb 12> :
+  # DEBUG BEGIN_STMT
+  _11 = col_def->index;
+  if (column == _11)
+    goto <bb 13>; [INV]
+  else
+    goto <bb 14>; [INV]
+
+  <bb 13> :
+  # DEBUG BEGIN_STMT
+  next_col_def = col_def;
+  # DEBUG BEGIN_STMT
+  goto <bb 20>; [INV]
+
+  <bb 14> :
+  # DEBUG BEGIN_STMT
+  _12 = col_def->index;
+  if (column < _12)
+    goto <bb 15>; [INV]
+  else
+    goto <bb 18>; [INV]
+
+  <bb 15> :
+  if (next_col_def == 0B)
+    goto <bb 17>; [INV]
+  else
+    goto <bb 16>; [INV]
+
+  <bb 16> :
+  _13 = col_def->index;
+  _14 = next_col_def->index;
+  if (_13 < _14)
+    goto <bb 17>; [INV]
+  else
+    goto <bb 18>; [INV]
+
+  <bb 17> :
+  # DEBUG BEGIN_STMT
+  next_col_def = col_def;
+
+  <bb 18> :
+  # DEBUG BEGIN_STMT
+  col_def = col_def + 8;
+  # DEBUG BEGIN_STMT
+  i.1_15 = i;
+  i = i.1_15 + 1;
+
+  <bb 19> :
+  # DEBUG BEGIN_STMT
+  _16 = table_node->column_count;
+  if (i < _16)
+    goto <bb 12>; [INV]
+  else
+    goto <bb 20>; [INV]
+
+  <bb 20> :
+  # DEBUG BEGIN_STMT
+  if (next_col_def == 0B)
+    goto <bb 21>; [INV]
+  else
+    goto <bb 22>; [INV]
+
+  <bb 21> :
+  # DEBUG BEGIN_STMT
+  D.6797 = 241;
+  // predicted unlikely by early return (on trees) predictor.
+  goto <bb 25>; [INV]
+
+  <bb 22> :
+  # DEBUG BEGIN_STMT
+  _17 = next_col_def->asn1_type;
+  instance->asn1_type = _17;
+  # DEBUG BEGIN_STMT
+  _18 = next_col_def->access;
+  instance->access = _18;
+  # DEBUG BEGIN_STMT
+  _19 = table_node->get_next_cell_instance;
+  _20 = &next_col_def->index;
+  result = _19 (_20, &row_oid, instance);
+  # DEBUG BEGIN_STMT
+  if (result == 0)
+    goto <bb 23>; [INV]
+  else
+    goto <bb 24>; [INV]
+
+  <bb 23> :
+  # DEBUG BEGIN_STMT
+  col_def = next_col_def;
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  instance->instance_oid.len = 2;
+  # DEBUG BEGIN_STMT
+  instance->instance_oid.id[0] = 1;
+  # DEBUG BEGIN_STMT
+  _22 = col_def->index;
+  instance->instance_oid.id[1] = _22;
+  # DEBUG BEGIN_STMT
+  _23 = &instance->instance_oid;
+  _24 = row_oid.len;
+  snmp_oid_append (_23, &row_oid.id, _24);
+  # DEBUG BEGIN_STMT
+  D.6797 = 0;
+  goto <bb 25>; [INV]
+
+  <bb 24> :
+  # DEBUG BEGIN_STMT
+  row_oid.len = 0;
+  # DEBUG BEGIN_STMT
+  _21 = next_col_def->index;
+  column = _21 + 1;
+  # DEBUG BEGIN_STMT
+  goto <bb 11>; [INV]
+
+  <bb 25> :
+  row_oid = {CLOBBER};
+  return D.6797;
+
+}
+
+
+snmp_table_get_instance (const u32_t * root_oid, u8_t root_oid_len, struct snmp_node_instance * instance)
+{
+  u16_t i;
+  const struct snmp_table_col_def * col_def;
+  const struct snmp_table_node * table_node;
+  snmp_err_t ret;
+  snmp_err_t D.6791;
+
+  <bb 2> :
+  # DEBUG BEGIN_STMT
+  ret = 241;
+  # DEBUG BEGIN_STMT
+  table_node = instance->node;
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _1 = instance->instance_oid.len;
+  if (_1 > 2)
+    goto <bb 3>; [INV]
+  else
+    goto <bb 10>; [INV]
+
+  <bb 3> :
+  _2 = instance->instance_oid.id[0];
+  if (_2 == 1)
+    goto <bb 4>; [INV]
+  else
+    goto <bb 10>; [INV]
+
+  <bb 4> :
+  # DEBUG BEGIN_STMT
+  col_def = table_node->columns;
+  # DEBUG BEGIN_STMT
+  i = table_node->column_count;
+  # DEBUG BEGIN_STMT
+  goto <bb 7>; [INV]
+
+  <bb 5> :
+  # DEBUG BEGIN_STMT
+  _3 = col_def->index;
+  _4 = instance->instance_oid.id[1];
+  if (_3 == _4)
+    goto <bb 8>; [INV]
+  else
+    goto <bb 6>; [INV]
+
+  <bb 6> :
+  # DEBUG BEGIN_STMT
+  col_def = col_def + 8;
+  # DEBUG BEGIN_STMT
+  i.0_5 = i;
+  i = i.0_5 + 65535;
+
+  <bb 7> :
+  # DEBUG BEGIN_STMT
+  if (i != 0)
+    goto <bb 5>; [INV]
+  else
+    goto <bb 8>; [INV]
+
+  <bb 8> :
+  # DEBUG BEGIN_STMT
+  if (i != 0)
+    goto <bb 9>; [INV]
+  else
+    goto <bb 10>; [INV]
+
+  <bb 9> :
+  # DEBUG BEGIN_STMT
+  _6 = col_def->asn1_type;
+  instance->asn1_type = _6;
+  # DEBUG BEGIN_STMT
+  _7 = col_def->access;
+  instance->access = _7;
+  # DEBUG BEGIN_STMT
+  _8 = table_node->get_value;
+  instance->get_value = _8;
+  # DEBUG BEGIN_STMT
+  _9 = table_node->set_test;
+  instance->set_test = _9;
+  # DEBUG BEGIN_STMT
+  _10 = table_node->set_value;
+  instance->set_value = _10;
+  # DEBUG BEGIN_STMT
+  _11 = table_node->get_cell_instance;
+  _12 = &instance->instance_oid.id[1];
+  _13 = &instance->instance_oid.id[2];
+  _14 = instance->instance_oid.len;
+  _15 = _14 + 254;
+  ret = _11 (_12, _13, _15, instance);
+
+  <bb 10> :
+  # DEBUG BEGIN_STMT
+  D.6791 = ret;
+  return D.6791;
+
+}
+
+

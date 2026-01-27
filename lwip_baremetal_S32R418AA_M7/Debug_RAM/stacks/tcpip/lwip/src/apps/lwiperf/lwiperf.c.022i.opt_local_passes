@@ -1,0 +1,2402 @@
+lwiperf_abort (void * lwiperf_session)
+{
+  struct lwiperf_state_base_t * last;
+  struct lwiperf_state_base_t * dealloc;
+  struct lwiperf_state_base_t * i;
+  struct lwiperf_state_base_t * _1;
+
+  <bb 2> :
+  # DEBUG BEGIN_STMT
+  last_6 = 0B;
+  # DEBUG last => last_6
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  i_8 = lwiperf_all_connections;
+  # DEBUG i => i_8
+  goto <bb 9>; [INV]
+
+  <bb 3> :
+  # DEBUG BEGIN_STMT
+  if (i_2 == lwiperf_session_9(D))
+    goto <bb 5>; [INV]
+  else
+    goto <bb 4>; [INV]
+
+  <bb 4> :
+  _1 = i_2->related_master_state;
+  if (lwiperf_session_9(D) == _1)
+    goto <bb 5>; [INV]
+  else
+    goto <bb 8>; [INV]
+
+  <bb 5> :
+  # DEBUG BEGIN_STMT
+  dealloc_12 = i_2;
+  # DEBUG dealloc => dealloc_12
+  # DEBUG BEGIN_STMT
+  i_13 = i_2->next;
+  # DEBUG i => i_13
+  # DEBUG BEGIN_STMT
+  if (last_3 != 0B)
+    goto <bb 6>; [INV]
+  else
+    goto <bb 7>; [INV]
+
+  <bb 6> :
+  # DEBUG BEGIN_STMT
+  last_3->next = i_13;
+
+  <bb 7> :
+  # DEBUG BEGIN_STMT
+  mem_free (dealloc_12);
+  goto <bb 9>; [INV]
+
+  <bb 8> :
+  # DEBUG BEGIN_STMT
+  last_10 = i_2;
+  # DEBUG last => last_10
+  # DEBUG BEGIN_STMT
+  i_11 = i_2->next;
+  # DEBUG i => i_11
+
+  <bb 9> :
+  # i_2 = PHI <i_8(2), i_13(7), i_11(8)>
+  # last_3 = PHI <last_6(2), last_3(7), last_10(8)>
+  # DEBUG last => last_3
+  # DEBUG i => i_2
+  # DEBUG BEGIN_STMT
+  if (i_2 != 0B)
+    goto <bb 3>; [INV]
+  else
+    goto <bb 10>; [INV]
+
+  <bb 10> :
+  return;
+
+}
+
+
+lwiperf_start_tcp_client (const struct ip_addr_t * remote_addr, u16_t remote_port, lwiperf_client_type type, void (*lwiperf_report_fn) (void *, lwiperf_report_type, const struct ip_addr_t *, u16_t, const struct ip_addr_t *, u16_t, u32_t, u32_t, u32_t) report_fn, void * report_arg)
+{
+  struct lwiperf_state_tcp_t * server;
+  struct lwiperf_state_tcp_t * state;
+  struct lwiperf_settings_t settings;
+  err_t ret;
+  int _1;
+  long unsigned int _2;
+  long unsigned int _3;
+  long unsigned int _4;
+  long unsigned int _5;
+  long unsigned int _6;
+  struct lwiperf_state_tcp_t * state.6_7;
+  struct lwiperf_state_tcp_t * state.7_8;
+  struct tcp_pcb * _9;
+  struct ip_addr_t * _10;
+  struct lwiperf_state_tcp_t * state.8_11;
+  struct lwiperf_state_tcp_t * state.9_12;
+  struct lwiperf_state_tcp_t * server.10_13;
+  struct lwiperf_state_tcp_t * state.11_14;
+  struct tcp_pcb * _15;
+  struct lwiperf_state_tcp_t * server.12_16;
+  struct lwiperf_state_tcp_t * server.13_17;
+  void * _18;
+  void * _45;
+  void * _54;
+  void * _56;
+  void * _58;
+
+  <bb 2> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  state = 0B;
+  # DEBUG BEGIN_STMT
+  memset (&settings, 0, 24);
+  # DEBUG BEGIN_STMT
+  _1 = (int) type_27(D);
+  switch (_1) <default: <L3> [INV], case 0: <L0> [INV], case 1: <L1> [INV], case 2: <L2> [INV]>
+
+  <bb 3> :
+<L0>:
+  # DEBUG BEGIN_STMT
+  settings.flags = 0;
+  # DEBUG BEGIN_STMT
+  goto <bb 7>; [INV]
+
+  <bb 4> :
+<L1>:
+  # DEBUG BEGIN_STMT
+  _2 = lwip_htonl (2147483649);
+  settings.flags = _2;
+  # DEBUG BEGIN_STMT
+  goto <bb 7>; [INV]
+
+  <bb 5> :
+<L2>:
+  # DEBUG BEGIN_STMT
+  _3 = lwip_htonl (2147483648);
+  settings.flags = _3;
+  # DEBUG BEGIN_STMT
+  goto <bb 7>; [INV]
+
+  <bb 6> :
+<L3>:
+  # DEBUG BEGIN_STMT
+  _58 = 0B;
+  goto <bb 18>; [INV]
+
+  <bb 7> :
+  # DEBUG BEGIN_STMT
+  _4 = lwip_htonl (1);
+  settings.num_threads = _4;
+  # DEBUG BEGIN_STMT
+  _5 = lwip_htonl (5001);
+  settings.remote_port = _5;
+  # DEBUG BEGIN_STMT
+  _6 = lwip_htonl (4294966296);
+  settings.amount = _6;
+  # DEBUG BEGIN_STMT
+  ret_44 = lwiperf_tx_start_impl (remote_addr_39(D), remote_port_40(D), &settings, report_fn_41(D), report_arg_42(D), 0B, &state);
+  # DEBUG ret => ret_44
+  # DEBUG BEGIN_STMT
+  if (ret_44 == 0)
+    goto <bb 8>; [INV]
+  else
+    goto <bb 17>; [INV]
+
+  <bb 8> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  state.6_7 = state;
+  if (state.6_7 == 0B)
+    goto <bb 9>; [INV]
+  else
+    goto <bb 10>; [INV]
+
+  <bb 9> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  __asm__ __volatile__("BKPT #0
+	");
+  # DEBUG BEGIN_STMT
+  goto <bb 9>; [INV]
+
+  <bb 10> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  if (type_27(D) != 0)
+    goto <bb 11>; [INV]
+  else
+    goto <bb 16>; [INV]
+
+  <bb 11> :
+  # DEBUG BEGIN_STMT
+  server = 0B;
+  # DEBUG BEGIN_STMT
+  state.7_8 = state;
+  _9 = state.7_8->conn_pcb;
+  _10 = &_9->local_ip;
+  state.8_11 = state;
+  ret_48 = lwiperf_start_tcp_server_impl (_10, 5001, report_fn_41(D), report_arg_42(D), state.8_11, &server);
+  # DEBUG ret => ret_48
+  # DEBUG BEGIN_STMT
+  if (ret_48 != 0)
+    goto <bb 12>; [INV]
+  else
+    goto <bb 13>; [INV]
+
+  <bb 12> :
+  # DEBUG BEGIN_STMT
+  state.9_12 = state;
+  lwiperf_abort (state.9_12);
+  # DEBUG BEGIN_STMT
+  _54 = 0B;
+  // predicted unlikely by early return (on trees) predictor.
+  server ={v} {CLOBBER};
+  goto <bb 18>; [INV]
+
+  <bb 13> :
+  # DEBUG BEGIN_STMT
+  server.10_13 = server;
+  server.10_13->specific_remote = 1;
+  # DEBUG BEGIN_STMT
+  state.11_14 = state;
+  _15 = state.11_14->conn_pcb;
+  server.12_16 = server;
+  server.12_16->remote_addr = _15->remote_ip;
+  # DEBUG BEGIN_STMT
+  if (type_27(D) == 2)
+    goto <bb 14>; [INV]
+  else
+    goto <bb 15>; [INV]
+
+  <bb 14> :
+  # DEBUG BEGIN_STMT
+  server.13_17 = server;
+  server.13_17->client_tradeoff_mode = 1;
+
+  <bb 15> :
+  server ={v} {CLOBBER};
+
+  <bb 16> :
+  # DEBUG BEGIN_STMT
+  _56 = state;
+  // predicted unlikely by early return (on trees) predictor.
+  goto <bb 18>; [INV]
+
+  <bb 17> :
+  # DEBUG BEGIN_STMT
+  _45 = 0B;
+
+  <bb 18> :
+  # _18 = PHI <_58(6), _54(12), _56(16), _45(17)>
+  settings ={v} {CLOBBER};
+  state ={v} {CLOBBER};
+  return _18;
+
+}
+
+
+lwiperf_start_tcp_client_default (const struct ip_addr_t * remote_addr, void (*lwiperf_report_fn) (void *, lwiperf_report_type, const struct ip_addr_t *, u16_t, const struct ip_addr_t *, u16_t, u32_t, u32_t, u32_t) report_fn, void * report_arg)
+{
+  void * _6;
+
+  <bb 2> :
+  # DEBUG BEGIN_STMT
+  _6 = lwiperf_start_tcp_client (remote_addr_2(D), 5001, 0, report_fn_3(D), report_arg_4(D));
+  return _6;
+
+}
+
+
+lwiperf_start_tcp_server_impl (const struct ip_addr_t * local_addr, u16_t local_port, void (*lwiperf_report_fn) (void *, lwiperf_report_type, const struct ip_addr_t *, u16_t, const struct ip_addr_t *, u16_t, u32_t, u32_t, u32_t) report_fn, void * report_arg, struct lwiperf_state_base_t * related_master_state, struct lwiperf_state_tcp_t * * state)
+{
+  struct lwiperf_state_tcp_t * s;
+  struct tcp_pcb * pcb;
+  err_t err;
+  struct tcp_pcb * _1;
+  struct tcp_pcb * _2;
+  struct tcp_pcb * _3;
+  struct tcp_pcb * _4;
+  struct lwiperf_state_base_t * _5;
+  err_t _6;
+  err_t _36;
+  err_t _39;
+  err_t _40;
+  err_t _41;
+  err_t _42;
+  err_t _43;
+
+  <bb 2> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  if (state_10(D) == 0B)
+    goto <bb 3>; [INV]
+  else
+    goto <bb 4>; [INV]
+
+  <bb 3> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  __asm__ __volatile__("BKPT #0
+	");
+  # DEBUG BEGIN_STMT
+  goto <bb 3>; [INV]
+
+  <bb 4> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  if (local_addr_12(D) == 0B)
+    goto <bb 5>; [INV]
+  else
+    goto <bb 6>; [INV]
+
+  <bb 5> :
+  # DEBUG BEGIN_STMT
+  _43 = -16;
+  // predicted unlikely by early return (on trees) predictor.
+  goto <bb 17>; [INV]
+
+  <bb 6> :
+  # DEBUG BEGIN_STMT
+  s_14 = mem_malloc (92);
+  # DEBUG s => s_14
+  # DEBUG BEGIN_STMT
+  if (s_14 == 0B)
+    goto <bb 7>; [INV]
+  else
+    goto <bb 8>; [INV]
+
+  <bb 7> :
+  # DEBUG BEGIN_STMT
+  _42 = -1;
+  // predicted unlikely by early return (on trees) predictor.
+  goto <bb 17>; [INV]
+
+  <bb 8> :
+  # DEBUG BEGIN_STMT
+  memset (s_14, 0, 92);
+  # DEBUG BEGIN_STMT
+  s_14->base.tcp = 1;
+  # DEBUG BEGIN_STMT
+  s_14->base.server = 1;
+  # DEBUG BEGIN_STMT
+  s_14->base.related_master_state = related_master_state_18(D);
+  # DEBUG BEGIN_STMT
+  s_14->report_fn = report_fn_20(D);
+  # DEBUG BEGIN_STMT
+  s_14->report_arg = report_arg_22(D);
+  # DEBUG BEGIN_STMT
+  pcb_25 = tcp_new_ip_type (46);
+  # DEBUG pcb => pcb_25
+  # DEBUG BEGIN_STMT
+  if (pcb_25 == 0B)
+    goto <bb 9>; [INV]
+  else
+    goto <bb 10>; [INV]
+
+  <bb 9> :
+  # DEBUG BEGIN_STMT
+  _41 = -1;
+  // predicted unlikely by early return (on trees) predictor.
+  goto <bb 17>; [INV]
+
+  <bb 10> :
+  # DEBUG BEGIN_STMT
+  err_28 = tcp_bind (pcb_25, local_addr_12(D), local_port_26(D));
+  # DEBUG err => err_28
+  # DEBUG BEGIN_STMT
+  if (err_28 != 0)
+    goto <bb 11>; [INV]
+  else
+    goto <bb 12>; [INV]
+
+  <bb 11> :
+  # DEBUG BEGIN_STMT
+  _40 = err_28;
+  // predicted unlikely by early return (on trees) predictor.
+  goto <bb 17>; [INV]
+
+  <bb 12> :
+  # DEBUG BEGIN_STMT
+  _1 = tcp_listen_with_backlog (pcb_25, 1);
+  s_14->server_pcb = _1;
+  # DEBUG BEGIN_STMT
+  _2 = s_14->server_pcb;
+  if (_2 == 0B)
+    goto <bb 13>; [INV]
+  else
+    goto <bb 16>; [INV]
+
+  <bb 13> :
+  # DEBUG BEGIN_STMT
+  if (pcb_25 != 0B)
+    goto <bb 14>; [INV]
+  else
+    goto <bb 15>; [INV]
+
+  <bb 14> :
+  # DEBUG BEGIN_STMT
+  tcp_close (pcb_25);
+
+  <bb 15> :
+  # DEBUG BEGIN_STMT
+  mem_free (s_14);
+  # DEBUG BEGIN_STMT
+  _39 = -1;
+  // predicted unlikely by early return (on trees) predictor.
+  goto <bb 17>; [INV]
+
+  <bb 16> :
+  # DEBUG BEGIN_STMT
+  pcb_31 = 0B;
+  # DEBUG pcb => pcb_31
+  # DEBUG BEGIN_STMT
+  _3 = s_14->server_pcb;
+  tcp_arg (_3, s_14);
+  # DEBUG BEGIN_STMT
+  _4 = s_14->server_pcb;
+  tcp_accept (_4, lwiperf_tcp_accept);
+  # DEBUG BEGIN_STMT
+  _5 = &s_14->base;
+  lwiperf_list_add (_5);
+  # DEBUG BEGIN_STMT
+  *state_10(D) = s_14;
+  # DEBUG BEGIN_STMT
+  _36 = 0;
+
+  <bb 17> :
+  # _6 = PHI <_43(5), _42(7), _41(9), _40(11), _39(15), _36(16)>
+  return _6;
+
+}
+
+
+lwiperf_start_tcp_server (const struct ip_addr_t * local_addr, u16_t local_port, void (*lwiperf_report_fn) (void *, lwiperf_report_type, const struct ip_addr_t *, u16_t, const struct ip_addr_t *, u16_t, u32_t, u32_t, u32_t) report_fn, void * report_arg)
+{
+  struct lwiperf_state_tcp_t * state;
+  err_t err;
+  void * _1;
+  void * _10;
+  void * _11;
+
+  <bb 2> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  state = 0B;
+  # DEBUG BEGIN_STMT
+  err_9 = lwiperf_start_tcp_server_impl (local_addr_4(D), local_port_5(D), report_fn_6(D), report_arg_7(D), 0B, &state);
+  # DEBUG err => err_9
+  # DEBUG BEGIN_STMT
+  if (err_9 == 0)
+    goto <bb 3>; [INV]
+  else
+    goto <bb 4>; [INV]
+
+  <bb 3> :
+  # DEBUG BEGIN_STMT
+  _11 = state;
+  // predicted unlikely by early return (on trees) predictor.
+  goto <bb 5>; [INV]
+
+  <bb 4> :
+  # DEBUG BEGIN_STMT
+  _10 = 0B;
+
+  <bb 5> :
+  # _1 = PHI <_11(3), _10(4)>
+  state ={v} {CLOBBER};
+  return _1;
+
+}
+
+
+lwiperf_start_tcp_server_default (void (*lwiperf_report_fn) (void *, lwiperf_report_type, const struct ip_addr_t *, u16_t, const struct ip_addr_t *, u16_t, u32_t, u32_t, u32_t) report_fn, void * report_arg)
+{
+  void * _5;
+
+  <bb 2> :
+  # DEBUG BEGIN_STMT
+  _5 = lwiperf_start_tcp_server (&ip_addr_any, 5001, report_fn_2(D), report_arg_3(D));
+  return _5;
+
+}
+
+
+lwiperf_tcp_accept (void * arg, struct tcp_pcb * newpcb, err_t err)
+{
+  struct lwiperf_state_tcp_t * conn;
+  struct lwiperf_state_tcp_t * s;
+  unsigned char _1;
+  struct tcp_pcb * _2;
+  struct tcp_pcb * _3;
+  unsigned char _4;
+  struct lwiperf_state_base_t * _5;
+  unsigned char _6;
+  unsigned char _7;
+  unsigned char _8;
+  long unsigned int _9;
+  long unsigned int _10;
+  long unsigned int _11;
+  long unsigned int _12;
+  long unsigned int _13;
+  long unsigned int _14;
+  long unsigned int _15;
+  long unsigned int _16;
+  unsigned char _17;
+  unsigned char _18;
+  long unsigned int _19;
+  long unsigned int _20;
+  struct lwiperf_state_base_t * _21;
+  struct lwiperf_state_base_t * _22;
+  long unsigned int _23;
+  void (*<T639>) (void *, lwiperf_report_type, const struct ip_addr_t *, u16_t, const struct ip_addr_t *, u16_t, u32_t, u32_t, u32_t) _24;
+  void * _25;
+  struct tcp_pcb * _26;
+  unsigned char _27;
+  struct lwiperf_state_base_t * _28;
+  unsigned char _29;
+  struct lwiperf_state_base_t * _30;
+  struct lwiperf_state_base_t * _31;
+  struct lwiperf_state_base_t * _32;
+  err_t _33;
+  _Bool iftmp.0_34;
+  _Bool iftmp.1_35;
+  int iftmp.2_36;
+  _Bool iftmp.0_51;
+  _Bool iftmp.1_52;
+  int iftmp.2_53;
+  int iftmp.2_54;
+  _Bool iftmp.1_55;
+  _Bool iftmp.0_56;
+  err_t _57;
+  err_t _79;
+  err_t _80;
+  err_t _84;
+
+  <bb 2> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  if (err_45(D) != 0)
+    goto <bb 5>; [INV]
+  else
+    goto <bb 3>; [INV]
+
+  <bb 3> :
+  if (newpcb_46(D) == 0B)
+    goto <bb 5>; [INV]
+  else
+    goto <bb 4>; [INV]
+
+  <bb 4> :
+  if (arg_47(D) == 0B)
+    goto <bb 5>; [INV]
+  else
+    goto <bb 6>; [INV]
+
+  <bb 5> :
+  # DEBUG BEGIN_STMT
+  _84 = -6;
+  // predicted unlikely by early return (on trees) predictor.
+  goto <bb 39>; [INV]
+
+  <bb 6> :
+  # DEBUG BEGIN_STMT
+  s_48 = arg_47(D);
+  # DEBUG s => s_48
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _1 = s_48->base.server;
+  if (_1 == 0)
+    goto <bb 7>; [INV]
+  else
+    goto <bb 8>; [INV]
+
+  <bb 7> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  __asm__ __volatile__("BKPT #0
+	");
+  # DEBUG BEGIN_STMT
+  goto <bb 7>; [INV]
+
+  <bb 8> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _2 = s_48->server_pcb;
+  if (_2 == 0B)
+    goto <bb 9>; [INV]
+  else
+    goto <bb 10>; [INV]
+
+  <bb 9> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  __asm__ __volatile__("BKPT #0
+	");
+  # DEBUG BEGIN_STMT
+  goto <bb 9>; [INV]
+
+  <bb 10> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _3 = s_48->conn_pcb;
+  if (_3 != 0B)
+    goto <bb 11>; [INV]
+  else
+    goto <bb 12>; [INV]
+
+  <bb 11> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  __asm__ __volatile__("BKPT #0
+	");
+  # DEBUG BEGIN_STMT
+  goto <bb 11>; [INV]
+
+  <bb 12> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _4 = s_48->specific_remote;
+  if (_4 != 0)
+    goto <bb 13>; [INV]
+  else
+    goto <bb 30>; [INV]
+
+  <bb 13> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _5 = s_48->base.related_master_state;
+  if (_5 == 0B)
+    goto <bb 14>; [INV]
+  else
+    goto <bb 15>; [INV]
+
+  <bb 14> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  __asm__ __volatile__("BKPT #0
+	");
+  # DEBUG BEGIN_STMT
+  goto <bb 14>; [INV]
+
+  <bb 15> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _6 = newpcb_46(D)->remote_ip.type;
+  _7 = s_48->remote_addr.type;
+  if (_6 == _7)
+    goto <bb 16>; [INV]
+  else
+    goto <bb 27>; [INV]
+
+  <bb 16> :
+  _8 = newpcb_46(D)->remote_ip.type;
+  if (_8 == 6)
+    goto <bb 17>; [INV]
+  else
+    goto <bb 25>; [INV]
+
+  <bb 17> :
+  _9 = newpcb_46(D)->remote_ip.u_addr.ip6.addr[0];
+  _10 = s_48->remote_addr.u_addr.ip6.addr[0];
+  if (_9 != _10)
+    goto <bb 22>; [INV]
+  else
+    goto <bb 18>; [INV]
+
+  <bb 18> :
+  _11 = newpcb_46(D)->remote_ip.u_addr.ip6.addr[1];
+  _12 = s_48->remote_addr.u_addr.ip6.addr[1];
+  if (_11 != _12)
+    goto <bb 22>; [INV]
+  else
+    goto <bb 19>; [INV]
+
+  <bb 19> :
+  _13 = newpcb_46(D)->remote_ip.u_addr.ip6.addr[2];
+  _14 = s_48->remote_addr.u_addr.ip6.addr[2];
+  if (_13 != _14)
+    goto <bb 22>; [INV]
+  else
+    goto <bb 20>; [INV]
+
+  <bb 20> :
+  _15 = newpcb_46(D)->remote_ip.u_addr.ip6.addr[3];
+  _16 = s_48->remote_addr.u_addr.ip6.addr[3];
+  if (_15 != _16)
+    goto <bb 22>; [INV]
+  else
+    goto <bb 21>; [INV]
+
+  <bb 21> :
+  _17 = newpcb_46(D)->remote_ip.u_addr.ip6.zone;
+  _18 = s_48->remote_addr.u_addr.ip6.zone;
+  if (_17 != _18)
+    goto <bb 22>; [INV]
+  else
+    goto <bb 23>; [INV]
+
+  <bb 22> :
+  iftmp.2_54 = 1;
+  goto <bb 24>; [INV]
+
+  <bb 23> :
+  iftmp.2_53 = 0;
+
+  <bb 24> :
+  # iftmp.2_36 = PHI <iftmp.2_54(22), iftmp.2_53(23)>
+  iftmp.1_55 = (_Bool) iftmp.2_36;
+  goto <bb 26>; [INV]
+
+  <bb 25> :
+  _19 = newpcb_46(D)->remote_ip.u_addr.ip4.addr;
+  _20 = s_48->remote_addr.u_addr.ip4.addr;
+  iftmp.1_52 = _19 != _20;
+
+  <bb 26> :
+  # iftmp.1_35 = PHI <iftmp.1_55(24), iftmp.1_52(25)>
+  iftmp.0_56 = iftmp.1_35;
+  goto <bb 28>; [INV]
+
+  <bb 27> :
+  iftmp.0_51 = 1;
+
+  <bb 28> :
+  # iftmp.0_34 = PHI <iftmp.0_56(26), iftmp.0_51(27)>
+  if (iftmp.0_34 != 0)
+    goto <bb 29>; [INV]
+  else
+    goto <bb 32>; [INV]
+
+  <bb 29> :
+  # DEBUG BEGIN_STMT
+  _57 = -6;
+  // predicted unlikely by early return (on trees) predictor.
+  goto <bb 39>; [INV]
+
+  <bb 30> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _21 = s_48->base.related_master_state;
+  if (_21 != 0B)
+    goto <bb 31>; [INV]
+  else
+    goto <bb 32>; [INV]
+
+  <bb 31> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  __asm__ __volatile__("BKPT #0
+	");
+  # DEBUG BEGIN_STMT
+  goto <bb 31>; [INV]
+
+  <bb 32> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  conn_60 = mem_malloc (92);
+  # DEBUG conn => conn_60
+  # DEBUG BEGIN_STMT
+  if (conn_60 == 0B)
+    goto <bb 33>; [INV]
+  else
+    goto <bb 34>; [INV]
+
+  <bb 33> :
+  # DEBUG BEGIN_STMT
+  _80 = -1;
+  // predicted unlikely by early return (on trees) predictor.
+  goto <bb 39>; [INV]
+
+  <bb 34> :
+  # DEBUG BEGIN_STMT
+  memset (conn_60, 0, 92);
+  # DEBUG BEGIN_STMT
+  conn_60->base.tcp = 1;
+  # DEBUG BEGIN_STMT
+  conn_60->base.server = 1;
+  # DEBUG BEGIN_STMT
+  _22 = &s_48->base;
+  conn_60->base.related_master_state = _22;
+  # DEBUG BEGIN_STMT
+  conn_60->conn_pcb = newpcb_46(D);
+  # DEBUG BEGIN_STMT
+  _23 = sys_now ();
+  conn_60->time_started = _23;
+  # DEBUG BEGIN_STMT
+  _24 = s_48->report_fn;
+  conn_60->report_fn = _24;
+  # DEBUG BEGIN_STMT
+  _25 = s_48->report_arg;
+  conn_60->report_arg = _25;
+  # DEBUG BEGIN_STMT
+  tcp_arg (newpcb_46(D), conn_60);
+  # DEBUG BEGIN_STMT
+  tcp_recv (newpcb_46(D), lwiperf_tcp_recv);
+  # DEBUG BEGIN_STMT
+  tcp_poll (newpcb_46(D), lwiperf_tcp_poll, 2);
+  # DEBUG BEGIN_STMT
+  _26 = conn_60->conn_pcb;
+  tcp_err (_26, lwiperf_tcp_err);
+  # DEBUG BEGIN_STMT
+  _27 = s_48->specific_remote;
+  if (_27 != 0)
+    goto <bb 35>; [INV]
+  else
+    goto <bb 38>; [INV]
+
+  <bb 35> :
+  # DEBUG BEGIN_STMT
+  _28 = s_48->base.related_master_state;
+  conn_60->base.related_master_state = _28;
+  # DEBUG BEGIN_STMT
+  _29 = s_48->client_tradeoff_mode;
+  if (_29 == 0)
+    goto <bb 37>; [INV]
+  else
+    goto <bb 36>; [INV]
+
+  <bb 36> :
+  _30 = s_48->base.related_master_state;
+  _31 = lwiperf_list_find (_30);
+  if (_31 == 0B)
+    goto <bb 37>; [INV]
+  else
+    goto <bb 38>; [INV]
+
+  <bb 37> :
+  # DEBUG BEGIN_STMT
+  s_48->report_fn = 0B;
+  # DEBUG BEGIN_STMT
+  lwiperf_tcp_close (s_48, 2);
+
+  <bb 38> :
+  # DEBUG BEGIN_STMT
+  _32 = &conn_60->base;
+  lwiperf_list_add (_32);
+  # DEBUG BEGIN_STMT
+  _79 = 0;
+
+  <bb 39> :
+  # _33 = PHI <_84(5), _57(29), _80(33), _79(38)>
+  return _33;
+
+}
+
+
+lwiperf_tcp_poll (void * arg, struct tcp_pcb * tpcb)
+{
+  struct lwiperf_state_tcp_t * conn;
+  struct tcp_pcb * _1;
+  unsigned char _2;
+  unsigned char _3;
+  unsigned char _4;
+  unsigned char _5;
+  err_t _6;
+  err_t _16;
+  err_t _18;
+
+  <bb 2> :
+  # DEBUG BEGIN_STMT
+  conn_11 = arg_10(D);
+  # DEBUG conn => conn_11
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _1 = conn_11->conn_pcb;
+  if (tpcb_13(D) != _1)
+    goto <bb 3>; [INV]
+  else
+    goto <bb 4>; [INV]
+
+  <bb 3> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  __asm__ __volatile__("BKPT #0
+	");
+  # DEBUG BEGIN_STMT
+  goto <bb 3>; [INV]
+
+  <bb 4> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _2 = conn_11->poll_count;
+  _3 = _2 + 1;
+  conn_11->poll_count = _3;
+  _4 = conn_11->poll_count;
+  if (_4 > 9)
+    goto <bb 5>; [INV]
+  else
+    goto <bb 6>; [INV]
+
+  <bb 5> :
+  # DEBUG BEGIN_STMT
+  lwiperf_tcp_close (conn_11, 2);
+  # DEBUG BEGIN_STMT
+  _18 = 0;
+  // predicted unlikely by early return (on trees) predictor.
+  goto <bb 9>; [INV]
+
+  <bb 6> :
+  # DEBUG BEGIN_STMT
+  _5 = conn_11->base.server;
+  if (_5 == 0)
+    goto <bb 7>; [INV]
+  else
+    goto <bb 8>; [INV]
+
+  <bb 7> :
+  # DEBUG BEGIN_STMT
+  lwiperf_tcp_client_send_more (conn_11);
+
+  <bb 8> :
+  # DEBUG BEGIN_STMT
+  _16 = 0;
+
+  <bb 9> :
+  # _6 = PHI <_18(5), _16(8)>
+  return _6;
+
+}
+
+
+lwiperf_tcp_err (void * arg, err_t err)
+{
+  struct lwiperf_state_tcp_t * conn;
+
+  <bb 2> :
+  # DEBUG BEGIN_STMT
+  conn_2 = arg_1(D);
+  # DEBUG conn => conn_2
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  lwiperf_tcp_close (conn_2, 5);
+  return;
+
+}
+
+
+lwiperf_tcp_recv (void * arg, struct tcp_pcb * tpcb, struct pbuf * p, err_t err)
+{
+  err_t err2;
+  struct lwiperf_state_tcp_t * conn;
+  struct pbuf * q;
+  u32_t packet_idx;
+  u16_t tot_len;
+  u8_t tmp;
+  struct tcp_pcb * _1;
+  long unsigned int _2;
+  long unsigned int _3;
+  long unsigned int _4;
+  long unsigned int _5;
+  unsigned char _6;
+  long unsigned int _7;
+  long unsigned int _8;
+  long unsigned int _9;
+  short unsigned int _10;
+  unsigned char _11;
+  struct lwiperf_settings_t * _12;
+  short unsigned int _13;
+  long unsigned int _14;
+  long unsigned int _15;
+  long unsigned int _16;
+  long unsigned int _17;
+  long unsigned int _18;
+  long unsigned int _19;
+  struct lwiperf_settings_t * _20;
+  short unsigned int _21;
+  long unsigned int _22;
+  long unsigned int _23;
+  long unsigned int _24;
+  long unsigned int _25;
+  short unsigned int _26;
+  short unsigned int _27;
+  long unsigned int _28;
+  short unsigned int _29;
+  long unsigned int _30;
+  long unsigned int _31;
+  long unsigned int _32;
+  err_t _35;
+  err_t _54;
+  err_t _61;
+  err_t _64;
+  err_t _74;
+  err_t _77;
+  err_t _83;
+  err_t _89;
+  err_t _91;
+
+  <bb 2> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  conn_44 = arg_43(D);
+  # DEBUG conn => conn_44
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _1 = conn_44->conn_pcb;
+  if (tpcb_46(D) != _1)
+    goto <bb 3>; [INV]
+  else
+    goto <bb 4>; [INV]
+
+  <bb 3> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  __asm__ __volatile__("BKPT #0
+	");
+  # DEBUG BEGIN_STMT
+  goto <bb 3>; [INV]
+
+  <bb 4> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  if (err_47(D) != 0)
+    goto <bb 5>; [INV]
+  else
+    goto <bb 6>; [INV]
+
+  <bb 5> :
+  # DEBUG BEGIN_STMT
+  lwiperf_tcp_close (conn_44, 5);
+  # DEBUG BEGIN_STMT
+  _91 = 0;
+  // predicted unlikely by early return (on trees) predictor.
+  goto <bb 35>; [INV]
+
+  <bb 6> :
+  # DEBUG BEGIN_STMT
+  if (p_48(D) == 0B)
+    goto <bb 7>; [INV]
+  else
+    goto <bb 11>; [INV]
+
+  <bb 7> :
+  # DEBUG BEGIN_STMT
+  _2 = conn_44->settings.flags;
+  _3 = _2 & 128;
+  if (_3 != 0)
+    goto <bb 8>; [INV]
+  else
+    goto <bb 10>; [INV]
+
+  <bb 8> :
+  # DEBUG BEGIN_STMT
+  _4 = conn_44->settings.flags;
+  _5 = _4 & 16777216;
+  if (_5 == 0)
+    goto <bb 9>; [INV]
+  else
+    goto <bb 10>; [INV]
+
+  <bb 9> :
+  # DEBUG BEGIN_STMT
+  lwiperf_tx_start_passive (conn_44);
+
+  <bb 10> :
+  # DEBUG BEGIN_STMT
+  lwiperf_tcp_close (conn_44, 0);
+  # DEBUG BEGIN_STMT
+  _89 = 0;
+  // predicted unlikely by early return (on trees) predictor.
+  goto <bb 35>; [INV]
+
+  <bb 11> :
+  # DEBUG BEGIN_STMT
+  tot_len_49 = p_48(D)->tot_len;
+  # DEBUG tot_len => tot_len_49
+  # DEBUG BEGIN_STMT
+  conn_44->poll_count = 0;
+  # DEBUG BEGIN_STMT
+  _6 = conn_44->have_settings_buf;
+  if (_6 == 0)
+    goto <bb 13>; [INV]
+  else
+    goto <bb 12>; [INV]
+
+  <bb 12> :
+  _7 = conn_44->bytes_transferred;
+  _8 = _7 + 4294967272;
+  _9 = _8 & 131071;
+  if (_9 == 0)
+    goto <bb 13>; [INV]
+  else
+    goto <bb 29>; [INV]
+
+  <bb 13> :
+  # DEBUG BEGIN_STMT
+  _10 = p_48(D)->tot_len;
+  if (_10 <= 23)
+    goto <bb 14>; [INV]
+  else
+    goto <bb 15>; [INV]
+
+  <bb 14> :
+  # DEBUG BEGIN_STMT
+  lwiperf_tcp_close (conn_44, 3);
+  # DEBUG BEGIN_STMT
+  pbuf_free (p_48(D));
+  # DEBUG BEGIN_STMT
+  _77 = 0;
+  // predicted unlikely by early return (on trees) predictor.
+  goto <bb 35>; [INV]
+
+  <bb 15> :
+  # DEBUG BEGIN_STMT
+  _11 = conn_44->have_settings_buf;
+  if (_11 == 0)
+    goto <bb 16>; [INV]
+  else
+    goto <bb 22>; [INV]
+
+  <bb 16> :
+  # DEBUG BEGIN_STMT
+  _12 = &conn_44->settings;
+  _13 = pbuf_copy_partial (p_48(D), _12, 24, 0);
+  if (_13 != 24)
+    goto <bb 17>; [INV]
+  else
+    goto <bb 18>; [INV]
+
+  <bb 17> :
+  # DEBUG BEGIN_STMT
+  lwiperf_tcp_close (conn_44, 2);
+  # DEBUG BEGIN_STMT
+  pbuf_free (p_48(D));
+  # DEBUG BEGIN_STMT
+  _64 = 0;
+  // predicted unlikely by early return (on trees) predictor.
+  goto <bb 35>; [INV]
+
+  <bb 18> :
+  # DEBUG BEGIN_STMT
+  conn_44->have_settings_buf = 1;
+  # DEBUG BEGIN_STMT
+  _14 = conn_44->settings.flags;
+  _15 = _14 & 128;
+  if (_15 != 0)
+    goto <bb 19>; [INV]
+  else
+    goto <bb 25>; [INV]
+
+  <bb 19> :
+  # DEBUG BEGIN_STMT
+  _16 = conn_44->settings.flags;
+  _17 = _16 & 16777216;
+  if (_17 != 0)
+    goto <bb 20>; [INV]
+  else
+    goto <bb 25>; [INV]
+
+  <bb 20> :
+  # DEBUG BEGIN_STMT
+  err2_58 = lwiperf_tx_start_passive (conn_44);
+  # DEBUG err2 => err2_58
+  # DEBUG BEGIN_STMT
+  if (err2_58 != 0)
+    goto <bb 21>; [INV]
+  else
+    goto <bb 25>; [INV]
+
+  <bb 21> :
+  # DEBUG BEGIN_STMT
+  lwiperf_tcp_close (conn_44, 4);
+  # DEBUG BEGIN_STMT
+  pbuf_free (p_48(D));
+  # DEBUG BEGIN_STMT
+  _61 = 0;
+  // predicted unlikely by early return (on trees) predictor.
+  goto <bb 35>; [INV]
+
+  <bb 22> :
+  # DEBUG BEGIN_STMT
+  _18 = conn_44->settings.flags;
+  _19 = _18 & 128;
+  if (_19 != 0)
+    goto <bb 23>; [INV]
+  else
+    goto <bb 25>; [INV]
+
+  <bb 23> :
+  # DEBUG BEGIN_STMT
+  _20 = &conn_44->settings;
+  _21 = pbuf_memcmp (p_48(D), 0, _20, 24);
+  if (_21 != 0)
+    goto <bb 24>; [INV]
+  else
+    goto <bb 25>; [INV]
+
+  <bb 24> :
+  # DEBUG BEGIN_STMT
+  lwiperf_tcp_close (conn_44, 3);
+  # DEBUG BEGIN_STMT
+  pbuf_free (p_48(D));
+  # DEBUG BEGIN_STMT
+  _54 = 0;
+  // predicted unlikely by early return (on trees) predictor.
+  goto <bb 35>; [INV]
+
+  <bb 25> :
+  # DEBUG BEGIN_STMT
+  _22 = conn_44->bytes_transferred;
+  _23 = _22 + 24;
+  conn_44->bytes_transferred = _23;
+  # DEBUG BEGIN_STMT
+  _24 = conn_44->bytes_transferred;
+  if (_24 <= 24)
+    goto <bb 26>; [INV]
+  else
+    goto <bb 27>; [INV]
+
+  <bb 26> :
+  # DEBUG BEGIN_STMT
+  _25 = sys_now ();
+  conn_44->time_started = _25;
+  # DEBUG BEGIN_STMT
+  _26 = p_48(D)->tot_len;
+  tcp_recved (tpcb_46(D), _26);
+  # DEBUG BEGIN_STMT
+  pbuf_free (p_48(D));
+  # DEBUG BEGIN_STMT
+  _74 = 0;
+  // predicted unlikely by early return (on trees) predictor.
+  goto <bb 35>; [INV]
+
+  <bb 27> :
+  # DEBUG BEGIN_STMT
+  conn_44->next_num = 4;
+  # DEBUG BEGIN_STMT
+  tmp_68 = pbuf_remove_header (p_48(D), 24);
+  # DEBUG tmp => tmp_68
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  if (tmp_68 != 0)
+    goto <bb 28>; [INV]
+  else
+    goto <bb 29>; [INV]
+
+  <bb 28> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  __asm__ __volatile__("BKPT #0
+	");
+  # DEBUG BEGIN_STMT
+  goto <bb 28>; [INV]
+
+  <bb 29> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  packet_idx_78 = 0;
+  # DEBUG packet_idx => packet_idx_78
+  # DEBUG BEGIN_STMT
+  q_79 = p_48(D);
+  # DEBUG q => q_79
+  goto <bb 31>; [INV]
+
+  <bb 30> :
+  # DEBUG BEGIN_STMT
+  _27 = q_34->len;
+  _28 = (long unsigned int) _27;
+  packet_idx_85 = packet_idx_33 + _28;
+  # DEBUG packet_idx => packet_idx_85
+  # DEBUG BEGIN_STMT
+  q_86 = q_34->next;
+  # DEBUG q => q_86
+
+  <bb 31> :
+  # packet_idx_33 = PHI <packet_idx_78(29), packet_idx_85(30)>
+  # q_34 = PHI <q_79(29), q_86(30)>
+  # DEBUG q => q_34
+  # DEBUG packet_idx => packet_idx_33
+  # DEBUG BEGIN_STMT
+  if (q_34 != 0B)
+    goto <bb 30>; [INV]
+  else
+    goto <bb 32>; [INV]
+
+  <bb 32> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _29 = p_48(D)->tot_len;
+  _30 = (long unsigned int) _29;
+  if (packet_idx_33 != _30)
+    goto <bb 33>; [INV]
+  else
+    goto <bb 34>; [INV]
+
+  <bb 33> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  __asm__ __volatile__("BKPT #0
+	");
+  # DEBUG BEGIN_STMT
+  goto <bb 33>; [INV]
+
+  <bb 34> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _31 = conn_44->bytes_transferred;
+  _32 = packet_idx_33 + _31;
+  conn_44->bytes_transferred = _32;
+  # DEBUG BEGIN_STMT
+  tcp_recved (tpcb_46(D), tot_len_49);
+  # DEBUG BEGIN_STMT
+  pbuf_free (p_48(D));
+  # DEBUG BEGIN_STMT
+  _83 = 0;
+
+  <bb 35> :
+  # _35 = PHI <_91(5), _89(10), _77(14), _64(17), _61(21), _54(24), _74(26), _83(34)>
+  return _35;
+
+}
+
+
+lwiperf_tx_start_passive (struct lwiperf_state_tcp_t * conn)
+{
+  u16_t remote_port;
+  struct lwiperf_state_tcp_t * new_conn;
+  err_t ret;
+  long unsigned int _1;
+  long unsigned int _2;
+  struct tcp_pcb * _3;
+  struct ip_addr_t * _4;
+  struct lwiperf_settings_t * _5;
+  void (*<T639>) (void *, lwiperf_report_type, const struct ip_addr_t *, u16_t, const struct ip_addr_t *, u16_t, u32_t, u32_t, u32_t) _6;
+  void * _7;
+  struct lwiperf_state_base_t * _8;
+  struct lwiperf_state_tcp_t * new_conn.3_9;
+  struct lwiperf_state_tcp_t * new_conn.4_10;
+  err_t _22;
+
+  <bb 2> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  new_conn = 0B;
+  # DEBUG BEGIN_STMT
+  _1 = conn_15(D)->settings.remote_port;
+  _2 = lwip_htonl (_1);
+  remote_port_17 = (u16_t) _2;
+  # DEBUG remote_port => remote_port_17
+  # DEBUG BEGIN_STMT
+  _3 = conn_15(D)->conn_pcb;
+  _4 = &_3->remote_ip;
+  _5 = &conn_15(D)->settings;
+  _6 = conn_15(D)->report_fn;
+  _7 = conn_15(D)->report_arg;
+  _8 = conn_15(D)->base.related_master_state;
+  ret_19 = lwiperf_tx_start_impl (_4, remote_port_17, _5, _6, _7, _8, &new_conn);
+  # DEBUG ret => ret_19
+  # DEBUG BEGIN_STMT
+  if (ret_19 == 0)
+    goto <bb 3>; [INV]
+  else
+    goto <bb 6>; [INV]
+
+  <bb 3> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  new_conn.3_9 = new_conn;
+  if (new_conn.3_9 == 0B)
+    goto <bb 4>; [INV]
+  else
+    goto <bb 5>; [INV]
+
+  <bb 4> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  __asm__ __volatile__("BKPT #0
+	");
+  # DEBUG BEGIN_STMT
+  goto <bb 4>; [INV]
+
+  <bb 5> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  new_conn.4_10 = new_conn;
+  new_conn.4_10->settings.flags = 0;
+
+  <bb 6> :
+  # DEBUG BEGIN_STMT
+  _22 = ret_19;
+  new_conn ={v} {CLOBBER};
+  return _22;
+
+}
+
+
+lwiperf_tx_start_impl (const struct ip_addr_t * remote_ip, u16_t remote_port, struct lwiperf_settings_t * settings, void (*lwiperf_report_fn) (void *, lwiperf_report_type, const struct ip_addr_t *, u16_t, const struct ip_addr_t *, u16_t, u32_t, u32_t, u32_t) report_fn, void * report_arg, struct lwiperf_state_base_t * related_master_state, struct lwiperf_state_tcp_t * * new_conn)
+{
+  struct ip_addr_t remote_addr;
+  struct tcp_pcb * newpcb;
+  struct lwiperf_state_tcp_t * client_conn;
+  err_t err;
+  unsigned char _1;
+  long unsigned int _2;
+  struct lwiperf_settings_t * _3;
+  unsigned char _4;
+  unsigned char _5;
+  long unsigned int _6;
+  long unsigned int _7;
+  long unsigned int _8;
+  long unsigned int _9;
+  unsigned char _10;
+  long unsigned int _11;
+  long unsigned int _12;
+  long unsigned int _13;
+  struct lwiperf_state_base_t * _14;
+  err_t _15;
+  err_t _65;
+  err_t _67;
+  err_t _69;
+  err_t _70;
+
+  <bb 2> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  if (remote_ip_21(D) == 0B)
+    goto <bb 3>; [INV]
+  else
+    goto <bb 4>; [INV]
+
+  <bb 3> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  __asm__ __volatile__("BKPT #0
+	");
+  # DEBUG BEGIN_STMT
+  goto <bb 3>; [INV]
+
+  <bb 4> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  if (settings_23(D) == 0B)
+    goto <bb 5>; [INV]
+  else
+    goto <bb 6>; [INV]
+
+  <bb 5> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  __asm__ __volatile__("BKPT #0
+	");
+  # DEBUG BEGIN_STMT
+  goto <bb 5>; [INV]
+
+  <bb 6> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  if (new_conn_24(D) == 0B)
+    goto <bb 7>; [INV]
+  else
+    goto <bb 8>; [INV]
+
+  <bb 7> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  __asm__ __volatile__("BKPT #0
+	");
+  # DEBUG BEGIN_STMT
+  goto <bb 7>; [INV]
+
+  <bb 8> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  *new_conn_24(D) = 0B;
+  # DEBUG BEGIN_STMT
+  client_conn_27 = mem_malloc (92);
+  # DEBUG client_conn => client_conn_27
+  # DEBUG BEGIN_STMT
+  if (client_conn_27 == 0B)
+    goto <bb 9>; [INV]
+  else
+    goto <bb 10>; [INV]
+
+  <bb 9> :
+  # DEBUG BEGIN_STMT
+  _70 = -1;
+  // predicted unlikely by early return (on trees) predictor.
+  goto <bb 18>; [INV]
+
+  <bb 10> :
+  # DEBUG BEGIN_STMT
+  _1 = remote_ip_21(D)->type;
+  newpcb_29 = tcp_new_ip_type (_1);
+  # DEBUG newpcb => newpcb_29
+  # DEBUG BEGIN_STMT
+  if (newpcb_29 == 0B)
+    goto <bb 11>; [INV]
+  else
+    goto <bb 12>; [INV]
+
+  <bb 11> :
+  # DEBUG BEGIN_STMT
+  mem_free (client_conn_27);
+  # DEBUG BEGIN_STMT
+  _69 = -1;
+  // predicted unlikely by early return (on trees) predictor.
+  goto <bb 18>; [INV]
+
+  <bb 12> :
+  # DEBUG BEGIN_STMT
+  memset (client_conn_27, 0, 92);
+  # DEBUG BEGIN_STMT
+  client_conn_27->base.tcp = 1;
+  # DEBUG BEGIN_STMT
+  client_conn_27->base.related_master_state = related_master_state_32(D);
+  # DEBUG BEGIN_STMT
+  client_conn_27->conn_pcb = newpcb_29;
+  # DEBUG BEGIN_STMT
+  _2 = sys_now ();
+  client_conn_27->time_started = _2;
+  # DEBUG BEGIN_STMT
+  client_conn_27->report_fn = report_fn_37(D);
+  # DEBUG BEGIN_STMT
+  client_conn_27->report_arg = report_arg_39(D);
+  # DEBUG BEGIN_STMT
+  client_conn_27->next_num = 4;
+  # DEBUG BEGIN_STMT
+  client_conn_27->bytes_transferred = 0;
+  # DEBUG BEGIN_STMT
+  _3 = &client_conn_27->settings;
+  memcpy (_3, settings_23(D), 24);
+  # DEBUG BEGIN_STMT
+  client_conn_27->have_settings_buf = 1;
+  # DEBUG BEGIN_STMT
+  tcp_arg (newpcb_29, client_conn_27);
+  # DEBUG BEGIN_STMT
+  tcp_sent (newpcb_29, lwiperf_tcp_client_sent);
+  # DEBUG BEGIN_STMT
+  tcp_poll (newpcb_29, lwiperf_tcp_poll, 2);
+  # DEBUG BEGIN_STMT
+  tcp_err (newpcb_29, lwiperf_tcp_err);
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _4 = remote_ip_21(D)->type;
+  remote_addr.type = _4;
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _5 = remote_ip_21(D)->type;
+  if (_5 == 6)
+    goto <bb 13>; [INV]
+  else
+    goto <bb 14>; [INV]
+
+  <bb 13> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _6 = remote_ip_21(D)->u_addr.ip6.addr[0];
+  remote_addr.u_addr.ip6.addr[0] = _6;
+  # DEBUG BEGIN_STMT
+  _7 = remote_ip_21(D)->u_addr.ip6.addr[1];
+  remote_addr.u_addr.ip6.addr[1] = _7;
+  # DEBUG BEGIN_STMT
+  _8 = remote_ip_21(D)->u_addr.ip6.addr[2];
+  remote_addr.u_addr.ip6.addr[2] = _8;
+  # DEBUG BEGIN_STMT
+  _9 = remote_ip_21(D)->u_addr.ip6.addr[3];
+  remote_addr.u_addr.ip6.addr[3] = _9;
+  # DEBUG BEGIN_STMT
+  _10 = remote_ip_21(D)->u_addr.ip6.zone;
+  remote_addr.u_addr.ip6.zone = _10;
+  # DEBUG BEGIN_STMT
+  goto <bb 15>; [INV]
+
+  <bb 14> :
+  # DEBUG BEGIN_STMT
+  _11 = remote_ip_21(D)->u_addr.ip4.addr;
+  remote_addr.u_addr.ip4.addr = _11;
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  remote_addr.u_addr.ip6.addr[3] = 0;
+  _12 = remote_addr.u_addr.ip6.addr[3];
+  remote_addr.u_addr.ip6.addr[2] = _12;
+  _13 = remote_addr.u_addr.ip6.addr[2];
+  remote_addr.u_addr.ip6.addr[1] = _13;
+  # DEBUG BEGIN_STMT
+  remote_addr.u_addr.ip6.zone = 0;
+
+  <bb 15> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  err_62 = tcp_connect (newpcb_29, &remote_addr, remote_port_60(D), lwiperf_tcp_client_connected);
+  # DEBUG err => err_62
+  # DEBUG BEGIN_STMT
+  if (err_62 != 0)
+    goto <bb 16>; [INV]
+  else
+    goto <bb 17>; [INV]
+
+  <bb 16> :
+  # DEBUG BEGIN_STMT
+  lwiperf_tcp_close (client_conn_27, 2);
+  # DEBUG BEGIN_STMT
+  _67 = err_62;
+  // predicted unlikely by early return (on trees) predictor.
+  goto <bb 18>; [INV]
+
+  <bb 17> :
+  # DEBUG BEGIN_STMT
+  _14 = &client_conn_27->base;
+  lwiperf_list_add (_14);
+  # DEBUG BEGIN_STMT
+  *new_conn_24(D) = client_conn_27;
+  # DEBUG BEGIN_STMT
+  _65 = 0;
+
+  <bb 18> :
+  # _15 = PHI <_70(9), _69(11), _67(16), _65(17)>
+  remote_addr ={v} {CLOBBER};
+  return _15;
+
+}
+
+
+lwiperf_tcp_client_connected (void * arg, struct tcp_pcb * tpcb, err_t err)
+{
+  struct lwiperf_state_tcp_t * conn;
+  struct tcp_pcb * _1;
+  long unsigned int _2;
+  err_t _3;
+  err_t _15;
+  err_t _17;
+
+  <bb 2> :
+  # DEBUG BEGIN_STMT
+  conn_7 = arg_6(D);
+  # DEBUG conn => conn_7
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _1 = conn_7->conn_pcb;
+  if (tpcb_9(D) != _1)
+    goto <bb 3>; [INV]
+  else
+    goto <bb 4>; [INV]
+
+  <bb 3> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  __asm__ __volatile__("BKPT #0
+	");
+  # DEBUG BEGIN_STMT
+  goto <bb 3>; [INV]
+
+  <bb 4> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  if (err_10(D) != 0)
+    goto <bb 5>; [INV]
+  else
+    goto <bb 6>; [INV]
+
+  <bb 5> :
+  # DEBUG BEGIN_STMT
+  lwiperf_tcp_close (conn_7, 5);
+  # DEBUG BEGIN_STMT
+  _17 = 0;
+  // predicted unlikely by early return (on trees) predictor.
+  goto <bb 7>; [INV]
+
+  <bb 6> :
+  # DEBUG BEGIN_STMT
+  conn_7->poll_count = 0;
+  # DEBUG BEGIN_STMT
+  _2 = sys_now ();
+  conn_7->time_started = _2;
+  # DEBUG BEGIN_STMT
+  _15 = lwiperf_tcp_client_send_more (conn_7);
+
+  <bb 7> :
+  # _3 = PHI <_17(5), _15(6)>
+  return _3;
+
+}
+
+
+lwiperf_tcp_client_sent (void * arg, struct tcp_pcb * tpcb, u16_t len)
+{
+  struct lwiperf_state_tcp_t * conn;
+  struct tcp_pcb * _1;
+  err_t _9;
+
+  <bb 2> :
+  # DEBUG BEGIN_STMT
+  conn_4 = arg_3(D);
+  # DEBUG conn => conn_4
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _1 = conn_4->conn_pcb;
+  if (tpcb_6(D) != _1)
+    goto <bb 3>; [INV]
+  else
+    goto <bb 4>; [INV]
+
+  <bb 3> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  __asm__ __volatile__("BKPT #0
+	");
+  # DEBUG BEGIN_STMT
+  goto <bb 3>; [INV]
+
+  <bb 4> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  conn_4->poll_count = 0;
+  # DEBUG BEGIN_STMT
+  _9 = lwiperf_tcp_client_send_more (conn_4);
+  return _9;
+
+}
+
+
+lwiperf_tcp_client_send_more (struct lwiperf_state_tcp_t * conn)
+{
+  u32_t amount_bytes;
+  u32_t time_ms;
+  u32_t time;
+  u32_t diff_ms;
+  u32_t now;
+  u8_t apiflags;
+  void * txptr;
+  u16_t txlen_max;
+  u16_t txlen;
+  err_t err;
+  int send_more;
+  unsigned char _1;
+  unsigned char _2;
+  long unsigned int _3;
+  long unsigned int _4;
+  long unsigned int _5;
+  long unsigned int _6;
+  long unsigned int _7;
+  long int _8;
+  long int _9;
+  long unsigned int _10;
+  long unsigned int _11;
+  long unsigned int _12;
+  struct lwiperf_settings_t * _13;
+  long unsigned int _14;
+  long unsigned int _15;
+  short unsigned int _16;
+  long unsigned int _17;
+  struct lwiperf_settings_t * _18;
+  long unsigned int _19;
+  sizetype _20;
+  long unsigned int _21;
+  short unsigned int _22;
+  long unsigned int _23;
+  long unsigned int _24;
+  long unsigned int _25;
+  struct tcp_pcb * _26;
+  long unsigned int _27;
+  long unsigned int _28;
+  long unsigned int _29;
+  struct tcp_pcb * _30;
+  err_t _39;
+  err_t _52;
+  err_t _60;
+  err_t _80;
+
+  <bb 2> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  if (conn_46(D) == 0B)
+    goto <bb 5>; [INV]
+  else
+    goto <bb 3>; [INV]
+
+  <bb 3> :
+  _1 = conn_46(D)->base.tcp;
+  if (_1 == 0)
+    goto <bb 5>; [INV]
+  else
+    goto <bb 4>; [INV]
+
+  <bb 4> :
+  _2 = conn_46(D)->base.server;
+  if (_2 != 0)
+    goto <bb 5>; [INV]
+  else
+    goto <bb 6>; [INV]
+
+  <bb 5> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  __asm__ __volatile__("BKPT #0
+	");
+  # DEBUG BEGIN_STMT
+  goto <bb 5>; [INV]
+
+  <bb 6> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  send_more_48 = 0;
+  # DEBUG send_more => send_more_48
+  # DEBUG BEGIN_STMT
+  _3 = conn_46(D)->settings.amount;
+  _4 = _3 & 128;
+  if (_4 != 0)
+    goto <bb 7>; [INV]
+  else
+    goto <bb 9>; [INV]
+
+  <bb 7> :
+  # DEBUG BEGIN_STMT
+  now_54 = sys_now ();
+  # DEBUG now => now_54
+  # DEBUG BEGIN_STMT
+  _5 = conn_46(D)->time_started;
+  diff_ms_55 = now_54 - _5;
+  # DEBUG diff_ms => diff_ms_55
+  # DEBUG BEGIN_STMT
+  _6 = conn_46(D)->settings.amount;
+  _7 = lwip_htonl (_6);
+  _8 = (long int) _7;
+  _9 = -_8;
+  time_57 = (u32_t) _9;
+  # DEBUG time => time_57
+  # DEBUG BEGIN_STMT
+  time_ms_58 = time_57 * 10;
+  # DEBUG time_ms => time_ms_58
+  # DEBUG BEGIN_STMT
+  if (diff_ms_55 >= time_ms_58)
+    goto <bb 8>; [INV]
+  else
+    goto <bb 11>; [INV]
+
+  <bb 8> :
+  # DEBUG BEGIN_STMT
+  lwiperf_tcp_close (conn_46(D), 1);
+  # DEBUG BEGIN_STMT
+  _60 = 0;
+  // predicted unlikely by early return (on trees) predictor.
+  goto <bb 28>; [INV]
+
+  <bb 9> :
+  # DEBUG BEGIN_STMT
+  _10 = conn_46(D)->settings.amount;
+  amount_bytes_50 = lwip_htonl (_10);
+  # DEBUG amount_bytes => amount_bytes_50
+  # DEBUG BEGIN_STMT
+  _11 = conn_46(D)->bytes_transferred;
+  if (amount_bytes_50 >= _11)
+    goto <bb 10>; [INV]
+  else
+    goto <bb 11>; [INV]
+
+  <bb 10> :
+  # DEBUG BEGIN_STMT
+  lwiperf_tcp_close (conn_46(D), 1);
+  # DEBUG BEGIN_STMT
+  _52 = 0;
+  // predicted unlikely by early return (on trees) predictor.
+  goto <bb 28>; [INV]
+
+  <bb 11> :
+  # DEBUG BEGIN_STMT
+  _12 = conn_46(D)->bytes_transferred;
+  if (_12 <= 23)
+    goto <bb 12>; [INV]
+  else
+    goto <bb 13>; [INV]
+
+  <bb 12> :
+  # DEBUG BEGIN_STMT
+  _13 = &conn_46(D)->settings;
+  _14 = conn_46(D)->bytes_transferred;
+  txptr_70 = _13 + _14;
+  # DEBUG txptr => txptr_70
+  # DEBUG BEGIN_STMT
+  _15 = conn_46(D)->bytes_transferred;
+  _16 = (short unsigned int) _15;
+  txlen_max_71 = 24 - _16;
+  # DEBUG txlen_max => txlen_max_71
+  # DEBUG BEGIN_STMT
+  apiflags_72 = 1;
+  # DEBUG apiflags => apiflags_72
+  goto <bb 18>; [INV]
+
+  <bb 13> :
+  # DEBUG BEGIN_STMT
+  _17 = conn_46(D)->bytes_transferred;
+  if (_17 <= 47)
+    goto <bb 14>; [INV]
+  else
+    goto <bb 15>; [INV]
+
+  <bb 14> :
+  # DEBUG BEGIN_STMT
+  _18 = &conn_46(D)->settings;
+  _19 = conn_46(D)->bytes_transferred;
+  _20 = _19 + 4294967272;
+  txptr_66 = _18 + _20;
+  # DEBUG txptr => txptr_66
+  # DEBUG BEGIN_STMT
+  _21 = conn_46(D)->bytes_transferred;
+  _22 = (short unsigned int) _21;
+  txlen_max_67 = 48 - _22;
+  # DEBUG txlen_max => txlen_max_67
+  # DEBUG BEGIN_STMT
+  apiflags_68 = 3;
+  # DEBUG apiflags => apiflags_68
+  # DEBUG BEGIN_STMT
+  send_more_69 = 1;
+  # DEBUG send_more => send_more_69
+  goto <bb 18>; [INV]
+
+  <bb 15> :
+  # DEBUG BEGIN_STMT
+  _23 = conn_46(D)->bytes_transferred;
+  _24 = _23 % 10;
+  txptr_61 = &lwiperf_txbuf_const[_24];
+  # DEBUG txptr => txptr_61
+  # DEBUG BEGIN_STMT
+  txlen_max_62 = 1460;
+  # DEBUG txlen_max => txlen_max_62
+  # DEBUG BEGIN_STMT
+  _25 = conn_46(D)->bytes_transferred;
+  if (_25 == 48)
+    goto <bb 16>; [INV]
+  else
+    goto <bb 17>; [INV]
+
+  <bb 16> :
+  # DEBUG BEGIN_STMT
+  txlen_max_63 = 1436;
+  # DEBUG txlen_max => txlen_max_63
+
+  <bb 17> :
+  # txlen_max_35 = PHI <txlen_max_62(15), txlen_max_63(16)>
+  # DEBUG txlen_max => txlen_max_35
+  # DEBUG BEGIN_STMT
+  apiflags_64 = 0;
+  # DEBUG apiflags => apiflags_64
+  # DEBUG BEGIN_STMT
+  send_more_65 = 1;
+  # DEBUG send_more => send_more_65
+
+  <bb 18> :
+  # send_more_31 = PHI <send_more_48(12), send_more_69(14), send_more_65(17)>
+  # txlen_max_36 = PHI <txlen_max_71(12), txlen_max_67(14), txlen_max_35(17)>
+  # txptr_37 = PHI <txptr_70(12), txptr_66(14), txptr_61(17)>
+  # apiflags_38 = PHI <apiflags_72(12), apiflags_68(14), apiflags_64(17)>
+  # DEBUG apiflags => apiflags_38
+  # DEBUG txptr => txptr_37
+  # DEBUG txlen_max => txlen_max_36
+  # DEBUG send_more => send_more_31
+  # DEBUG BEGIN_STMT
+  txlen_73 = txlen_max_36;
+  # DEBUG txlen => txlen_73
+
+  <bb 19> :
+  # txlen_33 = PHI <txlen_73(18), txlen_34(22)>
+  # DEBUG txlen => txlen_33
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _26 = conn_46(D)->conn_pcb;
+  err_75 = tcp_write (_26, txptr_37, txlen_33, apiflags_38);
+  # DEBUG err => err_75
+  # DEBUG BEGIN_STMT
+  if (err_75 == -1)
+    goto <bb 20>; [INV]
+  else
+    goto <bb 21>; [INV]
+
+  <bb 20> :
+  # DEBUG BEGIN_STMT
+  txlen_76 = txlen_33 / 2;
+  # DEBUG txlen => txlen_76
+
+  <bb 21> :
+  # txlen_34 = PHI <txlen_33(19), txlen_76(20)>
+  # DEBUG txlen => txlen_34
+  # DEBUG BEGIN_STMT
+  if (err_75 == -1)
+    goto <bb 22>; [INV]
+  else
+    goto <bb 23>; [INV]
+
+  <bb 22> :
+  if (txlen_34 > 729)
+    goto <bb 19>; [INV]
+  else
+    goto <bb 23>; [INV]
+
+  <bb 23> :
+  # DEBUG BEGIN_STMT
+  if (err_75 == 0)
+    goto <bb 24>; [INV]
+  else
+    goto <bb 25>; [INV]
+
+  <bb 24> :
+  # DEBUG BEGIN_STMT
+  _27 = conn_46(D)->bytes_transferred;
+  _28 = (long unsigned int) txlen_34;
+  _29 = _27 + _28;
+  conn_46(D)->bytes_transferred = _29;
+  goto <bb 26>; [INV]
+
+  <bb 25> :
+  # DEBUG BEGIN_STMT
+  send_more_77 = 0;
+  # DEBUG send_more => send_more_77
+
+  <bb 26> :
+  # send_more_32 = PHI <send_more_31(24), send_more_77(25)>
+  # DEBUG send_more => send_more_32
+  # DEBUG BEGIN_STMT
+  if (send_more_32 != 0)
+    goto <bb 6>; [INV]
+  else
+    goto <bb 27>; [INV]
+
+  <bb 27> :
+  # DEBUG BEGIN_STMT
+  _30 = conn_46(D)->conn_pcb;
+  tcp_output (_30);
+  # DEBUG BEGIN_STMT
+  _80 = 0;
+
+  <bb 28> :
+  # _39 = PHI <_60(8), _52(10), _80(27)>
+  return _39;
+
+}
+
+
+lwiperf_tcp_close (struct lwiperf_state_tcp_t * conn, lwiperf_report_type report_type)
+{
+  err_t err;
+  struct lwiperf_state_base_t * _1;
+  struct tcp_pcb * _2;
+  struct tcp_pcb * _3;
+  struct tcp_pcb * _4;
+  struct tcp_pcb * _5;
+  struct tcp_pcb * _6;
+  struct tcp_pcb * _7;
+  struct tcp_pcb * _8;
+  struct tcp_pcb * _9;
+  struct tcp_pcb * _10;
+
+  <bb 2> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _1 = &conn_13(D)->base;
+  lwiperf_list_remove (_1);
+  # DEBUG BEGIN_STMT
+  lwip_tcp_conn_report (conn_13(D), report_type_16(D));
+  # DEBUG BEGIN_STMT
+  _2 = conn_13(D)->conn_pcb;
+  if (_2 != 0B)
+    goto <bb 3>; [INV]
+  else
+    goto <bb 5>; [INV]
+
+  <bb 3> :
+  # DEBUG BEGIN_STMT
+  _3 = conn_13(D)->conn_pcb;
+  tcp_arg (_3, 0B);
+  # DEBUG BEGIN_STMT
+  _4 = conn_13(D)->conn_pcb;
+  tcp_poll (_4, 0B, 0);
+  # DEBUG BEGIN_STMT
+  _5 = conn_13(D)->conn_pcb;
+  tcp_sent (_5, 0B);
+  # DEBUG BEGIN_STMT
+  _6 = conn_13(D)->conn_pcb;
+  tcp_recv (_6, 0B);
+  # DEBUG BEGIN_STMT
+  _7 = conn_13(D)->conn_pcb;
+  tcp_err (_7, 0B);
+  # DEBUG BEGIN_STMT
+  _8 = conn_13(D)->conn_pcb;
+  err_27 = tcp_close (_8);
+  # DEBUG err => err_27
+  # DEBUG BEGIN_STMT
+  if (err_27 != 0)
+    goto <bb 4>; [INV]
+  else
+    goto <bb 7>; [INV]
+
+  <bb 4> :
+  # DEBUG BEGIN_STMT
+  _9 = conn_13(D)->conn_pcb;
+  tcp_abort (_9);
+  goto <bb 7>; [INV]
+
+  <bb 5> :
+  # DEBUG BEGIN_STMT
+  _10 = conn_13(D)->server_pcb;
+  err_19 = tcp_close (_10);
+  # DEBUG err => err_19
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  if (err_19 != 0)
+    goto <bb 6>; [INV]
+  else
+    goto <bb 7>; [INV]
+
+  <bb 6> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  __asm__ __volatile__("BKPT #0
+	");
+  # DEBUG BEGIN_STMT
+  goto <bb 6>; [INV]
+
+  <bb 7> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  mem_free (conn_13(D));
+  return;
+
+}
+
+
+lwip_tcp_conn_report (struct lwiperf_state_tcp_t * conn, lwiperf_report_type report_type)
+{
+  u32_t bandwidth_kbitpsec;
+  u32_t duration_ms;
+  u32_t now;
+  void (*<T639>) (void *, lwiperf_report_type, const struct ip_addr_t *, u16_t, const struct ip_addr_t *, u16_t, u32_t, u32_t, u32_t) _1;
+  long unsigned int _2;
+  long unsigned int _3;
+  long unsigned int _4;
+  void (*<T639>) (void *, lwiperf_report_type, const struct ip_addr_t *, u16_t, const struct ip_addr_t *, u16_t, u32_t, u32_t, u32_t) _5;
+  void * _6;
+  struct tcp_pcb * _7;
+  struct ip_addr_t * _8;
+  struct tcp_pcb * _9;
+  short unsigned int _10;
+  struct tcp_pcb * _11;
+  struct ip_addr_t * _12;
+  struct tcp_pcb * _13;
+  short unsigned int _14;
+  long unsigned int _15;
+
+  <bb 2> :
+  # DEBUG BEGIN_STMT
+  if (conn_18(D) != 0B)
+    goto <bb 3>; [INV]
+  else
+    goto <bb 8>; [INV]
+
+  <bb 3> :
+  _1 = conn_18(D)->report_fn;
+  if (_1 != 0B)
+    goto <bb 4>; [INV]
+  else
+    goto <bb 8>; [INV]
+
+  <bb 4> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  now_21 = sys_now ();
+  # DEBUG now => now_21
+  # DEBUG BEGIN_STMT
+  _2 = conn_18(D)->time_started;
+  duration_ms_22 = now_21 - _2;
+  # DEBUG duration_ms => duration_ms_22
+  # DEBUG BEGIN_STMT
+  if (duration_ms_22 == 0)
+    goto <bb 5>; [INV]
+  else
+    goto <bb 6>; [INV]
+
+  <bb 5> :
+  # DEBUG BEGIN_STMT
+  bandwidth_kbitpsec_24 = 0;
+  # DEBUG bandwidth_kbitpsec => bandwidth_kbitpsec_24
+  goto <bb 7>; [INV]
+
+  <bb 6> :
+  # DEBUG BEGIN_STMT
+  _3 = conn_18(D)->bytes_transferred;
+  _4 = _3 / duration_ms_22;
+  bandwidth_kbitpsec_23 = _4 * 8;
+  # DEBUG bandwidth_kbitpsec => bandwidth_kbitpsec_23
+
+  <bb 7> :
+  # bandwidth_kbitpsec_16 = PHI <bandwidth_kbitpsec_24(5), bandwidth_kbitpsec_23(6)>
+  # DEBUG bandwidth_kbitpsec => bandwidth_kbitpsec_16
+  # DEBUG BEGIN_STMT
+  _5 = conn_18(D)->report_fn;
+  _6 = conn_18(D)->report_arg;
+  _7 = conn_18(D)->conn_pcb;
+  _8 = &_7->local_ip;
+  _9 = conn_18(D)->conn_pcb;
+  _10 = _9->local_port;
+  _11 = conn_18(D)->conn_pcb;
+  _12 = &_11->remote_ip;
+  _13 = conn_18(D)->conn_pcb;
+  _14 = _13->remote_port;
+  _15 = conn_18(D)->bytes_transferred;
+  _5 (_6, report_type_25(D), _8, _10, _12, _14, _15, duration_ms_22, bandwidth_kbitpsec_16);
+
+  <bb 8> :
+  return;
+
+}
+
+
+lwiperf_list_find (struct lwiperf_state_base_t * item)
+{
+  struct lwiperf_state_base_t * iter;
+  struct lwiperf_state_base_t * _2;
+  struct lwiperf_state_base_t * _5;
+  struct lwiperf_state_base_t * _8;
+
+  <bb 2> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  iter_4 = lwiperf_all_connections;
+  # DEBUG iter => iter_4
+  goto <bb 6>; [INV]
+
+  <bb 3> :
+  # DEBUG BEGIN_STMT
+  if (iter_1 == item_6(D))
+    goto <bb 4>; [INV]
+  else
+    goto <bb 5>; [INV]
+
+  <bb 4> :
+  # DEBUG BEGIN_STMT
+  _8 = item_6(D);
+  // predicted unlikely by early return (on trees) predictor.
+  goto <bb 8>; [INV]
+
+  <bb 5> :
+  # DEBUG BEGIN_STMT
+  iter_7 = iter_1->next;
+  # DEBUG iter => iter_7
+
+  <bb 6> :
+  # iter_1 = PHI <iter_4(2), iter_7(5)>
+  # DEBUG iter => iter_1
+  # DEBUG BEGIN_STMT
+  if (iter_1 != 0B)
+    goto <bb 3>; [INV]
+  else
+    goto <bb 7>; [INV]
+
+  <bb 7> :
+  # DEBUG BEGIN_STMT
+  _5 = 0B;
+
+  <bb 8> :
+  # _2 = PHI <_8(4), _5(7)>
+  return _2;
+
+}
+
+
+lwiperf_list_remove (struct lwiperf_state_base_t * item)
+{
+  struct lwiperf_state_base_t * iter;
+  struct lwiperf_state_base_t * prev;
+  struct lwiperf_state_base_t * _1;
+  struct lwiperf_state_base_t * _2;
+
+  <bb 2> :
+  # DEBUG BEGIN_STMT
+  prev_9 = 0B;
+  # DEBUG prev => prev_9
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  iter_11 = lwiperf_all_connections;
+  # DEBUG iter => iter_11
+  goto <bb 13>; [INV]
+
+  <bb 3> :
+  # DEBUG BEGIN_STMT
+  if (iter_5 == item_12(D))
+    goto <bb 4>; [INV]
+  else
+    goto <bb 12>; [INV]
+
+  <bb 4> :
+  # DEBUG BEGIN_STMT
+  if (prev_3 == 0B)
+    goto <bb 5>; [INV]
+  else
+    goto <bb 6>; [INV]
+
+  <bb 5> :
+  # DEBUG BEGIN_STMT
+  _1 = iter_5->next;
+  lwiperf_all_connections = _1;
+  goto <bb 7>; [INV]
+
+  <bb 6> :
+  # DEBUG BEGIN_STMT
+  _2 = iter_5->next;
+  prev_3->next = _2;
+
+  <bb 7> :
+  # DEBUG BEGIN_STMT
+  iter_17 = iter_5->next;
+  # DEBUG iter => iter_17
+  goto <bb 11>; [INV]
+
+  <bb 8> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  if (iter_4 == item_12(D))
+    goto <bb 9>; [INV]
+  else
+    goto <bb 10>; [INV]
+
+  <bb 9> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  __asm__ __volatile__("BKPT #0
+	");
+  # DEBUG BEGIN_STMT
+  goto <bb 9>; [INV]
+
+  <bb 10> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  iter_18 = iter_4->next;
+  # DEBUG iter => iter_18
+
+  <bb 11> :
+  # iter_4 = PHI <iter_17(7), iter_18(10)>
+  # DEBUG iter => iter_4
+  # DEBUG BEGIN_STMT
+  if (iter_4 != 0B)
+    goto <bb 8>; [INV]
+  else
+    goto <bb 14>; [INV]
+
+  <bb 12> :
+  # DEBUG BEGIN_STMT
+  prev_13 = iter_5;
+  # DEBUG prev => prev_13
+  iter_14 = iter_5->next;
+  # DEBUG iter => iter_14
+
+  <bb 13> :
+  # prev_3 = PHI <prev_9(2), prev_13(12)>
+  # iter_5 = PHI <iter_11(2), iter_14(12)>
+  # DEBUG iter => iter_5
+  # DEBUG prev => prev_3
+  # DEBUG BEGIN_STMT
+  if (iter_5 != 0B)
+    goto <bb 3>; [INV]
+  else
+    goto <bb 14>; [INV]
+
+  <bb 14> :
+  return;
+
+}
+
+
+lwiperf_list_add (struct lwiperf_state_base_t * item)
+{
+  struct lwiperf_state_base_t * lwiperf_all_connections.5_1;
+
+  <bb 2> :
+  # DEBUG BEGIN_STMT
+  lwiperf_all_connections.5_1 = lwiperf_all_connections;
+  item_3(D)->next = lwiperf_all_connections.5_1;
+  # DEBUG BEGIN_STMT
+  lwiperf_all_connections = item_3(D);
+  return;
+
+}
+
+

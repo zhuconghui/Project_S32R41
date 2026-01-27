@@ -1,0 +1,5579 @@
+tcp_zero_window_probe (struct tcp_pcb * pcb)
+{
+  char * d;
+  u8_t optlen;
+  u32_t snd_nxt;
+  u8_t is_fin;
+  u16_t len;
+  struct tcp_seg * seg;
+  struct tcp_hdr * tcphdr;
+  struct pbuf * p;
+  err_t err;
+  unsigned char _1;
+  unsigned char _2;
+  unsigned char _3;
+  unsigned char _4;
+  struct tcp_hdr * _5;
+  short unsigned int _6;
+  short unsigned int _7;
+  unsigned char _8;
+  unsigned int _9;
+  unsigned int _10;
+  short unsigned int _11;
+  _Bool _12;
+  short unsigned int _13;
+  struct tcp_hdr * _14;
+  long unsigned int _15;
+  short unsigned int _16;
+  signed short _17;
+  signed short _18;
+  short unsigned int _19;
+  signed short _20;
+  signed short _21;
+  short unsigned int _22;
+  void * _23;
+  struct pbuf * _24;
+  struct pbuf * _25;
+  short unsigned int _26;
+  short unsigned int _27;
+  short unsigned int _28;
+  struct tcp_hdr * _29;
+  long unsigned int _30;
+  long unsigned int _31;
+  long unsigned int _32;
+  long unsigned int _33;
+  long int _34;
+  struct ip_addr_t * _35;
+  struct ip_addr_t * _36;
+  err_t _37;
+  int iftmp.24_38;
+  int iftmp.24_50;
+  int iftmp.24_51;
+  err_t _67;
+  err_t _68;
+  err_t _69;
+
+  <bb 2> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  optlen_44 = 0;
+  # DEBUG optlen => optlen_44
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  if (pcb_45(D) == 0B)
+    goto <bb 3>; [INV]
+  else
+    goto <bb 4>; [INV]
+
+  <bb 3> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  __asm__ __volatile__("BKPT #0
+	");
+  # DEBUG BEGIN_STMT
+  goto <bb 3>; [INV]
+
+  <bb 4> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _1 = pcb_45(D)->remote_ip.type;
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  seg_47 = pcb_45(D)->unsent;
+  # DEBUG seg => seg_47
+  # DEBUG BEGIN_STMT
+  if (seg_47 == 0B)
+    goto <bb 5>; [INV]
+  else
+    goto <bb 6>; [INV]
+
+  <bb 5> :
+  # DEBUG BEGIN_STMT
+  _69 = 0;
+  // predicted unlikely by early return (on trees) predictor.
+  goto <bb 20>; [INV]
+
+  <bb 6> :
+  # DEBUG BEGIN_STMT
+  _2 = pcb_45(D)->persist_probe;
+  if (_2 != 255)
+    goto <bb 7>; [INV]
+  else
+    goto <bb 8>; [INV]
+
+  <bb 7> :
+  # DEBUG BEGIN_STMT
+  _3 = pcb_45(D)->persist_probe;
+  _4 = _3 + 1;
+  pcb_45(D)->persist_probe = _4;
+
+  <bb 8> :
+  # DEBUG BEGIN_STMT
+  _5 = seg_47->tcphdr;
+  _6 = _5->_hdrlen_rsvd_flags;
+  _7 = lwip_htons (_6);
+  _8 = (unsigned char) _7;
+  _9 = (unsigned int) _8;
+  _10 = _9 & 1;
+  if (_10 != 0)
+    goto <bb 9>; [INV]
+  else
+    goto <bb 11>; [INV]
+
+  <bb 9> :
+  _11 = seg_47->len;
+  if (_11 == 0)
+    goto <bb 10>; [INV]
+  else
+    goto <bb 11>; [INV]
+
+  <bb 10> :
+  iftmp.24_50 = 1;
+  goto <bb 12>; [INV]
+
+  <bb 11> :
+  iftmp.24_51 = 0;
+
+  <bb 12> :
+  # iftmp.24_38 = PHI <iftmp.24_50(10), iftmp.24_51(11)>
+  is_fin_52 = (u8_t) iftmp.24_38;
+  # DEBUG is_fin => is_fin_52
+  # DEBUG BEGIN_STMT
+  _12 = is_fin_52 == 0;
+  len_53 = (u16_t) _12;
+  # DEBUG len => len_53
+  # DEBUG BEGIN_STMT
+  _13 = (short unsigned int) optlen_44;
+  _14 = seg_47->tcphdr;
+  _15 = _14->seqno;
+  p_55 = tcp_output_alloc_header (pcb_45(D), _13, len_53, _15);
+  # DEBUG p => p_55
+  # DEBUG BEGIN_STMT
+  if (p_55 == 0B)
+    goto <bb 13>; [INV]
+  else
+    goto <bb 14>; [INV]
+
+  <bb 13> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _68 = -1;
+  // predicted unlikely by early return (on trees) predictor.
+  goto <bb 20>; [INV]
+
+  <bb 14> :
+  # DEBUG BEGIN_STMT
+  tcphdr_56 = p_55->payload;
+  # DEBUG tcphdr => tcphdr_56
+  # DEBUG BEGIN_STMT
+  if (is_fin_52 != 0)
+    goto <bb 15>; [INV]
+  else
+    goto <bb 16>; [INV]
+
+  <bb 15> :
+  # DEBUG BEGIN_STMT
+  _16 = tcphdr_56->_hdrlen_rsvd_flags;
+  _17 = (signed short) _16;
+  _18 = _17 & -16129;
+  _19 = lwip_htons (17);
+  _20 = (signed short) _19;
+  _21 = _18 | _20;
+  _22 = (short unsigned int) _21;
+  tcphdr_56->_hdrlen_rsvd_flags = _22;
+  goto <bb 17>; [INV]
+
+  <bb 16> :
+  # DEBUG BEGIN_STMT
+  _23 = p_55->payload;
+  d_57 = _23 + 20;
+  # DEBUG d => d_57
+  # DEBUG BEGIN_STMT
+  _24 = seg_47->p;
+  _25 = seg_47->p;
+  _26 = _25->tot_len;
+  _27 = seg_47->len;
+  _28 = _26 - _27;
+  pbuf_copy_partial (_24, d_57, 1, _28);
+
+  <bb 17> :
+  # DEBUG BEGIN_STMT
+  _29 = seg_47->tcphdr;
+  _30 = _29->seqno;
+  _31 = lwip_htonl (_30);
+  snd_nxt_62 = _31 + 1;
+  # DEBUG snd_nxt => snd_nxt_62
+  # DEBUG BEGIN_STMT
+  _32 = pcb_45(D)->snd_nxt;
+  _33 = _32 - snd_nxt_62;
+  _34 = (long int) _33;
+  if (_34 < 0)
+    goto <bb 18>; [INV]
+  else
+    goto <bb 19>; [INV]
+
+  <bb 18> :
+  # DEBUG BEGIN_STMT
+  pcb_45(D)->snd_nxt = snd_nxt_62;
+
+  <bb 19> :
+  # DEBUG BEGIN_STMT
+  tcp_output_fill_options (pcb_45(D), p_55, 0, 0);
+  # DEBUG BEGIN_STMT
+  _35 = &pcb_45(D)->local_ip;
+  _36 = &pcb_45(D)->remote_ip;
+  err_66 = tcp_output_control_segment (pcb_45(D), p_55, _35, _36);
+  # DEBUG err => err_66
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _67 = err_66;
+
+  <bb 20> :
+  # _37 = PHI <_69(5), _68(13), _67(19)>
+  return _37;
+
+}
+
+
+tcp_keepalive (struct tcp_pcb * pcb)
+{
+  u8_t optlen;
+  struct pbuf * p;
+  err_t err;
+  unsigned char _1;
+  short unsigned int _2;
+  long unsigned int _3;
+  long unsigned int _4;
+  long unsigned int _5;
+  struct ip_addr_t * _6;
+  struct ip_addr_t * _7;
+  err_t _8;
+  err_t _20;
+  err_t _21;
+
+  <bb 2> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  optlen_11 = 0;
+  # DEBUG optlen => optlen_11
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  if (pcb_12(D) == 0B)
+    goto <bb 3>; [INV]
+  else
+    goto <bb 4>; [INV]
+
+  <bb 3> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  __asm__ __volatile__("BKPT #0
+	");
+  # DEBUG BEGIN_STMT
+  goto <bb 3>; [INV]
+
+  <bb 4> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _1 = pcb_12(D)->remote_ip.type;
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _2 = (short unsigned int) optlen_11;
+  _3 = pcb_12(D)->snd_nxt;
+  _4 = _3 + 4294967295;
+  _5 = lwip_htonl (_4);
+  p_16 = tcp_output_alloc_header (pcb_12(D), _2, 0, _5);
+  # DEBUG p => p_16
+  # DEBUG BEGIN_STMT
+  if (p_16 == 0B)
+    goto <bb 5>; [INV]
+  else
+    goto <bb 6>; [INV]
+
+  <bb 5> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _21 = -1;
+  // predicted unlikely by early return (on trees) predictor.
+  goto <bb 7>; [INV]
+
+  <bb 6> :
+  # DEBUG BEGIN_STMT
+  tcp_output_fill_options (pcb_12(D), p_16, 0, 0);
+  # DEBUG BEGIN_STMT
+  _6 = &pcb_12(D)->local_ip;
+  _7 = &pcb_12(D)->remote_ip;
+  err_19 = tcp_output_control_segment (pcb_12(D), p_16, _6, _7);
+  # DEBUG err => err_19
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _20 = err_19;
+
+  <bb 7> :
+  # _8 = PHI <_21(5), _20(6)>
+  return _8;
+
+}
+
+
+tcp_send_empty_ack (struct tcp_pcb * pcb)
+{
+  u8_t num_sacks;
+  u8_t optflags;
+  u8_t optlen;
+  struct pbuf * p;
+  err_t err;
+  int _1;
+  int _2;
+  unsigned char _3;
+  short unsigned int _4;
+  long unsigned int _5;
+  long unsigned int _6;
+  short unsigned int _7;
+  short unsigned int _8;
+  struct ip_addr_t * _9;
+  struct ip_addr_t * _10;
+  short unsigned int _11;
+  short unsigned int _12;
+  short unsigned int _13;
+  short unsigned int _14;
+  err_t _15;
+  err_t _32;
+  err_t _34;
+
+  <bb 2> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  optflags_19 = 0;
+  # DEBUG optflags => optflags_19
+  # DEBUG BEGIN_STMT
+  num_sacks_20 = 0;
+  # DEBUG num_sacks => num_sacks_20
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  if (pcb_21(D) == 0B)
+    goto <bb 3>; [INV]
+  else
+    goto <bb 4>; [INV]
+
+  <bb 3> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  __asm__ __volatile__("BKPT #0
+	");
+  # DEBUG BEGIN_STMT
+  goto <bb 3>; [INV]
+
+  <bb 4> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _1 = (int) optflags_19;
+  _2 = _1 << 2;
+  _3 = (unsigned char) _2;
+  optlen_23 = _3 & 4;
+  # DEBUG optlen => optlen_23
+  # DEBUG BEGIN_STMT
+  _4 = (short unsigned int) optlen_23;
+  _5 = pcb_21(D)->snd_nxt;
+  _6 = lwip_htonl (_5);
+  p_26 = tcp_output_alloc_header (pcb_21(D), _4, 0, _6);
+  # DEBUG p => p_26
+  # DEBUG BEGIN_STMT
+  if (p_26 == 0B)
+    goto <bb 5>; [INV]
+  else
+    goto <bb 6>; [INV]
+
+  <bb 5> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _7 = pcb_21(D)->flags;
+  _8 = _7 | 3;
+  pcb_21(D)->flags = _8;
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _34 = -2;
+  // predicted unlikely by early return (on trees) predictor.
+  goto <bb 10>; [INV]
+
+  <bb 6> :
+  # DEBUG BEGIN_STMT
+  tcp_output_fill_options (pcb_21(D), p_26, optflags_19, num_sacks_20);
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _9 = &pcb_21(D)->local_ip;
+  _10 = &pcb_21(D)->remote_ip;
+  err_29 = tcp_output_control_segment (pcb_21(D), p_26, _9, _10);
+  # DEBUG err => err_29
+  # DEBUG BEGIN_STMT
+  if (err_29 != 0)
+    goto <bb 7>; [INV]
+  else
+    goto <bb 8>; [INV]
+
+  <bb 7> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _11 = pcb_21(D)->flags;
+  _12 = _11 | 3;
+  pcb_21(D)->flags = _12;
+  # DEBUG BEGIN_STMT
+  goto <bb 9>; [INV]
+
+  <bb 8> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _13 = pcb_21(D)->flags;
+  _14 = _13 & 65532;
+  pcb_21(D)->flags = _14;
+
+  <bb 9> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _32 = err_29;
+
+  <bb 10> :
+  # _15 = PHI <_34(5), _32(9)>
+  return _15;
+
+}
+
+
+tcp_rst (const struct tcp_pcb * pcb, u32_t seqno, u32_t ackno, const struct ip_addr_t * local_ip, const struct ip_addr_t * remote_ip, u16_t local_port, u16_t remote_port)
+{
+  u8_t optlen;
+  u16_t wnd;
+  struct pbuf * p;
+  short unsigned int _1;
+  long unsigned int _2;
+  long unsigned int _3;
+  long unsigned int _4;
+
+  <bb 2> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  if (local_ip_8(D) == 0B)
+    goto <bb 3>; [INV]
+  else
+    goto <bb 4>; [INV]
+
+  <bb 3> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  __asm__ __volatile__("BKPT #0
+	");
+  # DEBUG BEGIN_STMT
+  goto <bb 3>; [INV]
+
+  <bb 4> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  if (remote_ip_10(D) == 0B)
+    goto <bb 5>; [INV]
+  else
+    goto <bb 6>; [INV]
+
+  <bb 5> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  __asm__ __volatile__("BKPT #0
+	");
+  # DEBUG BEGIN_STMT
+  goto <bb 5>; [INV]
+
+  <bb 6> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  optlen_11 = 0;
+  # DEBUG optlen => optlen_11
+  # DEBUG BEGIN_STMT
+  wnd_12 = 33820;
+  # DEBUG wnd => wnd_12
+  # DEBUG BEGIN_STMT
+  _1 = (short unsigned int) optlen_11;
+  _2 = lwip_htonl (seqno_13(D));
+  p_19 = tcp_output_alloc_header_common (ackno_15(D), _1, 0, _2, local_port_16(D), remote_port_17(D), 20, wnd_12);
+  # DEBUG p => p_19
+  # DEBUG BEGIN_STMT
+  if (p_19 == 0B)
+    goto <bb 7>; [INV]
+  else
+    goto <bb 8>; [INV]
+
+  <bb 7> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  // predicted unlikely by early return (on trees) predictor.
+  goto <bb 9>; [INV]
+
+  <bb 8> :
+  # DEBUG BEGIN_STMT
+  tcp_output_fill_options (pcb_20(D), p_19, 0, 0);
+  # DEBUG BEGIN_STMT
+  _3 = lwip_stats.mib2.tcpoutrsts;
+  _4 = _3 + 1;
+  lwip_stats.mib2.tcpoutrsts = _4;
+  # DEBUG BEGIN_STMT
+  tcp_output_control_segment (pcb_20(D), p_19, local_ip_8(D), remote_ip_10(D));
+
+  <bb 9> :
+  # DEBUG BEGIN_STMT
+  return;
+
+}
+
+
+tcp_output_control_segment (const struct tcp_pcb * pcb, struct pbuf * p, const struct ip_addr_t * src, const struct ip_addr_t * dst)
+{
+  u8_t tos;
+  u8_t ttl;
+  struct netif * netif;
+  err_t err;
+  short unsigned int _1;
+  short unsigned int _2;
+  unsigned char _3;
+  const struct ip6_addr_t * _4;
+  const struct ip6_addr_t * _5;
+  const struct ip4_addr_t * _6;
+  const struct ip4_addr_t * _7;
+  err_t iftmp.23_11;
+  err_t iftmp.23_28;
+  err_t iftmp.23_30;
+  err_t _34;
+
+  <bb 2> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  if (p_15(D) == 0B)
+    goto <bb 3>; [INV]
+  else
+    goto <bb 4>; [INV]
+
+  <bb 3> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  __asm__ __volatile__("BKPT #0
+	");
+  # DEBUG BEGIN_STMT
+  goto <bb 3>; [INV]
+
+  <bb 4> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  netif_21 = tcp_route (pcb_17(D), src_18(D), dst_19(D));
+  # DEBUG netif => netif_21
+  # DEBUG BEGIN_STMT
+  if (netif_21 == 0B)
+    goto <bb 5>; [INV]
+  else
+    goto <bb 6>; [INV]
+
+  <bb 5> :
+  # DEBUG BEGIN_STMT
+  err_32 = -4;
+  # DEBUG err => err_32
+  goto <bb 14>; [INV]
+
+  <bb 6> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  if (pcb_17(D) != 0B)
+    goto <bb 7>; [INV]
+  else
+    goto <bb 8>; [INV]
+
+  <bb 7> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  ttl_24 = pcb_17(D)->ttl;
+  # DEBUG ttl => ttl_24
+  # DEBUG BEGIN_STMT
+  tos_25 = pcb_17(D)->tos;
+  # DEBUG tos => tos_25
+  goto <bb 9>; [INV]
+
+  <bb 8> :
+  # DEBUG BEGIN_STMT
+  ttl_22 = 255;
+  # DEBUG ttl => ttl_22
+  # DEBUG BEGIN_STMT
+  tos_23 = 0;
+  # DEBUG tos => tos_23
+
+  <bb 9> :
+  # ttl_9 = PHI <ttl_24(7), ttl_22(8)>
+  # tos_10 = PHI <tos_25(7), tos_23(8)>
+  # DEBUG tos => tos_10
+  # DEBUG ttl => ttl_9
+  # DEBUG BEGIN_STMT
+  _1 = lwip_stats.tcp.xmit;
+  _2 = _1 + 1;
+  lwip_stats.tcp.xmit = _2;
+  # DEBUG BEGIN_STMT
+  if (dst_19(D) != 0B)
+    goto <bb 10>; [INV]
+  else
+    goto <bb 12>; [INV]
+
+  <bb 10> :
+  _3 = dst_19(D)->type;
+  if (_3 == 6)
+    goto <bb 11>; [INV]
+  else
+    goto <bb 12>; [INV]
+
+  <bb 11> :
+  _4 = &src_18(D)->u_addr.ip6;
+  _5 = &dst_19(D)->u_addr.ip6;
+  iftmp.23_28 = ip6_output_if (p_15(D), _4, _5, ttl_9, tos_10, 6, netif_21);
+  goto <bb 13>; [INV]
+
+  <bb 12> :
+  _6 = &src_18(D)->u_addr.ip4;
+  _7 = &dst_19(D)->u_addr.ip4;
+  iftmp.23_30 = ip4_output_if (p_15(D), _6, _7, ttl_9, tos_10, 6, netif_21);
+
+  <bb 13> :
+  # iftmp.23_11 = PHI <iftmp.23_28(11), iftmp.23_30(12)>
+  err_31 = iftmp.23_11;
+  # DEBUG err => err_31
+
+  <bb 14> :
+  # err_8 = PHI <err_32(5), err_31(13)>
+  # DEBUG err => err_8
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  pbuf_free (p_15(D));
+  # DEBUG BEGIN_STMT
+  _34 = err_8;
+  return _34;
+
+}
+
+
+tcp_output_fill_options (const struct tcp_pcb * pcb, struct pbuf * p, u8_t optflags, u8_t num_sacks)
+{
+  u16_t sacks_len;
+  u32_t * opts;
+  struct tcp_hdr * tcphdr;
+  struct tcp_hdr * _1;
+  int _2;
+  int _3;
+  sizetype _4;
+  sizetype _5;
+  sizetype _6;
+  sizetype _7;
+  sizetype _8;
+  u8_t * _9;
+
+  <bb 2> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  sacks_len_12 = 0;
+  # DEBUG sacks_len => sacks_len_12
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  if (p_13(D) == 0B)
+    goto <bb 3>; [INV]
+  else
+    goto <bb 4>; [INV]
+
+  <bb 3> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  __asm__ __volatile__("BKPT #0
+	");
+  # DEBUG BEGIN_STMT
+  goto <bb 3>; [INV]
+
+  <bb 4> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  tcphdr_15 = p_13(D)->payload;
+  # DEBUG tcphdr => tcphdr_15
+  # DEBUG BEGIN_STMT
+  opts_16 = tcphdr_15 + 20;
+  # DEBUG opts => opts_16
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _1 = tcphdr_15 + 20;
+  _2 = (int) sacks_len_12;
+  _3 = _2 * 4;
+  _4 = (sizetype) _3;
+  _5 = (sizetype) optflags_17(D);
+  _6 = _5 << 2;
+  _7 = _6 & 4;
+  _8 = _4 + _7;
+  _9 = _1 + _8;
+  if (opts_16 != _9)
+    goto <bb 5>; [INV]
+  else
+    goto <bb 6>; [INV]
+
+  <bb 5> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  __asm__ __volatile__("BKPT #0
+	");
+  # DEBUG BEGIN_STMT
+  goto <bb 5>; [INV]
+
+  <bb 6> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  return;
+
+}
+
+
+tcp_output_alloc_header (struct tcp_pcb * pcb, u16_t optlen, u16_t datalen, u32_t seqno_be)
+{
+  struct pbuf * p;
+  long unsigned int _1;
+  short unsigned int _2;
+  short unsigned int _3;
+  short unsigned int _4;
+  long unsigned int _5;
+  short unsigned int _6;
+  long unsigned int _7;
+  long unsigned int _8;
+  struct pbuf * _19;
+
+  <bb 2> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  if (pcb_11(D) == 0B)
+    goto <bb 3>; [INV]
+  else
+    goto <bb 4>; [INV]
+
+  <bb 3> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  __asm__ __volatile__("BKPT #0
+	");
+  # DEBUG BEGIN_STMT
+  goto <bb 3>; [INV]
+
+  <bb 4> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _1 = pcb_11(D)->rcv_nxt;
+  _2 = pcb_11(D)->local_port;
+  _3 = pcb_11(D)->remote_port;
+  _4 = pcb_11(D)->rcv_ann_wnd;
+  p_17 = tcp_output_alloc_header_common (_1, optlen_13(D), datalen_14(D), seqno_be_15(D), _2, _3, 16, _4);
+  # DEBUG p => p_17
+  # DEBUG BEGIN_STMT
+  if (p_17 != 0B)
+    goto <bb 5>; [INV]
+  else
+    goto <bb 6>; [INV]
+
+  <bb 5> :
+  # DEBUG BEGIN_STMT
+  _5 = pcb_11(D)->rcv_nxt;
+  _6 = pcb_11(D)->rcv_ann_wnd;
+  _7 = (long unsigned int) _6;
+  _8 = _5 + _7;
+  pcb_11(D)->rcv_ann_right_edge = _8;
+
+  <bb 6> :
+  # DEBUG BEGIN_STMT
+  _19 = p_17;
+  return _19;
+
+}
+
+
+tcp_output_alloc_header_common (u32_t ackno, u16_t optlen, u16_t datalen, u32_t seqno_be, u16_t src_port, u16_t dst_port, u8_t flags, u16_t wnd)
+{
+  struct pbuf * p;
+  struct tcp_hdr * tcphdr;
+  short unsigned int _1;
+  short unsigned int _2;
+  int _3;
+  int _4;
+  short unsigned int _5;
+  int _6;
+  short unsigned int _7;
+  short unsigned int _8;
+  long unsigned int _9;
+  short unsigned int _10;
+  short unsigned int _11;
+  short unsigned int _12;
+  short unsigned int _13;
+  short unsigned int _14;
+  short unsigned int _15;
+  short unsigned int _16;
+  struct pbuf * _45;
+
+  <bb 2> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _1 = optlen_19(D) + datalen_20(D);
+  _2 = _1 + 20;
+  p_23 = pbuf_alloc (54, _2, 640);
+  # DEBUG p => p_23
+  # DEBUG BEGIN_STMT
+  if (p_23 != 0B)
+    goto <bb 3>; [INV]
+  else
+    goto <bb 6>; [INV]
+
+  <bb 3> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _3 = (int) optlen_19(D);
+  _4 = _3 + 19;
+  _5 = p_23->len;
+  _6 = (int) _5;
+  if (_4 >= _6)
+    goto <bb 4>; [INV]
+  else
+    goto <bb 5>; [INV]
+
+  <bb 4> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  __asm__ __volatile__("BKPT #0
+	");
+  # DEBUG BEGIN_STMT
+  goto <bb 4>; [INV]
+
+  <bb 5> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  tcphdr_24 = p_23->payload;
+  # DEBUG tcphdr => tcphdr_24
+  # DEBUG BEGIN_STMT
+  _7 = lwip_htons (src_port_25(D));
+  tcphdr_24->src = _7;
+  # DEBUG BEGIN_STMT
+  _8 = lwip_htons (dst_port_28(D));
+  tcphdr_24->dest = _8;
+  # DEBUG BEGIN_STMT
+  tcphdr_24->seqno = seqno_be_31(D);
+  # DEBUG BEGIN_STMT
+  _9 = lwip_htonl (ackno_33(D));
+  tcphdr_24->ackno = _9;
+  # DEBUG BEGIN_STMT
+  _10 = optlen_19(D) / 4;
+  _11 = _10 + 5;
+  _12 = _11 << 12;
+  _13 = (short unsigned int) flags_36(D);
+  _14 = _12 | _13;
+  _15 = lwip_htons (_14);
+  tcphdr_24->_hdrlen_rsvd_flags = _15;
+  # DEBUG BEGIN_STMT
+  _16 = lwip_htons (wnd_39(D));
+  tcphdr_24->wnd = _16;
+  # DEBUG BEGIN_STMT
+  tcphdr_24->chksum = 0;
+  # DEBUG BEGIN_STMT
+  tcphdr_24->urgp = 0;
+
+  <bb 6> :
+  # DEBUG BEGIN_STMT
+  _45 = p_23;
+  return _45;
+
+}
+
+
+tcp_rexmit_fast (struct tcp_pcb * pcb)
+{
+  struct tcp_seg * _1;
+  short unsigned int _2;
+  unsigned int _3;
+  unsigned int _4;
+  signed char _5;
+  short unsigned int _6;
+  short unsigned int _7;
+  short unsigned int _8;
+  int _9;
+  int _10;
+  short unsigned int _11;
+  short unsigned int _12;
+  unsigned int _13;
+  short unsigned int _14;
+  unsigned int _15;
+  unsigned int _16;
+  short unsigned int _17;
+  short unsigned int _18;
+  short unsigned int _19;
+  short unsigned int _20;
+  short unsigned int _21;
+  short unsigned int _22;
+  short unsigned int _23;
+  short unsigned int _24;
+
+  <bb 2> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  if (pcb_28(D) == 0B)
+    goto <bb 3>; [INV]
+  else
+    goto <bb 4>; [INV]
+
+  <bb 3> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  __asm__ __volatile__("BKPT #0
+	");
+  # DEBUG BEGIN_STMT
+  goto <bb 3>; [INV]
+
+  <bb 4> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _1 = pcb_28(D)->unacked;
+  if (_1 != 0B)
+    goto <bb 5>; [INV]
+  else
+    goto <bb 10>; [INV]
+
+  <bb 5> :
+  _2 = pcb_28(D)->flags;
+  _3 = (unsigned int) _2;
+  _4 = _3 & 4;
+  if (_4 == 0)
+    goto <bb 6>; [INV]
+  else
+    goto <bb 10>; [INV]
+
+  <bb 6> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _5 = tcp_rexmit (pcb_28(D));
+  if (_5 == 0)
+    goto <bb 7>; [INV]
+  else
+    goto <bb 10>; [INV]
+
+  <bb 7> :
+  # DEBUG BEGIN_STMT
+  _6 = pcb_28(D)->snd_wnd;
+  _7 = pcb_28(D)->cwnd;
+  _8 = MIN_EXPR <_6, _7>;
+  _9 = (int) _8;
+  _10 = _9 / 2;
+  _11 = (short unsigned int) _10;
+  pcb_28(D)->ssthresh = _11;
+  # DEBUG BEGIN_STMT
+  _12 = pcb_28(D)->ssthresh;
+  _13 = (unsigned int) _12;
+  _14 = pcb_28(D)->mss;
+  _15 = (unsigned int) _14;
+  _16 = _15 * 2;
+  if (_13 < _16)
+    goto <bb 8>; [INV]
+  else
+    goto <bb 9>; [INV]
+
+  <bb 8> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _17 = pcb_28(D)->mss;
+  _18 = _17 * 2;
+  pcb_28(D)->ssthresh = _18;
+
+  <bb 9> :
+  # DEBUG BEGIN_STMT
+  _19 = pcb_28(D)->ssthresh;
+  _20 = pcb_28(D)->mss;
+  _21 = _20 * 3;
+  _22 = _19 + _21;
+  pcb_28(D)->cwnd = _22;
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _23 = pcb_28(D)->flags;
+  _24 = _23 | 4;
+  pcb_28(D)->flags = _24;
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  pcb_28(D)->rtime = 0;
+
+  <bb 10> :
+  return;
+
+}
+
+
+tcp_rexmit (struct tcp_pcb * pcb)
+{
+  struct tcp_seg * * cur_seg;
+  struct tcp_seg * seg;
+  struct tcp_seg * _1;
+  int _2;
+  struct tcp_seg * _3;
+  struct tcp_seg * _4;
+  struct tcp_seg * _5;
+  struct tcp_seg * _6;
+  struct tcp_hdr * _7;
+  long unsigned int _8;
+  long unsigned int _9;
+  struct tcp_hdr * _10;
+  long unsigned int _11;
+  long unsigned int _12;
+  long unsigned int _13;
+  long int _14;
+  struct tcp_seg * _15;
+  struct tcp_seg * _16;
+  unsigned char _17;
+  unsigned char _18;
+  unsigned char _19;
+  long unsigned int _20;
+  long unsigned int _21;
+  err_t _23;
+  err_t _45;
+  err_t _46;
+  err_t _47;
+
+  <bb 2> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  if (pcb_30(D) == 0B)
+    goto <bb 3>; [INV]
+  else
+    goto <bb 4>; [INV]
+
+  <bb 3> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  __asm__ __volatile__("BKPT #0
+	");
+  # DEBUG BEGIN_STMT
+  goto <bb 3>; [INV]
+
+  <bb 4> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _1 = pcb_30(D)->unacked;
+  if (_1 == 0B)
+    goto <bb 5>; [INV]
+  else
+    goto <bb 6>; [INV]
+
+  <bb 5> :
+  # DEBUG BEGIN_STMT
+  _47 = -6;
+  // predicted unlikely by early return (on trees) predictor.
+  goto <bb 17>; [INV]
+
+  <bb 6> :
+  # DEBUG BEGIN_STMT
+  seg_32 = pcb_30(D)->unacked;
+  # DEBUG seg => seg_32
+  # DEBUG BEGIN_STMT
+  _2 = tcp_output_segment_busy (seg_32);
+  if (_2 != 0)
+    goto <bb 7>; [INV]
+  else
+    goto <bb 8>; [INV]
+
+  <bb 7> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _46 = -6;
+  // predicted unlikely by early return (on trees) predictor.
+  goto <bb 17>; [INV]
+
+  <bb 8> :
+  # DEBUG BEGIN_STMT
+  _3 = seg_32->next;
+  pcb_30(D)->unacked = _3;
+  # DEBUG BEGIN_STMT
+  cur_seg_35 = &pcb_30(D)->unsent;
+  # DEBUG cur_seg => cur_seg_35
+  # DEBUG BEGIN_STMT
+  goto <bb 10>; [INV]
+
+  <bb 9> :
+  # DEBUG BEGIN_STMT
+  _4 = *cur_seg_22;
+  cur_seg_38 = &_4->next;
+  # DEBUG cur_seg => cur_seg_38
+
+  <bb 10> :
+  # cur_seg_22 = PHI <cur_seg_35(8), cur_seg_38(9)>
+  # DEBUG cur_seg => cur_seg_22
+  # DEBUG BEGIN_STMT
+  _5 = *cur_seg_22;
+  if (_5 != 0B)
+    goto <bb 11>; [INV]
+  else
+    goto <bb 12>; [INV]
+
+  <bb 11> :
+  _6 = *cur_seg_22;
+  _7 = _6->tcphdr;
+  _8 = _7->seqno;
+  _9 = lwip_htonl (_8);
+  _10 = seg_32->tcphdr;
+  _11 = _10->seqno;
+  _12 = lwip_htonl (_11);
+  _13 = _9 - _12;
+  _14 = (long int) _13;
+  if (_14 < 0)
+    goto <bb 9>; [INV]
+  else
+    goto <bb 12>; [INV]
+
+  <bb 12> :
+  # DEBUG BEGIN_STMT
+  _15 = *cur_seg_22;
+  seg_32->next = _15;
+  # DEBUG BEGIN_STMT
+  *cur_seg_22 = seg_32;
+  # DEBUG BEGIN_STMT
+  _16 = seg_32->next;
+  if (_16 == 0B)
+    goto <bb 13>; [INV]
+  else
+    goto <bb 14>; [INV]
+
+  <bb 13> :
+  # DEBUG BEGIN_STMT
+  pcb_30(D)->unsent_oversize = 0;
+
+  <bb 14> :
+  # DEBUG BEGIN_STMT
+  _17 = pcb_30(D)->nrtx;
+  if (_17 != 255)
+    goto <bb 15>; [INV]
+  else
+    goto <bb 16>; [INV]
+
+  <bb 15> :
+  # DEBUG BEGIN_STMT
+  _18 = pcb_30(D)->nrtx;
+  _19 = _18 + 1;
+  pcb_30(D)->nrtx = _19;
+
+  <bb 16> :
+  # DEBUG BEGIN_STMT
+  pcb_30(D)->rttest = 0;
+  # DEBUG BEGIN_STMT
+  _20 = lwip_stats.mib2.tcpretranssegs;
+  _21 = _20 + 1;
+  lwip_stats.mib2.tcpretranssegs = _21;
+  # DEBUG BEGIN_STMT
+  _45 = 0;
+
+  <bb 17> :
+  # _23 = PHI <_47(5), _46(7), _45(16)>
+  return _23;
+
+}
+
+
+tcp_rexmit_rto (struct tcp_pcb * pcb)
+{
+  signed char _1;
+
+  <bb 2> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  if (pcb_4(D) == 0B)
+    goto <bb 3>; [INV]
+  else
+    goto <bb 4>; [INV]
+
+  <bb 3> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  __asm__ __volatile__("BKPT #0
+	");
+  # DEBUG BEGIN_STMT
+  goto <bb 3>; [INV]
+
+  <bb 4> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _1 = tcp_rexmit_rto_prepare (pcb_4(D));
+  if (_1 == 0)
+    goto <bb 5>; [INV]
+  else
+    goto <bb 6>; [INV]
+
+  <bb 5> :
+  # DEBUG BEGIN_STMT
+  tcp_rexmit_rto_commit (pcb_4(D));
+
+  <bb 6> :
+  return;
+
+}
+
+
+tcp_rexmit_rto_commit (struct tcp_pcb * pcb)
+{
+  unsigned char _1;
+  unsigned char _2;
+  unsigned char _3;
+
+  <bb 2> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  if (pcb_6(D) == 0B)
+    goto <bb 3>; [INV]
+  else
+    goto <bb 4>; [INV]
+
+  <bb 3> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  __asm__ __volatile__("BKPT #0
+	");
+  # DEBUG BEGIN_STMT
+  goto <bb 3>; [INV]
+
+  <bb 4> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _1 = pcb_6(D)->nrtx;
+  if (_1 != 255)
+    goto <bb 5>; [INV]
+  else
+    goto <bb 6>; [INV]
+
+  <bb 5> :
+  # DEBUG BEGIN_STMT
+  _2 = pcb_6(D)->nrtx;
+  _3 = _2 + 1;
+  pcb_6(D)->nrtx = _3;
+
+  <bb 6> :
+  # DEBUG BEGIN_STMT
+  tcp_output (pcb_6(D));
+  return;
+
+}
+
+
+tcp_rexmit_rto_prepare (struct tcp_pcb * pcb)
+{
+  struct tcp_seg * seg;
+  struct tcp_seg * _1;
+  int _2;
+  struct tcp_seg * _3;
+  int _4;
+  struct tcp_seg * _5;
+  struct tcp_seg * _6;
+  short unsigned int _7;
+  short unsigned int _8;
+  struct tcp_hdr * _9;
+  long unsigned int _10;
+  long unsigned int _11;
+  short unsigned int _12;
+  unsigned int _13;
+  struct tcp_hdr * _14;
+  short unsigned int _15;
+  short unsigned int _16;
+  unsigned char _17;
+  unsigned int _18;
+  unsigned int _19;
+  unsigned int _20;
+  long unsigned int _21;
+  err_t _23;
+  unsigned int iftmp.22_24;
+  unsigned int iftmp.22_38;
+  unsigned int iftmp.22_39;
+  err_t _42;
+  err_t _43;
+  err_t _46;
+  err_t _47;
+
+  <bb 2> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  if (pcb_28(D) == 0B)
+    goto <bb 3>; [INV]
+  else
+    goto <bb 4>; [INV]
+
+  <bb 3> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  __asm__ __volatile__("BKPT #0
+	");
+  # DEBUG BEGIN_STMT
+  goto <bb 3>; [INV]
+
+  <bb 4> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _1 = pcb_28(D)->unacked;
+  if (_1 == 0B)
+    goto <bb 5>; [INV]
+  else
+    goto <bb 6>; [INV]
+
+  <bb 5> :
+  # DEBUG BEGIN_STMT
+  _47 = -6;
+  // predicted unlikely by early return (on trees) predictor.
+  goto <bb 17>; [INV]
+
+  <bb 6> :
+  # DEBUG BEGIN_STMT
+  seg_30 = pcb_28(D)->unacked;
+  # DEBUG seg => seg_30
+  goto <bb 10>; [INV]
+
+  <bb 7> :
+  # DEBUG BEGIN_STMT
+  _2 = tcp_output_segment_busy (seg_22);
+  if (_2 != 0)
+    goto <bb 8>; [INV]
+  else
+    goto <bb 9>; [INV]
+
+  <bb 8> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _46 = -6;
+  // predicted unlikely by early return (on trees) predictor.
+  goto <bb 17>; [INV]
+
+  <bb 9> :
+  # DEBUG BEGIN_STMT
+  seg_45 = seg_22->next;
+  # DEBUG seg => seg_45
+
+  <bb 10> :
+  # seg_22 = PHI <seg_30(6), seg_45(9)>
+  # DEBUG seg => seg_22
+  # DEBUG BEGIN_STMT
+  _3 = seg_22->next;
+  if (_3 != 0B)
+    goto <bb 7>; [INV]
+  else
+    goto <bb 11>; [INV]
+
+  <bb 11> :
+  # DEBUG BEGIN_STMT
+  _4 = tcp_output_segment_busy (seg_22);
+  if (_4 != 0)
+    goto <bb 12>; [INV]
+  else
+    goto <bb 13>; [INV]
+
+  <bb 12> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _43 = -6;
+  // predicted unlikely by early return (on trees) predictor.
+  goto <bb 17>; [INV]
+
+  <bb 13> :
+  # DEBUG BEGIN_STMT
+  _5 = pcb_28(D)->unsent;
+  seg_22->next = _5;
+  # DEBUG BEGIN_STMT
+  _6 = pcb_28(D)->unacked;
+  pcb_28(D)->unsent = _6;
+  # DEBUG BEGIN_STMT
+  pcb_28(D)->unacked = 0B;
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _7 = pcb_28(D)->flags;
+  _8 = _7 | 2048;
+  pcb_28(D)->flags = _8;
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _9 = seg_22->tcphdr;
+  _10 = _9->seqno;
+  _11 = lwip_htonl (_10);
+  _12 = seg_22->len;
+  _13 = (unsigned int) _12;
+  _14 = seg_22->tcphdr;
+  _15 = _14->_hdrlen_rsvd_flags;
+  _16 = lwip_htons (_15);
+  _17 = (unsigned char) _16;
+  _18 = (unsigned int) _17;
+  _19 = _18 & 3;
+  if (_19 != 0)
+    goto <bb 14>; [INV]
+  else
+    goto <bb 15>; [INV]
+
+  <bb 14> :
+  iftmp.22_39 = 1;
+  goto <bb 16>; [INV]
+
+  <bb 15> :
+  iftmp.22_38 = 0;
+
+  <bb 16> :
+  # iftmp.22_24 = PHI <iftmp.22_39(14), iftmp.22_38(15)>
+  _20 = iftmp.22_24 + _13;
+  _21 = _11 + _20;
+  pcb_28(D)->rto_end = _21;
+  # DEBUG BEGIN_STMT
+  pcb_28(D)->rttest = 0;
+  # DEBUG BEGIN_STMT
+  _42 = 0;
+
+  <bb 17> :
+  # _23 = PHI <_47(5), _46(8), _43(12), _42(16)>
+  return _23;
+
+}
+
+
+tcp_output_segment (struct tcp_seg * seg, struct tcp_pcb * pcb, struct netif * netif)
+{
+  u16_t mss;
+  u32_t * opts;
+  u16_t len;
+  err_t err;
+  int _1;
+  long unsigned int _2;
+  struct tcp_hdr * _3;
+  long unsigned int _4;
+  short unsigned int _5;
+  struct tcp_hdr * _6;
+  short unsigned int _7;
+  long unsigned int _8;
+  short unsigned int _9;
+  long unsigned int _10;
+  long unsigned int _11;
+  struct tcp_hdr * _12;
+  unsigned char _13;
+  int _14;
+  int _15;
+  struct ip_addr_t * _16;
+  int _17;
+  int _18;
+  long unsigned int _19;
+  long unsigned int _20;
+  short int _21;
+  long unsigned int _22;
+  long unsigned int tcp_ticks.20_23;
+  struct tcp_hdr * _24;
+  long unsigned int _25;
+  long unsigned int _26;
+  struct tcp_hdr * _27;
+  struct pbuf * _28;
+  void * _29;
+  int _30;
+  long unsigned int _31;
+  long unsigned int _32;
+  struct pbuf * _33;
+  short unsigned int _34;
+  struct pbuf * _35;
+  short unsigned int _36;
+  struct pbuf * _37;
+  short unsigned int _38;
+  struct pbuf * _39;
+  short unsigned int _40;
+  struct pbuf * _41;
+  struct tcp_hdr * _42;
+  struct tcp_hdr * _43;
+  struct tcp_hdr * _44;
+  struct tcp_hdr * _45;
+  unsigned char _46;
+  sizetype _47;
+  sizetype _48;
+  sizetype _49;
+  u8_t * _50;
+  short unsigned int _51;
+  short unsigned int _52;
+  struct ip_addr_t * _53;
+  unsigned char _54;
+  struct pbuf * _55;
+  struct ip6_addr_t * _56;
+  struct ip6_addr_t * _57;
+  unsigned char _58;
+  unsigned char _59;
+  struct pbuf * _60;
+  struct ip4_addr_t * _61;
+  struct ip4_addr_t * _62;
+  unsigned char _63;
+  unsigned char _64;
+  err_t _66;
+  err_t iftmp.21_67;
+  err_t iftmp.21_106;
+  err_t iftmp.21_108;
+  err_t _110;
+  err_t _112;
+
+  <bb 2> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  if (seg_78(D) == 0B)
+    goto <bb 3>; [INV]
+  else
+    goto <bb 4>; [INV]
+
+  <bb 3> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  __asm__ __volatile__("BKPT #0
+	");
+  # DEBUG BEGIN_STMT
+  goto <bb 3>; [INV]
+
+  <bb 4> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  if (pcb_80(D) == 0B)
+    goto <bb 5>; [INV]
+  else
+    goto <bb 6>; [INV]
+
+  <bb 5> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  __asm__ __volatile__("BKPT #0
+	");
+  # DEBUG BEGIN_STMT
+  goto <bb 5>; [INV]
+
+  <bb 6> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  if (netif_81(D) == 0B)
+    goto <bb 7>; [INV]
+  else
+    goto <bb 8>; [INV]
+
+  <bb 7> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  __asm__ __volatile__("BKPT #0
+	");
+  # DEBUG BEGIN_STMT
+  goto <bb 7>; [INV]
+
+  <bb 8> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _1 = tcp_output_segment_busy (seg_78(D));
+  if (_1 != 0)
+    goto <bb 9>; [INV]
+  else
+    goto <bb 10>; [INV]
+
+  <bb 9> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _112 = 0;
+  // predicted unlikely by early return (on trees) predictor.
+  goto <bb 25>; [INV]
+
+  <bb 10> :
+  # DEBUG BEGIN_STMT
+  _2 = pcb_80(D)->rcv_nxt;
+  _3 = seg_78(D)->tcphdr;
+  _4 = lwip_htonl (_2);
+  _3->ackno = _4;
+  # DEBUG BEGIN_STMT
+  _5 = pcb_80(D)->rcv_ann_wnd;
+  _6 = seg_78(D)->tcphdr;
+  _7 = lwip_htons (_5);
+  _6->wnd = _7;
+  # DEBUG BEGIN_STMT
+  _8 = pcb_80(D)->rcv_nxt;
+  _9 = pcb_80(D)->rcv_ann_wnd;
+  _10 = (long unsigned int) _9;
+  _11 = _8 + _10;
+  pcb_80(D)->rcv_ann_right_edge = _11;
+  # DEBUG BEGIN_STMT
+  _12 = seg_78(D)->tcphdr;
+  opts_88 = _12 + 20;
+  # DEBUG opts => opts_88
+  # DEBUG BEGIN_STMT
+  _13 = seg_78(D)->flags;
+  _14 = (int) _13;
+  _15 = _14 & 1;
+  if (_15 != 0)
+    goto <bb 11>; [INV]
+  else
+    goto <bb 12>; [INV]
+
+  <bb 11> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _16 = &pcb_80(D)->remote_ip;
+  mss_90 = tcp_eff_send_mss_netif (1460, netif_81(D), _16);
+  # DEBUG mss => mss_90
+  # DEBUG BEGIN_STMT
+  _17 = (int) mss_90;
+  _18 = _17 | 33816576;
+  _19 = (long unsigned int) _18;
+  _20 = lwip_htonl (_19);
+  *opts_88 = _20;
+  # DEBUG BEGIN_STMT
+  opts_93 = opts_88 + 4;
+  # DEBUG opts => opts_93
+
+  <bb 12> :
+  # opts_65 = PHI <opts_88(10), opts_93(11)>
+  # DEBUG opts => opts_65
+  # DEBUG BEGIN_STMT
+  _21 = pcb_80(D)->rtime;
+  if (_21 < 0)
+    goto <bb 13>; [INV]
+  else
+    goto <bb 14>; [INV]
+
+  <bb 13> :
+  # DEBUG BEGIN_STMT
+  pcb_80(D)->rtime = 0;
+
+  <bb 14> :
+  # DEBUG BEGIN_STMT
+  _22 = pcb_80(D)->rttest;
+  if (_22 == 0)
+    goto <bb 15>; [INV]
+  else
+    goto <bb 16>; [INV]
+
+  <bb 15> :
+  # DEBUG BEGIN_STMT
+  tcp_ticks.20_23 = tcp_ticks;
+  pcb_80(D)->rttest = tcp_ticks.20_23;
+  # DEBUG BEGIN_STMT
+  _24 = seg_78(D)->tcphdr;
+  _25 = _24->seqno;
+  _26 = lwip_htonl (_25);
+  pcb_80(D)->rtseq = _26;
+
+  <bb 16> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _27 = seg_78(D)->tcphdr;
+  _28 = seg_78(D)->p;
+  _29 = _28->payload;
+  _30 = _27 - _29;
+  len_98 = (u16_t) _30;
+  # DEBUG len => len_98
+  # DEBUG BEGIN_STMT
+  if (len_98 == 0)
+    goto <bb 17>; [INV]
+  else
+    goto <bb 18>; [INV]
+
+  <bb 17> :
+  # DEBUG BEGIN_STMT
+  _31 = lwip_stats.mib2.tcpoutsegs;
+  _32 = _31 + 1;
+  lwip_stats.mib2.tcpoutsegs = _32;
+
+  <bb 18> :
+  # DEBUG BEGIN_STMT
+  _33 = seg_78(D)->p;
+  _34 = _33->len;
+  _35 = seg_78(D)->p;
+  _36 = _34 - len_98;
+  _35->len = _36;
+  # DEBUG BEGIN_STMT
+  _37 = seg_78(D)->p;
+  _38 = _37->tot_len;
+  _39 = seg_78(D)->p;
+  _40 = _38 - len_98;
+  _39->tot_len = _40;
+  # DEBUG BEGIN_STMT
+  _41 = seg_78(D)->p;
+  _42 = seg_78(D)->tcphdr;
+  _41->payload = _42;
+  # DEBUG BEGIN_STMT
+  _43 = seg_78(D)->tcphdr;
+  _43->chksum = 0;
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _44 = seg_78(D)->tcphdr;
+  _45 = _44 + 20;
+  _46 = seg_78(D)->flags;
+  _47 = (sizetype) _46;
+  _48 = _47 << 2;
+  _49 = _48 & 4;
+  _50 = _45 + _49;
+  if (opts_65 != _50)
+    goto <bb 19>; [INV]
+  else
+    goto <bb 20>; [INV]
+
+  <bb 19> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  __asm__ __volatile__("BKPT #0
+	");
+  # DEBUG BEGIN_STMT
+  goto <bb 19>; [INV]
+
+  <bb 20> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _51 = lwip_stats.tcp.xmit;
+  _52 = _51 + 1;
+  lwip_stats.tcp.xmit = _52;
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _53 = &pcb_80(D)->remote_ip;
+  if (_53 != 0B)
+    goto <bb 21>; [INV]
+  else
+    goto <bb 23>; [INV]
+
+  <bb 21> :
+  _54 = pcb_80(D)->remote_ip.type;
+  if (_54 == 6)
+    goto <bb 22>; [INV]
+  else
+    goto <bb 23>; [INV]
+
+  <bb 22> :
+  _55 = seg_78(D)->p;
+  _56 = &pcb_80(D)->local_ip.u_addr.ip6;
+  _57 = &pcb_80(D)->remote_ip.u_addr.ip6;
+  _58 = pcb_80(D)->ttl;
+  _59 = pcb_80(D)->tos;
+  iftmp.21_106 = ip6_output_if (_55, _56, _57, _58, _59, 6, netif_81(D));
+  goto <bb 24>; [INV]
+
+  <bb 23> :
+  _60 = seg_78(D)->p;
+  _61 = &pcb_80(D)->local_ip.u_addr.ip4;
+  _62 = &pcb_80(D)->remote_ip.u_addr.ip4;
+  _63 = pcb_80(D)->ttl;
+  _64 = pcb_80(D)->tos;
+  iftmp.21_108 = ip4_output_if (_60, _61, _62, _63, _64, 6, netif_81(D));
+
+  <bb 24> :
+  # iftmp.21_67 = PHI <iftmp.21_106(22), iftmp.21_108(23)>
+  err_109 = iftmp.21_67;
+  # DEBUG err => err_109
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _110 = err_109;
+
+  <bb 25> :
+  # _66 = PHI <_112(9), _110(24)>
+  return _66;
+
+}
+
+
+tcp_output_segment_busy (const struct tcp_seg * seg)
+{
+  struct pbuf * _1;
+  unsigned char _2;
+  int _3;
+  int _7;
+  int _8;
+
+  <bb 2> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  if (seg_5(D) == 0B)
+    goto <bb 3>; [INV]
+  else
+    goto <bb 4>; [INV]
+
+  <bb 3> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  __asm__ __volatile__("BKPT #0
+	");
+  # DEBUG BEGIN_STMT
+  goto <bb 3>; [INV]
+
+  <bb 4> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _1 = seg_5(D)->p;
+  _2 = _1->ref;
+  if (_2 != 1)
+    goto <bb 5>; [INV]
+  else
+    goto <bb 6>; [INV]
+
+  <bb 5> :
+  # DEBUG BEGIN_STMT
+  _8 = 1;
+  // predicted unlikely by early return (on trees) predictor.
+  goto <bb 7>; [INV]
+
+  <bb 6> :
+  # DEBUG BEGIN_STMT
+  _7 = 0;
+
+  <bb 7> :
+  # _3 = PHI <_8(5), _7(6)>
+  return _3;
+
+}
+
+
+tcp_output (struct tcp_pcb * pcb)
+{
+  struct tcp_seg * * cur_seg;
+  const struct ip_addr_t * local_ip;
+  struct netif * netif;
+  err_t err;
+  u32_t snd_nxt;
+  u32_t wnd;
+  struct tcp_seg * useg;
+  struct tcp_seg * seg;
+  tcp_state _1;
+  struct tcp_pcb * tcp_input_pcb.8_2;
+  short unsigned int _3;
+  short unsigned int _4;
+  short unsigned int _5;
+  short unsigned int _6;
+  unsigned int _7;
+  unsigned int _8;
+  struct ip_addr_t * _9;
+  struct ip_addr_t * _10;
+  struct ip_addr_t * _11;
+  struct ip_addr_t * _12;
+  unsigned char _13;
+  struct ip6_addr_t * _14;
+  long unsigned int _15;
+  long unsigned int _16;
+  long unsigned int _17;
+  long unsigned int _18;
+  struct ip4_addr_t * _19;
+  long unsigned int _20;
+  struct ip_addr_t * _21;
+  unsigned char _22;
+  struct ip6_addr_t * _23;
+  unsigned char _24;
+  unsigned char _25;
+  long unsigned int _26;
+  long unsigned int _27;
+  long unsigned int _28;
+  long unsigned int _29;
+  unsigned char _30;
+  long unsigned int _31;
+  long unsigned int _32;
+  long unsigned int _33;
+  struct tcp_hdr * _34;
+  long unsigned int _35;
+  long unsigned int _36;
+  long unsigned int _37;
+  long unsigned int _38;
+  short unsigned int _39;
+  long unsigned int _40;
+  long unsigned int _41;
+  short unsigned int _42;
+  long unsigned int _43;
+  struct tcp_seg * _44;
+  unsigned char _45;
+  short unsigned int _46;
+  unsigned int _47;
+  unsigned int _48;
+  struct tcp_seg * _49;
+  struct tcp_hdr * _50;
+  short unsigned int _51;
+  short unsigned int _52;
+  unsigned char _53;
+  unsigned int _54;
+  unsigned int _55;
+  struct tcp_seg * _56;
+  short unsigned int _57;
+  unsigned int _58;
+  unsigned int _59;
+  struct tcp_seg * _60;
+  struct tcp_seg * _61;
+  struct tcp_seg * _62;
+  struct tcp_seg * _63;
+  short unsigned int _64;
+  short unsigned int _65;
+  short unsigned int _66;
+  short unsigned int _67;
+  short unsigned int _68;
+  unsigned int _69;
+  unsigned int _70;
+  tcp_state _71;
+  struct tcp_hdr * _72;
+  short unsigned int _73;
+  short unsigned int _74;
+  struct tcp_hdr * _75;
+  short unsigned int _76;
+  short unsigned int _77;
+  short unsigned int _78;
+  struct tcp_seg * _79;
+  tcp_state _80;
+  short unsigned int _81;
+  short unsigned int _82;
+  struct tcp_hdr * _83;
+  long unsigned int _84;
+  long unsigned int _85;
+  short unsigned int _86;
+  unsigned int _87;
+  struct tcp_hdr * _88;
+  short unsigned int _89;
+  short unsigned int _90;
+  unsigned char _91;
+  unsigned int _92;
+  unsigned int _93;
+  unsigned int _94;
+  long unsigned int _95;
+  long unsigned int _96;
+  long int _97;
+  short unsigned int _98;
+  unsigned int _99;
+  struct tcp_hdr * _100;
+  short unsigned int _101;
+  short unsigned int _102;
+  unsigned char _103;
+  unsigned int _104;
+  unsigned int _105;
+  unsigned int _106;
+  struct tcp_seg * _107;
+  struct tcp_hdr * _108;
+  long unsigned int _109;
+  long unsigned int _110;
+  struct tcp_hdr * _111;
+  long unsigned int _112;
+  long unsigned int _113;
+  long unsigned int _114;
+  long int _115;
+  struct tcp_seg * _116;
+  struct tcp_seg * _117;
+  struct tcp_seg * _118;
+  struct tcp_hdr * _119;
+  long unsigned int _120;
+  long unsigned int _121;
+  struct tcp_hdr * _122;
+  long unsigned int _123;
+  long unsigned int _124;
+  long unsigned int _125;
+  long int _126;
+  struct tcp_seg * _127;
+  struct tcp_hdr * _128;
+  long unsigned int _129;
+  long unsigned int _130;
+  long unsigned int _131;
+  long unsigned int _132;
+  short unsigned int _133;
+  long unsigned int _134;
+  long unsigned int _135;
+  struct tcp_seg * _136;
+  short unsigned int _137;
+  short unsigned int _138;
+  err_t _144;
+  _Bool iftmp.9_145;
+  _Bool iftmp.10_146;
+  int iftmp.11_147;
+  int iftmp.12_148;
+  const struct ip_addr_t * iftmp.13_149;
+  const struct ip_addr_t * iftmp.14_150;
+  const struct ip_addr_t * iftmp.15_151;
+  int iftmp.16_152;
+  unsigned int iftmp.17_153;
+  unsigned int iftmp.18_154;
+  _Bool iftmp.9_178;
+  int iftmp.11_179;
+  int iftmp.11_180;
+  _Bool iftmp.10_181;
+  int iftmp.12_182;
+  int iftmp.12_183;
+  _Bool iftmp.10_184;
+  _Bool iftmp.9_185;
+  const struct ip_addr_t * iftmp.14_186;
+  const struct ip_addr_t * iftmp.14_188;
+  const struct ip_addr_t * iftmp.13_189;
+  const struct ip_addr_t * iftmp.15_190;
+  const struct ip_addr_t * iftmp.15_191;
+  const struct ip_addr_t * iftmp.13_192;
+  err_t _205;
+  int iftmp.16_212;
+  int iftmp.16_213;
+  unsigned int iftmp.17_222;
+  unsigned int iftmp.17_223;
+  unsigned int iftmp.18_227;
+  unsigned int iftmp.18_228;
+  err_t _245;
+  err_t _252;
+  err_t _253;
+  err_t _255;
+  err_t _257;
+  err_t _258;
+
+  <bb 2> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  if (pcb_172(D) == 0B)
+    goto <bb 3>; [INV]
+  else
+    goto <bb 4>; [INV]
+
+  <bb 3> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  __asm__ __volatile__("BKPT #0
+	");
+  # DEBUG BEGIN_STMT
+  goto <bb 3>; [INV]
+
+  <bb 4> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _1 = pcb_172(D)->state;
+  if (_1 == 1)
+    goto <bb 5>; [INV]
+  else
+    goto <bb 6>; [INV]
+
+  <bb 5> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  __asm__ __volatile__("BKPT #0
+	");
+  # DEBUG BEGIN_STMT
+  goto <bb 5>; [INV]
+
+  <bb 6> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  tcp_input_pcb.8_2 = tcp_input_pcb;
+  if (pcb_172(D) == tcp_input_pcb.8_2)
+    goto <bb 7>; [INV]
+  else
+    goto <bb 8>; [INV]
+
+  <bb 7> :
+  # DEBUG BEGIN_STMT
+  _258 = 0;
+  // predicted unlikely by early return (on trees) predictor.
+  goto <bb 103>; [INV]
+
+  <bb 8> :
+  # DEBUG BEGIN_STMT
+  _3 = pcb_172(D)->cwnd;
+  _4 = pcb_172(D)->snd_wnd;
+  _5 = MIN_EXPR <_3, _4>;
+  wnd_174 = (u32_t) _5;
+  # DEBUG wnd => wnd_174
+  # DEBUG BEGIN_STMT
+  seg_175 = pcb_172(D)->unsent;
+  # DEBUG seg => seg_175
+  # DEBUG BEGIN_STMT
+  if (seg_175 == 0B)
+    goto <bb 9>; [INV]
+  else
+    goto <bb 12>; [INV]
+
+  <bb 9> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _6 = pcb_172(D)->flags;
+  _7 = (unsigned int) _6;
+  _8 = _7 & 2;
+  if (_8 != 0)
+    goto <bb 10>; [INV]
+  else
+    goto <bb 11>; [INV]
+
+  <bb 10> :
+  # DEBUG BEGIN_STMT
+  _255 = tcp_send_empty_ack (pcb_172(D));
+  // predicted unlikely by early return (on trees) predictor.
+  goto <bb 103>; [INV]
+
+  <bb 11> :
+  # DEBUG BEGIN_STMT
+  // predicted unlikely by goto predictor.
+  goto <bb 102>; [INV]
+
+  <bb 12> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _9 = &pcb_172(D)->local_ip;
+  _10 = &pcb_172(D)->remote_ip;
+  netif_177 = tcp_route (pcb_172(D), _9, _10);
+  # DEBUG netif => netif_177
+  # DEBUG BEGIN_STMT
+  if (netif_177 == 0B)
+    goto <bb 13>; [INV]
+  else
+    goto <bb 14>; [INV]
+
+  <bb 13> :
+  # DEBUG BEGIN_STMT
+  _253 = -4;
+  // predicted unlikely by early return (on trees) predictor.
+  goto <bb 103>; [INV]
+
+  <bb 14> :
+  # DEBUG BEGIN_STMT
+  _11 = &pcb_172(D)->local_ip;
+  if (_11 != 0B)
+    goto <bb 15>; [INV]
+  else
+    goto <bb 31>; [INV]
+
+  <bb 15> :
+  _12 = &pcb_172(D)->local_ip;
+  if (_12 != 0B)
+    goto <bb 16>; [INV]
+  else
+    goto <bb 25>; [INV]
+
+  <bb 16> :
+  _13 = pcb_172(D)->local_ip.type;
+  if (_13 == 6)
+    goto <bb 17>; [INV]
+  else
+    goto <bb 25>; [INV]
+
+  <bb 17> :
+  _14 = &pcb_172(D)->local_ip.u_addr.ip6;
+  if (_14 == 0B)
+    goto <bb 22>; [INV]
+  else
+    goto <bb 18>; [INV]
+
+  <bb 18> :
+  _15 = pcb_172(D)->local_ip.u_addr.ip6.addr[0];
+  if (_15 == 0)
+    goto <bb 19>; [INV]
+  else
+    goto <bb 23>; [INV]
+
+  <bb 19> :
+  _16 = pcb_172(D)->local_ip.u_addr.ip6.addr[1];
+  if (_16 == 0)
+    goto <bb 20>; [INV]
+  else
+    goto <bb 23>; [INV]
+
+  <bb 20> :
+  _17 = pcb_172(D)->local_ip.u_addr.ip6.addr[2];
+  if (_17 == 0)
+    goto <bb 21>; [INV]
+  else
+    goto <bb 23>; [INV]
+
+  <bb 21> :
+  _18 = pcb_172(D)->local_ip.u_addr.ip6.addr[3];
+  if (_18 == 0)
+    goto <bb 22>; [INV]
+  else
+    goto <bb 23>; [INV]
+
+  <bb 22> :
+  iftmp.11_180 = 1;
+  goto <bb 24>; [INV]
+
+  <bb 23> :
+  iftmp.11_179 = 0;
+
+  <bb 24> :
+  # iftmp.11_147 = PHI <iftmp.11_180(22), iftmp.11_179(23)>
+  iftmp.10_181 = (_Bool) iftmp.11_147;
+  goto <bb 30>; [INV]
+
+  <bb 25> :
+  _19 = &pcb_172(D)->local_ip.u_addr.ip4;
+  if (_19 == 0B)
+    goto <bb 27>; [INV]
+  else
+    goto <bb 26>; [INV]
+
+  <bb 26> :
+  _20 = pcb_172(D)->local_ip.u_addr.ip4.addr;
+  if (_20 == 0)
+    goto <bb 27>; [INV]
+  else
+    goto <bb 28>; [INV]
+
+  <bb 27> :
+  iftmp.12_183 = 1;
+  goto <bb 29>; [INV]
+
+  <bb 28> :
+  iftmp.12_182 = 0;
+
+  <bb 29> :
+  # iftmp.12_148 = PHI <iftmp.12_183(27), iftmp.12_182(28)>
+  iftmp.10_184 = (_Bool) iftmp.12_148;
+
+  <bb 30> :
+  # iftmp.10_146 = PHI <iftmp.10_181(24), iftmp.10_184(29)>
+  iftmp.9_185 = iftmp.10_146;
+  goto <bb 32>; [INV]
+
+  <bb 31> :
+  iftmp.9_178 = 1;
+
+  <bb 32> :
+  # iftmp.9_145 = PHI <iftmp.9_185(30), iftmp.9_178(31)>
+  if (iftmp.9_145 != 0)
+    goto <bb 33>; [INV]
+  else
+    goto <bb 48>; [INV]
+
+  <bb 33> :
+  # DEBUG BEGIN_STMT
+  _21 = &pcb_172(D)->remote_ip;
+  if (_21 != 0B)
+    goto <bb 34>; [INV]
+  else
+    goto <bb 39>; [INV]
+
+  <bb 34> :
+  _22 = pcb_172(D)->remote_ip.type;
+  if (_22 == 6)
+    goto <bb 35>; [INV]
+  else
+    goto <bb 39>; [INV]
+
+  <bb 35> :
+  if (netif_177 != 0B)
+    goto <bb 36>; [INV]
+  else
+    goto <bb 37>; [INV]
+
+  <bb 36> :
+  _23 = &pcb_172(D)->remote_ip.u_addr.ip6;
+  iftmp.14_188 = ip6_select_source_address (netif_177, _23);
+  goto <bb 38>; [INV]
+
+  <bb 37> :
+  iftmp.14_186 = 0B;
+
+  <bb 38> :
+  # iftmp.14_150 = PHI <iftmp.14_188(36), iftmp.14_186(37)>
+  iftmp.13_189 = iftmp.14_150;
+  goto <bb 43>; [INV]
+
+  <bb 39> :
+  if (netif_177 != 0B)
+    goto <bb 40>; [INV]
+  else
+    goto <bb 41>; [INV]
+
+  <bb 40> :
+  iftmp.15_191 = &netif_177->ip_addr;
+  goto <bb 42>; [INV]
+
+  <bb 41> :
+  iftmp.15_190 = 0B;
+
+  <bb 42> :
+  # iftmp.15_151 = PHI <iftmp.15_191(40), iftmp.15_190(41)>
+  iftmp.13_192 = iftmp.15_151;
+
+  <bb 43> :
+  # iftmp.13_149 = PHI <iftmp.13_189(38), iftmp.13_192(42)>
+  local_ip_193 = iftmp.13_149;
+  # DEBUG local_ip => local_ip_193
+  # DEBUG BEGIN_STMT
+  if (local_ip_193 == 0B)
+    goto <bb 44>; [INV]
+  else
+    goto <bb 45>; [INV]
+
+  <bb 44> :
+  # DEBUG BEGIN_STMT
+  _205 = -4;
+  // predicted unlikely by early return (on trees) predictor.
+  goto <bb 103>; [INV]
+
+  <bb 45> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _24 = local_ip_193->type;
+  pcb_172(D)->local_ip.type = _24;
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _25 = local_ip_193->type;
+  if (_25 == 6)
+    goto <bb 46>; [INV]
+  else
+    goto <bb 47>; [INV]
+
+  <bb 46> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _26 = local_ip_193->u_addr.ip6.addr[0];
+  pcb_172(D)->local_ip.u_addr.ip6.addr[0] = _26;
+  # DEBUG BEGIN_STMT
+  _27 = local_ip_193->u_addr.ip6.addr[1];
+  pcb_172(D)->local_ip.u_addr.ip6.addr[1] = _27;
+  # DEBUG BEGIN_STMT
+  _28 = local_ip_193->u_addr.ip6.addr[2];
+  pcb_172(D)->local_ip.u_addr.ip6.addr[2] = _28;
+  # DEBUG BEGIN_STMT
+  _29 = local_ip_193->u_addr.ip6.addr[3];
+  pcb_172(D)->local_ip.u_addr.ip6.addr[3] = _29;
+  # DEBUG BEGIN_STMT
+  _30 = local_ip_193->u_addr.ip6.zone;
+  pcb_172(D)->local_ip.u_addr.ip6.zone = _30;
+  # DEBUG BEGIN_STMT
+  goto <bb 48>; [INV]
+
+  <bb 47> :
+  # DEBUG BEGIN_STMT
+  _31 = local_ip_193->u_addr.ip4.addr;
+  pcb_172(D)->local_ip.u_addr.ip4.addr = _31;
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  pcb_172(D)->local_ip.u_addr.ip6.addr[3] = 0;
+  _32 = pcb_172(D)->local_ip.u_addr.ip6.addr[3];
+  pcb_172(D)->local_ip.u_addr.ip6.addr[2] = _32;
+  _33 = pcb_172(D)->local_ip.u_addr.ip6.addr[2];
+  pcb_172(D)->local_ip.u_addr.ip6.addr[1] = _33;
+  # DEBUG BEGIN_STMT
+  pcb_172(D)->local_ip.u_addr.ip6.zone = 0;
+
+  <bb 48> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _34 = seg_175->tcphdr;
+  _35 = _34->seqno;
+  _36 = lwip_htonl (_35);
+  _37 = pcb_172(D)->lastack;
+  _38 = _36 - _37;
+  _39 = seg_175->len;
+  _40 = (long unsigned int) _39;
+  _41 = _38 + _40;
+  if (wnd_174 < _41)
+    goto <bb 49>; [INV]
+  else
+    goto <bb 56>; [INV]
+
+  <bb 49> :
+  # DEBUG BEGIN_STMT
+  _42 = pcb_172(D)->snd_wnd;
+  _43 = (long unsigned int) _42;
+  if (wnd_174 == _43)
+    goto <bb 50>; [INV]
+  else
+    goto <bb 53>; [INV]
+
+  <bb 50> :
+  _44 = pcb_172(D)->unacked;
+  if (_44 == 0B)
+    goto <bb 51>; [INV]
+  else
+    goto <bb 53>; [INV]
+
+  <bb 51> :
+  _45 = pcb_172(D)->persist_backoff;
+  if (_45 == 0)
+    goto <bb 52>; [INV]
+  else
+    goto <bb 53>; [INV]
+
+  <bb 52> :
+  # DEBUG BEGIN_STMT
+  pcb_172(D)->persist_cnt = 0;
+  # DEBUG BEGIN_STMT
+  pcb_172(D)->persist_backoff = 1;
+  # DEBUG BEGIN_STMT
+  pcb_172(D)->persist_probe = 0;
+
+  <bb 53> :
+  # DEBUG BEGIN_STMT
+  _46 = pcb_172(D)->flags;
+  _47 = (unsigned int) _46;
+  _48 = _47 & 2;
+  if (_48 != 0)
+    goto <bb 54>; [INV]
+  else
+    goto <bb 55>; [INV]
+
+  <bb 54> :
+  # DEBUG BEGIN_STMT
+  _252 = tcp_send_empty_ack (pcb_172(D));
+  // predicted unlikely by early return (on trees) predictor.
+  goto <bb 103>; [INV]
+
+  <bb 55> :
+  # DEBUG BEGIN_STMT
+  // predicted unlikely by goto predictor.
+  goto <bb 102>; [INV]
+
+  <bb 56> :
+  # DEBUG BEGIN_STMT
+  pcb_172(D)->persist_backoff = 0;
+  # DEBUG BEGIN_STMT
+  useg_208 = pcb_172(D)->unacked;
+  # DEBUG useg => useg_208
+  # DEBUG BEGIN_STMT
+  if (useg_208 != 0B)
+    goto <bb 58>; [INV]
+  else
+    goto <bb 98>; [INV]
+
+  <bb 57> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  useg_209 = useg_140->next;
+  # DEBUG useg => useg_209
+
+  <bb 58> :
+  # useg_140 = PHI <useg_208(56), useg_209(57)>
+  # DEBUG useg => useg_140
+  # DEBUG BEGIN_STMT
+  _49 = useg_140->next;
+  if (_49 != 0B)
+    goto <bb 57>; [INV]
+  else
+    goto <bb 98>; [INV]
+
+  <bb 59> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _50 = seg_139->tcphdr;
+  _51 = _50->_hdrlen_rsvd_flags;
+  _52 = lwip_htons (_51);
+  _53 = (unsigned char) _52;
+  _54 = (unsigned int) _53;
+  _55 = _54 & 4;
+  if (_55 != 0)
+    goto <bb 60>; [INV]
+  else
+    goto <bb 61>; [INV]
+
+  <bb 60> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  __asm__ __volatile__("BKPT #0
+	");
+  # DEBUG BEGIN_STMT
+  goto <bb 60>; [INV]
+
+  <bb 61> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _56 = pcb_172(D)->unacked;
+  if (_56 == 0B)
+    goto <bb 68>; [INV]
+  else
+    goto <bb 62>; [INV]
+
+  <bb 62> :
+  _57 = pcb_172(D)->flags;
+  _58 = (unsigned int) _57;
+  _59 = _58 & 68;
+  if (_59 != 0)
+    goto <bb 68>; [INV]
+  else
+    goto <bb 63>; [INV]
+
+  <bb 63> :
+  _60 = pcb_172(D)->unsent;
+  if (_60 != 0B)
+    goto <bb 64>; [INV]
+  else
+    goto <bb 66>; [INV]
+
+  <bb 64> :
+  _61 = pcb_172(D)->unsent;
+  _62 = _61->next;
+  if (_62 != 0B)
+    goto <bb 68>; [INV]
+  else
+    goto <bb 65>; [INV]
+
+  <bb 65> :
+  _63 = pcb_172(D)->unsent;
+  _64 = _63->len;
+  _65 = pcb_172(D)->mss;
+  if (_64 >= _65)
+    goto <bb 68>; [INV]
+  else
+    goto <bb 66>; [INV]
+
+  <bb 66> :
+  _66 = pcb_172(D)->snd_buf;
+  if (_66 == 0)
+    goto <bb 68>; [INV]
+  else
+    goto <bb 67>; [INV]
+
+  <bb 67> :
+  _67 = pcb_172(D)->snd_queuelen;
+  if (_67 > 19)
+    goto <bb 68>; [INV]
+  else
+    goto <bb 69>; [INV]
+
+  <bb 68> :
+  iftmp.16_213 = 1;
+  goto <bb 70>; [INV]
+
+  <bb 69> :
+  iftmp.16_212 = 0;
+
+  <bb 70> :
+  # iftmp.16_152 = PHI <iftmp.16_213(68), iftmp.16_212(69)>
+  if (iftmp.16_152 == 0)
+    goto <bb 71>; [INV]
+  else
+    goto <bb 72>; [INV]
+
+  <bb 71> :
+  _68 = pcb_172(D)->flags;
+  _69 = (unsigned int) _68;
+  _70 = _69 & 160;
+  if (_70 == 0)
+    goto <bb 100>; [INV]
+  else
+    goto <bb 72>; [INV]
+
+  <bb 72> :
+  # DEBUG BEGIN_STMT
+  _71 = pcb_172(D)->state;
+  if (_71 != 2)
+    goto <bb 73>; [INV]
+  else
+    goto <bb 74>; [INV]
+
+  <bb 73> :
+  # DEBUG BEGIN_STMT
+  _72 = seg_139->tcphdr;
+  _73 = _72->_hdrlen_rsvd_flags;
+  _74 = lwip_htons (16);
+  _75 = seg_139->tcphdr;
+  _76 = _73 | _74;
+  _75->_hdrlen_rsvd_flags = _76;
+
+  <bb 74> :
+  # DEBUG BEGIN_STMT
+  err_217 = tcp_output_segment (seg_139, pcb_172(D), netif_177);
+  # DEBUG err => err_217
+  # DEBUG BEGIN_STMT
+  if (err_217 != 0)
+    goto <bb 75>; [INV]
+  else
+    goto <bb 76>; [INV]
+
+  <bb 75> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _77 = pcb_172(D)->flags;
+  _78 = _77 | 128;
+  pcb_172(D)->flags = _78;
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _245 = err_217;
+  // predicted unlikely by early return (on trees) predictor.
+  goto <bb 103>; [INV]
+
+  <bb 76> :
+  # DEBUG BEGIN_STMT
+  _79 = seg_139->next;
+  pcb_172(D)->unsent = _79;
+  # DEBUG BEGIN_STMT
+  _80 = pcb_172(D)->state;
+  if (_80 != 2)
+    goto <bb 77>; [INV]
+  else
+    goto <bb 78>; [INV]
+
+  <bb 77> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _81 = pcb_172(D)->flags;
+  _82 = _81 & 65532;
+  pcb_172(D)->flags = _82;
+
+  <bb 78> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _83 = seg_139->tcphdr;
+  _84 = _83->seqno;
+  _85 = lwip_htonl (_84);
+  _86 = seg_139->len;
+  _87 = (unsigned int) _86;
+  _88 = seg_139->tcphdr;
+  _89 = _88->_hdrlen_rsvd_flags;
+  _90 = lwip_htons (_89);
+  _91 = (unsigned char) _90;
+  _92 = (unsigned int) _91;
+  _93 = _92 & 3;
+  if (_93 != 0)
+    goto <bb 79>; [INV]
+  else
+    goto <bb 80>; [INV]
+
+  <bb 79> :
+  iftmp.17_223 = 1;
+  goto <bb 81>; [INV]
+
+  <bb 80> :
+  iftmp.17_222 = 0;
+
+  <bb 81> :
+  # iftmp.17_153 = PHI <iftmp.17_223(79), iftmp.17_222(80)>
+  _94 = iftmp.17_153 + _87;
+  snd_nxt_224 = _85 + _94;
+  # DEBUG snd_nxt => snd_nxt_224
+  # DEBUG BEGIN_STMT
+  _95 = pcb_172(D)->snd_nxt;
+  _96 = _95 - snd_nxt_224;
+  _97 = (long int) _96;
+  if (_97 < 0)
+    goto <bb 82>; [INV]
+  else
+    goto <bb 83>; [INV]
+
+  <bb 82> :
+  # DEBUG BEGIN_STMT
+  pcb_172(D)->snd_nxt = snd_nxt_224;
+
+  <bb 83> :
+  # DEBUG BEGIN_STMT
+  _98 = seg_139->len;
+  _99 = (unsigned int) _98;
+  _100 = seg_139->tcphdr;
+  _101 = _100->_hdrlen_rsvd_flags;
+  _102 = lwip_htons (_101);
+  _103 = (unsigned char) _102;
+  _104 = (unsigned int) _103;
+  _105 = _104 & 3;
+  if (_105 != 0)
+    goto <bb 84>; [INV]
+  else
+    goto <bb 85>; [INV]
+
+  <bb 84> :
+  iftmp.18_228 = 1;
+  goto <bb 86>; [INV]
+
+  <bb 85> :
+  iftmp.18_227 = 0;
+
+  <bb 86> :
+  # iftmp.18_154 = PHI <iftmp.18_228(84), iftmp.18_227(85)>
+  _106 = iftmp.18_154 + _99;
+  if (_106 != 0)
+    goto <bb 87>; [INV]
+  else
+    goto <bb 96>; [INV]
+
+  <bb 87> :
+  # DEBUG BEGIN_STMT
+  seg_139->next = 0B;
+  # DEBUG BEGIN_STMT
+  _107 = pcb_172(D)->unacked;
+  if (_107 == 0B)
+    goto <bb 88>; [INV]
+  else
+    goto <bb 89>; [INV]
+
+  <bb 88> :
+  # DEBUG BEGIN_STMT
+  pcb_172(D)->unacked = seg_139;
+  # DEBUG BEGIN_STMT
+  useg_242 = seg_139;
+  # DEBUG useg => useg_242
+  goto <bb 97>; [INV]
+
+  <bb 89> :
+  # DEBUG BEGIN_STMT
+  _108 = seg_139->tcphdr;
+  _109 = _108->seqno;
+  _110 = lwip_htonl (_109);
+  _111 = useg_142->tcphdr;
+  _112 = _111->seqno;
+  _113 = lwip_htonl (_112);
+  _114 = _110 - _113;
+  _115 = (long int) _114;
+  if (_115 < 0)
+    goto <bb 90>; [INV]
+  else
+    goto <bb 95>; [INV]
+
+  <bb 90> :
+  # DEBUG BEGIN_STMT
+  cur_seg_235 = &pcb_172(D)->unacked;
+  # DEBUG cur_seg => cur_seg_235
+  # DEBUG BEGIN_STMT
+  goto <bb 92>; [INV]
+
+  <bb 91> :
+  # DEBUG BEGIN_STMT
+  _116 = *cur_seg_143;
+  cur_seg_238 = &_116->next;
+  # DEBUG cur_seg => cur_seg_238
+
+  <bb 92> :
+  # cur_seg_143 = PHI <cur_seg_235(90), cur_seg_238(91)>
+  # DEBUG cur_seg => cur_seg_143
+  # DEBUG BEGIN_STMT
+  _117 = *cur_seg_143;
+  if (_117 != 0B)
+    goto <bb 93>; [INV]
+  else
+    goto <bb 94>; [INV]
+
+  <bb 93> :
+  _118 = *cur_seg_143;
+  _119 = _118->tcphdr;
+  _120 = _119->seqno;
+  _121 = lwip_htonl (_120);
+  _122 = seg_139->tcphdr;
+  _123 = _122->seqno;
+  _124 = lwip_htonl (_123);
+  _125 = _121 - _124;
+  _126 = (long int) _125;
+  if (_126 < 0)
+    goto <bb 91>; [INV]
+  else
+    goto <bb 94>; [INV]
+
+  <bb 94> :
+  # DEBUG BEGIN_STMT
+  _127 = *cur_seg_143;
+  seg_139->next = _127;
+  # DEBUG BEGIN_STMT
+  *cur_seg_143 = seg_139;
+  goto <bb 97>; [INV]
+
+  <bb 95> :
+  # DEBUG BEGIN_STMT
+  useg_142->next = seg_139;
+  # DEBUG BEGIN_STMT
+  useg_234 = useg_142->next;
+  # DEBUG useg => useg_234
+  goto <bb 97>; [INV]
+
+  <bb 96> :
+  # DEBUG BEGIN_STMT
+  tcp_seg_free (seg_139);
+
+  <bb 97> :
+  # useg_141 = PHI <useg_142(94), useg_142(96), useg_242(88), useg_234(95)>
+  # DEBUG useg => useg_141
+  # DEBUG BEGIN_STMT
+  seg_243 = pcb_172(D)->unsent;
+  # DEBUG seg => seg_243
+
+  <bb 98> :
+  # seg_139 = PHI <seg_175(58), seg_243(97), seg_175(56)>
+  # useg_142 = PHI <useg_140(58), useg_141(97), useg_208(56)>
+  # DEBUG useg => useg_142
+  # DEBUG seg => seg_139
+  # DEBUG BEGIN_STMT
+  if (seg_139 != 0B)
+    goto <bb 99>; [INV]
+  else
+    goto <bb 100>; [INV]
+
+  <bb 99> :
+  _128 = seg_139->tcphdr;
+  _129 = _128->seqno;
+  _130 = lwip_htonl (_129);
+  _131 = pcb_172(D)->lastack;
+  _132 = _130 - _131;
+  _133 = seg_139->len;
+  _134 = (long unsigned int) _133;
+  _135 = _132 + _134;
+  if (wnd_174 >= _135)
+    goto <bb 59>; [INV]
+  else
+    goto <bb 100>; [INV]
+
+  <bb 100> :
+  # DEBUG BEGIN_STMT
+  _136 = pcb_172(D)->unsent;
+  if (_136 == 0B)
+    goto <bb 101>; [INV]
+  else
+    goto <bb 102>; [INV]
+
+  <bb 101> :
+  # DEBUG BEGIN_STMT
+  pcb_172(D)->unsent_oversize = 0;
+
+  <bb 102> :
+output_done:
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _137 = pcb_172(D)->flags;
+  _138 = _137 & 65407;
+  pcb_172(D)->flags = _138;
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _257 = 0;
+
+  <bb 103> :
+  # _144 = PHI <_258(7), _255(10), _253(13), _205(44), _252(54), _245(75), _257(102)>
+  return _144;
+
+}
+
+
+tcp_enqueue_flags (struct tcp_pcb * pcb, u8_t flags)
+{
+  struct tcp_seg * useg;
+  u8_t optlen;
+  u8_t optflags;
+  struct tcp_seg * seg;
+  struct pbuf * p;
+  unsigned int _1;
+  unsigned int _2;
+  unsigned int _3;
+  unsigned int _4;
+  int _5;
+  int _6;
+  unsigned char _7;
+  short unsigned int _8;
+  short unsigned int _9;
+  short unsigned int _10;
+  short unsigned int _11;
+  short unsigned int _12;
+  short unsigned int _13;
+  short unsigned int _14;
+  long unsigned int _15;
+  short unsigned int _16;
+  short unsigned int _17;
+  short unsigned int _18;
+  short unsigned int _19;
+  struct tcp_hdr * _20;
+  unsigned int _21;
+  unsigned int _22;
+  short unsigned int _23;
+  struct tcp_seg * _24;
+  struct tcp_seg * _25;
+  unsigned int _26;
+  unsigned int _27;
+  long unsigned int _28;
+  long unsigned int _29;
+  unsigned int _30;
+  unsigned int _31;
+  short unsigned int _32;
+  short unsigned int _33;
+  struct pbuf * _34;
+  short unsigned int _35;
+  short unsigned int _36;
+  short unsigned int _37;
+  struct tcp_seg * _38;
+  struct tcp_seg * _39;
+  err_t _42;
+  short unsigned int _72;
+  err_t _75;
+  err_t _80;
+  err_t _84;
+
+  <bb 2> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  optflags_53 = 0;
+  # DEBUG optflags => optflags_53
+  # DEBUG BEGIN_STMT
+  optlen_54 = 0;
+  # DEBUG optlen => optlen_54
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _1 = (unsigned int) flags_55(D);
+  _2 = _1 & 3;
+  if (_2 == 0)
+    goto <bb 3>; [INV]
+  else
+    goto <bb 4>; [INV]
+
+  <bb 3> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  __asm__ __volatile__("BKPT #0
+	");
+  # DEBUG BEGIN_STMT
+  goto <bb 3>; [INV]
+
+  <bb 4> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  if (pcb_57(D) == 0B)
+    goto <bb 5>; [INV]
+  else
+    goto <bb 6>; [INV]
+
+  <bb 5> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  __asm__ __volatile__("BKPT #0
+	");
+  # DEBUG BEGIN_STMT
+  goto <bb 5>; [INV]
+
+  <bb 6> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _3 = (unsigned int) flags_55(D);
+  _4 = _3 & 2;
+  if (_4 != 0)
+    goto <bb 7>; [INV]
+  else
+    goto <bb 8>; [INV]
+
+  <bb 7> :
+  # DEBUG BEGIN_STMT
+  optflags_58 = 1;
+  # DEBUG optflags => optflags_58
+
+  <bb 8> :
+  # optflags_40 = PHI <optflags_53(6), optflags_58(7)>
+  # DEBUG optflags => optflags_40
+  # DEBUG BEGIN_STMT
+  _5 = (int) optflags_40;
+  _6 = _5 << 2;
+  _7 = (unsigned char) _6;
+  optlen_59 = _7 & 4;
+  # DEBUG optlen => optlen_59
+  # DEBUG BEGIN_STMT
+  _8 = (short unsigned int) optlen_59;
+  p_61 = pbuf_alloc (74, _8, 640);
+  # DEBUG p => p_61
+  if (p_61 == 0B)
+    goto <bb 9>; [INV]
+  else
+    goto <bb 10>; [INV]
+
+  <bb 9> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _9 = pcb_57(D)->flags;
+  _10 = _9 | 128;
+  pcb_57(D)->flags = _10;
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _11 = lwip_stats.tcp.memerr;
+  _12 = _11 + 1;
+  lwip_stats.tcp.memerr = _12;
+  # DEBUG BEGIN_STMT
+  _84 = -1;
+  // predicted unlikely by early return (on trees) predictor.
+  goto <bb 33>; [INV]
+
+  <bb 10> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _13 = p_61->len;
+  _14 = (short unsigned int) optlen_59;
+  if (_13 < _14)
+    goto <bb 11>; [INV]
+  else
+    goto <bb 12>; [INV]
+
+  <bb 11> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  __asm__ __volatile__("BKPT #0
+	");
+  # DEBUG BEGIN_STMT
+  goto <bb 11>; [INV]
+
+  <bb 12> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _15 = pcb_57(D)->snd_lbb;
+  seg_63 = tcp_create_segment (pcb_57(D), p_61, flags_55(D), _15, optflags_40);
+  # DEBUG seg => seg_63
+  if (seg_63 == 0B)
+    goto <bb 13>; [INV]
+  else
+    goto <bb 14>; [INV]
+
+  <bb 13> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _16 = pcb_57(D)->flags;
+  _17 = _16 | 128;
+  pcb_57(D)->flags = _17;
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _18 = lwip_stats.tcp.memerr;
+  _19 = _18 + 1;
+  lwip_stats.tcp.memerr = _19;
+  # DEBUG BEGIN_STMT
+  _80 = -1;
+  // predicted unlikely by early return (on trees) predictor.
+  goto <bb 33>; [INV]
+
+  <bb 14> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _20 = seg_63->tcphdr;
+  _21 = (unsigned int) _20;
+  _22 = _21 & 3;
+  if (_22 != 0)
+    goto <bb 15>; [INV]
+  else
+    goto <bb 16>; [INV]
+
+  <bb 15> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  __asm__ __volatile__("BKPT #0
+	");
+  # DEBUG BEGIN_STMT
+  goto <bb 15>; [INV]
+
+  <bb 16> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _23 = seg_63->len;
+  if (_23 != 0)
+    goto <bb 17>; [INV]
+  else
+    goto <bb 18>; [INV]
+
+  <bb 17> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  __asm__ __volatile__("BKPT #0
+	");
+  # DEBUG BEGIN_STMT
+  goto <bb 17>; [INV]
+
+  <bb 18> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _24 = pcb_57(D)->unsent;
+  if (_24 == 0B)
+    goto <bb 19>; [INV]
+  else
+    goto <bb 20>; [INV]
+
+  <bb 19> :
+  # DEBUG BEGIN_STMT
+  pcb_57(D)->unsent = seg_63;
+  goto <bb 24>; [INV]
+
+  <bb 20> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  useg_64 = pcb_57(D)->unsent;
+  # DEBUG useg => useg_64
+  goto <bb 22>; [INV]
+
+  <bb 21> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  useg_66 = useg_41->next;
+  # DEBUG useg => useg_66
+
+  <bb 22> :
+  # useg_41 = PHI <useg_64(20), useg_66(21)>
+  # DEBUG useg => useg_41
+  # DEBUG BEGIN_STMT
+  _25 = useg_41->next;
+  if (_25 != 0B)
+    goto <bb 21>; [INV]
+  else
+    goto <bb 23>; [INV]
+
+  <bb 23> :
+  # DEBUG BEGIN_STMT
+  useg_41->next = seg_63;
+
+  <bb 24> :
+  # DEBUG BEGIN_STMT
+  pcb_57(D)->unsent_oversize = 0;
+  # DEBUG BEGIN_STMT
+  _26 = (unsigned int) flags_55(D);
+  _27 = _26 & 3;
+  if (_27 != 0)
+    goto <bb 25>; [INV]
+  else
+    goto <bb 26>; [INV]
+
+  <bb 25> :
+  # DEBUG BEGIN_STMT
+  _28 = pcb_57(D)->snd_lbb;
+  _29 = _28 + 1;
+  pcb_57(D)->snd_lbb = _29;
+
+  <bb 26> :
+  # DEBUG BEGIN_STMT
+  _30 = (unsigned int) flags_55(D);
+  _31 = _30 & 1;
+  if (_31 != 0)
+    goto <bb 27>; [INV]
+  else
+    goto <bb 28>; [INV]
+
+  <bb 27> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _32 = pcb_57(D)->flags;
+  _33 = _32 | 32;
+  pcb_57(D)->flags = _33;
+
+  <bb 28> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _34 = seg_63->p;
+  _72 = pbuf_clen (_34);
+  _35 = pcb_57(D)->snd_queuelen;
+  _36 = _72 + _35;
+  pcb_57(D)->snd_queuelen = _36;
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _37 = pcb_57(D)->snd_queuelen;
+  if (_37 != 0)
+    goto <bb 29>; [INV]
+  else
+    goto <bb 32>; [INV]
+
+  <bb 29> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _38 = pcb_57(D)->unacked;
+  if (_38 == 0B)
+    goto <bb 30>; [INV]
+  else
+    goto <bb 32>; [INV]
+
+  <bb 30> :
+  _39 = pcb_57(D)->unsent;
+  if (_39 == 0B)
+    goto <bb 31>; [INV]
+  else
+    goto <bb 32>; [INV]
+
+  <bb 31> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  __asm__ __volatile__("BKPT #0
+	");
+  # DEBUG BEGIN_STMT
+  goto <bb 31>; [INV]
+
+  <bb 32> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _75 = 0;
+
+  <bb 33> :
+  # _42 = PHI <_84(9), _80(13), _75(32)>
+  return _42;
+
+}
+
+
+tcp_send_fin (struct tcp_pcb * pcb)
+{
+  struct tcp_seg * last_unsent;
+  struct tcp_seg * _1;
+  struct tcp_seg * _2;
+  struct tcp_hdr * _3;
+  short unsigned int _4;
+  short unsigned int _5;
+  unsigned char _6;
+  unsigned int _7;
+  unsigned int _8;
+  struct tcp_hdr * _9;
+  short unsigned int _10;
+  short unsigned int _11;
+  struct tcp_hdr * _12;
+  short unsigned int _13;
+  short unsigned int _14;
+  short unsigned int _15;
+  err_t _17;
+  err_t _28;
+  err_t _31;
+
+  <bb 2> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  if (pcb_21(D) == 0B)
+    goto <bb 3>; [INV]
+  else
+    goto <bb 4>; [INV]
+
+  <bb 3> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  __asm__ __volatile__("BKPT #0
+	");
+  # DEBUG BEGIN_STMT
+  goto <bb 3>; [INV]
+
+  <bb 4> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _1 = pcb_21(D)->unsent;
+  if (_1 != 0B)
+    goto <bb 5>; [INV]
+  else
+    goto <bb 10>; [INV]
+
+  <bb 5> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  last_unsent_23 = pcb_21(D)->unsent;
+  # DEBUG last_unsent => last_unsent_23
+  goto <bb 7>; [INV]
+
+  <bb 6> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  last_unsent_29 = last_unsent_16->next;
+  # DEBUG last_unsent => last_unsent_29
+
+  <bb 7> :
+  # last_unsent_16 = PHI <last_unsent_23(5), last_unsent_29(6)>
+  # DEBUG last_unsent => last_unsent_16
+  # DEBUG BEGIN_STMT
+  _2 = last_unsent_16->next;
+  if (_2 != 0B)
+    goto <bb 6>; [INV]
+  else
+    goto <bb 8>; [INV]
+
+  <bb 8> :
+  # DEBUG BEGIN_STMT
+  _3 = last_unsent_16->tcphdr;
+  _4 = _3->_hdrlen_rsvd_flags;
+  _5 = lwip_htons (_4);
+  _6 = (unsigned char) _5;
+  _7 = (unsigned int) _6;
+  _8 = _7 & 7;
+  if (_8 == 0)
+    goto <bb 9>; [INV]
+  else
+    goto <bb 10>; [INV]
+
+  <bb 9> :
+  # DEBUG BEGIN_STMT
+  _9 = last_unsent_16->tcphdr;
+  _10 = _9->_hdrlen_rsvd_flags;
+  _11 = lwip_htons (1);
+  _12 = last_unsent_16->tcphdr;
+  _13 = _10 | _11;
+  _12->_hdrlen_rsvd_flags = _13;
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _14 = pcb_21(D)->flags;
+  _15 = _14 | 32;
+  pcb_21(D)->flags = _15;
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _28 = 0;
+  // predicted unlikely by early return (on trees) predictor.
+  goto <bb 11>; [INV]
+
+  <bb 10> :
+  # DEBUG BEGIN_STMT
+  _31 = tcp_enqueue_flags (pcb_21(D), 1);
+
+  <bb 11> :
+  # _17 = PHI <_28(9), _31(10)>
+  return _17;
+
+}
+
+
+tcp_split_unsent_seg (struct tcp_pcb * pcb, u16_t split)
+{
+  u16_t offset;
+  u16_t remainder;
+  u8_t remainder_flags;
+  u8_t split_flags;
+  u8_t optflags;
+  u8_t optlen;
+  struct pbuf * p;
+  struct tcp_seg * useg;
+  struct tcp_seg * seg;
+  short unsigned int _1;
+  short unsigned int _2;
+  short unsigned int _3;
+  int _4;
+  int _5;
+  unsigned char _6;
+  short unsigned int _7;
+  short unsigned int _8;
+  short unsigned int _9;
+  struct pbuf * _10;
+  short unsigned int _11;
+  short unsigned int _12;
+  short unsigned int _13;
+  struct pbuf * _14;
+  void * _15;
+  sizetype _16;
+  void * _17;
+  short unsigned int _18;
+  struct tcp_hdr * _19;
+  short unsigned int _20;
+  short unsigned int _21;
+  unsigned char _22;
+  unsigned int _23;
+  unsigned int _24;
+  unsigned int _25;
+  unsigned int _26;
+  struct tcp_hdr * _27;
+  long unsigned int _28;
+  long unsigned int _29;
+  long unsigned int _30;
+  long unsigned int _31;
+  struct pbuf * _32;
+  short unsigned int _33;
+  short unsigned int _34;
+  struct pbuf * _35;
+  struct pbuf * _36;
+  short unsigned int _37;
+  short unsigned int _38;
+  short unsigned int _39;
+  short unsigned int _40;
+  struct tcp_hdr * _41;
+  short unsigned int _42;
+  short unsigned int _43;
+  short unsigned int _44;
+  struct tcp_hdr * _45;
+  short unsigned int _46;
+  struct pbuf * _47;
+  short unsigned int _48;
+  short unsigned int _49;
+  struct pbuf * _50;
+  short unsigned int _51;
+  short unsigned int _52;
+  struct tcp_seg * _53;
+  struct tcp_seg * _54;
+  short unsigned int _55;
+  short unsigned int _56;
+  err_t _63;
+  short unsigned int _98;
+  short unsigned int _105;
+  short unsigned int _108;
+  err_t _113;
+  err_t _117;
+  err_t _121;
+  err_t _123;
+
+  <bb 2> :
+  # DEBUG BEGIN_STMT
+  seg_73 = 0B;
+  # DEBUG seg => seg_73
+  useg_74 = 0B;
+  # DEBUG useg => useg_74
+  # DEBUG BEGIN_STMT
+  p_75 = 0B;
+  # DEBUG p => p_75
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  if (pcb_76(D) == 0B)
+    goto <bb 3>; [INV]
+  else
+    goto <bb 4>; [INV]
+
+  <bb 3> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  __asm__ __volatile__("BKPT #0
+	");
+  # DEBUG BEGIN_STMT
+  goto <bb 3>; [INV]
+
+  <bb 4> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  useg_78 = pcb_76(D)->unsent;
+  # DEBUG useg => useg_78
+  # DEBUG BEGIN_STMT
+  if (useg_78 == 0B)
+    goto <bb 5>; [INV]
+  else
+    goto <bb 6>; [INV]
+
+  <bb 5> :
+  # DEBUG BEGIN_STMT
+  _123 = -1;
+  // predicted unlikely by early return (on trees) predictor.
+  goto <bb 32>; [INV]
+
+  <bb 6> :
+  # DEBUG BEGIN_STMT
+  if (split_79(D) == 0)
+    goto <bb 7>; [INV]
+  else
+    goto <bb 8>; [INV]
+
+  <bb 7> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  __asm__ __volatile__("BKPT #0
+	");
+  # DEBUG BEGIN_STMT
+  goto <bb 7>; [INV]
+
+  <bb 8> :
+  # DEBUG BEGIN_STMT
+  _1 = useg_78->len;
+  if (split_79(D) >= _1)
+    goto <bb 9>; [INV]
+  else
+    goto <bb 10>; [INV]
+
+  <bb 9> :
+  # DEBUG BEGIN_STMT
+  _121 = 0;
+  // predicted unlikely by early return (on trees) predictor.
+  goto <bb 32>; [INV]
+
+  <bb 10> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _2 = pcb_76(D)->mss;
+  if (split_79(D) > _2)
+    goto <bb 11>; [INV]
+  else
+    goto <bb 12>; [INV]
+
+  <bb 11> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  __asm__ __volatile__("BKPT #0
+	");
+  # DEBUG BEGIN_STMT
+  goto <bb 11>; [INV]
+
+  <bb 12> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _3 = useg_78->len;
+  if (_3 == 0)
+    goto <bb 13>; [INV]
+  else
+    goto <bb 14>; [INV]
+
+  <bb 13> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  __asm__ __volatile__("BKPT #0
+	");
+  # DEBUG BEGIN_STMT
+  goto <bb 13>; [INV]
+
+  <bb 14> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  optflags_80 = useg_78->flags;
+  # DEBUG optflags => optflags_80
+  # DEBUG BEGIN_STMT
+  _4 = (int) optflags_80;
+  _5 = _4 << 2;
+  _6 = (unsigned char) _5;
+  optlen_81 = _6 & 4;
+  # DEBUG optlen => optlen_81
+  # DEBUG BEGIN_STMT
+  _7 = useg_78->len;
+  remainder_82 = _7 - split_79(D);
+  # DEBUG remainder => remainder_82
+  # DEBUG BEGIN_STMT
+  _8 = (short unsigned int) optlen_81;
+  _9 = remainder_82 + _8;
+  p_84 = pbuf_alloc (74, _9, 640);
+  # DEBUG p => p_84
+  # DEBUG BEGIN_STMT
+  if (p_84 == 0B)
+    goto <bb 15>; [INV]
+  else
+    goto <bb 16>; [INV]
+
+  <bb 15> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  // predicted unlikely by goto predictor.
+  goto <bb 27>; [INV]
+
+  <bb 16> :
+  # DEBUG BEGIN_STMT
+  _10 = useg_78->p;
+  _11 = _10->tot_len;
+  _12 = useg_78->len;
+  _13 = _11 - _12;
+  offset_85 = split_79(D) + _13;
+  # DEBUG offset => offset_85
+  # DEBUG BEGIN_STMT
+  _14 = useg_78->p;
+  _15 = p_84->payload;
+  _16 = (sizetype) optlen_81;
+  _17 = _15 + _16;
+  _18 = pbuf_copy_partial (_14, _17, remainder_82, offset_85);
+  if (remainder_82 != _18)
+    goto <bb 17>; [INV]
+  else
+    goto <bb 18>; [INV]
+
+  <bb 17> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  // predicted unlikely by goto predictor.
+  goto <bb 27>; [INV]
+
+  <bb 18> :
+  # DEBUG BEGIN_STMT
+  _19 = useg_78->tcphdr;
+  _20 = _19->_hdrlen_rsvd_flags;
+  _21 = lwip_htons (_20);
+  _22 = (unsigned char) _21;
+  split_flags_88 = _22 & 63;
+  # DEBUG split_flags => split_flags_88
+  # DEBUG BEGIN_STMT
+  remainder_flags_89 = 0;
+  # DEBUG remainder_flags => remainder_flags_89
+  # DEBUG BEGIN_STMT
+  _23 = (unsigned int) split_flags_88;
+  _24 = _23 & 8;
+  if (_24 != 0)
+    goto <bb 19>; [INV]
+  else
+    goto <bb 20>; [INV]
+
+  <bb 19> :
+  # DEBUG BEGIN_STMT
+  split_flags_90 = split_flags_88 & 247;
+  # DEBUG split_flags => split_flags_90
+  # DEBUG BEGIN_STMT
+  remainder_flags_91 = remainder_flags_89 | 8;
+  # DEBUG remainder_flags => remainder_flags_91
+
+  <bb 20> :
+  # split_flags_59 = PHI <split_flags_88(18), split_flags_90(19)>
+  # remainder_flags_61 = PHI <remainder_flags_89(18), remainder_flags_91(19)>
+  # DEBUG remainder_flags => remainder_flags_61
+  # DEBUG split_flags => split_flags_59
+  # DEBUG BEGIN_STMT
+  _25 = (unsigned int) split_flags_59;
+  _26 = _25 & 1;
+  if (_26 != 0)
+    goto <bb 21>; [INV]
+  else
+    goto <bb 22>; [INV]
+
+  <bb 21> :
+  # DEBUG BEGIN_STMT
+  split_flags_92 = split_flags_59 & 254;
+  # DEBUG split_flags => split_flags_92
+  # DEBUG BEGIN_STMT
+  remainder_flags_93 = remainder_flags_61 | 1;
+  # DEBUG remainder_flags => remainder_flags_93
+
+  <bb 22> :
+  # split_flags_60 = PHI <split_flags_59(20), split_flags_92(21)>
+  # remainder_flags_62 = PHI <remainder_flags_61(20), remainder_flags_93(21)>
+  # DEBUG remainder_flags => remainder_flags_62
+  # DEBUG split_flags => split_flags_60
+  # DEBUG BEGIN_STMT
+  _27 = useg_78->tcphdr;
+  _28 = _27->seqno;
+  _29 = lwip_htonl (_28);
+  _30 = (long unsigned int) split_79(D);
+  _31 = _29 + _30;
+  seg_96 = tcp_create_segment (pcb_76(D), p_84, remainder_flags_62, _31, optflags_80);
+  # DEBUG seg => seg_96
+  # DEBUG BEGIN_STMT
+  if (seg_96 == 0B)
+    goto <bb 23>; [INV]
+  else
+    goto <bb 24>; [INV]
+
+  <bb 23> :
+  # DEBUG BEGIN_STMT
+  p_114 = 0B;
+  # DEBUG p => p_114
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  // predicted unlikely by goto predictor.
+  goto <bb 27>; [INV]
+
+  <bb 24> :
+  # DEBUG BEGIN_STMT
+  _32 = useg_78->p;
+  _98 = pbuf_clen (_32);
+  _33 = pcb_76(D)->snd_queuelen;
+  _34 = _33 - _98;
+  pcb_76(D)->snd_queuelen = _34;
+  # DEBUG BEGIN_STMT
+  _35 = useg_78->p;
+  _36 = useg_78->p;
+  _37 = _36->tot_len;
+  _38 = _37 - remainder_82;
+  pbuf_realloc (_35, _38);
+  # DEBUG BEGIN_STMT
+  _39 = useg_78->len;
+  _40 = _39 - remainder_82;
+  useg_78->len = _40;
+  # DEBUG BEGIN_STMT
+  _41 = useg_78->tcphdr;
+  _42 = _41->_hdrlen_rsvd_flags;
+  _43 = (short unsigned int) split_flags_60;
+  _44 = lwip_htons (_43);
+  _45 = useg_78->tcphdr;
+  _46 = _42 | _44;
+  _45->_hdrlen_rsvd_flags = _46;
+  # DEBUG BEGIN_STMT
+  _47 = useg_78->p;
+  _105 = pbuf_clen (_47);
+  _48 = pcb_76(D)->snd_queuelen;
+  _49 = _105 + _48;
+  pcb_76(D)->snd_queuelen = _49;
+  # DEBUG BEGIN_STMT
+  _50 = seg_96->p;
+  _108 = pbuf_clen (_50);
+  _51 = pcb_76(D)->snd_queuelen;
+  _52 = _108 + _51;
+  pcb_76(D)->snd_queuelen = _52;
+  # DEBUG BEGIN_STMT
+  _53 = useg_78->next;
+  seg_96->next = _53;
+  # DEBUG BEGIN_STMT
+  useg_78->next = seg_96;
+  # DEBUG BEGIN_STMT
+  _54 = seg_96->next;
+  if (_54 == 0B)
+    goto <bb 25>; [INV]
+  else
+    goto <bb 26>; [INV]
+
+  <bb 25> :
+  # DEBUG BEGIN_STMT
+  pcb_76(D)->unsent_oversize = 0;
+
+  <bb 26> :
+  # DEBUG BEGIN_STMT
+  _113 = 0;
+  goto <bb 32>; [INV]
+
+  <bb 27> :
+  # seg_57 = PHI <seg_73(15), seg_73(17), seg_96(23)>
+  # p_58 = PHI <p_84(15), p_84(17), p_114(23)>
+memerr:
+  # DEBUG p => p_58
+  # DEBUG seg => seg_57
+  # DEBUG BEGIN_STMT
+  _55 = lwip_stats.tcp.memerr;
+  _56 = _55 + 1;
+  lwip_stats.tcp.memerr = _56;
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  if (seg_57 != 0B)
+    goto <bb 28>; [INV]
+  else
+    goto <bb 29>; [INV]
+
+  <bb 28> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  __asm__ __volatile__("BKPT #0
+	");
+  # DEBUG BEGIN_STMT
+  goto <bb 28>; [INV]
+
+  <bb 29> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  if (p_58 != 0B)
+    goto <bb 30>; [INV]
+  else
+    goto <bb 31>; [INV]
+
+  <bb 30> :
+  # DEBUG BEGIN_STMT
+  pbuf_free (p_58);
+
+  <bb 31> :
+  # DEBUG BEGIN_STMT
+  _117 = -1;
+
+  <bb 32> :
+  # _63 = PHI <_123(5), _117(31), _121(9), _113(26)>
+  return _63;
+
+}
+
+
+tcp_write (struct tcp_pcb * pcb, const void * arg, u16_t len, u8_t apiflags)
+{
+  struct pbuf * p;
+  struct pbuf * p;
+  struct pbuf * p2;
+  u16_t seglen;
+  u16_t max_len;
+  u16_t left;
+  struct pbuf * p;
+  struct pbuf * p;
+  u16_t seglen;
+  u16_t unsent_optlen;
+  u16_t space;
+  u16_t mss_local;
+  err_t err;
+  u16_t extendlen;
+  u16_t oversize_used;
+  u16_t oversize;
+  u8_t optflags;
+  u8_t optlen;
+  u16_t queuelen;
+  u16_t pos;
+  struct tcp_seg * queue;
+  struct tcp_seg * prev_seg;
+  struct tcp_seg * seg;
+  struct tcp_seg * last_unsent;
+  struct pbuf * concat_p;
+  short unsigned int _1;
+  short unsigned int _2;
+  short unsigned int _3;
+  struct tcp_seg * _4;
+  struct tcp_seg * _5;
+  unsigned char _6;
+  int _7;
+  int _8;
+  short unsigned int _9;
+  int _10;
+  short unsigned int _11;
+  int _12;
+  int _13;
+  int _14;
+  short unsigned int _15;
+  short unsigned int _16;
+  short unsigned int _17;
+  short unsigned int oversize.1_18;
+  short unsigned int oversize.2_19;
+  short unsigned int oversize.3_20;
+  short unsigned int _21;
+  short unsigned int oversize.4_22;
+  short unsigned int _23;
+  short unsigned int oversize.5_24;
+  short unsigned int _25;
+  int _26;
+  int _27;
+  int _28;
+  int _29;
+  int _30;
+  int _31;
+  int _32;
+  void * _33;
+  sizetype _34;
+  const void * _35;
+  unsigned int _36;
+  struct pbuf * _37;
+  unsigned char _38;
+  int _39;
+  int _40;
+  void * _41;
+  short unsigned int _42;
+  sizetype _43;
+  const u8_t * _44;
+  sizetype _45;
+  const void * _46;
+  short unsigned int _47;
+  short unsigned int _48;
+  int _49;
+  int _50;
+  short unsigned int _51;
+  short unsigned int _52;
+  _Bool _53;
+  unsigned char _54;
+  short unsigned int _55;
+  void * _56;
+  sizetype _57;
+  void * _58;
+  sizetype _59;
+  const void * _60;
+  unsigned int _61;
+  short unsigned int oversize.6_62;
+  sizetype _63;
+  const void * _64;
+  short unsigned int _65;
+  long unsigned int _66;
+  long unsigned int _67;
+  long unsigned int _68;
+  short unsigned int _69;
+  short unsigned int _70;
+  struct pbuf * _71;
+  void * _72;
+  short unsigned int _73;
+  sizetype _74;
+  void * _75;
+  unsigned int _76;
+  short unsigned int _77;
+  short unsigned int _78;
+  short unsigned int _79;
+  short unsigned int _80;
+  short unsigned int oversize.7_81;
+  struct pbuf * _82;
+  short unsigned int _83;
+  short unsigned int _84;
+  short unsigned int _85;
+  struct pbuf * _86;
+  short unsigned int _87;
+  short unsigned int _88;
+  struct pbuf * _89;
+  short unsigned int _90;
+  short unsigned int _91;
+  short unsigned int _92;
+  short unsigned int _93;
+  short unsigned int _94;
+  short unsigned int _95;
+  long unsigned int _96;
+  long unsigned int _97;
+  long unsigned int _98;
+  short unsigned int _99;
+  short unsigned int _100;
+  short unsigned int _101;
+  struct tcp_seg * _102;
+  struct tcp_seg * _103;
+  struct tcp_hdr * _104;
+  int _105;
+  int _106;
+  struct tcp_hdr * _107;
+  short unsigned int _108;
+  short unsigned int _109;
+  struct tcp_hdr * _110;
+  short unsigned int _111;
+  short unsigned int _112;
+  short unsigned int _113;
+  short unsigned int _114;
+  short unsigned int _115;
+  short unsigned int _116;
+  struct tcp_seg * _117;
+  struct tcp_seg * _118;
+  err_t _143;
+  u16_t iftmp.0_144;
+  u16_t iftmp.0_186;
+  u16_t iftmp.0_187;
+  short unsigned int _217;
+  short unsigned int _224;
+  err_t _254;
+  short unsigned int _271;
+  err_t _286;
+  err_t _287;
+  err_t _288;
+  err_t _289;
+
+  <bb 2> :
+  # DEBUG BEGIN_STMT
+  concat_p_173 = 0B;
+  # DEBUG concat_p => concat_p_173
+  # DEBUG BEGIN_STMT
+  last_unsent_174 = 0B;
+  # DEBUG last_unsent => last_unsent_174
+  seg_175 = 0B;
+  # DEBUG seg => seg_175
+  prev_seg_176 = 0B;
+  # DEBUG prev_seg => prev_seg_176
+  queue_177 = 0B;
+  # DEBUG queue => queue_177
+  # DEBUG BEGIN_STMT
+  pos_178 = 0;
+  # DEBUG pos => pos_178
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  optflags_179 = 0;
+  # DEBUG optflags => optflags_179
+  # DEBUG BEGIN_STMT
+  oversize = 0;
+  # DEBUG BEGIN_STMT
+  oversize_used_182 = 0;
+  # DEBUG oversize_used => oversize_used_182
+  # DEBUG BEGIN_STMT
+  extendlen_183 = 0;
+  # DEBUG extendlen => extendlen_183
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  if (pcb_184(D) == 0B)
+    goto <bb 3>; [INV]
+  else
+    goto <bb 4>; [INV]
+
+  <bb 3> :
+  # DEBUG BEGIN_STMT
+  _289 = -16;
+  // predicted unlikely by early return (on trees) predictor.
+  goto <bb 109>; [INV]
+
+  <bb 4> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _1 = pcb_184(D)->snd_wnd_max;
+  _2 = _1 / 2;
+  _3 = pcb_184(D)->mss;
+  mss_local_185 = MIN_EXPR <_2, _3>;
+  # DEBUG mss_local => mss_local_185
+  # DEBUG BEGIN_STMT
+  if (mss_local_185 == 0)
+    goto <bb 5>; [INV]
+  else
+    goto <bb 6>; [INV]
+
+  <bb 5> :
+  iftmp.0_187 = pcb_184(D)->mss;
+  goto <bb 7>; [INV]
+
+  <bb 6> :
+  iftmp.0_186 = mss_local_185;
+
+  <bb 7> :
+  # iftmp.0_144 = PHI <iftmp.0_187(5), iftmp.0_186(6)>
+  mss_local_188 = iftmp.0_144;
+  # DEBUG mss_local => mss_local_188
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  if (arg_189(D) == 0B)
+    goto <bb 8>; [INV]
+  else
+    goto <bb 9>; [INV]
+
+  <bb 8> :
+  # DEBUG BEGIN_STMT
+  _288 = -16;
+  // predicted unlikely by early return (on trees) predictor.
+  goto <bb 109>; [INV]
+
+  <bb 9> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  err_192 = tcp_write_checks (pcb_184(D), len_190(D));
+  # DEBUG err => err_192
+  # DEBUG BEGIN_STMT
+  if (err_192 != 0)
+    goto <bb 10>; [INV]
+  else
+    goto <bb 11>; [INV]
+
+  <bb 10> :
+  # DEBUG BEGIN_STMT
+  _287 = err_192;
+  // predicted unlikely by early return (on trees) predictor.
+  goto <bb 109>; [INV]
+
+  <bb 11> :
+  # DEBUG BEGIN_STMT
+  queuelen_193 = pcb_184(D)->snd_queuelen;
+  # DEBUG queuelen => queuelen_193
+  # DEBUG BEGIN_STMT
+  optlen_194 = 0;
+  # DEBUG optlen => optlen_194
+  # DEBUG BEGIN_STMT
+  _4 = pcb_184(D)->unsent;
+  if (_4 != 0B)
+    goto <bb 12>; [INV]
+  else
+    goto <bb 43>; [INV]
+
+  <bb 12> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  last_unsent_196 = pcb_184(D)->unsent;
+  # DEBUG last_unsent => last_unsent_196
+  goto <bb 14>; [INV]
+
+  <bb 13> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  last_unsent_228 = last_unsent_122->next;
+  # DEBUG last_unsent => last_unsent_228
+
+  <bb 14> :
+  # last_unsent_122 = PHI <last_unsent_196(12), last_unsent_228(13)>
+  # DEBUG last_unsent => last_unsent_122
+  # DEBUG BEGIN_STMT
+  _5 = last_unsent_122->next;
+  if (_5 != 0B)
+    goto <bb 13>; [INV]
+  else
+    goto <bb 15>; [INV]
+
+  <bb 15> :
+  # DEBUG BEGIN_STMT
+  _6 = last_unsent_122->flags;
+  _7 = (int) _6;
+  _8 = _7 << 2;
+  _9 = (short unsigned int) _8;
+  unsent_optlen_197 = _9 & 4;
+  # DEBUG unsent_optlen => unsent_optlen_197
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _10 = (int) mss_local_188;
+  _11 = last_unsent_122->len;
+  _12 = (int) _11;
+  _13 = (int) unsent_optlen_197;
+  _14 = _12 + _13;
+  if (_10 < _14)
+    goto <bb 16>; [INV]
+  else
+    goto <bb 17>; [INV]
+
+  <bb 16> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  __asm__ __volatile__("BKPT #0
+	");
+  # DEBUG BEGIN_STMT
+  goto <bb 16>; [INV]
+
+  <bb 17> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _15 = last_unsent_122->len;
+  _16 = unsent_optlen_197 + _15;
+  space_198 = mss_local_188 - _16;
+  # DEBUG space => space_198
+  # DEBUG BEGIN_STMT
+  _17 = pcb_184(D)->unsent_oversize;
+  oversize = _17;
+  # DEBUG BEGIN_STMT
+  oversize.1_18 = oversize;
+  if (oversize.1_18 != 0)
+    goto <bb 18>; [INV]
+  else
+    goto <bb 21>; [INV]
+
+  <bb 18> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  oversize.2_19 = oversize;
+  if (space_198 < oversize.2_19)
+    goto <bb 19>; [INV]
+  else
+    goto <bb 20>; [INV]
+
+  <bb 19> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  __asm__ __volatile__("BKPT #0
+	");
+  # DEBUG BEGIN_STMT
+  goto <bb 19>; [INV]
+
+  <bb 20> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  seg_200 = last_unsent_122;
+  # DEBUG seg => seg_200
+  # DEBUG BEGIN_STMT
+  oversize.3_20 = oversize;
+  _21 = MIN_EXPR <len_190(D), oversize.3_20>;
+  oversize_used_201 = MIN_EXPR <space_198, _21>;
+  # DEBUG oversize_used => oversize_used_201
+  # DEBUG BEGIN_STMT
+  pos_202 = pos_178 + oversize_used_201;
+  # DEBUG pos => pos_202
+  # DEBUG BEGIN_STMT
+  oversize.4_22 = oversize;
+  _23 = oversize.4_22 - oversize_used_201;
+  oversize = _23;
+  # DEBUG BEGIN_STMT
+  space_204 = space_198 - oversize_used_201;
+  # DEBUG space => space_204
+
+  <bb 21> :
+  # seg_124 = PHI <seg_175(17), seg_200(20)>
+  # pos_130 = PHI <pos_178(17), pos_202(20)>
+  # oversize_used_134 = PHI <oversize_used_182(17), oversize_used_201(20)>
+  # space_138 = PHI <space_198(17), space_204(20)>
+  # DEBUG space => space_138
+  # DEBUG oversize_used => oversize_used_134
+  # DEBUG pos => pos_130
+  # DEBUG seg => seg_124
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  oversize.5_24 = oversize;
+  if (oversize.5_24 != 0)
+    goto <bb 22>; [INV]
+  else
+    goto <bb 24>; [INV]
+
+  <bb 22> :
+  if (pos_130 != len_190(D))
+    goto <bb 23>; [INV]
+  else
+    goto <bb 24>; [INV]
+
+  <bb 23> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  __asm__ __volatile__("BKPT #0
+	");
+  # DEBUG BEGIN_STMT
+  goto <bb 23>; [INV]
+
+  <bb 24> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  if (pos_130 < len_190(D))
+    goto <bb 25>; [INV]
+  else
+    goto <bb 68>; [INV]
+
+  <bb 25> :
+  if (space_138 != 0)
+    goto <bb 26>; [INV]
+  else
+    goto <bb 68>; [INV]
+
+  <bb 26> :
+  _25 = last_unsent_122->len;
+  if (_25 != 0)
+    goto <bb 27>; [INV]
+  else
+    goto <bb 68>; [INV]
+
+  <bb 27> :
+  # DEBUG BEGIN_STMT
+  _26 = (int) len_190(D);
+  _27 = (int) pos_130;
+  _28 = _26 - _27;
+  _29 = (int) space_138;
+  _30 = MIN_EXPR <_28, _29>;
+  seglen_207 = (u16_t) _30;
+  # DEBUG seglen => seglen_207
+  # DEBUG BEGIN_STMT
+  seg_208 = last_unsent_122;
+  # DEBUG seg => seg_208
+  # DEBUG BEGIN_STMT
+  _31 = (int) apiflags_209(D);
+  _32 = _31 & 1;
+  if (_32 != 0)
+    goto <bb 28>; [INV]
+  else
+    goto <bb 31>; [INV]
+
+  <bb 28> :
+  # DEBUG BEGIN_STMT
+  concat_p_221 = tcp_pbuf_prealloc (0, seglen_207, space_138, &oversize, pcb_184(D), apiflags_209(D), 1);
+  # DEBUG concat_p => concat_p_221
+  if (concat_p_221 == 0B)
+    goto <bb 29>; [INV]
+  else
+    goto <bb 30>; [INV]
+
+  <bb 29> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  // predicted unlikely by goto predictor.
+  goto <bb 100>; [INV]
+
+  <bb 30> :
+  # DEBUG BEGIN_STMT
+  _33 = concat_p_221->payload;
+  _34 = (sizetype) pos_130;
+  _35 = arg_189(D) + _34;
+  _36 = (unsigned int) seglen_207;
+  memcpy (_33, _35, _36);
+  # DEBUG BEGIN_STMT
+  _224 = pbuf_clen (concat_p_221);
+  queuelen_225 = _224 + queuelen_193;
+  # DEBUG queuelen => queuelen_225
+  goto <bb 42>; [INV]
+
+  <bb 31> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  p_210 = last_unsent_122->p;
+  # DEBUG p => p_210
+  goto <bb 33>; [INV]
+
+  <bb 32> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  p_219 = p_139->next;
+  # DEBUG p => p_219
+
+  <bb 33> :
+  # p_139 = PHI <p_210(31), p_219(32)>
+  # DEBUG p => p_139
+  # DEBUG BEGIN_STMT
+  _37 = p_139->next;
+  if (_37 != 0B)
+    goto <bb 32>; [INV]
+  else
+    goto <bb 34>; [INV]
+
+  <bb 34> :
+  # DEBUG BEGIN_STMT
+  _38 = p_139->type_internal;
+  _39 = (int) _38;
+  _40 = _39 & 192;
+  if (_40 == 0)
+    goto <bb 35>; [INV]
+  else
+    goto <bb 39>; [INV]
+
+  <bb 35> :
+  _41 = p_139->payload;
+  _42 = p_139->len;
+  _43 = (sizetype) _42;
+  _44 = _41 + _43;
+  if (arg_189(D) == _44)
+    goto <bb 36>; [INV]
+  else
+    goto <bb 39>; [INV]
+
+  <bb 36> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  if (pos_130 != 0)
+    goto <bb 37>; [INV]
+  else
+    goto <bb 38>; [INV]
+
+  <bb 37> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  __asm__ __volatile__("BKPT #0
+	");
+  # DEBUG BEGIN_STMT
+  goto <bb 37>; [INV]
+
+  <bb 38> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  extendlen_211 = seglen_207;
+  # DEBUG extendlen => extendlen_211
+  goto <bb 42>; [INV]
+
+  <bb 39> :
+  # DEBUG BEGIN_STMT
+  concat_p_214 = pbuf_alloc (0, seglen_207, 1);
+  # DEBUG concat_p => concat_p_214
+  if (concat_p_214 == 0B)
+    goto <bb 40>; [INV]
+  else
+    goto <bb 41>; [INV]
+
+  <bb 40> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  // predicted unlikely by goto predictor.
+  goto <bb 100>; [INV]
+
+  <bb 41> :
+  # DEBUG BEGIN_STMT
+  _45 = (sizetype) pos_130;
+  _46 = arg_189(D) + _45;
+  MEM[(struct pbuf_rom *)concat_p_214].payload = _46;
+  # DEBUG BEGIN_STMT
+  _217 = pbuf_clen (concat_p_214);
+  queuelen_218 = _217 + queuelen_193;
+  # DEBUG queuelen => queuelen_218
+
+  <bb 42> :
+  # concat_p_119 = PHI <concat_p_221(30), concat_p_173(38), concat_p_214(41)>
+  # queuelen_132 = PHI <queuelen_225(30), queuelen_193(38), queuelen_218(41)>
+  # extendlen_136 = PHI <extendlen_183(30), extendlen_211(38), extendlen_183(41)>
+  # DEBUG extendlen => extendlen_136
+  # DEBUG queuelen => queuelen_132
+  # DEBUG concat_p => concat_p_119
+  # DEBUG BEGIN_STMT
+  pos_226 = pos_130 + seglen_207;
+  # DEBUG pos => pos_226
+  goto <bb 68>; [INV]
+
+  <bb 43> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _47 = pcb_184(D)->unsent_oversize;
+  if (_47 != 0)
+    goto <bb 44>; [INV]
+  else
+    goto <bb 68>; [INV]
+
+  <bb 44> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  __asm__ __volatile__("BKPT #0
+	");
+  # DEBUG BEGIN_STMT
+  goto <bb 44>; [INV]
+
+  <bb 45> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  left_255 = len_190(D) - pos_131;
+  # DEBUG left => left_255
+  # DEBUG BEGIN_STMT
+  _48 = (short unsigned int) optlen_194;
+  max_len_256 = mss_local_188 - _48;
+  # DEBUG max_len => max_len_256
+  # DEBUG BEGIN_STMT
+  seglen_257 = MIN_EXPR <max_len_256, left_255>;
+  # DEBUG seglen => seglen_257
+  # DEBUG BEGIN_STMT
+  _49 = (int) apiflags_209(D);
+  _50 = _49 & 1;
+  if (_50 != 0)
+    goto <bb 46>; [INV]
+  else
+    goto <bb 51>; [INV]
+
+  <bb 46> :
+  # DEBUG BEGIN_STMT
+  _51 = (short unsigned int) optlen_194;
+  _52 = seglen_257 + _51;
+  _53 = queue_128 == 0B;
+  _54 = (unsigned char) _53;
+  p_267 = tcp_pbuf_prealloc (74, _52, mss_local_188, &oversize, pcb_184(D), apiflags_209(D), _54);
+  # DEBUG p => p_267
+  if (p_267 == 0B)
+    goto <bb 47>; [INV]
+  else
+    goto <bb 48>; [INV]
+
+  <bb 47> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  // predicted unlikely by goto predictor.
+  goto <bb 100>; [INV]
+
+  <bb 48> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _55 = p_267->len;
+  if (seglen_257 > _55)
+    goto <bb 49>; [INV]
+  else
+    goto <bb 50>; [INV]
+
+  <bb 49> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  __asm__ __volatile__("BKPT #0
+	");
+  # DEBUG BEGIN_STMT
+  goto <bb 49>; [INV]
+
+  <bb 50> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _56 = p_267->payload;
+  _57 = (sizetype) optlen_194;
+  _58 = _56 + _57;
+  _59 = (sizetype) pos_131;
+  _60 = arg_189(D) + _59;
+  _61 = (unsigned int) seglen_257;
+  memcpy (_58, _60, _61);
+  goto <bb 58>; [INV]
+
+  <bb 51> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  oversize.6_62 = oversize;
+  if (oversize.6_62 != 0)
+    goto <bb 52>; [INV]
+  else
+    goto <bb 53>; [INV]
+
+  <bb 52> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  __asm__ __volatile__("BKPT #0
+	");
+  # DEBUG BEGIN_STMT
+  goto <bb 52>; [INV]
+
+  <bb 53> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  p2_259 = pbuf_alloc (74, seglen_257, 1);
+  # DEBUG p2 => p2_259
+  if (p2_259 == 0B)
+    goto <bb 54>; [INV]
+  else
+    goto <bb 55>; [INV]
+
+  <bb 54> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  // predicted unlikely by goto predictor.
+  goto <bb 100>; [INV]
+
+  <bb 55> :
+  # DEBUG BEGIN_STMT
+  _63 = (sizetype) pos_131;
+  _64 = arg_189(D) + _63;
+  MEM[(struct pbuf_rom *)p2_259].payload = _64;
+  # DEBUG BEGIN_STMT
+  _65 = (short unsigned int) optlen_194;
+  p_262 = pbuf_alloc (74, _65, 640);
+  # DEBUG p => p_262
+  if (p_262 == 0B)
+    goto <bb 56>; [INV]
+  else
+    goto <bb 57>; [INV]
+
+  <bb 56> :
+  # DEBUG BEGIN_STMT
+  pbuf_free (p2_259);
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  // predicted unlikely by goto predictor.
+  goto <bb 100>; [INV]
+
+  <bb 57> :
+  # DEBUG BEGIN_STMT
+  pbuf_cat (p_262, p2_259);
+
+  <bb 58> :
+  # p_140 = PHI <p_267(50), p_262(57)>
+  # DEBUG p => p_140
+  # DEBUG BEGIN_STMT
+  _271 = pbuf_clen (p_140);
+  queuelen_272 = _271 + queuelen_133;
+  # DEBUG queuelen => queuelen_272
+  # DEBUG BEGIN_STMT
+  if (queuelen_272 > 20)
+    goto <bb 59>; [INV]
+  else
+    goto <bb 60>; [INV]
+
+  <bb 59> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  pbuf_free (p_140);
+  # DEBUG BEGIN_STMT
+  // predicted unlikely by goto predictor.
+  goto <bb 100>; [INV]
+
+  <bb 60> :
+  # DEBUG BEGIN_STMT
+  _66 = pcb_184(D)->snd_lbb;
+  _67 = (long unsigned int) pos_131;
+  _68 = _66 + _67;
+  seg_274 = tcp_create_segment (pcb_184(D), p_140, 0, _68, optflags_179);
+  # DEBUG seg => seg_274
+  if (seg_274 == 0B)
+    goto <bb 61>; [INV]
+  else
+    goto <bb 62>; [INV]
+
+  <bb 61> :
+  # DEBUG BEGIN_STMT
+  // predicted unlikely by goto predictor.
+  goto <bb 100>; [INV]
+
+  <bb 62> :
+  # DEBUG BEGIN_STMT
+  if (queue_128 == 0B)
+    goto <bb 63>; [INV]
+  else
+    goto <bb 64>; [INV]
+
+  <bb 63> :
+  # DEBUG BEGIN_STMT
+  queue_277 = seg_274;
+  # DEBUG queue => queue_277
+  goto <bb 67>; [INV]
+
+  <bb 64> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  if (prev_seg_126 == 0B)
+    goto <bb 65>; [INV]
+  else
+    goto <bb 66>; [INV]
+
+  <bb 65> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  __asm__ __volatile__("BKPT #0
+	");
+  # DEBUG BEGIN_STMT
+  goto <bb 65>; [INV]
+
+  <bb 66> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  prev_seg_126->next = seg_274;
+
+  <bb 67> :
+  # queue_127 = PHI <queue_277(63), queue_128(66)>
+  # DEBUG queue => queue_127
+  # DEBUG BEGIN_STMT
+  prev_seg_278 = seg_274;
+  # DEBUG prev_seg => prev_seg_278
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  pos_279 = pos_131 + seglen_257;
+  # DEBUG pos => pos_279
+
+  <bb 68> :
+  # concat_p_120 = PHI <concat_p_173(43), concat_p_120(67), concat_p_173(25), concat_p_173(26), concat_p_119(42), concat_p_173(24)>
+  # last_unsent_123 = PHI <last_unsent_174(43), last_unsent_123(67), last_unsent_122(25), last_unsent_122(26), last_unsent_122(42), last_unsent_122(24)>
+  # seg_125 = PHI <seg_175(43), seg_274(67), seg_124(25), seg_124(26), seg_208(42), seg_124(24)>
+  # prev_seg_126 = PHI <prev_seg_176(43), prev_seg_278(67), prev_seg_176(25), prev_seg_176(26), prev_seg_176(42), prev_seg_176(24)>
+  # queue_128 = PHI <queue_177(43), queue_127(67), queue_177(25), queue_177(26), queue_177(42), queue_177(24)>
+  # pos_131 = PHI <pos_178(43), pos_279(67), pos_130(25), pos_130(26), pos_226(42), pos_130(24)>
+  # queuelen_133 = PHI <queuelen_193(43), queuelen_272(67), queuelen_193(25), queuelen_193(26), queuelen_132(42), queuelen_193(24)>
+  # oversize_used_135 = PHI <oversize_used_182(43), oversize_used_135(67), oversize_used_134(25), oversize_used_134(26), oversize_used_134(42), oversize_used_134(24)>
+  # extendlen_137 = PHI <extendlen_183(43), extendlen_137(67), extendlen_183(25), extendlen_183(26), extendlen_136(42), extendlen_183(24)>
+  # DEBUG extendlen => extendlen_137
+  # DEBUG oversize_used => oversize_used_135
+  # DEBUG queuelen => queuelen_133
+  # DEBUG pos => pos_131
+  # DEBUG queue => queue_128
+  # DEBUG prev_seg => prev_seg_126
+  # DEBUG seg => seg_125
+  # DEBUG last_unsent => last_unsent_123
+  # DEBUG concat_p => concat_p_120
+  # DEBUG BEGIN_STMT
+  if (pos_131 < len_190(D))
+    goto <bb 45>; [INV]
+  else
+    goto <bb 69>; [INV]
+
+  <bb 69> :
+  # DEBUG BEGIN_STMT
+  if (oversize_used_135 != 0)
+    goto <bb 70>; [INV]
+  else
+    goto <bb 76>; [INV]
+
+  <bb 70> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  p_229 = last_unsent_123->p;
+  # DEBUG p => p_229
+  goto <bb 74>; [INV]
+
+  <bb 71> :
+  # DEBUG BEGIN_STMT
+  _69 = p_141->tot_len;
+  _70 = oversize_used_135 + _69;
+  p_141->tot_len = _70;
+  # DEBUG BEGIN_STMT
+  _71 = p_141->next;
+  if (_71 == 0B)
+    goto <bb 72>; [INV]
+  else
+    goto <bb 73>; [INV]
+
+  <bb 72> :
+  # DEBUG BEGIN_STMT
+  _72 = p_141->payload;
+  _73 = p_141->len;
+  _74 = (sizetype) _73;
+  _75 = _72 + _74;
+  _76 = (unsigned int) oversize_used_135;
+  memcpy (_75, arg_189(D), _76);
+  # DEBUG BEGIN_STMT
+  _77 = p_141->len;
+  _78 = oversize_used_135 + _77;
+  p_141->len = _78;
+
+  <bb 73> :
+  # DEBUG BEGIN_STMT
+  p_234 = p_141->next;
+  # DEBUG p => p_234
+
+  <bb 74> :
+  # p_141 = PHI <p_229(70), p_234(73)>
+  # DEBUG p => p_141
+  # DEBUG BEGIN_STMT
+  if (p_141 != 0B)
+    goto <bb 71>; [INV]
+  else
+    goto <bb 75>; [INV]
+
+  <bb 75> :
+  # DEBUG BEGIN_STMT
+  _79 = last_unsent_123->len;
+  _80 = oversize_used_135 + _79;
+  last_unsent_123->len = _80;
+
+  <bb 76> :
+  # DEBUG BEGIN_STMT
+  oversize.7_81 = oversize;
+  pcb_184(D)->unsent_oversize = oversize.7_81;
+  # DEBUG BEGIN_STMT
+  if (concat_p_120 != 0B)
+    goto <bb 77>; [INV]
+  else
+    goto <bb 80>; [INV]
+
+  <bb 77> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  if (last_unsent_123 == 0B)
+    goto <bb 78>; [INV]
+  else
+    goto <bb 79>; [INV]
+
+  <bb 78> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  __asm__ __volatile__("BKPT #0
+	");
+  # DEBUG BEGIN_STMT
+  goto <bb 78>; [INV]
+
+  <bb 79> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _82 = last_unsent_123->p;
+  pbuf_cat (_82, concat_p_120);
+  # DEBUG BEGIN_STMT
+  _83 = last_unsent_123->len;
+  _84 = concat_p_120->tot_len;
+  _85 = _83 + _84;
+  last_unsent_123->len = _85;
+  goto <bb 88>; [INV]
+
+  <bb 80> :
+  # DEBUG BEGIN_STMT
+  if (extendlen_137 != 0)
+    goto <bb 81>; [INV]
+  else
+    goto <bb 88>; [INV]
+
+  <bb 81> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  if (last_unsent_123 == 0B)
+    goto <bb 83>; [INV]
+  else
+    goto <bb 82>; [INV]
+
+  <bb 82> :
+  _86 = last_unsent_123->p;
+  if (_86 == 0B)
+    goto <bb 83>; [INV]
+  else
+    goto <bb 84>; [INV]
+
+  <bb 83> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  __asm__ __volatile__("BKPT #0
+	");
+  # DEBUG BEGIN_STMT
+  goto <bb 83>; [INV]
+
+  <bb 84> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  p_236 = last_unsent_123->p;
+  # DEBUG p => p_236
+  goto <bb 86>; [INV]
+
+  <bb 85> :
+  # DEBUG BEGIN_STMT
+  _87 = p_142->tot_len;
+  _88 = extendlen_137 + _87;
+  p_142->tot_len = _88;
+  # DEBUG BEGIN_STMT
+  p_241 = p_142->next;
+  # DEBUG p => p_241
+
+  <bb 86> :
+  # p_142 = PHI <p_236(84), p_241(85)>
+  # DEBUG p => p_142
+  # DEBUG BEGIN_STMT
+  _89 = p_142->next;
+  if (_89 != 0B)
+    goto <bb 85>; [INV]
+  else
+    goto <bb 87>; [INV]
+
+  <bb 87> :
+  # DEBUG BEGIN_STMT
+  _90 = p_142->tot_len;
+  _91 = extendlen_137 + _90;
+  p_142->tot_len = _91;
+  # DEBUG BEGIN_STMT
+  _92 = p_142->len;
+  _93 = extendlen_137 + _92;
+  p_142->len = _93;
+  # DEBUG BEGIN_STMT
+  _94 = last_unsent_123->len;
+  _95 = extendlen_137 + _94;
+  last_unsent_123->len = _95;
+
+  <bb 88> :
+  # DEBUG BEGIN_STMT
+  if (last_unsent_123 == 0B)
+    goto <bb 89>; [INV]
+  else
+    goto <bb 90>; [INV]
+
+  <bb 89> :
+  # DEBUG BEGIN_STMT
+  pcb_184(D)->unsent = queue_128;
+  goto <bb 91>; [INV]
+
+  <bb 90> :
+  # DEBUG BEGIN_STMT
+  last_unsent_123->next = queue_128;
+
+  <bb 91> :
+  # DEBUG BEGIN_STMT
+  _96 = pcb_184(D)->snd_lbb;
+  _97 = (long unsigned int) len_190(D);
+  _98 = _96 + _97;
+  pcb_184(D)->snd_lbb = _98;
+  # DEBUG BEGIN_STMT
+  _99 = pcb_184(D)->snd_buf;
+  _100 = _99 - len_190(D);
+  pcb_184(D)->snd_buf = _100;
+  # DEBUG BEGIN_STMT
+  pcb_184(D)->snd_queuelen = queuelen_133;
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _101 = pcb_184(D)->snd_queuelen;
+  if (_101 != 0)
+    goto <bb 92>; [INV]
+  else
+    goto <bb 95>; [INV]
+
+  <bb 92> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _102 = pcb_184(D)->unacked;
+  if (_102 == 0B)
+    goto <bb 93>; [INV]
+  else
+    goto <bb 95>; [INV]
+
+  <bb 93> :
+  _103 = pcb_184(D)->unsent;
+  if (_103 == 0B)
+    goto <bb 94>; [INV]
+  else
+    goto <bb 95>; [INV]
+
+  <bb 94> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  __asm__ __volatile__("BKPT #0
+	");
+  # DEBUG BEGIN_STMT
+  goto <bb 94>; [INV]
+
+  <bb 95> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  if (seg_125 != 0B)
+    goto <bb 96>; [INV]
+  else
+    goto <bb 99>; [INV]
+
+  <bb 96> :
+  _104 = seg_125->tcphdr;
+  if (_104 != 0B)
+    goto <bb 97>; [INV]
+  else
+    goto <bb 99>; [INV]
+
+  <bb 97> :
+  _105 = (int) apiflags_209(D);
+  _106 = _105 & 2;
+  if (_106 == 0)
+    goto <bb 98>; [INV]
+  else
+    goto <bb 99>; [INV]
+
+  <bb 98> :
+  # DEBUG BEGIN_STMT
+  _107 = seg_125->tcphdr;
+  _108 = _107->_hdrlen_rsvd_flags;
+  _109 = lwip_htons (8);
+  _110 = seg_125->tcphdr;
+  _111 = _108 | _109;
+  _110->_hdrlen_rsvd_flags = _111;
+
+  <bb 99> :
+  # DEBUG BEGIN_STMT
+  _254 = 0;
+  goto <bb 109>; [INV]
+
+  <bb 100> :
+  # concat_p_121 = PHI <concat_p_221(29), concat_p_214(40), concat_p_120(47), concat_p_120(54), concat_p_120(56), concat_p_120(59), concat_p_120(61)>
+  # queue_129 = PHI <queue_177(29), queue_177(40), queue_128(47), queue_128(54), queue_128(56), queue_128(59), queue_128(61)>
+memerr:
+  # DEBUG queue => queue_129
+  # DEBUG concat_p => concat_p_121
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _112 = pcb_184(D)->flags;
+  _113 = _112 | 128;
+  pcb_184(D)->flags = _113;
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _114 = lwip_stats.tcp.memerr;
+  _115 = _114 + 1;
+  lwip_stats.tcp.memerr = _115;
+  # DEBUG BEGIN_STMT
+  if (concat_p_121 != 0B)
+    goto <bb 101>; [INV]
+  else
+    goto <bb 102>; [INV]
+
+  <bb 101> :
+  # DEBUG BEGIN_STMT
+  pbuf_free (concat_p_121);
+
+  <bb 102> :
+  # DEBUG BEGIN_STMT
+  if (queue_129 != 0B)
+    goto <bb 103>; [INV]
+  else
+    goto <bb 104>; [INV]
+
+  <bb 103> :
+  # DEBUG BEGIN_STMT
+  tcp_segs_free (queue_129);
+
+  <bb 104> :
+  # DEBUG BEGIN_STMT
+  _116 = pcb_184(D)->snd_queuelen;
+  if (_116 != 0)
+    goto <bb 105>; [INV]
+  else
+    goto <bb 108>; [INV]
+
+  <bb 105> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _117 = pcb_184(D)->unacked;
+  if (_117 == 0B)
+    goto <bb 106>; [INV]
+  else
+    goto <bb 108>; [INV]
+
+  <bb 106> :
+  _118 = pcb_184(D)->unsent;
+  if (_118 == 0B)
+    goto <bb 107>; [INV]
+  else
+    goto <bb 108>; [INV]
+
+  <bb 107> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  __asm__ __volatile__("BKPT #0
+	");
+  # DEBUG BEGIN_STMT
+  goto <bb 107>; [INV]
+
+  <bb 108> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _286 = -1;
+
+  <bb 109> :
+  # _143 = PHI <_289(3), _288(8), _287(10), _254(99), _286(108)>
+  oversize ={v} {CLOBBER};
+  return _143;
+
+}
+
+
+tcp_write_checks (struct tcp_pcb * pcb, u16_t len)
+{
+  tcp_state _1;
+  tcp_state _2;
+  tcp_state _3;
+  tcp_state _4;
+  short unsigned int _5;
+  short unsigned int _6;
+  short unsigned int _7;
+  short unsigned int _8;
+  short unsigned int _9;
+  short unsigned int _10;
+  short unsigned int _11;
+  short unsigned int _12;
+  short unsigned int _13;
+  struct tcp_seg * _14;
+  struct tcp_seg * _15;
+  struct tcp_seg * _16;
+  struct tcp_seg * _17;
+  err_t _18;
+  err_t _25;
+  err_t _29;
+  err_t _32;
+  err_t _34;
+  err_t _35;
+
+  <bb 2> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  if (pcb_23(D) == 0B)
+    goto <bb 3>; [INV]
+  else
+    goto <bb 4>; [INV]
+
+  <bb 3> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  __asm__ __volatile__("BKPT #0
+	");
+  # DEBUG BEGIN_STMT
+  goto <bb 3>; [INV]
+
+  <bb 4> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _1 = pcb_23(D)->state;
+  if (_1 != 4)
+    goto <bb 5>; [INV]
+  else
+    goto <bb 9>; [INV]
+
+  <bb 5> :
+  _2 = pcb_23(D)->state;
+  if (_2 != 7)
+    goto <bb 6>; [INV]
+  else
+    goto <bb 9>; [INV]
+
+  <bb 6> :
+  _3 = pcb_23(D)->state;
+  if (_3 != 2)
+    goto <bb 7>; [INV]
+  else
+    goto <bb 9>; [INV]
+
+  <bb 7> :
+  _4 = pcb_23(D)->state;
+  if (_4 != 3)
+    goto <bb 8>; [INV]
+  else
+    goto <bb 9>; [INV]
+
+  <bb 8> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _25 = -11;
+  // predicted unlikely by early return (on trees) predictor.
+  goto <bb 23>; [INV]
+
+  <bb 9> :
+  # DEBUG BEGIN_STMT
+  if (len_26(D) == 0)
+    goto <bb 10>; [INV]
+  else
+    goto <bb 11>; [INV]
+
+  <bb 10> :
+  # DEBUG BEGIN_STMT
+  _35 = 0;
+  // predicted unlikely by early return (on trees) predictor.
+  goto <bb 23>; [INV]
+
+  <bb 11> :
+  # DEBUG BEGIN_STMT
+  _5 = pcb_23(D)->snd_buf;
+  if (len_26(D) > _5)
+    goto <bb 12>; [INV]
+  else
+    goto <bb 13>; [INV]
+
+  <bb 12> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _6 = pcb_23(D)->flags;
+  _7 = _6 | 128;
+  pcb_23(D)->flags = _7;
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _34 = -1;
+  // predicted unlikely by early return (on trees) predictor.
+  goto <bb 23>; [INV]
+
+  <bb 13> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _8 = pcb_23(D)->snd_queuelen;
+  if (_8 > 19)
+    goto <bb 14>; [INV]
+  else
+    goto <bb 15>; [INV]
+
+  <bb 14> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _9 = lwip_stats.tcp.memerr;
+  _10 = _9 + 1;
+  lwip_stats.tcp.memerr = _10;
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _11 = pcb_23(D)->flags;
+  _12 = _11 | 128;
+  pcb_23(D)->flags = _12;
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _32 = -1;
+  // predicted unlikely by early return (on trees) predictor.
+  goto <bb 23>; [INV]
+
+  <bb 15> :
+  # DEBUG BEGIN_STMT
+  _13 = pcb_23(D)->snd_queuelen;
+  if (_13 != 0)
+    goto <bb 16>; [INV]
+  else
+    goto <bb 19>; [INV]
+
+  <bb 16> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _14 = pcb_23(D)->unacked;
+  if (_14 == 0B)
+    goto <bb 17>; [INV]
+  else
+    goto <bb 22>; [INV]
+
+  <bb 17> :
+  _15 = pcb_23(D)->unsent;
+  if (_15 == 0B)
+    goto <bb 18>; [INV]
+  else
+    goto <bb 22>; [INV]
+
+  <bb 18> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  __asm__ __volatile__("BKPT #0
+	");
+  # DEBUG BEGIN_STMT
+  goto <bb 18>; [INV]
+
+  <bb 19> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _16 = pcb_23(D)->unacked;
+  if (_16 != 0B)
+    goto <bb 21>; [INV]
+  else
+    goto <bb 20>; [INV]
+
+  <bb 20> :
+  _17 = pcb_23(D)->unsent;
+  if (_17 != 0B)
+    goto <bb 21>; [INV]
+  else
+    goto <bb 22>; [INV]
+
+  <bb 21> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  __asm__ __volatile__("BKPT #0
+	");
+  # DEBUG BEGIN_STMT
+  goto <bb 21>; [INV]
+
+  <bb 22> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _29 = 0;
+
+  <bb 23> :
+  # _18 = PHI <_25(8), _35(10), _34(12), _32(14), _29(22)>
+  return _18;
+
+}
+
+
+tcp_pbuf_prealloc (pbuf_layer layer, u16_t length, u16_t max_length, u16_t * oversize, const struct tcp_pcb * pcb, u8_t apiflags, u8_t first_seg)
+{
+  u16_t alloc;
+  struct pbuf * p;
+  int _1;
+  int _2;
+  short unsigned int _3;
+  unsigned int _4;
+  unsigned int _5;
+  struct tcp_seg * _6;
+  struct tcp_seg * _7;
+  unsigned int _8;
+  unsigned int _9;
+  unsigned int _10;
+  unsigned int _11;
+  unsigned int _12;
+  struct pbuf * _13;
+  short unsigned int _14;
+  short unsigned int _15;
+  short unsigned int _16;
+  struct pbuf * _18;
+  struct pbuf * _38;
+  struct pbuf * _40;
+
+  <bb 2> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  alloc_24 = length_23(D);
+  # DEBUG alloc => alloc_24
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  if (oversize_25(D) == 0B)
+    goto <bb 3>; [INV]
+  else
+    goto <bb 4>; [INV]
+
+  <bb 3> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  __asm__ __volatile__("BKPT #0
+	");
+  # DEBUG BEGIN_STMT
+  goto <bb 3>; [INV]
+
+  <bb 4> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  if (pcb_27(D) == 0B)
+    goto <bb 5>; [INV]
+  else
+    goto <bb 6>; [INV]
+
+  <bb 5> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  __asm__ __volatile__("BKPT #0
+	");
+  # DEBUG BEGIN_STMT
+  goto <bb 5>; [INV]
+
+  <bb 6> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  if (length_23(D) < max_length_28(D))
+    goto <bb 7>; [INV]
+  else
+    goto <bb 13>; [INV]
+
+  <bb 7> :
+  # DEBUG BEGIN_STMT
+  _1 = (int) apiflags_29(D);
+  _2 = _1 & 2;
+  if (_2 != 0)
+    goto <bb 12>; [INV]
+  else
+    goto <bb 8>; [INV]
+
+  <bb 8> :
+  _3 = pcb_27(D)->flags;
+  _4 = (unsigned int) _3;
+  _5 = _4 & 64;
+  if (_5 == 0)
+    goto <bb 9>; [INV]
+  else
+    goto <bb 13>; [INV]
+
+  <bb 9> :
+  if (first_seg_30(D) == 0)
+    goto <bb 12>; [INV]
+  else
+    goto <bb 10>; [INV]
+
+  <bb 10> :
+  _6 = pcb_27(D)->unsent;
+  if (_6 != 0B)
+    goto <bb 12>; [INV]
+  else
+    goto <bb 11>; [INV]
+
+  <bb 11> :
+  _7 = pcb_27(D)->unacked;
+  if (_7 != 0B)
+    goto <bb 12>; [INV]
+  else
+    goto <bb 13>; [INV]
+
+  <bb 12> :
+  # DEBUG BEGIN_STMT
+  _8 = (unsigned int) length_23(D);
+  _9 = _8 + 1475;
+  _10 = _9 & 4294967280;
+  _11 = (unsigned int) max_length_28(D);
+  _12 = MIN_EXPR <_10, _11>;
+  alloc_31 = (u16_t) _12;
+  # DEBUG alloc => alloc_31
+
+  <bb 13> :
+  # alloc_17 = PHI <alloc_24(6), alloc_24(8), alloc_24(11), alloc_31(12)>
+  # DEBUG alloc => alloc_17
+  # DEBUG BEGIN_STMT
+  p_34 = pbuf_alloc (layer_32(D), alloc_17, 640);
+  # DEBUG p => p_34
+  # DEBUG BEGIN_STMT
+  if (p_34 == 0B)
+    goto <bb 14>; [INV]
+  else
+    goto <bb 15>; [INV]
+
+  <bb 14> :
+  # DEBUG BEGIN_STMT
+  _40 = 0B;
+  // predicted unlikely by early return (on trees) predictor.
+  goto <bb 18>; [INV]
+
+  <bb 15> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _13 = p_34->next;
+  if (_13 != 0B)
+    goto <bb 16>; [INV]
+  else
+    goto <bb 17>; [INV]
+
+  <bb 16> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  __asm__ __volatile__("BKPT #0
+	");
+  # DEBUG BEGIN_STMT
+  goto <bb 16>; [INV]
+
+  <bb 17> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _14 = p_34->len;
+  _15 = _14 - length_23(D);
+  *oversize_25(D) = _15;
+  # DEBUG BEGIN_STMT
+  p_34->tot_len = length_23(D);
+  _16 = p_34->tot_len;
+  p_34->len = _16;
+  # DEBUG BEGIN_STMT
+  _38 = p_34;
+
+  <bb 18> :
+  # _18 = PHI <_40(14), _38(17)>
+  return _18;
+
+}
+
+
+tcp_create_segment (const struct tcp_pcb * pcb, struct pbuf * p, u8_t hdrflags, u32_t seqno, u8_t optflags)
+{
+  u8_t optlen;
+  struct tcp_seg * seg;
+  int _1;
+  int _2;
+  unsigned char _3;
+  short unsigned int _4;
+  short unsigned int _5;
+  short unsigned int _6;
+  short unsigned int _7;
+  short unsigned int _8;
+  unsigned char _9;
+  short unsigned int _10;
+  short unsigned int _11;
+  struct pbuf * _12;
+  void * _13;
+  short unsigned int _14;
+  struct tcp_hdr * _15;
+  short unsigned int _16;
+  short unsigned int _17;
+  struct tcp_hdr * _18;
+  short unsigned int _19;
+  struct tcp_hdr * _20;
+  long unsigned int _21;
+  unsigned char _22;
+  short unsigned int _23;
+  short unsigned int _24;
+  short unsigned int _25;
+  short unsigned int _26;
+  short unsigned int _27;
+  struct tcp_hdr * _28;
+  short unsigned int _29;
+  struct tcp_hdr * _30;
+  struct tcp_seg * _31;
+  struct tcp_seg * _60;
+  struct tcp_seg * _63;
+  struct tcp_seg * _66;
+
+  <bb 2> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  if (pcb_36(D) == 0B)
+    goto <bb 3>; [INV]
+  else
+    goto <bb 4>; [INV]
+
+  <bb 3> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  __asm__ __volatile__("BKPT #0
+	");
+  # DEBUG BEGIN_STMT
+  goto <bb 3>; [INV]
+
+  <bb 4> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  if (p_38(D) == 0B)
+    goto <bb 5>; [INV]
+  else
+    goto <bb 6>; [INV]
+
+  <bb 5> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  __asm__ __volatile__("BKPT #0
+	");
+  # DEBUG BEGIN_STMT
+  goto <bb 5>; [INV]
+
+  <bb 6> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _1 = (int) optflags_39(D);
+  _2 = _1 << 2;
+  _3 = (unsigned char) _2;
+  optlen_40 = _3 & 4;
+  # DEBUG optlen => optlen_40
+  # DEBUG BEGIN_STMT
+  seg_42 = memp_malloc (4);
+  # DEBUG seg => seg_42
+  if (seg_42 == 0B)
+    goto <bb 7>; [INV]
+  else
+    goto <bb 8>; [INV]
+
+  <bb 7> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  pbuf_free (p_38(D));
+  # DEBUG BEGIN_STMT
+  _66 = 0B;
+  // predicted unlikely by early return (on trees) predictor.
+  goto <bb 13>; [INV]
+
+  <bb 8> :
+  # DEBUG BEGIN_STMT
+  seg_42->flags = optflags_39(D);
+  # DEBUG BEGIN_STMT
+  seg_42->next = 0B;
+  # DEBUG BEGIN_STMT
+  seg_42->p = p_38(D);
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _4 = p_38(D)->tot_len;
+  _5 = (short unsigned int) optlen_40;
+  if (_4 < _5)
+    goto <bb 9>; [INV]
+  else
+    goto <bb 10>; [INV]
+
+  <bb 9> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  __asm__ __volatile__("BKPT #0
+	");
+  # DEBUG BEGIN_STMT
+  goto <bb 9>; [INV]
+
+  <bb 10> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _6 = p_38(D)->tot_len;
+  _7 = (short unsigned int) optlen_40;
+  _8 = _6 - _7;
+  seg_42->len = _8;
+  # DEBUG BEGIN_STMT
+  _9 = pbuf_add_header (p_38(D), 20);
+  if (_9 != 0)
+    goto <bb 11>; [INV]
+  else
+    goto <bb 12>; [INV]
+
+  <bb 11> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _10 = lwip_stats.tcp.err;
+  _11 = _10 + 1;
+  lwip_stats.tcp.err = _11;
+  # DEBUG BEGIN_STMT
+  tcp_seg_free (seg_42);
+  # DEBUG BEGIN_STMT
+  _63 = 0B;
+  // predicted unlikely by early return (on trees) predictor.
+  goto <bb 13>; [INV]
+
+  <bb 12> :
+  # DEBUG BEGIN_STMT
+  _12 = seg_42->p;
+  _13 = _12->payload;
+  seg_42->tcphdr = _13;
+  # DEBUG BEGIN_STMT
+  _14 = pcb_36(D)->local_port;
+  _15 = seg_42->tcphdr;
+  _16 = lwip_htons (_14);
+  _15->src = _16;
+  # DEBUG BEGIN_STMT
+  _17 = pcb_36(D)->remote_port;
+  _18 = seg_42->tcphdr;
+  _19 = lwip_htons (_17);
+  _18->dest = _19;
+  # DEBUG BEGIN_STMT
+  _20 = seg_42->tcphdr;
+  _21 = lwip_htonl (seqno_53(D));
+  _20->seqno = _21;
+  # DEBUG BEGIN_STMT
+  _22 = optlen_40 / 4;
+  _23 = (short unsigned int) _22;
+  _24 = _23 + 5;
+  _25 = _24 << 12;
+  _26 = (short unsigned int) hdrflags_56(D);
+  _27 = _25 | _26;
+  _28 = seg_42->tcphdr;
+  _29 = lwip_htons (_27);
+  _28->_hdrlen_rsvd_flags = _29;
+  # DEBUG BEGIN_STMT
+  _30 = seg_42->tcphdr;
+  _30->urgp = 0;
+  # DEBUG BEGIN_STMT
+  _60 = seg_42;
+
+  <bb 13> :
+  # _31 = PHI <_66(7), _63(11), _60(12)>
+  return _31;
+
+}
+
+
+tcp_route (const struct tcp_pcb * pcb, const struct ip_addr_t * src, const struct ip_addr_t * dst)
+{
+  unsigned char _1;
+  unsigned char _2;
+  unsigned char _3;
+  const struct ip6_addr_t * _4;
+  const struct ip6_addr_t * _5;
+  const struct ip4_addr_t * _6;
+  struct netif * _7;
+  struct netif * iftmp.19_8;
+  struct netif * _14;
+  struct netif * iftmp.19_18;
+  struct netif * iftmp.19_20;
+  struct netif * _21;
+
+  <bb 2> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  if (pcb_11(D) != 0B)
+    goto <bb 3>; [INV]
+  else
+    goto <bb 5>; [INV]
+
+  <bb 3> :
+  _1 = pcb_11(D)->netif_idx;
+  if (_1 != 0)
+    goto <bb 4>; [INV]
+  else
+    goto <bb 5>; [INV]
+
+  <bb 4> :
+  # DEBUG BEGIN_STMT
+  _2 = pcb_11(D)->netif_idx;
+  _14 = netif_get_by_index (_2);
+  // predicted unlikely by early return (on trees) predictor.
+  goto <bb 10>; [INV]
+
+  <bb 5> :
+  # DEBUG BEGIN_STMT
+  if (dst_15(D) != 0B)
+    goto <bb 6>; [INV]
+  else
+    goto <bb 8>; [INV]
+
+  <bb 6> :
+  _3 = dst_15(D)->type;
+  if (_3 == 6)
+    goto <bb 7>; [INV]
+  else
+    goto <bb 8>; [INV]
+
+  <bb 7> :
+  _4 = &src_16(D)->u_addr.ip6;
+  _5 = &dst_15(D)->u_addr.ip6;
+  iftmp.19_18 = ip6_route (_4, _5);
+  goto <bb 9>; [INV]
+
+  <bb 8> :
+  _6 = &dst_15(D)->u_addr.ip4;
+  iftmp.19_20 = ip4_route (_6);
+
+  <bb 9> :
+  # iftmp.19_8 = PHI <iftmp.19_18(7), iftmp.19_20(8)>
+  _21 = iftmp.19_8;
+  // predicted unlikely by early return (on trees) predictor.
+
+  <bb 10> :
+  # _7 = PHI <_14(4), _21(9)>
+  return _7;
+
+}
+
+

@@ -1,0 +1,71 @@
+end_tcpip_execution (struct netif * netif)
+{
+  <bb 2> :
+  # DEBUG BEGIN_STMT
+  if (netif_2(D) != 0B)
+    goto <bb 3>; [INV]
+  else
+    goto <bb 4>; [INV]
+
+  <bb 3> :
+  # DEBUG BEGIN_STMT
+  gmac_ethernetif_shutdown (netif_2(D));
+
+  <bb 4> :
+  # DEBUG BEGIN_STMT
+  set_software_breakpoint ();
+  return;
+
+}
+
+
+is_netif_shutdown_command (char * buf_ptr, uint16_t buf_len)
+{
+  unsigned int _1;
+  int _2;
+  _Bool _3;
+  _Bool _7;
+  _Bool _8;
+
+  <bb 2> :
+  # DEBUG BEGIN_STMT
+  if (buf_len_4(D) == 14)
+    goto <bb 3>; [INV]
+  else
+    goto <bb 5>; [INV]
+
+  <bb 3> :
+  _1 = (unsigned int) buf_len_4(D);
+  _2 = strncmp (buf_ptr_6(D), &netif_shutdown_cmd, _1);
+  if (_2 == 0)
+    goto <bb 4>; [INV]
+  else
+    goto <bb 5>; [INV]
+
+  <bb 4> :
+  # DEBUG BEGIN_STMT
+  _7 = 1;
+  // predicted unlikely by early return (on trees) predictor.
+  goto <bb 6>; [INV]
+
+  <bb 5> :
+  # DEBUG BEGIN_STMT
+  _8 = 0;
+
+  <bb 6> :
+  # _3 = PHI <_7(4), _8(5)>
+  return _3;
+
+}
+
+
+set_software_breakpoint ()
+{
+  <bb 2> :
+  # DEBUG BEGIN_STMT
+  __asm__ __volatile__("BKPT #0");
+  return;
+
+}
+
+

@@ -1,0 +1,441 @@
+bridgeif_age_tmr.part.0 (void * arg)
+{
+  struct bridgeif_dfdb_t * fdb;
+
+  <bb 3> [local count: 1073741824]:
+
+  <bb 2> [local count: 1073741824]:
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  bridgeif_fdb_age_one_second (arg_1(D));
+  # DEBUG BEGIN_STMT
+  sys_timeout (1000, bridgeif_age_tmr, arg_1(D));
+  return;
+
+}
+
+
+bridgeif_fdb_init (u16_t max_fdb_entries)
+{
+  size_t alloc_len_sizet;
+  struct bridgeif_dfdb_t * fdb;
+  unsigned int _1;
+  unsigned int _2;
+  struct bridgeif_dfdb_t * _3;
+  void * _4;
+
+  <bb 2> [local count: 1073741824]:
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _1 = (unsigned int) max_fdb_entries_6(D);
+  _2 = _1 * 16;
+  alloc_len_sizet_7 = _2 + 8;
+  # DEBUG alloc_len_sizet => alloc_len_sizet_7
+  # DEBUG BEGIN_STMT
+  # DEBUG alloc_len => alloc_len_sizet_7
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  fdb_10 = mem_calloc (1, alloc_len_sizet_7);
+  # DEBUG fdb => fdb_10
+  # DEBUG BEGIN_STMT
+  if (fdb_10 == 0B)
+    goto <bb 4>; [15.47%]
+  else
+    goto <bb 3>; [84.53%]
+
+  <bb 3> [local count: 907633965]:
+  # DEBUG BEGIN_STMT
+  fdb_10->max_fdb_entries = max_fdb_entries_6(D);
+  # DEBUG BEGIN_STMT
+  _3 = fdb_10 + 8;
+  fdb_10->fdb = _3;
+  # DEBUG BEGIN_STMT
+  sys_timeout (1000, bridgeif_age_tmr, fdb_10);
+  # DEBUG BEGIN_STMT
+
+  <bb 4> [local count: 1073741824]:
+  # _4 = PHI <0B(2), fdb_10(3)>
+  return _4;
+
+}
+
+
+bridgeif_age_tmr (void * arg)
+{
+  <bb 2> [local count: 230763]:
+  # DEBUG BEGIN_STMT
+  # DEBUG fdb => arg_2(D)
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  if (arg_2(D) == 0B)
+    goto <bb 3>; [46.53%]
+  else
+    goto <bb 4>; [53.47%]
+
+  <bb 3> [local count: 1073741824]:
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  __asm__ __volatile__("BKPT #0
+	");
+  # DEBUG BEGIN_STMT
+  goto <bb 3>; [100.00%]
+
+  <bb 4> [local count: 123389]:
+  bridgeif_age_tmr.part.0 (arg_2(D));
+  return;
+
+}
+
+
+bridgeif_fdb_age_one_second (void * fdb_ptr)
+{
+  struct bridgeif_dfdb_entry_t * e;
+  int i;
+  struct bridgeif_dfdb_entry_t * _1;
+  unsigned int i.3_2;
+  unsigned int _3;
+  unsigned char _4;
+  long unsigned int _5;
+  long unsigned int _6;
+  short unsigned int _7;
+  int _8;
+
+  <bb 2> [local count: 118111600]:
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG fdb => fdb_ptr_12(D)
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG i => 0
+  goto <bb 8>; [100.00%]
+
+  <bb 3> [local count: 955630223]:
+  # DEBUG BEGIN_STMT
+  _1 = MEM[(struct bridgeif_dfdb_t *)fdb_ptr_12(D)].fdb;
+  i.3_2 = (unsigned int) i_9;
+  _3 = i.3_2 * 16;
+  e_14 = _1 + _3;
+  # DEBUG e => e_14
+  # DEBUG BEGIN_STMT
+  _4 = e_14->used;
+  if (_4 != 0)
+    goto <bb 4>; [50.00%]
+  else
+    goto <bb 7>; [50.00%]
+
+  <bb 4> [local count: 477815111]:
+  _5 = e_14->ts;
+  if (_5 != 0)
+    goto <bb 5>; [50.00%]
+  else
+    goto <bb 7>; [50.00%]
+
+  <bb 5> [local count: 238907556]:
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _6 = _5 + 4294967295;
+  e_14->ts = _6;
+  if (_6 == 0)
+    goto <bb 6>; [50.00%]
+  else
+    goto <bb 7>; [50.00%]
+
+  <bb 6> [local count: 119453778]:
+  # DEBUG BEGIN_STMT
+  e_14->used = 0;
+
+  <bb 7> [local count: 955630223]:
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  i_17 = i_9 + 1;
+  # DEBUG i => i_17
+
+  <bb 8> [local count: 1073741824]:
+  # i_9 = PHI <0(2), i_17(7)>
+  # DEBUG i => i_9
+  # DEBUG BEGIN_STMT
+  _7 = MEM[(struct bridgeif_dfdb_t *)fdb_ptr_12(D)].max_fdb_entries;
+  _8 = (int) _7;
+  if (_8 > i_9)
+    goto <bb 3>; [89.00%]
+  else
+    goto <bb 9>; [11.00%]
+
+  <bb 9> [local count: 118111601]:
+  # DEBUG BEGIN_STMT
+  return;
+
+}
+
+
+bridgeif_fdb_get_dst_ports (void * fdb_ptr, struct eth_addr * dst_addr)
+{
+  bridgeif_portmask_t ret;
+  struct bridgeif_dfdb_entry_t * e;
+  int i;
+  struct bridgeif_dfdb_entry_t * _1;
+  unsigned int i.2_2;
+  unsigned int _3;
+  unsigned char _4;
+  long unsigned int _5;
+  struct eth_addr * _6;
+  int _7;
+  unsigned char _8;
+  int _9;
+  int _10;
+  short unsigned int _11;
+  int _12;
+  bridgeif_portmask_t _14;
+
+  <bb 2> [local count: 73007732]:
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG fdb => fdb_ptr_15(D)
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG i => 0
+  goto <bb 8>; [100.00%]
+
+  <bb 3> [local count: 1014686025]:
+  # DEBUG BEGIN_STMT
+  _1 = MEM[(struct bridgeif_dfdb_t *)fdb_ptr_15(D)].fdb;
+  i.2_2 = (unsigned int) i_13;
+  _3 = i.2_2 * 16;
+  e_18 = _1 + _3;
+  # DEBUG e => e_18
+  # DEBUG BEGIN_STMT
+  _4 = e_18->used;
+  if (_4 != 0)
+    goto <bb 4>; [50.00%]
+  else
+    goto <bb 7>; [50.00%]
+
+  <bb 4> [local count: 507343012]:
+  _5 = e_18->ts;
+  if (_5 != 0)
+    goto <bb 5>; [50.00%]
+  else
+    goto <bb 7>; [50.00%]
+
+  <bb 5> [local count: 253671506]:
+  # DEBUG BEGIN_STMT
+  _6 = &e_18->addr;
+  _7 = memcmp (_6, dst_addr_19(D), 6);
+  if (_7 == 0)
+    goto <bb 6>; [5.50%]
+  else
+    goto <bb 7>; [94.50%]
+
+  <bb 6> [local count: 13951933]:
+  # e_16 = PHI <e_18(5)>
+  # DEBUG BEGIN_STMT
+  _8 = e_16->port;
+  _9 = (int) _8;
+  _10 = 1 << _9;
+  ret_20 = (bridgeif_portmask_t) _10;
+  # DEBUG ret => ret_20
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  goto <bb 9>; [100.00%]
+
+  <bb 7> [local count: 1000734092]:
+  # DEBUG BEGIN_STMT
+  i_21 = i_13 + 1;
+  # DEBUG i => i_21
+
+  <bb 8> [local count: 1073741824]:
+  # i_13 = PHI <0(2), i_21(7)>
+  # DEBUG i => i_13
+  # DEBUG BEGIN_STMT
+  _11 = MEM[(struct bridgeif_dfdb_t *)fdb_ptr_15(D)].max_fdb_entries;
+  _12 = (int) _11;
+  if (_12 > i_13)
+    goto <bb 3>; [94.50%]
+  else
+    goto <bb 9>; [5.50%]
+
+  <bb 9> [local count: 73007733]:
+  # _14 = PHI <ret_20(6), 255(8)>
+  return _14;
+
+}
+
+
+bridgeif_fdb_update_src (void * fdb_ptr, struct eth_addr * src_addr, u8_t port_idx)
+{
+  struct bridgeif_dfdb_entry_t * e;
+  struct bridgeif_dfdb_entry_t * e;
+  int i;
+  struct bridgeif_dfdb_entry_t * _1;
+  unsigned int i.0_2;
+  unsigned int _3;
+  unsigned char _4;
+  long unsigned int _5;
+  struct eth_addr * _6;
+  int _7;
+  short unsigned int _8;
+  int _9;
+  struct bridgeif_dfdb_entry_t * _10;
+  unsigned int i.1_11;
+  unsigned int _12;
+  unsigned char _13;
+  long unsigned int _14;
+  long unsigned int _16;
+  struct eth_addr * _17;
+  int _18;
+
+  <bb 2> [local count: 73007732]:
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG fdb => fdb_ptr_23(D)
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG i => 0
+  goto <bb 8>; [100.00%]
+
+  <bb 3> [local count: 1014686025]:
+  # DEBUG BEGIN_STMT
+  _1 = MEM[(struct bridgeif_dfdb_t *)fdb_ptr_23(D)].fdb;
+  i.0_2 = (unsigned int) i_20;
+  _3 = i.0_2 * 16;
+  e_33 = _1 + _3;
+  # DEBUG e => e_33
+  # DEBUG BEGIN_STMT
+  _4 = e_33->used;
+  if (_4 != 0)
+    goto <bb 4>; [50.00%]
+  else
+    goto <bb 7>; [50.00%]
+
+  <bb 4> [local count: 507343012]:
+  _5 = e_33->ts;
+  if (_5 != 0)
+    goto <bb 5>; [50.00%]
+  else
+    goto <bb 7>; [50.00%]
+
+  <bb 5> [local count: 253671506]:
+  # DEBUG BEGIN_STMT
+  _6 = &e_33->addr;
+  _7 = memcmp (_6, src_addr_26(D), 6);
+  if (_7 == 0)
+    goto <bb 6>; [5.50%]
+  else
+    goto <bb 7>; [94.50%]
+
+  <bb 6> [local count: 13951933]:
+  # e_15 = PHI <e_33(5)>
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  e_15->ts = 300;
+  # DEBUG BEGIN_STMT
+  e_15->port = port_idx_29(D);
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  goto <bb 17>; [100.00%]
+
+  <bb 7> [local count: 1000734092]:
+  # DEBUG BEGIN_STMT
+  i_36 = i_20 + 1;
+  # DEBUG i => i_36
+
+  <bb 8> [local count: 1073741824]:
+  # i_20 = PHI <0(2), i_36(7)>
+  # DEBUG i => i_20
+  # DEBUG BEGIN_STMT
+  _8 = MEM[(struct bridgeif_dfdb_t *)fdb_ptr_23(D)].max_fdb_entries;
+  _9 = (int) _8;
+  if (_9 > i_20)
+    goto <bb 3>; [94.50%]
+  else
+    goto <bb 9>; [5.50%]
+
+  <bb 9> [local count: 59055800]:
+  # _18 = PHI <_9(8)>
+  goto <bb 16>; [100.00%]
+
+  <bb 10> [local count: 642708799]:
+  # DEBUG BEGIN_STMT
+  _10 = MEM[(struct bridgeif_dfdb_t *)fdb_ptr_23(D)].fdb;
+  i.1_11 = (unsigned int) i_21;
+  _12 = i.1_11 * 16;
+  e_25 = _10 + _12;
+  # DEBUG e => e_25
+  # DEBUG BEGIN_STMT
+  _13 = e_25->used;
+  if (_13 == 0)
+    goto <bb 12>; [50.00%]
+  else
+    goto <bb 11>; [50.00%]
+
+  <bb 11> [local count: 321354399]:
+  _14 = e_25->ts;
+  if (_14 == 0)
+    goto <bb 12>; [50.00%]
+  else
+    goto <bb 15>; [50.00%]
+
+  <bb 12> [local count: 482031599]:
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  if (_13 == 0)
+    goto <bb 14>; [3.66%]
+  else
+    goto <bb 13>; [96.34%]
+
+  <bb 13> [local count: 464389242]:
+  _16 = e_25->ts;
+  if (_16 == 0)
+    goto <bb 14>; [3.66%]
+  else
+    goto <bb 15>; [96.34%]
+
+  <bb 14> [local count: 34639003]:
+  # e_19 = PHI <e_25(12), e_25(13)>
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _17 = &e_19->addr;
+  memcpy (_17, src_addr_26(D), 6);
+  # DEBUG BEGIN_STMT
+  e_19->ts = 300;
+  # DEBUG BEGIN_STMT
+  e_19->port = port_idx_29(D);
+  # DEBUG BEGIN_STMT
+  e_19->used = 1;
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  goto <bb 17>; [100.00%]
+
+  <bb 15> [local count: 608069797]:
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  i_32 = i_21 + 1;
+  # DEBUG i => i_32
+
+  <bb 16> [local count: 667125596]:
+  # i_21 = PHI <i_32(15), 0(9)>
+  # DEBUG i => i_21
+  # DEBUG BEGIN_STMT
+  if (_18 > i_21)
+    goto <bb 10>; [96.34%]
+  else
+    goto <bb 17>; [3.66%]
+
+  <bb 17> [local count: 73007732]:
+  # DEBUG BEGIN_STMT
+  return;
+
+}
+
+

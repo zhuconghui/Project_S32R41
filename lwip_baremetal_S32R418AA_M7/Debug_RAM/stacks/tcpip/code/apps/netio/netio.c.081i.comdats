@@ -1,0 +1,155 @@
+netio_recv.part.0 (struct tcp_pcb * pcb)
+{
+  void * arg;
+  struct pbuf * p;
+  err_t err;
+
+  <bb 4> [local count: 1073741824]:
+  # DEBUG D#10 s=> arg
+  # DEBUG arg => D#10
+  # DEBUG D#9 s=> p
+  # DEBUG p => D#9
+  # DEBUG D#8 s=> err
+  # DEBUG err => D#8
+
+  <bb 2> [local count: 1073741824]:
+  # DEBUG BEGIN_STMT
+  tcp_arg (pcb_1(D), 0B);
+  # DEBUG BEGIN_STMT
+  tcp_sent (pcb_1(D), 0B);
+  # DEBUG BEGIN_STMT
+  tcp_recv (pcb_1(D), 0B);
+  # DEBUG BEGIN_STMT
+  tcp_close (pcb_1(D));
+
+  <bb 3> [local count: 1073741824]:
+  return;
+
+}
+
+
+netio_accept.part.0 (struct tcp_pcb * pcb)
+{
+  void * arg;
+  err_t err;
+
+  <bb 4> [local count: 1073741824]:
+  # DEBUG D#4 s=> arg
+  # DEBUG arg => D#4
+  # DEBUG D#3 s=> err
+  # DEBUG err => D#3
+
+  <bb 2> [local count: 1073741824]:
+  # DEBUG BEGIN_STMT
+  tcp_arg (pcb_1(D), 0B);
+  # DEBUG BEGIN_STMT
+  tcp_sent (pcb_1(D), 0B);
+  # DEBUG BEGIN_STMT
+  tcp_recv (pcb_1(D), netio_recv);
+
+  <bb 3> [local count: 1073741824]:
+  return;
+
+}
+
+
+netio_init ()
+{
+  struct tcp_pcb * pcb;
+
+  <bb 2> [local count: 1073741824]:
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  pcb_3 = tcp_new_ip_type (46);
+  # DEBUG pcb => pcb_3
+  # DEBUG BEGIN_STMT
+  tcp_bind (pcb_3, &ip_addr_any_type, 18767);
+  # DEBUG BEGIN_STMT
+  pcb_6 = tcp_listen_with_backlog (pcb_3, 255);
+  # DEBUG pcb => pcb_6
+  # DEBUG BEGIN_STMT
+  tcp_accept (pcb_6, netio_accept);
+  return;
+
+}
+
+
+netio_accept (void * arg, struct tcp_pcb * pcb, err_t err)
+{
+  <bb 2> [local count: 1073741824]:
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  if (pcb_1(D) != 0B)
+    goto <bb 3>; [53.47%]
+  else
+    goto <bb 4>; [46.53%]
+
+  <bb 3> [local count: 574129752]:
+  # DEBUG D#1 => arg_3(D)
+  # DEBUG D#2 => err_4(D)
+  netio_accept.part.0 (pcb_1(D));
+
+  <bb 4> [local count: 1073741824]:
+  # DEBUG BEGIN_STMT
+  return 0;
+
+}
+
+
+netio_recv (void * arg, struct tcp_pcb * pcb, struct pbuf * p, err_t err)
+{
+  short unsigned int _1;
+
+  <bb 2> [local count: 1073741824]:
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  if (err_3(D) == 0)
+    goto <bb 3>; [67.00%]
+  else
+    goto <bb 5>; [33.00%]
+
+  <bb 3> [local count: 719407023]:
+  if (p_4(D) != 0B)
+    goto <bb 4>; [53.47%]
+  else
+    goto <bb 5>; [46.53%]
+
+  <bb 4> [local count: 384666935]:
+  # DEBUG BEGIN_STMT
+  _1 = p_4(D)->tot_len;
+  tcp_recved (pcb_6(D), _1);
+  # DEBUG BEGIN_STMT
+  pbuf_free (p_4(D));
+  goto <bb 6>; [100.00%]
+
+  <bb 5> [local count: 689074890]:
+  # DEBUG BEGIN_STMT
+  pbuf_free (p_4(D));
+
+  <bb 6> [local count: 1073741824]:
+  # DEBUG BEGIN_STMT
+  if (err_3(D) == 0)
+    goto <bb 7>; [50.00%]
+  else
+    goto <bb 9>; [50.00%]
+
+  <bb 7> [local count: 536870913]:
+  if (p_4(D) == 0B)
+    goto <bb 8>; [17.43%]
+  else
+    goto <bb 9>; [82.57%]
+
+  <bb 8> [local count: 93576600]:
+  # DEBUG D#5 => arg_10(D)
+  # DEBUG D#6 => p_4(D)
+  # DEBUG D#7 => err_3(D)
+  netio_recv.part.0 (pcb_6(D));
+
+  <bb 9> [local count: 1073741824]:
+  # DEBUG BEGIN_STMT
+  return 0;
+
+}
+
+

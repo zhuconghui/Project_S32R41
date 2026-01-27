@@ -1,0 +1,518 @@
+netbiosns_stop ()
+{
+  struct udp_pcb * netbiosns_pcb.12_1;
+  struct udp_pcb * netbiosns_pcb.13_2;
+
+  <bb 2> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  netbiosns_pcb.12_1 = netbiosns_pcb;
+  if (netbiosns_pcb.12_1 != 0B)
+    goto <bb 3>; [INV]
+  else
+    goto <bb 4>; [INV]
+
+  <bb 3> :
+  # DEBUG BEGIN_STMT
+  netbiosns_pcb.13_2 = netbiosns_pcb;
+  udp_remove (netbiosns_pcb.13_2);
+  # DEBUG BEGIN_STMT
+  netbiosns_pcb = 0B;
+
+  <bb 4> :
+  return;
+
+}
+
+
+netbiosns_set_name (const char * hostname)
+{
+  unsigned char __x;
+  size_t copy_len;
+  size_t i;
+  const char * _1;
+  sizetype _2;
+  sizetype _3;
+  const char * _4;
+  char _5;
+  int _6;
+  int _7;
+  int _8;
+  char _9;
+  int iftmp.11_12;
+  int iftmp.11_22;
+  int iftmp.11_23;
+  int _24;
+
+  <bb 2> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  copy_len_17 = strlen (hostname_16(D));
+  # DEBUG copy_len => copy_len_17
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  if (copy_len_17 > 15)
+    goto <bb 3>; [INV]
+  else
+    goto <bb 4>; [INV]
+
+  <bb 3> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  __asm__ __volatile__("BKPT #0
+	");
+  # DEBUG BEGIN_STMT
+  goto <bb 3>; [INV]
+
+  <bb 4> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  if (copy_len_17 > 15)
+    goto <bb 5>; [INV]
+  else
+    goto <bb 6>; [INV]
+
+  <bb 5> :
+  # DEBUG BEGIN_STMT
+  copy_len_18 = 15;
+  # DEBUG copy_len => copy_len_18
+
+  <bb 6> :
+  # copy_len_11 = PHI <copy_len_17(4), copy_len_18(5)>
+  # DEBUG copy_len => copy_len_11
+  # DEBUG BEGIN_STMT
+  i_19 = 0;
+  # DEBUG i => i_19
+  goto <bb 11>; [INV]
+
+  <bb 7> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _1 = hostname_16(D) + i_10;
+  __x_21 = *_1;
+  # DEBUG __x => __x_21
+  # DEBUG BEGIN_STMT
+  _2 = (sizetype) __x_21;
+  _3 = _2 + 1;
+  _4 = &_ctype_ + _3;
+  _5 = *_4;
+  _6 = (int) _5;
+  _7 = _6 & 3;
+  if (_7 == 2)
+    goto <bb 8>; [INV]
+  else
+    goto <bb 9>; [INV]
+
+  <bb 8> :
+  _8 = (int) __x_21;
+  iftmp.11_23 = _8 + -32;
+  goto <bb 10>; [INV]
+
+  <bb 9> :
+  iftmp.11_22 = (int) __x_21;
+
+  <bb 10> :
+  # iftmp.11_12 = PHI <iftmp.11_23(8), iftmp.11_22(9)>
+  _24 = iftmp.11_12;
+  _9 = (char) _24;
+  netbiosns_local_name[i_10] = _9;
+  # DEBUG BEGIN_STMT
+  i_26 = i_10 + 1;
+  # DEBUG i => i_26
+
+  <bb 11> :
+  # i_10 = PHI <i_19(6), i_26(10)>
+  # DEBUG i => i_10
+  # DEBUG BEGIN_STMT
+  if (i_10 < copy_len_11)
+    goto <bb 7>; [INV]
+  else
+    goto <bb 12>; [INV]
+
+  <bb 12> :
+  # DEBUG BEGIN_STMT
+  netbiosns_local_name[copy_len_11] = 0;
+  return;
+
+}
+
+
+netbiosns_init ()
+{
+  struct udp_pcb * _1;
+  struct udp_pcb * netbiosns_pcb.0_2;
+  struct udp_pcb * netbiosns_pcb.1_3;
+  unsigned char _4;
+  struct udp_pcb * netbiosns_pcb.2_5;
+  unsigned char _6;
+  struct udp_pcb * netbiosns_pcb.3_7;
+  struct udp_pcb * netbiosns_pcb.4_8;
+  struct udp_pcb * netbiosns_pcb.5_9;
+
+  <bb 2> :
+  # DEBUG BEGIN_STMT
+  _1 = udp_new_ip_type (46);
+  netbiosns_pcb = _1;
+  # DEBUG BEGIN_STMT
+  netbiosns_pcb.0_2 = netbiosns_pcb;
+  if (netbiosns_pcb.0_2 != 0B)
+    goto <bb 3>; [INV]
+  else
+    goto <bb 4>; [INV]
+
+  <bb 3> :
+  # DEBUG BEGIN_STMT
+  netbiosns_pcb.1_3 = netbiosns_pcb;
+  _4 = netbiosns_pcb.1_3->so_options;
+  netbiosns_pcb.2_5 = netbiosns_pcb;
+  _6 = _4 | 32;
+  netbiosns_pcb.2_5->so_options = _6;
+  # DEBUG BEGIN_STMT
+  netbiosns_pcb.3_7 = netbiosns_pcb;
+  udp_bind (netbiosns_pcb.3_7, &ip_addr_any_type, 137);
+  # DEBUG BEGIN_STMT
+  netbiosns_pcb.4_8 = netbiosns_pcb;
+  netbiosns_pcb.5_9 = netbiosns_pcb;
+  udp_recv (netbiosns_pcb.4_8, netbiosns_recv, netbiosns_pcb.5_9);
+
+  <bb 4> :
+  return;
+
+}
+
+
+netbiosns_recv (void * arg, struct udp_pcb * upcb, struct pbuf * p, const struct ip_addr_t * addr, u16_t port)
+{
+  struct netbios_resp * resp;
+  struct pbuf * q;
+  struct netbios_question_hdr * netbios_question_hdr;
+  struct netbios_hdr * netbios_hdr;
+  char netbios_name[17];
+  short unsigned int _1;
+  struct netif * netif_default.6_2;
+  short unsigned int _3;
+  unsigned int _4;
+  unsigned int _5;
+  short unsigned int _6;
+  u8_t[33] * _7;
+  short unsigned int _8;
+  int _9;
+  short unsigned int _10;
+  u8_t[33] * _11;
+  u8_t[33] * _12;
+  unsigned char _13;
+  short unsigned int _14;
+  short unsigned int _15;
+  struct netif * netif_default.7_16;
+  struct ip4_addr_t * _17;
+  long unsigned int _18;
+
+  <bb 2> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  if (p_21(D) != 0B)
+    goto <bb 3>; [INV]
+  else
+    goto <bb 13>; [INV]
+
+  <bb 3> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  netbios_hdr_23 = p_21(D)->payload;
+  # DEBUG netbios_hdr => netbios_hdr_23
+  # DEBUG BEGIN_STMT
+  netbios_question_hdr_24 = netbios_hdr_23 + 12;
+  # DEBUG netbios_question_hdr => netbios_question_hdr_24
+  # DEBUG BEGIN_STMT
+  _1 = p_21(D)->len;
+  if (_1 <= 49)
+    goto <bb 4>; [INV]
+  else
+    goto <bb 5>; [INV]
+
+  <bb 4> :
+  # DEBUG BEGIN_STMT
+  pbuf_free (p_21(D));
+  # DEBUG BEGIN_STMT
+  // predicted unlikely by early return (on trees) predictor.
+  netbios_name ={v} {CLOBBER};
+  goto <bb 13>; [INV]
+
+  <bb 5> :
+  # DEBUG BEGIN_STMT
+  netif_default.6_2 = netif_default;
+  if (netif_default.6_2 != 0B)
+    goto <bb 6>; [INV]
+  else
+    goto <bb 12>; [INV]
+
+  <bb 6> :
+  # DEBUG BEGIN_STMT
+  _3 = netbios_hdr_23->flags;
+  _4 = (unsigned int) _3;
+  _5 = _4 & 248;
+  if (_5 == 0)
+    goto <bb 7>; [INV]
+  else
+    goto <bb 12>; [INV]
+
+  <bb 7> :
+  _6 = netbios_hdr_23->questions;
+  if (_6 == 256)
+    goto <bb 8>; [INV]
+  else
+    goto <bb 12>; [INV]
+
+  <bb 8> :
+  # DEBUG BEGIN_STMT
+  _7 = &netbios_question_hdr_24->encname;
+  netbiosns_name_decode (_7, &netbios_name, 17);
+  # DEBUG BEGIN_STMT
+  _8 = netbios_question_hdr_24->type;
+  if (_8 == 8192)
+    goto <bb 9>; [INV]
+  else
+    goto <bb 12>; [INV]
+
+  <bb 9> :
+  # DEBUG BEGIN_STMT
+  _9 = lwip_strnicmp (&netbios_name, &netbiosns_local_name, 16);
+  if (_9 == 0)
+    goto <bb 10>; [INV]
+  else
+    goto <bb 12>; [INV]
+
+  <bb 10> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  q_28 = pbuf_alloc (74, 62, 640);
+  # DEBUG q => q_28
+  # DEBUG BEGIN_STMT
+  if (q_28 != 0B)
+    goto <bb 11>; [INV]
+  else
+    goto <bb 12>; [INV]
+
+  <bb 11> :
+  # DEBUG BEGIN_STMT
+  resp_29 = q_28->payload;
+  # DEBUG resp => resp_29
+  # DEBUG BEGIN_STMT
+  _10 = netbios_hdr_23->trans_id;
+  resp_29->resp_hdr.trans_id = _10;
+  # DEBUG BEGIN_STMT
+  resp_29->resp_hdr.flags = 133;
+  # DEBUG BEGIN_STMT
+  resp_29->resp_hdr.questions = 0;
+  # DEBUG BEGIN_STMT
+  resp_29->resp_hdr.answerRRs = 256;
+  # DEBUG BEGIN_STMT
+  resp_29->resp_hdr.authorityRRs = 0;
+  # DEBUG BEGIN_STMT
+  resp_29->resp_hdr.additionalRRs = 0;
+  # DEBUG BEGIN_STMT
+  _11 = &resp_29->resp_name.encname;
+  _12 = &netbios_question_hdr_24->encname;
+  memcpy (_11, _12, 33);
+  # DEBUG BEGIN_STMT
+  _13 = netbios_question_hdr_24->nametype;
+  resp_29->resp_name.nametype = _13;
+  # DEBUG BEGIN_STMT
+  _14 = netbios_question_hdr_24->type;
+  resp_29->resp_name.type = _14;
+  # DEBUG BEGIN_STMT
+  _15 = netbios_question_hdr_24->cls;
+  resp_29->resp_name.cls = _15;
+  # DEBUG BEGIN_STMT
+  resp_29->resp_name.ttl = 3767731200;
+  # DEBUG BEGIN_STMT
+  resp_29->resp_name.datalen = 1536;
+  # DEBUG BEGIN_STMT
+  resp_29->resp_name.flags = 0;
+  # DEBUG BEGIN_STMT
+  netif_default.7_16 = netif_default;
+  _17 = &netif_default.7_16->ip_addr.u_addr.ip4;
+  _18 = MEM[(const struct ip4_addr_t *)_17].addr;
+  resp_29->resp_name.addr.addr = _18;
+  # DEBUG BEGIN_STMT
+  udp_sendto (upcb_44(D), q_28, addr_45(D), port_46(D));
+  # DEBUG BEGIN_STMT
+  pbuf_free (q_28);
+
+  <bb 12> :
+  # DEBUG BEGIN_STMT
+  pbuf_free (p_21(D));
+  netbios_name ={v} {CLOBBER};
+
+  <bb 13> :
+  return;
+
+}
+
+
+netbiosns_name_decode (const char * name_enc, char * name_dec, int name_dec_len)
+{
+  int idx;
+  char cnbname;
+  char cname;
+  const char * pname;
+  sizetype _1;
+  sizetype _2;
+  const char * _3;
+  char _4;
+  int _5;
+  int _6;
+  sizetype _7;
+  sizetype _8;
+  const char * _9;
+  char _10;
+  int _11;
+  int _12;
+  int idx.9_13;
+  sizetype idx.10_14;
+  char * _15;
+  int _18;
+  char iftmp.8_19;
+  char iftmp.8_33;
+  char iftmp.8_34;
+  int _38;
+  int _39;
+  int _40;
+
+  <bb 2> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  idx_21 = 0;
+  # DEBUG idx => idx_21
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  pname_23 = name_enc_22(D);
+  # DEBUG pname => pname_23
+
+  <bb 3> :
+  # pname_16 = PHI <pname_23(2), pname_32(13), pname_32(9)>
+  # idx_17 = PHI <idx_21(2), idx_35(13), idx_17(9)>
+  # DEBUG idx => idx_17
+  # DEBUG pname => pname_16
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  cname_25 = *pname_16;
+  # DEBUG cname => cname_25
+  # DEBUG BEGIN_STMT
+  if (cname_25 == 0)
+    goto <bb 14>; [INV]
+  else
+    goto <bb 4>; [INV]
+
+  <bb 4> :
+  # DEBUG BEGIN_STMT
+  if (cname_25 == 46)
+    goto <bb 14>; [INV]
+  else
+    goto <bb 5>; [INV]
+
+  <bb 5> :
+  # DEBUG BEGIN_STMT
+  _1 = (sizetype) cname_25;
+  _2 = _1 + 1;
+  _3 = &_ctype_ + _2;
+  _4 = *_3;
+  _5 = (int) _4;
+  _6 = _5 & 3;
+  if (_6 != 1)
+    goto <bb 6>; [INV]
+  else
+    goto <bb 7>; [INV]
+
+  <bb 6> :
+  # DEBUG BEGIN_STMT
+  _39 = -1;
+  // predicted unlikely by early return (on trees) predictor.
+  goto <bb 15>; [INV]
+
+  <bb 7> :
+  # DEBUG BEGIN_STMT
+  cname_26 = cname_25 + 191;
+  # DEBUG cname => cname_26
+  # DEBUG BEGIN_STMT
+  cnbname_27 = cname_26 << 4;
+  # DEBUG cnbname => cnbname_27
+  # DEBUG BEGIN_STMT
+  pname_28 = pname_16 + 1;
+  # DEBUG pname => pname_28
+  # DEBUG BEGIN_STMT
+  cname_29 = *pname_28;
+  # DEBUG cname => cname_29
+  # DEBUG BEGIN_STMT
+  _7 = (sizetype) cname_29;
+  _8 = _7 + 1;
+  _9 = &_ctype_ + _8;
+  _10 = *_9;
+  _11 = (int) _10;
+  _12 = _11 & 3;
+  if (_12 != 1)
+    goto <bb 8>; [INV]
+  else
+    goto <bb 9>; [INV]
+
+  <bb 8> :
+  # DEBUG BEGIN_STMT
+  _38 = -1;
+  // predicted unlikely by early return (on trees) predictor.
+  goto <bb 15>; [INV]
+
+  <bb 9> :
+  # DEBUG BEGIN_STMT
+  cname_30 = cname_29 + 191;
+  # DEBUG cname => cname_30
+  # DEBUG BEGIN_STMT
+  cnbname_31 = cnbname_27 | cname_30;
+  # DEBUG cnbname => cnbname_31
+  # DEBUG BEGIN_STMT
+  pname_32 = pname_28 + 1;
+  # DEBUG pname => pname_32
+  # DEBUG BEGIN_STMT
+  if (idx_17 <= 15)
+    goto <bb 10>; [INV]
+  else
+    goto <bb 3>; [INV]
+
+  <bb 10> :
+  # DEBUG BEGIN_STMT
+  if (cnbname_31 != 32)
+    goto <bb 11>; [INV]
+  else
+    goto <bb 12>; [INV]
+
+  <bb 11> :
+  iftmp.8_34 = cnbname_31;
+  goto <bb 13>; [INV]
+
+  <bb 12> :
+  iftmp.8_33 = 0;
+
+  <bb 13> :
+  # iftmp.8_19 = PHI <iftmp.8_34(11), iftmp.8_33(12)>
+  idx.9_13 = idx_17;
+  idx_35 = idx.9_13 + 1;
+  # DEBUG idx => idx_35
+  idx.10_14 = (sizetype) idx.9_13;
+  _15 = name_dec_36(D) + idx.10_14;
+  *_15 = iftmp.8_19;
+  goto <bb 3>; [INV]
+
+  <bb 14> :
+  # DEBUG BEGIN_STMT
+  _40 = 0;
+
+  <bb 15> :
+  # _18 = PHI <_39(6), _38(8), _40(14)>
+  return _18;
+
+}
+
+

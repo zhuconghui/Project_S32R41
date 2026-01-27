@@ -1,0 +1,517 @@
+
+Marking local functions: bridgeif_fdb_age_one_second
+
+
+Marking externally visible functions: bridgeif_fdb_init bridgeif_fdb_get_dst_ports bridgeif_fdb_update_src
+
+
+Marking externally visible variables:
+
+
+Reclaiming functions:
+Reclaiming variables:
+Clearing address taken flags:
+Symbol table:
+
+sys_timeout/9 (sys_timeout) @06c4a700
+  Type: function
+  Visibility: external public
+  References: 
+  Referring: 
+  Availability: not_available
+  Function flags: optimize_size
+  Called by: bridgeif_age_tmr/4 bridgeif_fdb_init/5 
+  Calls: 
+mem_calloc/8 (mem_calloc) @06c4a620
+  Type: function
+  Visibility: external public
+  References: 
+  Referring: 
+  Availability: not_available
+  Function flags: optimize_size
+  Called by: bridgeif_fdb_init/5 
+  Calls: 
+memcpy/7 (memcpy) @06c4a380
+  Type: function
+  Visibility: external public
+  References: 
+  Referring: 
+  Availability: not_available
+  Function flags: optimize_size
+  Called by: bridgeif_fdb_update_src/1 
+  Calls: 
+memcmp/6 (memcmp) @06c4a2a0
+  Type: function
+  Visibility: external public
+  References: 
+  Referring: 
+  Availability: not_available
+  Function flags: optimize_size
+  Called by: bridgeif_fdb_get_dst_ports/2 bridgeif_fdb_update_src/1 
+  Calls: 
+bridgeif_fdb_init/5 (bridgeif_fdb_init) @06ace620
+  Type: function definition analyzed
+  Visibility: externally_visible public
+  References: bridgeif_age_tmr/4 (addr)
+  Referring: 
+  Availability: available
+  Function flags: body optimize_size
+  Called by: 
+  Calls: sys_timeout/9 mem_calloc/8 
+bridgeif_age_tmr/4 (bridgeif_age_tmr) @06aced20
+  Type: function definition analyzed
+  Visibility: prevailing_def_ironly
+  Address is taken.
+  References: bridgeif_age_tmr/4 (addr)
+  Referring: bridgeif_fdb_init/5 (addr)bridgeif_age_tmr/4 (addr)
+  Availability: available
+  Function flags: body optimize_size
+  Called by: 
+  Calls: sys_timeout/9 bridgeif_fdb_age_one_second/3 
+bridgeif_fdb_age_one_second/3 (bridgeif_fdb_age_one_second) @06acea80
+  Type: function definition analyzed
+  Visibility: prevailing_def_ironly
+  References: 
+  Referring: 
+  Availability: local
+  Function flags: body local optimize_size
+  Called by: bridgeif_age_tmr/4 
+  Calls: 
+bridgeif_fdb_get_dst_ports/2 (bridgeif_fdb_get_dst_ports) @06ace7e0
+  Type: function definition analyzed
+  Visibility: externally_visible public
+  References: 
+  Referring: 
+  Availability: available
+  Function flags: body optimize_size
+  Called by: 
+  Calls: memcmp/6 
+bridgeif_fdb_update_src/1 (bridgeif_fdb_update_src) @06ace540
+  Type: function definition analyzed
+  Visibility: externally_visible public
+  References: 
+  Referring: 
+  Availability: available
+  Function flags: body optimize_size
+  Called by: 
+  Calls: memcpy/7 memcmp/6 
+bridgeif_fdb_init (u16_t max_fdb_entries)
+{
+  mem_size_t alloc_len;
+  size_t alloc_len_sizet;
+  struct bridgeif_dfdb_t * fdb;
+  void * D.6513;
+
+  <bb 2> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _1 = (unsigned int) max_fdb_entries;
+  _2 = _1 * 16;
+  alloc_len_sizet = _2 + 8;
+  # DEBUG BEGIN_STMT
+  alloc_len = alloc_len_sizet;
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  if (alloc_len != alloc_len_sizet)
+    goto <bb 3>; [INV]
+  else
+    goto <bb 4>; [INV]
+
+  <bb 3> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  __asm__ __volatile__("BKPT #0
+	");
+  # DEBUG BEGIN_STMT
+  goto <bb 3>; [INV]
+
+  <bb 4> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  fdb = mem_calloc (1, alloc_len);
+  # DEBUG BEGIN_STMT
+  if (fdb == 0B)
+    goto <bb 5>; [INV]
+  else
+    goto <bb 6>; [INV]
+
+  <bb 5> :
+  # DEBUG BEGIN_STMT
+  D.6513 = 0B;
+  // predicted unlikely by early return (on trees) predictor.
+  goto <bb 7>; [INV]
+
+  <bb 6> :
+  # DEBUG BEGIN_STMT
+  fdb->max_fdb_entries = max_fdb_entries;
+  # DEBUG BEGIN_STMT
+  _3 = fdb + 8;
+  fdb->fdb = _3;
+  # DEBUG BEGIN_STMT
+  sys_timeout (1000, bridgeif_age_tmr, fdb);
+  # DEBUG BEGIN_STMT
+  D.6513 = fdb;
+
+  <bb 7> :
+  return D.6513;
+
+}
+
+
+bridgeif_age_tmr (void * arg)
+{
+  struct bridgeif_dfdb_t * fdb;
+
+  <bb 2> :
+  # DEBUG BEGIN_STMT
+  fdb = arg;
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  if (arg == 0B)
+    goto <bb 3>; [INV]
+  else
+    goto <bb 4>; [INV]
+
+  <bb 3> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  __asm__ __volatile__("BKPT #0
+	");
+  # DEBUG BEGIN_STMT
+  goto <bb 3>; [INV]
+
+  <bb 4> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  bridgeif_fdb_age_one_second (fdb);
+  # DEBUG BEGIN_STMT
+  sys_timeout (1000, bridgeif_age_tmr, arg);
+  return;
+
+}
+
+
+bridgeif_fdb_age_one_second (void * fdb_ptr)
+{
+  struct bridgeif_dfdb_entry_t * e;
+  struct bridgeif_dfdb_t * fdb;
+  int i;
+
+  <bb 2> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  fdb = fdb_ptr;
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  i = 0;
+  goto <bb 10>; [INV]
+
+  <bb 3> :
+  # DEBUG BEGIN_STMT
+  _1 = fdb->fdb;
+  i.3_2 = (unsigned int) i;
+  _3 = i.3_2 * 16;
+  e = _1 + _3;
+  # DEBUG BEGIN_STMT
+  _4 = e->used;
+  if (_4 != 0)
+    goto <bb 4>; [INV]
+  else
+    goto <bb 9>; [INV]
+
+  <bb 4> :
+  _5 = e->ts;
+  if (_5 != 0)
+    goto <bb 5>; [INV]
+  else
+    goto <bb 9>; [INV]
+
+  <bb 5> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _6 = e->used;
+  if (_6 != 0)
+    goto <bb 6>; [INV]
+  else
+    goto <bb 9>; [INV]
+
+  <bb 6> :
+  _7 = e->ts;
+  if (_7 != 0)
+    goto <bb 7>; [INV]
+  else
+    goto <bb 9>; [INV]
+
+  <bb 7> :
+  # DEBUG BEGIN_STMT
+  _8 = e->ts;
+  _9 = _8 + 4294967295;
+  e->ts = _9;
+  _10 = e->ts;
+  if (_10 == 0)
+    goto <bb 8>; [INV]
+  else
+    goto <bb 9>; [INV]
+
+  <bb 8> :
+  # DEBUG BEGIN_STMT
+  e->used = 0;
+
+  <bb 9> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  i = i + 1;
+
+  <bb 10> :
+  # DEBUG BEGIN_STMT
+  _11 = fdb->max_fdb_entries;
+  _12 = (int) _11;
+  if (i < _12)
+    goto <bb 3>; [INV]
+  else
+    goto <bb 11>; [INV]
+
+  <bb 11> :
+  # DEBUG BEGIN_STMT
+  return;
+
+}
+
+
+bridgeif_fdb_get_dst_ports (void * fdb_ptr, struct eth_addr * dst_addr)
+{
+  bridgeif_portmask_t ret;
+  struct bridgeif_dfdb_entry_t * e;
+  struct bridgeif_dfdb_t * fdb;
+  int i;
+  bridgeif_portmask_t D.6507;
+
+  <bb 2> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  fdb = fdb_ptr;
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  i = 0;
+  goto <bb 8>; [INV]
+
+  <bb 3> :
+  # DEBUG BEGIN_STMT
+  _1 = fdb->fdb;
+  i.2_2 = (unsigned int) i;
+  _3 = i.2_2 * 16;
+  e = _1 + _3;
+  # DEBUG BEGIN_STMT
+  _4 = e->used;
+  if (_4 != 0)
+    goto <bb 4>; [INV]
+  else
+    goto <bb 7>; [INV]
+
+  <bb 4> :
+  _5 = e->ts;
+  if (_5 != 0)
+    goto <bb 5>; [INV]
+  else
+    goto <bb 7>; [INV]
+
+  <bb 5> :
+  # DEBUG BEGIN_STMT
+  _6 = &e->addr;
+  _7 = memcmp (_6, dst_addr, 6);
+  if (_7 == 0)
+    goto <bb 6>; [INV]
+  else
+    goto <bb 7>; [INV]
+
+  <bb 6> :
+  # DEBUG BEGIN_STMT
+  _8 = e->port;
+  _9 = (int) _8;
+  _10 = 1 << _9;
+  ret = (bridgeif_portmask_t) _10;
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  D.6507 = ret;
+  // predicted unlikely by early return (on trees) predictor.
+  goto <bb 10>; [INV]
+
+  <bb 7> :
+  # DEBUG BEGIN_STMT
+  i = i + 1;
+
+  <bb 8> :
+  # DEBUG BEGIN_STMT
+  _11 = fdb->max_fdb_entries;
+  _12 = (int) _11;
+  if (i < _12)
+    goto <bb 3>; [INV]
+  else
+    goto <bb 9>; [INV]
+
+  <bb 9> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  D.6507 = 255;
+
+  <bb 10> :
+  return D.6507;
+
+}
+
+
+bridgeif_fdb_update_src (void * fdb_ptr, struct eth_addr * src_addr, u8_t port_idx)
+{
+  struct bridgeif_dfdb_entry_t * e;
+  struct bridgeif_dfdb_entry_t * e;
+  struct bridgeif_dfdb_t * fdb;
+  int i;
+
+  <bb 2> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  fdb = fdb_ptr;
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  i = 0;
+  goto <bb 8>; [INV]
+
+  <bb 3> :
+  # DEBUG BEGIN_STMT
+  _1 = fdb->fdb;
+  i.0_2 = (unsigned int) i;
+  _3 = i.0_2 * 16;
+  e = _1 + _3;
+  # DEBUG BEGIN_STMT
+  _4 = e->used;
+  if (_4 != 0)
+    goto <bb 4>; [INV]
+  else
+    goto <bb 7>; [INV]
+
+  <bb 4> :
+  _5 = e->ts;
+  if (_5 != 0)
+    goto <bb 5>; [INV]
+  else
+    goto <bb 7>; [INV]
+
+  <bb 5> :
+  # DEBUG BEGIN_STMT
+  _6 = &e->addr;
+  _7 = memcmp (_6, src_addr, 6);
+  if (_7 == 0)
+    goto <bb 6>; [INV]
+  else
+    goto <bb 7>; [INV]
+
+  <bb 6> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  e->ts = 300;
+  # DEBUG BEGIN_STMT
+  e->port = port_idx;
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  // predicted unlikely by early return (on trees) predictor.
+  goto <bb 17>; [INV]
+
+  <bb 7> :
+  # DEBUG BEGIN_STMT
+  i = i + 1;
+
+  <bb 8> :
+  # DEBUG BEGIN_STMT
+  _8 = fdb->max_fdb_entries;
+  _9 = (int) _8;
+  if (i < _9)
+    goto <bb 3>; [INV]
+  else
+    goto <bb 9>; [INV]
+
+  <bb 9> :
+  # DEBUG BEGIN_STMT
+  i = 0;
+  goto <bb 16>; [INV]
+
+  <bb 10> :
+  # DEBUG BEGIN_STMT
+  _10 = fdb->fdb;
+  i.1_11 = (unsigned int) i;
+  _12 = i.1_11 * 16;
+  e = _10 + _12;
+  # DEBUG BEGIN_STMT
+  _13 = e->used;
+  if (_13 == 0)
+    goto <bb 12>; [INV]
+  else
+    goto <bb 11>; [INV]
+
+  <bb 11> :
+  _14 = e->ts;
+  if (_14 == 0)
+    goto <bb 12>; [INV]
+  else
+    goto <bb 15>; [INV]
+
+  <bb 12> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _15 = e->used;
+  if (_15 == 0)
+    goto <bb 14>; [INV]
+  else
+    goto <bb 13>; [INV]
+
+  <bb 13> :
+  _16 = e->ts;
+  if (_16 == 0)
+    goto <bb 14>; [INV]
+  else
+    goto <bb 15>; [INV]
+
+  <bb 14> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _17 = &e->addr;
+  memcpy (_17, src_addr, 6);
+  # DEBUG BEGIN_STMT
+  e->ts = 300;
+  # DEBUG BEGIN_STMT
+  e->port = port_idx;
+  # DEBUG BEGIN_STMT
+  e->used = 1;
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  // predicted unlikely by early return (on trees) predictor.
+  goto <bb 17>; [INV]
+
+  <bb 15> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  i = i + 1;
+
+  <bb 16> :
+  # DEBUG BEGIN_STMT
+  _18 = fdb->max_fdb_entries;
+  _19 = (int) _18;
+  if (i < _19)
+    goto <bb 10>; [INV]
+  else
+    goto <bb 17>; [INV]
+
+  <bb 17> :
+  # DEBUG BEGIN_STMT
+  return;
+
+}
+
+

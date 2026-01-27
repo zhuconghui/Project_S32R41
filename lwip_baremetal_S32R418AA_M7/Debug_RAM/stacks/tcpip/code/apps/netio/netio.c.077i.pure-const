@@ -1,0 +1,627 @@
+
+
+ local analysis of netio_recv.part.0
+   scanning: tcp_arg (pcb_1(D), 0B);
+  scanning: tcp_sent (pcb_1(D), 0B);
+  scanning: tcp_recv (pcb_1(D), 0B);
+  scanning: tcp_close (pcb_1(D));
+  scanning: return;
+Function is locally const.
+
+
+ local analysis of netio_accept.part.0
+   scanning: tcp_arg (pcb_1(D), 0B);
+  scanning: tcp_sent (pcb_1(D), 0B);
+  scanning: tcp_recv (pcb_1(D), netio_recv);
+  scanning: return;
+Function is locally const.
+
+
+ local analysis of netio_init
+   scanning: pcb_3 = tcp_new_ip_type (46);
+  scanning: tcp_bind (pcb_3, &ip_addr_any_type, 18767);
+  scanning: pcb_6 = tcp_listen_with_backlog (pcb_3, 255);
+  scanning: tcp_accept (pcb_6, netio_accept);
+  scanning: return;
+Function is locally const.
+
+
+ local analysis of netio_accept
+   scanning: if (pcb_1(D) != 0B)
+  scanning: netio_accept.part.0 (pcb_1(D));
+  scanning: return 0;
+Function is locally const.
+
+
+ local analysis of netio_recv
+   scanning: if (err_3(D) == 0)
+  scanning: if (p_4(D) != 0B)
+  scanning: _1 = p_4(D)->tot_len;
+    Indirect ref read is not const
+  scanning: tcp_recved (pcb_6(D), _1);
+  scanning: pbuf_free (p_4(D));
+  scanning: pbuf_free (p_4(D));
+  scanning: if (err_3(D) == 0)
+  scanning: if (p_4(D) == 0B)
+  scanning: netio_recv.part.0 (pcb_6(D));
+  scanning: return 0;
+Function is locally pure.
+callgraph:
+
+netio_recv.part.0/16 (netio_recv.part.0) @060f5380
+  Type: function definition analyzed
+  Visibility: prevailing_def_ironly artificial
+  Aux: @05eb59c0
+  References: 
+  Referring: 
+  Function netio_recv.part.0/16 is inline copy in netio_recv/1
+  Availability: local
+  Function flags: count:93576600 (estimated locally) first_run:1 body local split_part optimize_size
+  Called by: netio_recv/1 (inlined) (93576600 (estimated locally),0.09 per call) 
+  Calls: tcp_arg/9 (93576600 (estimated locally),0.09 per call) tcp_sent/10 (93576600 (estimated locally),0.09 per call) tcp_recv/11 (93576600 (estimated locally),0.09 per call) tcp_close/14 (93576600 (estimated locally),0.09 per call) 
+netio_accept.part.0/15 (netio_accept.part.0) @05f319a0
+  Type: function definition analyzed
+  Visibility: prevailing_def_ironly artificial
+  Aux: @05eb5ae0
+  References: netio_recv/1 (addr)
+  Referring: 
+  Function netio_accept.part.0/15 is inline copy in netio_accept/2
+  Availability: local
+  Function flags: count:574129752 (estimated locally) first_run:1 body local split_part optimize_size
+  Called by: netio_accept/2 (inlined) (574129752 (estimated locally),0.53 per call) 
+  Calls: tcp_arg/9 (574129752 (estimated locally),0.53 per call) tcp_sent/10 (574129752 (estimated locally),0.53 per call) tcp_recv/11 (574129752 (estimated locally),0.53 per call) 
+tcp_close/14 (tcp_close) @060eb2a0
+  Type: function
+  Visibility: external public
+  References: 
+  Referring: 
+  Availability: not_available
+  Function flags: optimize_size
+  Called by: netio_recv.part.0/16 (93576600 (estimated locally),0.09 per call) 
+  Calls: 
+pbuf_free/13 (pbuf_free) @060eb1c0
+  Type: function
+  Visibility: external public
+  References: 
+  Referring: 
+  Availability: not_available
+  Function flags: optimize_size
+  Called by: netio_recv/1 (689074890 (estimated locally),0.64 per call) netio_recv/1 (384666935 (estimated locally),0.36 per call) 
+  Calls: 
+tcp_recved/12 (tcp_recved) @060eb0e0
+  Type: function
+  Visibility: external public
+  References: 
+  Referring: 
+  Availability: not_available
+  Function flags: optimize_size
+  Called by: netio_recv/1 (384666935 (estimated locally),0.36 per call) 
+  Calls: 
+tcp_recv/11 (tcp_recv) @060e8380
+  Type: function
+  Visibility: external public
+  References: 
+  Referring: 
+  Availability: not_available
+  Function flags: optimize_size
+  Called by: netio_recv.part.0/16 (93576600 (estimated locally),0.09 per call) netio_accept.part.0/15 (574129752 (estimated locally),0.53 per call) 
+  Calls: 
+tcp_sent/10 (tcp_sent) @060e8ee0
+  Type: function
+  Visibility: external public
+  References: 
+  Referring: 
+  Availability: not_available
+  Function flags: optimize_size
+  Called by: netio_recv.part.0/16 (93576600 (estimated locally),0.09 per call) netio_accept.part.0/15 (574129752 (estimated locally),0.53 per call) 
+  Calls: 
+tcp_arg/9 (tcp_arg) @060e8e00
+  Type: function
+  Visibility: external public
+  References: 
+  Referring: 
+  Availability: not_available
+  Function flags: optimize_size
+  Called by: netio_recv.part.0/16 (93576600 (estimated locally),0.09 per call) netio_accept.part.0/15 (574129752 (estimated locally),0.53 per call) 
+  Calls: 
+tcp_accept/8 (tcp_accept) @060e8c40
+  Type: function
+  Visibility: external public
+  References: 
+  Referring: 
+  Availability: not_available
+  Function flags: optimize_size
+  Called by: netio_init/3 (1073741824 (estimated locally),1.00 per call) 
+  Calls: 
+tcp_listen_with_backlog/7 (tcp_listen_with_backlog) @060e8b60
+  Type: function
+  Visibility: external public
+  References: 
+  Referring: 
+  Availability: not_available
+  Function flags: optimize_size
+  Called by: netio_init/3 (1073741824 (estimated locally),1.00 per call) 
+  Calls: 
+tcp_bind/5 (tcp_bind) @060e8a80
+  Type: function
+  Visibility: external public
+  References: 
+  Referring: 
+  Availability: not_available
+  Function flags: optimize_size
+  Called by: netio_init/3 (1073741824 (estimated locally),1.00 per call) 
+  Calls: 
+tcp_new_ip_type/4 (tcp_new_ip_type) @060e89a0
+  Type: function
+  Visibility: external public
+  References: 
+  Referring: 
+  Availability: not_available
+  Function flags: optimize_size
+  Called by: netio_init/3 (1073741824 (estimated locally),1.00 per call) 
+  Calls: 
+netio_init/3 (netio_init) @060e8540
+  Type: function definition analyzed
+  Visibility: externally_visible public
+  Aux: @05eb5840
+  References: ip_addr_any_type/6 (addr)netio_accept/2 (addr)
+  Referring: 
+  Availability: available
+  Function flags: count:1073741824 (estimated locally) body optimize_size
+  Called by: 
+  Calls: tcp_accept/8 (1073741824 (estimated locally),1.00 per call) tcp_listen_with_backlog/7 (1073741824 (estimated locally),1.00 per call) tcp_bind/5 (1073741824 (estimated locally),1.00 per call) tcp_new_ip_type/4 (1073741824 (estimated locally),1.00 per call) 
+netio_accept/2 (netio_accept) @060e82a0
+  Type: function definition analyzed
+  Visibility: prevailing_def_ironly
+  Address is taken.
+  Aux: @05eb5920
+  References: 
+  Referring: netio_init/3 (addr)
+  Availability: available
+  Function flags: count:1073741824 (estimated locally) body optimize_size
+  Called by: 
+  Calls: netio_accept.part.0/15 (inlined) (574129752 (estimated locally),0.53 per call) 
+netio_recv/1 (netio_recv) @060e8000
+  Type: function definition analyzed
+  Visibility: prevailing_def_ironly
+  Address is taken.
+  Aux: @05eb5900
+  References: 
+  Referring: netio_accept.part.0/15 (addr)
+  Availability: available
+  Function flags: count:1073741824 (estimated locally) body optimize_size
+  Called by: 
+  Calls: netio_recv.part.0/16 (inlined) (93576600 (estimated locally),0.09 per call) pbuf_free/13 (689074890 (estimated locally),0.64 per call) pbuf_free/13 (384666935 (estimated locally),0.36 per call) tcp_recved/12 (384666935 (estimated locally),0.36 per call) 
+
+
+ ordered call graph: reduced for nothrow
+netio_recv.part.0/16 (netio_recv.part.0) @060f5380
+  Type: function definition analyzed
+  Visibility: prevailing_def_ironly artificial
+  Aux: @05eb59c0
+  References: 
+  Referring: 
+  Function netio_recv.part.0/16 is inline copy in netio_recv/1
+  Availability: local
+  Function flags: count:93576600 (estimated locally) first_run:1 body local split_part optimize_size
+  Called by: netio_recv/1 (inlined) (93576600 (estimated locally),0.09 per call) 
+  Calls: tcp_arg/9 (93576600 (estimated locally),0.09 per call) tcp_sent/10 (93576600 (estimated locally),0.09 per call) tcp_recv/11 (93576600 (estimated locally),0.09 per call) tcp_close/14 (93576600 (estimated locally),0.09 per call) 
+netio_accept.part.0/15 (netio_accept.part.0) @05f319a0
+  Type: function definition analyzed
+  Visibility: prevailing_def_ironly artificial
+  Aux: @05eb5ae0
+  References: netio_recv/1 (addr)
+  Referring: 
+  Function netio_accept.part.0/15 is inline copy in netio_accept/2
+  Availability: local
+  Function flags: count:574129752 (estimated locally) first_run:1 body local split_part optimize_size
+  Called by: netio_accept/2 (inlined) (574129752 (estimated locally),0.53 per call) 
+  Calls: tcp_arg/9 (574129752 (estimated locally),0.53 per call) tcp_sent/10 (574129752 (estimated locally),0.53 per call) tcp_recv/11 (574129752 (estimated locally),0.53 per call) 
+netio_init/3 (netio_init) @060e8540
+  Type: function definition analyzed
+  Visibility: externally_visible public
+  Aux: @05eb5840
+  References: ip_addr_any_type/6 (addr)netio_accept/2 (addr)
+  Referring: 
+  Availability: available
+  Function flags: count:1073741824 (estimated locally) body optimize_size
+  Called by: 
+  Calls: tcp_accept/8 (1073741824 (estimated locally),1.00 per call) tcp_listen_with_backlog/7 (1073741824 (estimated locally),1.00 per call) tcp_bind/5 (1073741824 (estimated locally),1.00 per call) tcp_new_ip_type/4 (1073741824 (estimated locally),1.00 per call) 
+netio_accept/2 (netio_accept) @060e82a0
+  Type: function definition analyzed
+  Visibility: prevailing_def_ironly
+  Address is taken.
+  Aux: @05eb5920
+  References: 
+  Referring: netio_init/3 (addr)
+  Availability: available
+  Function flags: count:1073741824 (estimated locally) body optimize_size
+  Called by: 
+  Calls: netio_accept.part.0/15 (inlined) (574129752 (estimated locally),0.53 per call) 
+netio_recv/1 (netio_recv) @060e8000
+  Type: function definition analyzed
+  Visibility: prevailing_def_ironly
+  Address is taken.
+  Aux: @05eb5900
+  References: 
+  Referring: netio_accept.part.0/15 (addr)
+  Availability: available
+  Function flags: count:1073741824 (estimated locally) body optimize_size
+  Called by: 
+  Calls: netio_recv.part.0/16 (inlined) (93576600 (estimated locally),0.09 per call) pbuf_free/13 (689074890 (estimated locally),0.64 per call) pbuf_free/13 (384666935 (estimated locally),0.36 per call) tcp_recved/12 (384666935 (estimated locally),0.36 per call) 
+
+
+
+MALLOC LATTICE Initial:
+netio_recv.part.0: malloc_bottom
+netio_accept.part.0: malloc_bottom
+netio_init: malloc_bottom
+netio_accept: malloc_bottom
+netio_recv: malloc_bottom
+
+
+MALLOC LATTICE after propagation:
+netio_recv.part.0: malloc_bottom
+netio_accept.part.0: malloc_bottom
+netio_init: malloc_bottom
+netio_accept: malloc_bottom
+netio_recv: malloc_bottom
+callgraph:
+
+netio_recv.part.0/16 (netio_recv.part.0) @060f5380
+  Type: function definition analyzed
+  Visibility: prevailing_def_ironly artificial
+  Aux: @05eb58a0
+  References: 
+  Referring: 
+  Function netio_recv.part.0/16 is inline copy in netio_recv/1
+  Availability: local
+  Function flags: count:93576600 (estimated locally) first_run:1 body local split_part optimize_size
+  Called by: netio_recv/1 (inlined) (93576600 (estimated locally),0.09 per call) 
+  Calls: tcp_arg/9 (93576600 (estimated locally),0.09 per call) tcp_sent/10 (93576600 (estimated locally),0.09 per call) tcp_recv/11 (93576600 (estimated locally),0.09 per call) tcp_close/14 (93576600 (estimated locally),0.09 per call) 
+netio_accept.part.0/15 (netio_accept.part.0) @05f319a0
+  Type: function definition analyzed
+  Visibility: prevailing_def_ironly artificial
+  Aux: @05eb58c0
+  References: netio_recv/1 (addr)
+  Referring: 
+  Function netio_accept.part.0/15 is inline copy in netio_accept/2
+  Availability: local
+  Function flags: count:574129752 (estimated locally) first_run:1 body local split_part optimize_size
+  Called by: netio_accept/2 (inlined) (574129752 (estimated locally),0.53 per call) 
+  Calls: tcp_arg/9 (574129752 (estimated locally),0.53 per call) tcp_sent/10 (574129752 (estimated locally),0.53 per call) tcp_recv/11 (574129752 (estimated locally),0.53 per call) 
+tcp_close/14 (tcp_close) @060eb2a0
+  Type: function
+  Visibility: external public
+  References: 
+  Referring: 
+  Availability: not_available
+  Function flags: optimize_size
+  Called by: netio_recv.part.0/16 (93576600 (estimated locally),0.09 per call) 
+  Calls: 
+pbuf_free/13 (pbuf_free) @060eb1c0
+  Type: function
+  Visibility: external public
+  References: 
+  Referring: 
+  Availability: not_available
+  Function flags: optimize_size
+  Called by: netio_recv/1 (689074890 (estimated locally),0.64 per call) netio_recv/1 (384666935 (estimated locally),0.36 per call) 
+  Calls: 
+tcp_recved/12 (tcp_recved) @060eb0e0
+  Type: function
+  Visibility: external public
+  References: 
+  Referring: 
+  Availability: not_available
+  Function flags: optimize_size
+  Called by: netio_recv/1 (384666935 (estimated locally),0.36 per call) 
+  Calls: 
+tcp_recv/11 (tcp_recv) @060e8380
+  Type: function
+  Visibility: external public
+  References: 
+  Referring: 
+  Availability: not_available
+  Function flags: optimize_size
+  Called by: netio_recv.part.0/16 (93576600 (estimated locally),0.09 per call) netio_accept.part.0/15 (574129752 (estimated locally),0.53 per call) 
+  Calls: 
+tcp_sent/10 (tcp_sent) @060e8ee0
+  Type: function
+  Visibility: external public
+  References: 
+  Referring: 
+  Availability: not_available
+  Function flags: optimize_size
+  Called by: netio_recv.part.0/16 (93576600 (estimated locally),0.09 per call) netio_accept.part.0/15 (574129752 (estimated locally),0.53 per call) 
+  Calls: 
+tcp_arg/9 (tcp_arg) @060e8e00
+  Type: function
+  Visibility: external public
+  References: 
+  Referring: 
+  Availability: not_available
+  Function flags: optimize_size
+  Called by: netio_recv.part.0/16 (93576600 (estimated locally),0.09 per call) netio_accept.part.0/15 (574129752 (estimated locally),0.53 per call) 
+  Calls: 
+tcp_accept/8 (tcp_accept) @060e8c40
+  Type: function
+  Visibility: external public
+  References: 
+  Referring: 
+  Availability: not_available
+  Function flags: optimize_size
+  Called by: netio_init/3 (1073741824 (estimated locally),1.00 per call) 
+  Calls: 
+tcp_listen_with_backlog/7 (tcp_listen_with_backlog) @060e8b60
+  Type: function
+  Visibility: external public
+  References: 
+  Referring: 
+  Availability: not_available
+  Function flags: optimize_size
+  Called by: netio_init/3 (1073741824 (estimated locally),1.00 per call) 
+  Calls: 
+tcp_bind/5 (tcp_bind) @060e8a80
+  Type: function
+  Visibility: external public
+  References: 
+  Referring: 
+  Availability: not_available
+  Function flags: optimize_size
+  Called by: netio_init/3 (1073741824 (estimated locally),1.00 per call) 
+  Calls: 
+tcp_new_ip_type/4 (tcp_new_ip_type) @060e89a0
+  Type: function
+  Visibility: external public
+  References: 
+  Referring: 
+  Availability: not_available
+  Function flags: optimize_size
+  Called by: netio_init/3 (1073741824 (estimated locally),1.00 per call) 
+  Calls: 
+netio_init/3 (netio_init) @060e8540
+  Type: function definition analyzed
+  Visibility: externally_visible public
+  Aux: @05eb5800
+  References: ip_addr_any_type/6 (addr)netio_accept/2 (addr)
+  Referring: 
+  Availability: available
+  Function flags: count:1073741824 (estimated locally) body optimize_size
+  Called by: 
+  Calls: tcp_accept/8 (1073741824 (estimated locally),1.00 per call) tcp_listen_with_backlog/7 (1073741824 (estimated locally),1.00 per call) tcp_bind/5 (1073741824 (estimated locally),1.00 per call) tcp_new_ip_type/4 (1073741824 (estimated locally),1.00 per call) 
+netio_accept/2 (netio_accept) @060e82a0
+  Type: function definition analyzed
+  Visibility: prevailing_def_ironly
+  Address is taken.
+  Aux: @05eb59c0
+  References: 
+  Referring: netio_init/3 (addr)
+  Availability: available
+  Function flags: count:1073741824 (estimated locally) body optimize_size
+  Called by: 
+  Calls: netio_accept.part.0/15 (inlined) (574129752 (estimated locally),0.53 per call) 
+netio_recv/1 (netio_recv) @060e8000
+  Type: function definition analyzed
+  Visibility: prevailing_def_ironly
+  Address is taken.
+  Aux: @05eb57e0
+  References: 
+  Referring: netio_accept.part.0/15 (addr)
+  Availability: available
+  Function flags: count:1073741824 (estimated locally) body optimize_size
+  Called by: 
+  Calls: netio_recv.part.0/16 (inlined) (93576600 (estimated locally),0.09 per call) pbuf_free/13 (689074890 (estimated locally),0.64 per call) pbuf_free/13 (384666935 (estimated locally),0.36 per call) tcp_recved/12 (384666935 (estimated locally),0.36 per call) 
+
+
+ ordered call graph: reduced
+netio_init/3 (netio_init) @060e8540
+  Type: function definition analyzed
+  Visibility: externally_visible public
+  Aux: @05eb5800
+  References: ip_addr_any_type/6 (addr)netio_accept/2 (addr)
+  Referring: 
+  Availability: available
+  Function flags: count:1073741824 (estimated locally) body optimize_size
+  Called by: 
+  Calls: tcp_accept/8 (1073741824 (estimated locally),1.00 per call) tcp_listen_with_backlog/7 (1073741824 (estimated locally),1.00 per call) tcp_bind/5 (1073741824 (estimated locally),1.00 per call) tcp_new_ip_type/4 (1073741824 (estimated locally),1.00 per call) 
+netio_accept/2 (netio_accept) @060e82a0
+  Type: function definition analyzed
+  Visibility: prevailing_def_ironly
+  Address is taken.
+  Aux: @05eb59c0
+  References: 
+  Referring: netio_init/3 (addr)
+  Availability: available
+  Function flags: count:1073741824 (estimated locally) body optimize_size
+  Called by: 
+  Calls: netio_accept.part.0/15 (inlined) (574129752 (estimated locally),0.53 per call) 
+netio_accept.part.0/15 (netio_accept.part.0) @05f319a0
+  Type: function definition analyzed
+  Visibility: prevailing_def_ironly artificial
+  Aux: @05eb58c0
+  References: netio_recv/1 (addr)
+  Referring: 
+  Function netio_accept.part.0/15 is inline copy in netio_accept/2
+  Availability: local
+  Function flags: count:574129752 (estimated locally) first_run:1 body local split_part optimize_size
+  Called by: netio_accept/2 (inlined) (574129752 (estimated locally),0.53 per call) 
+  Calls: tcp_arg/9 (574129752 (estimated locally),0.53 per call) tcp_sent/10 (574129752 (estimated locally),0.53 per call) tcp_recv/11 (574129752 (estimated locally),0.53 per call) 
+netio_recv/1 (netio_recv) @060e8000
+  Type: function definition analyzed
+  Visibility: prevailing_def_ironly
+  Address is taken.
+  Aux: @05eb57e0
+  References: 
+  Referring: netio_accept.part.0/15 (addr)
+  Availability: available
+  Function flags: count:1073741824 (estimated locally) body optimize_size
+  Called by: 
+  Calls: netio_recv.part.0/16 (inlined) (93576600 (estimated locally),0.09 per call) pbuf_free/13 (689074890 (estimated locally),0.64 per call) pbuf_free/13 (384666935 (estimated locally),0.36 per call) tcp_recved/12 (384666935 (estimated locally),0.36 per call) 
+netio_recv.part.0/16 (netio_recv.part.0) @060f5380
+  Type: function definition analyzed
+  Visibility: prevailing_def_ironly artificial
+  Aux: @05eb58a0
+  References: 
+  Referring: 
+  Function netio_recv.part.0/16 is inline copy in netio_recv/1
+  Availability: local
+  Function flags: count:93576600 (estimated locally) first_run:1 body local split_part optimize_size
+  Called by: netio_recv/1 (inlined) (93576600 (estimated locally),0.09 per call) 
+  Calls: tcp_arg/9 (93576600 (estimated locally),0.09 per call) tcp_sent/10 (93576600 (estimated locally),0.09 per call) tcp_recv/11 (93576600 (estimated locally),0.09 per call) tcp_close/14 (93576600 (estimated locally),0.09 per call) 
+
+netio_recv.part.0 (struct tcp_pcb * pcb)
+{
+  void * arg;
+  struct pbuf * p;
+  err_t err;
+
+  <bb 4> [local count: 1073741824]:
+  # DEBUG D#10 s=> arg
+  # DEBUG arg => D#10
+  # DEBUG D#9 s=> p
+  # DEBUG p => D#9
+  # DEBUG D#8 s=> err
+  # DEBUG err => D#8
+
+  <bb 2> [local count: 1073741824]:
+  # DEBUG BEGIN_STMT
+  tcp_arg (pcb_1(D), 0B);
+  # DEBUG BEGIN_STMT
+  tcp_sent (pcb_1(D), 0B);
+  # DEBUG BEGIN_STMT
+  tcp_recv (pcb_1(D), 0B);
+  # DEBUG BEGIN_STMT
+  tcp_close (pcb_1(D));
+
+  <bb 3> [local count: 1073741824]:
+  return;
+
+}
+
+
+netio_accept.part.0 (struct tcp_pcb * pcb)
+{
+  void * arg;
+  err_t err;
+
+  <bb 4> [local count: 1073741824]:
+  # DEBUG D#4 s=> arg
+  # DEBUG arg => D#4
+  # DEBUG D#3 s=> err
+  # DEBUG err => D#3
+
+  <bb 2> [local count: 1073741824]:
+  # DEBUG BEGIN_STMT
+  tcp_arg (pcb_1(D), 0B);
+  # DEBUG BEGIN_STMT
+  tcp_sent (pcb_1(D), 0B);
+  # DEBUG BEGIN_STMT
+  tcp_recv (pcb_1(D), netio_recv);
+
+  <bb 3> [local count: 1073741824]:
+  return;
+
+}
+
+
+netio_init ()
+{
+  struct tcp_pcb * pcb;
+
+  <bb 2> [local count: 1073741824]:
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  pcb_3 = tcp_new_ip_type (46);
+  # DEBUG pcb => pcb_3
+  # DEBUG BEGIN_STMT
+  tcp_bind (pcb_3, &ip_addr_any_type, 18767);
+  # DEBUG BEGIN_STMT
+  pcb_6 = tcp_listen_with_backlog (pcb_3, 255);
+  # DEBUG pcb => pcb_6
+  # DEBUG BEGIN_STMT
+  tcp_accept (pcb_6, netio_accept);
+  return;
+
+}
+
+
+netio_accept (void * arg, struct tcp_pcb * pcb, err_t err)
+{
+  <bb 2> [local count: 1073741824]:
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  if (pcb_1(D) != 0B)
+    goto <bb 3>; [53.47%]
+  else
+    goto <bb 4>; [46.53%]
+
+  <bb 3> [local count: 574129752]:
+  # DEBUG D#1 => arg_3(D)
+  # DEBUG D#2 => err_4(D)
+  netio_accept.part.0 (pcb_1(D));
+
+  <bb 4> [local count: 1073741824]:
+  # DEBUG BEGIN_STMT
+  return 0;
+
+}
+
+
+netio_recv (void * arg, struct tcp_pcb * pcb, struct pbuf * p, err_t err)
+{
+  short unsigned int _1;
+
+  <bb 2> [local count: 1073741824]:
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  if (err_3(D) == 0)
+    goto <bb 3>; [67.00%]
+  else
+    goto <bb 5>; [33.00%]
+
+  <bb 3> [local count: 719407023]:
+  if (p_4(D) != 0B)
+    goto <bb 4>; [53.47%]
+  else
+    goto <bb 5>; [46.53%]
+
+  <bb 4> [local count: 384666935]:
+  # DEBUG BEGIN_STMT
+  _1 = p_4(D)->tot_len;
+  tcp_recved (pcb_6(D), _1);
+  # DEBUG BEGIN_STMT
+  pbuf_free (p_4(D));
+  goto <bb 6>; [100.00%]
+
+  <bb 5> [local count: 689074890]:
+  # DEBUG BEGIN_STMT
+  pbuf_free (p_4(D));
+
+  <bb 6> [local count: 1073741824]:
+  # DEBUG BEGIN_STMT
+  if (err_3(D) == 0)
+    goto <bb 7>; [50.00%]
+  else
+    goto <bb 9>; [50.00%]
+
+  <bb 7> [local count: 536870913]:
+  if (p_4(D) == 0B)
+    goto <bb 8>; [17.43%]
+  else
+    goto <bb 9>; [82.57%]
+
+  <bb 8> [local count: 93576600]:
+  # DEBUG D#5 => arg_10(D)
+  # DEBUG D#6 => p_4(D)
+  # DEBUG D#7 => err_3(D)
+  netio_recv.part.0 (pcb_6(D));
+
+  <bb 9> [local count: 1073741824]:
+  # DEBUG BEGIN_STMT
+  return 0;
+
+}
+
+

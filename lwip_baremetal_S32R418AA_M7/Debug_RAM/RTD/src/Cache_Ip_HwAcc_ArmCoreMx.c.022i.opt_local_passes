@@ -1,0 +1,697 @@
+hwAcc_ArmCoreMx_DataCacheDisable ()
+{
+  struct S32_SCB_Type * _1;
+  long unsigned int _2;
+  struct S32_SCB_Type * _3;
+  long unsigned int _4;
+
+  <bb 2> :
+  # DEBUG BEGIN_STMT
+  _1 = 3758153728B;
+  _2 ={v} _1->CCR;
+  _3 = 3758153728B;
+  _4 = _2 & 4294901759;
+  _3->CCR ={v} _4;
+  # DEBUG BEGIN_STMT
+  __asm__ __volatile__(" DSB");
+  # DEBUG BEGIN_STMT
+  __asm__ __volatile__(" ISB");
+  return;
+
+}
+
+
+hwAcc_ArmCoreMx_InstructionCacheDisable ()
+{
+  struct S32_SCB_Type * _1;
+  long unsigned int _2;
+  struct S32_SCB_Type * _3;
+  long unsigned int _4;
+
+  <bb 2> :
+  # DEBUG BEGIN_STMT
+  __asm__ __volatile__(" DSB");
+  # DEBUG BEGIN_STMT
+  __asm__ __volatile__(" ISB");
+  # DEBUG BEGIN_STMT
+  _1 = 3758153728B;
+  _2 ={v} _1->CCR;
+  _3 = 3758153728B;
+  _4 = _2 & 4294836223;
+  _3->CCR ={v} _4;
+  # DEBUG BEGIN_STMT
+  __asm__ __volatile__(" DSB");
+  # DEBUG BEGIN_STMT
+  __asm__ __volatile__(" ISB");
+  return;
+
+}
+
+
+hwAcc_ArmCoreMx_DataCacheEnable ()
+{
+  struct S32_SCB_Type * _1;
+  long unsigned int _2;
+  struct S32_SCB_Type * _3;
+  long unsigned int _4;
+
+  <bb 2> :
+  # DEBUG BEGIN_STMT
+  _1 = 3758153728B;
+  _2 ={v} _1->CCR;
+  _3 = 3758153728B;
+  _4 = _2 | 65536;
+  _3->CCR ={v} _4;
+  # DEBUG BEGIN_STMT
+  __asm__ __volatile__(" DSB");
+  # DEBUG BEGIN_STMT
+  __asm__ __volatile__(" ISB");
+  return;
+
+}
+
+
+hwAcc_ArmCoreMx_InstructionCacheEnable ()
+{
+  struct S32_SCB_Type * _1;
+  long unsigned int _2;
+  struct S32_SCB_Type * _3;
+  long unsigned int _4;
+
+  <bb 2> :
+  # DEBUG BEGIN_STMT
+  _1 = 3758153728B;
+  _2 ={v} _1->CCR;
+  _3 = 3758153728B;
+  _4 = _2 | 131072;
+  _3->CCR ={v} _4;
+  # DEBUG BEGIN_STMT
+  __asm__ __volatile__(" DSB");
+  # DEBUG BEGIN_STMT
+  __asm__ __volatile__(" ISB");
+  return;
+
+}
+
+
+hwAcc_ArmCoreMx_DataCacheCleanByAddr (const boolean enInvalidate, const uint32 addr, const uint32 length)
+{
+  uint32 tmp_size;
+  uint32 op_addr;
+  sint32 op_size;
+  uint32 cacheLineSize;
+  struct S32_SCB_Type * _1;
+  long unsigned int _2;
+  struct S32_SCB_Type * _3;
+  long unsigned int _4;
+  struct S32_SCB_Type * _5;
+  long unsigned int _6;
+  long unsigned int _7;
+  long unsigned int _8;
+  long unsigned int _9;
+  long unsigned int _10;
+  struct S32_SCB_Type * _11;
+  struct S32_SCB_Type * _12;
+  long int cacheLineSize.2_13;
+
+  <bb 2> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _1 = 3758153728B;
+  _2 ={v} _1->CSSELR;
+  _3 = 3758153728B;
+  _4 = _2 & 4294967294;
+  _3->CSSELR ={v} _4;
+  # DEBUG BEGIN_STMT
+  __asm__ __volatile__(" DSB");
+  # DEBUG BEGIN_STMT
+  _5 = 3758153728B;
+  _6 ={v} _5->CCSIDR;
+  _7 = _6 & 7;
+  _8 = _7 + 1;
+  cacheLineSize_22 = _8 * 16;
+  # DEBUG cacheLineSize => cacheLineSize_22
+  # DEBUG BEGIN_STMT
+  if (length_23(D) != 0)
+    goto <bb 3>; [INV]
+  else
+    goto <bb 9>; [INV]
+
+  <bb 3> :
+  # DEBUG BEGIN_STMT
+  _9 = cacheLineSize_22 + 4294967295;
+  _10 = addr_24(D) & _9;
+  tmp_size_25 = length_23(D) + _10;
+  # DEBUG tmp_size => tmp_size_25
+  # DEBUG BEGIN_STMT
+  op_size_26 = (sint32) tmp_size_25;
+  # DEBUG op_size => op_size_26
+  # DEBUG BEGIN_STMT
+  op_addr_27 = addr_24(D);
+  # DEBUG op_addr => op_addr_27
+  # DEBUG BEGIN_STMT
+  __asm__ __volatile__(" DSB");
+
+  <bb 4> :
+  # op_size_14 = PHI <op_size_26(3), op_size_33(7)>
+  # op_addr_15 = PHI <op_addr_27(3), op_addr_32(7)>
+  # DEBUG op_addr => op_addr_15
+  # DEBUG op_size => op_size_14
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  if (enInvalidate_29(D) != 0)
+    goto <bb 5>; [INV]
+  else
+    goto <bb 6>; [INV]
+
+  <bb 5> :
+  # DEBUG BEGIN_STMT
+  _11 = 3758153728B;
+  _11->DCCIMVAC ={v} op_addr_15;
+  goto <bb 7>; [INV]
+
+  <bb 6> :
+  # DEBUG BEGIN_STMT
+  _12 = 3758153728B;
+  _12->DCCMVAC ={v} op_addr_15;
+
+  <bb 7> :
+  # DEBUG BEGIN_STMT
+  op_addr_32 = op_addr_15 + cacheLineSize_22;
+  # DEBUG op_addr => op_addr_32
+  # DEBUG BEGIN_STMT
+  cacheLineSize.2_13 = (long int) cacheLineSize_22;
+  op_size_33 = op_size_14 - cacheLineSize.2_13;
+  # DEBUG op_size => op_size_33
+  # DEBUG BEGIN_STMT
+  if (op_size_33 > 0)
+    goto <bb 4>; [INV]
+  else
+    goto <bb 8>; [INV]
+
+  <bb 8> :
+  # DEBUG BEGIN_STMT
+  __asm__ __volatile__(" DSB");
+  # DEBUG BEGIN_STMT
+  __asm__ __volatile__(" ISB");
+
+  <bb 9> :
+  return;
+
+}
+
+
+hwAcc_ArmCoreMx_InstructionCacheCleanByAddr (const boolean enInvalidate, const uint32 addr, const uint32 length)
+{
+  <bb 2> :
+  # DEBUG BEGIN_STMT
+  if (enInvalidate_2(D) != 0)
+    goto <bb 3>; [INV]
+  else
+    goto <bb 4>; [INV]
+
+  <bb 3> :
+  # DEBUG BEGIN_STMT
+  hwAcc_ArmCoreMx_InstructionCacheInvalidateByAddr (addr_4(D), length_5(D));
+
+  <bb 4> :
+  return;
+
+}
+
+
+hwAcc_ArmCoreMx_DataCacheInvalidateByAddr (const uint32 addr, const uint32 length)
+{
+  uint32 tmp_size;
+  uint32 op_addr;
+  sint32 op_size;
+  uint32 cacheLineSize;
+  struct S32_SCB_Type * _1;
+  long unsigned int _2;
+  struct S32_SCB_Type * _3;
+  long unsigned int _4;
+  struct S32_SCB_Type * _5;
+  long unsigned int _6;
+  long unsigned int _7;
+  long unsigned int _8;
+  long unsigned int _9;
+  long unsigned int _10;
+  struct S32_SCB_Type * _11;
+  long int cacheLineSize.1_12;
+
+  <bb 2> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _1 = 3758153728B;
+  _2 ={v} _1->CSSELR;
+  _3 = 3758153728B;
+  _4 = _2 & 4294967294;
+  _3->CSSELR ={v} _4;
+  # DEBUG BEGIN_STMT
+  __asm__ __volatile__(" DSB");
+  # DEBUG BEGIN_STMT
+  _5 = 3758153728B;
+  _6 ={v} _5->CCSIDR;
+  _7 = _6 & 7;
+  _8 = _7 + 1;
+  cacheLineSize_20 = _8 * 16;
+  # DEBUG cacheLineSize => cacheLineSize_20
+  # DEBUG BEGIN_STMT
+  if (length_21(D) != 0)
+    goto <bb 3>; [INV]
+  else
+    goto <bb 6>; [INV]
+
+  <bb 3> :
+  # DEBUG BEGIN_STMT
+  _9 = cacheLineSize_20 + 4294967295;
+  _10 = addr_22(D) & _9;
+  tmp_size_23 = length_21(D) + _10;
+  # DEBUG tmp_size => tmp_size_23
+  # DEBUG BEGIN_STMT
+  op_size_24 = (sint32) tmp_size_23;
+  # DEBUG op_size => op_size_24
+  # DEBUG BEGIN_STMT
+  op_addr_25 = addr_22(D);
+  # DEBUG op_addr => op_addr_25
+  # DEBUG BEGIN_STMT
+  __asm__ __volatile__(" DSB");
+
+  <bb 4> :
+  # op_size_13 = PHI <op_size_24(3), op_size_29(4)>
+  # op_addr_14 = PHI <op_addr_25(3), op_addr_28(4)>
+  # DEBUG op_addr => op_addr_14
+  # DEBUG op_size => op_size_13
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _11 = 3758153728B;
+  _11->DCIMVAC ={v} op_addr_14;
+  # DEBUG BEGIN_STMT
+  op_addr_28 = op_addr_14 + cacheLineSize_20;
+  # DEBUG op_addr => op_addr_28
+  # DEBUG BEGIN_STMT
+  cacheLineSize.1_12 = (long int) cacheLineSize_20;
+  op_size_29 = op_size_13 - cacheLineSize.1_12;
+  # DEBUG op_size => op_size_29
+  # DEBUG BEGIN_STMT
+  if (op_size_29 > 0)
+    goto <bb 4>; [INV]
+  else
+    goto <bb 5>; [INV]
+
+  <bb 5> :
+  # DEBUG BEGIN_STMT
+  __asm__ __volatile__(" DSB");
+  # DEBUG BEGIN_STMT
+  __asm__ __volatile__(" ISB");
+
+  <bb 6> :
+  return;
+
+}
+
+
+hwAcc_ArmCoreMx_InstructionCacheInvalidateByAddr (const uint32 addr, const uint32 length)
+{
+  uint32 tmp_size;
+  uint32 op_addr;
+  sint32 op_size;
+  uint32 cacheLineSize;
+  struct S32_SCB_Type * _1;
+  long unsigned int _2;
+  long unsigned int _3;
+  long unsigned int _4;
+  long unsigned int _5;
+  long unsigned int _6;
+  struct S32_SCB_Type * _7;
+  long int cacheLineSize.0_8;
+
+  <bb 2> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _1 = 3758153728B;
+  _2 ={v} _1->CCSIDR;
+  _3 = _2 & 7;
+  _4 = _3 + 1;
+  cacheLineSize_14 = _4 * 16;
+  # DEBUG cacheLineSize => cacheLineSize_14
+  # DEBUG BEGIN_STMT
+  if (length_15(D) != 0)
+    goto <bb 3>; [INV]
+  else
+    goto <bb 6>; [INV]
+
+  <bb 3> :
+  # DEBUG BEGIN_STMT
+  _5 = cacheLineSize_14 + 4294967295;
+  _6 = addr_16(D) & _5;
+  tmp_size_17 = length_15(D) + _6;
+  # DEBUG tmp_size => tmp_size_17
+  # DEBUG BEGIN_STMT
+  op_size_18 = (sint32) tmp_size_17;
+  # DEBUG op_size => op_size_18
+  # DEBUG BEGIN_STMT
+  op_addr_19 = addr_16(D);
+  # DEBUG op_addr => op_addr_19
+  # DEBUG BEGIN_STMT
+  __asm__ __volatile__(" DSB");
+
+  <bb 4> :
+  # op_size_9 = PHI <op_size_18(3), op_size_23(4)>
+  # op_addr_10 = PHI <op_addr_19(3), op_addr_22(4)>
+  # DEBUG op_addr => op_addr_10
+  # DEBUG op_size => op_size_9
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _7 = 3758153728B;
+  _7->ICIMVAU ={v} op_addr_10;
+  # DEBUG BEGIN_STMT
+  op_addr_22 = op_addr_10 + cacheLineSize_14;
+  # DEBUG op_addr => op_addr_22
+  # DEBUG BEGIN_STMT
+  cacheLineSize.0_8 = (long int) cacheLineSize_14;
+  op_size_23 = op_size_9 - cacheLineSize.0_8;
+  # DEBUG op_size => op_size_23
+  # DEBUG BEGIN_STMT
+  if (op_size_23 > 0)
+    goto <bb 4>; [INV]
+  else
+    goto <bb 5>; [INV]
+
+  <bb 5> :
+  # DEBUG BEGIN_STMT
+  __asm__ __volatile__(" DSB");
+  # DEBUG BEGIN_STMT
+  __asm__ __volatile__(" ISB");
+
+  <bb 6> :
+  return;
+
+}
+
+
+hwAcc_ArmCoreMx_DataCacheClean (const boolean enInvalidate)
+{
+  volatile uint32 * pDataCacheClean;
+  uint32 clean;
+  uint32 wayIdx;
+  uint32 setIdx;
+  uint32 cacheWaySize;
+  uint32 cacheSetSize;
+  struct S32_SCB_Type * _1;
+  long unsigned int _2;
+  struct S32_SCB_Type * _3;
+  long unsigned int _4;
+  struct S32_SCB_Type * _5;
+  long unsigned int _6;
+  long unsigned int _7;
+  long unsigned int _8;
+  struct S32_SCB_Type * _9;
+  long unsigned int _10;
+  long unsigned int _11;
+  long unsigned int _12;
+  long unsigned int _13;
+  long unsigned int _14;
+
+  <bb 2> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _1 = 3758153728B;
+  _2 ={v} _1->CSSELR;
+  _3 = 3758153728B;
+  _4 = _2 & 4294967294;
+  _3->CSSELR ={v} _4;
+  # DEBUG BEGIN_STMT
+  __asm__ __volatile__(" DSB");
+  # DEBUG BEGIN_STMT
+  _5 = 3758153728B;
+  _6 ={v} _5->CCSIDR;
+  _7 = _6 >> 13;
+  _8 = _7 & 32767;
+  cacheSetSize_23 = _8 + 1;
+  # DEBUG cacheSetSize => cacheSetSize_23
+  # DEBUG BEGIN_STMT
+  _9 = 3758153728B;
+  _10 ={v} _9->CCSIDR;
+  _11 = _10 >> 3;
+  _12 = _11 & 1023;
+  cacheWaySize_24 = _12 + 1;
+  # DEBUG cacheWaySize => cacheWaySize_24
+  # DEBUG BEGIN_STMT
+  if (enInvalidate_25(D) != 0)
+    goto <bb 3>; [INV]
+  else
+    goto <bb 4>; [INV]
+
+  <bb 3> :
+  # DEBUG BEGIN_STMT
+  pDataCacheClean_27 = 3758157684B;
+  # DEBUG pDataCacheClean => pDataCacheClean_27
+  goto <bb 5>; [INV]
+
+  <bb 4> :
+  # DEBUG BEGIN_STMT
+  pDataCacheClean_26 = 3758157676B;
+  # DEBUG pDataCacheClean => pDataCacheClean_26
+
+  <bb 5> :
+  # pDataCacheClean_17 = PHI <pDataCacheClean_27(3), pDataCacheClean_26(4)>
+  # DEBUG pDataCacheClean => pDataCacheClean_17
+  # DEBUG BEGIN_STMT
+  setIdx_28 = 0;
+  # DEBUG setIdx => setIdx_28
+  goto <bb 10>; [INV]
+
+  <bb 6> :
+  # DEBUG BEGIN_STMT
+  wayIdx_31 = 0;
+  # DEBUG wayIdx => wayIdx_31
+  goto <bb 8>; [INV]
+
+  <bb 7> :
+  # DEBUG BEGIN_STMT
+  _13 = setIdx_15 << 5;
+  clean_33 = _13 & 16352;
+  # DEBUG clean => clean_33
+  # DEBUG BEGIN_STMT
+  _14 = wayIdx_16 << 30;
+  clean_34 = clean_33 | _14;
+  # DEBUG clean => clean_34
+  # DEBUG BEGIN_STMT
+  *pDataCacheClean_17 ={v} clean_34;
+  # DEBUG BEGIN_STMT
+  __asm__ __volatile__(" DSB");
+  # DEBUG BEGIN_STMT
+  __asm__ __volatile__(" ISB");
+  # DEBUG BEGIN_STMT
+  wayIdx_38 = wayIdx_16 + 1;
+  # DEBUG wayIdx => wayIdx_38
+
+  <bb 8> :
+  # wayIdx_16 = PHI <wayIdx_31(6), wayIdx_38(7)>
+  # DEBUG wayIdx => wayIdx_16
+  # DEBUG BEGIN_STMT
+  if (wayIdx_16 < cacheWaySize_24)
+    goto <bb 7>; [INV]
+  else
+    goto <bb 9>; [INV]
+
+  <bb 9> :
+  # DEBUG BEGIN_STMT
+  setIdx_32 = setIdx_15 + 1;
+  # DEBUG setIdx => setIdx_32
+
+  <bb 10> :
+  # setIdx_15 = PHI <setIdx_28(5), setIdx_32(9)>
+  # DEBUG setIdx => setIdx_15
+  # DEBUG BEGIN_STMT
+  if (setIdx_15 < cacheSetSize_23)
+    goto <bb 6>; [INV]
+  else
+    goto <bb 11>; [INV]
+
+  <bb 11> :
+  # DEBUG BEGIN_STMT
+  __asm__ __volatile__(" DSB");
+  # DEBUG BEGIN_STMT
+  __asm__ __volatile__(" ISB");
+  return;
+
+}
+
+
+hwAcc_ArmCoreMx_InstructionCacheClean (const boolean enInvalidate)
+{
+  <bb 2> :
+  # DEBUG BEGIN_STMT
+  if (enInvalidate_2(D) != 0)
+    goto <bb 3>; [INV]
+  else
+    goto <bb 4>; [INV]
+
+  <bb 3> :
+  # DEBUG BEGIN_STMT
+  hwAcc_ArmCoreMx_InstructionCacheInvalidate ();
+
+  <bb 4> :
+  return;
+
+}
+
+
+hwAcc_ArmCoreMx_DataCacheInvalidate ()
+{
+  uint32 invalidate;
+  uint32 wayIdx;
+  uint32 setIdx;
+  uint32 cacheWaySize;
+  uint32 cacheSetSize;
+  struct S32_SCB_Type * _1;
+  long unsigned int _2;
+  struct S32_SCB_Type * _3;
+  long unsigned int _4;
+  struct S32_SCB_Type * _5;
+  long unsigned int _6;
+  long unsigned int _7;
+  long unsigned int _8;
+  struct S32_SCB_Type * _9;
+  long unsigned int _10;
+  long unsigned int _11;
+  long unsigned int _12;
+  long unsigned int _13;
+  long unsigned int _14;
+  struct S32_SCB_Type * _15;
+
+  <bb 2> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _1 = 3758153728B;
+  _2 ={v} _1->CSSELR;
+  _3 = 3758153728B;
+  _4 = _2 & 4294967294;
+  _3->CSSELR ={v} _4;
+  # DEBUG BEGIN_STMT
+  __asm__ __volatile__(" DSB");
+  # DEBUG BEGIN_STMT
+  _5 = 3758153728B;
+  _6 ={v} _5->CCSIDR;
+  _7 = _6 >> 13;
+  _8 = _7 & 32767;
+  cacheSetSize_23 = _8 + 1;
+  # DEBUG cacheSetSize => cacheSetSize_23
+  # DEBUG BEGIN_STMT
+  _9 = 3758153728B;
+  _10 ={v} _9->CCSIDR;
+  _11 = _10 >> 3;
+  _12 = _11 & 1023;
+  cacheWaySize_24 = _12 + 1;
+  # DEBUG cacheWaySize => cacheWaySize_24
+  # DEBUG BEGIN_STMT
+  setIdx_25 = 0;
+  # DEBUG setIdx => setIdx_25
+  goto <bb 7>; [INV]
+
+  <bb 3> :
+  # DEBUG BEGIN_STMT
+  wayIdx_28 = 0;
+  # DEBUG wayIdx => wayIdx_28
+  goto <bb 5>; [INV]
+
+  <bb 4> :
+  # DEBUG BEGIN_STMT
+  _13 = setIdx_16 << 5;
+  invalidate_30 = _13 & 16352;
+  # DEBUG invalidate => invalidate_30
+  # DEBUG BEGIN_STMT
+  _14 = wayIdx_17 << 30;
+  invalidate_31 = invalidate_30 | _14;
+  # DEBUG invalidate => invalidate_31
+  # DEBUG BEGIN_STMT
+  _15 = 3758153728B;
+  _15->DCISW ={v} invalidate_31;
+  # DEBUG BEGIN_STMT
+  __asm__ __volatile__(" DSB");
+  # DEBUG BEGIN_STMT
+  __asm__ __volatile__(" ISB");
+  # DEBUG BEGIN_STMT
+  wayIdx_35 = wayIdx_17 + 1;
+  # DEBUG wayIdx => wayIdx_35
+
+  <bb 5> :
+  # wayIdx_17 = PHI <wayIdx_28(3), wayIdx_35(4)>
+  # DEBUG wayIdx => wayIdx_17
+  # DEBUG BEGIN_STMT
+  if (wayIdx_17 < cacheWaySize_24)
+    goto <bb 4>; [INV]
+  else
+    goto <bb 6>; [INV]
+
+  <bb 6> :
+  # DEBUG BEGIN_STMT
+  setIdx_29 = setIdx_16 + 1;
+  # DEBUG setIdx => setIdx_29
+
+  <bb 7> :
+  # setIdx_16 = PHI <setIdx_25(2), setIdx_29(6)>
+  # DEBUG setIdx => setIdx_16
+  # DEBUG BEGIN_STMT
+  if (setIdx_16 < cacheSetSize_23)
+    goto <bb 3>; [INV]
+  else
+    goto <bb 8>; [INV]
+
+  <bb 8> :
+  # DEBUG BEGIN_STMT
+  __asm__ __volatile__(" DSB");
+  # DEBUG BEGIN_STMT
+  __asm__ __volatile__(" ISB");
+  return;
+
+}
+
+
+hwAcc_ArmCoreMx_InstructionCacheInvalidate ()
+{
+  struct S32_SCB_Type * _1;
+  long unsigned int _2;
+  struct S32_SCB_Type * _3;
+  long unsigned int _4;
+  struct S32_SCB_Type * _5;
+
+  <bb 2> :
+  # DEBUG BEGIN_STMT
+  _1 = 3758153728B;
+  _2 ={v} _1->CSSELR;
+  _3 = 3758153728B;
+  _4 = _2 | 1;
+  _3->CSSELR ={v} _4;
+  # DEBUG BEGIN_STMT
+  _5 = 3758153728B;
+  _5->ICIALLU ={v} 0;
+  # DEBUG BEGIN_STMT
+  __asm__ __volatile__(" DSB");
+  # DEBUG BEGIN_STMT
+  __asm__ __volatile__(" ISB");
+  return;
+
+}
+
+

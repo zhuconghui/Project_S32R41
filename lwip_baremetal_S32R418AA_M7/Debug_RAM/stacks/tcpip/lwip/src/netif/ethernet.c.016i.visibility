@@ -1,0 +1,499 @@
+
+Marking local functions:
+
+
+Marking externally visible functions: ethernet_output ethernet_input
+
+
+Marking externally visible variables: ethzero ethbroadcast
+
+
+Reclaiming functions:
+Reclaiming variables:
+Clearing address taken flags:
+Symbol table:
+
+memcpy/14 (memcpy) @06d387e0
+  Type: function
+  Visibility: external public
+  References: 
+  Referring: 
+  Availability: not_available
+  Function flags: optimize_size
+  Called by: ethernet_output/4 ethernet_output/4 
+  Calls: 
+pbuf_add_header/13 (pbuf_add_header) @06d38700
+  Type: function
+  Visibility: external public
+  References: 
+  Referring: 
+  Availability: not_available
+  Function flags: optimize_size
+  Called by: ethernet_output/4 
+  Calls: 
+lwip_htons/12 (lwip_htons) @06d38620
+  Type: function
+  Visibility: external public
+  References: 
+  Referring: 
+  Availability: not_available
+  Function flags: optimize_size
+  Called by: ethernet_output/4 
+  Calls: 
+pbuf_free/11 (pbuf_free) @06d38460
+  Type: function
+  Visibility: external public
+  References: 
+  Referring: 
+  Availability: not_available
+  Function flags: optimize_size
+  Called by: ethernet_input/3 
+  Calls: 
+ip6_input/10 (ip6_input) @06d38380
+  Type: function
+  Visibility: external public
+  References: 
+  Referring: 
+  Availability: not_available
+  Function flags: optimize_size
+  Called by: ethernet_input/3 
+  Calls: 
+etharp_input/9 (etharp_input) @06d382a0
+  Type: function
+  Visibility: external public
+  References: 
+  Referring: 
+  Availability: not_available
+  Function flags: optimize_size
+  Called by: ethernet_input/3 
+  Calls: 
+ip4_input/8 (ip4_input) @06d380e0
+  Type: function
+  Visibility: external public
+  References: 
+  Referring: 
+  Availability: not_available
+  Function flags: optimize_size
+  Called by: ethernet_input/3 
+  Calls: 
+pbuf_remove_header/7 (pbuf_remove_header) @06d38000
+  Type: function
+  Visibility: external public
+  References: 
+  Referring: 
+  Availability: not_available
+  Function flags: optimize_size
+  Called by: ethernet_input/3 ethernet_input/3 ethernet_input/3 
+  Calls: 
+memcmp/6 (memcmp) @06d05700
+  Type: function
+  Visibility: external public
+  References: 
+  Referring: 
+  Availability: not_available
+  Function flags: optimize_size
+  Called by: ethernet_input/3 
+  Calls: 
+lwip_stats/5 (lwip_stats) @06d357e0
+  Type: variable
+  Body removed by symtab_remove_unreachable_nodes
+  Visibility: external public
+  References: 
+  Referring: ethernet_input/3 (read)ethernet_input/3 (write)ethernet_input/3 (read)ethernet_input/3 (write)ethernet_input/3 (read)ethernet_input/3 (write)ethernet_input/3 (read)ethernet_input/3 (write)ethernet_input/3 (read)ethernet_input/3 (write)ethernet_input/3 (read)ethernet_input/3 (write)ethernet_output/4 (read)ethernet_output/4 (write)
+  Availability: not_available
+  Varpool flags:
+ethernet_output/4 (ethernet_output) @06d05a80
+  Type: function definition analyzed
+  Visibility: externally_visible public
+  References: lwip_stats/5 (read)lwip_stats/5 (write)
+  Referring: 
+  Availability: available
+  Function flags: body optimize_size
+  Called by: 
+  Calls: memcpy/14 memcpy/14 pbuf_add_header/13 lwip_htons/12 
+   Indirect call
+ethernet_input/3 (ethernet_input) @06d05620
+  Type: function definition analyzed
+  Visibility: externally_visible public
+  References: lwip_stats/5 (read)lwip_stats/5 (write)lwip_stats/5 (read)lwip_stats/5 (write)ethbroadcast/1 (addr)lwip_stats/5 (read)lwip_stats/5 (write)lwip_stats/5 (read)lwip_stats/5 (write)lwip_stats/5 (read)lwip_stats/5 (write)lwip_stats/5 (read)lwip_stats/5 (write)
+  Referring: 
+  Availability: available
+  Function flags: body optimize_size
+  Called by: 
+  Calls: pbuf_free/11 ip6_input/10 pbuf_remove_header/7 etharp_input/9 pbuf_remove_header/7 ip4_input/8 pbuf_remove_header/7 memcmp/6 
+ethzero/2 (ethzero) @06d04678
+  Type: variable definition analyzed
+  Visibility: externally_visible public
+  References: 
+  Referring: 
+  Availability: available
+  Varpool flags: initialized read-only const-value-known
+ethbroadcast/1 (ethbroadcast) @06d045e8
+  Type: variable definition analyzed
+  Visibility: externally_visible public
+  References: 
+  Referring: ethernet_input/3 (addr)
+  Availability: available
+  Varpool flags: initialized read-only const-value-known
+ethernet_output (struct netif * netif, struct pbuf * p, const struct eth_addr * src, const struct eth_addr * dst, u16_t eth_type)
+{
+  u16_t eth_type_be;
+  struct eth_hdr * ethhdr;
+  err_t D.7226;
+
+  <bb 2> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  eth_type_be = lwip_htons (eth_type);
+  # DEBUG BEGIN_STMT
+  _1 = pbuf_add_header (p, 14);
+  if (_1 != 0)
+    goto <bb 3>; [INV]
+  else
+    goto <bb 4>; [INV]
+
+  <bb 3> :
+  # DEBUG BEGIN_STMT
+  // predicted unlikely by goto predictor.
+  # DEBUG pbuf_header_failed => NULL
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _6 = lwip_stats.link.lenerr;
+  _7 = _6 + 1;
+  lwip_stats.link.lenerr = _7;
+  # DEBUG BEGIN_STMT
+  D.7226 = -2;
+  goto <bb 7>; [INV]
+
+  <bb 4> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  ethhdr = p->payload;
+  # DEBUG BEGIN_STMT
+  ethhdr->type = eth_type_be;
+  # DEBUG BEGIN_STMT
+  _2 = &ethhdr->dest;
+  memcpy (_2, dst, 6);
+  # DEBUG BEGIN_STMT
+  _3 = &ethhdr->src;
+  memcpy (_3, src, 6);
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _4 = netif->hwaddr_len;
+  if (_4 != 6)
+    goto <bb 5>; [INV]
+  else
+    goto <bb 6>; [INV]
+
+  <bb 5> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  __asm__ __volatile__("BKPT #0
+	");
+  # DEBUG BEGIN_STMT
+  goto <bb 5>; [INV]
+
+  <bb 6> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _5 = netif->linkoutput;
+  D.7226 = _5 (netif, p);
+
+  <bb 7> :
+  return D.7226;
+
+}
+
+
+ethernet_input (struct pbuf * p, struct netif * netif)
+{
+  u16_t next_hdr_offset;
+  u16_t type;
+  struct eth_hdr * ethhdr;
+  err_t D.7220;
+
+  <bb 2> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  next_hdr_offset = 14;
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _1 = p->len;
+  if (_1 <= 14)
+    goto <bb 3>; [INV]
+  else
+    goto <bb 4>; [INV]
+
+  <bb 3> :
+  # DEBUG BEGIN_STMT
+  _2 = lwip_stats.etharp.proterr;
+  _3 = _2 + 1;
+  lwip_stats.etharp.proterr = _3;
+  # DEBUG BEGIN_STMT
+  _4 = lwip_stats.etharp.drop;
+  _5 = _4 + 1;
+  lwip_stats.etharp.drop = _5;
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _6 = netif->mib2_counters.ifinerrors;
+  _7 = _6 + 1;
+  netif->mib2_counters.ifinerrors = _7;
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  // predicted unlikely by goto predictor.
+  goto <bb 33>; [INV]
+
+  <bb 4> :
+  # DEBUG BEGIN_STMT
+  _8 = p->if_idx;
+  if (_8 == 0)
+    goto <bb 5>; [INV]
+  else
+    goto <bb 6>; [INV]
+
+  <bb 5> :
+  # DEBUG BEGIN_STMT
+  _9 = netif->num;
+  _10 = _9 + 1;
+  p->if_idx = _10;
+
+  <bb 6> :
+  # DEBUG BEGIN_STMT
+  ethhdr = p->payload;
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  type = ethhdr->type;
+  # DEBUG BEGIN_STMT
+  _11 = ethhdr->dest.addr[0];
+  _12 = (int) _11;
+  _13 = _12 & 1;
+  if (_13 != 0)
+    goto <bb 7>; [INV]
+  else
+    goto <bb 16>; [INV]
+
+  <bb 7> :
+  # DEBUG BEGIN_STMT
+  _14 = ethhdr->dest.addr[0];
+  if (_14 == 1)
+    goto <bb 8>; [INV]
+  else
+    goto <bb 11>; [INV]
+
+  <bb 8> :
+  # DEBUG BEGIN_STMT
+  _15 = ethhdr->dest.addr[1];
+  if (_15 == 0)
+    goto <bb 9>; [INV]
+  else
+    goto <bb 16>; [INV]
+
+  <bb 9> :
+  _16 = ethhdr->dest.addr[2];
+  if (_16 == 94)
+    goto <bb 10>; [INV]
+  else
+    goto <bb 16>; [INV]
+
+  <bb 10> :
+  # DEBUG BEGIN_STMT
+  _17 = p->flags;
+  _18 = _17 | 16;
+  p->flags = _18;
+  goto <bb 16>; [INV]
+
+  <bb 11> :
+  # DEBUG BEGIN_STMT
+  _19 = ethhdr->dest.addr[0];
+  if (_19 == 51)
+    goto <bb 12>; [INV]
+  else
+    goto <bb 14>; [INV]
+
+  <bb 12> :
+  _20 = ethhdr->dest.addr[1];
+  if (_20 == 51)
+    goto <bb 13>; [INV]
+  else
+    goto <bb 14>; [INV]
+
+  <bb 13> :
+  # DEBUG BEGIN_STMT
+  _21 = p->flags;
+  _22 = _21 | 16;
+  p->flags = _22;
+  goto <bb 16>; [INV]
+
+  <bb 14> :
+  # DEBUG BEGIN_STMT
+  _23 = &ethhdr->dest.addr;
+  _24 = memcmp (_23, &ethbroadcast.addr, 6);
+  if (_24 == 0)
+    goto <bb 15>; [INV]
+  else
+    goto <bb 16>; [INV]
+
+  <bb 15> :
+  # DEBUG BEGIN_STMT
+  _25 = p->flags;
+  _26 = _25 | 8;
+  p->flags = _26;
+
+  <bb 16> :
+  # DEBUG BEGIN_STMT
+  _27 = (int) type;
+  switch (_27) <default: <L33> [INV], case 8: <L19> [INV], case 1544: <L24> [INV], case 56710: <L29> [INV]>
+
+  <bb 17> :
+<L19>:
+  # DEBUG BEGIN_STMT
+  _28 = netif->flags;
+  _29 = (unsigned int) _28;
+  _30 = _29 & 8;
+  if (_30 == 0)
+    goto <bb 18>; [INV]
+  else
+    goto <bb 19>; [INV]
+
+  <bb 18> :
+  # DEBUG BEGIN_STMT
+  // predicted unlikely by goto predictor.
+  goto <bb 33>; [INV]
+
+  <bb 19> :
+  # DEBUG BEGIN_STMT
+  _31 = (unsigned int) next_hdr_offset;
+  _32 = pbuf_remove_header (p, _31);
+  if (_32 != 0)
+    goto <bb 20>; [INV]
+  else
+    goto <bb 21>; [INV]
+
+  <bb 20> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  // predicted unlikely by goto predictor.
+  goto <bb 33>; [INV]
+
+  <bb 21> :
+  # DEBUG BEGIN_STMT
+  ip4_input (p, netif);
+  # DEBUG BEGIN_STMT
+  goto <bb 32>; [INV]
+
+  <bb 22> :
+<L24>:
+  # DEBUG BEGIN_STMT
+  _33 = netif->flags;
+  _34 = (unsigned int) _33;
+  _35 = _34 & 8;
+  if (_35 == 0)
+    goto <bb 23>; [INV]
+  else
+    goto <bb 24>; [INV]
+
+  <bb 23> :
+  # DEBUG BEGIN_STMT
+  // predicted unlikely by goto predictor.
+  goto <bb 33>; [INV]
+
+  <bb 24> :
+  # DEBUG BEGIN_STMT
+  _36 = (unsigned int) next_hdr_offset;
+  _37 = pbuf_remove_header (p, _36);
+  if (_37 != 0)
+    goto <bb 25>; [INV]
+  else
+    goto <bb 26>; [INV]
+
+  <bb 25> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _38 = lwip_stats.etharp.lenerr;
+  _39 = _38 + 1;
+  lwip_stats.etharp.lenerr = _39;
+  # DEBUG BEGIN_STMT
+  _40 = lwip_stats.etharp.drop;
+  _41 = _40 + 1;
+  lwip_stats.etharp.drop = _41;
+  # DEBUG BEGIN_STMT
+  // predicted unlikely by goto predictor.
+  goto <bb 33>; [INV]
+
+  <bb 26> :
+  # DEBUG BEGIN_STMT
+  etharp_input (p, netif);
+  # DEBUG BEGIN_STMT
+  goto <bb 32>; [INV]
+
+  <bb 27> :
+<L29>:
+  # DEBUG BEGIN_STMT
+  _42 = p->len;
+  if (next_hdr_offset > _42)
+    goto <bb 29>; [INV]
+  else
+    goto <bb 28>; [INV]
+
+  <bb 28> :
+  _43 = (unsigned int) next_hdr_offset;
+  _44 = pbuf_remove_header (p, _43);
+  if (_44 != 0)
+    goto <bb 29>; [INV]
+  else
+    goto <bb 30>; [INV]
+
+  <bb 29> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  // predicted unlikely by goto predictor.
+  goto <bb 33>; [INV]
+
+  <bb 30> :
+  # DEBUG BEGIN_STMT
+  ip6_input (p, netif);
+  # DEBUG BEGIN_STMT
+  goto <bb 32>; [INV]
+
+  <bb 31> :
+<L33>:
+  # DEBUG BEGIN_STMT
+  _45 = lwip_stats.etharp.proterr;
+  _46 = _45 + 1;
+  lwip_stats.etharp.proterr = _46;
+  # DEBUG BEGIN_STMT
+  _47 = lwip_stats.etharp.drop;
+  _48 = _47 + 1;
+  lwip_stats.etharp.drop = _48;
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _49 = netif->mib2_counters.ifinunknownprotos;
+  _50 = _49 + 1;
+  netif->mib2_counters.ifinunknownprotos = _50;
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  // predicted unlikely by goto predictor.
+  goto <bb 33>; [INV]
+
+  <bb 32> :
+  # DEBUG BEGIN_STMT
+  D.7220 = 0;
+  goto <bb 34>; [INV]
+
+  <bb 33> :
+free_and_return:
+  # DEBUG BEGIN_STMT
+  pbuf_free (p);
+  # DEBUG BEGIN_STMT
+  D.7220 = 0;
+
+  <bb 34> :
+  return D.7220;
+
+}
+
+

@@ -1,0 +1,3154 @@
+
+
+ local analysis of igmp_start_timer.isra.0
+   scanning: if (max_time_1(D) > 2)
+  scanning: _2 = rand ();
+  scanning: _3 = (long unsigned int) _2;
+  scanning: _4 = (long unsigned int) max_time_1(D);
+  scanning: _5 = _3 % _4;
+  scanning: iftmp.1_6 = (short unsigned int) _5;
+  scanning: *ISRA.5_15(D) = iftmp.1_7;
+    Indirect ref write is not const/pure
+  scanning: if (iftmp.1_7 == 0)
+  scanning: *ISRA.5_15(D) = 1;
+    Indirect ref write is not const/pure
+  scanning: return;
+
+
+ local analysis of igmp_remove_group.isra.0
+   scanning: tmp_group_2 = ISRA.3_13(D);
+  scanning: _4 = tmp_group_3->next;
+    Indirect ref read is not const
+  scanning: if (_4 == group_5(D))
+  scanning: _6 = group_5(D)->next;
+    Indirect ref read is not const
+  scanning: tmp_group_7->next = _6;
+    Indirect ref write is not const/pure
+  scanning: if (tmp_group_3 != 0B)
+  scanning: if (tmp_group_8 == 0B)
+  scanning: return err_9;
+
+
+ local analysis of igmp_send
+   scanning: src = ip_addr_any.u_addr.ip4;
+  scanning: p_17 = pbuf_alloc (74, 8, 640);
+  scanning: if (p_17 != 0B)
+  scanning: igmp_19 = p_17->payload;
+    Indirect ref read is not const
+  scanning: _1 = p_17->len;
+    Indirect ref read is not const
+  scanning: if (_1 <= 7)
+  scanning: __asm__ __volatile__("BKPT #0
+	");
+    memory asm clobber is not const/pure
+    volatile is not const/pure
+  scanning: _2 = MEM[(const struct ip4_addr_t *)netif_20(D) + 4B].addr;
+    Indirect ref read is not const
+  scanning: src.addr = _2;
+  scanning: if (type_22(D) == 22)
+  scanning: dest_25 = &group_23(D)->group_address;
+  scanning: _3 = group_23(D)->group_address.addr;
+    Indirect ref read is not const
+  scanning: igmp_19->igmp_group_address.addr = _3;
+    Indirect ref write is not const/pure
+  scanning: group_23(D)->last_reporter_flag = 1;
+    Indirect ref write is not const/pure
+  scanning: if (type_22(D) == 23)
+  scanning: _4 = group_23(D)->group_address.addr;
+    Indirect ref read is not const
+  scanning: igmp_19->igmp_group_address.addr = _4;
+    Indirect ref write is not const/pure
+  scanning: _5 = type_22(D) + 234;
+  scanning: if (_5 <= 1)
+  scanning: igmp_19->igmp_msgtype = type_22(D);
+    Indirect ref write is not const/pure
+  scanning: igmp_19->igmp_maxresp = 0;
+    Indirect ref write is not const/pure
+  scanning: igmp_19->igmp_checksum = 0;
+    Indirect ref write is not const/pure
+  scanning: _6 = inet_chksum (igmp_19, 8);
+  scanning: igmp_19->igmp_checksum = _6;
+    Indirect ref write is not const/pure
+  scanning: igmp_ip_output_if (p_17, &src, dest_9, netif_20(D));
+  scanning: pbuf_free (p_17);
+  scanning: _7 = lwip_stats.igmp.memerr;
+  scanning: _8 = _7 + 1;
+  scanning: lwip_stats.igmp.memerr = _8;
+  scanning: return;
+Function is locally looping.
+Function can locally free.
+
+
+ local analysis of igmp_ip_output_if
+   scanning: ra[0] = 1172;
+  scanning: ra[1] = 0;
+  scanning: _1 = lwip_stats.igmp.xmit;
+  scanning: _2 = _1 + 1;
+  scanning: lwip_stats.igmp.xmit = _2;
+  scanning: _12 = ip4_output_if_opt (p_7(D), src_8(D), dest_9(D), 1, 0, 2, netif_10(D), &ra, 4);
+  scanning: return _12;
+Function is locally const.
+
+
+ local analysis of igmp_delaying_member
+   scanning: _1 = group_6(D)->group_state;
+    Indirect ref read is not const
+  scanning: if (_1 == 2)
+  scanning: if (_1 == 1)
+  scanning: _2 = group_6(D)->timer;
+    Indirect ref read is not const
+  scanning: if (_2 == 0)
+  scanning: _3 = (short unsigned int) maxresp_7(D);
+  scanning: if (_2 > _3)
+  scanning: _10 = &MEM[(short unsigned int *)group_6(D) + 10B];
+  scanning: igmp_start_timer.isra.0 (_10, maxresp_7(D));
+  scanning: group_6(D)->group_state = 1;
+    Indirect ref write is not const/pure
+  scanning: return;
+
+
+ local analysis of igmp_timeout
+   scanning: _1 = group_8(D)->group_state;
+    Indirect ref read is not const
+  scanning: if (_1 == 1)
+  scanning: _2 = group_8(D)->group_address.addr;
+    Indirect ref read is not const
+  scanning: _3 = allsystems.addr;
+  scanning: if (_2 != _3)
+  scanning: group_8(D)->group_state = 2;
+    Indirect ref write is not const/pure
+  scanning: _4 = lwip_stats.igmp.tx_report;
+  scanning: _5 = _4 + 1;
+  scanning: lwip_stats.igmp.tx_report = _5;
+  scanning: igmp_send (netif_11(D), group_8(D), 22);
+  scanning: return;
+
+
+ local analysis of igmp_tmr
+   scanning: netif_9 = netif_list;
+  scanning: group_10 = netif_3->client_data[0];
+    Indirect ref read is not const
+  scanning: _1 = group_4->timer;
+    Indirect ref read is not const
+  scanning: if (_1 != 0)
+  scanning: _2 = _1 + 65535;
+  scanning: group_4->timer = _2;
+    Indirect ref write is not const/pure
+  scanning: if (_2 == 0)
+  scanning: igmp_timeout (netif_3, group_4);
+  scanning: group_14 = group_4->next;
+    Indirect ref read is not const
+  scanning: if (group_4 != 0B)
+  scanning: netif_11 = netif_3->next;
+    Indirect ref read is not const
+  scanning: if (netif_3 != 0B)
+  scanning: return;
+
+
+ local analysis of igmp_leavegroup_netif
+   scanning: _1 = groupaddr_17(D)->addr;
+    Indirect ref read is not const
+  scanning: _2 = _1 & 240;
+  scanning: if (_2 != 224)
+  scanning: _3 = allsystems.addr;
+  scanning: if (_1 == _3)
+  scanning: _4 = netif_18(D)->flags;
+    Indirect ref read is not const
+  scanning: _20 = _4 & 32;
+  scanning: if (_20 == 0)
+  scanning: group_19 = igmp_lookfor_group (netif_18(D), groupaddr_17(D));
+  scanning: if (group_19 != 0B)
+  scanning: _5 = group_19->use;
+    Indirect ref read is not const
+  scanning: if (_5 <= 1)
+  scanning: _27 = MEM[(void * *)netif_18(D) + 196B];
+    Indirect ref read is not const
+  scanning: igmp_remove_group.isra.0 (_27, group_19);
+  scanning: _6 = group_19->last_reporter_flag;
+    Indirect ref read is not const
+  scanning: if (_6 != 0)
+  scanning: _7 = lwip_stats.igmp.tx_leave;
+  scanning: _8 = _7 + 1;
+  scanning: lwip_stats.igmp.tx_leave = _8;
+  scanning: igmp_send (netif_18(D), group_19, 23);
+  scanning: _9 = netif_18(D)->igmp_mac_filter;
+    Indirect ref read is not const
+  scanning: if (_9 != 0B)
+  scanning: _9 (netif_18(D), groupaddr_17(D), 0);
+  scanning: memp_free (8, group_19);
+  scanning: _10 = _5 + 255;
+  scanning: group_19->use = _10;
+    Indirect ref write is not const/pure
+  scanning: return _11;
+
+
+ local analysis of igmp_leavegroup
+   scanning: _1 = groupaddr_16(D)->addr;
+    Indirect ref read is not const
+  scanning: _2 = _1 & 240;
+  scanning: if (_2 != 224)
+  scanning: _3 = allsystems.addr;
+  scanning: if (_1 == _3)
+  scanning: netif_17 = netif_list;
+  scanning: _4 = netif_9->flags;
+    Indirect ref read is not const
+  scanning: _14 = _4 & 32;
+  scanning: if (_14 != 0)
+  scanning: if (ifaddr_18(D) == 0B)
+  scanning: _5 = ifaddr_18(D)->addr;
+    Indirect ref read is not const
+  scanning: if (_5 == 0)
+  scanning: _6 = MEM[(const struct ip4_addr_t *)netif_9 + 4B].addr;
+    Indirect ref read is not const
+  scanning: if (_5 == _6)
+  scanning: res_20 = igmp_leavegroup_netif (netif_9, groupaddr_16(D));
+  scanning: if (err_8 != 0)
+  scanning: netif_21 = netif_9->next;
+    Indirect ref read is not const
+  scanning: if (netif_9 != 0B)
+  scanning: return _10;
+;; 2 loops found
+;;
+;; Loop 0
+;;  header 0, latch 1
+;;  depth 0, outer -1
+;;  nodes: 0 1 2 3 4 5 6 7 8 9 10 11 12 13
+;;
+;; Loop 1
+;;  header 12, latch 11
+;;  depth 1, outer 0
+;;  nodes: 12 11 5 8 9 10 6 7
+;; 2 succs { 13 3 }
+;; 3 succs { 13 4 }
+;; 4 succs { 12 }
+;; 5 succs { 6 11 }
+;; 6 succs { 9 7 }
+;; 7 succs { 9 8 }
+;; 8 succs { 9 11 }
+;; 9 succs { 10 11 }
+;; 10 succs { 11 }
+;; 11 succs { 12 }
+;; 12 succs { 5 13 }
+;; 13 succs { 1 }
+    cannot prove finiteness of loop 1
+Function is locally looping.
+Function is locally pure.
+
+
+ local analysis of igmp_joingroup_netif
+   scanning: _1 = groupaddr_17(D)->addr;
+    Indirect ref read is not const
+  scanning: _2 = _1 & 240;
+  scanning: if (_2 != 224)
+  scanning: _3 = allsystems.addr;
+  scanning: if (_1 == _3)
+  scanning: _4 = netif_18(D)->flags;
+    Indirect ref read is not const
+  scanning: _21 = _4 & 32;
+  scanning: if (_21 == 0)
+  scanning: group_20 = igmp_lookup_group (netif_18(D), groupaddr_17(D));
+  scanning: if (group_20 != 0B)
+  scanning: _5 = group_20->group_state;
+    Indirect ref read is not const
+  scanning: if (_5 != 0)
+  scanning: _6 = group_20->use;
+    Indirect ref read is not const
+  scanning: if (_6 == 0)
+  scanning: _7 = netif_18(D)->igmp_mac_filter;
+    Indirect ref read is not const
+  scanning: if (_7 != 0B)
+  scanning: _7 (netif_18(D), groupaddr_17(D), 1);
+  scanning: _8 = lwip_stats.igmp.tx_join;
+  scanning: _9 = _8 + 1;
+  scanning: lwip_stats.igmp.tx_join = _9;
+  scanning: igmp_send (netif_18(D), group_20, 22);
+  scanning: _28 = &MEM[(short unsigned int *)group_20 + 10B];
+  scanning: igmp_start_timer.isra.0 (_28, 5);
+  scanning: group_20->group_state = 1;
+    Indirect ref write is not const/pure
+  scanning: _10 = group_20->use;
+    Indirect ref read is not const
+  scanning: _11 = _10 + 1;
+  scanning: group_20->use = _11;
+    Indirect ref write is not const/pure
+  scanning: return _12;
+
+
+ local analysis of igmp_joingroup
+   scanning: _1 = groupaddr_17(D)->addr;
+    Indirect ref read is not const
+  scanning: _2 = _1 & 240;
+  scanning: if (_2 != 224)
+  scanning: _4 = allsystems.addr;
+  scanning: if (_1 == _4)
+  scanning: netif_18 = netif_list;
+  scanning: _5 = netif_10->flags;
+    Indirect ref read is not const
+  scanning: _15 = _5 & 32;
+  scanning: if (_15 != 0)
+  scanning: if (ifaddr_19(D) == 0B)
+  scanning: _6 = ifaddr_19(D)->addr;
+    Indirect ref read is not const
+  scanning: if (_6 == 0)
+  scanning: _7 = MEM[(const struct ip4_addr_t *)netif_10 + 4B].addr;
+    Indirect ref read is not const
+  scanning: if (_6 == _7)
+  scanning: err_21 = igmp_joingroup_netif (netif_10, groupaddr_17(D));
+  scanning: if (err_21 != 0)
+  scanning: netif_22 = netif_10->next;
+    Indirect ref read is not const
+  scanning: if (netif_10 != 0B)
+  scanning: return _11;
+;; 2 loops found
+;;
+;; Loop 0
+;;  header 0, latch 1
+;;  depth 0, outer -1
+;;  nodes: 0 1 2 3 4 5 6 7 8 9 10 11 12 13
+;;
+;; Loop 1
+;;  header 12, latch 11
+;;  depth 1, outer 0
+;;  nodes: 12 11 5 8 9 6 7
+;; 2 succs { 13 3 }
+;; 3 succs { 13 4 }
+;; 4 succs { 12 }
+;; 5 succs { 6 11 }
+;; 6 succs { 9 7 }
+;; 7 succs { 9 8 }
+;; 8 succs { 9 11 }
+;; 9 succs { 10 11 }
+;; 10 succs { 13 }
+;; 11 succs { 12 }
+;; 12 succs { 5 13 }
+;; 13 succs { 1 }
+    cannot prove finiteness of loop 1
+Function is locally looping.
+Function is locally pure.
+
+
+ local analysis of igmp_input
+   scanning: _1 = lwip_stats.igmp.recv;
+  scanning: _2 = _1 + 1;
+  scanning: lwip_stats.igmp.recv = _2;
+  scanning: _3 = p_43(D)->len;
+    Indirect ref read is not const
+  scanning: if (_3 <= 7)
+  scanning: pbuf_free (p_43(D));
+  scanning: _4 = lwip_stats.igmp.lenerr;
+  scanning: _5 = _4 + 1;
+  scanning: lwip_stats.igmp.lenerr = _5;
+  scanning: igmp_44 = p_43(D)->payload;
+    Indirect ref read is not const
+  scanning: _6 = inet_chksum (igmp_44, _3);
+  scanning: if (_6 != 0)
+  scanning: pbuf_free (p_43(D));
+  scanning: _7 = lwip_stats.igmp.chkerr;
+  scanning: _8 = _7 + 1;
+  scanning: lwip_stats.igmp.chkerr = _8;
+  scanning: group_48 = igmp_lookfor_group (inp_46(D), dest_47(D));
+  scanning: if (group_48 == 0B)
+  scanning: pbuf_free (p_43(D));
+  scanning: _9 = lwip_stats.igmp.drop;
+  scanning: _10 = _9 + 1;
+  scanning: lwip_stats.igmp.drop = _10;
+  scanning: _11 = igmp_44->igmp_msgtype;
+    Indirect ref read is not const
+  scanning: switch (_11) <default: <L33> [33.33%], case 17: <L6> [33.33%], case 22: <L30> [33.33%]>
+  scanning: <L6>:
+  scanning: _12 = dest_47(D)->addr;
+    Indirect ref read is not const
+  scanning: _13 = allsystems.addr;
+  scanning: if (_12 == _13)
+  scanning: _14 = igmp_44->igmp_group_address.addr;
+    Indirect ref read is not const
+  scanning: if (_14 == 0)
+  scanning: _15 = igmp_44->igmp_maxresp;
+    Indirect ref read is not const
+  scanning: if (_15 == 0)
+  scanning: _16 = lwip_stats.igmp.rx_v1;
+  scanning: _17 = _16 + 1;
+  scanning: lwip_stats.igmp.rx_v1 = _17;
+  scanning: igmp_44->igmp_maxresp = 10;
+    Indirect ref write is not const/pure
+  scanning: _18 = lwip_stats.igmp.rx_general;
+  scanning: _19 = _18 + 1;
+  scanning: lwip_stats.igmp.rx_general = _19;
+  scanning: groupref_56 = inp_46(D)->client_data[0];
+    Indirect ref read is not const
+  scanning: if (groupref_56 != 0B)
+  scanning: groupref_57 = groupref_56->next;
+    Indirect ref read is not const
+  scanning: _20 = igmp_44->igmp_maxresp;
+    Indirect ref read is not const
+  scanning: igmp_delaying_member (groupref_35, _20);
+  scanning: groupref_59 = groupref_35->next;
+    Indirect ref read is not const
+  scanning: if (groupref_35 != 0B)
+  scanning: _21 = igmp_44->igmp_group_address.addr;
+    Indirect ref read is not const
+  scanning: if (_21 != 0)
+  scanning: if (_12 == _13)
+  scanning: groupaddr.addr = _21;
+  scanning: group_61 = igmp_lookfor_group (inp_46(D), &groupaddr);
+  scanning: if (group_34 != 0B)
+  scanning: _22 = lwip_stats.igmp.rx_group;
+  scanning: _23 = _22 + 1;
+  scanning: lwip_stats.igmp.rx_group = _23;
+  scanning: _24 = igmp_44->igmp_maxresp;
+    Indirect ref read is not const
+  scanning: igmp_delaying_member (group_34, _24);
+  scanning: _25 = lwip_stats.igmp.drop;
+  scanning: _26 = _25 + 1;
+  scanning: lwip_stats.igmp.drop = _26;
+  scanning: _27 = lwip_stats.igmp.proterr;
+  scanning: _28 = _27 + 1;
+  scanning: lwip_stats.igmp.proterr = _28;
+  scanning: <L30>:
+  scanning: _29 = lwip_stats.igmp.rx_report;
+  scanning: _30 = _29 + 1;
+  scanning: lwip_stats.igmp.rx_report = _30;
+  scanning: _31 = group_48->group_state;
+    Indirect ref read is not const
+  scanning: if (_31 == 1)
+  scanning: group_48->timer = 0;
+    Indirect ref write is not const/pure
+  scanning: group_48->group_state = 2;
+    Indirect ref write is not const/pure
+  scanning: group_48->last_reporter_flag = 0;
+    Indirect ref write is not const/pure
+  scanning: <L33>:
+  scanning: _32 = lwip_stats.igmp.proterr;
+  scanning: _33 = _32 + 1;
+  scanning: lwip_stats.igmp.proterr = _33;
+  scanning: pbuf_free (p_43(D));
+  scanning: return;
+
+
+ local analysis of igmp_lookup_group
+   scanning: list_head_13 = ifp_12(D)->client_data[0];
+    Indirect ref read is not const
+  scanning: group_15 = igmp_lookfor_group (ifp_12(D), addr_14(D));
+  scanning: if (group_15 != 0B)
+  scanning: group_17 = memp_malloc (8);
+  scanning: if (group_17 != 0B)
+  scanning: if (addr_14(D) != 0B)
+  scanning: iftmp.0_18 = addr_14(D)->addr;
+    Indirect ref read is not const
+  scanning: group_17->group_address.addr = iftmp.0_7;
+    Indirect ref write is not const/pure
+  scanning: group_17->timer = 0;
+    Indirect ref write is not const/pure
+  scanning: group_17->group_state = 0;
+    Indirect ref write is not const/pure
+  scanning: group_17->last_reporter_flag = 0;
+    Indirect ref write is not const/pure
+  scanning: group_17->use = 0;
+    Indirect ref write is not const/pure
+  scanning: if (list_head_13 == 0B)
+  scanning: _1 = addr_14(D)->addr;
+    Indirect ref read is not const
+  scanning: _2 = allsystems.addr;
+  scanning: if (_1 != _2)
+  scanning: __asm__ __volatile__("BKPT #0
+	");
+    memory asm clobber is not const/pure
+    volatile is not const/pure
+  scanning: group_17->next = 0B;
+    Indirect ref write is not const/pure
+  scanning: ifp_12(D)->client_data[0] = group_17;
+    Indirect ref write is not const/pure
+  scanning: _3 = addr_14(D)->addr;
+    Indirect ref read is not const
+  scanning: _4 = allsystems.addr;
+  scanning: if (_3 == _4)
+  scanning: __asm__ __volatile__("BKPT #0
+	");
+    memory asm clobber is not const/pure
+    volatile is not const/pure
+  scanning: _5 = list_head_13->next;
+    Indirect ref read is not const
+  scanning: group_17->next = _5;
+    Indirect ref write is not const/pure
+  scanning: list_head_13->next = group_17;
+    Indirect ref write is not const/pure
+  scanning: return _6;
+Function is locally looping.
+Function can locally free.
+
+
+ local analysis of igmp_lookfor_group
+   scanning: group_7 = ifp_6(D)->client_data[0];
+    Indirect ref read is not const
+  scanning: _1 = group_3->group_address.addr;
+    Indirect ref read is not const
+  scanning: _2 = addr_8(D)->addr;
+    Indirect ref read is not const
+  scanning: if (_1 == _2)
+  scanning: group_9 = group_3->next;
+    Indirect ref read is not const
+  scanning: if (group_3 != 0B)
+  scanning: return _4;
+;; 2 loops found
+;;
+;; Loop 0
+;;  header 0, latch 1
+;;  depth 0, outer -1
+;;  nodes: 0 1 2 3 4 5 6 7
+;;
+;; Loop 1
+;;  header 6, latch 5
+;;  depth 1, outer 0
+;;  nodes: 6 5 3
+;; 2 succs { 6 }
+;; 3 succs { 4 5 }
+;; 4 succs { 7 }
+;; 5 succs { 6 }
+;; 6 succs { 3 7 }
+;; 7 succs { 1 }
+    cannot prove finiteness of loop 1
+Function is locally looping.
+Function is locally pure.
+
+
+ local analysis of igmp_report_groups
+   scanning: group_5 = netif_4(D)->client_data[0];
+    Indirect ref read is not const
+  scanning: if (group_5 != 0B)
+  scanning: group_6 = group_5->next;
+    Indirect ref read is not const
+  scanning: igmp_delaying_member (group_1, 5);
+  scanning: group_8 = group_1->next;
+    Indirect ref read is not const
+  scanning: if (group_1 != 0B)
+  scanning: return;
+;; 2 loops found
+;;
+;; Loop 0
+;;  header 0, latch 1
+;;  depth 0, outer -1
+;;  nodes: 0 1 2 3 4 5 6 7
+;;
+;; Loop 1
+;;  header 6, latch 5
+;;  depth 1, outer 0
+;;  nodes: 6 5
+;; 2 succs { 3 4 }
+;; 3 succs { 4 }
+;; 4 succs { 6 }
+;; 5 succs { 6 }
+;; 6 succs { 5 7 }
+;; 7 succs { 1 }
+    cannot prove finiteness of loop 1
+Function is locally looping.
+Function is locally pure.
+
+
+ local analysis of igmp_stop
+   scanning: group_8 = netif_7(D)->client_data[0];
+    Indirect ref read is not const
+  scanning: netif_7(D)->client_data[0] = 0B;
+    Indirect ref write is not const/pure
+  scanning: next_10 = group_3->next;
+    Indirect ref read is not const
+  scanning: _1 = netif_7(D)->igmp_mac_filter;
+    Indirect ref read is not const
+  scanning: if (_1 != 0B)
+  scanning: _2 = &group_3->group_address;
+  scanning: _1 (netif_7(D), _2, 0);
+  scanning: memp_free (8, group_3);
+  scanning: if (group_3 != 0B)
+  scanning: return 0;
+
+
+ local analysis of igmp_start
+   scanning: group_10 = igmp_lookup_group (netif_8(D), &allsystems);
+  scanning: if (group_10 != 0B)
+  scanning: group_10->group_state = 2;
+    Indirect ref write is not const/pure
+  scanning: _1 = group_10->use;
+    Indirect ref read is not const
+  scanning: _2 = _1 + 1;
+  scanning: group_10->use = _2;
+    Indirect ref write is not const/pure
+  scanning: _3 = netif_8(D)->igmp_mac_filter;
+    Indirect ref read is not const
+  scanning: if (_3 != 0B)
+  scanning: _3 (netif_8(D), &allsystems, 1);
+  scanning: return _4;
+
+
+ local analysis of igmp_init
+   scanning: allsystems.addr = 16777440;
+  scanning: allrouters.addr = 33554656;
+  scanning: return;
+Function is locally const.
+callgraph:
+
+igmp_start_timer.isra.0/33 (igmp_start_timer.isra.0) @06120b60
+  Type: function definition analyzed
+  Visibility: artificial
+  next sharing asm name: 32
+  Aux: @061353a8
+  References: 
+  Referring: 
+  Function igmp_start_timer.isra.0/33 is inline copy in igmp_delaying_member/18
+  Clone of igmp_start_timer.isra.0/32
+  Availability: local
+  Function flags: count:435711547 (estimated locally) body local optimize_size
+  Called by: igmp_delaying_member/18 (inlined) (435711547 (estimated locally),0.41 per call) 
+  Calls: rand/23 (143784811 (estimated locally),0.13 per call) 
+igmp_start_timer.isra.0/32 (igmp_start_timer.isra.0) @061f4b60
+  Type: function definition analyzed
+  Visibility: prevailing_def_ironly artificial
+  previous sharing asm name: 33
+  Aux: @061351c8
+  References: 
+  Referring: 
+  Function igmp_start_timer.isra.0/32 is inline copy in igmp_joingroup_netif/12
+  Availability: local
+  Function flags: count:507898069 (estimated locally) body local optimize_size
+  Called by: igmp_joingroup_netif/12 (inlined) (507898069 (estimated locally),0.47 per call) 
+  Calls: rand/23 (167606363 (estimated locally),0.16 per call) 
+igmp_remove_group.isra.0/31 (igmp_remove_group.isra.0) @05f708c0
+  Type: function definition analyzed
+  Visibility: prevailing_def_ironly artificial
+  Aux: @06135428
+  References: 
+  Referring: 
+  Function igmp_remove_group.isra.0/31 is inline copy in igmp_leavegroup_netif/14
+  Availability: local
+  Function flags: count:259028015 (estimated locally) body local optimize_size
+  Called by: igmp_leavegroup_netif/14 (inlined) (259028015 (estimated locally),0.24 per call) 
+  Calls: 
+ip4_output_if_opt/30 (ip4_output_if_opt) @061cc000
+  Type: function
+  Visibility: external public
+  References: 
+  Referring: 
+  Availability: not_available
+  Function flags: optimize_size
+  Called by: igmp_ip_output_if/19 (27380 (estimated locally),0.09 per call) 
+  Calls: 
+pbuf_alloc/29 (pbuf_alloc) @06182ee0
+  Type: function
+  Visibility: external public
+  References: 
+  Referring: 
+  Availability: not_available
+  Function flags: optimize_size
+  Called by: igmp_send/20 (306783 (estimated locally),1.00 per call) 
+  Calls: 
+inet_chksum/26 (inet_chksum) @06182a80
+  Type: function
+  Visibility: external public
+  References: 
+  Referring: 
+  Availability: not_available
+  Function flags: optimize_size
+  Called by: igmp_input/10 (708669605 (estimated locally),0.66 per call) igmp_send/20 (27380 (estimated locally),0.09 per call) 
+  Calls: 
+pbuf_free/25 (pbuf_free) @061829a0
+  Type: function
+  Visibility: external public
+  References: 
+  Referring: 
+  Availability: not_available
+  Function flags: optimize_size
+  Called by: igmp_input/10 (421796233 (estimated locally),0.39 per call) igmp_input/10 (45883522 (estimated locally),0.04 per call) igmp_input/10 (240947665 (estimated locally),0.22 per call) igmp_input/10 (365072220 (estimated locally),0.34 per call) igmp_send/20 (107374 (estimated locally),0.35 per call) 
+  Calls: 
+rand/23 (rand) @06182540
+  Type: function
+  Visibility: external public
+  References: 
+  Referring: 
+  Availability: not_available
+  Function flags: optimize_size
+  Called by: igmp_start_timer.isra.0/33 (143784811 (estimated locally),0.13 per call) igmp_start_timer.isra.0/32 (167606363 (estimated locally),0.16 per call) 
+  Calls: 
+memp_free/22 (memp_free) @061821c0
+  Type: function
+  Visibility: external public
+  References: 
+  Referring: 
+  Availability: not_available
+  Function flags: optimize_size
+  Called by: igmp_leavegroup_netif/14 (259028015 (estimated locally),0.24 per call) igmp_stop/5 (955630223 (estimated locally),8.09 per call) 
+  Calls: 
+memp_malloc/21 (memp_malloc) @06182000
+  Type: function
+  Visibility: external public
+  References: 
+  Referring: 
+  Availability: not_available
+  Function flags: optimize_size
+  Called by: igmp_lookup_group/8 (644502 (estimated locally),0.29 per call) 
+  Calls: 
+igmp_send/20 (igmp_send) @06150d20
+  Type: function definition analyzed
+  Visibility: prevailing_def_ironly
+  Aux: @06135288
+  References: ip_addr_any/28 (read)allrouters/2 (addr)lwip_stats/24 (read)lwip_stats/24 (write)
+  Referring: 
+  Availability: local
+  Function flags: count:306783 (estimated locally) body local optimize_size
+  Called by: igmp_leavegroup_netif/14 (85479245 (estimated locally),0.08 per call) igmp_joingroup_netif/12 (507898069 (estimated locally),0.47 per call) igmp_timeout/16 (26204986 (estimated locally),1.80 per call) 
+  Calls: pbuf_free/25 (107374 (estimated locally),0.35 per call) igmp_ip_output_if/19 (inlined) (27380 (estimated locally),0.09 per call) inet_chksum/26 (27380 (estimated locally),0.09 per call) pbuf_alloc/29 (306783 (estimated locally),1.00 per call) 
+igmp_ip_output_if/19 (igmp_ip_output_if) @06150700
+  Type: function definition analyzed
+  Visibility: prevailing_def_ironly
+  Aux: @061350c8
+  References: lwip_stats/24 (read)lwip_stats/24 (write)
+  Referring: 
+  Function igmp_ip_output_if/19 is inline copy in igmp_send/20
+  Availability: local
+  Function flags: count:27380 (estimated locally) body local optimize_size
+  Called by: igmp_send/20 (inlined) (27380 (estimated locally),0.09 per call) 
+  Calls: ip4_output_if_opt/30 (27380 (estimated locally),0.09 per call) 
+igmp_delaying_member/18 (igmp_delaying_member) @06150460
+  Type: function definition analyzed
+  Visibility: prevailing_def_ironly
+  Aux: @061353e8
+  References: 
+  Referring: 
+  Availability: local
+  Function flags: count:1073741824 (estimated locally) body local optimize_size
+  Called by: igmp_input/10 (31198932 (estimated locally),0.03 per call) igmp_input/10 (193387183 (estimated locally),0.18 per call) igmp_report_groups/6 (955630223 (estimated locally),8.09 per call) 
+  Calls: igmp_start_timer.isra.0/33 (inlined) (435711547 (estimated locally),0.41 per call) 
+igmp_timeout/16 (igmp_timeout) @0614ba80
+  Type: function definition analyzed
+  Visibility: prevailing_def_ironly
+  Aux: @06135188
+  References: allsystems/1 (read)lwip_stats/24 (read)lwip_stats/24 (write)
+  Referring: 
+  Function igmp_timeout/16 is inline copy in igmp_tmr/15
+  Availability: local
+  Function flags: count:157678987 (estimated locally) body local optimize_size
+  Called by: igmp_tmr/15 (inlined) (157678987 (estimated locally),10.80 per call) 
+  Calls: igmp_send/20 (26204986 (estimated locally),1.80 per call) 
+igmp_tmr/15 (igmp_tmr) @0614b9a0
+  Type: function definition analyzed
+  Visibility: externally_visible public
+  Aux: @06135368
+  References: netif_list/27 (read)
+  Referring: 
+  Availability: available
+  Function flags: count:14598062 (estimated locally) body optimize_size
+  Called by: 
+  Calls: igmp_timeout/16 (inlined) (157678987 (estimated locally),10.80 per call) 
+igmp_leavegroup_netif/14 (igmp_leavegroup_netif) @0614b700
+  Type: function definition analyzed
+  Visibility: externally_visible public
+  Aux: @06135248
+  References: allsystems/1 (read)lwip_stats/24 (read)lwip_stats/24 (write)
+  Referring: 
+  Availability: available
+  Function flags: count:1073741824 (estimated locally) body optimize_size
+  Called by: igmp_leavegroup/13 (347619573 (estimated locally),2.87 per call) 
+  Calls: memp_free/22 (259028015 (estimated locally),0.24 per call) igmp_send/20 (85479245 (estimated locally),0.08 per call) igmp_remove_group.isra.0/31 (inlined) (259028015 (estimated locally),0.24 per call) igmp_lookfor_group/7 (1024711125 (estimated locally),0.95 per call) 
+   Indirect call(181319611 (estimated locally),0.17 per call)  of param:0 loaded from aggregate passed by reference at offset 2272 (vptr maybe changed)
+igmp_leavegroup/13 (igmp_leavegroup) @06142d20
+  Type: function definition analyzed
+  Visibility: externally_visible public
+  Aux: @061351e8
+  References: allsystems/1 (read)netif_list/27 (read)
+  Referring: 
+  Availability: available
+  Function flags: count:121176393 (estimated locally) body optimize_size
+  Called by: 
+  Calls: igmp_leavegroup_netif/14 (347619573 (estimated locally),2.87 per call) 
+igmp_joingroup_netif/12 (igmp_joingroup_netif) @06142620
+  Type: function definition analyzed
+  Visibility: externally_visible public
+  Aux: @061352c8
+  References: allsystems/1 (read)lwip_stats/24 (read)lwip_stats/24 (write)
+  Referring: 
+  Availability: available
+  Function flags: count:1073741824 (estimated locally) body optimize_size
+  Called by: igmp_joingroup/11 (369101681 (estimated locally),4.53 per call) 
+  Calls: igmp_start_timer.isra.0/32 (inlined) (507898069 (estimated locally),0.47 per call) igmp_send/20 (507898069 (estimated locally),0.47 per call) igmp_lookup_group/8 (1024711125 (estimated locally),0.95 per call) 
+   Indirect call(177764324 (estimated locally),0.17 per call)  of param:0 loaded from aggregate passed by reference at offset 2272 (vptr maybe changed)
+igmp_joingroup/11 (igmp_joingroup) @06131c40
+  Type: function definition analyzed
+  Visibility: externally_visible public
+  Aux: @06135408
+  References: allsystems/1 (read)netif_list/27 (read)
+  Referring: 
+  Availability: available
+  Function flags: count:81415554 (estimated locally) body optimize_size
+  Called by: 
+  Calls: igmp_joingroup_netif/12 (369101681 (estimated locally),4.53 per call) 
+igmp_input/10 (igmp_input) @06131540
+  Type: function definition analyzed
+  Visibility: externally_visible public
+  Aux: @061350e8
+  References: lwip_stats/24 (read)lwip_stats/24 (write)lwip_stats/24 (read)lwip_stats/24 (write)lwip_stats/24 (read)lwip_stats/24 (write)lwip_stats/24 (read)lwip_stats/24 (write)allsystems/1 (read)lwip_stats/24 (read)lwip_stats/24 (write)lwip_stats/24 (read)lwip_stats/24 (write)lwip_stats/24 (read)lwip_stats/24 (write)lwip_stats/24 (read)lwip_stats/24 (write)lwip_stats/24 (read)lwip_stats/24 (write)lwip_stats/24 (read)lwip_stats/24 (write)lwip_stats/24 (read)lwip_stats/24 (write)
+  Referring: 
+  Availability: available
+  Function flags: count:1073741824 (estimated locally) body optimize_size
+  Called by: 
+  Calls: pbuf_free/25 (421796233 (estimated locally),0.39 per call) igmp_delaying_member/18 (31198932 (estimated locally),0.03 per call) igmp_lookfor_group/7 (11809732 (estimated locally),0.01 per call) igmp_delaying_member/18 (193387183 (estimated locally),0.18 per call) pbuf_free/25 (45883522 (estimated locally),0.04 per call) igmp_lookfor_group/7 (467721939 (estimated locally),0.44 per call) pbuf_free/25 (240947665 (estimated locally),0.22 per call) inet_chksum/26 (708669605 (estimated locally),0.66 per call) pbuf_free/25 (365072220 (estimated locally),0.34 per call) 
+igmp_lookup_group/8 (igmp_lookup_group) @061208c0
+  Type: function definition analyzed
+  Visibility: prevailing_def_ironly
+  Aux: @06135228
+  References: allsystems/1 (read)allsystems/1 (read)
+  Referring: 
+  Availability: local
+  Function flags: count:2217068 (estimated locally) body local optimize_size
+  Called by: igmp_joingroup_netif/12 (1024711125 (estimated locally),0.95 per call) igmp_start/4 (1073741824 (estimated locally),1.00 per call) 
+  Calls: memp_malloc/21 (644502 (estimated locally),0.29 per call) igmp_lookfor_group/7 (2217068 (estimated locally),1.00 per call) 
+igmp_lookfor_group/7 (igmp_lookfor_group) @061200e0
+  Type: function definition analyzed
+  Visibility: externally_visible public
+  Aux: @061352a8
+  References: 
+  Referring: 
+  Availability: available
+  Function flags: count:114863532 (estimated locally) body optimize_size
+  Called by: igmp_leavegroup_netif/14 (1024711125 (estimated locally),0.95 per call) igmp_input/10 (11809732 (estimated locally),0.01 per call) igmp_input/10 (467721939 (estimated locally),0.44 per call) igmp_lookup_group/8 (2217068 (estimated locally),1.00 per call) 
+  Calls: 
+igmp_report_groups/6 (igmp_report_groups) @061182a0
+  Type: function definition analyzed
+  Visibility: externally_visible public
+  Aux: @06135128
+  References: 
+  Referring: 
+  Availability: available
+  Function flags: count:118111600 (estimated locally) body optimize_size
+  Called by: 
+  Calls: igmp_delaying_member/18 (955630223 (estimated locally),8.09 per call) 
+igmp_stop/5 (igmp_stop) @06118ee0
+  Type: function definition analyzed
+  Visibility: externally_visible public
+  Aux: @061351a8
+  References: 
+  Referring: 
+  Availability: available
+  Function flags: count:118111600 (estimated locally) body optimize_size
+  Called by: 
+  Calls: memp_free/22 (955630223 (estimated locally),8.09 per call) 
+   Indirect call(668941156 (estimated locally),5.66 per call)  of param:0 loaded from aggregate passed by reference at offset 2272 (vptr maybe changed)
+igmp_start/4 (igmp_start) @061187e0
+  Type: function definition analyzed
+  Visibility: externally_visible public
+  Aux: @061352e8
+  References: allsystems/1 (addr)allsystems/1 (addr)
+  Referring: 
+  Availability: available
+  Function flags: count:1073741824 (estimated locally) body optimize_size
+  Called by: 
+  Calls: igmp_lookup_group/8 (1073741824 (estimated locally),1.00 per call) 
+   Indirect call(739067236 (estimated locally),0.69 per call)  of param:0 loaded from aggregate passed by reference at offset 2272 (vptr maybe changed)
+igmp_init/3 (igmp_init) @061181c0
+  Type: function definition analyzed
+  Visibility: externally_visible public
+  Aux: @06135308
+  References: allsystems/1 (write)allrouters/2 (write)
+  Referring: 
+  Availability: available
+  Function flags: count:1073741824 (estimated locally) body optimize_size
+  Called by: 
+  Calls: 
+
+
+ ordered call graph: reduced for nothrow
+igmp_start_timer.isra.0/33 (igmp_start_timer.isra.0) @06120b60
+  Type: function definition analyzed
+  Visibility: artificial
+  next sharing asm name: 32
+  Aux: @061353a8
+  References: 
+  Referring: 
+  Function igmp_start_timer.isra.0/33 is inline copy in igmp_delaying_member/18
+  Clone of igmp_start_timer.isra.0/32
+  Availability: local
+  Function flags: count:435711547 (estimated locally) body local optimize_size
+  Called by: igmp_delaying_member/18 (inlined) (435711547 (estimated locally),0.41 per call) 
+  Calls: rand/23 (143784811 (estimated locally),0.13 per call) 
+igmp_start_timer.isra.0/32 (igmp_start_timer.isra.0) @061f4b60
+  Type: function definition analyzed
+  Visibility: prevailing_def_ironly artificial
+  previous sharing asm name: 33
+  Aux: @061351c8
+  References: 
+  Referring: 
+  Function igmp_start_timer.isra.0/32 is inline copy in igmp_joingroup_netif/12
+  Availability: local
+  Function flags: count:507898069 (estimated locally) body local optimize_size
+  Called by: igmp_joingroup_netif/12 (inlined) (507898069 (estimated locally),0.47 per call) 
+  Calls: rand/23 (167606363 (estimated locally),0.16 per call) 
+igmp_remove_group.isra.0/31 (igmp_remove_group.isra.0) @05f708c0
+  Type: function definition analyzed
+  Visibility: prevailing_def_ironly artificial
+  Aux: @06135428
+  References: 
+  Referring: 
+  Function igmp_remove_group.isra.0/31 is inline copy in igmp_leavegroup_netif/14
+  Availability: local
+  Function flags: count:259028015 (estimated locally) body local optimize_size
+  Called by: igmp_leavegroup_netif/14 (inlined) (259028015 (estimated locally),0.24 per call) 
+  Calls: 
+igmp_send/20 (igmp_send) @06150d20
+  Type: function definition analyzed
+  Visibility: prevailing_def_ironly
+  Aux: @06135288
+  References: ip_addr_any/28 (read)allrouters/2 (addr)lwip_stats/24 (read)lwip_stats/24 (write)
+  Referring: 
+  Availability: local
+  Function flags: count:306783 (estimated locally) body local optimize_size
+  Called by: igmp_leavegroup_netif/14 (85479245 (estimated locally),0.08 per call) igmp_joingroup_netif/12 (507898069 (estimated locally),0.47 per call) igmp_timeout/16 (26204986 (estimated locally),1.80 per call) 
+  Calls: pbuf_free/25 (107374 (estimated locally),0.35 per call) igmp_ip_output_if/19 (inlined) (27380 (estimated locally),0.09 per call) inet_chksum/26 (27380 (estimated locally),0.09 per call) pbuf_alloc/29 (306783 (estimated locally),1.00 per call) 
+igmp_ip_output_if/19 (igmp_ip_output_if) @06150700
+  Type: function definition analyzed
+  Visibility: prevailing_def_ironly
+  Aux: @061350c8
+  References: lwip_stats/24 (read)lwip_stats/24 (write)
+  Referring: 
+  Function igmp_ip_output_if/19 is inline copy in igmp_send/20
+  Availability: local
+  Function flags: count:27380 (estimated locally) body local optimize_size
+  Called by: igmp_send/20 (inlined) (27380 (estimated locally),0.09 per call) 
+  Calls: ip4_output_if_opt/30 (27380 (estimated locally),0.09 per call) 
+igmp_delaying_member/18 (igmp_delaying_member) @06150460
+  Type: function definition analyzed
+  Visibility: prevailing_def_ironly
+  Aux: @061353e8
+  References: 
+  Referring: 
+  Availability: local
+  Function flags: count:1073741824 (estimated locally) body local optimize_size
+  Called by: igmp_input/10 (31198932 (estimated locally),0.03 per call) igmp_input/10 (193387183 (estimated locally),0.18 per call) igmp_report_groups/6 (955630223 (estimated locally),8.09 per call) 
+  Calls: igmp_start_timer.isra.0/33 (inlined) (435711547 (estimated locally),0.41 per call) 
+igmp_timeout/16 (igmp_timeout) @0614ba80
+  Type: function definition analyzed
+  Visibility: prevailing_def_ironly
+  Aux: @06135188
+  References: allsystems/1 (read)lwip_stats/24 (read)lwip_stats/24 (write)
+  Referring: 
+  Function igmp_timeout/16 is inline copy in igmp_tmr/15
+  Availability: local
+  Function flags: count:157678987 (estimated locally) body local optimize_size
+  Called by: igmp_tmr/15 (inlined) (157678987 (estimated locally),10.80 per call) 
+  Calls: igmp_send/20 (26204986 (estimated locally),1.80 per call) 
+igmp_tmr/15 (igmp_tmr) @0614b9a0
+  Type: function definition analyzed
+  Visibility: externally_visible public
+  Aux: @06135368
+  References: netif_list/27 (read)
+  Referring: 
+  Availability: available
+  Function flags: count:14598062 (estimated locally) body optimize_size
+  Called by: 
+  Calls: igmp_timeout/16 (inlined) (157678987 (estimated locally),10.80 per call) 
+igmp_leavegroup_netif/14 (igmp_leavegroup_netif) @0614b700
+  Type: function definition analyzed
+  Visibility: externally_visible public
+  Aux: @06135248
+  References: allsystems/1 (read)lwip_stats/24 (read)lwip_stats/24 (write)
+  Referring: 
+  Availability: available
+  Function flags: count:1073741824 (estimated locally) body optimize_size
+  Called by: igmp_leavegroup/13 (347619573 (estimated locally),2.87 per call) 
+  Calls: memp_free/22 (259028015 (estimated locally),0.24 per call) igmp_send/20 (85479245 (estimated locally),0.08 per call) igmp_remove_group.isra.0/31 (inlined) (259028015 (estimated locally),0.24 per call) igmp_lookfor_group/7 (1024711125 (estimated locally),0.95 per call) 
+   Indirect call(181319611 (estimated locally),0.17 per call)  of param:0 loaded from aggregate passed by reference at offset 2272 (vptr maybe changed)
+igmp_leavegroup/13 (igmp_leavegroup) @06142d20
+  Type: function definition analyzed
+  Visibility: externally_visible public
+  Aux: @061351e8
+  References: allsystems/1 (read)netif_list/27 (read)
+  Referring: 
+  Availability: available
+  Function flags: count:121176393 (estimated locally) body optimize_size
+  Called by: 
+  Calls: igmp_leavegroup_netif/14 (347619573 (estimated locally),2.87 per call) 
+igmp_joingroup_netif/12 (igmp_joingroup_netif) @06142620
+  Type: function definition analyzed
+  Visibility: externally_visible public
+  Aux: @061352c8
+  References: allsystems/1 (read)lwip_stats/24 (read)lwip_stats/24 (write)
+  Referring: 
+  Availability: available
+  Function flags: count:1073741824 (estimated locally) body optimize_size
+  Called by: igmp_joingroup/11 (369101681 (estimated locally),4.53 per call) 
+  Calls: igmp_start_timer.isra.0/32 (inlined) (507898069 (estimated locally),0.47 per call) igmp_send/20 (507898069 (estimated locally),0.47 per call) igmp_lookup_group/8 (1024711125 (estimated locally),0.95 per call) 
+   Indirect call(177764324 (estimated locally),0.17 per call)  of param:0 loaded from aggregate passed by reference at offset 2272 (vptr maybe changed)
+igmp_joingroup/11 (igmp_joingroup) @06131c40
+  Type: function definition analyzed
+  Visibility: externally_visible public
+  Aux: @06135408
+  References: allsystems/1 (read)netif_list/27 (read)
+  Referring: 
+  Availability: available
+  Function flags: count:81415554 (estimated locally) body optimize_size
+  Called by: 
+  Calls: igmp_joingroup_netif/12 (369101681 (estimated locally),4.53 per call) 
+igmp_input/10 (igmp_input) @06131540
+  Type: function definition analyzed
+  Visibility: externally_visible public
+  Aux: @061350e8
+  References: lwip_stats/24 (read)lwip_stats/24 (write)lwip_stats/24 (read)lwip_stats/24 (write)lwip_stats/24 (read)lwip_stats/24 (write)lwip_stats/24 (read)lwip_stats/24 (write)allsystems/1 (read)lwip_stats/24 (read)lwip_stats/24 (write)lwip_stats/24 (read)lwip_stats/24 (write)lwip_stats/24 (read)lwip_stats/24 (write)lwip_stats/24 (read)lwip_stats/24 (write)lwip_stats/24 (read)lwip_stats/24 (write)lwip_stats/24 (read)lwip_stats/24 (write)lwip_stats/24 (read)lwip_stats/24 (write)
+  Referring: 
+  Availability: available
+  Function flags: count:1073741824 (estimated locally) body optimize_size
+  Called by: 
+  Calls: pbuf_free/25 (421796233 (estimated locally),0.39 per call) igmp_delaying_member/18 (31198932 (estimated locally),0.03 per call) igmp_lookfor_group/7 (11809732 (estimated locally),0.01 per call) igmp_delaying_member/18 (193387183 (estimated locally),0.18 per call) pbuf_free/25 (45883522 (estimated locally),0.04 per call) igmp_lookfor_group/7 (467721939 (estimated locally),0.44 per call) pbuf_free/25 (240947665 (estimated locally),0.22 per call) inet_chksum/26 (708669605 (estimated locally),0.66 per call) pbuf_free/25 (365072220 (estimated locally),0.34 per call) 
+igmp_lookup_group/8 (igmp_lookup_group) @061208c0
+  Type: function definition analyzed
+  Visibility: prevailing_def_ironly
+  Aux: @06135228
+  References: allsystems/1 (read)allsystems/1 (read)
+  Referring: 
+  Availability: local
+  Function flags: count:2217068 (estimated locally) body local optimize_size
+  Called by: igmp_joingroup_netif/12 (1024711125 (estimated locally),0.95 per call) igmp_start/4 (1073741824 (estimated locally),1.00 per call) 
+  Calls: memp_malloc/21 (644502 (estimated locally),0.29 per call) igmp_lookfor_group/7 (2217068 (estimated locally),1.00 per call) 
+igmp_lookfor_group/7 (igmp_lookfor_group) @061200e0
+  Type: function definition analyzed
+  Visibility: externally_visible public
+  Aux: @061352a8
+  References: 
+  Referring: 
+  Availability: available
+  Function flags: count:114863532 (estimated locally) body optimize_size
+  Called by: igmp_leavegroup_netif/14 (1024711125 (estimated locally),0.95 per call) igmp_input/10 (11809732 (estimated locally),0.01 per call) igmp_input/10 (467721939 (estimated locally),0.44 per call) igmp_lookup_group/8 (2217068 (estimated locally),1.00 per call) 
+  Calls: 
+igmp_report_groups/6 (igmp_report_groups) @061182a0
+  Type: function definition analyzed
+  Visibility: externally_visible public
+  Aux: @06135128
+  References: 
+  Referring: 
+  Availability: available
+  Function flags: count:118111600 (estimated locally) body optimize_size
+  Called by: 
+  Calls: igmp_delaying_member/18 (955630223 (estimated locally),8.09 per call) 
+igmp_stop/5 (igmp_stop) @06118ee0
+  Type: function definition analyzed
+  Visibility: externally_visible public
+  Aux: @061351a8
+  References: 
+  Referring: 
+  Availability: available
+  Function flags: count:118111600 (estimated locally) body optimize_size
+  Called by: 
+  Calls: memp_free/22 (955630223 (estimated locally),8.09 per call) 
+   Indirect call(668941156 (estimated locally),5.66 per call)  of param:0 loaded from aggregate passed by reference at offset 2272 (vptr maybe changed)
+igmp_start/4 (igmp_start) @061187e0
+  Type: function definition analyzed
+  Visibility: externally_visible public
+  Aux: @061352e8
+  References: allsystems/1 (addr)allsystems/1 (addr)
+  Referring: 
+  Availability: available
+  Function flags: count:1073741824 (estimated locally) body optimize_size
+  Called by: 
+  Calls: igmp_lookup_group/8 (1073741824 (estimated locally),1.00 per call) 
+   Indirect call(739067236 (estimated locally),0.69 per call)  of param:0 loaded from aggregate passed by reference at offset 2272 (vptr maybe changed)
+igmp_init/3 (igmp_init) @061181c0
+  Type: function definition analyzed
+  Visibility: externally_visible public
+  Aux: @06135308
+  References: allsystems/1 (write)allrouters/2 (write)
+  Referring: 
+  Availability: available
+  Function flags: count:1073741824 (estimated locally) body optimize_size
+  Called by: 
+  Calls: 
+
+
+
+MALLOC LATTICE Initial:
+igmp_start_timer.isra.0: malloc_bottom
+igmp_start_timer.isra.0: malloc_bottom
+igmp_remove_group.isra.0: malloc_bottom
+igmp_send: malloc_bottom
+igmp_ip_output_if: malloc_bottom
+igmp_delaying_member: malloc_bottom
+igmp_timeout: malloc_bottom
+igmp_tmr: malloc_bottom
+igmp_leavegroup_netif: malloc_bottom
+igmp_leavegroup: malloc_bottom
+igmp_joingroup_netif: malloc_bottom
+igmp_joingroup: malloc_bottom
+igmp_input: malloc_bottom
+igmp_lookup_group: malloc_bottom
+igmp_lookfor_group: malloc_bottom
+igmp_report_groups: malloc_bottom
+igmp_stop: malloc_bottom
+igmp_start: malloc_bottom
+igmp_init: malloc_bottom
+
+
+MALLOC LATTICE after propagation:
+igmp_start_timer.isra.0: malloc_bottom
+igmp_start_timer.isra.0: malloc_bottom
+igmp_remove_group.isra.0: malloc_bottom
+igmp_send: malloc_bottom
+igmp_ip_output_if: malloc_bottom
+igmp_delaying_member: malloc_bottom
+igmp_timeout: malloc_bottom
+igmp_tmr: malloc_bottom
+igmp_leavegroup_netif: malloc_bottom
+igmp_leavegroup: malloc_bottom
+igmp_joingroup_netif: malloc_bottom
+igmp_joingroup: malloc_bottom
+igmp_input: malloc_bottom
+igmp_lookup_group: malloc_bottom
+igmp_lookfor_group: malloc_bottom
+igmp_report_groups: malloc_bottom
+igmp_stop: malloc_bottom
+igmp_start: malloc_bottom
+igmp_init: malloc_bottom
+callgraph:
+
+igmp_start_timer.isra.0/33 (igmp_start_timer.isra.0) @06120b60
+  Type: function definition analyzed
+  Visibility: artificial
+  next sharing asm name: 32
+  Aux: @06135368
+  References: 
+  Referring: 
+  Function igmp_start_timer.isra.0/33 is inline copy in igmp_delaying_member/18
+  Clone of igmp_start_timer.isra.0/32
+  Availability: local
+  Function flags: count:435711547 (estimated locally) body local optimize_size
+  Called by: igmp_delaying_member/18 (inlined) (435711547 (estimated locally),0.41 per call) 
+  Calls: rand/23 (143784811 (estimated locally),0.13 per call) 
+igmp_start_timer.isra.0/32 (igmp_start_timer.isra.0) @061f4b60
+  Type: function definition analyzed
+  Visibility: prevailing_def_ironly artificial
+  previous sharing asm name: 33
+  Aux: @06135188
+  References: 
+  Referring: 
+  Function igmp_start_timer.isra.0/32 is inline copy in igmp_joingroup_netif/12
+  Availability: local
+  Function flags: count:507898069 (estimated locally) body local optimize_size
+  Called by: igmp_joingroup_netif/12 (inlined) (507898069 (estimated locally),0.47 per call) 
+  Calls: rand/23 (167606363 (estimated locally),0.16 per call) 
+igmp_remove_group.isra.0/31 (igmp_remove_group.isra.0) @05f708c0
+  Type: function definition analyzed
+  Visibility: prevailing_def_ironly artificial
+  Aux: @061351e8
+  References: 
+  Referring: 
+  Function igmp_remove_group.isra.0/31 is inline copy in igmp_leavegroup_netif/14
+  Availability: local
+  Function flags: count:259028015 (estimated locally) body local optimize_size
+  Called by: igmp_leavegroup_netif/14 (inlined) (259028015 (estimated locally),0.24 per call) 
+  Calls: 
+ip4_output_if_opt/30 (ip4_output_if_opt) @061cc000
+  Type: function
+  Visibility: external public
+  References: 
+  Referring: 
+  Availability: not_available
+  Function flags: optimize_size
+  Called by: igmp_ip_output_if/19 (27380 (estimated locally),0.09 per call) 
+  Calls: 
+pbuf_alloc/29 (pbuf_alloc) @06182ee0
+  Type: function
+  Visibility: external public
+  References: 
+  Referring: 
+  Availability: not_available
+  Function flags: optimize_size
+  Called by: igmp_send/20 (306783 (estimated locally),1.00 per call) 
+  Calls: 
+inet_chksum/26 (inet_chksum) @06182a80
+  Type: function
+  Visibility: external public
+  References: 
+  Referring: 
+  Availability: not_available
+  Function flags: optimize_size
+  Called by: igmp_input/10 (708669605 (estimated locally),0.66 per call) igmp_send/20 (27380 (estimated locally),0.09 per call) 
+  Calls: 
+pbuf_free/25 (pbuf_free) @061829a0
+  Type: function
+  Visibility: external public
+  References: 
+  Referring: 
+  Availability: not_available
+  Function flags: optimize_size
+  Called by: igmp_input/10 (421796233 (estimated locally),0.39 per call) igmp_input/10 (45883522 (estimated locally),0.04 per call) igmp_input/10 (240947665 (estimated locally),0.22 per call) igmp_input/10 (365072220 (estimated locally),0.34 per call) igmp_send/20 (107374 (estimated locally),0.35 per call) 
+  Calls: 
+rand/23 (rand) @06182540
+  Type: function
+  Visibility: external public
+  References: 
+  Referring: 
+  Availability: not_available
+  Function flags: optimize_size
+  Called by: igmp_start_timer.isra.0/33 (143784811 (estimated locally),0.13 per call) igmp_start_timer.isra.0/32 (167606363 (estimated locally),0.16 per call) 
+  Calls: 
+memp_free/22 (memp_free) @061821c0
+  Type: function
+  Visibility: external public
+  References: 
+  Referring: 
+  Availability: not_available
+  Function flags: optimize_size
+  Called by: igmp_leavegroup_netif/14 (259028015 (estimated locally),0.24 per call) igmp_stop/5 (955630223 (estimated locally),8.09 per call) 
+  Calls: 
+memp_malloc/21 (memp_malloc) @06182000
+  Type: function
+  Visibility: external public
+  References: 
+  Referring: 
+  Availability: not_available
+  Function flags: optimize_size
+  Called by: igmp_lookup_group/8 (644502 (estimated locally),0.29 per call) 
+  Calls: 
+igmp_send/20 (igmp_send) @06150d20
+  Type: function definition analyzed
+  Visibility: prevailing_def_ironly
+  Aux: @06135308
+  References: ip_addr_any/28 (read)allrouters/2 (addr)lwip_stats/24 (read)lwip_stats/24 (write)
+  Referring: 
+  Availability: local
+  Function flags: count:306783 (estimated locally) body local optimize_size
+  Called by: igmp_leavegroup_netif/14 (85479245 (estimated locally),0.08 per call) igmp_joingroup_netif/12 (507898069 (estimated locally),0.47 per call) igmp_timeout/16 (26204986 (estimated locally),1.80 per call) 
+  Calls: pbuf_free/25 (107374 (estimated locally),0.35 per call) igmp_ip_output_if/19 (inlined) (27380 (estimated locally),0.09 per call) inet_chksum/26 (27380 (estimated locally),0.09 per call) pbuf_alloc/29 (306783 (estimated locally),1.00 per call) 
+igmp_ip_output_if/19 (igmp_ip_output_if) @06150700
+  Type: function definition analyzed
+  Visibility: prevailing_def_ironly
+  Aux: @061353e8
+  References: lwip_stats/24 (read)lwip_stats/24 (write)
+  Referring: 
+  Function igmp_ip_output_if/19 is inline copy in igmp_send/20
+  Availability: local
+  Function flags: count:27380 (estimated locally) body local optimize_size
+  Called by: igmp_send/20 (inlined) (27380 (estimated locally),0.09 per call) 
+  Calls: ip4_output_if_opt/30 (27380 (estimated locally),0.09 per call) 
+igmp_delaying_member/18 (igmp_delaying_member) @06150460
+  Type: function definition analyzed
+  Visibility: prevailing_def_ironly
+  Aux: @06135128
+  References: 
+  Referring: 
+  Availability: local
+  Function flags: count:1073741824 (estimated locally) body local optimize_size
+  Called by: igmp_input/10 (31198932 (estimated locally),0.03 per call) igmp_input/10 (193387183 (estimated locally),0.18 per call) igmp_report_groups/6 (955630223 (estimated locally),8.09 per call) 
+  Calls: igmp_start_timer.isra.0/33 (inlined) (435711547 (estimated locally),0.41 per call) 
+igmp_timeout/16 (igmp_timeout) @0614ba80
+  Type: function definition analyzed
+  Visibility: prevailing_def_ironly
+  Aux: @06135228
+  References: allsystems/1 (read)lwip_stats/24 (read)lwip_stats/24 (write)
+  Referring: 
+  Function igmp_timeout/16 is inline copy in igmp_tmr/15
+  Availability: local
+  Function flags: count:157678987 (estimated locally) body local optimize_size
+  Called by: igmp_tmr/15 (inlined) (157678987 (estimated locally),10.80 per call) 
+  Calls: igmp_send/20 (26204986 (estimated locally),1.80 per call) 
+igmp_tmr/15 (igmp_tmr) @0614b9a0
+  Type: function definition analyzed
+  Visibility: externally_visible public
+  Aux: @06135148
+  References: netif_list/27 (read)
+  Referring: 
+  Availability: available
+  Function flags: count:14598062 (estimated locally) body optimize_size
+  Called by: 
+  Calls: igmp_timeout/16 (inlined) (157678987 (estimated locally),10.80 per call) 
+igmp_leavegroup_netif/14 (igmp_leavegroup_netif) @0614b700
+  Type: function definition analyzed
+  Visibility: externally_visible public
+  Aux: @06135328
+  References: allsystems/1 (read)lwip_stats/24 (read)lwip_stats/24 (write)
+  Referring: 
+  Availability: available
+  Function flags: count:1073741824 (estimated locally) body optimize_size
+  Called by: igmp_leavegroup/13 (347619573 (estimated locally),2.87 per call) 
+  Calls: memp_free/22 (259028015 (estimated locally),0.24 per call) igmp_send/20 (85479245 (estimated locally),0.08 per call) igmp_remove_group.isra.0/31 (inlined) (259028015 (estimated locally),0.24 per call) igmp_lookfor_group/7 (1024711125 (estimated locally),0.95 per call) 
+   Indirect call(181319611 (estimated locally),0.17 per call)  of param:0 loaded from aggregate passed by reference at offset 2272 (vptr maybe changed)
+igmp_leavegroup/13 (igmp_leavegroup) @06142d20
+  Type: function definition analyzed
+  Visibility: externally_visible public
+  Aux: @061352c8
+  References: allsystems/1 (read)netif_list/27 (read)
+  Referring: 
+  Availability: available
+  Function flags: count:121176393 (estimated locally) body optimize_size
+  Called by: 
+  Calls: igmp_leavegroup_netif/14 (347619573 (estimated locally),2.87 per call) 
+igmp_joingroup_netif/12 (igmp_joingroup_netif) @06142620
+  Type: function definition analyzed
+  Visibility: externally_visible public
+  Aux: @061351a8
+  References: allsystems/1 (read)lwip_stats/24 (read)lwip_stats/24 (write)
+  Referring: 
+  Availability: available
+  Function flags: count:1073741824 (estimated locally) body optimize_size
+  Called by: igmp_joingroup/11 (369101681 (estimated locally),4.53 per call) 
+  Calls: igmp_start_timer.isra.0/32 (inlined) (507898069 (estimated locally),0.47 per call) igmp_send/20 (507898069 (estimated locally),0.47 per call) igmp_lookup_group/8 (1024711125 (estimated locally),0.95 per call) 
+   Indirect call(177764324 (estimated locally),0.17 per call)  of param:0 loaded from aggregate passed by reference at offset 2272 (vptr maybe changed)
+igmp_joingroup/11 (igmp_joingroup) @06131c40
+  Type: function definition analyzed
+  Visibility: externally_visible public
+  Aux: @061351c8
+  References: allsystems/1 (read)netif_list/27 (read)
+  Referring: 
+  Availability: available
+  Function flags: count:81415554 (estimated locally) body optimize_size
+  Called by: 
+  Calls: igmp_joingroup_netif/12 (369101681 (estimated locally),4.53 per call) 
+igmp_input/10 (igmp_input) @06131540
+  Type: function definition analyzed
+  Visibility: externally_visible public
+  Aux: @061350a8
+  References: lwip_stats/24 (read)lwip_stats/24 (write)lwip_stats/24 (read)lwip_stats/24 (write)lwip_stats/24 (read)lwip_stats/24 (write)lwip_stats/24 (read)lwip_stats/24 (write)allsystems/1 (read)lwip_stats/24 (read)lwip_stats/24 (write)lwip_stats/24 (read)lwip_stats/24 (write)lwip_stats/24 (read)lwip_stats/24 (write)lwip_stats/24 (read)lwip_stats/24 (write)lwip_stats/24 (read)lwip_stats/24 (write)lwip_stats/24 (read)lwip_stats/24 (write)lwip_stats/24 (read)lwip_stats/24 (write)
+  Referring: 
+  Availability: available
+  Function flags: count:1073741824 (estimated locally) body optimize_size
+  Called by: 
+  Calls: pbuf_free/25 (421796233 (estimated locally),0.39 per call) igmp_delaying_member/18 (31198932 (estimated locally),0.03 per call) igmp_lookfor_group/7 (11809732 (estimated locally),0.01 per call) igmp_delaying_member/18 (193387183 (estimated locally),0.18 per call) pbuf_free/25 (45883522 (estimated locally),0.04 per call) igmp_lookfor_group/7 (467721939 (estimated locally),0.44 per call) pbuf_free/25 (240947665 (estimated locally),0.22 per call) inet_chksum/26 (708669605 (estimated locally),0.66 per call) pbuf_free/25 (365072220 (estimated locally),0.34 per call) 
+igmp_lookup_group/8 (igmp_lookup_group) @061208c0
+  Type: function definition analyzed
+  Visibility: prevailing_def_ironly
+  Aux: @06135248
+  References: allsystems/1 (read)allsystems/1 (read)
+  Referring: 
+  Availability: local
+  Function flags: count:2217068 (estimated locally) body local optimize_size
+  Called by: igmp_joingroup_netif/12 (1024711125 (estimated locally),0.95 per call) igmp_start/4 (1073741824 (estimated locally),1.00 per call) 
+  Calls: memp_malloc/21 (644502 (estimated locally),0.29 per call) igmp_lookfor_group/7 (2217068 (estimated locally),1.00 per call) 
+igmp_lookfor_group/7 (igmp_lookfor_group) @061200e0
+  Type: function definition analyzed
+  Visibility: externally_visible public
+  Aux: @061352e8
+  References: 
+  Referring: 
+  Availability: available
+  Function flags: count:114863532 (estimated locally) body optimize_size
+  Called by: igmp_leavegroup_netif/14 (1024711125 (estimated locally),0.95 per call) igmp_input/10 (11809732 (estimated locally),0.01 per call) igmp_input/10 (467721939 (estimated locally),0.44 per call) igmp_lookup_group/8 (2217068 (estimated locally),1.00 per call) 
+  Calls: 
+igmp_report_groups/6 (igmp_report_groups) @061182a0
+  Type: function definition analyzed
+  Visibility: externally_visible public
+  Aux: @06135168
+  References: 
+  Referring: 
+  Availability: available
+  Function flags: count:118111600 (estimated locally) body optimize_size
+  Called by: 
+  Calls: igmp_delaying_member/18 (955630223 (estimated locally),8.09 per call) 
+igmp_stop/5 (igmp_stop) @06118ee0
+  Type: function definition analyzed
+  Visibility: externally_visible public
+  Aux: @06135428
+  References: 
+  Referring: 
+  Availability: available
+  Function flags: count:118111600 (estimated locally) body optimize_size
+  Called by: 
+  Calls: memp_free/22 (955630223 (estimated locally),8.09 per call) 
+   Indirect call(668941156 (estimated locally),5.66 per call)  of param:0 loaded from aggregate passed by reference at offset 2272 (vptr maybe changed)
+igmp_start/4 (igmp_start) @061187e0
+  Type: function definition analyzed
+  Visibility: externally_visible public
+  Aux: @061353a8
+  References: allsystems/1 (addr)allsystems/1 (addr)
+  Referring: 
+  Availability: available
+  Function flags: count:1073741824 (estimated locally) body optimize_size
+  Called by: 
+  Calls: igmp_lookup_group/8 (1073741824 (estimated locally),1.00 per call) 
+   Indirect call(739067236 (estimated locally),0.69 per call)  of param:0 loaded from aggregate passed by reference at offset 2272 (vptr maybe changed)
+igmp_init/3 (igmp_init) @061181c0
+  Type: function definition analyzed
+  Visibility: externally_visible public
+  Aux: @06135408
+  References: allsystems/1 (write)allrouters/2 (write)
+  Referring: 
+  Availability: available
+  Function flags: count:1073741824 (estimated locally) body optimize_size
+  Called by: 
+  Calls: 
+
+
+ ordered call graph: reduced
+igmp_tmr/15 (igmp_tmr) @0614b9a0
+  Type: function definition analyzed
+  Visibility: externally_visible public
+  Aux: @06135148
+  References: netif_list/27 (read)
+  Referring: 
+  Availability: available
+  Function flags: count:14598062 (estimated locally) body optimize_size
+  Called by: 
+  Calls: igmp_timeout/16 (inlined) (157678987 (estimated locally),10.80 per call) 
+igmp_timeout/16 (igmp_timeout) @0614ba80
+  Type: function definition analyzed
+  Visibility: prevailing_def_ironly
+  Aux: @06135228
+  References: allsystems/1 (read)lwip_stats/24 (read)lwip_stats/24 (write)
+  Referring: 
+  Function igmp_timeout/16 is inline copy in igmp_tmr/15
+  Availability: local
+  Function flags: count:157678987 (estimated locally) body local optimize_size
+  Called by: igmp_tmr/15 (inlined) (157678987 (estimated locally),10.80 per call) 
+  Calls: igmp_send/20 (26204986 (estimated locally),1.80 per call) 
+igmp_leavegroup/13 (igmp_leavegroup) @06142d20
+  Type: function definition analyzed
+  Visibility: externally_visible public
+  Aux: @061352c8
+  References: allsystems/1 (read)netif_list/27 (read)
+  Referring: 
+  Availability: available
+  Function flags: count:121176393 (estimated locally) body optimize_size
+  Called by: 
+  Calls: igmp_leavegroup_netif/14 (347619573 (estimated locally),2.87 per call) 
+igmp_leavegroup_netif/14 (igmp_leavegroup_netif) @0614b700
+  Type: function definition analyzed
+  Visibility: externally_visible public
+  Aux: @06135328
+  References: allsystems/1 (read)lwip_stats/24 (read)lwip_stats/24 (write)
+  Referring: 
+  Availability: available
+  Function flags: count:1073741824 (estimated locally) body optimize_size
+  Called by: igmp_leavegroup/13 (347619573 (estimated locally),2.87 per call) 
+  Calls: memp_free/22 (259028015 (estimated locally),0.24 per call) igmp_send/20 (85479245 (estimated locally),0.08 per call) igmp_remove_group.isra.0/31 (inlined) (259028015 (estimated locally),0.24 per call) igmp_lookfor_group/7 (1024711125 (estimated locally),0.95 per call) 
+   Indirect call(181319611 (estimated locally),0.17 per call)  of param:0 loaded from aggregate passed by reference at offset 2272 (vptr maybe changed)
+igmp_remove_group.isra.0/31 (igmp_remove_group.isra.0) @05f708c0
+  Type: function definition analyzed
+  Visibility: prevailing_def_ironly artificial
+  Aux: @061351e8
+  References: 
+  Referring: 
+  Function igmp_remove_group.isra.0/31 is inline copy in igmp_leavegroup_netif/14
+  Availability: local
+  Function flags: count:259028015 (estimated locally) body local optimize_size
+  Called by: igmp_leavegroup_netif/14 (inlined) (259028015 (estimated locally),0.24 per call) 
+  Calls: 
+igmp_joingroup/11 (igmp_joingroup) @06131c40
+  Type: function definition analyzed
+  Visibility: externally_visible public
+  Aux: @061351c8
+  References: allsystems/1 (read)netif_list/27 (read)
+  Referring: 
+  Availability: available
+  Function flags: count:81415554 (estimated locally) body optimize_size
+  Called by: 
+  Calls: igmp_joingroup_netif/12 (369101681 (estimated locally),4.53 per call) 
+igmp_joingroup_netif/12 (igmp_joingroup_netif) @06142620
+  Type: function definition analyzed
+  Visibility: externally_visible public
+  Aux: @061351a8
+  References: allsystems/1 (read)lwip_stats/24 (read)lwip_stats/24 (write)
+  Referring: 
+  Availability: available
+  Function flags: count:1073741824 (estimated locally) body optimize_size
+  Called by: igmp_joingroup/11 (369101681 (estimated locally),4.53 per call) 
+  Calls: igmp_start_timer.isra.0/32 (inlined) (507898069 (estimated locally),0.47 per call) igmp_send/20 (507898069 (estimated locally),0.47 per call) igmp_lookup_group/8 (1024711125 (estimated locally),0.95 per call) 
+   Indirect call(177764324 (estimated locally),0.17 per call)  of param:0 loaded from aggregate passed by reference at offset 2272 (vptr maybe changed)
+igmp_send/20 (igmp_send) @06150d20
+  Type: function definition analyzed
+  Visibility: prevailing_def_ironly
+  Aux: @06135308
+  References: ip_addr_any/28 (read)allrouters/2 (addr)lwip_stats/24 (read)lwip_stats/24 (write)
+  Referring: 
+  Availability: local
+  Function flags: count:306783 (estimated locally) body local optimize_size
+  Called by: igmp_leavegroup_netif/14 (85479245 (estimated locally),0.08 per call) igmp_joingroup_netif/12 (507898069 (estimated locally),0.47 per call) igmp_timeout/16 (26204986 (estimated locally),1.80 per call) 
+  Calls: pbuf_free/25 (107374 (estimated locally),0.35 per call) igmp_ip_output_if/19 (inlined) (27380 (estimated locally),0.09 per call) inet_chksum/26 (27380 (estimated locally),0.09 per call) pbuf_alloc/29 (306783 (estimated locally),1.00 per call) 
+igmp_ip_output_if/19 (igmp_ip_output_if) @06150700
+  Type: function definition analyzed
+  Visibility: prevailing_def_ironly
+  Aux: @061353e8
+  References: lwip_stats/24 (read)lwip_stats/24 (write)
+  Referring: 
+  Function igmp_ip_output_if/19 is inline copy in igmp_send/20
+  Availability: local
+  Function flags: count:27380 (estimated locally) body local optimize_size
+  Called by: igmp_send/20 (inlined) (27380 (estimated locally),0.09 per call) 
+  Calls: ip4_output_if_opt/30 (27380 (estimated locally),0.09 per call) 
+igmp_start_timer.isra.0/32 (igmp_start_timer.isra.0) @061f4b60
+  Type: function definition analyzed
+  Visibility: prevailing_def_ironly artificial
+  previous sharing asm name: 33
+  Aux: @06135188
+  References: 
+  Referring: 
+  Function igmp_start_timer.isra.0/32 is inline copy in igmp_joingroup_netif/12
+  Availability: local
+  Function flags: count:507898069 (estimated locally) body local optimize_size
+  Called by: igmp_joingroup_netif/12 (inlined) (507898069 (estimated locally),0.47 per call) 
+  Calls: rand/23 (167606363 (estimated locally),0.16 per call) 
+igmp_input/10 (igmp_input) @06131540
+  Type: function definition analyzed
+  Visibility: externally_visible public
+  Aux: @061350a8
+  References: lwip_stats/24 (read)lwip_stats/24 (write)lwip_stats/24 (read)lwip_stats/24 (write)lwip_stats/24 (read)lwip_stats/24 (write)lwip_stats/24 (read)lwip_stats/24 (write)allsystems/1 (read)lwip_stats/24 (read)lwip_stats/24 (write)lwip_stats/24 (read)lwip_stats/24 (write)lwip_stats/24 (read)lwip_stats/24 (write)lwip_stats/24 (read)lwip_stats/24 (write)lwip_stats/24 (read)lwip_stats/24 (write)lwip_stats/24 (read)lwip_stats/24 (write)lwip_stats/24 (read)lwip_stats/24 (write)
+  Referring: 
+  Availability: available
+  Function flags: count:1073741824 (estimated locally) body optimize_size
+  Called by: 
+  Calls: pbuf_free/25 (421796233 (estimated locally),0.39 per call) igmp_delaying_member/18 (31198932 (estimated locally),0.03 per call) igmp_lookfor_group/7 (11809732 (estimated locally),0.01 per call) igmp_delaying_member/18 (193387183 (estimated locally),0.18 per call) pbuf_free/25 (45883522 (estimated locally),0.04 per call) igmp_lookfor_group/7 (467721939 (estimated locally),0.44 per call) pbuf_free/25 (240947665 (estimated locally),0.22 per call) inet_chksum/26 (708669605 (estimated locally),0.66 per call) pbuf_free/25 (365072220 (estimated locally),0.34 per call) 
+igmp_report_groups/6 (igmp_report_groups) @061182a0
+  Type: function definition analyzed
+  Visibility: externally_visible public
+  Aux: @06135168
+  References: 
+  Referring: 
+  Availability: available
+  Function flags: count:118111600 (estimated locally) body optimize_size
+  Called by: 
+  Calls: igmp_delaying_member/18 (955630223 (estimated locally),8.09 per call) 
+igmp_delaying_member/18 (igmp_delaying_member) @06150460
+  Type: function definition analyzed
+  Visibility: prevailing_def_ironly
+  Aux: @06135128
+  References: 
+  Referring: 
+  Availability: local
+  Function flags: count:1073741824 (estimated locally) body local optimize_size
+  Called by: igmp_input/10 (31198932 (estimated locally),0.03 per call) igmp_input/10 (193387183 (estimated locally),0.18 per call) igmp_report_groups/6 (955630223 (estimated locally),8.09 per call) 
+  Calls: igmp_start_timer.isra.0/33 (inlined) (435711547 (estimated locally),0.41 per call) 
+igmp_start_timer.isra.0/33 (igmp_start_timer.isra.0) @06120b60
+  Type: function definition analyzed
+  Visibility: artificial
+  next sharing asm name: 32
+  Aux: @06135368
+  References: 
+  Referring: 
+  Function igmp_start_timer.isra.0/33 is inline copy in igmp_delaying_member/18
+  Clone of igmp_start_timer.isra.0/32
+  Availability: local
+  Function flags: count:435711547 (estimated locally) body local optimize_size
+  Called by: igmp_delaying_member/18 (inlined) (435711547 (estimated locally),0.41 per call) 
+  Calls: rand/23 (143784811 (estimated locally),0.13 per call) 
+igmp_stop/5 (igmp_stop) @06118ee0
+  Type: function definition analyzed
+  Visibility: externally_visible public
+  Aux: @06135428
+  References: 
+  Referring: 
+  Availability: available
+  Function flags: count:118111600 (estimated locally) body optimize_size
+  Called by: 
+  Calls: memp_free/22 (955630223 (estimated locally),8.09 per call) 
+   Indirect call(668941156 (estimated locally),5.66 per call)  of param:0 loaded from aggregate passed by reference at offset 2272 (vptr maybe changed)
+igmp_start/4 (igmp_start) @061187e0
+  Type: function definition analyzed
+  Visibility: externally_visible public
+  Aux: @061353a8
+  References: allsystems/1 (addr)allsystems/1 (addr)
+  Referring: 
+  Availability: available
+  Function flags: count:1073741824 (estimated locally) body optimize_size
+  Called by: 
+  Calls: igmp_lookup_group/8 (1073741824 (estimated locally),1.00 per call) 
+   Indirect call(739067236 (estimated locally),0.69 per call)  of param:0 loaded from aggregate passed by reference at offset 2272 (vptr maybe changed)
+igmp_lookup_group/8 (igmp_lookup_group) @061208c0
+  Type: function definition analyzed
+  Visibility: prevailing_def_ironly
+  Aux: @06135248
+  References: allsystems/1 (read)allsystems/1 (read)
+  Referring: 
+  Availability: local
+  Function flags: count:2217068 (estimated locally) body local optimize_size
+  Called by: igmp_joingroup_netif/12 (1024711125 (estimated locally),0.95 per call) igmp_start/4 (1073741824 (estimated locally),1.00 per call) 
+  Calls: memp_malloc/21 (644502 (estimated locally),0.29 per call) igmp_lookfor_group/7 (2217068 (estimated locally),1.00 per call) 
+igmp_lookfor_group/7 (igmp_lookfor_group) @061200e0
+  Type: function definition analyzed
+  Visibility: externally_visible public
+  Aux: @061352e8
+  References: 
+  Referring: 
+  Availability: available
+  Function flags: count:114863532 (estimated locally) body optimize_size
+  Called by: igmp_leavegroup_netif/14 (1024711125 (estimated locally),0.95 per call) igmp_input/10 (11809732 (estimated locally),0.01 per call) igmp_input/10 (467721939 (estimated locally),0.44 per call) igmp_lookup_group/8 (2217068 (estimated locally),1.00 per call) 
+  Calls: 
+igmp_init/3 (igmp_init) @061181c0
+  Type: function definition analyzed
+  Visibility: externally_visible public
+  Aux: @06135408
+  References: allsystems/1 (write)allrouters/2 (write)
+  Referring: 
+  Availability: available
+  Function flags: count:1073741824 (estimated locally) body optimize_size
+  Called by: 
+  Calls: 
+
+Function found not to call free: igmp_init
+Function found not to call free: igmp_lookfor_group
+Function found not to call free: igmp_remove_group.isra.0
+igmp_start_timer.isra.0 (u16_t * ISRA.5, u8_t max_time)
+{
+  int _2;
+  long unsigned int _3;
+  long unsigned int _4;
+  long unsigned int _5;
+  short unsigned int iftmp.1_6;
+  short unsigned int iftmp.1_7;
+
+  <bb 7> [local count: 1073741824]:
+  # DEBUG group s=> group
+
+  <bb 2> [local count: 1073741824]:
+  # DEBUG BEGIN_STMT
+  if (max_time_1(D) > 2)
+    goto <bb 3>; [33.00%]
+  else
+    goto <bb 4>; [67.00%]
+
+  <bb 3> [local count: 354334802]:
+  _2 = rand ();
+  _3 = (long unsigned int) _2;
+  _4 = (long unsigned int) max_time_1(D);
+  _5 = _3 % _4;
+  iftmp.1_6 = (short unsigned int) _5;
+
+  <bb 4> [local count: 1073741824]:
+  # iftmp.1_7 = PHI <1(2), iftmp.1_6(3)>
+  *ISRA.5_15(D) = iftmp.1_7;
+  # DEBUG BEGIN_STMT
+  if (iftmp.1_7 == 0)
+    goto <bb 5>; [50.00%]
+  else
+    goto <bb 6>; [50.00%]
+
+  <bb 5> [local count: 536870913]:
+  # DEBUG BEGIN_STMT
+  *ISRA.5_15(D) = 1;
+
+  <bb 6> [local count: 1073741824]:
+  return;
+
+}
+
+
+igmp_remove_group.isra.0 (void * ISRA.3, struct igmp_group * group)
+{
+  err_t err;
+  struct igmp_group * tmp_group;
+  struct igmp_group * _4;
+  struct igmp_group * _6;
+
+  <bb 10> [local count: 114863532]:
+  # DEBUG netif s=> netif
+
+  <bb 2> [local count: 114863532]:
+  # DEBUG BEGIN_STMT
+  # DEBUG err => 0
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  tmp_group_2 = ISRA.3_13(D);
+  # DEBUG tmp_group => tmp_group_2
+  goto <bb 6>; [100.00%]
+
+  <bb 3> [local count: 1014686025]:
+  # DEBUG BEGIN_STMT
+  _4 = tmp_group_3->next;
+  if (_4 == group_5(D))
+    goto <bb 4>; [5.50%]
+  else
+    goto <bb 5>; [94.50%]
+
+  <bb 4> [local count: 55807731]:
+  # tmp_group_7 = PHI <tmp_group_3(3)>
+  # DEBUG BEGIN_STMT
+  _6 = group_5(D)->next;
+  tmp_group_7->next = _6;
+  # DEBUG BEGIN_STMT
+  goto <bb 7>; [100.00%]
+
+  <bb 5> [local count: 958878293]:
+
+  <bb 6> [local count: 1073741824]:
+  # tmp_group_3 = PHI <tmp_group_2(2), _4(5)>
+  # DEBUG tmp_group => tmp_group_3
+  # DEBUG BEGIN_STMT
+  if (tmp_group_3 != 0B)
+    goto <bb 3>; [94.50%]
+  else
+    goto <bb 7>; [5.50%]
+
+  <bb 7> [local count: 114863532]:
+  # tmp_group_8 = PHI <tmp_group_7(4), tmp_group_3(6)>
+  # DEBUG BEGIN_STMT
+  if (tmp_group_8 == 0B)
+    goto <bb 8>; [0.87%]
+  else
+    goto <bb 9>; [99.13%]
+
+  <bb 8> [local count: 999313]:
+  # DEBUG BEGIN_STMT
+  # DEBUG err => -16
+
+  <bb 9> [local count: 114863532]:
+  # err_9 = PHI <0(7), -16(8)>
+  # DEBUG err => err_9
+  # DEBUG BEGIN_STMT
+  return err_9;
+
+}
+
+
+igmp_send (struct netif * netif, struct igmp_group * group, u8_t type)
+{
+  struct ip4_addr_t * dest;
+  struct ip4_addr_t src;
+  struct igmp_msg * igmp;
+  struct pbuf * p;
+  short unsigned int _1;
+  long unsigned int _2;
+  long unsigned int _3;
+  long unsigned int _4;
+  unsigned char _5;
+  short unsigned int _6;
+  short unsigned int _7;
+  short unsigned int _8;
+
+  <bb 2> [local count: 306783]:
+  # DEBUG BEGIN_STMT
+  # DEBUG p => 0B
+  # DEBUG BEGIN_STMT
+  # DEBUG igmp => 0B
+  # DEBUG BEGIN_STMT
+  src = ip_addr_any.u_addr.ip4;
+  # DEBUG BEGIN_STMT
+  # DEBUG dest => 0B
+  # DEBUG BEGIN_STMT
+  p_17 = pbuf_alloc (74, 8, 640);
+  # DEBUG p => p_17
+  # DEBUG BEGIN_STMT
+  if (p_17 != 0B)
+    goto <bb 3>; [70.00%]
+  else
+    goto <bb 12>; [30.00%]
+
+  <bb 3> [local count: 214748]:
+  # DEBUG BEGIN_STMT
+  igmp_19 = p_17->payload;
+  # DEBUG igmp => igmp_19
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _1 = p_17->len;
+  if (_1 <= 7)
+    goto <bb 14>; [50.00%]
+  else
+    goto <bb 5>; [50.00%]
+
+  <bb 14> [local count: 107374]:
+
+  <bb 4> [local count: 1073741823]:
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  __asm__ __volatile__("BKPT #0
+	");
+  # DEBUG BEGIN_STMT
+
+  <bb 15> [local count: 1073741824]:
+  goto <bb 4>; [100.00%]
+
+  <bb 5> [local count: 107374]:
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _2 = MEM[(const struct ip4_addr_t *)netif_20(D) + 4B].addr;
+  src.addr = _2;
+  # DEBUG BEGIN_STMT
+  if (type_22(D) == 22)
+    goto <bb 6>; [34.00%]
+  else
+    goto <bb 7>; [66.00%]
+
+  <bb 6> [local count: 36507]:
+  # DEBUG BEGIN_STMT
+  dest_25 = &group_23(D)->group_address;
+  # DEBUG dest => dest_25
+  # DEBUG BEGIN_STMT
+  _3 = group_23(D)->group_address.addr;
+  igmp_19->igmp_group_address.addr = _3;
+  # DEBUG BEGIN_STMT
+  group_23(D)->last_reporter_flag = 1;
+  goto <bb 9>; [100.00%]
+
+  <bb 7> [local count: 70867]:
+  # DEBUG BEGIN_STMT
+  if (type_22(D) == 23)
+    goto <bb 8>; [34.00%]
+  else
+    goto <bb 9>; [66.00%]
+
+  <bb 8> [local count: 24095]:
+  # DEBUG BEGIN_STMT
+  # DEBUG dest => &allrouters
+  # DEBUG BEGIN_STMT
+  _4 = group_23(D)->group_address.addr;
+  igmp_19->igmp_group_address.addr = _4;
+
+  <bb 9> [local count: 107374]:
+  # dest_9 = PHI <dest_25(6), 0B(7), &allrouters(8)>
+  # DEBUG dest => dest_9
+  # DEBUG BEGIN_STMT
+  _5 = type_22(D) + 234;
+  if (_5 <= 1)
+    goto <bb 10>; [25.50%]
+  else
+    goto <bb 11>; [74.50%]
+
+  <bb 10> [local count: 27380]:
+  # DEBUG BEGIN_STMT
+  igmp_19->igmp_msgtype = type_22(D);
+  # DEBUG BEGIN_STMT
+  igmp_19->igmp_maxresp = 0;
+  # DEBUG BEGIN_STMT
+  igmp_19->igmp_checksum = 0;
+  # DEBUG BEGIN_STMT
+  _6 = inet_chksum (igmp_19, 8);
+  igmp_19->igmp_checksum = _6;
+  # DEBUG BEGIN_STMT
+  igmp_ip_output_if (p_17, &src, dest_9, netif_20(D));
+
+  <bb 11> [local count: 107374]:
+  # DEBUG BEGIN_STMT
+  pbuf_free (p_17);
+  goto <bb 13>; [100.00%]
+
+  <bb 12> [local count: 92035]:
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _7 = lwip_stats.igmp.memerr;
+  _8 = _7 + 1;
+  lwip_stats.igmp.memerr = _8;
+
+  <bb 13> [local count: 199409]:
+  src ={v} {CLOBBER};
+  return;
+
+}
+
+
+igmp_ip_output_if (struct pbuf * p, const struct ip4_addr_t * src, const struct ip4_addr_t * dest, struct netif * netif)
+{
+  u16_t ra[2];
+  short unsigned int _1;
+  short unsigned int _2;
+  err_t _12;
+
+  <bb 2> [local count: 1073741824]:
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  ra[0] = 1172;
+  # DEBUG BEGIN_STMT
+  ra[1] = 0;
+  # DEBUG BEGIN_STMT
+  _1 = lwip_stats.igmp.xmit;
+  _2 = _1 + 1;
+  lwip_stats.igmp.xmit = _2;
+  # DEBUG BEGIN_STMT
+  _12 = ip4_output_if_opt (p_7(D), src_8(D), dest_9(D), 1, 0, 2, netif_10(D), &ra, 4);
+  ra ={v} {CLOBBER};
+  return _12;
+
+}
+
+
+igmp_delaying_member (struct igmp_group * group, u8_t maxresp)
+{
+  unsigned char _1;
+  short unsigned int _2;
+  short unsigned int _3;
+  u16_t * _10;
+
+  <bb 2> [local count: 1073741824]:
+  # DEBUG BEGIN_STMT
+  _1 = group_6(D)->group_state;
+  if (_1 == 2)
+    goto <bb 6>; [20.24%]
+  else
+    goto <bb 3>; [79.76%]
+
+  <bb 3> [local count: 856416480]:
+  if (_1 == 1)
+    goto <bb 4>; [34.00%]
+  else
+    goto <bb 7>; [66.00%]
+
+  <bb 4> [local count: 291181603]:
+  _2 = group_6(D)->timer;
+  if (_2 == 0)
+    goto <bb 6>; [50.00%]
+  else
+    goto <bb 5>; [50.00%]
+
+  <bb 5> [local count: 145590801]:
+  _3 = (short unsigned int) maxresp_7(D);
+  if (_2 > _3)
+    goto <bb 6>; [50.00%]
+  else
+    goto <bb 7>; [50.00%]
+
+  <bb 6> [local count: 435711547]:
+  # DEBUG BEGIN_STMT
+  _10 = &MEM[(short unsigned int *)group_6(D) + 10B];
+  # DEBUG D#2 => group_6(D)
+  igmp_start_timer.isra.0 (_10, maxresp_7(D));
+  # DEBUG BEGIN_STMT
+  group_6(D)->group_state = 1;
+
+  <bb 7> [local count: 1073741824]:
+  return;
+
+}
+
+
+igmp_timeout (struct netif * netif, struct igmp_group * group)
+{
+  unsigned char _1;
+  long unsigned int _2;
+  long unsigned int _3;
+  short unsigned int _4;
+  short unsigned int _5;
+
+  <bb 2> [local count: 1073741824]:
+  # DEBUG BEGIN_STMT
+  _1 = group_8(D)->group_state;
+  if (_1 == 1)
+    goto <bb 3>; [34.00%]
+  else
+    goto <bb 5>; [66.00%]
+
+  <bb 3> [local count: 365072220]:
+  _2 = group_8(D)->group_address.addr;
+  _3 = allsystems.addr;
+  if (_2 != _3)
+    goto <bb 4>; [48.88%]
+  else
+    goto <bb 5>; [51.12%]
+
+  <bb 4> [local count: 178447301]:
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  group_8(D)->group_state = 2;
+  # DEBUG BEGIN_STMT
+  _4 = lwip_stats.igmp.tx_report;
+  _5 = _4 + 1;
+  lwip_stats.igmp.tx_report = _5;
+  # DEBUG BEGIN_STMT
+  igmp_send (netif_11(D), group_8(D), 22);
+
+  <bb 5> [local count: 1073741824]:
+  return;
+
+}
+
+
+igmp_tmr ()
+{
+  struct igmp_group * group;
+  struct netif * netif;
+  short unsigned int _1;
+  short unsigned int _2;
+
+  <bb 2> [local count: 14598062]:
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  netif_9 = netif_list;
+  # DEBUG netif => netif_9
+  goto <bb 10>; [100.00%]
+
+  <bb 3> [local count: 118111600]:
+  # DEBUG BEGIN_STMT
+  group_10 = netif_3->client_data[0];
+  # DEBUG group => group_10
+  # DEBUG BEGIN_STMT
+  goto <bb 8>; [100.00%]
+
+  <bb 4> [local count: 955630224]:
+  # DEBUG BEGIN_STMT
+  _1 = group_4->timer;
+  if (_1 != 0)
+    goto <bb 5>; [50.00%]
+  else
+    goto <bb 7>; [50.00%]
+
+  <bb 5> [local count: 477815112]:
+  # DEBUG BEGIN_STMT
+  _2 = _1 + 65535;
+  group_4->timer = _2;
+  # DEBUG BEGIN_STMT
+  if (_2 == 0)
+    goto <bb 6>; [33.00%]
+  else
+    goto <bb 7>; [67.00%]
+
+  <bb 6> [local count: 157678987]:
+  # DEBUG BEGIN_STMT
+  igmp_timeout (netif_3, group_4);
+
+  <bb 7> [local count: 955630224]:
+  # DEBUG BEGIN_STMT
+  group_14 = group_4->next;
+  # DEBUG group => group_14
+
+  <bb 8> [local count: 1073741824]:
+  # group_4 = PHI <group_10(3), group_14(7)>
+  # DEBUG group => group_4
+  # DEBUG BEGIN_STMT
+  if (group_4 != 0B)
+    goto <bb 4>; [89.00%]
+  else
+    goto <bb 9>; [11.00%]
+
+  <bb 9> [local count: 118111601]:
+  # DEBUG BEGIN_STMT
+  netif_11 = netif_3->next;
+  # DEBUG netif => netif_11
+
+  <bb 10> [local count: 132709663]:
+  # netif_3 = PHI <netif_9(2), netif_11(9)>
+  # DEBUG netif => netif_3
+  # DEBUG BEGIN_STMT
+  if (netif_3 != 0B)
+    goto <bb 3>; [89.00%]
+  else
+    goto <bb 11>; [11.00%]
+
+  <bb 11> [local count: 14598063]:
+  return;
+
+}
+
+
+igmp_leavegroup_netif (struct netif * netif, const struct ip4_addr_t * groupaddr)
+{
+  struct igmp_group * group;
+  long unsigned int _1;
+  long unsigned int _2;
+  long unsigned int _3;
+  unsigned char _4;
+  unsigned char _5;
+  unsigned char _6;
+  short unsigned int _7;
+  short unsigned int _8;
+  err_t (*<T6c1>) (struct netif *, const struct ip4_addr_t *, netif_mac_filter_action) _9;
+  unsigned char _10;
+  err_t _11;
+  unsigned char _20;
+  void * _27;
+
+  <bb 2> [local count: 1073741824]:
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _1 = groupaddr_17(D)->addr;
+  _2 = _1 & 240;
+  if (_2 != 224)
+    goto <bb 14>; [2.00%]
+  else
+    goto <bb 3>; [98.00%]
+
+  <bb 3> [local count: 1052266988]:
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _3 = allsystems.addr;
+  if (_1 == _3)
+    goto <bb 14>; [0.54%]
+  else
+    goto <bb 4>; [99.46%]
+
+  <bb 4> [local count: 1046584747]:
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _4 = netif_18(D)->flags;
+  _20 = _4 & 32;
+  if (_20 == 0)
+    goto <bb 14>; [2.09%]
+  else
+    goto <bb 5>; [97.91%]
+
+  <bb 5> [local count: 1024711125]:
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  group_19 = igmp_lookfor_group (netif_18(D), groupaddr_17(D));
+  # DEBUG group => group_19
+  # DEBUG BEGIN_STMT
+  if (group_19 != 0B)
+    goto <bb 6>; [99.13%]
+  else
+    goto <bb 14>; [0.87%]
+
+  <bb 6> [local count: 1015796139]:
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _5 = group_19->use;
+  if (_5 <= 1)
+    goto <bb 7>; [25.50%]
+  else
+    goto <bb 12>; [74.50%]
+
+  <bb 7> [local count: 259028015]:
+  # DEBUG BEGIN_STMT
+  _27 = MEM[(void * *)netif_18(D) + 196B];
+  # DEBUG D#1 => netif_18(D)
+  igmp_remove_group.isra.0 (_27, group_19);
+  # DEBUG BEGIN_STMT
+  _6 = group_19->last_reporter_flag;
+  if (_6 != 0)
+    goto <bb 8>; [33.00%]
+  else
+    goto <bb 9>; [67.00%]
+
+  <bb 8> [local count: 85479245]:
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _7 = lwip_stats.igmp.tx_leave;
+  _8 = _7 + 1;
+  lwip_stats.igmp.tx_leave = _8;
+  # DEBUG BEGIN_STMT
+  igmp_send (netif_18(D), group_19, 23);
+
+  <bb 9> [local count: 259028015]:
+  # DEBUG BEGIN_STMT
+  _9 = netif_18(D)->igmp_mac_filter;
+  if (_9 != 0B)
+    goto <bb 10>; [70.00%]
+  else
+    goto <bb 11>; [30.00%]
+
+  <bb 10> [local count: 181319611]:
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _9 (netif_18(D), groupaddr_17(D), 0);
+
+  <bb 11> [local count: 259028015]:
+  # DEBUG BEGIN_STMT
+  memp_free (8, group_19);
+  goto <bb 13>; [100.00%]
+
+  <bb 12> [local count: 756768123]:
+  # DEBUG BEGIN_STMT
+  _10 = _5 + 255;
+  group_19->use = _10;
+
+  <bb 13> [local count: 1015796137]:
+  # DEBUG BEGIN_STMT
+
+  <bb 14> [local count: 1073741823]:
+  # _11 = PHI <-6(2), -6(3), -6(4), 0(13), -6(5)>
+  return _11;
+
+}
+
+
+igmp_leavegroup (const struct ip4_addr_t * ifaddr, const struct ip4_addr_t * groupaddr)
+{
+  err_t res;
+  struct netif * netif;
+  err_t err;
+  long unsigned int _1;
+  long unsigned int _2;
+  long unsigned int _3;
+  unsigned char _4;
+  long unsigned int _5;
+  long unsigned int _6;
+  err_t _10;
+  unsigned char _14;
+
+  <bb 2> [local count: 121176393]:
+  # DEBUG BEGIN_STMT
+  # DEBUG err => -6
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _1 = groupaddr_16(D)->addr;
+  _2 = _1 & 240;
+  if (_2 != 224)
+    goto <bb 13>; [2.00%]
+  else
+    goto <bb 3>; [98.00%]
+
+  <bb 3> [local count: 118752866]:
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _3 = allsystems.addr;
+  if (_1 == _3)
+    goto <bb 13>; [0.54%]
+  else
+    goto <bb 4>; [99.46%]
+
+  <bb 4> [local count: 118111600]:
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  netif_17 = netif_list;
+  # DEBUG netif => netif_17
+  goto <bb 12>; [100.00%]
+
+  <bb 5> [local count: 955630225]:
+  # DEBUG BEGIN_STMT
+  _4 = netif_9->flags;
+  _14 = _4 & 32;
+  if (_14 != 0)
+    goto <bb 6>; [50.00%]
+  else
+    goto <bb 11>; [50.00%]
+
+  <bb 6> [local count: 477815112]:
+  if (ifaddr_18(D) == 0B)
+    goto <bb 9>; [17.43%]
+  else
+    goto <bb 7>; [82.57%]
+
+  <bb 7> [local count: 394531938]:
+  _5 = ifaddr_18(D)->addr;
+  if (_5 == 0)
+    goto <bb 9>; [50.00%]
+  else
+    goto <bb 8>; [50.00%]
+
+  <bb 8> [local count: 197265969]:
+  _6 = MEM[(const struct ip4_addr_t *)netif_9 + 4B].addr;
+  if (_5 == _6)
+    goto <bb 9>; [34.00%]
+  else
+    goto <bb 11>; [66.00%]
+
+  <bb 9> [local count: 347619573]:
+  # DEBUG BEGIN_STMT
+  res_20 = igmp_leavegroup_netif (netif_9, groupaddr_16(D));
+  # DEBUG res => res_20
+  # DEBUG BEGIN_STMT
+  if (err_8 != 0)
+    goto <bb 10>; [50.00%]
+  else
+    goto <bb 11>; [50.00%]
+
+  <bb 10> [local count: 173809786]:
+  # DEBUG BEGIN_STMT
+  # DEBUG err => res_20
+
+  <bb 11> [local count: 955630226]:
+  # err_7 = PHI <err_8(5), err_8(8), err_8(9), res_20(10)>
+  # DEBUG err => err_7
+  # DEBUG BEGIN_STMT
+  netif_21 = netif_9->next;
+  # DEBUG netif => netif_21
+
+  <bb 12> [local count: 1073741824]:
+  # err_8 = PHI <-6(4), err_7(11)>
+  # netif_9 = PHI <netif_17(4), netif_21(11)>
+  # DEBUG netif => netif_9
+  # DEBUG err => err_8
+  # DEBUG BEGIN_STMT
+  if (netif_9 != 0B)
+    goto <bb 5>; [89.00%]
+  else
+    goto <bb 13>; [11.00%]
+
+  <bb 13> [local count: 121176394]:
+  # _10 = PHI <-6(2), -6(3), err_8(12)>
+  return _10;
+
+}
+
+
+igmp_joingroup_netif (struct netif * netif, const struct ip4_addr_t * groupaddr)
+{
+  struct igmp_group * group;
+  long unsigned int _1;
+  long unsigned int _2;
+  long unsigned int _3;
+  unsigned char _4;
+  unsigned char _5;
+  unsigned char _6;
+  err_t (*<T6c1>) (struct netif *, const struct ip4_addr_t *, netif_mac_filter_action) _7;
+  short unsigned int _8;
+  short unsigned int _9;
+  unsigned char _10;
+  unsigned char _11;
+  err_t _12;
+  unsigned char _21;
+  u16_t * _28;
+
+  <bb 2> [local count: 1073741824]:
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _1 = groupaddr_17(D)->addr;
+  _2 = _1 & 240;
+  if (_2 != 224)
+    goto <bb 12>; [2.00%]
+  else
+    goto <bb 3>; [98.00%]
+
+  <bb 3> [local count: 1052266988]:
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _3 = allsystems.addr;
+  if (_1 == _3)
+    goto <bb 12>; [0.54%]
+  else
+    goto <bb 4>; [99.46%]
+
+  <bb 4> [local count: 1046584747]:
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _4 = netif_18(D)->flags;
+  _21 = _4 & 32;
+  if (_21 == 0)
+    goto <bb 12>; [2.09%]
+  else
+    goto <bb 5>; [97.91%]
+
+  <bb 5> [local count: 1024711125]:
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  group_20 = igmp_lookup_group (netif_18(D), groupaddr_17(D));
+  # DEBUG group => group_20
+  # DEBUG BEGIN_STMT
+  if (group_20 != 0B)
+    goto <bb 6>; [99.13%]
+  else
+    goto <bb 12>; [0.87%]
+
+  <bb 6> [local count: 1015796139]:
+  # DEBUG BEGIN_STMT
+  _5 = group_20->group_state;
+  if (_5 != 0)
+    goto <bb 11>; [50.00%]
+  else
+    goto <bb 7>; [50.00%]
+
+  <bb 7> [local count: 507898069]:
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _6 = group_20->use;
+  if (_6 == 0)
+    goto <bb 8>; [50.00%]
+  else
+    goto <bb 10>; [50.00%]
+
+  <bb 8> [local count: 253949035]:
+  _7 = netif_18(D)->igmp_mac_filter;
+  if (_7 != 0B)
+    goto <bb 9>; [70.00%]
+  else
+    goto <bb 10>; [30.00%]
+
+  <bb 9> [local count: 177764324]:
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _7 (netif_18(D), groupaddr_17(D), 1);
+
+  <bb 10> [local count: 507898069]:
+  # DEBUG BEGIN_STMT
+  _8 = lwip_stats.igmp.tx_join;
+  _9 = _8 + 1;
+  lwip_stats.igmp.tx_join = _9;
+  # DEBUG BEGIN_STMT
+  igmp_send (netif_18(D), group_20, 22);
+  # DEBUG BEGIN_STMT
+  _28 = &MEM[(short unsigned int *)group_20 + 10B];
+  # DEBUG D#2 => group_20
+  igmp_start_timer.isra.0 (_28, 5);
+  # DEBUG BEGIN_STMT
+  group_20->group_state = 1;
+
+  <bb 11> [local count: 1015796139]:
+  # DEBUG BEGIN_STMT
+  _10 = group_20->use;
+  _11 = _10 + 1;
+  group_20->use = _11;
+  # DEBUG BEGIN_STMT
+
+  <bb 12> [local count: 1073741824]:
+  # _12 = PHI <-6(2), -6(3), -6(4), 0(11), -1(5)>
+  return _12;
+
+}
+
+
+igmp_joingroup (const struct ip4_addr_t * ifaddr, const struct ip4_addr_t * groupaddr)
+{
+  struct netif * netif;
+  err_t err;
+  long unsigned int _1;
+  long unsigned int _2;
+  long unsigned int _4;
+  unsigned char _5;
+  long unsigned int _6;
+  long unsigned int _7;
+  err_t _11;
+  unsigned char _15;
+
+  <bb 2> [local count: 81415554]:
+  # DEBUG BEGIN_STMT
+  # DEBUG err => -6
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _1 = groupaddr_17(D)->addr;
+  _2 = _1 & 240;
+  if (_2 != 224)
+    goto <bb 13>; [2.00%]
+  else
+    goto <bb 3>; [98.00%]
+
+  <bb 3> [local count: 79787243]:
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _4 = allsystems.addr;
+  if (_1 == _4)
+    goto <bb 13>; [0.54%]
+  else
+    goto <bb 4>; [99.46%]
+
+  <bb 4> [local count: 79356392]:
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  netif_18 = netif_list;
+  # DEBUG netif => netif_18
+  goto <bb 12>; [100.00%]
+
+  <bb 5> [local count: 1014686024]:
+  # DEBUG BEGIN_STMT
+  _5 = netif_10->flags;
+  _15 = _5 & 32;
+  if (_15 != 0)
+    goto <bb 6>; [50.00%]
+  else
+    goto <bb 11>; [50.00%]
+
+  <bb 6> [local count: 507343012]:
+  if (ifaddr_19(D) == 0B)
+    goto <bb 9>; [17.43%]
+  else
+    goto <bb 7>; [82.57%]
+
+  <bb 7> [local count: 418913124]:
+  _6 = ifaddr_19(D)->addr;
+  if (_6 == 0)
+    goto <bb 9>; [50.00%]
+  else
+    goto <bb 8>; [50.00%]
+
+  <bb 8> [local count: 209456562]:
+  _7 = MEM[(const struct ip4_addr_t *)netif_10 + 4B].addr;
+  if (_6 == _7)
+    goto <bb 9>; [34.00%]
+  else
+    goto <bb 11>; [66.00%]
+
+  <bb 9> [local count: 369101681]:
+  # DEBUG BEGIN_STMT
+  err_21 = igmp_joingroup_netif (netif_10, groupaddr_17(D));
+  # DEBUG err => err_21
+  # DEBUG BEGIN_STMT
+  if (err_21 != 0)
+    goto <bb 10>; [5.50%]
+  else
+    goto <bb 11>; [94.50%]
+
+  <bb 10> [local count: 20300592]:
+  # err_3 = PHI <err_21(9)>
+  # DEBUG BEGIN_STMT
+  goto <bb 13>; [100.00%]
+
+  <bb 11> [local count: 994385432]:
+  # err_8 = PHI <err_9(5), err_9(8), err_21(9)>
+  # DEBUG err => err_8
+  # DEBUG BEGIN_STMT
+  netif_22 = netif_10->next;
+  # DEBUG netif => netif_22
+
+  <bb 12> [local count: 1073741824]:
+  # err_9 = PHI <-6(4), err_8(11)>
+  # netif_10 = PHI <netif_18(4), netif_22(11)>
+  # DEBUG netif => netif_10
+  # DEBUG err => err_9
+  # DEBUG BEGIN_STMT
+  if (netif_10 != 0B)
+    goto <bb 5>; [94.50%]
+  else
+    goto <bb 13>; [5.50%]
+
+  <bb 13> [local count: 81415555]:
+  # _11 = PHI <-6(2), -6(3), err_3(10), err_9(12)>
+  return _11;
+
+}
+
+
+igmp_input (struct pbuf * p, struct netif * inp, const struct ip4_addr_t * dest)
+{
+  struct ip4_addr_t groupaddr;
+  struct igmp_group * groupref;
+  struct igmp_group * group;
+  struct igmp_msg * igmp;
+  short unsigned int _1;
+  short unsigned int _2;
+  short unsigned int _3;
+  short unsigned int _4;
+  short unsigned int _5;
+  short unsigned int _6;
+  short unsigned int _7;
+  short unsigned int _8;
+  short unsigned int _9;
+  short unsigned int _10;
+  unsigned char _11;
+  long unsigned int _12;
+  long unsigned int _13;
+  long unsigned int _14;
+  unsigned char _15;
+  short unsigned int _16;
+  short unsigned int _17;
+  short unsigned int _18;
+  short unsigned int _19;
+  unsigned char _20;
+  long unsigned int _21;
+  short unsigned int _22;
+  short unsigned int _23;
+  unsigned char _24;
+  short unsigned int _25;
+  short unsigned int _26;
+  short unsigned int _27;
+  short unsigned int _28;
+  short unsigned int _29;
+  short unsigned int _30;
+  unsigned char _31;
+  short unsigned int _32;
+  short unsigned int _33;
+
+  <bb 2> [local count: 1073741824]:
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _1 = lwip_stats.igmp.recv;
+  _2 = _1 + 1;
+  lwip_stats.igmp.recv = _2;
+  # DEBUG BEGIN_STMT
+  _3 = p_43(D)->len;
+  if (_3 <= 7)
+    goto <bb 3>; [34.00%]
+  else
+    goto <bb 4>; [66.00%]
+
+  <bb 3> [local count: 365072220]:
+  # DEBUG BEGIN_STMT
+  pbuf_free (p_43(D));
+  # DEBUG BEGIN_STMT
+  _4 = lwip_stats.igmp.lenerr;
+  _5 = _4 + 1;
+  lwip_stats.igmp.lenerr = _5;
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  goto <bb 30>; [100.00%]
+
+  <bb 4> [local count: 708669605]:
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  igmp_44 = p_43(D)->payload;
+  # DEBUG igmp => igmp_44
+  # DEBUG BEGIN_STMT
+  _6 = inet_chksum (igmp_44, _3);
+  if (_6 != 0)
+    goto <bb 5>; [34.00%]
+  else
+    goto <bb 6>; [66.00%]
+
+  <bb 5> [local count: 240947665]:
+  # DEBUG BEGIN_STMT
+  pbuf_free (p_43(D));
+  # DEBUG BEGIN_STMT
+  _7 = lwip_stats.igmp.chkerr;
+  _8 = _7 + 1;
+  lwip_stats.igmp.chkerr = _8;
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  goto <bb 30>; [100.00%]
+
+  <bb 6> [local count: 467721939]:
+  # DEBUG BEGIN_STMT
+  group_48 = igmp_lookfor_group (inp_46(D), dest_47(D));
+  # DEBUG group => group_48
+  # DEBUG BEGIN_STMT
+  if (group_48 == 0B)
+    goto <bb 7>; [9.81%]
+  else
+    goto <bb 8>; [90.19%]
+
+  <bb 7> [local count: 45883522]:
+  # DEBUG BEGIN_STMT
+  pbuf_free (p_43(D));
+  # DEBUG BEGIN_STMT
+  _9 = lwip_stats.igmp.drop;
+  _10 = _9 + 1;
+  lwip_stats.igmp.drop = _10;
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  goto <bb 30>; [100.00%]
+
+  <bb 8> [local count: 421838416]:
+  # DEBUG BEGIN_STMT
+  _11 = igmp_44->igmp_msgtype;
+  switch (_11) <default: <L33> [33.33%], case 17: <L6> [33.33%], case 22: <L30> [33.33%]>
+
+  <bb 9> [local count: 140598744]:
+<L6>:
+  # DEBUG BEGIN_STMT
+  _12 = dest_47(D)->addr;
+  _13 = allsystems.addr;
+  if (_12 == _13)
+    goto <bb 10>; [34.00%]
+  else
+    goto <bb 19>; [66.00%]
+
+  <bb 10> [local count: 47803573]:
+  _14 = igmp_44->igmp_group_address.addr;
+  if (_14 == 0)
+    goto <bb 11>; [50.00%]
+  else
+    goto <bb 19>; [50.00%]
+
+  <bb 11> [local count: 23901786]:
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _15 = igmp_44->igmp_maxresp;
+  if (_15 == 0)
+    goto <bb 12>; [50.00%]
+  else
+    goto <bb 13>; [50.00%]
+
+  <bb 12> [local count: 11950893]:
+  # DEBUG BEGIN_STMT
+  _16 = lwip_stats.igmp.rx_v1;
+  _17 = _16 + 1;
+  lwip_stats.igmp.rx_v1 = _17;
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  igmp_44->igmp_maxresp = 10;
+  goto <bb 14>; [100.00%]
+
+  <bb 13> [local count: 11950893]:
+  # DEBUG BEGIN_STMT
+  _18 = lwip_stats.igmp.rx_general;
+  _19 = _18 + 1;
+  lwip_stats.igmp.rx_general = _19;
+
+  <bb 14> [local count: 23901786]:
+  # DEBUG BEGIN_STMT
+  groupref_56 = inp_46(D)->client_data[0];
+  # DEBUG groupref => groupref_56
+  # DEBUG BEGIN_STMT
+  if (groupref_56 != 0B)
+    goto <bb 15>; [70.00%]
+  else
+    goto <bb 16>; [30.00%]
+
+  <bb 15> [local count: 16731251]:
+  # DEBUG BEGIN_STMT
+  groupref_57 = groupref_56->next;
+  # DEBUG groupref => groupref_57
+
+  <bb 16> [local count: 23901786]:
+  # groupref_75 = PHI <groupref_56(14), groupref_57(15)>
+  goto <bb 18>; [100.00%]
+
+  <bb 17> [local count: 193387183]:
+  # DEBUG BEGIN_STMT
+  _20 = igmp_44->igmp_maxresp;
+  igmp_delaying_member (groupref_35, _20);
+  # DEBUG BEGIN_STMT
+  groupref_59 = groupref_35->next;
+  # DEBUG groupref => groupref_59
+
+  <bb 18> [local count: 217288969]:
+  # groupref_35 = PHI <groupref_75(16), groupref_59(17)>
+  # DEBUG groupref => groupref_35
+  # DEBUG BEGIN_STMT
+  if (groupref_35 != 0B)
+    goto <bb 17>; [89.00%]
+  else
+    goto <bb 29>; [11.00%]
+
+  <bb 19> [local count: 116696958]:
+  # DEBUG BEGIN_STMT
+  _21 = igmp_44->igmp_group_address.addr;
+  if (_21 != 0)
+    goto <bb 20>; [50.00%]
+  else
+    goto <bb 25>; [50.00%]
+
+  <bb 20> [local count: 58348479]:
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  if (_12 == _13)
+    goto <bb 21>; [20.24%]
+  else
+    goto <bb 22>; [79.76%]
+
+  <bb 21> [local count: 11809732]:
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  groupaddr.addr = _21;
+  # DEBUG BEGIN_STMT
+  group_61 = igmp_lookfor_group (inp_46(D), &groupaddr);
+  # DEBUG group => group_61
+  groupaddr ={v} {CLOBBER};
+
+  <bb 22> [local count: 58348479]:
+  # group_34 = PHI <group_48(20), group_61(21)>
+  # DEBUG group => group_34
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  if (group_34 != 0B)
+    goto <bb 23>; [53.47%]
+  else
+    goto <bb 24>; [46.53%]
+
+  <bb 23> [local count: 31198932]:
+  # DEBUG BEGIN_STMT
+  _22 = lwip_stats.igmp.rx_group;
+  _23 = _22 + 1;
+  lwip_stats.igmp.rx_group = _23;
+  # DEBUG BEGIN_STMT
+  _24 = igmp_44->igmp_maxresp;
+  igmp_delaying_member (group_34, _24);
+  goto <bb 29>; [100.00%]
+
+  <bb 24> [local count: 27149547]:
+  # DEBUG BEGIN_STMT
+  _25 = lwip_stats.igmp.drop;
+  _26 = _25 + 1;
+  lwip_stats.igmp.drop = _26;
+  goto <bb 29>; [100.00%]
+
+  <bb 25> [local count: 58348479]:
+  # DEBUG BEGIN_STMT
+  _27 = lwip_stats.igmp.proterr;
+  _28 = _27 + 1;
+  lwip_stats.igmp.proterr = _28;
+  goto <bb 29>; [100.00%]
+
+  <bb 26> [local count: 140598744]:
+<L30>:
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _29 = lwip_stats.igmp.rx_report;
+  _30 = _29 + 1;
+  lwip_stats.igmp.rx_report = _30;
+  # DEBUG BEGIN_STMT
+  _31 = group_48->group_state;
+  if (_31 == 1)
+    goto <bb 27>; [34.00%]
+  else
+    goto <bb 29>; [66.00%]
+
+  <bb 27> [local count: 47803573]:
+  # DEBUG BEGIN_STMT
+  group_48->timer = 0;
+  # DEBUG BEGIN_STMT
+  group_48->group_state = 2;
+  # DEBUG BEGIN_STMT
+  group_48->last_reporter_flag = 0;
+  goto <bb 29>; [100.00%]
+
+  <bb 28> [local count: 140598744]:
+<L33>:
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _32 = lwip_stats.igmp.proterr;
+  _33 = _32 + 1;
+  lwip_stats.igmp.proterr = _33;
+  # DEBUG BEGIN_STMT
+
+  <bb 29> [local count: 421796233]:
+  # DEBUG BEGIN_STMT
+  pbuf_free (p_43(D));
+  # DEBUG BEGIN_STMT
+
+  <bb 30> [local count: 1073699642]:
+  return;
+
+}
+
+
+igmp_lookup_group (struct netif * ifp, const struct ip4_addr_t * addr)
+{
+  struct igmp_group * list_head;
+  struct igmp_group * group;
+  long unsigned int _1;
+  long unsigned int _2;
+  long unsigned int _3;
+  long unsigned int _4;
+  struct igmp_group * _5;
+  struct igmp_group * _6;
+  const long unsigned int iftmp.0_7;
+  const long unsigned int iftmp.0_18;
+
+  <bb 2> [local count: 2217068]:
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  list_head_13 = ifp_12(D)->client_data[0];
+  # DEBUG list_head => list_head_13
+  # DEBUG BEGIN_STMT
+  group_15 = igmp_lookfor_group (ifp_12(D), addr_14(D));
+  # DEBUG group => group_15
+  # DEBUG BEGIN_STMT
+  if (group_15 != 0B)
+    goto <bb 13>; [70.93%]
+  else
+    goto <bb 3>; [29.07%]
+
+  <bb 3> [local count: 644502]:
+  # DEBUG BEGIN_STMT
+  group_17 = memp_malloc (8);
+  # DEBUG group => group_17
+  # DEBUG BEGIN_STMT
+  if (group_17 != 0B)
+    goto <bb 4>; [70.00%]
+  else
+    goto <bb 13>; [30.00%]
+
+  <bb 4> [local count: 451151]:
+  # DEBUG BEGIN_STMT
+  if (addr_14(D) != 0B)
+    goto <bb 5>; [70.00%]
+  else
+    goto <bb 6>; [30.00%]
+
+  <bb 5> [local count: 315806]:
+  iftmp.0_18 = addr_14(D)->addr;
+
+  <bb 6> [local count: 451151]:
+  # iftmp.0_7 = PHI <iftmp.0_18(5), 0(4)>
+  group_17->group_address.addr = iftmp.0_7;
+  # DEBUG BEGIN_STMT
+  group_17->timer = 0;
+  # DEBUG BEGIN_STMT
+  group_17->group_state = 0;
+  # DEBUG BEGIN_STMT
+  group_17->last_reporter_flag = 0;
+  # DEBUG BEGIN_STMT
+  group_17->use = 0;
+  # DEBUG BEGIN_STMT
+  if (list_head_13 == 0B)
+    goto <bb 7>; [30.00%]
+  else
+    goto <bb 10>; [70.00%]
+
+  <bb 7> [local count: 135345]:
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _1 = addr_14(D)->addr;
+  _2 = allsystems.addr;
+  if (_1 != _2)
+    goto <bb 14>; [66.00%]
+  else
+    goto <bb 9>; [34.00%]
+
+  <bb 14> [local count: 89328]:
+
+  <bb 8> [local count: 893281014]:
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  __asm__ __volatile__("BKPT #0
+	");
+  # DEBUG BEGIN_STMT
+
+  <bb 16> [local count: 893281014]:
+  goto <bb 8>; [100.00%]
+
+  <bb 9> [local count: 46017]:
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  group_17->next = 0B;
+  # DEBUG BEGIN_STMT
+  ifp_12(D)->client_data[0] = group_17;
+  goto <bb 13>; [100.00%]
+
+  <bb 10> [local count: 315806]:
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _3 = addr_14(D)->addr;
+  _4 = allsystems.addr;
+  if (_3 == _4)
+    goto <bb 15>; [34.00%]
+  else
+    goto <bb 12>; [66.00%]
+
+  <bb 15> [local count: 107374]:
+
+  <bb 11> [local count: 1073741824]:
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  __asm__ __volatile__("BKPT #0
+	");
+  # DEBUG BEGIN_STMT
+
+  <bb 17> [local count: 1073741824]:
+  goto <bb 11>; [100.00%]
+
+  <bb 12> [local count: 208432]:
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _5 = list_head_13->next;
+  group_17->next = _5;
+  # DEBUG BEGIN_STMT
+  list_head_13->next = group_17;
+
+  <bb 13> [local count: 2020367]:
+  # _6 = PHI <group_15(2), group_17(9), group_17(3), group_17(12)>
+  return _6;
+
+}
+
+
+igmp_lookfor_group (struct netif * ifp, const struct ip4_addr_t * addr)
+{
+  struct igmp_group * group;
+  long unsigned int _1;
+  long unsigned int _2;
+  struct igmp_group * _4;
+
+  <bb 2> [local count: 114863532]:
+  # DEBUG BEGIN_STMT
+  group_7 = ifp_6(D)->client_data[0];
+  # DEBUG group => group_7
+  # DEBUG BEGIN_STMT
+  goto <bb 6>; [100.00%]
+
+  <bb 3> [local count: 1014686025]:
+  # DEBUG BEGIN_STMT
+  _1 = group_3->group_address.addr;
+  _2 = addr_8(D)->addr;
+  if (_1 == _2)
+    goto <bb 4>; [5.50%]
+  else
+    goto <bb 5>; [94.50%]
+
+  <bb 4> [local count: 55807731]:
+  # group_10 = PHI <group_3(3)>
+  # DEBUG BEGIN_STMT
+  goto <bb 7>; [100.00%]
+
+  <bb 5> [local count: 958878293]:
+  # DEBUG BEGIN_STMT
+  group_9 = group_3->next;
+  # DEBUG group => group_9
+
+  <bb 6> [local count: 1073741824]:
+  # group_3 = PHI <group_7(2), group_9(5)>
+  # DEBUG group => group_3
+  # DEBUG BEGIN_STMT
+  if (group_3 != 0B)
+    goto <bb 3>; [94.50%]
+  else
+    goto <bb 7>; [5.50%]
+
+  <bb 7> [local count: 114863532]:
+  # _4 = PHI <group_10(4), 0B(6)>
+  return _4;
+
+}
+
+
+igmp_report_groups (struct netif * netif)
+{
+  struct igmp_group * group;
+
+  <bb 2> [local count: 118111600]:
+  # DEBUG BEGIN_STMT
+  group_5 = netif_4(D)->client_data[0];
+  # DEBUG group => group_5
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  if (group_5 != 0B)
+    goto <bb 3>; [70.00%]
+  else
+    goto <bb 4>; [30.00%]
+
+  <bb 3> [local count: 82678120]:
+  # DEBUG BEGIN_STMT
+  group_6 = group_5->next;
+  # DEBUG group => group_6
+
+  <bb 4> [local count: 118111600]:
+  # group_9 = PHI <group_5(2), group_6(3)>
+  goto <bb 6>; [100.00%]
+
+  <bb 5> [local count: 955630223]:
+  # DEBUG BEGIN_STMT
+  igmp_delaying_member (group_1, 5);
+  # DEBUG BEGIN_STMT
+  group_8 = group_1->next;
+  # DEBUG group => group_8
+
+  <bb 6> [local count: 1073741824]:
+  # group_1 = PHI <group_9(4), group_8(5)>
+  # DEBUG group => group_1
+  # DEBUG BEGIN_STMT
+  if (group_1 != 0B)
+    goto <bb 5>; [89.00%]
+  else
+    goto <bb 7>; [11.00%]
+
+  <bb 7> [local count: 118111601]:
+  return;
+
+}
+
+
+igmp_stop (struct netif * netif)
+{
+  struct igmp_group * next;
+  struct igmp_group * group;
+  err_t (*<T6c1>) (struct netif *, const struct ip4_addr_t *, netif_mac_filter_action) _1;
+  struct ip4_addr_t * _2;
+
+  <bb 2> [local count: 118111600]:
+  # DEBUG BEGIN_STMT
+  group_8 = netif_7(D)->client_data[0];
+  # DEBUG group => group_8
+  # DEBUG BEGIN_STMT
+  netif_7(D)->client_data[0] = 0B;
+  # DEBUG BEGIN_STMT
+  goto <bb 6>; [100.00%]
+
+  <bb 3> [local count: 955630223]:
+  # DEBUG BEGIN_STMT
+  next_10 = group_3->next;
+  # DEBUG next => next_10
+  # DEBUG BEGIN_STMT
+  _1 = netif_7(D)->igmp_mac_filter;
+  if (_1 != 0B)
+    goto <bb 4>; [70.00%]
+  else
+    goto <bb 5>; [30.00%]
+
+  <bb 4> [local count: 668941156]:
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _2 = &group_3->group_address;
+  _1 (netif_7(D), _2, 0);
+
+  <bb 5> [local count: 955630223]:
+  # DEBUG BEGIN_STMT
+  memp_free (8, group_3);
+  # DEBUG BEGIN_STMT
+  # DEBUG group => next_10
+
+  <bb 6> [local count: 1073741824]:
+  # group_3 = PHI <group_8(2), next_10(5)>
+  # DEBUG group => group_3
+  # DEBUG BEGIN_STMT
+  if (group_3 != 0B)
+    goto <bb 3>; [89.00%]
+  else
+    goto <bb 7>; [11.00%]
+
+  <bb 7> [local count: 118111601]:
+  # DEBUG BEGIN_STMT
+  return 0;
+
+}
+
+
+igmp_start (struct netif * netif)
+{
+  struct igmp_group * group;
+  unsigned char _1;
+  unsigned char _2;
+  err_t (*<T6c1>) (struct netif *, const struct ip4_addr_t *, netif_mac_filter_action) _3;
+  err_t _4;
+
+  <bb 2> [local count: 1073741824]:
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  group_10 = igmp_lookup_group (netif_8(D), &allsystems);
+  # DEBUG group => group_10
+  # DEBUG BEGIN_STMT
+  if (group_10 != 0B)
+    goto <bb 3>; [98.33%]
+  else
+    goto <bb 6>; [1.67%]
+
+  <bb 3> [local count: 1055810336]:
+  # DEBUG BEGIN_STMT
+  group_10->group_state = 2;
+  # DEBUG BEGIN_STMT
+  _1 = group_10->use;
+  _2 = _1 + 1;
+  group_10->use = _2;
+  # DEBUG BEGIN_STMT
+  _3 = netif_8(D)->igmp_mac_filter;
+  if (_3 != 0B)
+    goto <bb 4>; [70.00%]
+  else
+    goto <bb 5>; [30.00%]
+
+  <bb 4> [local count: 739067236]:
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _3 (netif_8(D), &allsystems, 1);
+
+  <bb 5> [local count: 1055810337]:
+  # DEBUG BEGIN_STMT
+
+  <bb 6> [local count: 1073741824]:
+  # _4 = PHI <0(5), -1(2)>
+  return _4;
+
+}
+
+
+igmp_init ()
+{
+  <bb 2> [local count: 1073741824]:
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  allsystems.addr = 16777440;
+  # DEBUG BEGIN_STMT
+  allrouters.addr = 33554656;
+  return;
+
+}
+
+

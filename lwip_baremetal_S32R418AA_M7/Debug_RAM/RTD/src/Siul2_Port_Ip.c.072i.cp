@@ -1,0 +1,1871 @@
+
+IPA constant propagation start:
+Determining dynamic type for call: Siul2_Port_Ip_GetValuePinConfiguration (base_3(D), config_8(D), pin_6(D));
+  Starting walk at: Siul2_Port_Ip_GetValuePinConfiguration (base_3(D), config_8(D), pin_6(D));
+  instance pointer: base_3(D)  Outer instance pointer: base_3(D) offset: 0 (bits) vtbl reference: 
+  Function call may change dynamic type:DevAssert (_2);
+  Function call may change dynamic type:DevAssert (_1);
+Determining dynamic type for call: Siul2_Port_Ip_GetValuePinConfiguration (base_3(D), config_8(D), pin_6(D));
+  Starting walk at: Siul2_Port_Ip_GetValuePinConfiguration (base_3(D), config_8(D), pin_6(D));
+  instance pointer: config_8(D)  Outer instance pointer: config_8(D) offset: 0 (bits) vtbl reference: 
+  Function call may change dynamic type:DevAssert (_2);
+  Function call may change dynamic type:DevAssert (_1);
+Determining dynamic type for call: Siul2_Port_Ip_GetMSCRConfiguration (config_27(D), base_22(D), pin_24(D));
+  Starting walk at: Siul2_Port_Ip_GetMSCRConfiguration (config_27(D), base_22(D), pin_24(D));
+  instance pointer: config_27(D)  Outer instance pointer: config_27(D) offset: 0 (bits) vtbl reference: 
+Determining dynamic type for call: Siul2_Port_Ip_GetMSCRConfiguration (config_27(D), base_22(D), pin_24(D));
+  Starting walk at: Siul2_Port_Ip_GetMSCRConfiguration (config_27(D), base_22(D), pin_24(D));
+  instance pointer: base_22(D)  Outer instance pointer: base_22(D) offset: 0 (bits) vtbl reference: 
+Determining dynamic type for call: u32RegVal_9 = Siul2_Port_Ip_GetValueConfigRevertPin (base_3(D), pin_6(D));
+  Starting walk at: u32RegVal_9 = Siul2_Port_Ip_GetValueConfigRevertPin (base_3(D), pin_6(D));
+  instance pointer: base_3(D)  Outer instance pointer: base_3(D) offset: 0 (bits) vtbl reference: 
+  Function call may change dynamic type:DevAssert (_2);
+  Function call may change dynamic type:DevAssert (_1);
+Determining dynamic type for call: Siul2_Port_Ip_PinInit (_8);
+  Starting walk at: Siul2_Port_Ip_PinInit (_8);
+  instance pointer: _8  Outer instance pointer: _6 offset: 0 (bits) vtbl reference: 
+Determining dynamic type for call: Siul2_Port_Ip_ConfigPinDirection (base_3(D), pin_6(D), direction_8(D));
+  Starting walk at: Siul2_Port_Ip_ConfigPinDirection (base_3(D), pin_6(D), direction_8(D));
+  instance pointer: base_3(D)  Outer instance pointer: base_3(D) offset: 0 (bits) vtbl reference: 
+  Function call may change dynamic type:DevAssert (_2);
+  Function call may change dynamic type:DevAssert (_1);
+Determining dynamic type for call: Siul2_Port_Ip_ConfigInputBuffer (base_5(D), pin_2(D), enable_6(D), inputMuxReg_7(D), inputMux_8(D));
+  Starting walk at: Siul2_Port_Ip_ConfigInputBuffer (base_5(D), pin_2(D), enable_6(D), inputMuxReg_7(D), inputMux_8(D));
+  instance pointer: base_5(D)  Outer instance pointer: base_5(D) offset: 0 (bits) vtbl reference: 
+  Function call may change dynamic type:DevAssert (_1);
+Determining dynamic type for call: Siul2_Port_Ip_ConfigOutputBuffer (base_3(D), pin_6(D), enable_8(D), mux_9(D));
+  Starting walk at: Siul2_Port_Ip_ConfigOutputBuffer (base_3(D), pin_6(D), enable_8(D), mux_9(D));
+  instance pointer: base_3(D)  Outer instance pointer: base_3(D) offset: 0 (bits) vtbl reference: 
+  Function call may change dynamic type:DevAssert (_2);
+  Function call may change dynamic type:DevAssert (_1);
+Determining dynamic type for call: Siul2_Port_Ip_ConfigInternalResistor (base_3(D), pin_6(D), pullConfig_8(D));
+  Starting walk at: Siul2_Port_Ip_ConfigInternalResistor (base_3(D), pin_6(D), pullConfig_8(D));
+  instance pointer: base_3(D)  Outer instance pointer: base_3(D) offset: 0 (bits) vtbl reference: 
+  Function call may change dynamic type:DevAssert (_2);
+  Function call may change dynamic type:DevAssert (_1);
+Determining dynamic type for call: Siul2_Port_Ip_PinInit (_2);
+  Starting walk at: Siul2_Port_Ip_PinInit (_2);
+  instance pointer: _2  Outer instance pointer: _2 offset: 0 (bits) vtbl reference: 
+  Function call may change dynamic type:Siul2_Port_Ip_PinInit (_2);
+Determining dynamic type for call: Siul2_Port_Ip_GetIMCRInstance (config_16(D), &imcrRegIdx, &imcrBase, inputMuxIterator_9);
+  Starting walk at: Siul2_Port_Ip_GetIMCRInstance (config_16(D), &imcrRegIdx, &imcrBase, inputMuxIterator_9);
+  instance pointer: config_16(D)  Outer instance pointer: config_16(D) offset: 0 (bits) vtbl reference: 
+  Function call may change dynamic type:Siul2_Port_Ip_GetIMCRInstance (config_16(D), &imcrRegIdx, &imcrBase, inputMuxIterator_9);
+Determining dynamic type for call: Siul2_Port_Ip_GetIMCRInstance (config_16(D), &imcrRegIdx, &imcrBase, inputMuxIterator_9);
+  Starting walk at: Siul2_Port_Ip_GetIMCRInstance (config_16(D), &imcrRegIdx, &imcrBase, inputMuxIterator_9);
+  instance pointer: &imcrRegIdx  Outer instance pointer: imcrRegIdx offset: 0 (bits) vtbl reference: 
+  Function call may change dynamic type:Siul2_Port_Ip_GetIMCRInstance (config_16(D), &imcrRegIdx, &imcrBase, inputMuxIterator_9);
+Determining dynamic type for call: Siul2_Port_Ip_GetIMCRInstance (config_16(D), &imcrRegIdx, &imcrBase, inputMuxIterator_9);
+  Starting walk at: Siul2_Port_Ip_GetIMCRInstance (config_16(D), &imcrRegIdx, &imcrBase, inputMuxIterator_9);
+  instance pointer: &imcrBase  Outer instance pointer: imcrBase offset: 0 (bits) vtbl reference: 
+  Function call may change dynamic type:Siul2_Port_Ip_GetIMCRInstance (config_16(D), &imcrRegIdx, &imcrBase, inputMuxIterator_9);
+Determining dynamic type for call: Siul2_Port_Ip_WriteIMCRConfiguration (config_52(D));
+  Starting walk at: Siul2_Port_Ip_WriteIMCRConfiguration (config_52(D));
+  instance pointer: config_52(D)  Outer instance pointer: config_52(D) offset: 0 (bits) vtbl reference: 
+  Function call may change dynamic type:DevAssert (_1);
+  Function call may change dynamic type:DevAssert (_3);
+  Function call may change dynamic type:DevAssert (_1);
+
+IPA structures before propagation:
+
+Jump functions:
+  Jump functions of caller  SchM_Exit_Port_PORT_EXCLUSIVE_AREA_04/29:
+  Jump functions of caller  SchM_Enter_Port_PORT_EXCLUSIVE_AREA_04/28:
+  Jump functions of caller  SchM_Exit_Port_PORT_EXCLUSIVE_AREA_03/27:
+  Jump functions of caller  SchM_Enter_Port_PORT_EXCLUSIVE_AREA_03/26:
+  Jump functions of caller  SchM_Exit_Port_PORT_EXCLUSIVE_AREA_02/25:
+  Jump functions of caller  SchM_Enter_Port_PORT_EXCLUSIVE_AREA_02/24:
+  Jump functions of caller  SchM_Exit_Port_PORT_EXCLUSIVE_AREA_01/23:
+  Jump functions of caller  SchM_Enter_Port_PORT_EXCLUSIVE_AREA_01/22:
+  Jump functions of caller  Siul2_Port_Ip_GetPinConfiguration/21:
+    callsite  Siul2_Port_Ip_GetPinConfiguration/21 -> Siul2_Port_Ip_GetValuePinConfiguration/20 : 
+       param 0: PASS THROUGH: 0, op nop_expr
+         value: 0x0, mask: 0xffffffff
+         Unknown VR
+       param 1: PASS THROUGH: 1, op nop_expr
+         value: 0x0, mask: 0xffffffff
+         Unknown VR
+       param 2: PASS THROUGH: 2, op nop_expr
+         value: 0x0, mask: 0xffff
+         Unknown VR
+    callsite  Siul2_Port_Ip_GetPinConfiguration/21 -> DevAssert/0 : 
+       param 0: PASS THROUGH: 2, op le_expr 15
+         value: 0x0, mask: 0x1
+         Unknown VR
+    callsite  Siul2_Port_Ip_GetPinConfiguration/21 -> DevAssert/0 : 
+       param 0: PASS THROUGH: 0, op ne_expr 0B
+         value: 0x0, mask: 0x1
+         Unknown VR
+  Jump functions of caller  Siul2_Port_Ip_GetValuePinConfiguration/20:
+    callsite  Siul2_Port_Ip_GetValuePinConfiguration/20 -> Siul2_Port_Ip_GetMSCRConfiguration/8 : 
+       param 0: PASS THROUGH: 1, op nop_expr
+         value: 0x0, mask: 0xffffffff
+         Unknown VR
+       param 1: PASS THROUGH: 0, op nop_expr
+         value: 0x0, mask: 0xffffffff
+         Unknown VR
+       param 2: PASS THROUGH: 2, op nop_expr
+         value: 0x0, mask: 0xffff
+         Unknown VR
+  Jump functions of caller  Siul2_Port_Ip_RevertPinConfiguration/19:
+    callsite  Siul2_Port_Ip_RevertPinConfiguration/19 -> Siul2_Port_Ip_GetValueConfigRevertPin/18 : 
+       param 0: PASS THROUGH: 0, op nop_expr
+         value: 0x0, mask: 0xffffffff
+         Unknown VR
+       param 1: PASS THROUGH: 1, op nop_expr
+         value: 0x0, mask: 0xffff
+         Unknown VR
+    callsite  Siul2_Port_Ip_RevertPinConfiguration/19 -> DevAssert/0 : 
+       param 0: PASS THROUGH: 1, op le_expr 15
+         value: 0x0, mask: 0x1
+         Unknown VR
+    callsite  Siul2_Port_Ip_RevertPinConfiguration/19 -> DevAssert/0 : 
+       param 0: PASS THROUGH: 0, op ne_expr 0B
+         value: 0x0, mask: 0x1
+         Unknown VR
+  Jump functions of caller  Siul2_Port_Ip_GetValueConfigRevertPin/18:
+    callsite  Siul2_Port_Ip_GetValueConfigRevertPin/18 -> Siul2_Port_Ip_PinInit/5 : 
+       param 0: UNKNOWN
+         value: 0x0, mask: 0xffffffff
+         VR  ~[0, 0]
+  Jump functions of caller  Siul2_Port_Ip_SetPinDirection/17:
+    callsite  Siul2_Port_Ip_SetPinDirection/17 -> Siul2_Port_Ip_ConfigPinDirection/16 : 
+       param 0: PASS THROUGH: 0, op nop_expr
+         value: 0x0, mask: 0xffffffff
+         Unknown VR
+       param 1: PASS THROUGH: 1, op nop_expr
+         value: 0x0, mask: 0xffff
+         Unknown VR
+       param 2: PASS THROUGH: 2, op nop_expr
+         value: 0x0, mask: 0xff
+         Unknown VR
+    callsite  Siul2_Port_Ip_SetPinDirection/17 -> DevAssert/0 : 
+       param 0: PASS THROUGH: 1, op le_expr 15
+         value: 0x0, mask: 0x1
+         Unknown VR
+    callsite  Siul2_Port_Ip_SetPinDirection/17 -> DevAssert/0 : 
+       param 0: PASS THROUGH: 0, op ne_expr 0B
+         value: 0x0, mask: 0x1
+         Unknown VR
+  Jump functions of caller  Siul2_Port_Ip_ConfigPinDirection/16:
+  Jump functions of caller  Siul2_Port_Ip_SetInputBuffer/15:
+    callsite  Siul2_Port_Ip_SetInputBuffer/15 -> Siul2_Port_Ip_ConfigInputBuffer/14 : 
+       param 0: PASS THROUGH: 0, op nop_expr
+         value: 0x0, mask: 0xffffffff
+         Unknown VR
+       param 1: PASS THROUGH: 1, op nop_expr
+         value: 0x0, mask: 0xffff
+         Unknown VR
+       param 2: PASS THROUGH: 2, op nop_expr
+         value: 0x0, mask: 0x1
+         Unknown VR
+       param 3: PASS THROUGH: 3, op nop_expr
+         value: 0x0, mask: 0xffffffff
+         Unknown VR
+       param 4: PASS THROUGH: 4, op nop_expr
+         value: 0x0, mask: 0xff
+         Unknown VR
+    callsite  Siul2_Port_Ip_SetInputBuffer/15 -> DevAssert/0 : 
+       param 0: PASS THROUGH: 1, op le_expr 15
+         value: 0x0, mask: 0x1
+         Unknown VR
+  Jump functions of caller  Siul2_Port_Ip_ConfigInputBuffer/14:
+  Jump functions of caller  Siul2_Port_Ip_SetOutputBuffer/13:
+    callsite  Siul2_Port_Ip_SetOutputBuffer/13 -> Siul2_Port_Ip_ConfigOutputBuffer/12 : 
+       param 0: PASS THROUGH: 0, op nop_expr
+         value: 0x0, mask: 0xffffffff
+         Unknown VR
+       param 1: PASS THROUGH: 1, op nop_expr
+         value: 0x0, mask: 0xffff
+         Unknown VR
+       param 2: PASS THROUGH: 2, op nop_expr
+         value: 0x0, mask: 0x1
+         Unknown VR
+       param 3: PASS THROUGH: 3, op nop_expr
+         value: 0x0, mask: 0xff
+         Unknown VR
+    callsite  Siul2_Port_Ip_SetOutputBuffer/13 -> DevAssert/0 : 
+       param 0: PASS THROUGH: 1, op le_expr 15
+         value: 0x0, mask: 0x1
+         Unknown VR
+    callsite  Siul2_Port_Ip_SetOutputBuffer/13 -> DevAssert/0 : 
+       param 0: PASS THROUGH: 0, op ne_expr 0B
+         value: 0x0, mask: 0x1
+         Unknown VR
+  Jump functions of caller  Siul2_Port_Ip_ConfigOutputBuffer/12:
+  Jump functions of caller  Siul2_Port_Ip_SetPullSel/11:
+    callsite  Siul2_Port_Ip_SetPullSel/11 -> Siul2_Port_Ip_ConfigInternalResistor/10 : 
+       param 0: PASS THROUGH: 0, op nop_expr
+         value: 0x0, mask: 0xffffffff
+         Unknown VR
+       param 1: PASS THROUGH: 1, op nop_expr
+         value: 0x0, mask: 0xffff
+         Unknown VR
+       param 2: PASS THROUGH: 2, op nop_expr
+         value: 0x0, mask: 0xff
+         Unknown VR
+    callsite  Siul2_Port_Ip_SetPullSel/11 -> DevAssert/0 : 
+       param 0: PASS THROUGH: 1, op le_expr 15
+         value: 0x0, mask: 0x1
+         Unknown VR
+    callsite  Siul2_Port_Ip_SetPullSel/11 -> DevAssert/0 : 
+       param 0: PASS THROUGH: 0, op ne_expr 0B
+         value: 0x0, mask: 0x1
+         Unknown VR
+  Jump functions of caller  Siul2_Port_Ip_ConfigInternalResistor/10:
+  Jump functions of caller  Siul2_Port_Ip_Init/9:
+    callsite  Siul2_Port_Ip_Init/9 -> Siul2_Port_Ip_PinInit/5 : 
+       param 0: UNKNOWN
+         value: 0x0, mask: 0xffffffff
+         Unknown VR
+  Jump functions of caller  Siul2_Port_Ip_GetMSCRConfiguration/8:
+  Jump functions of caller  Siul2_Port_Ip_WriteIMCRConfiguration/7:
+    callsite  Siul2_Port_Ip_WriteIMCRConfiguration/7 -> Siul2_Port_Ip_GetIMCRInstance/6 : 
+       param 0: PASS THROUGH: 0, op nop_expr
+         value: 0x0, mask: 0xffffffff
+         Unknown VR
+       param 1: UNKNOWN
+         value: 0x0, mask: 0xfffffffc
+         VR  ~[0, 0]
+       param 2: UNKNOWN
+         value: 0x0, mask: 0xfffffffc
+         VR  ~[0, 0]
+       param 3: UNKNOWN
+         value: 0x0, mask: 0xf
+         VR  [0, 8]
+  Jump functions of caller  Siul2_Port_Ip_GetIMCRInstance/6:
+  Jump functions of caller  Siul2_Port_Ip_PinInit/5:
+    callsite  Siul2_Port_Ip_PinInit/5 -> Siul2_Port_Ip_WriteIMCRConfiguration/7 : 
+       param 0: PASS THROUGH: 0, op nop_expr
+         value: 0x0, mask: 0xffffffff
+         Unknown VR
+    callsite  Siul2_Port_Ip_PinInit/5 -> DevAssert/0 : 
+       param 0: PASS THROUGH: 0, op ne_expr 0B
+         value: 0x0, mask: 0x1
+         Unknown VR
+    callsite  Siul2_Port_Ip_PinInit/5 -> DevAssert/0 : 
+       param 0: UNKNOWN
+         value: 0x0, mask: 0x1
+         Unknown VR
+    callsite  Siul2_Port_Ip_PinInit/5 -> DevAssert/0 : 
+       param 0: PASS THROUGH: 0, op ne_expr 0B
+         value: 0x0, mask: 0x1
+         Unknown VR
+  Jump functions of caller  DevAssert/0:
+
+ Propagating constants:
+
+Not considering Siul2_Port_Ip_GetPinConfiguration for cloning; -fipa-cp-clone disabled.
+Not considering Siul2_Port_Ip_GetValuePinConfiguration for cloning; -fipa-cp-clone disabled.
+Not considering Siul2_Port_Ip_RevertPinConfiguration for cloning; -fipa-cp-clone disabled.
+Not considering Siul2_Port_Ip_GetValueConfigRevertPin for cloning; -fipa-cp-clone disabled.
+Not considering Siul2_Port_Ip_SetPinDirection for cloning; -fipa-cp-clone disabled.
+Not considering Siul2_Port_Ip_ConfigPinDirection for cloning; -fipa-cp-clone disabled.
+Not considering Siul2_Port_Ip_SetInputBuffer for cloning; -fipa-cp-clone disabled.
+Not considering Siul2_Port_Ip_ConfigInputBuffer for cloning; -fipa-cp-clone disabled.
+Not considering Siul2_Port_Ip_SetOutputBuffer for cloning; -fipa-cp-clone disabled.
+Not considering Siul2_Port_Ip_ConfigOutputBuffer for cloning; -fipa-cp-clone disabled.
+Not considering Siul2_Port_Ip_SetPullSel for cloning; -fipa-cp-clone disabled.
+Not considering Siul2_Port_Ip_ConfigInternalResistor for cloning; -fipa-cp-clone disabled.
+Not considering Siul2_Port_Ip_Init for cloning; -fipa-cp-clone disabled.
+Not considering Siul2_Port_Ip_PinInit for cloning; -fipa-cp-clone disabled.
+
+overall_size: 398, max_new_size: 11001
+
+IPA lattices after all propagation:
+
+Lattices:
+  Node: Siul2_Port_Ip_GetPinConfiguration/21:
+    param [0]: BOTTOM
+         ctxs: BOTTOM
+         Bits unusable (BOTTOM)
+         VARYING
+        AGGS BOTTOM
+    param [1]: BOTTOM
+         ctxs: BOTTOM
+         Bits unusable (BOTTOM)
+         VARYING
+        AGGS BOTTOM
+    param [2]: BOTTOM
+         ctxs: BOTTOM
+         Bits unusable (BOTTOM)
+         VARYING
+        AGGS BOTTOM
+  Node: Siul2_Port_Ip_GetValuePinConfiguration/20:
+    param [0]: BOTTOM
+         ctxs: BOTTOM
+         Bits unusable (BOTTOM)
+         VARYING
+        AGGS BOTTOM
+    param [1]: BOTTOM
+         ctxs: BOTTOM
+         Bits unusable (BOTTOM)
+         VARYING
+        AGGS BOTTOM
+    param [2]: BOTTOM
+         ctxs: BOTTOM
+         Bits unusable (BOTTOM)
+         VARYING
+        AGGS BOTTOM
+  Node: Siul2_Port_Ip_RevertPinConfiguration/19:
+    param [0]: BOTTOM
+         ctxs: BOTTOM
+         Bits unusable (BOTTOM)
+         VARYING
+        AGGS BOTTOM
+    param [1]: BOTTOM
+         ctxs: BOTTOM
+         Bits unusable (BOTTOM)
+         VARYING
+        AGGS BOTTOM
+  Node: Siul2_Port_Ip_GetValueConfigRevertPin/18:
+    param [0]: BOTTOM
+         ctxs: BOTTOM
+         Bits unusable (BOTTOM)
+         VARYING
+        AGGS BOTTOM
+    param [1]: BOTTOM
+         ctxs: BOTTOM
+         Bits unusable (BOTTOM)
+         VARYING
+        AGGS BOTTOM
+  Node: Siul2_Port_Ip_SetPinDirection/17:
+    param [0]: BOTTOM
+         ctxs: BOTTOM
+         Bits unusable (BOTTOM)
+         VARYING
+        AGGS BOTTOM
+    param [1]: BOTTOM
+         ctxs: BOTTOM
+         Bits unusable (BOTTOM)
+         VARYING
+        AGGS BOTTOM
+    param [2]: BOTTOM
+         ctxs: BOTTOM
+         Bits unusable (BOTTOM)
+         VARYING
+        AGGS BOTTOM
+  Node: Siul2_Port_Ip_ConfigPinDirection/16:
+    param [0]: BOTTOM
+         ctxs: BOTTOM
+         Bits unusable (BOTTOM)
+         VARYING
+        AGGS BOTTOM
+    param [1]: BOTTOM
+         ctxs: BOTTOM
+         Bits unusable (BOTTOM)
+         VARYING
+        AGGS BOTTOM
+    param [2]: BOTTOM
+         ctxs: BOTTOM
+         Bits unusable (BOTTOM)
+         VARYING
+        AGGS BOTTOM
+  Node: Siul2_Port_Ip_SetInputBuffer/15:
+    param [0]: BOTTOM
+         ctxs: BOTTOM
+         Bits unusable (BOTTOM)
+         VARYING
+        AGGS BOTTOM
+    param [1]: BOTTOM
+         ctxs: BOTTOM
+         Bits unusable (BOTTOM)
+         VARYING
+        AGGS BOTTOM
+    param [2]: BOTTOM
+         ctxs: BOTTOM
+         Bits unusable (BOTTOM)
+         VARYING
+        AGGS BOTTOM
+    param [3]: BOTTOM
+         ctxs: BOTTOM
+         Bits unusable (BOTTOM)
+         VARYING
+        AGGS BOTTOM
+    param [4]: BOTTOM
+         ctxs: BOTTOM
+         Bits unusable (BOTTOM)
+         VARYING
+        AGGS BOTTOM
+  Node: Siul2_Port_Ip_ConfigInputBuffer/14:
+    param [0]: BOTTOM
+         ctxs: BOTTOM
+         Bits unusable (BOTTOM)
+         VARYING
+        AGGS BOTTOM
+    param [1]: BOTTOM
+         ctxs: BOTTOM
+         Bits unusable (BOTTOM)
+         VARYING
+        AGGS BOTTOM
+    param [2]: BOTTOM
+         ctxs: BOTTOM
+         Bits unusable (BOTTOM)
+         VARYING
+        AGGS BOTTOM
+    param [3]: BOTTOM
+         ctxs: BOTTOM
+         Bits unusable (BOTTOM)
+         VARYING
+        AGGS BOTTOM
+    param [4]: BOTTOM
+         ctxs: BOTTOM
+         Bits unusable (BOTTOM)
+         VARYING
+        AGGS BOTTOM
+  Node: Siul2_Port_Ip_SetOutputBuffer/13:
+    param [0]: BOTTOM
+         ctxs: BOTTOM
+         Bits unusable (BOTTOM)
+         VARYING
+        AGGS BOTTOM
+    param [1]: BOTTOM
+         ctxs: BOTTOM
+         Bits unusable (BOTTOM)
+         VARYING
+        AGGS BOTTOM
+    param [2]: BOTTOM
+         ctxs: BOTTOM
+         Bits unusable (BOTTOM)
+         VARYING
+        AGGS BOTTOM
+    param [3]: BOTTOM
+         ctxs: BOTTOM
+         Bits unusable (BOTTOM)
+         VARYING
+        AGGS BOTTOM
+  Node: Siul2_Port_Ip_ConfigOutputBuffer/12:
+    param [0]: BOTTOM
+         ctxs: BOTTOM
+         Bits unusable (BOTTOM)
+         VARYING
+        AGGS BOTTOM
+    param [1]: BOTTOM
+         ctxs: BOTTOM
+         Bits unusable (BOTTOM)
+         VARYING
+        AGGS BOTTOM
+    param [2]: BOTTOM
+         ctxs: BOTTOM
+         Bits unusable (BOTTOM)
+         VARYING
+        AGGS BOTTOM
+    param [3]: BOTTOM
+         ctxs: BOTTOM
+         Bits unusable (BOTTOM)
+         VARYING
+        AGGS BOTTOM
+  Node: Siul2_Port_Ip_SetPullSel/11:
+    param [0]: BOTTOM
+         ctxs: BOTTOM
+         Bits unusable (BOTTOM)
+         VARYING
+        AGGS BOTTOM
+    param [1]: BOTTOM
+         ctxs: BOTTOM
+         Bits unusable (BOTTOM)
+         VARYING
+        AGGS BOTTOM
+    param [2]: BOTTOM
+         ctxs: BOTTOM
+         Bits unusable (BOTTOM)
+         VARYING
+        AGGS BOTTOM
+  Node: Siul2_Port_Ip_ConfigInternalResistor/10:
+    param [0]: BOTTOM
+         ctxs: BOTTOM
+         Bits unusable (BOTTOM)
+         VARYING
+        AGGS BOTTOM
+    param [1]: BOTTOM
+         ctxs: BOTTOM
+         Bits unusable (BOTTOM)
+         VARYING
+        AGGS BOTTOM
+    param [2]: BOTTOM
+         ctxs: BOTTOM
+         Bits unusable (BOTTOM)
+         VARYING
+        AGGS BOTTOM
+  Node: Siul2_Port_Ip_Init/9:
+    param [0]: BOTTOM
+         ctxs: BOTTOM
+         Bits unusable (BOTTOM)
+         VARYING
+        AGGS BOTTOM
+    param [1]: BOTTOM
+         ctxs: BOTTOM
+         Bits unusable (BOTTOM)
+         VARYING
+        AGGS BOTTOM
+  Node: Siul2_Port_Ip_GetMSCRConfiguration/8:
+    param [0]: VARIABLE
+         ctxs: VARIABLE
+         Bits unusable (BOTTOM)
+         VARYING
+        AGGS VARIABLE
+    param [1]: VARIABLE
+         ctxs: VARIABLE
+         Bits unusable (BOTTOM)
+         VARYING
+        AGGS VARIABLE
+    param [2]: VARIABLE
+         ctxs: VARIABLE
+         Bits unusable (BOTTOM)
+         VARYING
+        AGGS VARIABLE
+  Node: Siul2_Port_Ip_WriteIMCRConfiguration/7:
+    param [0]: VARIABLE
+         ctxs: VARIABLE
+         Bits unusable (BOTTOM)
+         VARYING
+        AGGS VARIABLE
+  Node: Siul2_Port_Ip_GetIMCRInstance/6:
+    param [0]: VARIABLE
+         ctxs: VARIABLE
+         Bits unusable (BOTTOM)
+         VARYING
+        AGGS VARIABLE
+    param [1]: VARIABLE
+         ctxs: VARIABLE
+         Bits: value = 0x0, mask = 0xfffffffc
+         uint32 * ~[0B, 0B]
+        AGGS VARIABLE
+    param [2]: VARIABLE
+         ctxs: VARIABLE
+         Bits: value = 0x0, mask = 0xfffffffc
+         struct SIUL2_Type * * ~[0B, 0B]
+        AGGS VARIABLE
+    param [3]: VARIABLE
+         ctxs: VARIABLE
+         Bits: value = 0x0, mask = 0xf
+         uint8 [0, 8]
+        AGGS VARIABLE
+  Node: Siul2_Port_Ip_PinInit/5:
+    param [0]: BOTTOM
+         ctxs: BOTTOM
+         Bits unusable (BOTTOM)
+         VARYING
+        AGGS BOTTOM
+  Node: DevAssert/0:
+    param [0]: VARIABLE
+         ctxs: VARIABLE
+         Bits unusable (BOTTOM)
+         VARYING
+        AGGS VARIABLE
+
+IPA decision stage:
+
+Propagated bits info for function Siul2_Port_Ip_GetIMCRInstance/6:
+ param 1: value = 0x0, mask = 0xfffffffc
+ param 2: value = 0x0, mask = 0xfffffffc
+ param 3: value = 0x0, mask = 0xf
+
+IPA constant propagation end
+
+Reclaiming functions:
+Reclaiming variables:
+Clearing address taken flags:
+Symbol table:
+
+SchM_Exit_Port_PORT_EXCLUSIVE_AREA_04/29 (SchM_Exit_Port_PORT_EXCLUSIVE_AREA_04) @06e78620
+  Type: function
+  Visibility: external public
+  References: 
+  Referring: 
+  Availability: not_available
+  Function flags: optimize_size
+  Called by: Siul2_Port_Ip_ConfigPinDirection/16 (1073741824 (estimated locally),1.00 per call) 
+  Calls: 
+SchM_Enter_Port_PORT_EXCLUSIVE_AREA_04/28 (SchM_Enter_Port_PORT_EXCLUSIVE_AREA_04) @06e78540
+  Type: function
+  Visibility: external public
+  References: 
+  Referring: 
+  Availability: not_available
+  Function flags: optimize_size
+  Called by: Siul2_Port_Ip_ConfigPinDirection/16 (1073741823 (estimated locally),1.00 per call) 
+  Calls: 
+SchM_Exit_Port_PORT_EXCLUSIVE_AREA_03/27 (SchM_Exit_Port_PORT_EXCLUSIVE_AREA_03) @06e782a0
+  Type: function
+  Visibility: external public
+  References: 
+  Referring: 
+  Availability: not_available
+  Function flags: optimize_size
+  Called by: Siul2_Port_Ip_ConfigInputBuffer/14 (1073741824 (estimated locally),1.00 per call) 
+  Calls: 
+SchM_Enter_Port_PORT_EXCLUSIVE_AREA_03/26 (SchM_Enter_Port_PORT_EXCLUSIVE_AREA_03) @06e781c0
+  Type: function
+  Visibility: external public
+  References: 
+  Referring: 
+  Availability: not_available
+  Function flags: optimize_size
+  Called by: Siul2_Port_Ip_ConfigInputBuffer/14 (1073741824 (estimated locally),1.00 per call) 
+  Calls: 
+SchM_Exit_Port_PORT_EXCLUSIVE_AREA_02/25 (SchM_Exit_Port_PORT_EXCLUSIVE_AREA_02) @06e0b2a0
+  Type: function
+  Visibility: external public
+  References: 
+  Referring: 
+  Availability: not_available
+  Function flags: optimize_size
+  Called by: Siul2_Port_Ip_ConfigOutputBuffer/12 (1073741824 (estimated locally),1.00 per call) 
+  Calls: 
+SchM_Enter_Port_PORT_EXCLUSIVE_AREA_02/24 (SchM_Enter_Port_PORT_EXCLUSIVE_AREA_02) @06e0bee0
+  Type: function
+  Visibility: external public
+  References: 
+  Referring: 
+  Availability: not_available
+  Function flags: optimize_size
+  Called by: Siul2_Port_Ip_ConfigOutputBuffer/12 (1073741824 (estimated locally),1.00 per call) 
+  Calls: 
+SchM_Exit_Port_PORT_EXCLUSIVE_AREA_01/23 (SchM_Exit_Port_PORT_EXCLUSIVE_AREA_01) @06e0bc40
+  Type: function
+  Visibility: external public
+  References: 
+  Referring: 
+  Availability: not_available
+  Function flags: optimize_size
+  Called by: Siul2_Port_Ip_ConfigInternalResistor/10 (751618 (estimated locally),0.88 per call) 
+  Calls: 
+SchM_Enter_Port_PORT_EXCLUSIVE_AREA_01/22 (SchM_Enter_Port_PORT_EXCLUSIVE_AREA_01) @06e0bb60
+  Type: function
+  Visibility: external public
+  References: 
+  Referring: 
+  Availability: not_available
+  Function flags: optimize_size
+  Called by: Siul2_Port_Ip_ConfigInternalResistor/10 (858992 (estimated locally),1.00 per call) 
+  Calls: 
+Siul2_Port_Ip_GetPinConfiguration/21 (Siul2_Port_Ip_GetPinConfiguration) @06e0b1c0
+  Type: function definition analyzed
+  Visibility: externally_visible public
+  References: 
+  Referring: 
+  Availability: available
+  Function flags: count:1073741824 (estimated locally) body optimize_size
+  Called by: 
+  Calls: Siul2_Port_Ip_GetValuePinConfiguration/20 (1073741824 (estimated locally),1.00 per call) DevAssert/0 (1073741824 (estimated locally),1.00 per call) DevAssert/0 (1073741824 (estimated locally),1.00 per call) 
+Siul2_Port_Ip_GetValuePinConfiguration/20 (Siul2_Port_Ip_GetValuePinConfiguration) @06e049a0
+  Type: function definition analyzed
+  Visibility: externally_visible public
+  References: pPort_Setting/2 (read)u32MaxPinConfigured/3 (read)
+  Referring: 
+  Availability: available
+  Function flags: count:114863532 (estimated locally) body optimize_size
+  Called by: Siul2_Port_Ip_GetPinConfiguration/21 (1073741824 (estimated locally),1.00 per call) 
+  Calls: Siul2_Port_Ip_GetMSCRConfiguration/8 (55807732 (estimated locally),0.49 per call) 
+Siul2_Port_Ip_RevertPinConfiguration/19 (Siul2_Port_Ip_RevertPinConfiguration) @06e040e0
+  Type: function definition analyzed
+  Visibility: externally_visible public
+  References: 
+  Referring: 
+  Availability: available
+  Function flags: count:1073741824 (estimated locally) body optimize_size
+  Called by: 
+  Calls: Siul2_Port_Ip_GetValueConfigRevertPin/18 (1073741824 (estimated locally),1.00 per call) DevAssert/0 (1073741824 (estimated locally),1.00 per call) DevAssert/0 (1073741824 (estimated locally),1.00 per call) 
+Siul2_Port_Ip_GetValueConfigRevertPin/18 (Siul2_Port_Ip_GetValueConfigRevertPin) @06e04b60
+  Type: function definition analyzed
+  Visibility: externally_visible public
+  References: pPort_Setting/2 (read)u32MaxPinConfigured/3 (read)
+  Referring: 
+  Availability: available
+  Function flags: count:114863532 (estimated locally) body optimize_size
+  Called by: Siul2_Port_Ip_RevertPinConfiguration/19 (1073741824 (estimated locally),1.00 per call) 
+  Calls: Siul2_Port_Ip_PinInit/5 (55807731 (estimated locally),0.49 per call) 
+Siul2_Port_Ip_SetPinDirection/17 (Siul2_Port_Ip_SetPinDirection) @06e048c0
+  Type: function definition analyzed
+  Visibility: externally_visible public
+  References: 
+  Referring: 
+  Availability: available
+  Function flags: count:1073741824 (estimated locally) body optimize_size
+  Called by: 
+  Calls: Siul2_Port_Ip_ConfigPinDirection/16 (1073741824 (estimated locally),1.00 per call) DevAssert/0 (1073741824 (estimated locally),1.00 per call) DevAssert/0 (1073741824 (estimated locally),1.00 per call) 
+Siul2_Port_Ip_ConfigPinDirection/16 (Siul2_Port_Ip_ConfigPinDirection) @06e04460
+  Type: function definition analyzed
+  Visibility: externally_visible public
+  References: 
+  Referring: 
+  Availability: available
+  Function flags: count:1073741823 (estimated locally) body optimize_size
+  Called by: Siul2_Port_Ip_SetPinDirection/17 (1073741824 (estimated locally),1.00 per call) 
+  Calls: SchM_Exit_Port_PORT_EXCLUSIVE_AREA_04/29 (1073741824 (estimated locally),1.00 per call) SchM_Enter_Port_PORT_EXCLUSIVE_AREA_04/28 (1073741823 (estimated locally),1.00 per call) 
+Siul2_Port_Ip_SetInputBuffer/15 (Siul2_Port_Ip_SetInputBuffer) @06e04000
+  Type: function definition analyzed
+  Visibility: externally_visible public
+  References: 
+  Referring: 
+  Availability: available
+  Function flags: count:1073741824 (estimated locally) body optimize_size
+  Called by: 
+  Calls: Siul2_Port_Ip_ConfigInputBuffer/14 (1073741824 (estimated locally),1.00 per call) DevAssert/0 (1073741824 (estimated locally),1.00 per call) 
+Siul2_Port_Ip_ConfigInputBuffer/14 (Siul2_Port_Ip_ConfigInputBuffer) @06d36460
+  Type: function definition analyzed
+  Visibility: externally_visible public
+  References: 
+  Referring: 
+  Availability: available
+  Function flags: count:1073741824 (estimated locally) body optimize_size
+  Called by: Siul2_Port_Ip_SetInputBuffer/15 (1073741824 (estimated locally),1.00 per call) 
+  Calls: SchM_Exit_Port_PORT_EXCLUSIVE_AREA_03/27 (1073741824 (estimated locally),1.00 per call) SchM_Enter_Port_PORT_EXCLUSIVE_AREA_03/26 (1073741824 (estimated locally),1.00 per call) 
+Siul2_Port_Ip_SetOutputBuffer/13 (Siul2_Port_Ip_SetOutputBuffer) @06d36c40
+  Type: function definition analyzed
+  Visibility: externally_visible public
+  References: 
+  Referring: 
+  Availability: available
+  Function flags: count:1073741824 (estimated locally) body optimize_size
+  Called by: 
+  Calls: Siul2_Port_Ip_ConfigOutputBuffer/12 (1073741824 (estimated locally),1.00 per call) DevAssert/0 (1073741824 (estimated locally),1.00 per call) DevAssert/0 (1073741824 (estimated locally),1.00 per call) 
+Siul2_Port_Ip_ConfigOutputBuffer/12 (Siul2_Port_Ip_ConfigOutputBuffer) @06d367e0
+  Type: function definition analyzed
+  Visibility: externally_visible public
+  References: 
+  Referring: 
+  Availability: available
+  Function flags: count:1073741824 (estimated locally) body optimize_size
+  Called by: Siul2_Port_Ip_SetOutputBuffer/13 (1073741824 (estimated locally),1.00 per call) 
+  Calls: SchM_Exit_Port_PORT_EXCLUSIVE_AREA_02/25 (1073741824 (estimated locally),1.00 per call) SchM_Enter_Port_PORT_EXCLUSIVE_AREA_02/24 (1073741824 (estimated locally),1.00 per call) 
+Siul2_Port_Ip_SetPullSel/11 (Siul2_Port_Ip_SetPullSel) @06d36380
+  Type: function definition analyzed
+  Visibility: externally_visible public
+  References: 
+  Referring: 
+  Availability: available
+  Function flags: count:1073741824 (estimated locally) body optimize_size
+  Called by: 
+  Calls: Siul2_Port_Ip_ConfigInternalResistor/10 (1073741824 (estimated locally),1.00 per call) DevAssert/0 (1073741824 (estimated locally),1.00 per call) DevAssert/0 (1073741824 (estimated locally),1.00 per call) 
+Siul2_Port_Ip_ConfigInternalResistor/10 (Siul2_Port_Ip_ConfigInternalResistor) @06d19ee0
+  Type: function definition analyzed
+  Visibility: externally_visible public
+  References: 
+  Referring: 
+  Availability: available
+  Function flags: count:858992 (estimated locally) body optimize_size
+  Called by: Siul2_Port_Ip_SetPullSel/11 (1073741824 (estimated locally),1.00 per call) 
+  Calls: SchM_Exit_Port_PORT_EXCLUSIVE_AREA_01/23 (751618 (estimated locally),0.88 per call) SchM_Enter_Port_PORT_EXCLUSIVE_AREA_01/22 (858992 (estimated locally),1.00 per call) 
+Siul2_Port_Ip_Init/9 (Siul2_Port_Ip_Init) @06d198c0
+  Type: function definition analyzed
+  Visibility: externally_visible public
+  References: pPort_Setting/2 (write)u32MaxPinConfigured/3 (write)
+  Referring: 
+  Availability: available
+  Function flags: count:118111600 (estimated locally) body optimize_size
+  Called by: 
+  Calls: Siul2_Port_Ip_PinInit/5 (955630223 (estimated locally),8.09 per call) 
+Siul2_Port_Ip_GetMSCRConfiguration/8 (Siul2_Port_Ip_GetMSCRConfiguration) @06d19e00
+  Type: function definition analyzed
+  Visibility: prevailing_def_ironly
+  References: 
+  Referring: 
+  Availability: local
+  Function flags: count:1073741824 (estimated locally) body local optimize_size
+  Called by: Siul2_Port_Ip_GetValuePinConfiguration/20 (55807732 (estimated locally),0.49 per call) 
+  Calls: 
+Siul2_Port_Ip_WriteIMCRConfiguration/7 (Siul2_Port_Ip_WriteIMCRConfiguration) @06d19b60
+  Type: function definition analyzed
+  Visibility: prevailing_def_ironly
+  References: 
+  Referring: 
+  Availability: local
+  Function flags: count:350860930 (estimated locally) body local optimize_size
+  Called by: Siul2_Port_Ip_PinInit/5 (1073741824 (estimated locally),1.00 per call) 
+  Calls: Siul2_Port_Ip_GetIMCRInstance/6 (466534724 (estimated locally),1.33 per call) 
+Siul2_Port_Ip_GetIMCRInstance/6 (Siul2_Port_Ip_GetIMCRInstance) @06d197e0
+  Type: function definition analyzed
+  Visibility: prevailing_def_ironly
+  References: 
+  Referring: 
+  Availability: local
+  Function flags: count:1073741824 (estimated locally) body local optimize_size
+  Called by: Siul2_Port_Ip_WriteIMCRConfiguration/7 (466534724 (estimated locally),1.33 per call) 
+  Calls: 
+Siul2_Port_Ip_PinInit/5 (Siul2_Port_Ip_PinInit) @06d19540
+  Type: function definition analyzed
+  Visibility: externally_visible public
+  References: 
+  Referring: 
+  Availability: available
+  Function flags: count:1073741824 (estimated locally) body optimize_size
+  Called by: Siul2_Port_Ip_GetValueConfigRevertPin/18 (55807731 (estimated locally),0.49 per call) Siul2_Port_Ip_Init/9 (955630223 (estimated locally),8.09 per call) 
+  Calls: Siul2_Port_Ip_WriteIMCRConfiguration/7 (1073741824 (estimated locally),1.00 per call) DevAssert/0 (1073741824 (estimated locally),1.00 per call) DevAssert/0 (1073741824 (estimated locally),1.00 per call) DevAssert/0 (1073741824 (estimated locally),1.00 per call) 
+u32MaxPinConfigured/3 (u32MaxPinConfigured) @06d160d8
+  Type: variable definition analyzed
+  Visibility: prevailing_def_ironly
+  References: 
+  Referring: Siul2_Port_Ip_Init/9 (write)Siul2_Port_Ip_GetValueConfigRevertPin/18 (read)Siul2_Port_Ip_GetValuePinConfiguration/20 (read)
+  Availability: available
+  Varpool flags:
+pPort_Setting/2 (pPort_Setting) @06d16048
+  Type: variable definition analyzed
+  Visibility: prevailing_def_ironly
+  References: 
+  Referring: Siul2_Port_Ip_Init/9 (write)Siul2_Port_Ip_GetValueConfigRevertPin/18 (read)Siul2_Port_Ip_GetValuePinConfiguration/20 (read)
+  Availability: available
+  Varpool flags:
+Port_au32Siul2BaseAddr/1 (Port_au32Siul2BaseAddr) @06d0ef78
+  Type: variable definition analyzed
+  Visibility: externally_visible public
+  References: 
+  Referring: 
+  Availability: available
+  Varpool flags: initialized read-only const-value-known
+DevAssert/0 (DevAssert) @06b6d8c0
+  Type: function definition analyzed
+  Visibility: prevailing_def_ironly
+  References: 
+  Referring: 
+  Availability: local
+  Function flags: count:214748 (estimated locally) body local optimize_size
+  Called by: Siul2_Port_Ip_GetPinConfiguration/21 (1073741824 (estimated locally),1.00 per call) Siul2_Port_Ip_GetPinConfiguration/21 (1073741824 (estimated locally),1.00 per call) Siul2_Port_Ip_RevertPinConfiguration/19 (1073741824 (estimated locally),1.00 per call) Siul2_Port_Ip_RevertPinConfiguration/19 (1073741824 (estimated locally),1.00 per call) Siul2_Port_Ip_SetPinDirection/17 (1073741824 (estimated locally),1.00 per call) Siul2_Port_Ip_SetPinDirection/17 (1073741824 (estimated locally),1.00 per call) Siul2_Port_Ip_SetInputBuffer/15 (1073741824 (estimated locally),1.00 per call) Siul2_Port_Ip_SetOutputBuffer/13 (1073741824 (estimated locally),1.00 per call) Siul2_Port_Ip_SetOutputBuffer/13 (1073741824 (estimated locally),1.00 per call) Siul2_Port_Ip_SetPullSel/11 (1073741824 (estimated locally),1.00 per call) Siul2_Port_Ip_SetPullSel/11 (1073741824 (estimated locally),1.00 per call) Siul2_Port_Ip_PinInit/5 (1073741824 (estimated locally),1.00 per call) Siul2_Port_Ip_PinInit/5 (1073741824 (estimated locally),1.00 per call) Siul2_Port_Ip_PinInit/5 (1073741824 (estimated locally),1.00 per call) 
+  Calls: 
+
+;; Function DevAssert (DevAssert, funcdef_no=0, decl_uid=5900, cgraph_uid=1, symbol_order=0)
+
+Modification phase of node DevAssert/0
+DevAssert (volatile boolean x)
+{
+  _Bool x.0_1;
+
+  <bb 2> [local count: 214748]:
+  # DEBUG BEGIN_STMT
+  x.0_1 ={v} x;
+  if (x.0_1 != 0)
+    goto <bb 4>; [50.00%]
+  else
+    goto <bb 5>; [50.00%]
+
+  <bb 5> [local count: 107374]:
+
+  <bb 3> [local count: 1073741824]:
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  __asm__ __volatile__("BKPT #0");
+  # DEBUG BEGIN_STMT
+
+  <bb 6> [local count: 1073741824]:
+  goto <bb 3>; [100.00%]
+
+  <bb 4> [local count: 107374]:
+  # DEBUG BEGIN_STMT
+  return;
+
+}
+
+
+
+;; Function Siul2_Port_Ip_PinInit (Siul2_Port_Ip_PinInit, funcdef_no=2, decl_uid=5935, cgraph_uid=3, symbol_order=5)
+
+Modification phase of node Siul2_Port_Ip_PinInit/5
+Siul2_Port_Ip_PinInit (const struct Siul2_Port_Ip_PinSettingsConfig * config)
+{
+  uint32 pinsValues;
+  _Bool _1;
+  long unsigned int _2;
+  _Bool _3;
+  <unnamed type> _4;
+  long unsigned int _5;
+  long unsigned int _6;
+  long unsigned int _7;
+  <unnamed type> _8;
+  long unsigned int _9;
+  long unsigned int _10;
+  long unsigned int _11;
+  <unnamed type> _12;
+  long unsigned int _13;
+  long unsigned int _14;
+  long unsigned int _15;
+  <unnamed type> _16;
+  long unsigned int _17;
+  long unsigned int _18;
+  long unsigned int _19;
+  <unnamed type> _20;
+  long unsigned int _21;
+  long unsigned int _22;
+  long unsigned int _23;
+  <unnamed type> _24;
+  long unsigned int _25;
+  long unsigned int _26;
+  long unsigned int _27;
+  <unnamed type> _28;
+  long unsigned int _29;
+  long unsigned int _30;
+  long unsigned int _31;
+  <unnamed type> _32;
+  long unsigned int _33;
+  unsigned char _34;
+  long unsigned int _35;
+  short unsigned int _36;
+  short unsigned int _37;
+  long unsigned int _38;
+  long unsigned int _39;
+  volatile uint8 * _40;
+  struct SIUL2_Type * _41;
+  long unsigned int _42;
+  <unnamed type> _51;
+
+  <bb 2> [local count: 1073741824]:
+  # DEBUG BEGIN_STMT
+  # DEBUG pinsValues => 0
+  # DEBUG BEGIN_STMT
+  # DEBUG siulInstance => 0
+  # DEBUG BEGIN_STMT
+  _1 = config_52(D) != 0B;
+  DevAssert (_1);
+  # DEBUG BEGIN_STMT
+  _2 = config_52(D)->pinPortIdx;
+  _3 = _2 <= 106;
+  DevAssert (_3);
+  # DEBUG BEGIN_STMT
+  # DEBUG config => config_52(D)
+  # DEBUG INLINE_ENTRY Siul2_Port_Ip_GetSiulInstance
+  # DEBUG BEGIN_STMT
+  # DEBUG siulInstance => 0
+  # DEBUG BEGIN_STMT
+  DevAssert (_1);
+  # DEBUG BEGIN_STMT
+  # DEBUG siulInstance => 0
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG config => NULL
+  # DEBUG siulInstance => 0
+  # DEBUG BEGIN_STMT
+  _4 = config_52(D)->pullConfig;
+  if (_4 != 2)
+    goto <bb 3>; [66.00%]
+  else
+    goto <bb 4>; [34.00%]
+
+  <bb 3> [local count: 708669605]:
+  # DEBUG BEGIN_STMT
+  # DEBUG pinsValues => 8192
+  # DEBUG BEGIN_STMT
+  _5 = (long unsigned int) _4;
+  _6 = _5 << 12;
+  _7 = _6 & 4096;
+  pinsValues_56 = _7 | 8192;
+  # DEBUG pinsValues => pinsValues_56
+
+  <bb 4> [local count: 1073741824]:
+  # pinsValues_43 = PHI <0(2), pinsValues_56(3)>
+  # DEBUG pinsValues => pinsValues_43
+  # DEBUG BEGIN_STMT
+  _8 = config_52(D)->outputBuffer;
+  if (_8 != 2)
+    goto <bb 5>; [66.00%]
+  else
+    goto <bb 6>; [34.00%]
+
+  <bb 5> [local count: 708669605]:
+  # DEBUG BEGIN_STMT
+  _9 = (long unsigned int) _8;
+  _10 = _9 << 21;
+  _11 = _10 & 2097152;
+  pinsValues_57 = _11 | pinsValues_43;
+  # DEBUG pinsValues => pinsValues_57
+
+  <bb 6> [local count: 1073741824]:
+  # pinsValues_44 = PHI <pinsValues_43(4), pinsValues_57(5)>
+  # DEBUG pinsValues => pinsValues_44
+  # DEBUG BEGIN_STMT
+  _12 = config_52(D)->receiverSel;
+  if (_12 != 2)
+    goto <bb 7>; [66.00%]
+  else
+    goto <bb 8>; [34.00%]
+
+  <bb 7> [local count: 708669605]:
+  # DEBUG BEGIN_STMT
+  _13 = (long unsigned int) _12;
+  _14 = _13 << 10;
+  _15 = _14 & 1024;
+  pinsValues_58 = _15 | pinsValues_44;
+  # DEBUG pinsValues => pinsValues_58
+
+  <bb 8> [local count: 1073741824]:
+  # pinsValues_45 = PHI <pinsValues_44(6), pinsValues_58(7)>
+  # DEBUG pinsValues => pinsValues_45
+  # DEBUG BEGIN_STMT
+  _16 = config_52(D)->openDrain;
+  if (_16 != 2)
+    goto <bb 9>; [66.00%]
+  else
+    goto <bb 10>; [34.00%]
+
+  <bb 9> [local count: 708669605]:
+  # DEBUG BEGIN_STMT
+  _17 = (long unsigned int) _16;
+  _18 = _17 << 20;
+  _19 = _18 & 1048576;
+  pinsValues_59 = _19 | pinsValues_45;
+  # DEBUG pinsValues => pinsValues_59
+
+  <bb 10> [local count: 1073741824]:
+  # pinsValues_46 = PHI <pinsValues_45(8), pinsValues_59(9)>
+  # DEBUG pinsValues => pinsValues_46
+  # DEBUG BEGIN_STMT
+  _20 = config_52(D)->inputBuffer;
+  if (_20 != 2)
+    goto <bb 11>; [66.00%]
+  else
+    goto <bb 12>; [34.00%]
+
+  <bb 11> [local count: 708669605]:
+  # DEBUG BEGIN_STMT
+  _21 = (long unsigned int) _20;
+  _22 = _21 << 19;
+  _23 = _22 & 524288;
+  pinsValues_60 = _23 | pinsValues_46;
+  # DEBUG pinsValues => pinsValues_60
+
+  <bb 12> [local count: 1073741824]:
+  # pinsValues_47 = PHI <pinsValues_46(10), pinsValues_60(11)>
+  # DEBUG pinsValues => pinsValues_47
+  # DEBUG BEGIN_STMT
+  _24 = config_52(D)->slewRateCtrlSel;
+  if (_24 != 16)
+    goto <bb 13>; [66.00%]
+  else
+    goto <bb 14>; [34.00%]
+
+  <bb 13> [local count: 708669605]:
+  # DEBUG BEGIN_STMT
+  _25 = (long unsigned int) _24;
+  _26 = _25 << 14;
+  _27 = _26 & 114688;
+  pinsValues_61 = _27 | pinsValues_47;
+  # DEBUG pinsValues => pinsValues_61
+
+  <bb 14> [local count: 1073741824]:
+  # pinsValues_48 = PHI <pinsValues_47(12), pinsValues_61(13)>
+  # DEBUG pinsValues => pinsValues_48
+  # DEBUG BEGIN_STMT
+  _28 = config_52(D)->safeMode;
+  if (_28 != 2)
+    goto <bb 15>; [66.00%]
+  else
+    goto <bb 16>; [34.00%]
+
+  <bb 15> [local count: 708669605]:
+  # DEBUG BEGIN_STMT
+  _29 = (long unsigned int) _28;
+  _30 = _29 << 5;
+  _31 = _30 & 32;
+  pinsValues_62 = _31 | pinsValues_48;
+  # DEBUG pinsValues => pinsValues_62
+
+  <bb 16> [local count: 1073741824]:
+  # pinsValues_49 = PHI <pinsValues_48(14), pinsValues_62(15)>
+  # DEBUG pinsValues => pinsValues_49
+  # DEBUG BEGIN_STMT
+  _32 = config_52(D)->mux;
+  _51 = _32 & 7;
+  _33 = (long unsigned int) _51;
+  pinsValues_63 = _33 | pinsValues_49;
+  # DEBUG pinsValues => pinsValues_63
+  # DEBUG BEGIN_STMT
+  if (_32 == 0)
+    goto <bb 17>; [50.00%]
+  else
+    goto <bb 20>; [50.00%]
+
+  <bb 17> [local count: 536870913]:
+  if (_8 == 1)
+    goto <bb 18>; [34.00%]
+  else
+    goto <bb 20>; [66.00%]
+
+  <bb 18> [local count: 182536110]:
+  # DEBUG BEGIN_STMT
+  _34 = config_52(D)->initValue;
+  if (_34 != 2)
+    goto <bb 19>; [66.00%]
+  else
+    goto <bb 20>; [34.00%]
+
+  <bb 19> [local count: 120473833]:
+  # DEBUG BEGIN_STMT
+  _35 = config_52(D)->pinPortIdx;
+  _36 = (short unsigned int) _35;
+  _37 = _36 ^ 3;
+  _38 = (long unsigned int) _37;
+  _39 = _38 + 1074795264;
+  _40 = (volatile uint8 *) _39;
+  *_40 ={v} _34;
+
+  <bb 20> [local count: 1073741824]:
+  # DEBUG BEGIN_STMT
+  _41 = config_52(D)->base;
+  _42 = config_52(D)->pinPortIdx;
+  _41->MSCR[_42] ={v} pinsValues_63;
+  # DEBUG BEGIN_STMT
+  Siul2_Port_Ip_WriteIMCRConfiguration (config_52(D));
+  return;
+
+}
+
+
+
+;; Function Siul2_Port_Ip_Init (Siul2_Port_Ip_Init, funcdef_no=6, decl_uid=5922, cgraph_uid=7, symbol_order=9)
+
+Modification phase of node Siul2_Port_Ip_Init/9
+Siul2_Port_Ip_Init (uint32 pinCount, const struct Siul2_Port_Ip_PinSettingsConfig * config)
+{
+  uint32 i;
+  long unsigned int _1;
+  const struct Siul2_Port_Ip_PinSettingsConfig * _2;
+
+  <bb 2> [local count: 118111600]:
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  pPort_Setting = config_6(D);
+  # DEBUG BEGIN_STMT
+  u32MaxPinConfigured = pinCount_8(D);
+  # DEBUG BEGIN_STMT
+  # DEBUG i => 0
+  goto <bb 4>; [100.00%]
+
+  <bb 3> [local count: 955630223]:
+  # DEBUG BEGIN_STMT
+  _1 = i_3 * 60;
+  _2 = config_6(D) + _1;
+  Siul2_Port_Ip_PinInit (_2);
+  # DEBUG BEGIN_STMT
+  i_11 = i_3 + 1;
+  # DEBUG i => i_11
+
+  <bb 4> [local count: 1073741824]:
+  # i_3 = PHI <0(2), i_11(3)>
+  # DEBUG i => i_3
+  # DEBUG BEGIN_STMT
+  if (i_3 < pinCount_8(D))
+    goto <bb 3>; [89.00%]
+  else
+    goto <bb 5>; [11.00%]
+
+  <bb 5> [local count: 118111601]:
+  # DEBUG BEGIN_STMT
+  return 0;
+
+}
+
+
+
+;; Function Siul2_Port_Ip_ConfigInternalResistor (Siul2_Port_Ip_ConfigInternalResistor, funcdef_no=7, decl_uid=5939, cgraph_uid=8, symbol_order=10)
+
+Modification phase of node Siul2_Port_Ip_ConfigInternalResistor/10
+Siul2_Port_Ip_ConfigInternalResistor (struct Siul2_Port_Ip_PortType * const base, uint16 pin, Siul2_Port_Ip_PortPullConfig pullConfig)
+{
+  volatile boolean x;
+  uint32 regVal;
+  int _1;
+  long unsigned int _2;
+  long unsigned int _3;
+  int _4;
+  int _5;
+  long unsigned int _19;
+  _Bool x.0_21;
+
+  <bb 2> [local count: 858992]:
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG pueVal => 8192
+  # DEBUG BEGIN_STMT
+  # DEBUG pusVal => 4096
+  # DEBUG BEGIN_STMT
+  SchM_Enter_Port_PORT_EXCLUSIVE_AREA_01 ();
+  # DEBUG BEGIN_STMT
+  switch (pullConfig_9(D)) <default: <L3> [25.00%], case 0: <L1> [25.00%], case 1: <L2> [25.00%], case 2: <L0> [25.00%]>
+
+  <bb 3> [local count: 214748]:
+<L0>:
+  # DEBUG BEGIN_STMT
+  _1 = (int) pin_10(D);
+  _2 ={v} base_11(D)->MSCR[_1];
+  _3 = _2 & 4294959103;
+  base_11(D)->MSCR[_1] ={v} _3;
+  # DEBUG BEGIN_STMT
+  goto <bb 8>; [100.00%]
+
+  <bb 4> [local count: 214748]:
+<L1>:
+  # DEBUG BEGIN_STMT
+  _4 = (int) pin_10(D);
+  regVal_16 ={v} base_11(D)->MSCR[_4];
+  # DEBUG regVal => regVal_16
+  # DEBUG BEGIN_STMT
+  # DEBUG regVal => regVal_16 | 8192
+  # DEBUG BEGIN_STMT
+  _19 = regVal_16 & 4294963199;
+  regVal_17 = _19 | 8192;
+  # DEBUG regVal => regVal_17
+  # DEBUG BEGIN_STMT
+  base_11(D)->MSCR[_4] ={v} regVal_17;
+  # DEBUG BEGIN_STMT
+  goto <bb 8>; [100.00%]
+
+  <bb 5> [local count: 214748]:
+<L2>:
+  # DEBUG BEGIN_STMT
+  _5 = (int) pin_10(D);
+  regVal_13 ={v} base_11(D)->MSCR[_5];
+  # DEBUG regVal => regVal_13
+  # DEBUG BEGIN_STMT
+  # DEBUG regVal => regVal_13 | 8192
+  # DEBUG BEGIN_STMT
+  regVal_14 = regVal_13 | 12288;
+  # DEBUG regVal => regVal_14
+  # DEBUG BEGIN_STMT
+  base_11(D)->MSCR[_5] ={v} regVal_14;
+  # DEBUG BEGIN_STMT
+  goto <bb 8>; [100.00%]
+
+  <bb 6> [local count: 214748]:
+<L3>:
+  # DEBUG BEGIN_STMT
+  x ={v} 0;
+  # DEBUG x => x
+  # DEBUG INLINE_ENTRY DevAssert
+  # DEBUG BEGIN_STMT
+  x.0_21 ={v} x;
+  if (x.0_21 != 0)
+    goto <bb 8>; [50.00%]
+  else
+    goto <bb 9>; [50.00%]
+
+  <bb 9> [local count: 107374]:
+
+  <bb 7> [local count: 1073741824]:
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  __asm__ __volatile__("BKPT #0");
+  # DEBUG BEGIN_STMT
+
+  <bb 10> [local count: 1073741824]:
+  goto <bb 7>; [100.00%]
+
+  <bb 8> [local count: 751618]:
+  # DEBUG x => NULL
+  # DEBUG BEGIN_STMT
+  SchM_Exit_Port_PORT_EXCLUSIVE_AREA_01 ();
+  return;
+
+}
+
+
+
+;; Function Siul2_Port_Ip_SetPullSel (Siul2_Port_Ip_SetPullSel, funcdef_no=8, decl_uid=5908, cgraph_uid=9, symbol_order=11)
+
+Modification phase of node Siul2_Port_Ip_SetPullSel/11
+Siul2_Port_Ip_SetPullSel (struct Siul2_Port_Ip_PortType * const base, uint16 pin, Siul2_Port_Ip_PortPullConfig pullConfig)
+{
+  _Bool _1;
+  _Bool _2;
+
+  <bb 2> [local count: 1073741824]:
+  # DEBUG BEGIN_STMT
+  _1 = base_3(D) != 0B;
+  DevAssert (_1);
+  # DEBUG BEGIN_STMT
+  _2 = pin_6(D) <= 15;
+  DevAssert (_2);
+  # DEBUG BEGIN_STMT
+  Siul2_Port_Ip_ConfigInternalResistor (base_3(D), pin_6(D), pullConfig_8(D));
+  return;
+
+}
+
+
+
+;; Function Siul2_Port_Ip_ConfigOutputBuffer (Siul2_Port_Ip_ConfigOutputBuffer, funcdef_no=9, decl_uid=5944, cgraph_uid=10, symbol_order=12)
+
+Modification phase of node Siul2_Port_Ip_ConfigOutputBuffer/12
+Siul2_Port_Ip_ConfigOutputBuffer (struct Siul2_Port_Ip_PortType * const base, uint16 pin, boolean enable, Siul2_Port_Ip_PortMux mux)
+{
+  int _1;
+  long unsigned int _2;
+  long unsigned int _3;
+  long unsigned int _4;
+  long unsigned int _5;
+  long unsigned int _6;
+  long unsigned int _7;
+  long unsigned int _8;
+  long unsigned int _9;
+  long unsigned int _10;
+  long unsigned int iftmp.5_11;
+  <unnamed type> _18;
+
+  <bb 2> [local count: 1073741824]:
+  # DEBUG BEGIN_STMT
+  SchM_Enter_Port_PORT_EXCLUSIVE_AREA_02 ();
+  # DEBUG BEGIN_STMT
+  _1 = (int) pin_14(D);
+  _2 ={v} base_15(D)->MSCR[_1];
+  _3 = _2 & 4292870143;
+  base_15(D)->MSCR[_1] ={v} _3;
+  # DEBUG BEGIN_STMT
+  _4 ={v} base_15(D)->MSCR[_1];
+  if (enable_17(D) != 0)
+    goto <bb 4>; [50.00%]
+  else
+    goto <bb 3>; [50.00%]
+
+  <bb 3> [local count: 536870913]:
+
+  <bb 4> [local count: 1073741824]:
+  # iftmp.5_11 = PHI <2097152(2), 0(3)>
+  _5 = _4 | iftmp.5_11;
+  base_15(D)->MSCR[_1] ={v} _5;
+  # DEBUG BEGIN_STMT
+  _6 ={v} base_15(D)->MSCR[_1];
+  _7 = _6 & 4294967288;
+  base_15(D)->MSCR[_1] ={v} _7;
+  # DEBUG BEGIN_STMT
+  _8 ={v} base_15(D)->MSCR[_1];
+  _18 = mux_21(D) & 7;
+  _9 = (long unsigned int) _18;
+  _10 = _8 | _9;
+  base_15(D)->MSCR[_1] ={v} _10;
+  # DEBUG BEGIN_STMT
+  SchM_Exit_Port_PORT_EXCLUSIVE_AREA_02 ();
+  return;
+
+}
+
+
+
+;; Function Siul2_Port_Ip_SetOutputBuffer (Siul2_Port_Ip_SetOutputBuffer, funcdef_no=10, decl_uid=5913, cgraph_uid=11, symbol_order=13)
+
+Modification phase of node Siul2_Port_Ip_SetOutputBuffer/13
+Siul2_Port_Ip_SetOutputBuffer (struct Siul2_Port_Ip_PortType * const base, uint16 pin, boolean enable, Siul2_Port_Ip_PortMux mux)
+{
+  _Bool _1;
+  _Bool _2;
+
+  <bb 2> [local count: 1073741824]:
+  # DEBUG BEGIN_STMT
+  _1 = base_3(D) != 0B;
+  DevAssert (_1);
+  # DEBUG BEGIN_STMT
+  _2 = pin_6(D) <= 15;
+  DevAssert (_2);
+  # DEBUG BEGIN_STMT
+  Siul2_Port_Ip_ConfigOutputBuffer (base_3(D), pin_6(D), enable_8(D), mux_9(D));
+  return;
+
+}
+
+
+
+;; Function Siul2_Port_Ip_ConfigInputBuffer (Siul2_Port_Ip_ConfigInputBuffer, funcdef_no=11, decl_uid=5950, cgraph_uid=12, symbol_order=14)
+
+Modification phase of node Siul2_Port_Ip_ConfigInputBuffer/14
+Siul2_Port_Ip_ConfigInputBuffer (struct Siul2_Port_Ip_PortType * const base, uint16 pin, boolean enable, uint32 inputMuxReg, Siul2_Port_Ip_PortInputMux inputMux)
+{
+  uint32 imcrVal;
+  struct SIUL2_Type * siul2Base;
+  int _1;
+  long unsigned int _2;
+  long unsigned int _3;
+  long unsigned int _4;
+  long unsigned int _5;
+  long unsigned int _6;
+  long unsigned int _7;
+  long unsigned int iftmp.6_9;
+  <unnamed type> _12;
+
+  <bb 2> [local count: 1073741824]:
+  # DEBUG BEGIN_STMT
+  # DEBUG siul2Base => 0B
+  # DEBUG BEGIN_STMT
+  # DEBUG imcrRegIdx => inputMuxReg_13(D)
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  SchM_Enter_Port_PORT_EXCLUSIVE_AREA_03 ();
+  # DEBUG BEGIN_STMT
+  if (base_16(D) != 0B)
+    goto <bb 3>; [70.00%]
+  else
+    goto <bb 6>; [30.00%]
+
+  <bb 3> [local count: 751619278]:
+  # DEBUG BEGIN_STMT
+  _1 = (int) pin_17(D);
+  _2 ={v} base_16(D)->MSCR[_1];
+  _3 = _2 & 4294443007;
+  base_16(D)->MSCR[_1] ={v} _3;
+  # DEBUG BEGIN_STMT
+  _4 ={v} base_16(D)->MSCR[_1];
+  if (enable_19(D) != 0)
+    goto <bb 5>; [50.00%]
+  else
+    goto <bb 4>; [50.00%]
+
+  <bb 4> [local count: 375809639]:
+
+  <bb 5> [local count: 751619278]:
+  # iftmp.6_9 = PHI <524288(3), 0(4)>
+  _5 = _4 | iftmp.6_9;
+  base_16(D)->MSCR[_1] ={v} _5;
+
+  <bb 6> [local count: 1073741824]:
+  # DEBUG BEGIN_STMT
+  if (inputMux_21(D) != 16)
+    goto <bb 7>; [66.00%]
+  else
+    goto <bb 12>; [34.00%]
+
+  <bb 7> [local count: 708669605]:
+  # DEBUG BEGIN_STMT
+  if (inputMuxReg_13(D) <= 511)
+    goto <bb 8>; [50.00%]
+  else
+    goto <bb 10>; [50.00%]
+
+  <bb 8> [local count: 354334802]:
+  # DEBUG BEGIN_STMT
+  if (inputMuxReg_13(D) <= 107)
+    goto <bb 9>; [50.00%]
+  else
+    goto <bb 10>; [50.00%]
+
+  <bb 9> [local count: 177167401]:
+  # DEBUG BEGIN_STMT
+  # DEBUG siul2Base => 1074790400B
+
+  <bb 10> [local count: 708669605]:
+  # siul2Base_8 = PHI <0B(7), 0B(8), 1074790400B(9)>
+  # DEBUG siul2Base => siul2Base_8
+  # DEBUG BEGIN_STMT
+  if (inputMuxReg_13(D) <= 107)
+    goto <bb 11>; [50.00%]
+  else
+    goto <bb 12>; [50.00%]
+
+  <bb 11> [local count: 354334802]:
+  # DEBUG BEGIN_STMT
+  _6 = inputMuxReg_13(D);
+  imcrVal_22 ={v} siul2Base_8->IMCR[_6];
+  # DEBUG imcrVal => imcrVal_22
+  # DEBUG BEGIN_STMT
+  imcrVal_23 = imcrVal_22 & 4294967288;
+  # DEBUG imcrVal => imcrVal_23
+  # DEBUG BEGIN_STMT
+  _12 = inputMux_21(D) & 7;
+  _7 = (long unsigned int) _12;
+  imcrVal_24 = _7 | imcrVal_23;
+  # DEBUG imcrVal => imcrVal_24
+  # DEBUG BEGIN_STMT
+  siul2Base_8->IMCR[_6] ={v} imcrVal_24;
+
+  <bb 12> [local count: 1073741824]:
+  # DEBUG BEGIN_STMT
+  SchM_Exit_Port_PORT_EXCLUSIVE_AREA_03 ();
+  return;
+
+}
+
+
+
+;; Function Siul2_Port_Ip_SetInputBuffer (Siul2_Port_Ip_SetInputBuffer, funcdef_no=12, decl_uid=5919, cgraph_uid=13, symbol_order=15)
+
+Modification phase of node Siul2_Port_Ip_SetInputBuffer/15
+Siul2_Port_Ip_SetInputBuffer (struct Siul2_Port_Ip_PortType * const base, uint16 pin, boolean enable, uint32 inputMuxReg, Siul2_Port_Ip_PortInputMux inputMux)
+{
+  _Bool _1;
+
+  <bb 2> [local count: 1073741824]:
+  # DEBUG BEGIN_STMT
+  _1 = pin_2(D) <= 15;
+  DevAssert (_1);
+  # DEBUG BEGIN_STMT
+  Siul2_Port_Ip_ConfigInputBuffer (base_5(D), pin_2(D), enable_6(D), inputMuxReg_7(D), inputMux_8(D));
+  return;
+
+}
+
+
+
+;; Function Siul2_Port_Ip_ConfigPinDirection (Siul2_Port_Ip_ConfigPinDirection, funcdef_no=13, decl_uid=5954, cgraph_uid=14, symbol_order=16)
+
+Modification phase of node Siul2_Port_Ip_ConfigPinDirection/16
+Siul2_Port_Ip_ConfigPinDirection (struct Siul2_Port_Ip_PortType * const base, uint16 pin, Siul2_Port_Ip_PortDirectionType direction)
+{
+  int _1;
+  long unsigned int _2;
+  long unsigned int _3;
+  long unsigned int _4;
+  long unsigned int _5;
+  int _6;
+  long unsigned int _7;
+  long unsigned int _8;
+  long unsigned int _9;
+  long unsigned int _10;
+  int _11;
+  long unsigned int _12;
+  long unsigned int _13;
+  int _14;
+  long unsigned int _15;
+  long unsigned int _16;
+
+  <bb 2> [local count: 1073741823]:
+  # DEBUG BEGIN_STMT
+  SchM_Enter_Port_PORT_EXCLUSIVE_AREA_04 ();
+  # DEBUG BEGIN_STMT
+  switch (direction_20(D)) <default: <L6> [20.00%], case 0: <L0> [20.00%], case 1: <L1> [20.00%], case 2: <L2> [20.00%], case 3: <L3> [20.00%]>
+
+  <bb 3> [local count: 214748364]:
+<L0>:
+  # DEBUG BEGIN_STMT
+  _1 = (int) pin_21(D);
+  _2 ={v} base_22(D)->MSCR[_1];
+  _3 = _2 & 4292870143;
+  base_22(D)->MSCR[_1] ={v} _3;
+  # DEBUG BEGIN_STMT
+  _4 ={v} base_22(D)->MSCR[_1];
+  _5 = _4 | 524288;
+  base_22(D)->MSCR[_1] ={v} _5;
+  # DEBUG BEGIN_STMT
+  goto <bb 7>; [100.00%]
+
+  <bb 4> [local count: 214748364]:
+<L1>:
+  # DEBUG BEGIN_STMT
+  _6 = (int) pin_21(D);
+  _7 ={v} base_22(D)->MSCR[_6];
+  _8 = _7 & 4294443007;
+  base_22(D)->MSCR[_6] ={v} _8;
+  # DEBUG BEGIN_STMT
+  _9 ={v} base_22(D)->MSCR[_6];
+  _10 = _9 | 2097152;
+  base_22(D)->MSCR[_6] ={v} _10;
+  # DEBUG BEGIN_STMT
+  goto <bb 7>; [100.00%]
+
+  <bb 5> [local count: 214748364]:
+<L2>:
+  # DEBUG BEGIN_STMT
+  _11 = (int) pin_21(D);
+  _12 ={v} base_22(D)->MSCR[_11];
+  _13 = _12 | 2621440;
+  base_22(D)->MSCR[_11] ={v} _13;
+  # DEBUG BEGIN_STMT
+  goto <bb 7>; [100.00%]
+
+  <bb 6> [local count: 214748364]:
+<L3>:
+  # DEBUG BEGIN_STMT
+  _14 = (int) pin_21(D);
+  _15 ={v} base_22(D)->MSCR[_14];
+  _16 = _15 & 4292345855;
+  base_22(D)->MSCR[_14] ={v} _16;
+  # DEBUG BEGIN_STMT
+
+  <bb 7> [local count: 1073741824]:
+<L6>:
+  # DEBUG BEGIN_STMT
+  SchM_Exit_Port_PORT_EXCLUSIVE_AREA_04 ();
+  return;
+
+}
+
+
+
+;; Function Siul2_Port_Ip_SetPinDirection (Siul2_Port_Ip_SetPinDirection, funcdef_no=14, decl_uid=5926, cgraph_uid=15, symbol_order=17)
+
+Modification phase of node Siul2_Port_Ip_SetPinDirection/17
+Siul2_Port_Ip_SetPinDirection (struct Siul2_Port_Ip_PortType * const base, uint16 pin, Siul2_Port_Ip_PortDirectionType direction)
+{
+  _Bool _1;
+  _Bool _2;
+
+  <bb 2> [local count: 1073741824]:
+  # DEBUG BEGIN_STMT
+  _1 = base_3(D) != 0B;
+  DevAssert (_1);
+  # DEBUG BEGIN_STMT
+  _2 = pin_6(D) <= 15;
+  DevAssert (_2);
+  # DEBUG BEGIN_STMT
+  Siul2_Port_Ip_ConfigPinDirection (base_3(D), pin_6(D), direction_8(D));
+  return;
+
+}
+
+
+
+;; Function Siul2_Port_Ip_GetValueConfigRevertPin (Siul2_Port_Ip_GetValueConfigRevertPin, funcdef_no=15, decl_uid=5957, cgraph_uid=16, symbol_order=18)
+
+Modification phase of node Siul2_Port_Ip_GetValueConfigRevertPin/18
+Siul2_Port_Ip_GetValueConfigRevertPin (const struct Siul2_Port_Ip_PortType * const base, uint16 pin)
+{
+  uint32 u32MscrId;
+  uint32 portNumber;
+  uint32 MaxPinConfigured;
+  const struct Siul2_Port_Ip_PinSettingsConfig * ConfigPtr;
+  uint32 u32RegVal;
+  uint32 u32PinIdx;
+  long unsigned int base.7_1;
+  long unsigned int _2;
+  long unsigned int _3;
+  long unsigned int _4;
+  long unsigned int _5;
+  const struct Siul2_Port_Ip_PinSettingsConfig * _6;
+  long unsigned int _7;
+  const struct Siul2_Port_Ip_PinSettingsConfig * _8;
+  int _9;
+
+  <bb 2> [local count: 114863532]:
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG u32RegVal => 4294967295
+  # DEBUG BEGIN_STMT
+  ConfigPtr_14 = pPort_Setting;
+  # DEBUG ConfigPtr => ConfigPtr_14
+  # DEBUG BEGIN_STMT
+  MaxPinConfigured_15 = u32MaxPinConfigured;
+  # DEBUG MaxPinConfigured => MaxPinConfigured_15
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  base.7_1 = (long unsigned int) base_16(D);
+  _2 = base.7_1 + 3220176320;
+  portNumber_17 = _2 >> 6;
+  # DEBUG portNumber => portNumber_17
+  # DEBUG BEGIN_STMT
+  _3 = portNumber_17 << 4;
+  _4 = (long unsigned int) pin_18(D);
+  u32MscrId_19 = _3 + _4;
+  # DEBUG u32MscrId => u32MscrId_19
+  # DEBUG BEGIN_STMT
+  # DEBUG u32PinIdx => 0
+  goto <bb 6>; [100.00%]
+
+  <bb 3> [local count: 1014686025]:
+  # DEBUG BEGIN_STMT
+  _5 = u32PinIdx_10 * 60;
+  _6 = ConfigPtr_14 + _5;
+  _7 = _6->pinPortIdx;
+  if (_7 == u32MscrId_19)
+    goto <bb 4>; [5.50%]
+  else
+    goto <bb 5>; [94.50%]
+
+  <bb 4> [local count: 55807731]:
+  # _8 = PHI <_6(3)>
+  # DEBUG BEGIN_STMT
+  Siul2_Port_Ip_PinInit (_8);
+  # DEBUG BEGIN_STMT
+  _9 = (int) pin_18(D);
+  u32RegVal_22 ={v} base_16(D)->MSCR[_9];
+  # DEBUG u32RegVal => u32RegVal_22
+  # DEBUG BEGIN_STMT
+  goto <bb 7>; [100.00%]
+
+  <bb 5> [local count: 958878293]:
+  # DEBUG BEGIN_STMT
+  u32PinIdx_20 = u32PinIdx_10 + 1;
+  # DEBUG u32PinIdx => u32PinIdx_20
+
+  <bb 6> [local count: 1073741824]:
+  # u32PinIdx_10 = PHI <0(2), u32PinIdx_20(5)>
+  # DEBUG u32PinIdx => u32PinIdx_10
+  # DEBUG BEGIN_STMT
+  if (u32PinIdx_10 < MaxPinConfigured_15)
+    goto <bb 3>; [94.50%]
+  else
+    goto <bb 7>; [5.50%]
+
+  <bb 7> [local count: 114863532]:
+  # u32RegVal_11 = PHI <u32RegVal_22(4), 4294967295(6)>
+  # DEBUG u32RegVal => u32RegVal_11
+  # DEBUG BEGIN_STMT
+  return u32RegVal_11;
+
+}
+
+
+
+;; Function Siul2_Port_Ip_RevertPinConfiguration (Siul2_Port_Ip_RevertPinConfiguration, funcdef_no=16, decl_uid=5929, cgraph_uid=17, symbol_order=19)
+
+Modification phase of node Siul2_Port_Ip_RevertPinConfiguration/19
+Siul2_Port_Ip_RevertPinConfiguration (const struct Siul2_Port_Ip_PortType * const base, uint16 pin)
+{
+  uint32 u32RegVal;
+  _Bool _1;
+  _Bool _2;
+
+  <bb 2> [local count: 1073741824]:
+  # DEBUG BEGIN_STMT
+  # DEBUG u32RegVal => 0
+  # DEBUG BEGIN_STMT
+  _1 = base_3(D) != 0B;
+  DevAssert (_1);
+  # DEBUG BEGIN_STMT
+  _2 = pin_6(D) <= 15;
+  DevAssert (_2);
+  # DEBUG BEGIN_STMT
+  u32RegVal_9 = Siul2_Port_Ip_GetValueConfigRevertPin (base_3(D), pin_6(D));
+  # DEBUG u32RegVal => u32RegVal_9
+  # DEBUG BEGIN_STMT
+  return u32RegVal_9;
+
+}
+
+
+
+;; Function Siul2_Port_Ip_GetValuePinConfiguration (Siul2_Port_Ip_GetValuePinConfiguration, funcdef_no=17, decl_uid=5961, cgraph_uid=18, symbol_order=20)
+
+Modification phase of node Siul2_Port_Ip_GetValuePinConfiguration/20
+Siul2_Port_Ip_GetValuePinConfiguration (const struct Siul2_Port_Ip_PortType * const base, struct Siul2_Port_Ip_PinSettingsConfig * config, uint16 pin)
+{
+  uint8 inputMuxIterator;
+  uint32 u32PinIdx;
+  uint32 u32MscrId;
+  uint32 portNumber;
+  uint32 MaxPinConfigured;
+  const struct Siul2_Port_Ip_PinSettingsConfig * ConfigPtr;
+  long unsigned int base.8_1;
+  long unsigned int _2;
+  long unsigned int _3;
+  long unsigned int _4;
+  long unsigned int _5;
+  const struct Siul2_Port_Ip_PinSettingsConfig * _6;
+  long unsigned int _7;
+  const struct Siul2_Port_Ip_PinSettingsConfig * _8;
+  long unsigned int _9;
+  struct SIUL2_Type * _10;
+  unsigned char _11;
+  int _12;
+  long unsigned int _13;
+  <unnamed type> _14;
+
+  <bb 2> [local count: 114863532]:
+  # DEBUG BEGIN_STMT
+  ConfigPtr_20 = pPort_Setting;
+  # DEBUG ConfigPtr => ConfigPtr_20
+  # DEBUG BEGIN_STMT
+  MaxPinConfigured_21 = u32MaxPinConfigured;
+  # DEBUG MaxPinConfigured => MaxPinConfigured_21
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG u32MscrBase => 1074790976
+  # DEBUG BEGIN_STMT
+  base.8_1 = (long unsigned int) base_22(D);
+  _2 = base.8_1 + 3220176320;
+  portNumber_23 = _2 >> 6;
+  # DEBUG portNumber => portNumber_23
+  # DEBUG BEGIN_STMT
+  _3 = portNumber_23 << 4;
+  _4 = (long unsigned int) pin_24(D);
+  u32MscrId_25 = _3 + _4;
+  # DEBUG u32MscrId => u32MscrId_25
+  # DEBUG BEGIN_STMT
+  # DEBUG u32PinIdx => 0
+  goto <bb 9>; [100.00%]
+
+  <bb 3> [local count: 1014686025]:
+  # DEBUG BEGIN_STMT
+  _5 = u32PinIdx_15 * 60;
+  _6 = ConfigPtr_20 + _5;
+  _7 = _6->pinPortIdx;
+  if (_7 == u32MscrId_25)
+    goto <bb 4>; [5.50%]
+  else
+    goto <bb 8>; [94.50%]
+
+  <bb 4> [local count: 55807731]:
+  # _8 = PHI <_6(3)>
+  # _9 = PHI <_7(3)>
+  # DEBUG BEGIN_STMT
+  _10 = _8->base;
+  config_27(D)->base = _10;
+  # DEBUG BEGIN_STMT
+  config_27(D)->pinPortIdx = _9;
+  # DEBUG BEGIN_STMT
+  _11 = _8->initValue;
+  config_27(D)->initValue = _11;
+  # DEBUG BEGIN_STMT
+  # DEBUG inputMuxIterator => 0
+  goto <bb 6>; [100.00%]
+
+  <bb 5> [local count: 446512084]:
+  # DEBUG BEGIN_STMT
+  _12 = (int) inputMuxIterator_16;
+  _13 = _8->inputMuxReg[_12];
+  config_27(D)->inputMuxReg[_12] = _13;
+  # DEBUG BEGIN_STMT
+  _14 = _8->inputMux[_12];
+  config_27(D)->inputMux[_12] = _14;
+  # DEBUG BEGIN_STMT
+  inputMuxIterator_34 = inputMuxIterator_16 + 1;
+  # DEBUG inputMuxIterator => inputMuxIterator_34
+
+  <bb 6> [local count: 502319816]:
+  # inputMuxIterator_16 = PHI <0(4), inputMuxIterator_34(5)>
+  # DEBUG inputMuxIterator => inputMuxIterator_16
+  # DEBUG BEGIN_STMT
+  if (inputMuxIterator_16 != 8)
+    goto <bb 5>; [88.89%]
+  else
+    goto <bb 7>; [11.11%]
+
+  <bb 7> [local count: 55807732]:
+  # DEBUG BEGIN_STMT
+  Siul2_Port_Ip_GetMSCRConfiguration (config_27(D), base_22(D), pin_24(D));
+  # DEBUG BEGIN_STMT
+  goto <bb 10>; [100.00%]
+
+  <bb 8> [local count: 958878293]:
+  # DEBUG BEGIN_STMT
+  u32PinIdx_26 = u32PinIdx_15 + 1;
+  # DEBUG u32PinIdx => u32PinIdx_26
+
+  <bb 9> [local count: 1073741824]:
+  # u32PinIdx_15 = PHI <0(2), u32PinIdx_26(8)>
+  # DEBUG u32PinIdx => u32PinIdx_15
+  # DEBUG BEGIN_STMT
+  if (u32PinIdx_15 < MaxPinConfigured_21)
+    goto <bb 3>; [94.50%]
+  else
+    goto <bb 10>; [5.50%]
+
+  <bb 10> [local count: 114863532]:
+  return;
+
+}
+
+
+
+;; Function Siul2_Port_Ip_GetPinConfiguration (Siul2_Port_Ip_GetPinConfiguration, funcdef_no=18, decl_uid=5933, cgraph_uid=19, symbol_order=21)
+
+Modification phase of node Siul2_Port_Ip_GetPinConfiguration/21
+Siul2_Port_Ip_GetPinConfiguration (const struct Siul2_Port_Ip_PortType * const base, struct Siul2_Port_Ip_PinSettingsConfig * config, uint16 pin)
+{
+  _Bool _1;
+  _Bool _2;
+
+  <bb 2> [local count: 1073741824]:
+  # DEBUG BEGIN_STMT
+  _1 = base_3(D) != 0B;
+  DevAssert (_1);
+  # DEBUG BEGIN_STMT
+  _2 = pin_6(D) <= 15;
+  DevAssert (_2);
+  # DEBUG BEGIN_STMT
+  Siul2_Port_Ip_GetValuePinConfiguration (base_3(D), config_8(D), pin_6(D));
+  return;
+
+}
+
+

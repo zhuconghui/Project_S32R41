@@ -1,0 +1,1787 @@
+ip6_frag (struct pbuf * p, struct netif * netif, const struct ip6_addr_t * dest)
+{
+  struct pbuf_custom_ref * pcr;
+  u16_t poff;
+  u16_t last;
+  u16_t fragment_offset;
+  const u16_t nfb;
+  const u16_t mtu;
+  u16_t cop;
+  u16_t left;
+  static u32_t identification;
+  u16_t left_to_copy;
+  u16_t newpbuflen;
+  struct pbuf * newpbuf;
+  struct pbuf * rambuf;
+  struct ip6_frag_hdr * frag_hdr;
+  struct ip6_hdr * ip6hdr;
+  struct ip6_hdr * original_ip6hdr;
+  err_t D.7465;
+  u16_t iftmp.13;
+
+  <bb 2> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  newpbuflen = 0;
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  mtu = nd6_get_destination_mtu (dest, netif);
+  # DEBUG BEGIN_STMT
+  _1 = mtu + 65488;
+  nfb = _1 & 65528;
+  # DEBUG BEGIN_STMT
+  fragment_offset = 0;
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  poff = 40;
+  # DEBUG BEGIN_STMT
+  identification.12_2 = identification;
+  _3 = identification.12_2 + 1;
+  identification = _3;
+  # DEBUG BEGIN_STMT
+  original_ip6hdr = p->payload;
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _4 = p->tot_len;
+  if (_4 <= 39)
+    goto <bb 3>; [INV]
+  else
+    goto <bb 4>; [INV]
+
+  <bb 3> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  __asm__ __volatile__("BKPT #0
+	");
+  # DEBUG BEGIN_STMT
+  goto <bb 3>; [INV]
+
+  <bb 4> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _5 = p->tot_len;
+  left = _5 + 65496;
+  # DEBUG BEGIN_STMT
+  goto <bb 23>; [INV]
+
+  <bb 5> :
+  # DEBUG BEGIN_STMT
+  _6 = left <= nfb;
+  last = (u16_t) _6;
+  # DEBUG BEGIN_STMT
+  if (last != 0)
+    goto <bb 6>; [INV]
+  else
+    goto <bb 7>; [INV]
+
+  <bb 6> :
+  iftmp.13 = left;
+  goto <bb 8>; [INV]
+
+  <bb 7> :
+  iftmp.13 = nfb;
+
+  <bb 8> :
+  cop = iftmp.13;
+  # DEBUG BEGIN_STMT
+  rambuf = pbuf_alloc (14, 48, 640);
+  # DEBUG BEGIN_STMT
+  if (rambuf == 0B)
+    goto <bb 9>; [INV]
+  else
+    goto <bb 10>; [INV]
+
+  <bb 9> :
+  # DEBUG BEGIN_STMT
+  _7 = lwip_stats.ip6_frag.memerr;
+  _8 = _7 + 1;
+  lwip_stats.ip6_frag.memerr = _8;
+  # DEBUG BEGIN_STMT
+  D.7465 = -1;
+  // predicted unlikely by early return (on trees) predictor.
+  goto <bb 25>; [INV]
+
+  <bb 10> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _9 = rambuf->len;
+  if (_9 <= 39)
+    goto <bb 11>; [INV]
+  else
+    goto <bb 12>; [INV]
+
+  <bb 11> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  __asm__ __volatile__("BKPT #0
+	");
+  # DEBUG BEGIN_STMT
+  goto <bb 11>; [INV]
+
+  <bb 12> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _10 = rambuf->payload;
+  memcpy (_10, original_ip6hdr, 40);
+  # DEBUG BEGIN_STMT
+  ip6hdr = rambuf->payload;
+  # DEBUG BEGIN_STMT
+  _11 = rambuf->payload;
+  frag_hdr = _11 + 40;
+  # DEBUG BEGIN_STMT
+  _12 = p->payload;
+  _13 = (sizetype) poff;
+  _14 = _12 + _13;
+  p->payload = _14;
+  # DEBUG BEGIN_STMT
+  _15 = p->len;
+  _16 = _15 - poff;
+  p->len = _16;
+  # DEBUG BEGIN_STMT
+  _17 = p->tot_len;
+  _18 = _17 - poff;
+  p->tot_len = _18;
+  # DEBUG BEGIN_STMT
+  left_to_copy = cop;
+  # DEBUG BEGIN_STMT
+  goto <bb 21>; [INV]
+
+  <bb 13> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _19 = p->len;
+  newpbuflen = MIN_EXPR <left_to_copy, _19>;
+  # DEBUG BEGIN_STMT
+  if (newpbuflen == 0)
+    goto <bb 14>; [INV]
+  else
+    goto <bb 15>; [INV]
+
+  <bb 14> :
+  # DEBUG BEGIN_STMT
+  p = p->next;
+  # DEBUG BEGIN_STMT
+  // predicted unlikely by continue predictor.
+  goto <bb 21>; [INV]
+
+  <bb 15> :
+  # DEBUG BEGIN_STMT
+  pcr = ip6_frag_alloc_pbuf_custom_ref ();
+  # DEBUG BEGIN_STMT
+  if (pcr == 0B)
+    goto <bb 16>; [INV]
+  else
+    goto <bb 17>; [INV]
+
+  <bb 16> :
+  # DEBUG BEGIN_STMT
+  pbuf_free (rambuf);
+  # DEBUG BEGIN_STMT
+  _20 = lwip_stats.ip6_frag.memerr;
+  _21 = _20 + 1;
+  lwip_stats.ip6_frag.memerr = _21;
+  # DEBUG BEGIN_STMT
+  D.7465 = -1;
+  // predicted unlikely by early return (on trees) predictor.
+  goto <bb 25>; [INV]
+
+  <bb 17> :
+  # DEBUG BEGIN_STMT
+  _22 = &pcr->pc;
+  _23 = p->payload;
+  newpbuf = pbuf_alloced_custom (0, newpbuflen, 65, _22, _23, newpbuflen);
+  # DEBUG BEGIN_STMT
+  if (newpbuf == 0B)
+    goto <bb 18>; [INV]
+  else
+    goto <bb 19>; [INV]
+
+  <bb 18> :
+  # DEBUG BEGIN_STMT
+  ip6_frag_free_pbuf_custom_ref (pcr);
+  # DEBUG BEGIN_STMT
+  pbuf_free (rambuf);
+  # DEBUG BEGIN_STMT
+  _24 = lwip_stats.ip6_frag.memerr;
+  _25 = _24 + 1;
+  lwip_stats.ip6_frag.memerr = _25;
+  # DEBUG BEGIN_STMT
+  D.7465 = -1;
+  // predicted unlikely by early return (on trees) predictor.
+  goto <bb 25>; [INV]
+
+  <bb 19> :
+  # DEBUG BEGIN_STMT
+  pbuf_ref (p);
+  # DEBUG BEGIN_STMT
+  pcr->original = p;
+  # DEBUG BEGIN_STMT
+  pcr->pc.custom_free_function = ip6_frag_free_pbuf_custom;
+  # DEBUG BEGIN_STMT
+  pbuf_cat (rambuf, newpbuf);
+  # DEBUG BEGIN_STMT
+  left_to_copy = left_to_copy - newpbuflen;
+  # DEBUG BEGIN_STMT
+  if (left_to_copy != 0)
+    goto <bb 20>; [INV]
+  else
+    goto <bb 21>; [INV]
+
+  <bb 20> :
+  # DEBUG BEGIN_STMT
+  p = p->next;
+
+  <bb 21> :
+  # DEBUG BEGIN_STMT
+  if (left_to_copy != 0)
+    goto <bb 13>; [INV]
+  else
+    goto <bb 22>; [INV]
+
+  <bb 22> :
+  # DEBUG BEGIN_STMT
+  poff = newpbuflen;
+  # DEBUG BEGIN_STMT
+  _26 = original_ip6hdr->_nexth;
+  frag_hdr->_nexth = _26;
+  # DEBUG BEGIN_STMT
+  frag_hdr->reserved = 0;
+  # DEBUG BEGIN_STMT
+  fragment_offset.14_27 = (signed short) fragment_offset;
+  _28 = fragment_offset.14_27 & -8;
+  _29 = last == 0;
+  _30 = (int) _29;
+  _31 = (signed short) _30;
+  _32 = _28 | _31;
+  _33 = (short unsigned int) _32;
+  _34 = lwip_htons (_33);
+  frag_hdr->_fragment_offset = _34;
+  # DEBUG BEGIN_STMT
+  identification.15_35 = identification;
+  _36 = lwip_htonl (identification.15_35);
+  frag_hdr->_identification = _36;
+  # DEBUG BEGIN_STMT
+  ip6hdr->_nexth = 44;
+  # DEBUG BEGIN_STMT
+  _37 = cop + 8;
+  _38 = lwip_htons (_37);
+  ip6hdr->_plen = _38;
+  # DEBUG BEGIN_STMT
+  _39 = lwip_stats.ip6_frag.xmit;
+  _40 = _39 + 1;
+  lwip_stats.ip6_frag.xmit = _40;
+  # DEBUG BEGIN_STMT
+  _41 = netif->output_ip6;
+  _41 (netif, rambuf, dest);
+  # DEBUG BEGIN_STMT
+  pbuf_free (rambuf);
+  # DEBUG BEGIN_STMT
+  left = left - cop;
+  # DEBUG BEGIN_STMT
+  fragment_offset = fragment_offset + cop;
+
+  <bb 23> :
+  # DEBUG BEGIN_STMT
+  if (left != 0)
+    goto <bb 5>; [INV]
+  else
+    goto <bb 24>; [INV]
+
+  <bb 24> :
+  # DEBUG BEGIN_STMT
+  D.7465 = 0;
+
+  <bb 25> :
+  return D.7465;
+
+}
+
+
+ip6_frag_free_pbuf_custom (struct pbuf * p)
+{
+  struct pbuf_custom_ref * pcr;
+
+  <bb 2> :
+  # DEBUG BEGIN_STMT
+  pcr = p;
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  if (pcr == 0B)
+    goto <bb 3>; [INV]
+  else
+    goto <bb 4>; [INV]
+
+  <bb 3> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  __asm__ __volatile__("BKPT #0
+	");
+  # DEBUG BEGIN_STMT
+  goto <bb 3>; [INV]
+
+  <bb 4> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  if (pcr != p)
+    goto <bb 5>; [INV]
+  else
+    goto <bb 6>; [INV]
+
+  <bb 5> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  __asm__ __volatile__("BKPT #0
+	");
+  # DEBUG BEGIN_STMT
+  goto <bb 5>; [INV]
+
+  <bb 6> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _1 = pcr->original;
+  if (_1 != 0B)
+    goto <bb 7>; [INV]
+  else
+    goto <bb 8>; [INV]
+
+  <bb 7> :
+  # DEBUG BEGIN_STMT
+  _2 = pcr->original;
+  pbuf_free (_2);
+
+  <bb 8> :
+  # DEBUG BEGIN_STMT
+  ip6_frag_free_pbuf_custom_ref (pcr);
+  return;
+
+}
+
+
+ip6_frag_free_pbuf_custom_ref (struct pbuf_custom_ref * p)
+{
+  <bb 2> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  if (p == 0B)
+    goto <bb 3>; [INV]
+  else
+    goto <bb 4>; [INV]
+
+  <bb 3> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  __asm__ __volatile__("BKPT #0
+	");
+  # DEBUG BEGIN_STMT
+  goto <bb 3>; [INV]
+
+  <bb 4> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  memp_free (6, p);
+  return;
+
+}
+
+
+ip6_frag_alloc_pbuf_custom_ref ()
+{
+  struct pbuf_custom_ref * D.7483;
+
+  <bb 2> :
+  # DEBUG BEGIN_STMT
+  D.7483 = memp_malloc (6);
+  return D.7483;
+
+}
+
+
+ip6_reass (struct pbuf * p)
+{
+  u8_t * ptr;
+  struct ip6_hdr * iphdr_ptr;
+  struct pbuf * next_pbuf;
+  struct pbuf * q;
+  u8_t valid;
+  u16_t clen;
+  ptrdiff_t hdrdiff;
+  u16_t end;
+  u16_t start;
+  u16_t len;
+  u16_t offset;
+  struct ip6_frag_hdr * frag_hdr;
+  struct ip6_reass_helper * iprh_prev;
+  struct ip6_reass_helper * iprh_tmp;
+  struct ip6_reass_helper * iprh;
+  struct ip6_reassdata * ipr_prev;
+  struct ip6_reassdata * ipr;
+  struct pbuf * D.7445;
+
+  <bb 2> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  iprh_prev = 0B;
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  valid = 1;
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _1 = lwip_stats.ip6_frag.recv;
+  _2 = _1 + 1;
+  lwip_stats.ip6_frag.recv = _2;
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _3 = p->len;
+  if (_3 <= 7)
+    goto <bb 3>; [INV]
+  else
+    goto <bb 4>; [INV]
+
+  <bb 3> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  __asm__ __volatile__("BKPT #0
+	");
+  # DEBUG BEGIN_STMT
+  goto <bb 3>; [INV]
+
+  <bb 4> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  frag_hdr = p->payload;
+  # DEBUG BEGIN_STMT
+  clen = pbuf_clen (p);
+  # DEBUG BEGIN_STMT
+  _4 = frag_hdr->_fragment_offset;
+  offset = lwip_htons (_4);
+  # DEBUG BEGIN_STMT
+  _5 = ip_data.current_ip6_header;
+  _6 = MEM[(const struct ip6_hdr *)_5]._plen;
+  len = lwip_htons (_6);
+  # DEBUG BEGIN_STMT
+  _7 = p->payload;
+  _8 = ip_data.current_ip6_header;
+  hdrdiff = _7 - _8;
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  if (hdrdiff > 65535)
+    goto <bb 5>; [INV]
+  else
+    goto <bb 6>; [INV]
+
+  <bb 5> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  __asm__ __volatile__("BKPT #0
+	");
+  # DEBUG BEGIN_STMT
+  goto <bb 5>; [INV]
+
+  <bb 6> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  if (hdrdiff <= 39)
+    goto <bb 7>; [INV]
+  else
+    goto <bb 8>; [INV]
+
+  <bb 7> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  __asm__ __volatile__("BKPT #0
+	");
+  # DEBUG BEGIN_STMT
+  goto <bb 7>; [INV]
+
+  <bb 8> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  hdrdiff = hdrdiff + -40;
+  # DEBUG BEGIN_STMT
+  hdrdiff = hdrdiff + 8;
+  # DEBUG BEGIN_STMT
+  _9 = (int) len;
+  if (hdrdiff > _9)
+    goto <bb 9>; [INV]
+  else
+    goto <bb 10>; [INV]
+
+  <bb 9> :
+  # DEBUG BEGIN_STMT
+  _10 = lwip_stats.ip6_frag.proterr;
+  _11 = _10 + 1;
+  lwip_stats.ip6_frag.proterr = _11;
+  # DEBUG BEGIN_STMT
+  // predicted unlikely by goto predictor.
+  goto <bb 109>; [INV]
+
+  <bb 10> :
+  # DEBUG BEGIN_STMT
+  _12 = (short unsigned int) hdrdiff;
+  len = len - _12;
+  # DEBUG BEGIN_STMT
+  start = offset & 65528;
+  # DEBUG BEGIN_STMT
+  _13 = (int) start;
+  _14 = (int) len;
+  _15 = 65535 - _14;
+  if (_13 > _15)
+    goto <bb 11>; [INV]
+  else
+    goto <bb 12>; [INV]
+
+  <bb 11> :
+  # DEBUG BEGIN_STMT
+  _16 = lwip_stats.ip6_frag.proterr;
+  _17 = _16 + 1;
+  lwip_stats.ip6_frag.proterr = _17;
+  # DEBUG BEGIN_STMT
+  // predicted unlikely by goto predictor.
+  goto <bb 109>; [INV]
+
+  <bb 12> :
+  # DEBUG BEGIN_STMT
+  ipr = reassdatagrams;
+  ipr_prev = 0B;
+  goto <bb 26>; [INV]
+
+  <bb 13> :
+  # DEBUG BEGIN_STMT
+  _18 = frag_hdr->_identification;
+  _19 = ipr->identification;
+  if (_18 == _19)
+    goto <bb 14>; [INV]
+  else
+    goto <bb 25>; [INV]
+
+  <bb 14> :
+  _20 = ip_data.current_iphdr_src.u_addr.ip6.addr[0];
+  _21 = ipr->iphdr;
+  _22 = _21->src.addr[0];
+  if (_20 == _22)
+    goto <bb 15>; [INV]
+  else
+    goto <bb 25>; [INV]
+
+  <bb 15> :
+  _23 = ip_data.current_iphdr_src.u_addr.ip6.addr[1];
+  _24 = ipr->iphdr;
+  _25 = _24->src.addr[1];
+  if (_23 == _25)
+    goto <bb 16>; [INV]
+  else
+    goto <bb 25>; [INV]
+
+  <bb 16> :
+  _26 = ip_data.current_iphdr_src.u_addr.ip6.addr[2];
+  _27 = ipr->iphdr;
+  _28 = _27->src.addr[2];
+  if (_26 == _28)
+    goto <bb 17>; [INV]
+  else
+    goto <bb 25>; [INV]
+
+  <bb 17> :
+  _29 = ip_data.current_iphdr_src.u_addr.ip6.addr[3];
+  _30 = ipr->iphdr;
+  _31 = _30->src.addr[3];
+  if (_29 == _31)
+    goto <bb 18>; [INV]
+  else
+    goto <bb 25>; [INV]
+
+  <bb 18> :
+  _32 = ip_data.current_iphdr_src.u_addr.ip6.zone;
+  _33 = ipr->src_zone;
+  if (_32 == _33)
+    goto <bb 19>; [INV]
+  else
+    goto <bb 25>; [INV]
+
+  <bb 19> :
+  _34 = ip_data.current_iphdr_dest.u_addr.ip6.addr[0];
+  _35 = ipr->iphdr;
+  _36 = _35->dest.addr[0];
+  if (_34 == _36)
+    goto <bb 20>; [INV]
+  else
+    goto <bb 25>; [INV]
+
+  <bb 20> :
+  _37 = ip_data.current_iphdr_dest.u_addr.ip6.addr[1];
+  _38 = ipr->iphdr;
+  _39 = _38->dest.addr[1];
+  if (_37 == _39)
+    goto <bb 21>; [INV]
+  else
+    goto <bb 25>; [INV]
+
+  <bb 21> :
+  _40 = ip_data.current_iphdr_dest.u_addr.ip6.addr[2];
+  _41 = ipr->iphdr;
+  _42 = _41->dest.addr[2];
+  if (_40 == _42)
+    goto <bb 22>; [INV]
+  else
+    goto <bb 25>; [INV]
+
+  <bb 22> :
+  _43 = ip_data.current_iphdr_dest.u_addr.ip6.addr[3];
+  _44 = ipr->iphdr;
+  _45 = _44->dest.addr[3];
+  if (_43 == _45)
+    goto <bb 23>; [INV]
+  else
+    goto <bb 25>; [INV]
+
+  <bb 23> :
+  _46 = ip_data.current_iphdr_dest.u_addr.ip6.zone;
+  _47 = ipr->dest_zone;
+  if (_46 == _47)
+    goto <bb 24>; [INV]
+  else
+    goto <bb 25>; [INV]
+
+  <bb 24> :
+  # DEBUG BEGIN_STMT
+  _48 = lwip_stats.ip6_frag.cachehit;
+  _49 = _48 + 1;
+  lwip_stats.ip6_frag.cachehit = _49;
+  # DEBUG BEGIN_STMT
+  goto <bb 27>; [INV]
+
+  <bb 25> :
+  # DEBUG BEGIN_STMT
+  ipr_prev = ipr;
+  # DEBUG BEGIN_STMT
+  ipr = ipr->next;
+
+  <bb 26> :
+  # DEBUG BEGIN_STMT
+  if (ipr != 0B)
+    goto <bb 13>; [INV]
+  else
+    goto <bb 27>; [INV]
+
+  <bb 27> :
+  # DEBUG BEGIN_STMT
+  if (ipr == 0B)
+    goto <bb 28>; [INV]
+  else
+    goto <bb 36>; [INV]
+
+  <bb 28> :
+  # DEBUG BEGIN_STMT
+  ipr = memp_malloc (11);
+  # DEBUG BEGIN_STMT
+  if (ipr == 0B)
+    goto <bb 29>; [INV]
+  else
+    goto <bb 35>; [INV]
+
+  <bb 29> :
+  # DEBUG BEGIN_STMT
+  _50 = (int) clen;
+  ip6_reass_remove_oldest_datagram (ipr, _50);
+  # DEBUG BEGIN_STMT
+  ipr = memp_malloc (11);
+  # DEBUG BEGIN_STMT
+  if (ipr != 0B)
+    goto <bb 30>; [INV]
+  else
+    goto <bb 34>; [INV]
+
+  <bb 30> :
+  # DEBUG BEGIN_STMT
+  ipr_prev = reassdatagrams;
+  goto <bb 33>; [INV]
+
+  <bb 31> :
+  # DEBUG BEGIN_STMT
+  _51 = ipr_prev->next;
+  if (ipr == _51)
+    goto <bb 35>; [INV]
+  else
+    goto <bb 32>; [INV]
+
+  <bb 32> :
+  # DEBUG BEGIN_STMT
+  ipr_prev = ipr_prev->next;
+
+  <bb 33> :
+  # DEBUG BEGIN_STMT
+  if (ipr_prev != 0B)
+    goto <bb 31>; [INV]
+  else
+    goto <bb 35>; [INV]
+
+  <bb 34> :
+  # DEBUG BEGIN_STMT
+  _52 = lwip_stats.ip6_frag.memerr;
+  _53 = _52 + 1;
+  lwip_stats.ip6_frag.memerr = _53;
+  # DEBUG BEGIN_STMT
+  // predicted unlikely by goto predictor.
+  goto <bb 109>; [INV]
+
+  <bb 35> :
+  # DEBUG BEGIN_STMT
+  memset (ipr, 0, 32);
+  # DEBUG BEGIN_STMT
+  ipr->timer = 60;
+  # DEBUG BEGIN_STMT
+  reassdatagrams.3_54 = reassdatagrams;
+  ipr->next = reassdatagrams.3_54;
+  # DEBUG BEGIN_STMT
+  reassdatagrams = ipr;
+  # DEBUG BEGIN_STMT
+  _55 = ip_data.current_ip6_header;
+  ipr->iphdr = _55;
+  # DEBUG BEGIN_STMT
+  _56 = ip_data.current_iphdr_src.u_addr.ip6.zone;
+  ipr->src_zone = _56;
+  # DEBUG BEGIN_STMT
+  _57 = ip_data.current_iphdr_dest.u_addr.ip6.zone;
+  ipr->dest_zone = _57;
+  # DEBUG BEGIN_STMT
+  _58 = frag_hdr->_identification;
+  ipr->identification = _58;
+  # DEBUG BEGIN_STMT
+  _59 = frag_hdr->_nexth;
+  ipr->nexth = _59;
+
+  <bb 36> :
+  # DEBUG BEGIN_STMT
+  ip6_reass_pbufcount.4_60 = ip6_reass_pbufcount;
+  _61 = (int) ip6_reass_pbufcount.4_60;
+  _62 = (int) clen;
+  _63 = _61 + _62;
+  if (_63 > 10)
+    goto <bb 37>; [INV]
+  else
+    goto <bb 43>; [INV]
+
+  <bb 37> :
+  # DEBUG BEGIN_STMT
+  _64 = (int) clen;
+  ip6_reass_remove_oldest_datagram (ipr, _64);
+  # DEBUG BEGIN_STMT
+  ip6_reass_pbufcount.5_65 = ip6_reass_pbufcount;
+  _66 = (int) ip6_reass_pbufcount.5_65;
+  _67 = (int) clen;
+  _68 = _66 + _67;
+  if (_68 <= 10)
+    goto <bb 38>; [INV]
+  else
+    goto <bb 42>; [INV]
+
+  <bb 38> :
+  # DEBUG BEGIN_STMT
+  ipr_prev = reassdatagrams;
+  goto <bb 41>; [INV]
+
+  <bb 39> :
+  # DEBUG BEGIN_STMT
+  _69 = ipr_prev->next;
+  if (ipr == _69)
+    goto <bb 43>; [INV]
+  else
+    goto <bb 40>; [INV]
+
+  <bb 40> :
+  # DEBUG BEGIN_STMT
+  ipr_prev = ipr_prev->next;
+
+  <bb 41> :
+  # DEBUG BEGIN_STMT
+  if (ipr_prev != 0B)
+    goto <bb 39>; [INV]
+  else
+    goto <bb 43>; [INV]
+
+  <bb 42> :
+  # DEBUG BEGIN_STMT
+  _70 = lwip_stats.ip6_frag.memerr;
+  _71 = _70 + 1;
+  lwip_stats.ip6_frag.memerr = _71;
+  # DEBUG BEGIN_STMT
+  // predicted unlikely by goto predictor.
+  goto <bb 109>; [INV]
+
+  <bb 43> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  iprh = p->payload;
+  # DEBUG BEGIN_STMT
+  next_pbuf = 0B;
+  # DEBUG BEGIN_STMT
+  end = start + len;
+  # DEBUG BEGIN_STMT
+  q = ipr->p;
+  goto <bb 61>; [INV]
+
+  <bb 44> :
+  # DEBUG BEGIN_STMT
+  iprh_tmp = q->payload;
+  # DEBUG BEGIN_STMT
+  _72 = iprh_tmp->start;
+  if (start < _72)
+    goto <bb 45>; [INV]
+  else
+    goto <bb 53>; [INV]
+
+  <bb 45> :
+  # DEBUG BEGIN_STMT
+  _73 = iprh_tmp->start;
+  if (end > _73)
+    goto <bb 46>; [INV]
+  else
+    goto <bb 47>; [INV]
+
+  <bb 46> :
+  # DEBUG BEGIN_STMT
+  _74 = lwip_stats.ip6_frag.proterr;
+  _75 = _74 + 1;
+  lwip_stats.ip6_frag.proterr = _75;
+  # DEBUG BEGIN_STMT
+  // predicted unlikely by goto predictor.
+  goto <bb 109>; [INV]
+
+  <bb 47> :
+  # DEBUG BEGIN_STMT
+  if (iprh_prev != 0B)
+    goto <bb 48>; [INV]
+  else
+    goto <bb 50>; [INV]
+
+  <bb 48> :
+  # DEBUG BEGIN_STMT
+  _76 = iprh_prev->end;
+  if (start < _76)
+    goto <bb 49>; [INV]
+  else
+    goto <bb 50>; [INV]
+
+  <bb 49> :
+  # DEBUG BEGIN_STMT
+  _77 = lwip_stats.ip6_frag.proterr;
+  _78 = _77 + 1;
+  lwip_stats.ip6_frag.proterr = _78;
+  # DEBUG BEGIN_STMT
+  // predicted unlikely by goto predictor.
+  goto <bb 109>; [INV]
+
+  <bb 50> :
+  # DEBUG BEGIN_STMT
+  next_pbuf = q;
+  # DEBUG BEGIN_STMT
+  if (iprh_prev != 0B)
+    goto <bb 51>; [INV]
+  else
+    goto <bb 52>; [INV]
+
+  <bb 51> :
+  # DEBUG BEGIN_STMT
+  iprh_prev->next_pbuf = p;
+  goto <bb 62>; [INV]
+
+  <bb 52> :
+  # DEBUG BEGIN_STMT
+  ipr->p = p;
+  goto <bb 62>; [INV]
+
+  <bb 53> :
+  # DEBUG BEGIN_STMT
+  _79 = iprh_tmp->start;
+  if (start == _79)
+    goto <bb 54>; [INV]
+  else
+    goto <bb 55>; [INV]
+
+  <bb 54> :
+  # DEBUG BEGIN_STMT
+  // predicted unlikely by goto predictor.
+  goto <bb 109>; [INV]
+
+  <bb 55> :
+  # DEBUG BEGIN_STMT
+  _80 = iprh_tmp->end;
+  if (start < _80)
+    goto <bb 56>; [INV]
+  else
+    goto <bb 57>; [INV]
+
+  <bb 56> :
+  # DEBUG BEGIN_STMT
+  _81 = lwip_stats.ip6_frag.proterr;
+  _82 = _81 + 1;
+  lwip_stats.ip6_frag.proterr = _82;
+  # DEBUG BEGIN_STMT
+  // predicted unlikely by goto predictor.
+  goto <bb 109>; [INV]
+
+  <bb 57> :
+  # DEBUG BEGIN_STMT
+  if (iprh_prev != 0B)
+    goto <bb 58>; [INV]
+  else
+    goto <bb 60>; [INV]
+
+  <bb 58> :
+  # DEBUG BEGIN_STMT
+  _83 = iprh_prev->end;
+  _84 = iprh_tmp->start;
+  if (_83 != _84)
+    goto <bb 59>; [INV]
+  else
+    goto <bb 60>; [INV]
+
+  <bb 59> :
+  # DEBUG BEGIN_STMT
+  valid = 0;
+
+  <bb 60> :
+  # DEBUG BEGIN_STMT
+  q = iprh_tmp->next_pbuf;
+  # DEBUG BEGIN_STMT
+  iprh_prev = iprh_tmp;
+
+  <bb 61> :
+  # DEBUG BEGIN_STMT
+  if (q != 0B)
+    goto <bb 44>; [INV]
+  else
+    goto <bb 62>; [INV]
+
+  <bb 62> :
+  # DEBUG BEGIN_STMT
+  if (q == 0B)
+    goto <bb 63>; [INV]
+  else
+    goto <bb 71>; [INV]
+
+  <bb 63> :
+  # DEBUG BEGIN_STMT
+  if (iprh_prev != 0B)
+    goto <bb 64>; [INV]
+  else
+    goto <bb 68>; [INV]
+
+  <bb 64> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _85 = iprh_prev->end;
+  if (start < _85)
+    goto <bb 65>; [INV]
+  else
+    goto <bb 66>; [INV]
+
+  <bb 65> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  __asm__ __volatile__("BKPT #0
+	");
+  # DEBUG BEGIN_STMT
+  goto <bb 65>; [INV]
+
+  <bb 66> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  iprh_prev->next_pbuf = p;
+  # DEBUG BEGIN_STMT
+  _86 = iprh_prev->end;
+  if (start != _86)
+    goto <bb 67>; [INV]
+  else
+    goto <bb 71>; [INV]
+
+  <bb 67> :
+  # DEBUG BEGIN_STMT
+  valid = 0;
+  goto <bb 71>; [INV]
+
+  <bb 68> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _87 = ipr->p;
+  if (_87 != 0B)
+    goto <bb 69>; [INV]
+  else
+    goto <bb 70>; [INV]
+
+  <bb 69> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  __asm__ __volatile__("BKPT #0
+	");
+  # DEBUG BEGIN_STMT
+  goto <bb 69>; [INV]
+
+  <bb 70> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  ipr->p = p;
+
+  <bb 71> :
+  # DEBUG BEGIN_STMT
+  ip6_reass_pbufcount.6_88 = ip6_reass_pbufcount;
+  _89 = clen + ip6_reass_pbufcount.6_88;
+  ip6_reass_pbufcount = _89;
+  # DEBUG BEGIN_STMT
+  if (start == 0)
+    goto <bb 72>; [INV]
+  else
+    goto <bb 73>; [INV]
+
+  <bb 72> :
+  # DEBUG BEGIN_STMT
+  _90 = ip_data.current_ip6_header;
+  ipr->iphdr = _90;
+  # DEBUG BEGIN_STMT
+  _91 = &ipr->orig_hdr;
+  _92 = p->payload;
+  memcpy (_91, _92, 8);
+
+  <bb 73> :
+  # DEBUG BEGIN_STMT
+  iprh->next_pbuf = next_pbuf;
+  # DEBUG BEGIN_STMT
+  iprh->start = start;
+  # DEBUG BEGIN_STMT
+  iprh->end = end;
+  # DEBUG BEGIN_STMT
+  _93 = (int) offset;
+  _94 = _93 & 1;
+  if (_94 == 0)
+    goto <bb 74>; [INV]
+  else
+    goto <bb 75>; [INV]
+
+  <bb 74> :
+  # DEBUG BEGIN_STMT
+  _95 = iprh->end;
+  ipr->datagram_len = _95;
+
+  <bb 75> :
+  # DEBUG BEGIN_STMT
+  _96 = ipr->p;
+  iprh_tmp = _96->payload;
+  # DEBUG BEGIN_STMT
+  _97 = iprh_tmp->start;
+  if (_97 != 0)
+    goto <bb 76>; [INV]
+  else
+    goto <bb 77>; [INV]
+
+  <bb 76> :
+  # DEBUG BEGIN_STMT
+  valid = 0;
+
+  <bb 77> :
+  # DEBUG BEGIN_STMT
+  _98 = ipr->datagram_len;
+  if (_98 == 0)
+    goto <bb 78>; [INV]
+  else
+    goto <bb 79>; [INV]
+
+  <bb 78> :
+  # DEBUG BEGIN_STMT
+  valid = 0;
+
+  <bb 79> :
+  # DEBUG BEGIN_STMT
+  iprh_prev = iprh;
+  # DEBUG BEGIN_STMT
+  q = iprh->next_pbuf;
+  # DEBUG BEGIN_STMT
+  goto <bb 83>; [INV]
+
+  <bb 80> :
+  # DEBUG BEGIN_STMT
+  iprh = q->payload;
+  # DEBUG BEGIN_STMT
+  _99 = iprh_prev->end;
+  _100 = iprh->start;
+  if (_99 != _100)
+    goto <bb 81>; [INV]
+  else
+    goto <bb 82>; [INV]
+
+  <bb 81> :
+  # DEBUG BEGIN_STMT
+  valid = 0;
+  # DEBUG BEGIN_STMT
+  goto <bb 85>; [INV]
+
+  <bb 82> :
+  # DEBUG BEGIN_STMT
+  iprh_prev = iprh;
+  # DEBUG BEGIN_STMT
+  q = iprh->next_pbuf;
+
+  <bb 83> :
+  # DEBUG BEGIN_STMT
+  if (q != 0B)
+    goto <bb 84>; [INV]
+  else
+    goto <bb 85>; [INV]
+
+  <bb 84> :
+  if (valid != 0)
+    goto <bb 80>; [INV]
+  else
+    goto <bb 85>; [INV]
+
+  <bb 85> :
+  # DEBUG BEGIN_STMT
+  if (valid != 0)
+    goto <bb 86>; [INV]
+  else
+    goto <bb 108>; [INV]
+
+  <bb 86> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _101 = ipr->p;
+  iprh = _101->payload;
+  # DEBUG BEGIN_STMT
+  goto <bb 91>; [INV]
+
+  <bb 87> :
+  # DEBUG BEGIN_STMT
+  next_pbuf = iprh->next_pbuf;
+  # DEBUG BEGIN_STMT
+  if (next_pbuf != 0B)
+    goto <bb 88>; [INV]
+  else
+    goto <bb 89>; [INV]
+
+  <bb 88> :
+  # DEBUG BEGIN_STMT
+  iprh_tmp = next_pbuf->payload;
+  # DEBUG BEGIN_STMT
+  pbuf_remove_header (next_pbuf, 8);
+  # DEBUG BEGIN_STMT
+  _102 = ipr->p;
+  pbuf_cat (_102, next_pbuf);
+  goto <bb 90>; [INV]
+
+  <bb 89> :
+  # DEBUG BEGIN_STMT
+  iprh_tmp = 0B;
+
+  <bb 90> :
+  # DEBUG BEGIN_STMT
+  iprh = iprh_tmp;
+
+  <bb 91> :
+  # DEBUG BEGIN_STMT
+  if (iprh != 0B)
+    goto <bb 87>; [INV]
+  else
+    goto <bb 92>; [INV]
+
+  <bb 92> :
+  # DEBUG BEGIN_STMT
+  p = ipr->p;
+  # DEBUG BEGIN_STMT
+  _103 = ipr->iphdr;
+  _104 = _103 + 8;
+  _105 = ipr->iphdr;
+  _106 = p->payload;
+  _107 = ipr->iphdr;
+  _108 = _106 - _107;
+  _109 = (unsigned int) _108;
+  memmove (_104, _105, _109);
+  # DEBUG BEGIN_STMT
+  _110 = ipr->iphdr;
+  iphdr_ptr = _110 + 8;
+  # DEBUG BEGIN_STMT
+  _111 = ipr->datagram_len;
+  _112 = p->payload;
+  _113 = _112 - iphdr_ptr;
+  _114 = (short unsigned int) _113;
+  _115 = _111 + _114;
+  _116 = _115 + 65496;
+  ipr->datagram_len = _116;
+  # DEBUG BEGIN_STMT
+  _117 = ipr->datagram_len;
+  _118 = lwip_htons (_117);
+  iphdr_ptr->_plen = _118;
+  # DEBUG BEGIN_STMT
+  _119 = iphdr_ptr->_nexth;
+  if (_119 == 44)
+    goto <bb 93>; [INV]
+  else
+    goto <bb 94>; [INV]
+
+  <bb 93> :
+  # DEBUG BEGIN_STMT
+  _120 = ipr->nexth;
+  iphdr_ptr->_nexth = _120;
+  goto <bb 98>; [INV]
+
+  <bb 94> :
+  # DEBUG BEGIN_STMT
+  ptr = iphdr_ptr + 40;
+  # DEBUG BEGIN_STMT
+  goto <bb 96>; [INV]
+
+  <bb 95> :
+  # DEBUG BEGIN_STMT
+  _121 = ptr + 1;
+  _122 = *_121;
+  _123 = (int) _122;
+  _124 = _123 + 1;
+  _125 = _124 * 8;
+  _126 = (sizetype) _125;
+  ptr = ptr + _126;
+
+  <bb 96> :
+  # DEBUG BEGIN_STMT
+  _127 = *ptr;
+  if (_127 != 44)
+    goto <bb 95>; [INV]
+  else
+    goto <bb 97>; [INV]
+
+  <bb 97> :
+  # DEBUG BEGIN_STMT
+  _128 = ipr->nexth;
+  *ptr = _128;
+
+  <bb 98> :
+  # DEBUG BEGIN_STMT
+  reassdatagrams.7_129 = reassdatagrams;
+  if (ipr == reassdatagrams.7_129)
+    goto <bb 99>; [INV]
+  else
+    goto <bb 100>; [INV]
+
+  <bb 99> :
+  # DEBUG BEGIN_STMT
+  _130 = ipr->next;
+  reassdatagrams = _130;
+  goto <bb 103>; [INV]
+
+  <bb 100> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  if (ipr_prev == 0B)
+    goto <bb 101>; [INV]
+  else
+    goto <bb 102>; [INV]
+
+  <bb 101> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  __asm__ __volatile__("BKPT #0
+	");
+  # DEBUG BEGIN_STMT
+  goto <bb 101>; [INV]
+
+  <bb 102> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _131 = ipr->next;
+  ipr_prev->next = _131;
+
+  <bb 103> :
+  # DEBUG BEGIN_STMT
+  memp_free (11, ipr);
+  # DEBUG BEGIN_STMT
+  clen = pbuf_clen (p);
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  ip6_reass_pbufcount.8_132 = ip6_reass_pbufcount;
+  if (clen > ip6_reass_pbufcount.8_132)
+    goto <bb 104>; [INV]
+  else
+    goto <bb 105>; [INV]
+
+  <bb 104> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  __asm__ __volatile__("BKPT #0
+	");
+  # DEBUG BEGIN_STMT
+  goto <bb 104>; [INV]
+
+  <bb 105> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  ip6_reass_pbufcount.9_133 = ip6_reass_pbufcount;
+  _134 = ip6_reass_pbufcount.9_133 - clen;
+  ip6_reass_pbufcount = _134;
+  # DEBUG BEGIN_STMT
+  _135 = p->payload;
+  _136 = _135 - iphdr_ptr;
+  _137 = (short int) _136;
+  _138 = pbuf_header_force (p, _137);
+  if (_138 != 0)
+    goto <bb 106>; [INV]
+  else
+    goto <bb 107>; [INV]
+
+  <bb 106> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  __asm__ __volatile__("BKPT #0
+	");
+  # DEBUG BEGIN_STMT
+  goto <bb 106>; [INV]
+
+  <bb 107> :
+  # DEBUG BEGIN_STMT
+  D.7445 = p;
+  // predicted unlikely by early return (on trees) predictor.
+  goto <bb 110>; [INV]
+
+  <bb 108> :
+  # DEBUG BEGIN_STMT
+  D.7445 = 0B;
+  goto <bb 110>; [INV]
+
+  <bb 109> :
+nullreturn:
+  # DEBUG BEGIN_STMT
+  _139 = lwip_stats.ip6_frag.drop;
+  _140 = _139 + 1;
+  lwip_stats.ip6_frag.drop = _140;
+  # DEBUG BEGIN_STMT
+  pbuf_free (p);
+  # DEBUG BEGIN_STMT
+  D.7445 = 0B;
+
+  <bb 110> :
+  return D.7445;
+
+}
+
+
+ip6_reass_remove_oldest_datagram (struct ip6_reassdata * ipr, int pbufs_needed)
+{
+  struct ip6_reassdata * oldest;
+  struct ip6_reassdata * r;
+
+  <bb 2> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  oldest = reassdatagrams;
+  r = oldest;
+  # DEBUG BEGIN_STMT
+  goto <bb 7>; [INV]
+
+  <bb 3> :
+  # DEBUG BEGIN_STMT
+  if (r != ipr)
+    goto <bb 4>; [INV]
+  else
+    goto <bb 6>; [INV]
+
+  <bb 4> :
+  # DEBUG BEGIN_STMT
+  _1 = r->timer;
+  _2 = oldest->timer;
+  if (_1 <= _2)
+    goto <bb 5>; [INV]
+  else
+    goto <bb 6>; [INV]
+
+  <bb 5> :
+  # DEBUG BEGIN_STMT
+  oldest = r;
+
+  <bb 6> :
+  # DEBUG BEGIN_STMT
+  r = r->next;
+
+  <bb 7> :
+  # DEBUG BEGIN_STMT
+  if (r != 0B)
+    goto <bb 3>; [INV]
+  else
+    goto <bb 8>; [INV]
+
+  <bb 8> :
+  # DEBUG BEGIN_STMT
+  if (oldest == ipr)
+    goto <bb 9>; [INV]
+  else
+    goto <bb 10>; [INV]
+
+  <bb 9> :
+  # DEBUG BEGIN_STMT
+  // predicted unlikely by early return (on trees) predictor.
+  goto <bb 14>; [INV]
+
+  <bb 10> :
+  # DEBUG BEGIN_STMT
+  if (oldest != 0B)
+    goto <bb 11>; [INV]
+  else
+    goto <bb 12>; [INV]
+
+  <bb 11> :
+  # DEBUG BEGIN_STMT
+  ip6_reass_free_complete_datagram (oldest);
+
+  <bb 12> :
+  # DEBUG BEGIN_STMT
+  ip6_reass_pbufcount.10_3 = ip6_reass_pbufcount;
+  _4 = (int) ip6_reass_pbufcount.10_3;
+  _5 = pbufs_needed + _4;
+  if (_5 > 10)
+    goto <bb 13>; [INV]
+  else
+    goto <bb 14>; [INV]
+
+  <bb 13> :
+  reassdatagrams.11_6 = reassdatagrams;
+  if (reassdatagrams.11_6 != 0B)
+    goto <bb 2>; [INV]
+  else
+    goto <bb 14>; [INV]
+
+  <bb 14> :
+  return;
+
+}
+
+
+ip6_reass_free_complete_datagram (struct ip6_reassdata * ipr)
+{
+  struct pbuf * pcur;
+  struct ip6_addr_t dest_addr;
+  struct ip6_addr_t src_addr;
+  unsigned int D.7336;
+  struct ip6_reass_helper * iprh;
+  struct pbuf * p;
+  u16_t clen;
+  u16_t pbufs_freed;
+  struct ip6_reassdata * prev;
+
+  <bb 2> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  pbufs_freed = 0;
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _1 = ipr->p;
+  iprh = _1->payload;
+  # DEBUG BEGIN_STMT
+  _2 = iprh->start;
+  if (_2 == 0)
+    goto <bb 3>; [INV]
+  else
+    goto <bb 8>; [INV]
+
+  <bb 3> :
+  # DEBUG BEGIN_STMT
+  p = ipr->p;
+  # DEBUG BEGIN_STMT
+  _3 = iprh->next_pbuf;
+  ipr->p = _3;
+  # DEBUG BEGIN_STMT
+  _4 = p->payload;
+  _5 = &ipr->orig_hdr;
+  D.7336 = MEM[(char * {ref-all})_5];
+  MEM[(char * {ref-all})_4] = D.7336;
+  # DEBUG BEGIN_STMT
+  _6 = p->payload;
+  _7 = ipr->iphdr;
+  _8 = _6 - _7;
+  _9 = (short int) _8;
+  _10 = pbuf_header_force (p, _9);
+  if (_10 != 0)
+    goto <bb 4>; [INV]
+  else
+    goto <bb 5>; [INV]
+
+  <bb 4> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  __asm__ __volatile__("BKPT #0
+	");
+  # DEBUG BEGIN_STMT
+  goto <bb 4>; [INV]
+
+  <bb 5> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _11 = ipr->iphdr;
+  _12 = _11->src.addr[0];
+  src_addr.addr[0] = _12;
+  # DEBUG BEGIN_STMT
+  _13 = ipr->iphdr;
+  _14 = _13->src.addr[1];
+  src_addr.addr[1] = _14;
+  # DEBUG BEGIN_STMT
+  _15 = ipr->iphdr;
+  _16 = _15->src.addr[2];
+  src_addr.addr[2] = _16;
+  # DEBUG BEGIN_STMT
+  _17 = ipr->iphdr;
+  _18 = _17->src.addr[3];
+  src_addr.addr[3] = _18;
+  # DEBUG BEGIN_STMT
+  src_addr.zone = 0;
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _19 = ipr->src_zone;
+  src_addr.zone = _19;
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _20 = ipr->iphdr;
+  _21 = _20->dest.addr[0];
+  dest_addr.addr[0] = _21;
+  # DEBUG BEGIN_STMT
+  _22 = ipr->iphdr;
+  _23 = _22->dest.addr[1];
+  dest_addr.addr[1] = _23;
+  # DEBUG BEGIN_STMT
+  _24 = ipr->iphdr;
+  _25 = _24->dest.addr[2];
+  dest_addr.addr[2] = _25;
+  # DEBUG BEGIN_STMT
+  _26 = ipr->iphdr;
+  _27 = _26->dest.addr[3];
+  dest_addr.addr[3] = _27;
+  # DEBUG BEGIN_STMT
+  dest_addr.zone = 0;
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _28 = ipr->dest_zone;
+  dest_addr.zone = _28;
+  # DEBUG BEGIN_STMT
+  icmp6_time_exceeded_with_addrs (p, 1, &src_addr, &dest_addr);
+  src_addr = {CLOBBER};
+  dest_addr = {CLOBBER};
+  # DEBUG BEGIN_STMT
+  clen = pbuf_clen (p);
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _29 = (int) pbufs_freed;
+  _30 = (int) clen;
+  _31 = _29 + _30;
+  if (_31 > 65535)
+    goto <bb 6>; [INV]
+  else
+    goto <bb 7>; [INV]
+
+  <bb 6> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  __asm__ __volatile__("BKPT #0
+	");
+  # DEBUG BEGIN_STMT
+  goto <bb 6>; [INV]
+
+  <bb 7> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  pbufs_freed = pbufs_freed + clen;
+  # DEBUG BEGIN_STMT
+  pbuf_free (p);
+
+  <bb 8> :
+  # DEBUG BEGIN_STMT
+  p = ipr->p;
+  # DEBUG BEGIN_STMT
+  goto <bb 12>; [INV]
+
+  <bb 9> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  iprh = p->payload;
+  # DEBUG BEGIN_STMT
+  pcur = p;
+  # DEBUG BEGIN_STMT
+  p = iprh->next_pbuf;
+  # DEBUG BEGIN_STMT
+  clen = pbuf_clen (pcur);
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _32 = (int) pbufs_freed;
+  _33 = (int) clen;
+  _34 = _32 + _33;
+  if (_34 > 65535)
+    goto <bb 10>; [INV]
+  else
+    goto <bb 11>; [INV]
+
+  <bb 10> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  __asm__ __volatile__("BKPT #0
+	");
+  # DEBUG BEGIN_STMT
+  goto <bb 10>; [INV]
+
+  <bb 11> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  pbufs_freed = pbufs_freed + clen;
+  # DEBUG BEGIN_STMT
+  pbuf_free (pcur);
+
+  <bb 12> :
+  # DEBUG BEGIN_STMT
+  if (p != 0B)
+    goto <bb 9>; [INV]
+  else
+    goto <bb 13>; [INV]
+
+  <bb 13> :
+  # DEBUG BEGIN_STMT
+  reassdatagrams.0_35 = reassdatagrams;
+  if (ipr == reassdatagrams.0_35)
+    goto <bb 14>; [INV]
+  else
+    goto <bb 15>; [INV]
+
+  <bb 14> :
+  # DEBUG BEGIN_STMT
+  _36 = ipr->next;
+  reassdatagrams = _36;
+  goto <bb 21>; [INV]
+
+  <bb 15> :
+  # DEBUG BEGIN_STMT
+  prev = reassdatagrams;
+  # DEBUG BEGIN_STMT
+  goto <bb 18>; [INV]
+
+  <bb 16> :
+  # DEBUG BEGIN_STMT
+  _37 = prev->next;
+  if (ipr == _37)
+    goto <bb 19>; [INV]
+  else
+    goto <bb 17>; [INV]
+
+  <bb 17> :
+  # DEBUG BEGIN_STMT
+  prev = prev->next;
+
+  <bb 18> :
+  # DEBUG BEGIN_STMT
+  if (prev != 0B)
+    goto <bb 16>; [INV]
+  else
+    goto <bb 19>; [INV]
+
+  <bb 19> :
+  # DEBUG BEGIN_STMT
+  if (prev != 0B)
+    goto <bb 20>; [INV]
+  else
+    goto <bb 21>; [INV]
+
+  <bb 20> :
+  # DEBUG BEGIN_STMT
+  _38 = ipr->next;
+  prev->next = _38;
+
+  <bb 21> :
+  # DEBUG BEGIN_STMT
+  memp_free (11, ipr);
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  ip6_reass_pbufcount.1_39 = ip6_reass_pbufcount;
+  if (pbufs_freed > ip6_reass_pbufcount.1_39)
+    goto <bb 22>; [INV]
+  else
+    goto <bb 23>; [INV]
+
+  <bb 22> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  __asm__ __volatile__("BKPT #0
+	");
+  # DEBUG BEGIN_STMT
+  goto <bb 22>; [INV]
+
+  <bb 23> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  ip6_reass_pbufcount.2_40 = ip6_reass_pbufcount;
+  _41 = ip6_reass_pbufcount.2_40 - pbufs_freed;
+  ip6_reass_pbufcount = _41;
+  return;
+
+}
+
+
+ip6_reass_tmr ()
+{
+  struct ip6_reassdata * tmp;
+  struct ip6_reassdata * r;
+
+  <bb 2> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  r = reassdatagrams;
+  # DEBUG BEGIN_STMT
+  goto <bb 6>; [INV]
+
+  <bb 3> :
+  # DEBUG BEGIN_STMT
+  _1 = r->timer;
+  if (_1 != 0)
+    goto <bb 4>; [INV]
+  else
+    goto <bb 5>; [INV]
+
+  <bb 4> :
+  # DEBUG BEGIN_STMT
+  _2 = r->timer;
+  _3 = _2;
+  _4 = _3 + 255;
+  r->timer = _4;
+  # DEBUG BEGIN_STMT
+  r = r->next;
+  goto <bb 6>; [INV]
+
+  <bb 5> :
+  # DEBUG BEGIN_STMT
+  tmp = r;
+  # DEBUG BEGIN_STMT
+  r = r->next;
+  # DEBUG BEGIN_STMT
+  ip6_reass_free_complete_datagram (tmp);
+
+  <bb 6> :
+  # DEBUG BEGIN_STMT
+  if (r != 0B)
+    goto <bb 3>; [INV]
+  else
+    goto <bb 7>; [INV]
+
+  <bb 7> :
+  return;
+
+}
+
+

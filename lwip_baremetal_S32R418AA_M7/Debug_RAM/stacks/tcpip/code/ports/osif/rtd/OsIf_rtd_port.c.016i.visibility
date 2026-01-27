@@ -1,0 +1,100 @@
+
+Marking local functions:
+
+
+Marking externally visible functions: OsIf_GetMilliseconds OsIf_TimeDelay OsIf_Millisecond
+
+
+Marking externally visible variables:
+
+
+Reclaiming functions:
+Reclaiming variables:
+Clearing address taken flags:
+Symbol table:
+
+OsIf_GetMilliseconds/4 (OsIf_GetMilliseconds) @05fe4b60
+  Type: function definition analyzed
+  Visibility: externally_visible public
+  References: u32OsIf_Milliseconds/1 (read)
+  Referring: 
+  Availability: available
+  Function flags: body optimize_size
+  Called by: OsIf_TimeDelay/3 OsIf_TimeDelay/3 
+  Calls: 
+OsIf_TimeDelay/3 (OsIf_TimeDelay) @05fe48c0
+  Type: function definition analyzed
+  Visibility: externally_visible public
+  References: 
+  Referring: 
+  Availability: available
+  Function flags: body optimize_size
+  Called by: 
+  Calls: OsIf_GetMilliseconds/4 OsIf_GetMilliseconds/4 
+OsIf_Millisecond/2 (OsIf_Millisecond) @05fe4620
+  Type: function definition analyzed
+  Visibility: externally_visible public
+  References: u32OsIf_Milliseconds/1 (read)u32OsIf_Milliseconds/1 (write)
+  Referring: 
+  Availability: available
+  Function flags: body optimize_size
+  Called by: 
+  Calls: 
+u32OsIf_Milliseconds/1 (u32OsIf_Milliseconds) @05fe5360
+  Type: variable definition analyzed
+  Visibility: force_output prevailing_def_ironly
+  References: 
+  Referring: OsIf_Millisecond/2 (read)OsIf_Millisecond/2 (write)OsIf_GetMilliseconds/4 (read)
+  Availability: available
+  Varpool flags: initialized
+OsIf_GetMilliseconds ()
+{
+  uint32 D.5598;
+
+  <bb 2> :
+  # DEBUG BEGIN_STMT
+  D.5598 = u32OsIf_Milliseconds;
+  return D.5598;
+
+}
+
+
+OsIf_TimeDelay (const uint32 delayMs)
+{
+  uint32 endTimeMs;
+
+  <bb 2> :
+  # DEBUG BEGIN_STMT
+  endTimeMs = 0;
+  # DEBUG BEGIN_STMT
+  _1 = OsIf_GetMilliseconds ();
+  endTimeMs = delayMs + _1;
+  # DEBUG BEGIN_STMT
+
+  <bb 3> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _2 = OsIf_GetMilliseconds ();
+  if (endTimeMs > _2)
+    goto <bb 3>; [INV]
+  else
+    goto <bb 4>; [INV]
+
+  <bb 4> :
+  return;
+
+}
+
+
+OsIf_Millisecond ()
+{
+  <bb 2> :
+  # DEBUG BEGIN_STMT
+  u32OsIf_Milliseconds.0_1 = u32OsIf_Milliseconds;
+  _2 = u32OsIf_Milliseconds.0_1 + 1;
+  u32OsIf_Milliseconds = _2;
+  return;
+
+}
+
+

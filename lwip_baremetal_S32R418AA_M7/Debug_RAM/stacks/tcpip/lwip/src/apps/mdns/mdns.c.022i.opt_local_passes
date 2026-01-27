@@ -1,0 +1,7662 @@
+mdns_resp_init ()
+{
+  err_t res;
+  struct udp_pcb * _1;
+  struct udp_pcb * mdns_pcb.49_2;
+  struct udp_pcb * mdns_pcb.50_3;
+  struct udp_pcb * mdns_pcb.51_4;
+  struct udp_pcb * mdns_pcb.52_5;
+  unsigned char _6;
+
+  <bb 2> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _1 = udp_new_ip_type (46);
+  mdns_pcb = _1;
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  mdns_pcb.49_2 = mdns_pcb;
+  if (mdns_pcb.49_2 == 0B)
+    goto <bb 3>; [INV]
+  else
+    goto <bb 4>; [INV]
+
+  <bb 3> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  __asm__ __volatile__("BKPT #0
+	");
+  # DEBUG BEGIN_STMT
+  goto <bb 3>; [INV]
+
+  <bb 4> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  mdns_pcb.50_3 = mdns_pcb;
+  mdns_pcb.50_3->mcast_ttl = 255;
+  # DEBUG BEGIN_STMT
+  mdns_pcb.51_4 = mdns_pcb;
+  res_14 = udp_bind (mdns_pcb.51_4, &ip_addr_any_type, 5353);
+  # DEBUG res => res_14
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  if (res_14 != 0)
+    goto <bb 5>; [INV]
+  else
+    goto <bb 6>; [INV]
+
+  <bb 5> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  __asm__ __volatile__("BKPT #0
+	");
+  # DEBUG BEGIN_STMT
+  goto <bb 5>; [INV]
+
+  <bb 6> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  mdns_pcb.52_5 = mdns_pcb;
+  udp_recv (mdns_pcb.52_5, mdns_recv, 0B);
+  # DEBUG BEGIN_STMT
+  _6 = netif_alloc_client_data_id ();
+  mdns_netif_client_id = _6;
+  return;
+
+}
+
+
+mdns_resp_restart (struct netif * netif)
+{
+  struct mdns_host * mdns;
+  unsigned char mdns_netif_client_id.48_1;
+  int _2;
+  unsigned char _3;
+  int _4;
+  long unsigned int _5;
+  long unsigned int _6;
+
+  <bb 2> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  if (netif_9(D) == 0B)
+    goto <bb 3>; [INV]
+  else
+    goto <bb 4>; [INV]
+
+  <bb 3> :
+  # DEBUG BEGIN_STMT
+  // predicted unlikely by early return (on trees) predictor.
+  goto <bb 9>; [INV]
+
+  <bb 4> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  mdns_netif_client_id.48_1 = mdns_netif_client_id;
+  _2 = (int) mdns_netif_client_id.48_1;
+  mdns_11 = netif_9(D)->client_data[_2];
+  # DEBUG mdns => mdns_11
+  # DEBUG BEGIN_STMT
+  if (mdns_11 == 0B)
+    goto <bb 5>; [INV]
+  else
+    goto <bb 6>; [INV]
+
+  <bb 5> :
+  # DEBUG BEGIN_STMT
+  // predicted unlikely by early return (on trees) predictor.
+  goto <bb 9>; [INV]
+
+  <bb 6> :
+  # DEBUG BEGIN_STMT
+  _3 = mdns_11->probing_state;
+  if (_3 == 1)
+    goto <bb 7>; [INV]
+  else
+    goto <bb 8>; [INV]
+
+  <bb 7> :
+  # DEBUG BEGIN_STMT
+  sys_untimeout (mdns_probe, netif_9(D));
+
+  <bb 8> :
+  # DEBUG BEGIN_STMT
+  mdns_11->probes_sent = 0;
+  # DEBUG BEGIN_STMT
+  mdns_11->probing_state = 1;
+  # DEBUG BEGIN_STMT
+  _4 = rand ();
+  _5 = (long unsigned int) _4;
+  _6 = _5 % 250;
+  sys_timeout (_6, mdns_probe, netif_9(D));
+
+  <bb 9> :
+  return;
+
+}
+
+
+mdns_resp_register_name_result_cb (void (*mdns_name_result_cb_t) (struct netif *, u8_t) cb)
+{
+  <bb 2> :
+  # DEBUG BEGIN_STMT
+  mdns_name_result_cb = cb_2(D);
+  return;
+
+}
+
+
+mdns_resp_announce (struct netif * netif)
+{
+  struct mdns_host * mdns;
+  unsigned char mdns_netif_client_id.46_1;
+  int _2;
+  unsigned char _3;
+  struct ip4_addr_t * _4;
+  long unsigned int _5;
+
+  <bb 2> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  if (netif_7(D) == 0B)
+    goto <bb 3>; [INV]
+  else
+    goto <bb 4>; [INV]
+
+  <bb 3> :
+  # DEBUG BEGIN_STMT
+  // predicted unlikely by early return (on trees) predictor.
+  goto <bb 9>; [INV]
+
+  <bb 4> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  mdns_netif_client_id.46_1 = mdns_netif_client_id;
+  _2 = (int) mdns_netif_client_id.46_1;
+  mdns_9 = netif_7(D)->client_data[_2];
+  # DEBUG mdns => mdns_9
+  # DEBUG BEGIN_STMT
+  if (mdns_9 == 0B)
+    goto <bb 5>; [INV]
+  else
+    goto <bb 6>; [INV]
+
+  <bb 5> :
+  # DEBUG BEGIN_STMT
+  // predicted unlikely by early return (on trees) predictor.
+  goto <bb 9>; [INV]
+
+  <bb 6> :
+  # DEBUG BEGIN_STMT
+  _3 = mdns_9->probing_state;
+  if (_3 == 2)
+    goto <bb 7>; [INV]
+  else
+    goto <bb 9>; [INV]
+
+  <bb 7> :
+  # DEBUG BEGIN_STMT
+  mdns_announce (netif_7(D), &ip6_addr_any);
+  # DEBUG BEGIN_STMT
+  _4 = &netif_7(D)->ip_addr.u_addr.ip4;
+  _5 = MEM[(const struct ip4_addr_t *)_4].addr;
+  if (_5 != 0)
+    goto <bb 8>; [INV]
+  else
+    goto <bb 9>; [INV]
+
+  <bb 8> :
+  # DEBUG BEGIN_STMT
+  mdns_announce (netif_7(D), &ip_addr_any);
+
+  <bb 9> :
+  return;
+
+}
+
+
+mdns_resp_add_service_txtitem (struct mdns_service * service, const char * txt, u8_t txt_len)
+{
+  struct mdns_domain * _1;
+  err_t _8;
+
+  <bb 2> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  if (service_3(D) == 0B)
+    goto <bb 3>; [INV]
+  else
+    goto <bb 4>; [INV]
+
+  <bb 3> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  __asm__ __volatile__("BKPT #0
+	");
+  # DEBUG BEGIN_STMT
+  goto <bb 3>; [INV]
+
+  <bb 4> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _1 = &service_3(D)->txtdata;
+  _8 = mdns_domain_add_label (_1, txt_5(D), txt_len_6(D));
+  return _8;
+
+}
+
+
+mdns_resp_rename_service (struct netif * netif, s8_t slot, const char * name)
+{
+  size_t len;
+  struct mdns_host * mdns;
+  struct mdns_service * srv;
+  unsigned char mdns_netif_client_id.45_1;
+  int _2;
+  int _3;
+  struct mdns_service * _4;
+  int _5;
+  char[64] * _6;
+  unsigned int _7;
+  err_t _8;
+  err_t _21;
+  err_t _22;
+  err_t _23;
+  err_t _24;
+  err_t _25;
+
+  <bb 2> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  len_13 = strlen (name_12(D));
+  # DEBUG len => len_13
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  if (netif_14(D) == 0B)
+    goto <bb 3>; [INV]
+  else
+    goto <bb 4>; [INV]
+
+  <bb 3> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  __asm__ __volatile__("BKPT #0
+	");
+  # DEBUG BEGIN_STMT
+  goto <bb 3>; [INV]
+
+  <bb 4> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  mdns_netif_client_id.45_1 = mdns_netif_client_id;
+  _2 = (int) mdns_netif_client_id.45_1;
+  mdns_15 = netif_14(D)->client_data[_2];
+  # DEBUG mdns => mdns_15
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  if (mdns_15 == 0B)
+    goto <bb 5>; [INV]
+  else
+    goto <bb 6>; [INV]
+
+  <bb 5> :
+  # DEBUG BEGIN_STMT
+  _25 = -6;
+  // predicted unlikely by early return (on trees) predictor.
+  goto <bb 13>; [INV]
+
+  <bb 6> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  if (len_13 > 63)
+    goto <bb 7>; [INV]
+  else
+    goto <bb 8>; [INV]
+
+  <bb 7> :
+  # DEBUG BEGIN_STMT
+  _24 = -6;
+  // predicted unlikely by early return (on trees) predictor.
+  goto <bb 13>; [INV]
+
+  <bb 8> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  if (slot_16(D) != 0)
+    goto <bb 9>; [INV]
+  else
+    goto <bb 10>; [INV]
+
+  <bb 9> :
+  # DEBUG BEGIN_STMT
+  _23 = -6;
+  // predicted unlikely by early return (on trees) predictor.
+  goto <bb 13>; [INV]
+
+  <bb 10> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _3 = (int) slot_16(D);
+  _4 = mdns_15->services[_3];
+  if (_4 == 0B)
+    goto <bb 11>; [INV]
+  else
+    goto <bb 12>; [INV]
+
+  <bb 11> :
+  # DEBUG BEGIN_STMT
+  _22 = -6;
+  // predicted unlikely by early return (on trees) predictor.
+  goto <bb 13>; [INV]
+
+  <bb 12> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _5 = (int) slot_16(D);
+  srv_17 = mdns_15->services[_5];
+  # DEBUG srv => srv_17
+  # DEBUG BEGIN_STMT
+  _6 = &srv_17->name;
+  _7 = MIN_EXPR <len_13, 63>;
+  memcpy (_6, name_12(D), _7);
+  # DEBUG BEGIN_STMT
+  srv_17->name[len_13] = 0;
+  # DEBUG BEGIN_STMT
+  mdns_resp_restart (netif_14(D));
+  # DEBUG BEGIN_STMT
+  _21 = 0;
+
+  <bb 13> :
+  # _8 = PHI <_25(5), _24(7), _23(9), _22(11), _21(12)>
+  return _8;
+
+}
+
+
+mdns_resp_del_service (struct netif * netif, s8_t slot)
+{
+  struct mdns_service * srv;
+  struct mdns_host * mdns;
+  unsigned char mdns_netif_client_id.44_1;
+  int _2;
+  int _3;
+  struct mdns_service * _4;
+  int _5;
+  int _6;
+  err_t _7;
+  err_t _17;
+  err_t _18;
+  err_t _19;
+  err_t _20;
+
+  <bb 2> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  if (netif_10(D) == 0B)
+    goto <bb 3>; [INV]
+  else
+    goto <bb 4>; [INV]
+
+  <bb 3> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  __asm__ __volatile__("BKPT #0
+	");
+  # DEBUG BEGIN_STMT
+  goto <bb 3>; [INV]
+
+  <bb 4> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  mdns_netif_client_id.44_1 = mdns_netif_client_id;
+  _2 = (int) mdns_netif_client_id.44_1;
+  mdns_12 = netif_10(D)->client_data[_2];
+  # DEBUG mdns => mdns_12
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  if (mdns_12 == 0B)
+    goto <bb 5>; [INV]
+  else
+    goto <bb 6>; [INV]
+
+  <bb 5> :
+  # DEBUG BEGIN_STMT
+  _20 = -6;
+  // predicted unlikely by early return (on trees) predictor.
+  goto <bb 11>; [INV]
+
+  <bb 6> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  if (slot_13(D) != 0)
+    goto <bb 7>; [INV]
+  else
+    goto <bb 8>; [INV]
+
+  <bb 7> :
+  # DEBUG BEGIN_STMT
+  _19 = -6;
+  // predicted unlikely by early return (on trees) predictor.
+  goto <bb 11>; [INV]
+
+  <bb 8> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _3 = (int) slot_13(D);
+  _4 = mdns_12->services[_3];
+  if (_4 == 0B)
+    goto <bb 9>; [INV]
+  else
+    goto <bb 10>; [INV]
+
+  <bb 9> :
+  # DEBUG BEGIN_STMT
+  _18 = -6;
+  // predicted unlikely by early return (on trees) predictor.
+  goto <bb 11>; [INV]
+
+  <bb 10> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _5 = (int) slot_13(D);
+  srv_14 = mdns_12->services[_5];
+  # DEBUG srv => srv_14
+  # DEBUG BEGIN_STMT
+  _6 = (int) slot_13(D);
+  mdns_12->services[_6] = 0B;
+  # DEBUG BEGIN_STMT
+  mem_free (srv_14);
+  # DEBUG BEGIN_STMT
+  _17 = 0;
+
+  <bb 11> :
+  # _7 = PHI <_20(5), _19(7), _18(9), _17(10)>
+  return _7;
+
+}
+
+
+mdns_resp_add_service (struct netif * netif, const char * name, const char * service, mdns_sd_proto proto, u16_t port, u32_t dns_ttl, void (*service_get_txt_fn_t) (struct mdns_service *, void *) txt_fn, void * txt_data)
+{
+  struct mdns_host * mdns;
+  struct mdns_service * srv;
+  s8_t slot;
+  s8_t i;
+  unsigned char mdns_netif_client_id.39_1;
+  int _2;
+  unsigned int _3;
+  unsigned int _4;
+  int _5;
+  struct mdns_service * _6;
+  signed char i.40_7;
+  unsigned char i.41_8;
+  unsigned char _9;
+  char[64] * _10;
+  unsigned int _11;
+  char[64] * _12;
+  unsigned int _13;
+  short unsigned int _14;
+  int _15;
+  s8_t _18;
+  size_t iftmp.42_19;
+  size_t iftmp.43_20;
+  size_t iftmp.42_35;
+  size_t iftmp.42_36;
+  size_t iftmp.43_38;
+  size_t iftmp.43_39;
+  s8_t _52;
+  s8_t _53;
+  s8_t _54;
+  s8_t _55;
+  s8_t _56;
+  s8_t _57;
+  s8_t _58;
+
+  <bb 2> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  slot_23 = -1;
+  # DEBUG slot => slot_23
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  if (netif_24(D) == 0B)
+    goto <bb 3>; [INV]
+  else
+    goto <bb 4>; [INV]
+
+  <bb 3> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  __asm__ __volatile__("BKPT #0
+	");
+  # DEBUG BEGIN_STMT
+  goto <bb 3>; [INV]
+
+  <bb 4> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  mdns_netif_client_id.39_1 = mdns_netif_client_id;
+  _2 = (int) mdns_netif_client_id.39_1;
+  mdns_26 = netif_24(D)->client_data[_2];
+  # DEBUG mdns => mdns_26
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  if (mdns_26 == 0B)
+    goto <bb 5>; [INV]
+  else
+    goto <bb 6>; [INV]
+
+  <bb 5> :
+  # DEBUG BEGIN_STMT
+  _58 = -6;
+  // predicted unlikely by early return (on trees) predictor.
+  goto <bb 28>; [INV]
+
+  <bb 6> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _3 = strlen (name_27(D));
+  if (_3 > 63)
+    goto <bb 7>; [INV]
+  else
+    goto <bb 8>; [INV]
+
+  <bb 7> :
+  # DEBUG BEGIN_STMT
+  _57 = -6;
+  // predicted unlikely by early return (on trees) predictor.
+  goto <bb 28>; [INV]
+
+  <bb 8> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _4 = strlen (service_28(D));
+  if (_4 > 63)
+    goto <bb 9>; [INV]
+  else
+    goto <bb 10>; [INV]
+
+  <bb 9> :
+  # DEBUG BEGIN_STMT
+  _56 = -6;
+  // predicted unlikely by early return (on trees) predictor.
+  goto <bb 28>; [INV]
+
+  <bb 10> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  if (proto_29(D) > 1)
+    goto <bb 11>; [INV]
+  else
+    goto <bb 12>; [INV]
+
+  <bb 11> :
+  # DEBUG BEGIN_STMT
+  _55 = -6;
+  // predicted unlikely by early return (on trees) predictor.
+  goto <bb 28>; [INV]
+
+  <bb 12> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  i_30 = 0;
+  # DEBUG i => i_30
+  goto <bb 16>; [INV]
+
+  <bb 13> :
+  # DEBUG BEGIN_STMT
+  _5 = (int) i_16;
+  _6 = mdns_26->services[_5];
+  if (_6 == 0B)
+    goto <bb 14>; [INV]
+  else
+    goto <bb 15>; [INV]
+
+  <bb 14> :
+  # DEBUG BEGIN_STMT
+  slot_32 = i_16;
+  # DEBUG slot => slot_32
+  # DEBUG BEGIN_STMT
+  goto <bb 17>; [INV]
+
+  <bb 15> :
+  # DEBUG BEGIN_STMT
+  i.40_7 = i_16;
+  i.41_8 = (unsigned char) i.40_7;
+  _9 = i.41_8 + 1;
+  i_31 = (s8_t) _9;
+  # DEBUG i => i_31
+
+  <bb 16> :
+  # i_16 = PHI <i_30(12), i_31(15)>
+  # DEBUG i => i_16
+  # DEBUG BEGIN_STMT
+  if (i_16 <= 0)
+    goto <bb 13>; [INV]
+  else
+    goto <bb 17>; [INV]
+
+  <bb 17> :
+  # slot_17 = PHI <slot_32(14), slot_23(16)>
+  # DEBUG slot => slot_17
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  if (slot_17 < 0)
+    goto <bb 18>; [INV]
+  else
+    goto <bb 19>; [INV]
+
+  <bb 18> :
+  # DEBUG BEGIN_STMT
+  _54 = -1;
+  // predicted unlikely by early return (on trees) predictor.
+  goto <bb 28>; [INV]
+
+  <bb 19> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  srv_34 = mem_calloc (1, 404);
+  # DEBUG srv => srv_34
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  if (srv_34 == 0B)
+    goto <bb 20>; [INV]
+  else
+    goto <bb 21>; [INV]
+
+  <bb 20> :
+  # DEBUG BEGIN_STMT
+  _53 = -1;
+  // predicted unlikely by early return (on trees) predictor.
+  goto <bb 28>; [INV]
+
+  <bb 21> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _10 = &srv_34->name;
+  _11 = strlen (name_27(D));
+  if (_11 <= 63)
+    goto <bb 22>; [INV]
+  else
+    goto <bb 23>; [INV]
+
+  <bb 22> :
+  iftmp.42_36 = strlen (name_27(D));
+  goto <bb 24>; [INV]
+
+  <bb 23> :
+  iftmp.42_35 = 63;
+
+  <bb 24> :
+  # iftmp.42_19 = PHI <iftmp.42_36(22), iftmp.42_35(23)>
+  memcpy (_10, name_27(D), iftmp.42_19);
+  # DEBUG BEGIN_STMT
+  _12 = &srv_34->service;
+  _13 = strlen (service_28(D));
+  if (_13 <= 63)
+    goto <bb 25>; [INV]
+  else
+    goto <bb 26>; [INV]
+
+  <bb 25> :
+  iftmp.43_39 = strlen (service_28(D));
+  goto <bb 27>; [INV]
+
+  <bb 26> :
+  iftmp.43_38 = 63;
+
+  <bb 27> :
+  # iftmp.43_20 = PHI <iftmp.43_39(25), iftmp.43_38(26)>
+  memcpy (_12, service_28(D), iftmp.43_20);
+  # DEBUG BEGIN_STMT
+  srv_34->txt_fn = txt_fn_41(D);
+  # DEBUG BEGIN_STMT
+  srv_34->txt_userdata = txt_data_43(D);
+  # DEBUG BEGIN_STMT
+  _14 = (short unsigned int) proto_29(D);
+  srv_34->proto = _14;
+  # DEBUG BEGIN_STMT
+  srv_34->port = port_46(D);
+  # DEBUG BEGIN_STMT
+  srv_34->dns_ttl = dns_ttl_48(D);
+  # DEBUG BEGIN_STMT
+  _15 = (int) slot_17;
+  mdns_26->services[_15] = srv_34;
+  # DEBUG BEGIN_STMT
+  mdns_resp_restart (netif_24(D));
+  # DEBUG BEGIN_STMT
+  _52 = slot_17;
+
+  <bb 28> :
+  # _18 = PHI <_58(5), _57(7), _56(9), _55(11), _54(18), _53(20), _52(27)>
+  return _18;
+
+}
+
+
+mdns_resp_rename_netif (struct netif * netif, const char * hostname)
+{
+  size_t len;
+  struct mdns_host * mdns;
+  unsigned char mdns_netif_client_id.38_1;
+  int _2;
+  char[64] * _3;
+  unsigned int _4;
+  err_t _5;
+  err_t _15;
+  err_t _16;
+  err_t _17;
+  err_t _18;
+
+  <bb 2> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  len_9 = strlen (hostname_8(D));
+  # DEBUG len => len_9
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  if (netif_10(D) == 0B)
+    goto <bb 3>; [INV]
+  else
+    goto <bb 4>; [INV]
+
+  <bb 3> :
+  # DEBUG BEGIN_STMT
+  _18 = -6;
+  // predicted unlikely by early return (on trees) predictor.
+  goto <bb 9>; [INV]
+
+  <bb 4> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  if (len_9 > 63)
+    goto <bb 5>; [INV]
+  else
+    goto <bb 6>; [INV]
+
+  <bb 5> :
+  # DEBUG BEGIN_STMT
+  _17 = -6;
+  // predicted unlikely by early return (on trees) predictor.
+  goto <bb 9>; [INV]
+
+  <bb 6> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  mdns_netif_client_id.38_1 = mdns_netif_client_id;
+  _2 = (int) mdns_netif_client_id.38_1;
+  mdns_11 = netif_10(D)->client_data[_2];
+  # DEBUG mdns => mdns_11
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  if (mdns_11 == 0B)
+    goto <bb 7>; [INV]
+  else
+    goto <bb 8>; [INV]
+
+  <bb 7> :
+  # DEBUG BEGIN_STMT
+  _16 = -6;
+  // predicted unlikely by early return (on trees) predictor.
+  goto <bb 9>; [INV]
+
+  <bb 8> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _3 = &mdns_11->name;
+  _4 = MIN_EXPR <len_9, 63>;
+  memcpy (_3, hostname_8(D), _4);
+  # DEBUG BEGIN_STMT
+  mdns_11->name[len_9] = 0;
+  # DEBUG BEGIN_STMT
+  mdns_resp_restart (netif_10(D));
+  # DEBUG BEGIN_STMT
+  _15 = 0;
+
+  <bb 9> :
+  # _5 = PHI <_18(3), _17(5), _16(7), _15(8)>
+  return _5;
+
+}
+
+
+mdns_resp_remove_netif (struct netif * netif)
+{
+  struct mdns_service * service;
+  struct mdns_host * mdns;
+  int i;
+  unsigned char mdns_netif_client_id.6_1;
+  int _2;
+  unsigned char _3;
+  unsigned char mdns_netif_client_id.7_4;
+  int _5;
+  err_t _7;
+  err_t _22;
+  err_t _26;
+
+  <bb 2> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  if (netif_13(D) == 0B)
+    goto <bb 3>; [INV]
+  else
+    goto <bb 4>; [INV]
+
+  <bb 3> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  __asm__ __volatile__("BKPT #0
+	");
+  # DEBUG BEGIN_STMT
+  goto <bb 3>; [INV]
+
+  <bb 4> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  mdns_netif_client_id.6_1 = mdns_netif_client_id;
+  _2 = (int) mdns_netif_client_id.6_1;
+  mdns_15 = netif_13(D)->client_data[_2];
+  # DEBUG mdns => mdns_15
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  if (mdns_15 == 0B)
+    goto <bb 5>; [INV]
+  else
+    goto <bb 6>; [INV]
+
+  <bb 5> :
+  # DEBUG BEGIN_STMT
+  _26 = -6;
+  // predicted unlikely by early return (on trees) predictor.
+  goto <bb 14>; [INV]
+
+  <bb 6> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _3 = mdns_15->probing_state;
+  if (_3 == 1)
+    goto <bb 7>; [INV]
+  else
+    goto <bb 8>; [INV]
+
+  <bb 7> :
+  # DEBUG BEGIN_STMT
+  sys_untimeout (mdns_probe, netif_13(D));
+
+  <bb 8> :
+  # DEBUG BEGIN_STMT
+  i_17 = 0;
+  # DEBUG i => i_17
+  goto <bb 12>; [INV]
+
+  <bb 9> :
+  # DEBUG BEGIN_STMT
+  service_23 = mdns_15->services[i_6];
+  # DEBUG service => service_23
+  # DEBUG BEGIN_STMT
+  if (service_23 != 0B)
+    goto <bb 10>; [INV]
+  else
+    goto <bb 11>; [INV]
+
+  <bb 10> :
+  # DEBUG BEGIN_STMT
+  mem_free (service_23);
+
+  <bb 11> :
+  # DEBUG BEGIN_STMT
+  i_25 = i_6 + 1;
+  # DEBUG i => i_25
+
+  <bb 12> :
+  # i_6 = PHI <i_17(8), i_25(11)>
+  # DEBUG i => i_6
+  # DEBUG BEGIN_STMT
+  if (i_6 <= 0)
+    goto <bb 9>; [INV]
+  else
+    goto <bb 13>; [INV]
+
+  <bb 13> :
+  # DEBUG BEGIN_STMT
+  igmp_leavegroup_netif (netif_13(D), &v4group.u_addr.ip4);
+  # DEBUG BEGIN_STMT
+  mld6_leavegroup_netif (netif_13(D), &v6group.u_addr.ip6);
+  # DEBUG BEGIN_STMT
+  mem_free (mdns_15);
+  # DEBUG BEGIN_STMT
+  mdns_netif_client_id.7_4 = mdns_netif_client_id;
+  _5 = (int) mdns_netif_client_id.7_4;
+  netif_13(D)->client_data[_5] = 0B;
+  # DEBUG BEGIN_STMT
+  _22 = 0;
+
+  <bb 14> :
+  # _7 = PHI <_26(5), _22(13)>
+  return _7;
+
+}
+
+
+mdns_resp_add_netif (struct netif * netif, const char * hostname, u32_t dns_ttl)
+{
+  struct mdns_host * mdns;
+  err_t res;
+  unsigned int _1;
+  unsigned char mdns_netif_client_id.2_2;
+  int _3;
+  void * _4;
+  unsigned char mdns_netif_client_id.3_5;
+  int _6;
+  char[64] * _7;
+  unsigned int _8;
+  unsigned char mdns_netif_client_id.5_9;
+  int _10;
+  err_t _12;
+  size_t iftmp.4_13;
+  size_t iftmp.4_23;
+  size_t iftmp.4_24;
+  err_t _35;
+  err_t _38;
+  err_t _39;
+  err_t _41;
+  err_t _42;
+
+  <bb 2> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  if (netif_17(D) == 0B)
+    goto <bb 3>; [INV]
+  else
+    goto <bb 4>; [INV]
+
+  <bb 3> :
+  # DEBUG BEGIN_STMT
+  _42 = -6;
+  // predicted unlikely by early return (on trees) predictor.
+  goto <bb 19>; [INV]
+
+  <bb 4> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _1 = strlen (hostname_19(D));
+  if (_1 > 63)
+    goto <bb 5>; [INV]
+  else
+    goto <bb 6>; [INV]
+
+  <bb 5> :
+  # DEBUG BEGIN_STMT
+  _41 = -6;
+  // predicted unlikely by early return (on trees) predictor.
+  goto <bb 19>; [INV]
+
+  <bb 6> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  mdns_netif_client_id.2_2 = mdns_netif_client_id;
+  _3 = (int) mdns_netif_client_id.2_2;
+  _4 = netif_17(D)->client_data[_3];
+  if (_4 != 0B)
+    goto <bb 7>; [INV]
+  else
+    goto <bb 8>; [INV]
+
+  <bb 7> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  __asm__ __volatile__("BKPT #0
+	");
+  # DEBUG BEGIN_STMT
+  goto <bb 7>; [INV]
+
+  <bb 8> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  mdns_21 = mem_calloc (1, 76);
+  # DEBUG mdns => mdns_21
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  if (mdns_21 == 0B)
+    goto <bb 9>; [INV]
+  else
+    goto <bb 10>; [INV]
+
+  <bb 9> :
+  # DEBUG BEGIN_STMT
+  _39 = -1;
+  // predicted unlikely by early return (on trees) predictor.
+  goto <bb 19>; [INV]
+
+  <bb 10> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  mdns_netif_client_id.3_5 = mdns_netif_client_id;
+  _6 = (int) mdns_netif_client_id.3_5;
+  netif_17(D)->client_data[_6] = mdns_21;
+  # DEBUG BEGIN_STMT
+  _7 = &mdns_21->name;
+  _8 = strlen (hostname_19(D));
+  if (_8 <= 63)
+    goto <bb 11>; [INV]
+  else
+    goto <bb 12>; [INV]
+
+  <bb 11> :
+  iftmp.4_24 = strlen (hostname_19(D));
+  goto <bb 13>; [INV]
+
+  <bb 12> :
+  iftmp.4_23 = 63;
+
+  <bb 13> :
+  # iftmp.4_13 = PHI <iftmp.4_24(11), iftmp.4_23(12)>
+  memcpy (_7, hostname_19(D), iftmp.4_13);
+  # DEBUG BEGIN_STMT
+  mdns_21->dns_ttl = dns_ttl_26(D);
+  # DEBUG BEGIN_STMT
+  mdns_21->probes_sent = 0;
+  # DEBUG BEGIN_STMT
+  mdns_21->probing_state = 0;
+  # DEBUG BEGIN_STMT
+  res_31 = igmp_joingroup_netif (netif_17(D), &v4group.u_addr.ip4);
+  # DEBUG res => res_31
+  # DEBUG BEGIN_STMT
+  if (res_31 != 0)
+    goto <bb 14>; [INV]
+  else
+    goto <bb 15>; [INV]
+
+  <bb 14> :
+  # DEBUG BEGIN_STMT
+  // predicted unlikely by goto predictor.
+  goto <bb 18>; [INV]
+
+  <bb 15> :
+  # DEBUG BEGIN_STMT
+  res_33 = mld6_joingroup_netif (netif_17(D), &v6group.u_addr.ip6);
+  # DEBUG res => res_33
+  # DEBUG BEGIN_STMT
+  if (res_33 != 0)
+    goto <bb 16>; [INV]
+  else
+    goto <bb 17>; [INV]
+
+  <bb 16> :
+  # DEBUG BEGIN_STMT
+  // predicted unlikely by goto predictor.
+  goto <bb 18>; [INV]
+
+  <bb 17> :
+  # DEBUG BEGIN_STMT
+  mdns_resp_restart (netif_17(D));
+  # DEBUG BEGIN_STMT
+  _35 = 0;
+  goto <bb 19>; [INV]
+
+  <bb 18> :
+  # res_11 = PHI <res_31(14), res_33(16)>
+cleanup:
+  # DEBUG res => res_11
+  # DEBUG BEGIN_STMT
+  mem_free (mdns_21);
+  # DEBUG BEGIN_STMT
+  mdns_netif_client_id.5_9 = mdns_netif_client_id;
+  _10 = (int) mdns_netif_client_id.5_9;
+  netif_17(D)->client_data[_10] = 0B;
+  # DEBUG BEGIN_STMT
+  _38 = res_11;
+
+  <bb 19> :
+  # _12 = PHI <_42(3), _41(5), _39(9), _35(17), _38(18)>
+  return _12;
+
+}
+
+
+mdns_probe (void * arg)
+{
+  struct mdns_host * mdns;
+  struct netif * netif;
+  unsigned char mdns_netif_client_id.8_1;
+  int _2;
+  unsigned char _3;
+  void (*<T709>) (struct netif *, u8_t) mdns_name_result_cb.9_4;
+  void (*<T709>) (struct netif *, u8_t) mdns_name_result_cb.10_5;
+  struct ip4_addr_t * _6;
+  long unsigned int _7;
+  signed char _8;
+  signed char _9;
+  unsigned char _10;
+  unsigned char _11;
+  unsigned char _12;
+
+  <bb 2> :
+  # DEBUG BEGIN_STMT
+  netif_16 = arg_15(D);
+  # DEBUG netif => netif_16
+  # DEBUG BEGIN_STMT
+  mdns_netif_client_id.8_1 = mdns_netif_client_id;
+  _2 = (int) mdns_netif_client_id.8_1;
+  mdns_18 = netif_16->client_data[_2];
+  # DEBUG mdns => mdns_18
+  # DEBUG BEGIN_STMT
+  _3 = mdns_18->probes_sent;
+  if (_3 > 2)
+    goto <bb 3>; [INV]
+  else
+    goto <bb 5>; [INV]
+
+  <bb 3> :
+  # DEBUG BEGIN_STMT
+  mdns_18->probing_state = 2;
+  # DEBUG BEGIN_STMT
+  mdns_resp_announce (netif_16);
+  # DEBUG BEGIN_STMT
+  mdns_name_result_cb.9_4 = mdns_name_result_cb;
+  if (mdns_name_result_cb.9_4 != 0B)
+    goto <bb 4>; [INV]
+  else
+    goto <bb 10>; [INV]
+
+  <bb 4> :
+  # DEBUG BEGIN_STMT
+  mdns_name_result_cb.10_5 = mdns_name_result_cb;
+  mdns_name_result_cb.10_5 (netif_16, 1);
+  goto <bb 10>; [INV]
+
+  <bb 5> :
+  # DEBUG BEGIN_STMT
+  _6 = &netif_16->ip_addr.u_addr.ip4;
+  _7 = MEM[(const struct ip4_addr_t *)_6].addr;
+  if (_7 != 0)
+    goto <bb 6>; [INV]
+  else
+    goto <bb 9>; [INV]
+
+  <bb 6> :
+  _8 = mdns_send_probe (netif_16, &ip_addr_any);
+  if (_8 == 0)
+    goto <bb 7>; [INV]
+  else
+    goto <bb 9>; [INV]
+
+  <bb 7> :
+  # DEBUG BEGIN_STMT
+  _9 = mdns_send_probe (netif_16, &ip6_addr_any);
+  if (_9 == 0)
+    goto <bb 8>; [INV]
+  else
+    goto <bb 9>; [INV]
+
+  <bb 8> :
+  # DEBUG BEGIN_STMT
+  _10 = mdns_18->probes_sent;
+  _11 = _10;
+  _12 = _11 + 1;
+  mdns_18->probes_sent = _12;
+
+  <bb 9> :
+  # DEBUG BEGIN_STMT
+  sys_timeout (250, mdns_probe, netif_16);
+
+  <bb 10> :
+  return;
+
+}
+
+
+mdns_send_probe (struct netif * netif, const struct ip_addr_t * destination)
+{
+  struct mdns_service * serv;
+  struct mdns_service * service;
+  err_t res;
+  u8_t i;
+  struct mdns_domain domain;
+  struct mdns_outpacket pkt;
+  struct mdns_host * mdns;
+  unsigned char mdns_netif_client_id.11_1;
+  int _2;
+  short unsigned int _3;
+  short unsigned int _4;
+  short unsigned int _5;
+  int _6;
+  short unsigned int _7;
+  short unsigned int _8;
+  short unsigned int _9;
+  unsigned char i.12_10;
+  struct ip4_addr_t * _11;
+  long unsigned int _12;
+  int _13;
+  unsigned char _14;
+  int _15;
+  int _16;
+  unsigned char _17;
+  unsigned char _18;
+  unsigned char i.13_19;
+  int _20;
+  int _21;
+  unsigned char i.14_22;
+  struct pbuf * _23;
+  struct pbuf * _24;
+  err_t _70;
+
+  <bb 2> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  mdns_netif_client_id.11_1 = mdns_netif_client_id;
+  _2 = (int) mdns_netif_client_id.11_1;
+  mdns_40 = netif_39(D)->client_data[_2];
+  # DEBUG mdns => mdns_40
+  # DEBUG BEGIN_STMT
+  memset (&pkt, 0, 72);
+  # DEBUG BEGIN_STMT
+  pkt.netif = netif_39(D);
+  # DEBUG BEGIN_STMT
+  mdns_build_host_domain (&domain, mdns_40);
+  # DEBUG BEGIN_STMT
+  res_45 = mdns_add_question (&pkt, &domain, 255, 1, 1);
+  # DEBUG res => res_45
+  # DEBUG BEGIN_STMT
+  if (res_45 != 0)
+    goto <bb 3>; [INV]
+  else
+    goto <bb 4>; [INV]
+
+  <bb 3> :
+  # DEBUG BEGIN_STMT
+  // predicted unlikely by goto predictor.
+  goto <bb 25>; [INV]
+
+  <bb 4> :
+  # DEBUG BEGIN_STMT
+  _3 = pkt.questions;
+  _4 = _3;
+  _5 = _4 + 1;
+  pkt.questions = _5;
+  # DEBUG BEGIN_STMT
+  i_47 = 0;
+  # DEBUG i => i_47
+  goto <bb 11>; [INV]
+
+  <bb 5> :
+  # DEBUG BEGIN_STMT
+  _6 = (int) i_25;
+  service_62 = mdns_40->services[_6];
+  # DEBUG service => service_62
+  # DEBUG BEGIN_STMT
+  if (service_62 == 0B)
+    goto <bb 6>; [INV]
+  else
+    goto <bb 7>; [INV]
+
+  <bb 6> :
+  # DEBUG BEGIN_STMT
+  // predicted unlikely by continue predictor.
+  goto <bb 10>; [INV]
+
+  <bb 7> :
+  # DEBUG BEGIN_STMT
+  mdns_build_service_domain (&domain, service_62, 1);
+  # DEBUG BEGIN_STMT
+  res_65 = mdns_add_question (&pkt, &domain, 255, 1, 1);
+  # DEBUG res => res_65
+  # DEBUG BEGIN_STMT
+  if (res_65 != 0)
+    goto <bb 8>; [INV]
+  else
+    goto <bb 9>; [INV]
+
+  <bb 8> :
+  # DEBUG BEGIN_STMT
+  // predicted unlikely by goto predictor.
+  goto <bb 25>; [INV]
+
+  <bb 9> :
+  # DEBUG BEGIN_STMT
+  _7 = pkt.questions;
+  _8 = _7;
+  _9 = _8 + 1;
+  pkt.questions = _9;
+
+  <bb 10> :
+  # DEBUG BEGIN_STMT
+  i.12_10 = i_25;
+  i_67 = i.12_10 + 1;
+  # DEBUG i => i_67
+
+  <bb 11> :
+  # i_25 = PHI <i_47(4), i_67(10)>
+  # DEBUG i => i_25
+  # DEBUG BEGIN_STMT
+  if (i_25 == 0)
+    goto <bb 5>; [INV]
+  else
+    goto <bb 12>; [INV]
+
+  <bb 12> :
+  # DEBUG BEGIN_STMT
+  _11 = &netif_39(D)->ip_addr.u_addr.ip4;
+  _12 = MEM[(const struct ip4_addr_t *)_11].addr;
+  if (_12 != 0)
+    goto <bb 13>; [INV]
+  else
+    goto <bb 14>; [INV]
+
+  <bb 13> :
+  # DEBUG BEGIN_STMT
+  pkt.host_replies = 1;
+
+  <bb 14> :
+  # DEBUG BEGIN_STMT
+  i_49 = 0;
+  # DEBUG i => i_49
+  goto <bb 18>; [INV]
+
+  <bb 15> :
+  # DEBUG BEGIN_STMT
+  _13 = (int) i_26;
+  _14 = netif_39(D)->ip6_addr_state[_13];
+  _15 = (int) _14;
+  _16 = _15 & 16;
+  if (_16 != 0)
+    goto <bb 16>; [INV]
+  else
+    goto <bb 17>; [INV]
+
+  <bb 16> :
+  # DEBUG BEGIN_STMT
+  _17 = pkt.host_replies;
+  _18 = _17 | 4;
+  pkt.host_replies = _18;
+
+  <bb 17> :
+  # DEBUG BEGIN_STMT
+  i.13_19 = i_26;
+  i_61 = i.13_19 + 1;
+  # DEBUG i => i_61
+
+  <bb 18> :
+  # i_26 = PHI <i_49(14), i_61(17)>
+  # DEBUG i => i_26
+  # DEBUG BEGIN_STMT
+  if (i_26 <= 2)
+    goto <bb 15>; [INV]
+  else
+    goto <bb 19>; [INV]
+
+  <bb 19> :
+  # DEBUG BEGIN_STMT
+  i_50 = 0;
+  # DEBUG i => i_50
+  goto <bb 23>; [INV]
+
+  <bb 20> :
+  # DEBUG BEGIN_STMT
+  _20 = (int) i_27;
+  serv_57 = mdns_40->services[_20];
+  # DEBUG serv => serv_57
+  # DEBUG BEGIN_STMT
+  if (serv_57 != 0B)
+    goto <bb 21>; [INV]
+  else
+    goto <bb 22>; [INV]
+
+  <bb 21> :
+  # DEBUG BEGIN_STMT
+  _21 = (int) i_27;
+  pkt.serv_replies[_21] = 192;
+
+  <bb 22> :
+  # DEBUG BEGIN_STMT
+  i.14_22 = i_27;
+  i_59 = i.14_22 + 1;
+  # DEBUG i => i_59
+
+  <bb 23> :
+  # i_27 = PHI <i_50(19), i_59(22)>
+  # DEBUG i => i_27
+  # DEBUG BEGIN_STMT
+  if (i_27 == 0)
+    goto <bb 20>; [INV]
+  else
+    goto <bb 24>; [INV]
+
+  <bb 24> :
+  # DEBUG BEGIN_STMT
+  pkt.tx_id = 0;
+  # DEBUG BEGIN_STMT
+  pkt.dest_port = 5353;
+  # DEBUG BEGIN_STMT
+  memcpy (&pkt.dest_addr, destination_53(D), 24);
+  # DEBUG BEGIN_STMT
+  res_56 = mdns_send_outpacket (&pkt, 0);
+  # DEBUG res => res_56
+
+  <bb 25> :
+  # res_28 = PHI <res_45(3), res_65(8), res_56(24)>
+cleanup:
+  # DEBUG res => res_28
+  # DEBUG BEGIN_STMT
+  _23 = pkt.pbuf;
+  if (_23 != 0B)
+    goto <bb 26>; [INV]
+  else
+    goto <bb 27>; [INV]
+
+  <bb 26> :
+  # DEBUG BEGIN_STMT
+  _24 = pkt.pbuf;
+  pbuf_free (_24);
+  # DEBUG BEGIN_STMT
+  pkt.pbuf = 0B;
+
+  <bb 27> :
+  # DEBUG BEGIN_STMT
+  _70 = res_28;
+  pkt ={v} {CLOBBER};
+  domain ={v} {CLOBBER};
+  return _70;
+
+}
+
+
+mdns_recv (void * arg, struct udp_pcb * pcb, struct pbuf * p, const struct ip_addr_t * addr, u16_t port)
+{
+  u16_t offset;
+  struct netif * recv_netif;
+  struct mdns_packet packet;
+  struct dns_hdr hdr;
+  unsigned char mdns_netif_client_id.53_1;
+  int _2;
+  void * _3;
+  short unsigned int _4;
+  unsigned char _5;
+  unsigned char _6;
+  int _7;
+  int _8;
+  short unsigned int _9;
+  short unsigned int _10;
+  short unsigned int _11;
+  short unsigned int _12;
+  short unsigned int _13;
+  short unsigned int _14;
+  short unsigned int _15;
+  short unsigned int _16;
+  short unsigned int _17;
+  short unsigned int _18;
+  short unsigned int _19;
+  short unsigned int _20;
+  short unsigned int _21;
+  short unsigned int _22;
+  unsigned char _23;
+  unsigned char _24;
+  unsigned char _25;
+  unsigned char _26;
+  long unsigned int _27;
+  long unsigned int _28;
+  long unsigned int _29;
+  long unsigned int _30;
+  long unsigned int _31;
+  long unsigned int _32;
+  long unsigned int _33;
+  long unsigned int _34;
+  long unsigned int _35;
+  long unsigned int _36;
+  unsigned char _37;
+  unsigned char _38;
+  unsigned char _39;
+  unsigned char _40;
+  long unsigned int _41;
+  long unsigned int _42;
+  long unsigned int _43;
+  long unsigned int _44;
+  long unsigned int _45;
+  long unsigned int _46;
+  long unsigned int _47;
+  long unsigned int _48;
+  unsigned char _49;
+  unsigned char _50;
+  long unsigned int _51;
+  long unsigned int _52;
+  unsigned char _53;
+  signed char _54;
+  _Bool iftmp.54_55;
+  _Bool iftmp.55_56;
+  int iftmp.56_57;
+  _Bool iftmp.57_58;
+  _Bool iftmp.58_59;
+  int iftmp.59_60;
+  _Bool iftmp.54_88;
+  _Bool iftmp.55_89;
+  int iftmp.56_90;
+  int iftmp.56_91;
+  _Bool iftmp.55_92;
+  _Bool iftmp.54_93;
+  _Bool iftmp.57_95;
+  _Bool iftmp.58_96;
+  int iftmp.59_97;
+  int iftmp.59_98;
+  _Bool iftmp.58_99;
+  _Bool iftmp.57_100;
+
+  <bb 2> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  recv_netif_65 = ip_data.current_input_netif;
+  # DEBUG recv_netif => recv_netif_65
+  # DEBUG BEGIN_STMT
+  offset_66 = 0;
+  # DEBUG offset => offset_66
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  mdns_netif_client_id.53_1 = mdns_netif_client_id;
+  _2 = (int) mdns_netif_client_id.53_1;
+  _3 = recv_netif_65->client_data[_2];
+  if (_3 == 0B)
+    goto <bb 3>; [INV]
+  else
+    goto <bb 4>; [INV]
+
+  <bb 3> :
+  # DEBUG BEGIN_STMT
+  // predicted unlikely by goto predictor.
+  goto <bb 42>; [INV]
+
+  <bb 4> :
+  # DEBUG BEGIN_STMT
+  _4 = pbuf_copy_partial (p_67(D), &hdr, 12, offset_66);
+  if (_4 <= 11)
+    goto <bb 5>; [INV]
+  else
+    goto <bb 6>; [INV]
+
+  <bb 5> :
+  # DEBUG BEGIN_STMT
+  // predicted unlikely by goto predictor.
+  goto <bb 42>; [INV]
+
+  <bb 6> :
+  # DEBUG BEGIN_STMT
+  offset_69 = offset_66 + 12;
+  # DEBUG offset => offset_69
+  # DEBUG BEGIN_STMT
+  _5 = hdr.flags1;
+  _6 = _5 >> 3;
+  _7 = (int) _6;
+  _8 = _7 & 15;
+  if (_8 != 0)
+    goto <bb 7>; [INV]
+  else
+    goto <bb 8>; [INV]
+
+  <bb 7> :
+  # DEBUG BEGIN_STMT
+  // predicted unlikely by goto predictor.
+  goto <bb 42>; [INV]
+
+  <bb 8> :
+  # DEBUG BEGIN_STMT
+  memset (&packet, 0, 48);
+  # DEBUG BEGIN_STMT
+  memcpy (&packet.source_addr, addr_71(D), 24);
+  # DEBUG BEGIN_STMT
+  packet.source_port = port_73(D);
+  # DEBUG BEGIN_STMT
+  packet.netif = recv_netif_65;
+  # DEBUG BEGIN_STMT
+  packet.pbuf = p_67(D);
+  # DEBUG BEGIN_STMT
+  packet.parse_offset = offset_69;
+  # DEBUG BEGIN_STMT
+  _9 = hdr.id;
+  _10 = lwip_htons (_9);
+  packet.tx_id = _10;
+  # DEBUG BEGIN_STMT
+  _11 = hdr.numquestions;
+  _12 = lwip_htons (_11);
+  packet.questions_left = _12;
+  _13 = packet.questions_left;
+  packet.questions = _13;
+  # DEBUG BEGIN_STMT
+  _14 = hdr.numanswers;
+  _15 = lwip_htons (_14);
+  _16 = hdr.numauthrr;
+  _17 = lwip_htons (_16);
+  _18 = _15 + _17;
+  _19 = hdr.numextrarr;
+  _20 = lwip_htons (_19);
+  _21 = _18 + _20;
+  packet.answers_left = _21;
+  _22 = packet.answers_left;
+  packet.answers = _22;
+  # DEBUG BEGIN_STMT
+  _23 = ip_data.current_iphdr_dest.type;
+  if (_23 == 6)
+    goto <bb 9>; [INV]
+  else
+    goto <bb 23>; [INV]
+
+  <bb 9> :
+  # DEBUG BEGIN_STMT
+  _24 = ip_data.current_iphdr_dest.type;
+  _25 = 6;
+  if (_24 == _25)
+    goto <bb 10>; [INV]
+  else
+    goto <bb 20>; [INV]
+
+  <bb 10> :
+  _26 = ip_data.current_iphdr_dest.type;
+  if (_26 == 6)
+    goto <bb 11>; [INV]
+  else
+    goto <bb 18>; [INV]
+
+  <bb 11> :
+  _27 = ip_data.current_iphdr_dest.u_addr.ip6.addr[0];
+  _28 = 767;
+  if (_27 != _28)
+    goto <bb 15>; [INV]
+  else
+    goto <bb 12>; [INV]
+
+  <bb 12> :
+  _29 = ip_data.current_iphdr_dest.u_addr.ip6.addr[1];
+  _30 = 0;
+  if (_29 != _30)
+    goto <bb 15>; [INV]
+  else
+    goto <bb 13>; [INV]
+
+  <bb 13> :
+  _31 = ip_data.current_iphdr_dest.u_addr.ip6.addr[2];
+  _32 = 0;
+  if (_31 != _32)
+    goto <bb 15>; [INV]
+  else
+    goto <bb 14>; [INV]
+
+  <bb 14> :
+  _33 = ip_data.current_iphdr_dest.u_addr.ip6.addr[3];
+  _34 = 4211081216;
+  if (_33 != _34)
+    goto <bb 15>; [INV]
+  else
+    goto <bb 16>; [INV]
+
+  <bb 15> :
+  iftmp.56_91 = 1;
+  goto <bb 17>; [INV]
+
+  <bb 16> :
+  iftmp.56_90 = 0;
+
+  <bb 17> :
+  # iftmp.56_57 = PHI <iftmp.56_91(15), iftmp.56_90(16)>
+  iftmp.55_92 = (_Bool) iftmp.56_57;
+  goto <bb 19>; [INV]
+
+  <bb 18> :
+  _35 = ip_data.current_iphdr_dest.u_addr.ip4.addr;
+  _36 = 767;
+  iftmp.55_89 = _35 != _36;
+
+  <bb 19> :
+  # iftmp.55_56 = PHI <iftmp.55_92(17), iftmp.55_89(18)>
+  iftmp.54_93 = iftmp.55_56;
+  goto <bb 21>; [INV]
+
+  <bb 20> :
+  iftmp.54_88 = 1;
+
+  <bb 21> :
+  # iftmp.54_55 = PHI <iftmp.54_93(19), iftmp.54_88(20)>
+  if (iftmp.54_55 != 0)
+    goto <bb 22>; [INV]
+  else
+    goto <bb 23>; [INV]
+
+  <bb 22> :
+  # DEBUG BEGIN_STMT
+  packet.recv_unicast = 1;
+
+  <bb 23> :
+  # DEBUG BEGIN_STMT
+  _37 = ip_data.current_iphdr_dest.type;
+  if (_37 != 6)
+    goto <bb 24>; [INV]
+  else
+    goto <bb 39>; [INV]
+
+  <bb 24> :
+  # DEBUG BEGIN_STMT
+  _38 = ip_data.current_iphdr_dest.type;
+  _39 = 0;
+  if (_38 == _39)
+    goto <bb 25>; [INV]
+  else
+    goto <bb 36>; [INV]
+
+  <bb 25> :
+  _40 = ip_data.current_iphdr_dest.type;
+  if (_40 == 6)
+    goto <bb 26>; [INV]
+  else
+    goto <bb 34>; [INV]
+
+  <bb 26> :
+  _41 = ip_data.current_iphdr_dest.u_addr.ip6.addr[0];
+  _42 = 4211081440;
+  if (_41 != _42)
+    goto <bb 31>; [INV]
+  else
+    goto <bb 27>; [INV]
+
+  <bb 27> :
+  _43 = ip_data.current_iphdr_dest.u_addr.ip6.addr[1];
+  _44 = 0;
+  if (_43 != _44)
+    goto <bb 31>; [INV]
+  else
+    goto <bb 28>; [INV]
+
+  <bb 28> :
+  _45 = ip_data.current_iphdr_dest.u_addr.ip6.addr[2];
+  _46 = 0;
+  if (_45 != _46)
+    goto <bb 31>; [INV]
+  else
+    goto <bb 29>; [INV]
+
+  <bb 29> :
+  _47 = ip_data.current_iphdr_dest.u_addr.ip6.addr[3];
+  _48 = 0;
+  if (_47 != _48)
+    goto <bb 31>; [INV]
+  else
+    goto <bb 30>; [INV]
+
+  <bb 30> :
+  _49 = ip_data.current_iphdr_dest.u_addr.ip6.zone;
+  _50 = 0;
+  if (_49 != _50)
+    goto <bb 31>; [INV]
+  else
+    goto <bb 32>; [INV]
+
+  <bb 31> :
+  iftmp.59_98 = 1;
+  goto <bb 33>; [INV]
+
+  <bb 32> :
+  iftmp.59_97 = 0;
+
+  <bb 33> :
+  # iftmp.59_60 = PHI <iftmp.59_98(31), iftmp.59_97(32)>
+  iftmp.58_99 = (_Bool) iftmp.59_60;
+  goto <bb 35>; [INV]
+
+  <bb 34> :
+  _51 = ip_data.current_iphdr_dest.u_addr.ip4.addr;
+  _52 = 4211081440;
+  iftmp.58_96 = _51 != _52;
+
+  <bb 35> :
+  # iftmp.58_59 = PHI <iftmp.58_99(33), iftmp.58_96(34)>
+  iftmp.57_100 = iftmp.58_59;
+  goto <bb 37>; [INV]
+
+  <bb 36> :
+  iftmp.57_95 = 1;
+
+  <bb 37> :
+  # iftmp.57_58 = PHI <iftmp.57_100(35), iftmp.57_95(36)>
+  if (iftmp.57_58 != 0)
+    goto <bb 38>; [INV]
+  else
+    goto <bb 39>; [INV]
+
+  <bb 38> :
+  # DEBUG BEGIN_STMT
+  packet.recv_unicast = 1;
+
+  <bb 39> :
+  # DEBUG BEGIN_STMT
+  _53 = hdr.flags1;
+  _54 = (signed char) _53;
+  if (_54 < 0)
+    goto <bb 40>; [INV]
+  else
+    goto <bb 41>; [INV]
+
+  <bb 40> :
+  # DEBUG BEGIN_STMT
+  mdns_handle_response (&packet);
+  goto <bb 42>; [INV]
+
+  <bb 41> :
+  # DEBUG BEGIN_STMT
+  mdns_handle_question (&packet);
+
+  <bb 42> :
+dealloc:
+  # DEBUG BEGIN_STMT
+  pbuf_free (p_67(D));
+  hdr ={v} {CLOBBER};
+  packet ={v} {CLOBBER};
+  return;
+
+}
+
+
+mdns_handle_response (struct mdns_packet * pkt)
+{
+  struct mdns_service * service;
+  u8_t conflict;
+  u8_t i;
+  struct mdns_domain domain;
+  err_t res;
+  struct mdns_answer ans;
+  err_t res;
+  struct mdns_question q;
+  struct mdns_host * mdns;
+  struct netif * _1;
+  unsigned char mdns_netif_client_id.60_2;
+  int _3;
+  short unsigned int _4;
+  unsigned char _5;
+  unsigned char _6;
+  int _7;
+  int _8;
+  int _9;
+  unsigned char i.61_10;
+  struct netif * _11;
+  void (*<T709>) (struct netif *, u8_t) mdns_name_result_cb.62_12;
+  void (*<T709>) (struct netif *, u8_t) mdns_name_result_cb.63_13;
+  struct netif * _14;
+  short unsigned int _15;
+
+  <bb 2> :
+  # DEBUG BEGIN_STMT
+  _1 = pkt_29(D)->netif;
+  mdns_netif_client_id.60_2 = mdns_netif_client_id;
+  _3 = (int) mdns_netif_client_id.60_2;
+  mdns_30 = _1->client_data[_3];
+  # DEBUG mdns => mdns_30
+  # DEBUG BEGIN_STMT
+  goto <bb 6>; [INV]
+
+  <bb 3> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  res_52 = mdns_read_question (pkt_29(D), &q);
+  # DEBUG res => res_52
+  # DEBUG BEGIN_STMT
+  if (res_52 != 0)
+    goto <bb 4>; [INV]
+  else
+    goto <bb 5>; [INV]
+
+  <bb 4> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  // predicted unlikely by early return (on trees) predictor.
+  q ={v} {CLOBBER};
+  goto <bb 28>; [INV]
+
+  <bb 5> :
+  q ={v} {CLOBBER};
+
+  <bb 6> :
+  # DEBUG BEGIN_STMT
+  _4 = pkt_29(D)->questions_left;
+  if (_4 != 0)
+    goto <bb 3>; [INV]
+  else
+    goto <bb 27>; [INV]
+
+  <bb 7> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  res_32 = mdns_read_answer (pkt_29(D), &ans);
+  # DEBUG res => res_32
+  # DEBUG BEGIN_STMT
+  if (res_32 != 0)
+    goto <bb 8>; [INV]
+  else
+    goto <bb 9>; [INV]
+
+  <bb 8> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  // predicted unlikely by early return (on trees) predictor.
+  ans ={v} {CLOBBER};
+  goto <bb 28>; [INV]
+
+  <bb 9> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  mdns_domain_debug_print (&ans.info.domain);
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _5 = mdns_30->probing_state;
+  if (_5 == 1)
+    goto <bb 10>; [INV]
+  else
+    goto <bb 26>; [INV]
+
+  <bb 10> :
+  _6 = mdns_30->probes_sent;
+  if (_6 != 0)
+    goto <bb 11>; [INV]
+  else
+    goto <bb 26>; [INV]
+
+  <bb 11> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  conflict_34 = 0;
+  # DEBUG conflict => conflict_34
+  # DEBUG BEGIN_STMT
+  res_36 = mdns_build_host_domain (&domain, mdns_30);
+  # DEBUG res => res_36
+  # DEBUG BEGIN_STMT
+  if (res_36 == 0)
+    goto <bb 12>; [INV]
+  else
+    goto <bb 14>; [INV]
+
+  <bb 12> :
+  _7 = mdns_domain_eq (&ans.info.domain, &domain);
+  if (_7 != 0)
+    goto <bb 13>; [INV]
+  else
+    goto <bb 14>; [INV]
+
+  <bb 13> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  conflict_38 = 1;
+  # DEBUG conflict => conflict_38
+
+  <bb 14> :
+  # conflict_17 = PHI <conflict_34(11), conflict_34(12), conflict_38(13)>
+  # DEBUG conflict => conflict_17
+  # DEBUG BEGIN_STMT
+  i_39 = 0;
+  # DEBUG i => i_39
+  goto <bb 21>; [INV]
+
+  <bb 15> :
+  # DEBUG BEGIN_STMT
+  _8 = (int) i_16;
+  service_43 = mdns_30->services[_8];
+  # DEBUG service => service_43
+  # DEBUG BEGIN_STMT
+  if (service_43 == 0B)
+    goto <bb 16>; [INV]
+  else
+    goto <bb 17>; [INV]
+
+  <bb 16> :
+  # DEBUG BEGIN_STMT
+  // predicted unlikely by continue predictor.
+  goto <bb 20>; [INV]
+
+  <bb 17> :
+  # DEBUG BEGIN_STMT
+  res_45 = mdns_build_service_domain (&domain, service_43, 1);
+  # DEBUG res => res_45
+  # DEBUG BEGIN_STMT
+  if (res_45 == 0)
+    goto <bb 18>; [INV]
+  else
+    goto <bb 20>; [INV]
+
+  <bb 18> :
+  _9 = mdns_domain_eq (&ans.info.domain, &domain);
+  if (_9 != 0)
+    goto <bb 19>; [INV]
+  else
+    goto <bb 20>; [INV]
+
+  <bb 19> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  conflict_47 = 1;
+  # DEBUG conflict => conflict_47
+
+  <bb 20> :
+  # conflict_18 = PHI <conflict_19(16), conflict_19(17), conflict_19(18), conflict_47(19)>
+  # DEBUG conflict => conflict_18
+  # DEBUG BEGIN_STMT
+  i.61_10 = i_16;
+  i_48 = i.61_10 + 1;
+  # DEBUG i => i_48
+
+  <bb 21> :
+  # i_16 = PHI <i_39(14), i_48(20)>
+  # conflict_19 = PHI <conflict_17(14), conflict_18(20)>
+  # DEBUG conflict => conflict_19
+  # DEBUG i => i_16
+  # DEBUG BEGIN_STMT
+  if (i_16 == 0)
+    goto <bb 15>; [INV]
+  else
+    goto <bb 22>; [INV]
+
+  <bb 22> :
+  # DEBUG BEGIN_STMT
+  if (conflict_19 != 0)
+    goto <bb 23>; [INV]
+  else
+    goto <bb 25>; [INV]
+
+  <bb 23> :
+  # DEBUG BEGIN_STMT
+  _11 = pkt_29(D)->netif;
+  sys_untimeout (mdns_probe, _11);
+  # DEBUG BEGIN_STMT
+  mdns_name_result_cb.62_12 = mdns_name_result_cb;
+  if (mdns_name_result_cb.62_12 != 0B)
+    goto <bb 24>; [INV]
+  else
+    goto <bb 25>; [INV]
+
+  <bb 24> :
+  # DEBUG BEGIN_STMT
+  mdns_name_result_cb.63_13 = mdns_name_result_cb;
+  _14 = pkt_29(D)->netif;
+  mdns_name_result_cb.63_13 (_14, 0);
+
+  <bb 25> :
+  domain ={v} {CLOBBER};
+
+  <bb 26> :
+  ans ={v} {CLOBBER};
+
+  <bb 27> :
+  # DEBUG BEGIN_STMT
+  _15 = pkt_29(D)->answers_left;
+  if (_15 != 0)
+    goto <bb 7>; [INV]
+  else
+    goto <bb 28>; [INV]
+
+  <bb 28> :
+  return;
+
+}
+
+
+mdns_handle_question (struct mdns_packet * pkt)
+{
+  struct mdns_domain my_ans;
+  struct mdns_domain known_ans;
+  u16_t read_pos;
+  u16_t len;
+  u16_t field16;
+  u16_t len;
+  struct mdns_domain my_ans;
+  struct mdns_domain known_ans;
+  u16_t len;
+  struct mdns_domain my_ans;
+  struct mdns_domain known_ans;
+  int match;
+  u8_t rev_v6;
+  struct mdns_answer ans;
+  struct mdns_question q;
+  struct mdns_host * mdns;
+  err_t res;
+  int i;
+  int replies;
+  struct mdns_outpacket reply;
+  struct mdns_service * service;
+  struct netif * _1;
+  unsigned char mdns_netif_client_id.69_2;
+  int _3;
+  unsigned char _4;
+  short unsigned int _5;
+  struct netif * _6;
+  unsigned char _7;
+  signed char _8;
+  signed char _9;
+  signed char _10;
+  unsigned char _11;
+  unsigned char _12;
+  int _13;
+  unsigned char _14;
+  signed char _15;
+  signed char _16;
+  signed char _17;
+  unsigned char _18;
+  unsigned char _19;
+  int _20;
+  unsigned char _21;
+  short unsigned int _22;
+  short unsigned int _23;
+  short unsigned int _24;
+  short unsigned int _25;
+  short unsigned int _26;
+  unsigned char _27;
+  int _28;
+  struct netif * _29;
+  int _30;
+  long unsigned int _31;
+  long unsigned int _32;
+  long unsigned int _33;
+  short unsigned int _34;
+  struct pbuf * _35;
+  short unsigned int _36;
+  int _37;
+  int _38;
+  unsigned char _39;
+  unsigned char _40;
+  int _41;
+  unsigned char _42;
+  signed char _43;
+  unsigned char rev_v6.70_44;
+  signed char rev_v6.71_45;
+  signed char _46;
+  signed char _47;
+  unsigned char _48;
+  unsigned char _49;
+  unsigned char _50;
+  unsigned char _51;
+  int _52;
+  short unsigned int _53;
+  struct pbuf * _54;
+  short unsigned int _55;
+  struct netif * _56;
+  struct ip4_addr_t * _57;
+  short unsigned int _58;
+  short unsigned int _59;
+  unsigned char _60;
+  unsigned char _61;
+  int _62;
+  short unsigned int _63;
+  struct pbuf * _64;
+  short unsigned int _65;
+  struct netif * _66;
+  struct ip6_addr_t * _67;
+  short unsigned int _68;
+  short unsigned int _69;
+  unsigned char _70;
+  unsigned char _71;
+  unsigned char _72;
+  int _73;
+  int _74;
+  long unsigned int _75;
+  long unsigned int _76;
+  long unsigned int _77;
+  short unsigned int _78;
+  struct pbuf * _79;
+  short unsigned int _80;
+  int _81;
+  int _82;
+  unsigned char _83;
+  unsigned char _84;
+  int _85;
+  int _86;
+  unsigned char _87;
+  unsigned char _88;
+  int _89;
+  struct pbuf * _90;
+  short unsigned int field16.72_91;
+  short unsigned int _92;
+  struct pbuf * _93;
+  short unsigned int field16.73_94;
+  short unsigned int _95;
+  struct pbuf * _96;
+  short unsigned int field16.74_97;
+  short unsigned int _98;
+  short unsigned int _99;
+  struct pbuf * _100;
+  int _101;
+  unsigned char _102;
+  unsigned char _103;
+  int _104;
+  short unsigned int _105;
+  short unsigned int _106;
+  struct pbuf * _107;
+  short unsigned int _108;
+  u8_t[256] * _109;
+  short unsigned int _110;
+  short unsigned int _111;
+  unsigned char _112;
+  unsigned char _113;
+  short unsigned int _114;
+  struct pbuf * _115;
+  struct pbuf * _116;
+  int _218;
+  int _229;
+
+  <bb 2> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  replies_140 = 0;
+  # DEBUG replies => replies_140
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _1 = pkt_142(D)->netif;
+  mdns_netif_client_id.69_2 = mdns_netif_client_id;
+  _3 = (int) mdns_netif_client_id.69_2;
+  mdns_143 = _1->client_data[_3];
+  # DEBUG mdns => mdns_143
+  # DEBUG BEGIN_STMT
+  _4 = mdns_143->probing_state;
+  if (_4 != 2)
+    goto <bb 3>; [INV]
+  else
+    goto <bb 4>; [INV]
+
+  <bb 3> :
+  # DEBUG BEGIN_STMT
+  // predicted unlikely by early return (on trees) predictor.
+  goto <bb 85>; [INV]
+
+  <bb 4> :
+  # DEBUG BEGIN_STMT
+  mdns_init_outpacket (&reply, pkt_142(D));
+  # DEBUG BEGIN_STMT
+  goto <bb 20>; [INV]
+
+  <bb 5> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  res_214 = mdns_read_question (pkt_142(D), &q);
+  # DEBUG res => res_214
+  # DEBUG BEGIN_STMT
+  if (res_214 != 0)
+    goto <bb 6>; [INV]
+  else
+    goto <bb 7>; [INV]
+
+  <bb 6> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  // predicted unlikely by early return (on trees) predictor.
+  q ={v} {CLOBBER};
+  goto <bb 85>; [INV]
+
+  <bb 7> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  mdns_domain_debug_print (&q.info.domain);
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _5 = q.unicast;
+  if (_5 != 0)
+    goto <bb 8>; [INV]
+  else
+    goto <bb 9>; [INV]
+
+  <bb 8> :
+  # DEBUG BEGIN_STMT
+  reply.unicast_reply = 1;
+
+  <bb 9> :
+  # DEBUG BEGIN_STMT
+  _6 = pkt_142(D)->netif;
+  _218 = check_host (_6, &q.info, &reply.host_reverse_v6_replies);
+  _7 = reply.host_replies;
+  _8 = (signed char) _7;
+  _9 = (signed char) _218;
+  _10 = _8 | _9;
+  _11 = (unsigned char) _10;
+  reply.host_replies = _11;
+  # DEBUG BEGIN_STMT
+  _12 = reply.host_replies;
+  _13 = (int) _12;
+  replies_220 = replies_119 | _13;
+  # DEBUG replies => replies_220
+  # DEBUG BEGIN_STMT
+  i_221 = 0;
+  # DEBUG i => i_221
+  goto <bb 14>; [INV]
+
+  <bb 10> :
+  # DEBUG BEGIN_STMT
+  service_227 = mdns_143->services[i_120];
+  # DEBUG service => service_227
+  # DEBUG BEGIN_STMT
+  if (service_227 == 0B)
+    goto <bb 11>; [INV]
+  else
+    goto <bb 12>; [INV]
+
+  <bb 11> :
+  # DEBUG BEGIN_STMT
+  // predicted unlikely by continue predictor.
+  goto <bb 13>; [INV]
+
+  <bb 12> :
+  # DEBUG BEGIN_STMT
+  _229 = check_service (service_227, &q.info);
+  _14 = reply.serv_replies[i_120];
+  _15 = (signed char) _14;
+  _16 = (signed char) _229;
+  _17 = _15 | _16;
+  _18 = (unsigned char) _17;
+  reply.serv_replies[i_120] = _18;
+  # DEBUG BEGIN_STMT
+  _19 = reply.serv_replies[i_120];
+  _20 = (int) _19;
+  replies_231 = replies_118 | _20;
+  # DEBUG replies => replies_231
+
+  <bb 13> :
+  # replies_117 = PHI <replies_118(11), replies_231(12)>
+  # DEBUG replies => replies_117
+  # DEBUG BEGIN_STMT
+  i_232 = i_120 + 1;
+  # DEBUG i => i_232
+
+  <bb 14> :
+  # replies_118 = PHI <replies_220(9), replies_117(13)>
+  # i_120 = PHI <i_221(9), i_232(13)>
+  # DEBUG i => i_120
+  # DEBUG replies => replies_118
+  # DEBUG BEGIN_STMT
+  if (i_120 <= 0)
+    goto <bb 10>; [INV]
+  else
+    goto <bb 15>; [INV]
+
+  <bb 15> :
+  # DEBUG BEGIN_STMT
+  if (replies_118 != 0)
+    goto <bb 16>; [INV]
+  else
+    goto <bb 19>; [INV]
+
+  <bb 16> :
+  _21 = reply.legacy_query;
+  if (_21 != 0)
+    goto <bb 17>; [INV]
+  else
+    goto <bb 19>; [INV]
+
+  <bb 17> :
+  # DEBUG BEGIN_STMT
+  _22 = q.info.type;
+  _23 = q.info.klass;
+  res_223 = mdns_add_question (&reply, &q.info.domain, _22, _23, 0);
+  # DEBUG res => res_223
+  # DEBUG BEGIN_STMT
+  reply.questions = 1;
+  # DEBUG BEGIN_STMT
+  if (res_223 != 0)
+    goto <bb 18>; [INV]
+  else
+    goto <bb 19>; [INV]
+
+  <bb 18> :
+  # DEBUG BEGIN_STMT
+  // predicted unlikely by goto predictor.
+  q ={v} {CLOBBER};
+  goto <bb 82>; [INV]
+
+  <bb 19> :
+  q ={v} {CLOBBER};
+
+  <bb 20> :
+  # replies_119 = PHI <replies_140(4), replies_118(19)>
+  # DEBUG replies => replies_119
+  # DEBUG BEGIN_STMT
+  _24 = pkt_142(D)->questions_left;
+  if (_24 != 0)
+    goto <bb 5>; [INV]
+  else
+    goto <bb 80>; [INV]
+
+  <bb 21> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  res_147 = mdns_read_answer (pkt_142(D), &ans);
+  # DEBUG res => res_147
+  # DEBUG BEGIN_STMT
+  if (res_147 != 0)
+    goto <bb 22>; [INV]
+  else
+    goto <bb 23>; [INV]
+
+  <bb 22> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  // predicted unlikely by goto predictor.
+  ans ={v} {CLOBBER};
+  rev_v6 ={v} {CLOBBER};
+  goto <bb 82>; [INV]
+
+  <bb 23> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  mdns_domain_debug_print (&ans.info.domain);
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _25 = ans.info.type;
+  if (_25 == 255)
+    goto <bb 25>; [INV]
+  else
+    goto <bb 24>; [INV]
+
+  <bb 24> :
+  _26 = ans.info.klass;
+  if (_26 == 255)
+    goto <bb 25>; [INV]
+  else
+    goto <bb 26>; [INV]
+
+  <bb 25> :
+  # DEBUG BEGIN_STMT
+  // predicted unlikely by continue predictor.
+  ans ={v} {CLOBBER};
+  rev_v6 ={v} {CLOBBER};
+  goto <bb 80>; [INV]
+
+  <bb 26> :
+  # DEBUG BEGIN_STMT
+  rev_v6 = 0;
+  # DEBUG BEGIN_STMT
+  _27 = reply.host_replies;
+  _28 = (int) _27;
+  _29 = pkt_142(D)->netif;
+  _30 = check_host (_29, &ans.info, &rev_v6);
+  match_151 = _28 & _30;
+  # DEBUG match => match_151
+  # DEBUG BEGIN_STMT
+  if (match_151 != 0)
+    goto <bb 27>; [INV]
+  else
+    goto <bb 46>; [INV]
+
+  <bb 27> :
+  _31 = ans.ttl;
+  _32 = mdns_143->dns_ttl;
+  _33 = _32 / 2;
+  if (_31 > _33)
+    goto <bb 28>; [INV]
+  else
+    goto <bb 46>; [INV]
+
+  <bb 28> :
+  # DEBUG BEGIN_STMT
+  _34 = ans.info.type;
+  if (_34 == 12)
+    goto <bb 29>; [INV]
+  else
+    goto <bb 38>; [INV]
+
+  <bb 29> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _35 = pkt_142(D)->pbuf;
+  _36 = ans.rd_offset;
+  len_157 = mdns_readname (_35, _36, &known_ans);
+  # DEBUG len => len_157
+  # DEBUG BEGIN_STMT
+  res_159 = mdns_build_host_domain (&my_ans, mdns_143);
+  # DEBUG res => res_159
+  # DEBUG BEGIN_STMT
+  if (len_157 != 65535)
+    goto <bb 30>; [INV]
+  else
+    goto <bb 37>; [INV]
+
+  <bb 30> :
+  if (res_159 == 0)
+    goto <bb 31>; [INV]
+  else
+    goto <bb 37>; [INV]
+
+  <bb 31> :
+  _37 = mdns_domain_eq (&known_ans, &my_ans);
+  if (_37 != 0)
+    goto <bb 32>; [INV]
+  else
+    goto <bb 37>; [INV]
+
+  <bb 32> :
+  # DEBUG BEGIN_STMT
+  _38 = match_151 & 2;
+  if (_38 != 0)
+    goto <bb 33>; [INV]
+  else
+    goto <bb 34>; [INV]
+
+  <bb 33> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _39 = reply.host_replies;
+  _40 = _39 & 253;
+  reply.host_replies = _40;
+
+  <bb 34> :
+  # DEBUG BEGIN_STMT
+  _41 = match_151 & 8;
+  if (_41 != 0)
+    goto <bb 35>; [INV]
+  else
+    goto <bb 37>; [INV]
+
+  <bb 35> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _42 = reply.host_reverse_v6_replies;
+  _43 = (signed char) _42;
+  rev_v6.70_44 = rev_v6;
+  rev_v6.71_45 = (signed char) rev_v6.70_44;
+  _46 = ~rev_v6.71_45;
+  _47 = _43 & _46;
+  _48 = (unsigned char) _47;
+  reply.host_reverse_v6_replies = _48;
+  # DEBUG BEGIN_STMT
+  _49 = reply.host_reverse_v6_replies;
+  if (_49 == 0)
+    goto <bb 36>; [INV]
+  else
+    goto <bb 37>; [INV]
+
+  <bb 36> :
+  # DEBUG BEGIN_STMT
+  _50 = reply.host_replies;
+  _51 = _50 & 247;
+  reply.host_replies = _51;
+
+  <bb 37> :
+  known_ans ={v} {CLOBBER};
+  my_ans ={v} {CLOBBER};
+  goto <bb 46>; [INV]
+
+  <bb 38> :
+  # DEBUG BEGIN_STMT
+  _52 = match_151 & 1;
+  if (_52 != 0)
+    goto <bb 39>; [INV]
+  else
+    goto <bb 42>; [INV]
+
+  <bb 39> :
+  # DEBUG BEGIN_STMT
+  _53 = ans.rd_length;
+  if (_53 == 4)
+    goto <bb 40>; [INV]
+  else
+    goto <bb 46>; [INV]
+
+  <bb 40> :
+  _54 = pkt_142(D)->pbuf;
+  _55 = ans.rd_offset;
+  _56 = pkt_142(D)->netif;
+  _57 = &_56->ip_addr.u_addr.ip4;
+  _58 = ans.rd_length;
+  _59 = pbuf_memcmp (_54, _55, _57, _58);
+  if (_59 == 0)
+    goto <bb 41>; [INV]
+  else
+    goto <bb 46>; [INV]
+
+  <bb 41> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _60 = reply.host_replies;
+  _61 = _60 & 254;
+  reply.host_replies = _61;
+  goto <bb 46>; [INV]
+
+  <bb 42> :
+  # DEBUG BEGIN_STMT
+  _62 = match_151 & 4;
+  if (_62 != 0)
+    goto <bb 43>; [INV]
+  else
+    goto <bb 46>; [INV]
+
+  <bb 43> :
+  # DEBUG BEGIN_STMT
+  _63 = ans.rd_length;
+  if (_63 == 16)
+    goto <bb 44>; [INV]
+  else
+    goto <bb 46>; [INV]
+
+  <bb 44> :
+  _64 = pkt_142(D)->pbuf;
+  _65 = ans.rd_offset;
+  _66 = pkt_142(D)->netif;
+  _67 = &_66->ip6_addr[0].u_addr.ip6;
+  _68 = ans.rd_length;
+  _69 = pbuf_memcmp (_64, _65, _67, _68);
+  if (_69 == 0)
+    goto <bb 45>; [INV]
+  else
+    goto <bb 46>; [INV]
+
+  <bb 45> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _70 = reply.host_replies;
+  _71 = _70 & 251;
+  reply.host_replies = _71;
+
+  <bb 46> :
+  # DEBUG BEGIN_STMT
+  i_166 = 0;
+  # DEBUG i => i_166
+  goto <bb 78>; [INV]
+
+  <bb 47> :
+  # DEBUG BEGIN_STMT
+  service_169 = mdns_143->services[i_121];
+  # DEBUG service => service_169
+  # DEBUG BEGIN_STMT
+  if (service_169 == 0B)
+    goto <bb 48>; [INV]
+  else
+    goto <bb 49>; [INV]
+
+  <bb 48> :
+  # DEBUG BEGIN_STMT
+  // predicted unlikely by continue predictor.
+  goto <bb 77>; [INV]
+
+  <bb 49> :
+  # DEBUG BEGIN_STMT
+  _72 = reply.serv_replies[i_121];
+  _73 = (int) _72;
+  _74 = check_service (service_169, &ans.info);
+  match_171 = _73 & _74;
+  # DEBUG match => match_171
+  # DEBUG BEGIN_STMT
+  if (match_171 != 0)
+    goto <bb 50>; [INV]
+  else
+    goto <bb 77>; [INV]
+
+  <bb 50> :
+  _75 = ans.ttl;
+  _76 = service_169->dns_ttl;
+  _77 = _76 / 2;
+  if (_75 > _77)
+    goto <bb 51>; [INV]
+  else
+    goto <bb 77>; [INV]
+
+  <bb 51> :
+  # DEBUG BEGIN_STMT
+  _78 = ans.info.type;
+  if (_78 == 12)
+    goto <bb 52>; [INV]
+  else
+    goto <bb 62>; [INV]
+
+  <bb 52> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _79 = pkt_142(D)->pbuf;
+  _80 = ans.rd_offset;
+  len_197 = mdns_readname (_79, _80, &known_ans);
+  # DEBUG len => len_197
+  # DEBUG BEGIN_STMT
+  if (len_197 != 65535)
+    goto <bb 53>; [INV]
+  else
+    goto <bb 61>; [INV]
+
+  <bb 53> :
+  # DEBUG BEGIN_STMT
+  _81 = match_171 & 16;
+  if (_81 != 0)
+    goto <bb 54>; [INV]
+  else
+    goto <bb 57>; [INV]
+
+  <bb 54> :
+  # DEBUG BEGIN_STMT
+  res_199 = mdns_build_service_domain (&my_ans, service_169, 0);
+  # DEBUG res => res_199
+  # DEBUG BEGIN_STMT
+  if (res_199 == 0)
+    goto <bb 55>; [INV]
+  else
+    goto <bb 57>; [INV]
+
+  <bb 55> :
+  _82 = mdns_domain_eq (&known_ans, &my_ans);
+  if (_82 != 0)
+    goto <bb 56>; [INV]
+  else
+    goto <bb 57>; [INV]
+
+  <bb 56> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _83 = reply.serv_replies[i_121];
+  _84 = _83 & 239;
+  reply.serv_replies[i_121] = _84;
+
+  <bb 57> :
+  # DEBUG BEGIN_STMT
+  _85 = match_171 & 32;
+  if (_85 != 0)
+    goto <bb 58>; [INV]
+  else
+    goto <bb 61>; [INV]
+
+  <bb 58> :
+  # DEBUG BEGIN_STMT
+  res_203 = mdns_build_service_domain (&my_ans, service_169, 1);
+  # DEBUG res => res_203
+  # DEBUG BEGIN_STMT
+  if (res_203 == 0)
+    goto <bb 59>; [INV]
+  else
+    goto <bb 61>; [INV]
+
+  <bb 59> :
+  _86 = mdns_domain_eq (&known_ans, &my_ans);
+  if (_86 != 0)
+    goto <bb 60>; [INV]
+  else
+    goto <bb 61>; [INV]
+
+  <bb 60> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _87 = reply.serv_replies[i_121];
+  _88 = _87 & 223;
+  reply.serv_replies[i_121] = _88;
+
+  <bb 61> :
+  known_ans ={v} {CLOBBER};
+  my_ans ={v} {CLOBBER};
+  goto <bb 77>; [INV]
+
+  <bb 62> :
+  # DEBUG BEGIN_STMT
+  _89 = match_171 & 64;
+  if (_89 != 0)
+    goto <bb 63>; [INV]
+  else
+    goto <bb 73>; [INV]
+
+  <bb 63> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  read_pos_175 = ans.rd_offset;
+  # DEBUG read_pos => read_pos_175
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _90 = pkt_142(D)->pbuf;
+  len_177 = pbuf_copy_partial (_90, &field16, 2, read_pos_175);
+  # DEBUG len => len_177
+  # DEBUG BEGIN_STMT
+  if (len_177 != 2)
+    goto <bb 72>; [INV]
+  else
+    goto <bb 64>; [INV]
+
+  <bb 64> :
+  field16.72_91 = field16;
+  _92 = lwip_htons (field16.72_91);
+  if (_92 != 0)
+    goto <bb 72>; [INV]
+  else
+    goto <bb 65>; [INV]
+
+  <bb 65> :
+  # DEBUG BEGIN_STMT
+  read_pos_179 = read_pos_175 + len_177;
+  # DEBUG read_pos => read_pos_179
+  # DEBUG BEGIN_STMT
+  _93 = pkt_142(D)->pbuf;
+  len_181 = pbuf_copy_partial (_93, &field16, 2, read_pos_179);
+  # DEBUG len => len_181
+  # DEBUG BEGIN_STMT
+  if (len_181 != 2)
+    goto <bb 72>; [INV]
+  else
+    goto <bb 66>; [INV]
+
+  <bb 66> :
+  field16.73_94 = field16;
+  _95 = lwip_htons (field16.73_94);
+  if (_95 != 0)
+    goto <bb 72>; [INV]
+  else
+    goto <bb 67>; [INV]
+
+  <bb 67> :
+  # DEBUG BEGIN_STMT
+  read_pos_183 = read_pos_179 + len_181;
+  # DEBUG read_pos => read_pos_183
+  # DEBUG BEGIN_STMT
+  _96 = pkt_142(D)->pbuf;
+  len_185 = pbuf_copy_partial (_96, &field16, 2, read_pos_183);
+  # DEBUG len => len_185
+  # DEBUG BEGIN_STMT
+  if (len_185 != 2)
+    goto <bb 72>; [INV]
+  else
+    goto <bb 68>; [INV]
+
+  <bb 68> :
+  field16.74_97 = field16;
+  _98 = lwip_htons (field16.74_97);
+  _99 = service_169->port;
+  if (_98 != _99)
+    goto <bb 72>; [INV]
+  else
+    goto <bb 69>; [INV]
+
+  <bb 69> :
+  # DEBUG BEGIN_STMT
+  read_pos_187 = read_pos_183 + len_185;
+  # DEBUG read_pos => read_pos_187
+  # DEBUG BEGIN_STMT
+  _100 = pkt_142(D)->pbuf;
+  len_189 = mdns_readname (_100, read_pos_187, &known_ans);
+  # DEBUG len => len_189
+  # DEBUG BEGIN_STMT
+  mdns_build_host_domain (&my_ans, mdns_143);
+  # DEBUG BEGIN_STMT
+  if (len_189 == 65535)
+    goto <bb 72>; [INV]
+  else
+    goto <bb 70>; [INV]
+
+  <bb 70> :
+  _101 = mdns_domain_eq (&known_ans, &my_ans);
+  if (_101 == 0)
+    goto <bb 72>; [INV]
+  else
+    goto <bb 71>; [INV]
+
+  <bb 71> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _102 = reply.serv_replies[i_121];
+  _103 = _102 & 191;
+  reply.serv_replies[i_121] = _103;
+
+  <bb 72> :
+  # DEBUG BEGIN_STMT
+  field16 ={v} {CLOBBER};
+  known_ans ={v} {CLOBBER};
+  my_ans ={v} {CLOBBER};
+  goto <bb 77>; [INV]
+
+  <bb 73> :
+  # DEBUG BEGIN_STMT
+  _104 = match_171 & 128;
+  if (_104 != 0)
+    goto <bb 74>; [INV]
+  else
+    goto <bb 77>; [INV]
+
+  <bb 74> :
+  # DEBUG BEGIN_STMT
+  mdns_prepare_txtdata (service_169);
+  # DEBUG BEGIN_STMT
+  _105 = service_169->txtdata.length;
+  _106 = ans.rd_length;
+  if (_105 == _106)
+    goto <bb 75>; [INV]
+  else
+    goto <bb 77>; [INV]
+
+  <bb 75> :
+  _107 = pkt_142(D)->pbuf;
+  _108 = ans.rd_offset;
+  _109 = &service_169->txtdata.name;
+  _110 = ans.rd_length;
+  _111 = pbuf_memcmp (_107, _108, _109, _110);
+  if (_111 == 0)
+    goto <bb 76>; [INV]
+  else
+    goto <bb 77>; [INV]
+
+  <bb 76> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _112 = reply.serv_replies[i_121];
+  _113 = _112 & 127;
+  reply.serv_replies[i_121] = _113;
+
+  <bb 77> :
+  # DEBUG BEGIN_STMT
+  i_208 = i_121 + 1;
+  # DEBUG i => i_208
+
+  <bb 78> :
+  # i_121 = PHI <i_166(46), i_208(77)>
+  # DEBUG i => i_121
+  # DEBUG BEGIN_STMT
+  if (i_121 <= 0)
+    goto <bb 47>; [INV]
+  else
+    goto <bb 79>; [INV]
+
+  <bb 79> :
+  ans ={v} {CLOBBER};
+  rev_v6 ={v} {CLOBBER};
+
+  <bb 80> :
+  # DEBUG BEGIN_STMT
+  _114 = pkt_142(D)->answers_left;
+  if (_114 != 0)
+    goto <bb 21>; [INV]
+  else
+    goto <bb 81>; [INV]
+
+  <bb 81> :
+  # DEBUG BEGIN_STMT
+  mdns_send_outpacket (&reply, 132);
+
+  <bb 82> :
+cleanup:
+  # DEBUG BEGIN_STMT
+  _115 = reply.pbuf;
+  if (_115 != 0B)
+    goto <bb 83>; [INV]
+  else
+    goto <bb 84>; [INV]
+
+  <bb 83> :
+  # DEBUG BEGIN_STMT
+  _116 = reply.pbuf;
+  pbuf_free (_116);
+  # DEBUG BEGIN_STMT
+  reply.pbuf = 0B;
+
+  <bb 84> :
+  reply ={v} {CLOBBER};
+  goto <bb 86>; [INV]
+
+  <bb 85> :
+  reply ={v} {CLOBBER};
+
+  <bb 86> :
+  return;
+
+}
+
+
+mdns_announce (struct netif * netif, const struct ip_addr_t * destination)
+{
+  struct mdns_service * serv;
+  struct mdns_host * mdns;
+  int i;
+  struct mdns_outpacket announce;
+  unsigned char mdns_netif_client_id.47_1;
+  int _2;
+  struct ip4_addr_t * _3;
+  long unsigned int _4;
+  unsigned char _5;
+  int _6;
+  int _7;
+  unsigned char _8;
+  unsigned char _9;
+  unsigned char _10;
+  signed char _11;
+  int _12;
+  signed char _13;
+  signed char _14;
+  unsigned char _15;
+
+  <bb 2> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  mdns_netif_client_id.47_1 = mdns_netif_client_id;
+  _2 = (int) mdns_netif_client_id.47_1;
+  mdns_25 = netif_24(D)->client_data[_2];
+  # DEBUG mdns => mdns_25
+  # DEBUG BEGIN_STMT
+  memset (&announce, 0, 72);
+  # DEBUG BEGIN_STMT
+  announce.netif = netif_24(D);
+  # DEBUG BEGIN_STMT
+  announce.cache_flush = 1;
+  # DEBUG BEGIN_STMT
+  _3 = &netif_24(D)->ip_addr.u_addr.ip4;
+  _4 = MEM[(const struct ip4_addr_t *)_3].addr;
+  if (_4 != 0)
+    goto <bb 3>; [INV]
+  else
+    goto <bb 4>; [INV]
+
+  <bb 3> :
+  # DEBUG BEGIN_STMT
+  announce.host_replies = 3;
+
+  <bb 4> :
+  # DEBUG BEGIN_STMT
+  i_30 = 0;
+  # DEBUG i => i_30
+  goto <bb 8>; [INV]
+
+  <bb 5> :
+  # DEBUG BEGIN_STMT
+  _5 = netif_24(D)->ip6_addr_state[i_16];
+  _6 = (int) _5;
+  _7 = _6 & 16;
+  if (_7 != 0)
+    goto <bb 6>; [INV]
+  else
+    goto <bb 7>; [INV]
+
+  <bb 6> :
+  # DEBUG BEGIN_STMT
+  _8 = announce.host_replies;
+  _9 = _8 | 12;
+  announce.host_replies = _9;
+  # DEBUG BEGIN_STMT
+  _10 = announce.host_reverse_v6_replies;
+  _11 = (signed char) _10;
+  _12 = 1 << i_16;
+  _13 = (signed char) _12;
+  _14 = _11 | _13;
+  _15 = (unsigned char) _14;
+  announce.host_reverse_v6_replies = _15;
+
+  <bb 7> :
+  # DEBUG BEGIN_STMT
+  i_42 = i_16 + 1;
+  # DEBUG i => i_42
+
+  <bb 8> :
+  # i_16 = PHI <i_30(4), i_42(7)>
+  # DEBUG i => i_16
+  # DEBUG BEGIN_STMT
+  if (i_16 <= 2)
+    goto <bb 5>; [INV]
+  else
+    goto <bb 9>; [INV]
+
+  <bb 9> :
+  # DEBUG BEGIN_STMT
+  i_31 = 0;
+  # DEBUG i => i_31
+  goto <bb 13>; [INV]
+
+  <bb 10> :
+  # DEBUG BEGIN_STMT
+  serv_37 = mdns_25->services[i_17];
+  # DEBUG serv => serv_37
+  # DEBUG BEGIN_STMT
+  if (serv_37 != 0B)
+    goto <bb 11>; [INV]
+  else
+    goto <bb 12>; [INV]
+
+  <bb 11> :
+  # DEBUG BEGIN_STMT
+  announce.serv_replies[i_17] = 240;
+
+  <bb 12> :
+  # DEBUG BEGIN_STMT
+  i_39 = i_17 + 1;
+  # DEBUG i => i_39
+
+  <bb 13> :
+  # i_17 = PHI <i_31(9), i_39(12)>
+  # DEBUG i => i_17
+  # DEBUG BEGIN_STMT
+  if (i_17 <= 0)
+    goto <bb 10>; [INV]
+  else
+    goto <bb 14>; [INV]
+
+  <bb 14> :
+  # DEBUG BEGIN_STMT
+  announce.dest_port = 5353;
+  # DEBUG BEGIN_STMT
+  memcpy (&announce.dest_addr, destination_33(D), 24);
+  # DEBUG BEGIN_STMT
+  mdns_send_outpacket (&announce, 132);
+  announce ={v} {CLOBBER};
+  return;
+
+}
+
+
+mdns_send_outpacket (struct mdns_outpacket * outpkt, u8_t flags)
+{
+  struct dns_hdr hdr;
+  const struct ip_addr_t * mcast_destaddr;
+  int addrindex;
+  int addrindex;
+  u8_t rev_addrs;
+  int addrindex;
+  u16_t answers;
+  struct mdns_host * mdns;
+  int i;
+  err_t res;
+  struct mdns_service * service;
+  struct netif * _1;
+  unsigned char mdns_netif_client_id.16_2;
+  int _3;
+  unsigned char _4;
+  int _5;
+  int _6;
+  unsigned char _7;
+  short unsigned int _8;
+  struct netif * _9;
+  short unsigned int answers.17_10;
+  unsigned char _11;
+  int _12;
+  int _13;
+  unsigned char _14;
+  short unsigned int _15;
+  struct netif * _16;
+  short unsigned int answers.18_17;
+  unsigned char _18;
+  int _19;
+  int _20;
+  struct netif * _21;
+  unsigned char _22;
+  int _23;
+  int _24;
+  unsigned char _25;
+  short unsigned int _26;
+  struct netif * _27;
+  short unsigned int answers.19_28;
+  unsigned char _29;
+  int _30;
+  int _31;
+  int _32;
+  int _33;
+  unsigned char _34;
+  short unsigned int _35;
+  struct netif * _36;
+  short unsigned int answers.20_37;
+  unsigned char _38;
+  int _39;
+  int _40;
+  short unsigned int answers.21_41;
+  unsigned char _42;
+  int _43;
+  int _44;
+  short unsigned int answers.22_45;
+  unsigned char _46;
+  int _47;
+  int _48;
+  unsigned char _49;
+  short unsigned int _50;
+  short unsigned int answers.23_51;
+  unsigned char _52;
+  signed char _53;
+  unsigned char _54;
+  short unsigned int _55;
+  short unsigned int answers.24_56;
+  signed char flags.25_57;
+  short unsigned int _58;
+  short unsigned int _59;
+  short unsigned int _60;
+  short unsigned int _61;
+  unsigned char _62;
+  int _63;
+  int _64;
+  unsigned char _65;
+  int _66;
+  int _67;
+  unsigned char _68;
+  short unsigned int _69;
+  short unsigned int _70;
+  short unsigned int _71;
+  short unsigned int _72;
+  unsigned char _73;
+  signed char _74;
+  unsigned char _75;
+  short unsigned int _76;
+  short unsigned int _77;
+  short unsigned int _78;
+  short unsigned int _79;
+  unsigned char _80;
+  int _81;
+  int _82;
+  unsigned char _83;
+  int _84;
+  int _85;
+  unsigned char _86;
+  int _87;
+  int _88;
+  struct netif * _89;
+  unsigned char _90;
+  int _91;
+  int _92;
+  unsigned char _93;
+  short unsigned int _94;
+  struct netif * _95;
+  short unsigned int _96;
+  short unsigned int _97;
+  short unsigned int _98;
+  unsigned char _99;
+  int _100;
+  int _101;
+  struct netif * _102;
+  struct ip4_addr_t * _103;
+  long unsigned int _104;
+  unsigned char _105;
+  short unsigned int _106;
+  struct netif * _107;
+  short unsigned int _108;
+  short unsigned int _109;
+  short unsigned int _110;
+  struct pbuf * _111;
+  short unsigned int _112;
+  short unsigned int _113;
+  short unsigned int _114;
+  short unsigned int _115;
+  short unsigned int _116;
+  short unsigned int _117;
+  short unsigned int _118;
+  short unsigned int _119;
+  short unsigned int _120;
+  short unsigned int _121;
+  struct pbuf * _122;
+  struct pbuf * _123;
+  short unsigned int _124;
+  unsigned char _125;
+  unsigned char _126;
+  struct udp_pcb * mdns_pcb.26_127;
+  struct pbuf * _128;
+  struct ip_addr_t * _129;
+  short unsigned int _130;
+  struct netif * _131;
+  struct udp_pcb * mdns_pcb.27_132;
+  struct pbuf * _133;
+  struct netif * _134;
+  struct pbuf * _135;
+  struct pbuf * _136;
+  err_t _284;
+
+  <bb 2> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  res_203 = -16;
+  # DEBUG res => res_203
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _1 = outpkt_205(D)->netif;
+  mdns_netif_client_id.16_2 = mdns_netif_client_id;
+  _3 = (int) mdns_netif_client_id.16_2;
+  mdns_206 = _1->client_data[_3];
+  # DEBUG mdns => mdns_206
+  # DEBUG BEGIN_STMT
+  answers_207 = 0;
+  # DEBUG answers => answers_207
+  # DEBUG BEGIN_STMT
+  _4 = outpkt_205(D)->host_replies;
+  _5 = (int) _4;
+  _6 = _5 & 1;
+  if (_6 != 0)
+    goto <bb 3>; [INV]
+  else
+    goto <bb 6>; [INV]
+
+  <bb 3> :
+  # DEBUG BEGIN_STMT
+  _7 = outpkt_205(D)->cache_flush;
+  _8 = (short unsigned int) _7;
+  _9 = outpkt_205(D)->netif;
+  res_209 = mdns_add_a_answer (outpkt_205(D), _8, _9);
+  # DEBUG res => res_209
+  # DEBUG BEGIN_STMT
+  if (res_209 != 0)
+    goto <bb 4>; [INV]
+  else
+    goto <bb 5>; [INV]
+
+  <bb 4> :
+  # DEBUG BEGIN_STMT
+  // predicted unlikely by goto predictor.
+  goto <bb 87>; [INV]
+
+  <bb 5> :
+  # DEBUG BEGIN_STMT
+  answers.17_10 = answers_207;
+  answers_210 = answers.17_10 + 1;
+  # DEBUG answers => answers_210
+
+  <bb 6> :
+  # res_137 = PHI <res_203(2), res_209(5)>
+  # answers_161 = PHI <answers_207(2), answers_210(5)>
+  # DEBUG answers => answers_161
+  # DEBUG res => res_137
+  # DEBUG BEGIN_STMT
+  _11 = outpkt_205(D)->host_replies;
+  _12 = (int) _11;
+  _13 = _12 & 2;
+  if (_13 != 0)
+    goto <bb 7>; [INV]
+  else
+    goto <bb 10>; [INV]
+
+  <bb 7> :
+  # DEBUG BEGIN_STMT
+  _14 = outpkt_205(D)->cache_flush;
+  _15 = (short unsigned int) _14;
+  _16 = outpkt_205(D)->netif;
+  res_212 = mdns_add_hostv4_ptr_answer (outpkt_205(D), _15, _16);
+  # DEBUG res => res_212
+  # DEBUG BEGIN_STMT
+  if (res_212 != 0)
+    goto <bb 8>; [INV]
+  else
+    goto <bb 9>; [INV]
+
+  <bb 8> :
+  # DEBUG BEGIN_STMT
+  // predicted unlikely by goto predictor.
+  goto <bb 87>; [INV]
+
+  <bb 9> :
+  # DEBUG BEGIN_STMT
+  answers.18_17 = answers_161;
+  answers_213 = answers.18_17 + 1;
+  # DEBUG answers => answers_213
+
+  <bb 10> :
+  # res_138 = PHI <res_137(6), res_212(9)>
+  # answers_162 = PHI <answers_161(6), answers_213(9)>
+  # DEBUG answers => answers_162
+  # DEBUG res => res_138
+  # DEBUG BEGIN_STMT
+  _18 = outpkt_205(D)->host_replies;
+  _19 = (int) _18;
+  _20 = _19 & 4;
+  if (_20 != 0)
+    goto <bb 11>; [INV]
+  else
+    goto <bb 18>; [INV]
+
+  <bb 11> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  addrindex_214 = 0;
+  # DEBUG addrindex => addrindex_214
+  goto <bb 17>; [INV]
+
+  <bb 12> :
+  # DEBUG BEGIN_STMT
+  _21 = outpkt_205(D)->netif;
+  _22 = _21->ip6_addr_state[addrindex_174];
+  _23 = (int) _22;
+  _24 = _23 & 16;
+  if (_24 != 0)
+    goto <bb 13>; [INV]
+  else
+    goto <bb 16>; [INV]
+
+  <bb 13> :
+  # DEBUG BEGIN_STMT
+  _25 = outpkt_205(D)->cache_flush;
+  _26 = (short unsigned int) _25;
+  _27 = outpkt_205(D)->netif;
+  res_216 = mdns_add_aaaa_answer (outpkt_205(D), _26, _27, addrindex_174);
+  # DEBUG res => res_216
+  # DEBUG BEGIN_STMT
+  if (res_216 != 0)
+    goto <bb 14>; [INV]
+  else
+    goto <bb 15>; [INV]
+
+  <bb 14> :
+  # DEBUG BEGIN_STMT
+  // predicted unlikely by goto predictor.
+  goto <bb 87>; [INV]
+
+  <bb 15> :
+  # DEBUG BEGIN_STMT
+  answers.19_28 = answers_164;
+  answers_217 = answers.19_28 + 1;
+  # DEBUG answers => answers_217
+
+  <bb 16> :
+  # res_139 = PHI <res_140(12), res_216(15)>
+  # answers_163 = PHI <answers_164(12), answers_217(15)>
+  # DEBUG answers => answers_163
+  # DEBUG res => res_139
+  # DEBUG BEGIN_STMT
+  addrindex_218 = addrindex_174 + 1;
+  # DEBUG addrindex => addrindex_218
+
+  <bb 17> :
+  # res_140 = PHI <res_138(11), res_139(16)>
+  # answers_164 = PHI <answers_162(11), answers_163(16)>
+  # addrindex_174 = PHI <addrindex_214(11), addrindex_218(16)>
+  # DEBUG addrindex => addrindex_174
+  # DEBUG answers => answers_164
+  # DEBUG res => res_140
+  # DEBUG BEGIN_STMT
+  if (addrindex_174 <= 2)
+    goto <bb 12>; [INV]
+  else
+    goto <bb 18>; [INV]
+
+  <bb 18> :
+  # res_141 = PHI <res_138(10), res_140(17)>
+  # answers_165 = PHI <answers_162(10), answers_164(17)>
+  # DEBUG answers => answers_165
+  # DEBUG res => res_141
+  # DEBUG BEGIN_STMT
+  _29 = outpkt_205(D)->host_replies;
+  _30 = (int) _29;
+  _31 = _30 & 8;
+  if (_31 != 0)
+    goto <bb 19>; [INV]
+  else
+    goto <bb 26>; [INV]
+
+  <bb 19> :
+  # DEBUG BEGIN_STMT
+  rev_addrs_219 = outpkt_205(D)->host_reverse_v6_replies;
+  # DEBUG rev_addrs => rev_addrs_219
+  # DEBUG BEGIN_STMT
+  addrindex_220 = 0;
+  # DEBUG addrindex => addrindex_220
+  # DEBUG BEGIN_STMT
+  goto <bb 25>; [INV]
+
+  <bb 20> :
+  # DEBUG BEGIN_STMT
+  _32 = (int) rev_addrs_175;
+  _33 = _32 & 1;
+  if (_33 != 0)
+    goto <bb 21>; [INV]
+  else
+    goto <bb 24>; [INV]
+
+  <bb 21> :
+  # DEBUG BEGIN_STMT
+  _34 = outpkt_205(D)->cache_flush;
+  _35 = (short unsigned int) _34;
+  _36 = outpkt_205(D)->netif;
+  res_222 = mdns_add_hostv6_ptr_answer (outpkt_205(D), _35, _36, addrindex_176);
+  # DEBUG res => res_222
+  # DEBUG BEGIN_STMT
+  if (res_222 != 0)
+    goto <bb 22>; [INV]
+  else
+    goto <bb 23>; [INV]
+
+  <bb 22> :
+  # DEBUG BEGIN_STMT
+  // predicted unlikely by goto predictor.
+  goto <bb 87>; [INV]
+
+  <bb 23> :
+  # DEBUG BEGIN_STMT
+  answers.20_37 = answers_167;
+  answers_223 = answers.20_37 + 1;
+  # DEBUG answers => answers_223
+
+  <bb 24> :
+  # res_142 = PHI <res_143(20), res_222(23)>
+  # answers_166 = PHI <answers_167(20), answers_223(23)>
+  # DEBUG answers => answers_166
+  # DEBUG res => res_142
+  # DEBUG BEGIN_STMT
+  addrindex_224 = addrindex_176 + 1;
+  # DEBUG addrindex => addrindex_224
+  # DEBUG BEGIN_STMT
+  rev_addrs_225 = rev_addrs_175 >> 1;
+  # DEBUG rev_addrs => rev_addrs_225
+
+  <bb 25> :
+  # res_143 = PHI <res_141(19), res_142(24)>
+  # answers_167 = PHI <answers_165(19), answers_166(24)>
+  # rev_addrs_175 = PHI <rev_addrs_219(19), rev_addrs_225(24)>
+  # addrindex_176 = PHI <addrindex_220(19), addrindex_224(24)>
+  # DEBUG addrindex => addrindex_176
+  # DEBUG rev_addrs => rev_addrs_175
+  # DEBUG answers => answers_167
+  # DEBUG res => res_143
+  # DEBUG BEGIN_STMT
+  if (rev_addrs_175 != 0)
+    goto <bb 20>; [INV]
+  else
+    goto <bb 26>; [INV]
+
+  <bb 26> :
+  # res_144 = PHI <res_141(18), res_143(25)>
+  # answers_168 = PHI <answers_165(18), answers_167(25)>
+  # DEBUG answers => answers_168
+  # DEBUG res => res_144
+  # DEBUG BEGIN_STMT
+  i_226 = 0;
+  # DEBUG i => i_226
+  goto <bb 46>; [INV]
+
+  <bb 27> :
+  # DEBUG BEGIN_STMT
+  service_268 = mdns_206->services[i_159];
+  # DEBUG service => service_268
+  # DEBUG BEGIN_STMT
+  if (service_268 == 0B)
+    goto <bb 28>; [INV]
+  else
+    goto <bb 29>; [INV]
+
+  <bb 28> :
+  # DEBUG BEGIN_STMT
+  // predicted unlikely by continue predictor.
+  goto <bb 45>; [INV]
+
+  <bb 29> :
+  # DEBUG BEGIN_STMT
+  _38 = outpkt_205(D)->serv_replies[i_159];
+  _39 = (int) _38;
+  _40 = _39 & 16;
+  if (_40 != 0)
+    goto <bb 30>; [INV]
+  else
+    goto <bb 33>; [INV]
+
+  <bb 30> :
+  # DEBUG BEGIN_STMT
+  res_270 = mdns_add_servicetype_ptr_answer (outpkt_205(D), service_268);
+  # DEBUG res => res_270
+  # DEBUG BEGIN_STMT
+  if (res_270 != 0)
+    goto <bb 31>; [INV]
+  else
+    goto <bb 32>; [INV]
+
+  <bb 31> :
+  # DEBUG BEGIN_STMT
+  // predicted unlikely by goto predictor.
+  goto <bb 87>; [INV]
+
+  <bb 32> :
+  # DEBUG BEGIN_STMT
+  answers.21_41 = answers_173;
+  answers_271 = answers.21_41 + 1;
+  # DEBUG answers => answers_271
+
+  <bb 33> :
+  # res_145 = PHI <res_149(29), res_270(32)>
+  # answers_169 = PHI <answers_173(29), answers_271(32)>
+  # DEBUG answers => answers_169
+  # DEBUG res => res_145
+  # DEBUG BEGIN_STMT
+  _42 = outpkt_205(D)->serv_replies[i_159];
+  _43 = (int) _42;
+  _44 = _43 & 32;
+  if (_44 != 0)
+    goto <bb 34>; [INV]
+  else
+    goto <bb 37>; [INV]
+
+  <bb 34> :
+  # DEBUG BEGIN_STMT
+  res_273 = mdns_add_servicename_ptr_answer (outpkt_205(D), service_268);
+  # DEBUG res => res_273
+  # DEBUG BEGIN_STMT
+  if (res_273 != 0)
+    goto <bb 35>; [INV]
+  else
+    goto <bb 36>; [INV]
+
+  <bb 35> :
+  # DEBUG BEGIN_STMT
+  // predicted unlikely by goto predictor.
+  goto <bb 87>; [INV]
+
+  <bb 36> :
+  # DEBUG BEGIN_STMT
+  answers.22_45 = answers_169;
+  answers_274 = answers.22_45 + 1;
+  # DEBUG answers => answers_274
+
+  <bb 37> :
+  # res_146 = PHI <res_145(33), res_273(36)>
+  # answers_170 = PHI <answers_169(33), answers_274(36)>
+  # DEBUG answers => answers_170
+  # DEBUG res => res_146
+  # DEBUG BEGIN_STMT
+  _46 = outpkt_205(D)->serv_replies[i_159];
+  _47 = (int) _46;
+  _48 = _47 & 64;
+  if (_48 != 0)
+    goto <bb 38>; [INV]
+  else
+    goto <bb 41>; [INV]
+
+  <bb 38> :
+  # DEBUG BEGIN_STMT
+  _49 = outpkt_205(D)->cache_flush;
+  _50 = (short unsigned int) _49;
+  res_276 = mdns_add_srv_answer (outpkt_205(D), _50, mdns_206, service_268);
+  # DEBUG res => res_276
+  # DEBUG BEGIN_STMT
+  if (res_276 != 0)
+    goto <bb 39>; [INV]
+  else
+    goto <bb 40>; [INV]
+
+  <bb 39> :
+  # DEBUG BEGIN_STMT
+  // predicted unlikely by goto predictor.
+  goto <bb 87>; [INV]
+
+  <bb 40> :
+  # DEBUG BEGIN_STMT
+  answers.23_51 = answers_170;
+  answers_277 = answers.23_51 + 1;
+  # DEBUG answers => answers_277
+
+  <bb 41> :
+  # res_147 = PHI <res_146(37), res_276(40)>
+  # answers_171 = PHI <answers_170(37), answers_277(40)>
+  # DEBUG answers => answers_171
+  # DEBUG res => res_147
+  # DEBUG BEGIN_STMT
+  _52 = outpkt_205(D)->serv_replies[i_159];
+  _53 = (signed char) _52;
+  if (_53 < 0)
+    goto <bb 42>; [INV]
+  else
+    goto <bb 45>; [INV]
+
+  <bb 42> :
+  # DEBUG BEGIN_STMT
+  _54 = outpkt_205(D)->cache_flush;
+  _55 = (short unsigned int) _54;
+  res_279 = mdns_add_txt_answer (outpkt_205(D), _55, service_268);
+  # DEBUG res => res_279
+  # DEBUG BEGIN_STMT
+  if (res_279 != 0)
+    goto <bb 43>; [INV]
+  else
+    goto <bb 44>; [INV]
+
+  <bb 43> :
+  # DEBUG BEGIN_STMT
+  // predicted unlikely by goto predictor.
+  goto <bb 87>; [INV]
+
+  <bb 44> :
+  # DEBUG BEGIN_STMT
+  answers.24_56 = answers_171;
+  answers_280 = answers.24_56 + 1;
+  # DEBUG answers => answers_280
+
+  <bb 45> :
+  # res_148 = PHI <res_149(28), res_147(41), res_279(44)>
+  # answers_172 = PHI <answers_173(28), answers_171(41), answers_280(44)>
+  # DEBUG answers => answers_172
+  # DEBUG res => res_148
+  # DEBUG BEGIN_STMT
+  i_281 = i_159 + 1;
+  # DEBUG i => i_281
+
+  <bb 46> :
+  # res_149 = PHI <res_144(26), res_148(45)>
+  # i_159 = PHI <i_226(26), i_281(45)>
+  # answers_173 = PHI <answers_168(26), answers_172(45)>
+  # DEBUG answers => answers_173
+  # DEBUG i => i_159
+  # DEBUG res => res_149
+  # DEBUG BEGIN_STMT
+  if (i_159 <= 0)
+    goto <bb 27>; [INV]
+  else
+    goto <bb 47>; [INV]
+
+  <bb 47> :
+  # DEBUG BEGIN_STMT
+  flags.25_57 = (signed char) flags_227(D);
+  if (flags.25_57 < 0)
+    goto <bb 48>; [INV]
+  else
+    goto <bb 49>; [INV]
+
+  <bb 48> :
+  # DEBUG BEGIN_STMT
+  _58 = outpkt_205(D)->answers;
+  _59 = answers_173 + _58;
+  outpkt_205(D)->answers = _59;
+  goto <bb 50>; [INV]
+
+  <bb 49> :
+  # DEBUG BEGIN_STMT
+  _60 = outpkt_205(D)->authoritative;
+  _61 = answers_173 + _60;
+  outpkt_205(D)->authoritative = _61;
+
+  <bb 50> :
+  # DEBUG BEGIN_STMT
+  i_230 = 0;
+  # DEBUG i => i_230
+  goto <bb 78>; [INV]
+
+  <bb 51> :
+  # DEBUG BEGIN_STMT
+  service_252 = mdns_206->services[i_160];
+  # DEBUG service => service_252
+  # DEBUG BEGIN_STMT
+  if (service_252 == 0B)
+    goto <bb 52>; [INV]
+  else
+    goto <bb 53>; [INV]
+
+  <bb 52> :
+  # DEBUG BEGIN_STMT
+  // predicted unlikely by continue predictor.
+  goto <bb 77>; [INV]
+
+  <bb 53> :
+  # DEBUG BEGIN_STMT
+  _62 = outpkt_205(D)->serv_replies[i_160];
+  _63 = (int) _62;
+  _64 = _63 & 32;
+  if (_64 != 0)
+    goto <bb 54>; [INV]
+  else
+    goto <bb 62>; [INV]
+
+  <bb 54> :
+  # DEBUG BEGIN_STMT
+  _65 = outpkt_205(D)->serv_replies[i_160];
+  _66 = (int) _65;
+  _67 = _66 & 64;
+  if (_67 == 0)
+    goto <bb 55>; [INV]
+  else
+    goto <bb 58>; [INV]
+
+  <bb 55> :
+  # DEBUG BEGIN_STMT
+  _68 = outpkt_205(D)->cache_flush;
+  _69 = (short unsigned int) _68;
+  res_254 = mdns_add_srv_answer (outpkt_205(D), _69, mdns_206, service_252);
+  # DEBUG res => res_254
+  # DEBUG BEGIN_STMT
+  if (res_254 != 0)
+    goto <bb 56>; [INV]
+  else
+    goto <bb 57>; [INV]
+
+  <bb 56> :
+  # DEBUG BEGIN_STMT
+  // predicted unlikely by goto predictor.
+  goto <bb 87>; [INV]
+
+  <bb 57> :
+  # DEBUG BEGIN_STMT
+  _70 = outpkt_205(D)->additional;
+  _71 = _70;
+  _72 = _71 + 1;
+  outpkt_205(D)->additional = _72;
+
+  <bb 58> :
+  # res_150 = PHI <res_156(54), res_254(57)>
+  # DEBUG res => res_150
+  # DEBUG BEGIN_STMT
+  _73 = outpkt_205(D)->serv_replies[i_160];
+  _74 = (signed char) _73;
+  if (_74 >= 0)
+    goto <bb 59>; [INV]
+  else
+    goto <bb 62>; [INV]
+
+  <bb 59> :
+  # DEBUG BEGIN_STMT
+  _75 = outpkt_205(D)->cache_flush;
+  _76 = (short unsigned int) _75;
+  res_257 = mdns_add_txt_answer (outpkt_205(D), _76, service_252);
+  # DEBUG res => res_257
+  # DEBUG BEGIN_STMT
+  if (res_257 != 0)
+    goto <bb 60>; [INV]
+  else
+    goto <bb 61>; [INV]
+
+  <bb 60> :
+  # DEBUG BEGIN_STMT
+  // predicted unlikely by goto predictor.
+  goto <bb 87>; [INV]
+
+  <bb 61> :
+  # DEBUG BEGIN_STMT
+  _77 = outpkt_205(D)->additional;
+  _78 = _77;
+  _79 = _78 + 1;
+  outpkt_205(D)->additional = _79;
+
+  <bb 62> :
+  # res_151 = PHI <res_156(53), res_150(58), res_257(61)>
+  # DEBUG res => res_151
+  # DEBUG BEGIN_STMT
+  _80 = outpkt_205(D)->serv_replies[i_160];
+  _81 = (int) _80;
+  _82 = _81 & 96;
+  if (_82 != 0)
+    goto <bb 64>; [INV]
+  else
+    goto <bb 63>; [INV]
+
+  <bb 63> :
+  _83 = outpkt_205(D)->host_replies;
+  _84 = (int) _83;
+  _85 = _84 & 5;
+  if (_85 != 0)
+    goto <bb 64>; [INV]
+  else
+    goto <bb 77>; [INV]
+
+  <bb 64> :
+  # DEBUG BEGIN_STMT
+  _86 = outpkt_205(D)->host_replies;
+  _87 = (int) _86;
+  _88 = _87 & 4;
+  if (_88 == 0)
+    goto <bb 65>; [INV]
+  else
+    goto <bb 72>; [INV]
+
+  <bb 65> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  addrindex_259 = 0;
+  # DEBUG addrindex => addrindex_259
+  goto <bb 71>; [INV]
+
+  <bb 66> :
+  # DEBUG BEGIN_STMT
+  _89 = outpkt_205(D)->netif;
+  _90 = _89->ip6_addr_state[addrindex_177];
+  _91 = (int) _90;
+  _92 = _91 & 16;
+  if (_92 != 0)
+    goto <bb 67>; [INV]
+  else
+    goto <bb 70>; [INV]
+
+  <bb 67> :
+  # DEBUG BEGIN_STMT
+  _93 = outpkt_205(D)->cache_flush;
+  _94 = (short unsigned int) _93;
+  _95 = outpkt_205(D)->netif;
+  res_261 = mdns_add_aaaa_answer (outpkt_205(D), _94, _95, addrindex_177);
+  # DEBUG res => res_261
+  # DEBUG BEGIN_STMT
+  if (res_261 != 0)
+    goto <bb 68>; [INV]
+  else
+    goto <bb 69>; [INV]
+
+  <bb 68> :
+  # DEBUG BEGIN_STMT
+  // predicted unlikely by goto predictor.
+  goto <bb 87>; [INV]
+
+  <bb 69> :
+  # DEBUG BEGIN_STMT
+  _96 = outpkt_205(D)->additional;
+  _97 = _96;
+  _98 = _97 + 1;
+  outpkt_205(D)->additional = _98;
+
+  <bb 70> :
+  # res_152 = PHI <res_153(66), res_261(69)>
+  # DEBUG res => res_152
+  # DEBUG BEGIN_STMT
+  addrindex_263 = addrindex_177 + 1;
+  # DEBUG addrindex => addrindex_263
+
+  <bb 71> :
+  # res_153 = PHI <res_151(65), res_152(70)>
+  # addrindex_177 = PHI <addrindex_259(65), addrindex_263(70)>
+  # DEBUG addrindex => addrindex_177
+  # DEBUG res => res_153
+  # DEBUG BEGIN_STMT
+  if (addrindex_177 <= 2)
+    goto <bb 66>; [INV]
+  else
+    goto <bb 72>; [INV]
+
+  <bb 72> :
+  # res_154 = PHI <res_151(64), res_153(71)>
+  # DEBUG res => res_154
+  # DEBUG BEGIN_STMT
+  _99 = outpkt_205(D)->host_replies;
+  _100 = (int) _99;
+  _101 = _100 & 1;
+  if (_101 == 0)
+    goto <bb 73>; [INV]
+  else
+    goto <bb 77>; [INV]
+
+  <bb 73> :
+  _102 = outpkt_205(D)->netif;
+  _103 = &_102->ip_addr.u_addr.ip4;
+  _104 = MEM[(const struct ip4_addr_t *)_103].addr;
+  if (_104 != 0)
+    goto <bb 74>; [INV]
+  else
+    goto <bb 77>; [INV]
+
+  <bb 74> :
+  # DEBUG BEGIN_STMT
+  _105 = outpkt_205(D)->cache_flush;
+  _106 = (short unsigned int) _105;
+  _107 = outpkt_205(D)->netif;
+  res_265 = mdns_add_a_answer (outpkt_205(D), _106, _107);
+  # DEBUG res => res_265
+  # DEBUG BEGIN_STMT
+  if (res_265 != 0)
+    goto <bb 75>; [INV]
+  else
+    goto <bb 76>; [INV]
+
+  <bb 75> :
+  # DEBUG BEGIN_STMT
+  // predicted unlikely by goto predictor.
+  goto <bb 87>; [INV]
+
+  <bb 76> :
+  # DEBUG BEGIN_STMT
+  _108 = outpkt_205(D)->additional;
+  _109 = _108;
+  _110 = _109 + 1;
+  outpkt_205(D)->additional = _110;
+
+  <bb 77> :
+  # res_155 = PHI <res_156(52), res_151(63), res_154(72), res_154(73), res_265(76)>
+  # DEBUG res => res_155
+  # DEBUG BEGIN_STMT
+  i_267 = i_160 + 1;
+  # DEBUG i => i_267
+
+  <bb 78> :
+  # res_156 = PHI <res_149(50), res_155(77)>
+  # i_160 = PHI <i_230(50), i_267(77)>
+  # DEBUG i => i_160
+  # DEBUG res => res_156
+  # DEBUG BEGIN_STMT
+  if (i_160 <= 0)
+    goto <bb 51>; [INV]
+  else
+    goto <bb 79>; [INV]
+
+  <bb 79> :
+  # DEBUG BEGIN_STMT
+  _111 = outpkt_205(D)->pbuf;
+  if (_111 != 0B)
+    goto <bb 80>; [INV]
+  else
+    goto <bb 87>; [INV]
+
+  <bb 80> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  memset (&hdr, 0, 12);
+  # DEBUG BEGIN_STMT
+  hdr.flags1 = flags_227(D);
+  # DEBUG BEGIN_STMT
+  _112 = outpkt_205(D)->questions;
+  _113 = lwip_htons (_112);
+  hdr.numquestions = _113;
+  # DEBUG BEGIN_STMT
+  _114 = outpkt_205(D)->answers;
+  _115 = lwip_htons (_114);
+  hdr.numanswers = _115;
+  # DEBUG BEGIN_STMT
+  _116 = outpkt_205(D)->authoritative;
+  _117 = lwip_htons (_116);
+  hdr.numauthrr = _117;
+  # DEBUG BEGIN_STMT
+  _118 = outpkt_205(D)->additional;
+  _119 = lwip_htons (_118);
+  hdr.numextrarr = _119;
+  # DEBUG BEGIN_STMT
+  _120 = outpkt_205(D)->tx_id;
+  _121 = lwip_htons (_120);
+  hdr.id = _121;
+  # DEBUG BEGIN_STMT
+  _122 = outpkt_205(D)->pbuf;
+  pbuf_take (_122, &hdr, 12);
+  # DEBUG BEGIN_STMT
+  _123 = outpkt_205(D)->pbuf;
+  _124 = outpkt_205(D)->write_offset;
+  pbuf_realloc (_123, _124);
+  # DEBUG BEGIN_STMT
+  _125 = outpkt_205(D)->dest_addr.type;
+  if (_125 == 6)
+    goto <bb 81>; [INV]
+  else
+    goto <bb 82>; [INV]
+
+  <bb 81> :
+  # DEBUG BEGIN_STMT
+  mcast_destaddr_246 = &v6group;
+  # DEBUG mcast_destaddr => mcast_destaddr_246
+  goto <bb 83>; [INV]
+
+  <bb 82> :
+  # DEBUG BEGIN_STMT
+  mcast_destaddr_245 = &v4group;
+  # DEBUG mcast_destaddr => mcast_destaddr_245
+
+  <bb 83> :
+  # mcast_destaddr_178 = PHI <mcast_destaddr_246(81), mcast_destaddr_245(82)>
+  # DEBUG mcast_destaddr => mcast_destaddr_178
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _126 = outpkt_205(D)->unicast_reply;
+  if (_126 != 0)
+    goto <bb 84>; [INV]
+  else
+    goto <bb 85>; [INV]
+
+  <bb 84> :
+  # DEBUG BEGIN_STMT
+  mdns_pcb.26_127 = mdns_pcb;
+  _128 = outpkt_205(D)->pbuf;
+  _129 = &outpkt_205(D)->dest_addr;
+  _130 = outpkt_205(D)->dest_port;
+  _131 = outpkt_205(D)->netif;
+  res_250 = udp_sendto_if (mdns_pcb.26_127, _128, _129, _130, _131);
+  # DEBUG res => res_250
+  goto <bb 86>; [INV]
+
+  <bb 85> :
+  # DEBUG BEGIN_STMT
+  mdns_pcb.27_132 = mdns_pcb;
+  _133 = outpkt_205(D)->pbuf;
+  _134 = outpkt_205(D)->netif;
+  res_248 = udp_sendto_if (mdns_pcb.27_132, _133, mcast_destaddr_178, 5353, _134);
+  # DEBUG res => res_248
+
+  <bb 86> :
+  # res_157 = PHI <res_250(84), res_248(85)>
+  # DEBUG res => res_157
+  hdr ={v} {CLOBBER};
+
+  <bb 87> :
+  # res_158 = PHI <res_209(4), res_212(8), res_216(14), res_222(22), res_270(31), res_273(35), res_276(39), res_279(43), res_254(56), res_257(60), res_261(68), res_265(75), res_156(79), res_157(86)>
+cleanup:
+  # DEBUG res => res_158
+  # DEBUG BEGIN_STMT
+  _135 = outpkt_205(D)->pbuf;
+  if (_135 != 0B)
+    goto <bb 88>; [INV]
+  else
+    goto <bb 89>; [INV]
+
+  <bb 88> :
+  # DEBUG BEGIN_STMT
+  _136 = outpkt_205(D)->pbuf;
+  pbuf_free (_136);
+  # DEBUG BEGIN_STMT
+  outpkt_205(D)->pbuf = 0B;
+
+  <bb 89> :
+  # DEBUG BEGIN_STMT
+  _284 = res_158;
+  return _284;
+
+}
+
+
+mdns_init_outpacket (struct mdns_outpacket * out, struct mdns_packet * in)
+{
+  struct netif * _1;
+  struct ip_addr_t * _2;
+  struct ip_addr_t * _3;
+  short unsigned int _4;
+  short unsigned int _5;
+  short unsigned int _6;
+  short unsigned int _7;
+  short unsigned int _8;
+
+  <bb 2> :
+  # DEBUG BEGIN_STMT
+  memset (out_12(D), 0, 72);
+  # DEBUG BEGIN_STMT
+  out_12(D)->cache_flush = 1;
+  # DEBUG BEGIN_STMT
+  _1 = in_15(D)->netif;
+  out_12(D)->netif = _1;
+  # DEBUG BEGIN_STMT
+  _2 = &out_12(D)->dest_addr;
+  _3 = &in_15(D)->source_addr;
+  memcpy (_2, _3, 24);
+  # DEBUG BEGIN_STMT
+  _4 = in_15(D)->source_port;
+  out_12(D)->dest_port = _4;
+  # DEBUG BEGIN_STMT
+  _5 = in_15(D)->source_port;
+  if (_5 != 5353)
+    goto <bb 3>; [INV]
+  else
+    goto <bb 5>; [INV]
+
+  <bb 3> :
+  # DEBUG BEGIN_STMT
+  out_12(D)->unicast_reply = 1;
+  # DEBUG BEGIN_STMT
+  out_12(D)->cache_flush = 0;
+  # DEBUG BEGIN_STMT
+  _6 = in_15(D)->questions;
+  if (_6 == 1)
+    goto <bb 4>; [INV]
+  else
+    goto <bb 5>; [INV]
+
+  <bb 4> :
+  # DEBUG BEGIN_STMT
+  out_12(D)->legacy_query = 1;
+  # DEBUG BEGIN_STMT
+  _7 = in_15(D)->tx_id;
+  out_12(D)->tx_id = _7;
+
+  <bb 5> :
+  # DEBUG BEGIN_STMT
+  _8 = in_15(D)->recv_unicast;
+  if (_8 != 0)
+    goto <bb 6>; [INV]
+  else
+    goto <bb 7>; [INV]
+
+  <bb 6> :
+  # DEBUG BEGIN_STMT
+  out_12(D)->unicast_reply = 1;
+
+  <bb 7> :
+  return;
+
+}
+
+
+mdns_add_txt_answer (struct mdns_outpacket * reply, u16_t cache_flush, struct mdns_service * service)
+{
+  struct mdns_domain service_instance;
+  long unsigned int _1;
+  u8_t[256] * _2;
+  short unsigned int _3;
+  unsigned int _4;
+  err_t _12;
+
+  <bb 2> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  mdns_build_service_domain (&service_instance, service_6(D), 1);
+  # DEBUG BEGIN_STMT
+  mdns_prepare_txtdata (service_6(D));
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _1 = service_6(D)->dns_ttl;
+  _2 = &service_6(D)->txtdata.name;
+  _3 = service_6(D)->txtdata.length;
+  _4 = (unsigned int) _3;
+  _12 = mdns_add_answer (reply_9(D), &service_instance, 16, 1, cache_flush_10(D), _1, _2, _4, 0B);
+  service_instance ={v} {CLOBBER};
+  return _12;
+
+}
+
+
+mdns_add_srv_answer (struct mdns_outpacket * reply, u16_t cache_flush, struct mdns_host * mdns, struct mdns_service * service)
+{
+  u16_t srvdata[3];
+  struct mdns_domain srvhost;
+  struct mdns_domain service_instance;
+  unsigned char _1;
+  short unsigned int _2;
+  short unsigned int _3;
+  short unsigned int _4;
+  short unsigned int _5;
+  long unsigned int _6;
+  err_t _23;
+
+  <bb 2> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  mdns_build_service_domain (&service_instance, service_9(D), 1);
+  # DEBUG BEGIN_STMT
+  mdns_build_host_domain (&srvhost, mdns_11(D));
+  # DEBUG BEGIN_STMT
+  _1 = reply_13(D)->legacy_query;
+  if (_1 != 0)
+    goto <bb 3>; [INV]
+  else
+    goto <bb 4>; [INV]
+
+  <bb 3> :
+  # DEBUG BEGIN_STMT
+  srvhost.skip_compression = 1;
+
+  <bb 4> :
+  # DEBUG BEGIN_STMT
+  _2 = lwip_htons (0);
+  srvdata[0] = _2;
+  # DEBUG BEGIN_STMT
+  _3 = lwip_htons (0);
+  srvdata[1] = _3;
+  # DEBUG BEGIN_STMT
+  _4 = service_9(D)->port;
+  _5 = lwip_htons (_4);
+  srvdata[2] = _5;
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _6 = service_9(D)->dns_ttl;
+  _23 = mdns_add_answer (reply_13(D), &service_instance, 33, 1, cache_flush_21(D), _6, &srvdata, 6, &srvhost);
+  service_instance ={v} {CLOBBER};
+  srvhost ={v} {CLOBBER};
+  srvdata ={v} {CLOBBER};
+  return _23;
+
+}
+
+
+mdns_add_servicename_ptr_answer (struct mdns_outpacket * reply, struct mdns_service * service)
+{
+  struct mdns_domain service_instance;
+  struct mdns_domain service_type;
+  long unsigned int _1;
+  err_t _8;
+
+  <bb 2> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  mdns_build_service_domain (&service_type, service_3(D), 0);
+  # DEBUG BEGIN_STMT
+  mdns_build_service_domain (&service_instance, service_3(D), 1);
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _1 = service_3(D)->dns_ttl;
+  _8 = mdns_add_answer (reply_6(D), &service_type, 12, 1, 0, _1, 0B, 0, &service_instance);
+  service_type ={v} {CLOBBER};
+  service_instance ={v} {CLOBBER};
+  return _8;
+
+}
+
+
+mdns_add_servicetype_ptr_answer (struct mdns_outpacket * reply, struct mdns_service * service)
+{
+  struct mdns_domain service_dnssd;
+  struct mdns_domain service_type;
+  long unsigned int _1;
+  err_t _8;
+
+  <bb 2> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  mdns_build_service_domain (&service_type, service_3(D), 0);
+  # DEBUG BEGIN_STMT
+  mdns_build_dnssd_domain (&service_dnssd);
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _1 = service_3(D)->dns_ttl;
+  _8 = mdns_add_answer (reply_6(D), &service_dnssd, 12, 1, 0, _1, 0B, 0, &service_type);
+  service_type ={v} {CLOBBER};
+  service_dnssd ={v} {CLOBBER};
+  return _8;
+
+}
+
+
+mdns_add_hostv6_ptr_answer (struct mdns_outpacket * reply, u16_t cache_flush, struct netif * netif, int addrindex)
+{
+  struct mdns_domain revhost;
+  struct mdns_domain host;
+  unsigned char mdns_netif_client_id.31_1;
+  int _2;
+  void * _3;
+  struct ip6_addr_t * _4;
+  unsigned char mdns_netif_client_id.32_5;
+  int _6;
+  void * _7;
+  long unsigned int _8;
+  err_t _17;
+
+  <bb 2> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  mdns_netif_client_id.31_1 = mdns_netif_client_id;
+  _2 = (int) mdns_netif_client_id.31_1;
+  _3 = netif_10(D)->client_data[_2];
+  mdns_build_host_domain (&host, _3);
+  # DEBUG BEGIN_STMT
+  _4 = &netif_10(D)->ip6_addr[addrindex_12(D)].u_addr.ip6;
+  mdns_build_reverse_v6_domain (&revhost, _4);
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  mdns_netif_client_id.32_5 = mdns_netif_client_id;
+  _6 = (int) mdns_netif_client_id.32_5;
+  _7 = netif_10(D)->client_data[_6];
+  _8 = MEM[(struct mdns_host *)_7].dns_ttl;
+  _17 = mdns_add_answer (reply_14(D), &revhost, 12, 1, cache_flush_15(D), _8, 0B, 0, &host);
+  host ={v} {CLOBBER};
+  revhost ={v} {CLOBBER};
+  return _17;
+
+}
+
+
+mdns_add_aaaa_answer (struct mdns_outpacket * reply, u16_t cache_flush, struct netif * netif, int addrindex)
+{
+  struct mdns_domain host;
+  unsigned char mdns_netif_client_id.34_1;
+  int _2;
+  void * _3;
+  unsigned char mdns_netif_client_id.35_4;
+  int _5;
+  void * _6;
+  long unsigned int _7;
+  struct ip6_addr_t * _8;
+  err_t _16;
+
+  <bb 2> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  mdns_netif_client_id.34_1 = mdns_netif_client_id;
+  _2 = (int) mdns_netif_client_id.34_1;
+  _3 = netif_10(D)->client_data[_2];
+  mdns_build_host_domain (&host, _3);
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  mdns_netif_client_id.35_4 = mdns_netif_client_id;
+  _5 = (int) mdns_netif_client_id.35_4;
+  _6 = netif_10(D)->client_data[_5];
+  _7 = MEM[(struct mdns_host *)_6].dns_ttl;
+  _8 = &netif_10(D)->ip6_addr[addrindex_12(D)].u_addr.ip6;
+  _16 = mdns_add_answer (reply_13(D), &host, 28, 1, cache_flush_14(D), _7, _8, 16, 0B);
+  host ={v} {CLOBBER};
+  return _16;
+
+}
+
+
+mdns_add_hostv4_ptr_answer (struct mdns_outpacket * reply, u16_t cache_flush, struct netif * netif)
+{
+  struct mdns_domain revhost;
+  struct mdns_domain host;
+  unsigned char mdns_netif_client_id.28_1;
+  int _2;
+  void * _3;
+  struct ip4_addr_t * _4;
+  unsigned char mdns_netif_client_id.29_5;
+  int _6;
+  void * _7;
+  long unsigned int _8;
+  err_t _16;
+
+  <bb 2> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  mdns_netif_client_id.28_1 = mdns_netif_client_id;
+  _2 = (int) mdns_netif_client_id.28_1;
+  _3 = netif_10(D)->client_data[_2];
+  mdns_build_host_domain (&host, _3);
+  # DEBUG BEGIN_STMT
+  _4 = &netif_10(D)->ip_addr.u_addr.ip4;
+  mdns_build_reverse_v4_domain (&revhost, _4);
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  mdns_netif_client_id.29_5 = mdns_netif_client_id;
+  _6 = (int) mdns_netif_client_id.29_5;
+  _7 = netif_10(D)->client_data[_6];
+  _8 = MEM[(struct mdns_host *)_7].dns_ttl;
+  _16 = mdns_add_answer (reply_13(D), &revhost, 12, 1, cache_flush_14(D), _8, 0B, 0, &host);
+  host ={v} {CLOBBER};
+  revhost ={v} {CLOBBER};
+  return _16;
+
+}
+
+
+mdns_add_a_answer (struct mdns_outpacket * reply, u16_t cache_flush, struct netif * netif)
+{
+  struct mdns_domain host;
+  unsigned char mdns_netif_client_id.36_1;
+  int _2;
+  void * _3;
+  unsigned char mdns_netif_client_id.37_4;
+  int _5;
+  void * _6;
+  long unsigned int _7;
+  struct ip4_addr_t * _8;
+  err_t _15;
+
+  <bb 2> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  mdns_netif_client_id.36_1 = mdns_netif_client_id;
+  _2 = (int) mdns_netif_client_id.36_1;
+  _3 = netif_10(D)->client_data[_2];
+  mdns_build_host_domain (&host, _3);
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  mdns_netif_client_id.37_4 = mdns_netif_client_id;
+  _5 = (int) mdns_netif_client_id.37_4;
+  _6 = netif_10(D)->client_data[_5];
+  _7 = MEM[(struct mdns_host *)_6].dns_ttl;
+  _8 = &netif_10(D)->ip_addr.u_addr.ip4;
+  _15 = mdns_add_answer (reply_12(D), &host, 1, 1, cache_flush_13(D), _7, _8, 4, 0B);
+  host ={v} {CLOBBER};
+  return _15;
+
+}
+
+
+mdns_read_answer (struct mdns_packet * pkt, struct mdns_answer * answer)
+{
+  err_t res;
+  u32_t ttl;
+  u16_t field16;
+  u16_t copied;
+  short unsigned int _1;
+  struct pbuf * _2;
+  short unsigned int _3;
+  short unsigned int _4;
+  short unsigned int _5;
+  short unsigned int _6;
+  short unsigned int _7;
+  short unsigned int _8;
+  struct mdns_rr_info * _9;
+  short unsigned int _10;
+  short unsigned int _11;
+  short unsigned int _12;
+  short unsigned int _13;
+  struct pbuf * _14;
+  short unsigned int _15;
+  short unsigned int _16;
+  short unsigned int _17;
+  long unsigned int ttl.66_18;
+  long unsigned int _19;
+  struct pbuf * _20;
+  short unsigned int _21;
+  short unsigned int _22;
+  short unsigned int _23;
+  short unsigned int field16.67_24;
+  short unsigned int _25;
+  short unsigned int _26;
+  short unsigned int _27;
+  short unsigned int _28;
+  short unsigned int _29;
+  err_t _30;
+  err_t _31;
+  err_t _36;
+  err_t _56;
+  err_t _57;
+  err_t _58;
+  err_t _59;
+  err_t _62;
+  err_t _63;
+
+  <bb 2> :
+  # DEBUG BEGIN_STMT
+  _1 = pkt_35(D)->questions_left;
+  if (_1 != 0)
+    goto <bb 3>; [INV]
+  else
+    goto <bb 4>; [INV]
+
+  <bb 3> :
+  # DEBUG BEGIN_STMT
+  _63 = -6;
+  // predicted unlikely by early return (on trees) predictor.
+  goto <bb 16>; [INV]
+
+  <bb 4> :
+  # DEBUG BEGIN_STMT
+  _2 = pkt_35(D)->pbuf;
+  _3 = _2->tot_len;
+  _4 = pkt_35(D)->parse_offset;
+  if (_3 < _4)
+    goto <bb 5>; [INV]
+  else
+    goto <bb 6>; [INV]
+
+  <bb 5> :
+  # DEBUG BEGIN_STMT
+  _62 = -6;
+  // predicted unlikely by early return (on trees) predictor.
+  goto <bb 16>; [INV]
+
+  <bb 6> :
+  # DEBUG BEGIN_STMT
+  _5 = pkt_35(D)->answers_left;
+  if (_5 != 0)
+    goto <bb 7>; [INV]
+  else
+    goto <bb 15>; [INV]
+
+  <bb 7> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _6 = pkt_35(D)->answers_left;
+  _7 = _6;
+  _8 = _7 + 65535;
+  pkt_35(D)->answers_left = _8;
+  # DEBUG BEGIN_STMT
+  memset (answer_38(D), 0, 276);
+  # DEBUG BEGIN_STMT
+  _9 = &answer_38(D)->info;
+  res_41 = mdns_read_rr_info (pkt_35(D), _9);
+  # DEBUG res => res_41
+  # DEBUG BEGIN_STMT
+  if (res_41 != 0)
+    goto <bb 8>; [INV]
+  else
+    goto <bb 9>; [INV]
+
+  <bb 8> :
+  # DEBUG BEGIN_STMT
+  _59 = res_41;
+  // predicted unlikely by early return (on trees) predictor.
+  goto <bb 14>; [INV]
+
+  <bb 9> :
+  # DEBUG BEGIN_STMT
+  _10 = answer_38(D)->info.klass;
+  _11 = _10 & 32768;
+  answer_38(D)->cache_flush = _11;
+  # DEBUG BEGIN_STMT
+  _12 = answer_38(D)->info.klass;
+  _13 = _12 & 32767;
+  answer_38(D)->info.klass = _13;
+  # DEBUG BEGIN_STMT
+  _14 = pkt_35(D)->pbuf;
+  _15 = pkt_35(D)->parse_offset;
+  copied_45 = pbuf_copy_partial (_14, &ttl, 4, _15);
+  # DEBUG copied => copied_45
+  # DEBUG BEGIN_STMT
+  if (copied_45 != 4)
+    goto <bb 10>; [INV]
+  else
+    goto <bb 11>; [INV]
+
+  <bb 10> :
+  # DEBUG BEGIN_STMT
+  _58 = -6;
+  // predicted unlikely by early return (on trees) predictor.
+  goto <bb 14>; [INV]
+
+  <bb 11> :
+  # DEBUG BEGIN_STMT
+  _16 = pkt_35(D)->parse_offset;
+  _17 = copied_45 + _16;
+  pkt_35(D)->parse_offset = _17;
+  # DEBUG BEGIN_STMT
+  ttl.66_18 = ttl;
+  _19 = lwip_htonl (ttl.66_18);
+  answer_38(D)->ttl = _19;
+  # DEBUG BEGIN_STMT
+  _20 = pkt_35(D)->pbuf;
+  _21 = pkt_35(D)->parse_offset;
+  copied_50 = pbuf_copy_partial (_20, &field16, 2, _21);
+  # DEBUG copied => copied_50
+  # DEBUG BEGIN_STMT
+  if (copied_50 != 2)
+    goto <bb 12>; [INV]
+  else
+    goto <bb 13>; [INV]
+
+  <bb 12> :
+  # DEBUG BEGIN_STMT
+  _57 = -6;
+  // predicted unlikely by early return (on trees) predictor.
+  goto <bb 14>; [INV]
+
+  <bb 13> :
+  # DEBUG BEGIN_STMT
+  _22 = pkt_35(D)->parse_offset;
+  _23 = copied_50 + _22;
+  pkt_35(D)->parse_offset = _23;
+  # DEBUG BEGIN_STMT
+  field16.67_24 = field16;
+  _25 = lwip_htons (field16.67_24);
+  answer_38(D)->rd_length = _25;
+  # DEBUG BEGIN_STMT
+  _26 = pkt_35(D)->parse_offset;
+  answer_38(D)->rd_offset = _26;
+  # DEBUG BEGIN_STMT
+  _27 = pkt_35(D)->parse_offset;
+  _28 = answer_38(D)->rd_length;
+  _29 = _27 + _28;
+  pkt_35(D)->parse_offset = _29;
+  # DEBUG BEGIN_STMT
+  _56 = 0;
+  // predicted unlikely by early return (on trees) predictor.
+
+  <bb 14> :
+  # _30 = PHI <_59(8), _58(10), _57(12), _56(13)>
+  field16 ={v} {CLOBBER};
+  ttl ={v} {CLOBBER};
+  goto <bb 16>; [INV]
+
+  <bb 15> :
+  # DEBUG BEGIN_STMT
+  _36 = -6;
+
+  <bb 16> :
+  # _31 = PHI <_63(3), _62(5), _30(14), _36(15)>
+  return _31;
+
+}
+
+
+mdns_read_question (struct mdns_packet * pkt, struct mdns_question * question)
+{
+  err_t res;
+  struct pbuf * _1;
+  short unsigned int _2;
+  short unsigned int _3;
+  short unsigned int _4;
+  short unsigned int _5;
+  short unsigned int _6;
+  short unsigned int _7;
+  struct mdns_rr_info * _8;
+  short unsigned int _9;
+  short unsigned int _10;
+  short unsigned int _11;
+  short unsigned int _12;
+  err_t _13;
+  err_t _17;
+  err_t _25;
+  err_t _26;
+  err_t _27;
+
+  <bb 2> :
+  # DEBUG BEGIN_STMT
+  _1 = pkt_16(D)->pbuf;
+  _2 = _1->tot_len;
+  _3 = pkt_16(D)->parse_offset;
+  if (_2 < _3)
+    goto <bb 3>; [INV]
+  else
+    goto <bb 4>; [INV]
+
+  <bb 3> :
+  # DEBUG BEGIN_STMT
+  _27 = -6;
+  // predicted unlikely by early return (on trees) predictor.
+  goto <bb 9>; [INV]
+
+  <bb 4> :
+  # DEBUG BEGIN_STMT
+  _4 = pkt_16(D)->questions_left;
+  if (_4 != 0)
+    goto <bb 5>; [INV]
+  else
+    goto <bb 8>; [INV]
+
+  <bb 5> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _5 = pkt_16(D)->questions_left;
+  _6 = _5;
+  _7 = _6 + 65535;
+  pkt_16(D)->questions_left = _7;
+  # DEBUG BEGIN_STMT
+  memset (question_19(D), 0, 266);
+  # DEBUG BEGIN_STMT
+  _8 = &question_19(D)->info;
+  res_22 = mdns_read_rr_info (pkt_16(D), _8);
+  # DEBUG res => res_22
+  # DEBUG BEGIN_STMT
+  if (res_22 != 0)
+    goto <bb 6>; [INV]
+  else
+    goto <bb 7>; [INV]
+
+  <bb 6> :
+  # DEBUG BEGIN_STMT
+  _26 = res_22;
+  // predicted unlikely by early return (on trees) predictor.
+  goto <bb 9>; [INV]
+
+  <bb 7> :
+  # DEBUG BEGIN_STMT
+  _9 = question_19(D)->info.klass;
+  _10 = _9 & 32768;
+  question_19(D)->unicast = _10;
+  # DEBUG BEGIN_STMT
+  _11 = question_19(D)->info.klass;
+  _12 = _11 & 32767;
+  question_19(D)->info.klass = _12;
+  # DEBUG BEGIN_STMT
+  _25 = 0;
+  // predicted unlikely by early return (on trees) predictor.
+  goto <bb 9>; [INV]
+
+  <bb 8> :
+  # DEBUG BEGIN_STMT
+  _17 = -6;
+
+  <bb 9> :
+  # _13 = PHI <_27(3), _26(6), _25(7), _17(8)>
+  return _13;
+
+}
+
+
+mdns_read_rr_info (struct mdns_packet * pkt, struct mdns_rr_info * info)
+{
+  u16_t copied;
+  u16_t field16;
+  struct pbuf * _1;
+  short unsigned int _2;
+  struct mdns_domain * _3;
+  short unsigned int _4;
+  short unsigned int _5;
+  struct pbuf * _6;
+  short unsigned int _7;
+  short unsigned int _8;
+  short unsigned int _9;
+  short unsigned int field16.64_10;
+  short unsigned int _11;
+  struct pbuf * _12;
+  short unsigned int _13;
+  short unsigned int _14;
+  short unsigned int _15;
+  short unsigned int field16.65_16;
+  short unsigned int _17;
+  err_t _18;
+  err_t _35;
+  err_t _36;
+  err_t _37;
+  err_t _38;
+
+  <bb 2> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _1 = pkt_21(D)->pbuf;
+  _2 = pkt_21(D)->parse_offset;
+  _3 = &info_22(D)->domain;
+  _4 = mdns_readname (_1, _2, _3);
+  pkt_21(D)->parse_offset = _4;
+  # DEBUG BEGIN_STMT
+  _5 = pkt_21(D)->parse_offset;
+  if (_5 == 65535)
+    goto <bb 3>; [INV]
+  else
+    goto <bb 4>; [INV]
+
+  <bb 3> :
+  # DEBUG BEGIN_STMT
+  _38 = -6;
+  // predicted unlikely by early return (on trees) predictor.
+  goto <bb 9>; [INV]
+
+  <bb 4> :
+  # DEBUG BEGIN_STMT
+  _6 = pkt_21(D)->pbuf;
+  _7 = pkt_21(D)->parse_offset;
+  copied_26 = pbuf_copy_partial (_6, &field16, 2, _7);
+  # DEBUG copied => copied_26
+  # DEBUG BEGIN_STMT
+  if (copied_26 != 2)
+    goto <bb 5>; [INV]
+  else
+    goto <bb 6>; [INV]
+
+  <bb 5> :
+  # DEBUG BEGIN_STMT
+  _37 = -6;
+  // predicted unlikely by early return (on trees) predictor.
+  goto <bb 9>; [INV]
+
+  <bb 6> :
+  # DEBUG BEGIN_STMT
+  _8 = pkt_21(D)->parse_offset;
+  _9 = copied_26 + _8;
+  pkt_21(D)->parse_offset = _9;
+  # DEBUG BEGIN_STMT
+  field16.64_10 = field16;
+  _11 = lwip_htons (field16.64_10);
+  info_22(D)->type = _11;
+  # DEBUG BEGIN_STMT
+  _12 = pkt_21(D)->pbuf;
+  _13 = pkt_21(D)->parse_offset;
+  copied_31 = pbuf_copy_partial (_12, &field16, 2, _13);
+  # DEBUG copied => copied_31
+  # DEBUG BEGIN_STMT
+  if (copied_31 != 2)
+    goto <bb 7>; [INV]
+  else
+    goto <bb 8>; [INV]
+
+  <bb 7> :
+  # DEBUG BEGIN_STMT
+  _36 = -6;
+  // predicted unlikely by early return (on trees) predictor.
+  goto <bb 9>; [INV]
+
+  <bb 8> :
+  # DEBUG BEGIN_STMT
+  _14 = pkt_21(D)->parse_offset;
+  _15 = copied_31 + _14;
+  pkt_21(D)->parse_offset = _15;
+  # DEBUG BEGIN_STMT
+  field16.65_16 = field16;
+  _17 = lwip_htons (field16.65_16);
+  info_22(D)->klass = _17;
+  # DEBUG BEGIN_STMT
+  _35 = 0;
+
+  <bb 9> :
+  # _18 = PHI <_38(3), _37(5), _36(7), _35(8)>
+  field16 ={v} {CLOBBER};
+  return _18;
+
+}
+
+
+mdns_add_answer (struct mdns_outpacket * reply, struct mdns_domain * domain, u16_t type, u16_t klass, u16_t cache_flush, u32_t ttl, const u8_t * buf, size_t buf_length, struct mdns_domain * answer_domain)
+{
+  err_t res;
+  u32_t field32;
+  u16_t answer_offset;
+  u16_t rdlen_offset;
+  u16_t field16;
+  u16_t answer_len;
+  struct pbuf * _1;
+  struct pbuf * _2;
+  struct pbuf * _3;
+  short unsigned int _4;
+  short unsigned int _5;
+  short unsigned int _6;
+  short unsigned int _7;
+  int _8;
+  int _9;
+  int _10;
+  struct pbuf * _11;
+  short unsigned int _12;
+  int _13;
+  long unsigned int _14;
+  struct pbuf * _15;
+  short unsigned int _16;
+  short unsigned int _17;
+  short unsigned int _18;
+  short unsigned int _19;
+  short unsigned int _20;
+  struct pbuf * _21;
+  short unsigned int _22;
+  short unsigned int _23;
+  short unsigned int _24;
+  short unsigned int _25;
+  short unsigned int _26;
+  short unsigned int _27;
+  short unsigned int _28;
+  short unsigned int _29;
+  struct pbuf * _30;
+  err_t _33;
+  err_t _43;
+  err_t _67;
+  err_t _70;
+  err_t _75;
+  err_t _76;
+  err_t _77;
+
+  <bb 2> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _1 = reply_39(D)->pbuf;
+  if (_1 == 0B)
+    goto <bb 3>; [INV]
+  else
+    goto <bb 6>; [INV]
+
+  <bb 3> :
+  # DEBUG BEGIN_STMT
+  _2 = pbuf_alloc (74, 500, 640);
+  reply_39(D)->pbuf = _2;
+  # DEBUG BEGIN_STMT
+  _3 = reply_39(D)->pbuf;
+  if (_3 == 0B)
+    goto <bb 4>; [INV]
+  else
+    goto <bb 5>; [INV]
+
+  <bb 4> :
+  # DEBUG BEGIN_STMT
+  _43 = -1;
+  // predicted unlikely by early return (on trees) predictor.
+  goto <bb 22>; [INV]
+
+  <bb 5> :
+  # DEBUG BEGIN_STMT
+  reply_39(D)->write_offset = 12;
+
+  <bb 6> :
+  # DEBUG BEGIN_STMT
+  _4 = domain_44(D)->length;
+  answer_len_45 = _4 + 10;
+  # DEBUG answer_len => answer_len_45
+  # DEBUG BEGIN_STMT
+  if (buf_46(D) != 0B)
+    goto <bb 7>; [INV]
+  else
+    goto <bb 8>; [INV]
+
+  <bb 7> :
+  # DEBUG BEGIN_STMT
+  _5 = (short unsigned int) buf_length_47(D);
+  answer_len_48 = answer_len_45 + _5;
+  # DEBUG answer_len => answer_len_48
+
+  <bb 8> :
+  # answer_len_31 = PHI <answer_len_45(6), answer_len_48(7)>
+  # DEBUG answer_len => answer_len_31
+  # DEBUG BEGIN_STMT
+  if (answer_domain_49(D) != 0B)
+    goto <bb 9>; [INV]
+  else
+    goto <bb 10>; [INV]
+
+  <bb 9> :
+  # DEBUG BEGIN_STMT
+  _6 = answer_domain_49(D)->length;
+  answer_len_50 = answer_len_31 + _6;
+  # DEBUG answer_len => answer_len_50
+
+  <bb 10> :
+  # answer_len_32 = PHI <answer_len_31(8), answer_len_50(9)>
+  # DEBUG answer_len => answer_len_32
+  # DEBUG BEGIN_STMT
+  _7 = reply_39(D)->write_offset;
+  _8 = (int) _7;
+  _9 = (int) answer_len_32;
+  _10 = _8 + _9;
+  _11 = reply_39(D)->pbuf;
+  _12 = _11->tot_len;
+  _13 = (int) _12;
+  if (_10 > _13)
+    goto <bb 11>; [INV]
+  else
+    goto <bb 12>; [INV]
+
+  <bb 11> :
+  # DEBUG BEGIN_STMT
+  _77 = -1;
+  // predicted unlikely by early return (on trees) predictor.
+  goto <bb 22>; [INV]
+
+  <bb 12> :
+  # DEBUG BEGIN_STMT
+  mdns_add_question (reply_39(D), domain_44(D), type_51(D), klass_52(D), cache_flush_53(D));
+  # DEBUG BEGIN_STMT
+  _14 = lwip_htonl (ttl_55(D));
+  field32 = _14;
+  # DEBUG BEGIN_STMT
+  _15 = reply_39(D)->pbuf;
+  _16 = reply_39(D)->write_offset;
+  res_59 = pbuf_take_at (_15, &field32, 4, _16);
+  # DEBUG res => res_59
+  # DEBUG BEGIN_STMT
+  if (res_59 != 0)
+    goto <bb 13>; [INV]
+  else
+    goto <bb 14>; [INV]
+
+  <bb 13> :
+  # DEBUG BEGIN_STMT
+  _76 = res_59;
+  // predicted unlikely by early return (on trees) predictor.
+  goto <bb 22>; [INV]
+
+  <bb 14> :
+  # DEBUG BEGIN_STMT
+  _17 = reply_39(D)->write_offset;
+  _18 = _17 + 4;
+  reply_39(D)->write_offset = _18;
+  # DEBUG BEGIN_STMT
+  rdlen_offset_61 = reply_39(D)->write_offset;
+  # DEBUG rdlen_offset => rdlen_offset_61
+  # DEBUG BEGIN_STMT
+  _19 = reply_39(D)->write_offset;
+  _20 = _19 + 2;
+  reply_39(D)->write_offset = _20;
+  # DEBUG BEGIN_STMT
+  answer_offset_63 = reply_39(D)->write_offset;
+  # DEBUG answer_offset => answer_offset_63
+  # DEBUG BEGIN_STMT
+  if (buf_46(D) != 0B)
+    goto <bb 15>; [INV]
+  else
+    goto <bb 18>; [INV]
+
+  <bb 15> :
+  # DEBUG BEGIN_STMT
+  _21 = reply_39(D)->pbuf;
+  _22 = (short unsigned int) buf_length_47(D);
+  _23 = reply_39(D)->write_offset;
+  res_65 = pbuf_take_at (_21, buf_46(D), _22, _23);
+  # DEBUG res => res_65
+  # DEBUG BEGIN_STMT
+  if (res_65 != 0)
+    goto <bb 16>; [INV]
+  else
+    goto <bb 17>; [INV]
+
+  <bb 16> :
+  # DEBUG BEGIN_STMT
+  _67 = res_65;
+  // predicted unlikely by early return (on trees) predictor.
+  goto <bb 22>; [INV]
+
+  <bb 17> :
+  # DEBUG BEGIN_STMT
+  _24 = reply_39(D)->write_offset;
+  _25 = (short unsigned int) buf_length_47(D);
+  _26 = _24 + _25;
+  reply_39(D)->write_offset = _26;
+
+  <bb 18> :
+  # DEBUG BEGIN_STMT
+  if (answer_domain_49(D) != 0B)
+    goto <bb 19>; [INV]
+  else
+    goto <bb 21>; [INV]
+
+  <bb 19> :
+  # DEBUG BEGIN_STMT
+  res_69 = mdns_write_domain (reply_39(D), answer_domain_49(D));
+  # DEBUG res => res_69
+  # DEBUG BEGIN_STMT
+  if (res_69 != 0)
+    goto <bb 20>; [INV]
+  else
+    goto <bb 21>; [INV]
+
+  <bb 20> :
+  # DEBUG BEGIN_STMT
+  _70 = res_69;
+  // predicted unlikely by early return (on trees) predictor.
+  goto <bb 22>; [INV]
+
+  <bb 21> :
+  # DEBUG BEGIN_STMT
+  _27 = reply_39(D)->write_offset;
+  _28 = _27 - answer_offset_63;
+  _29 = lwip_htons (_28);
+  field16 = _29;
+  # DEBUG BEGIN_STMT
+  _30 = reply_39(D)->pbuf;
+  res_74 = pbuf_take_at (_30, &field16, 2, rdlen_offset_61);
+  # DEBUG res => res_74
+  # DEBUG BEGIN_STMT
+  _75 = res_74;
+
+  <bb 22> :
+  # _33 = PHI <_43(4), _77(11), _76(13), _67(16), _70(20), _75(21)>
+  field16 ={v} {CLOBBER};
+  field32 ={v} {CLOBBER};
+  return _33;
+
+}
+
+
+mdns_add_question (struct mdns_outpacket * outpkt, struct mdns_domain * domain, u16_t type, u16_t klass, u16_t unicast)
+{
+  err_t res;
+  u16_t field16;
+  u16_t question_len;
+  struct pbuf * _1;
+  struct pbuf * _2;
+  struct pbuf * _3;
+  short unsigned int _4;
+  short unsigned int _5;
+  int _6;
+  int _7;
+  int _8;
+  struct pbuf * _9;
+  short unsigned int _10;
+  int _11;
+  short unsigned int _12;
+  struct pbuf * _13;
+  short unsigned int _14;
+  short unsigned int _15;
+  short unsigned int _16;
+  short unsigned int _17;
+  struct pbuf * _18;
+  short unsigned int _19;
+  short unsigned int _20;
+  short unsigned int _21;
+  err_t _23;
+  err_t _31;
+  err_t _50;
+  err_t _51;
+  err_t _52;
+  err_t _53;
+  err_t _54;
+
+  <bb 2> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _1 = outpkt_27(D)->pbuf;
+  if (_1 == 0B)
+    goto <bb 3>; [INV]
+  else
+    goto <bb 6>; [INV]
+
+  <bb 3> :
+  # DEBUG BEGIN_STMT
+  _2 = pbuf_alloc (74, 500, 640);
+  outpkt_27(D)->pbuf = _2;
+  # DEBUG BEGIN_STMT
+  _3 = outpkt_27(D)->pbuf;
+  if (_3 == 0B)
+    goto <bb 4>; [INV]
+  else
+    goto <bb 5>; [INV]
+
+  <bb 4> :
+  # DEBUG BEGIN_STMT
+  _31 = -1;
+  // predicted unlikely by early return (on trees) predictor.
+  goto <bb 17>; [INV]
+
+  <bb 5> :
+  # DEBUG BEGIN_STMT
+  outpkt_27(D)->write_offset = 12;
+
+  <bb 6> :
+  # DEBUG BEGIN_STMT
+  _4 = domain_32(D)->length;
+  question_len_33 = _4 + 4;
+  # DEBUG question_len => question_len_33
+  # DEBUG BEGIN_STMT
+  _5 = outpkt_27(D)->write_offset;
+  _6 = (int) _5;
+  _7 = (int) question_len_33;
+  _8 = _6 + _7;
+  _9 = outpkt_27(D)->pbuf;
+  _10 = _9->tot_len;
+  _11 = (int) _10;
+  if (_8 > _11)
+    goto <bb 7>; [INV]
+  else
+    goto <bb 8>; [INV]
+
+  <bb 7> :
+  # DEBUG BEGIN_STMT
+  _54 = -1;
+  // predicted unlikely by early return (on trees) predictor.
+  goto <bb 17>; [INV]
+
+  <bb 8> :
+  # DEBUG BEGIN_STMT
+  res_35 = mdns_write_domain (outpkt_27(D), domain_32(D));
+  # DEBUG res => res_35
+  # DEBUG BEGIN_STMT
+  if (res_35 != 0)
+    goto <bb 9>; [INV]
+  else
+    goto <bb 10>; [INV]
+
+  <bb 9> :
+  # DEBUG BEGIN_STMT
+  _53 = res_35;
+  // predicted unlikely by early return (on trees) predictor.
+  goto <bb 17>; [INV]
+
+  <bb 10> :
+  # DEBUG BEGIN_STMT
+  _12 = lwip_htons (type_36(D));
+  field16 = _12;
+  # DEBUG BEGIN_STMT
+  _13 = outpkt_27(D)->pbuf;
+  _14 = outpkt_27(D)->write_offset;
+  res_40 = pbuf_take_at (_13, &field16, 2, _14);
+  # DEBUG res => res_40
+  # DEBUG BEGIN_STMT
+  if (res_40 != 0)
+    goto <bb 11>; [INV]
+  else
+    goto <bb 12>; [INV]
+
+  <bb 11> :
+  # DEBUG BEGIN_STMT
+  _52 = res_40;
+  // predicted unlikely by early return (on trees) predictor.
+  goto <bb 17>; [INV]
+
+  <bb 12> :
+  # DEBUG BEGIN_STMT
+  _15 = outpkt_27(D)->write_offset;
+  _16 = _15 + 2;
+  outpkt_27(D)->write_offset = _16;
+  # DEBUG BEGIN_STMT
+  if (unicast_42(D) != 0)
+    goto <bb 13>; [INV]
+  else
+    goto <bb 14>; [INV]
+
+  <bb 13> :
+  # DEBUG BEGIN_STMT
+  klass_44 = klass_43(D) | 32768;
+  # DEBUG klass => klass_44
+
+  <bb 14> :
+  # klass_22 = PHI <klass_43(D)(12), klass_44(13)>
+  # DEBUG klass => klass_22
+  # DEBUG BEGIN_STMT
+  _17 = lwip_htons (klass_22);
+  field16 = _17;
+  # DEBUG BEGIN_STMT
+  _18 = outpkt_27(D)->pbuf;
+  _19 = outpkt_27(D)->write_offset;
+  res_48 = pbuf_take_at (_18, &field16, 2, _19);
+  # DEBUG res => res_48
+  # DEBUG BEGIN_STMT
+  if (res_48 != 0)
+    goto <bb 15>; [INV]
+  else
+    goto <bb 16>; [INV]
+
+  <bb 15> :
+  # DEBUG BEGIN_STMT
+  _51 = res_48;
+  // predicted unlikely by early return (on trees) predictor.
+  goto <bb 17>; [INV]
+
+  <bb 16> :
+  # DEBUG BEGIN_STMT
+  _20 = outpkt_27(D)->write_offset;
+  _21 = _20 + 2;
+  outpkt_27(D)->write_offset = _21;
+  # DEBUG BEGIN_STMT
+  _50 = 0;
+
+  <bb 17> :
+  # _23 = PHI <_31(4), _54(7), _53(9), _52(11), _51(15), _50(16)>
+  field16 ={v} {CLOBBER};
+  return _23;
+
+}
+
+
+mdns_write_domain (struct mdns_outpacket * outpkt, struct mdns_domain * domain)
+{
+  u16_t len;
+  u16_t offset;
+  u16_t jump;
+  u16_t jump_offset;
+  u16_t writelen;
+  err_t res;
+  int i;
+  unsigned char _1;
+  short unsigned int _2;
+  short unsigned int offset.15_3;
+  struct pbuf * _4;
+  struct pbuf * _5;
+  u8_t[256] * _6;
+  short unsigned int _7;
+  short unsigned int _8;
+  short unsigned int _9;
+  short unsigned int _10;
+  short unsigned int _11;
+  short unsigned int _12;
+  short unsigned int _13;
+  struct pbuf * _14;
+  short unsigned int _15;
+  short unsigned int _16;
+  short unsigned int _17;
+  err_t _26;
+  err_t _53;
+  err_t _59;
+  err_t _60;
+
+  <bb 2> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  writelen_36 = domain_35(D)->length;
+  # DEBUG writelen => writelen_36
+  # DEBUG BEGIN_STMT
+  jump_offset_37 = 0;
+  # DEBUG jump_offset => jump_offset_37
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _1 = domain_35(D)->skip_compression;
+  if (_1 == 0)
+    goto <bb 3>; [INV]
+  else
+    goto <bb 9>; [INV]
+
+  <bb 3> :
+  # DEBUG BEGIN_STMT
+  i_38 = 0;
+  # DEBUG i => i_38
+  goto <bb 8>; [INV]
+
+  <bb 4> :
+  # DEBUG BEGIN_STMT
+  _2 = outpkt_39(D)->domain_offsets[i_18];
+  offset = _2;
+  # DEBUG BEGIN_STMT
+  offset.15_3 = offset;
+  if (offset.15_3 != 0)
+    goto <bb 5>; [INV]
+  else
+    goto <bb 7>; [INV]
+
+  <bb 5> :
+  # DEBUG BEGIN_STMT
+  _4 = outpkt_39(D)->pbuf;
+  len_42 = mdns_compress_domain (_4, &offset, domain_35(D));
+  # DEBUG len => len_42
+  # DEBUG BEGIN_STMT
+  if (len_42 < writelen_21)
+    goto <bb 6>; [INV]
+  else
+    goto <bb 7>; [INV]
+
+  <bb 6> :
+  # DEBUG BEGIN_STMT
+  writelen_43 = len_42;
+  # DEBUG writelen => writelen_43
+  # DEBUG BEGIN_STMT
+  jump_offset_44 = offset;
+  # DEBUG jump_offset => jump_offset_44
+
+  <bb 7> :
+  # writelen_20 = PHI <writelen_21(4), writelen_21(5), writelen_43(6)>
+  # jump_offset_23 = PHI <jump_offset_24(4), jump_offset_24(5), jump_offset_44(6)>
+  # DEBUG jump_offset => jump_offset_23
+  # DEBUG writelen => writelen_20
+  offset ={v} {CLOBBER};
+  # DEBUG BEGIN_STMT
+  i_46 = i_18 + 1;
+  # DEBUG i => i_46
+
+  <bb 8> :
+  # i_18 = PHI <i_38(3), i_46(7)>
+  # writelen_21 = PHI <writelen_36(3), writelen_20(7)>
+  # jump_offset_24 = PHI <jump_offset_37(3), jump_offset_23(7)>
+  # DEBUG jump_offset => jump_offset_24
+  # DEBUG writelen => writelen_21
+  # DEBUG i => i_18
+  # DEBUG BEGIN_STMT
+  if (i_18 <= 9)
+    goto <bb 4>; [INV]
+  else
+    goto <bb 9>; [INV]
+
+  <bb 9> :
+  # writelen_22 = PHI <writelen_36(2), writelen_21(8)>
+  # jump_offset_25 = PHI <jump_offset_37(2), jump_offset_24(8)>
+  # DEBUG jump_offset => jump_offset_25
+  # DEBUG writelen => writelen_22
+  # DEBUG BEGIN_STMT
+  if (writelen_22 != 0)
+    goto <bb 10>; [INV]
+  else
+    goto <bb 18>; [INV]
+
+  <bb 10> :
+  # DEBUG BEGIN_STMT
+  _5 = outpkt_39(D)->pbuf;
+  _6 = &domain_35(D)->name;
+  _7 = outpkt_39(D)->write_offset;
+  res_48 = pbuf_take_at (_5, _6, writelen_22, _7);
+  # DEBUG res => res_48
+  # DEBUG BEGIN_STMT
+  if (res_48 != 0)
+    goto <bb 11>; [INV]
+  else
+    goto <bb 12>; [INV]
+
+  <bb 11> :
+  # DEBUG BEGIN_STMT
+  _53 = res_48;
+  // predicted unlikely by early return (on trees) predictor.
+  goto <bb 23>; [INV]
+
+  <bb 12> :
+  # DEBUG BEGIN_STMT
+  i_49 = 0;
+  # DEBUG i => i_49
+  goto <bb 16>; [INV]
+
+  <bb 13> :
+  # DEBUG BEGIN_STMT
+  _8 = outpkt_39(D)->domain_offsets[i_19];
+  if (_8 == 0)
+    goto <bb 14>; [INV]
+  else
+    goto <bb 15>; [INV]
+
+  <bb 14> :
+  # DEBUG BEGIN_STMT
+  _9 = outpkt_39(D)->write_offset;
+  outpkt_39(D)->domain_offsets[i_19] = _9;
+  # DEBUG BEGIN_STMT
+  goto <bb 17>; [INV]
+
+  <bb 15> :
+  # DEBUG BEGIN_STMT
+  i_50 = i_19 + 1;
+  # DEBUG i => i_50
+
+  <bb 16> :
+  # i_19 = PHI <i_49(12), i_50(15)>
+  # DEBUG i => i_19
+  # DEBUG BEGIN_STMT
+  if (i_19 <= 9)
+    goto <bb 13>; [INV]
+  else
+    goto <bb 17>; [INV]
+
+  <bb 17> :
+  # DEBUG BEGIN_STMT
+  _10 = outpkt_39(D)->write_offset;
+  _11 = writelen_22 + _10;
+  outpkt_39(D)->write_offset = _11;
+
+  <bb 18> :
+  # DEBUG BEGIN_STMT
+  if (jump_offset_25 != 0)
+    goto <bb 19>; [INV]
+  else
+    goto <bb 22>; [INV]
+
+  <bb 19> :
+  # DEBUG BEGIN_STMT
+  _12 = jump_offset_25 | 49152;
+  _13 = lwip_htons (_12);
+  jump = _13;
+  # DEBUG BEGIN_STMT
+  _14 = outpkt_39(D)->pbuf;
+  _15 = outpkt_39(D)->write_offset;
+  res_57 = pbuf_take_at (_14, &jump, 2, _15);
+  # DEBUG res => res_57
+  # DEBUG BEGIN_STMT
+  if (res_57 != 0)
+    goto <bb 20>; [INV]
+  else
+    goto <bb 21>; [INV]
+
+  <bb 20> :
+  # DEBUG BEGIN_STMT
+  _59 = res_57;
+  // predicted unlikely by early return (on trees) predictor.
+  goto <bb 23>; [INV]
+
+  <bb 21> :
+  # DEBUG BEGIN_STMT
+  _16 = outpkt_39(D)->write_offset;
+  _17 = _16 + 2;
+  outpkt_39(D)->write_offset = _17;
+
+  <bb 22> :
+  # DEBUG BEGIN_STMT
+  _60 = 0;
+
+  <bb 23> :
+  # _26 = PHI <_53(11), _59(20), _60(22)>
+  jump ={v} {CLOBBER};
+  return _26;
+
+}
+
+
+mdns_compress_domain (struct pbuf * pbuf, u16_t * offset, struct mdns_domain * domain)
+{
+  u8_t targetpos;
+  u8_t labellen;
+  u8_t domainlen;
+  u8_t * ptr;
+  u8_t writelen;
+  u8_t target_len;
+  u16_t target_end;
+  struct mdns_domain target;
+  short unsigned int _1;
+  unsigned char _2;
+  short unsigned int _3;
+  unsigned char _4;
+  short unsigned int _5;
+  unsigned char _6;
+  short unsigned int _7;
+  short unsigned int _8;
+  short unsigned int _9;
+  unsigned char _10;
+  int _11;
+  int _12;
+  int _13;
+  short unsigned int _14;
+  short unsigned int _15;
+  int _16;
+  u8_t * _17;
+  int _18;
+  u8_t * _19;
+  unsigned int _20;
+  int _21;
+  short unsigned int _22;
+  short unsigned int _23;
+  short unsigned int _24;
+  unsigned char _25;
+  int _26;
+  int _27;
+  sizetype _28;
+  short unsigned int _29;
+  short unsigned int _30;
+  u16_t _33;
+  u16_t _47;
+  u16_t _51;
+  u16_t _52;
+  u16_t _53;
+
+  <bb 2> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  writelen_35 = 0;
+  # DEBUG writelen => writelen_35
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  if (pbuf_36(D) == 0B)
+    goto <bb 3>; [INV]
+  else
+    goto <bb 4>; [INV]
+
+  <bb 3> :
+  # DEBUG BEGIN_STMT
+  _53 = domain_42(D)->length;
+  // predicted unlikely by early return (on trees) predictor.
+  goto <bb 16>; [INV]
+
+  <bb 4> :
+  # DEBUG BEGIN_STMT
+  _1 = *offset_38(D);
+  target_end_40 = mdns_readname (pbuf_36(D), _1, &target);
+  # DEBUG target_end => target_end_40
+  # DEBUG BEGIN_STMT
+  if (target_end_40 == 65535)
+    goto <bb 5>; [INV]
+  else
+    goto <bb 6>; [INV]
+
+  <bb 5> :
+  # DEBUG BEGIN_STMT
+  _52 = domain_42(D)->length;
+  // predicted unlikely by early return (on trees) predictor.
+  goto <bb 16>; [INV]
+
+  <bb 6> :
+  # DEBUG BEGIN_STMT
+  _2 = (unsigned char) target_end_40;
+  _3 = *offset_38(D);
+  _4 = (unsigned char) _3;
+  target_len_41 = _2 - _4;
+  # DEBUG target_len => target_len_41
+  # DEBUG BEGIN_STMT
+  ptr_43 = &domain_42(D)->name;
+  # DEBUG ptr => ptr_43
+  # DEBUG BEGIN_STMT
+  goto <bb 14>; [INV]
+
+  <bb 7> :
+  # DEBUG BEGIN_STMT
+  _5 = domain_42(D)->length;
+  _6 = (unsigned char) _5;
+  domainlen_44 = _6 - writelen_31;
+  # DEBUG domainlen => domainlen_44
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _7 = (short unsigned int) domainlen_44;
+  _8 = target.length;
+  if (_7 <= _8)
+    goto <bb 8>; [INV]
+  else
+    goto <bb 13>; [INV]
+
+  <bb 8> :
+  if (domainlen_44 > 2)
+    goto <bb 9>; [INV]
+  else
+    goto <bb 13>; [INV]
+
+  <bb 9> :
+  # DEBUG BEGIN_STMT
+  _9 = target.length;
+  _10 = (unsigned char) _9;
+  targetpos_45 = _10 - domainlen_44;
+  # DEBUG targetpos => targetpos_45
+  # DEBUG BEGIN_STMT
+  _11 = (int) targetpos_45;
+  _12 = _11 + 2;
+  _13 = (int) target_len_41;
+  if (_12 >= _13)
+    goto <bb 15>; [INV]
+  else
+    goto <bb 10>; [INV]
+
+  <bb 10> :
+  # DEBUG BEGIN_STMT
+  _14 = target.length;
+  _15 = (short unsigned int) domainlen_44;
+  if (_14 >= _15)
+    goto <bb 11>; [INV]
+  else
+    goto <bb 13>; [INV]
+
+  <bb 11> :
+  _16 = (int) writelen_31;
+  _17 = &domain_42(D)->name[_16];
+  _18 = (int) targetpos_45;
+  _19 = &target.name[_18];
+  _20 = (unsigned int) domainlen_44;
+  _21 = memcmp (_17, _19, _20);
+  if (_21 == 0)
+    goto <bb 12>; [INV]
+  else
+    goto <bb 13>; [INV]
+
+  <bb 12> :
+  # DEBUG BEGIN_STMT
+  _22 = *offset_38(D);
+  _23 = (short unsigned int) targetpos_45;
+  _24 = _22 + _23;
+  *offset_38(D) = _24;
+  # DEBUG BEGIN_STMT
+  _47 = (u16_t) writelen_31;
+  // predicted unlikely by early return (on trees) predictor.
+  goto <bb 16>; [INV]
+
+  <bb 13> :
+  # DEBUG BEGIN_STMT
+  labellen_48 = *ptr_32;
+  # DEBUG labellen => labellen_48
+  # DEBUG BEGIN_STMT
+  _25 = labellen_48 + writelen_31;
+  writelen_49 = _25 + 1;
+  # DEBUG writelen => writelen_49
+  # DEBUG BEGIN_STMT
+  _26 = (int) labellen_48;
+  _27 = _26 + 1;
+  _28 = (sizetype) _27;
+  ptr_50 = ptr_32 + _28;
+  # DEBUG ptr => ptr_50
+
+  <bb 14> :
+  # writelen_31 = PHI <writelen_35(6), writelen_49(13)>
+  # ptr_32 = PHI <ptr_43(6), ptr_50(13)>
+  # DEBUG ptr => ptr_32
+  # DEBUG writelen => writelen_31
+  # DEBUG BEGIN_STMT
+  _29 = (short unsigned int) writelen_31;
+  _30 = domain_42(D)->length;
+  if (_29 < _30)
+    goto <bb 7>; [INV]
+  else
+    goto <bb 15>; [INV]
+
+  <bb 15> :
+  # DEBUG BEGIN_STMT
+  _51 = domain_42(D)->length;
+
+  <bb 16> :
+  # _33 = PHI <_53(3), _52(5), _47(12), _51(15)>
+  target ={v} {CLOBBER};
+  return _33;
+
+}
+
+
+check_service (struct mdns_service * service, struct mdns_rr_info * rr)
+{
+  struct mdns_domain mydomain;
+  int replies;
+  err_t res;
+  short unsigned int _1;
+  short unsigned int _2;
+  struct mdns_domain * _3;
+  int _4;
+  short unsigned int _5;
+  short unsigned int _6;
+  struct mdns_domain * _7;
+  int _8;
+  short unsigned int _9;
+  short unsigned int _10;
+  struct mdns_domain * _11;
+  int _12;
+  short unsigned int _13;
+  short unsigned int _14;
+  short unsigned int _15;
+  short unsigned int _16;
+  int _21;
+  int _29;
+  int _44;
+
+  <bb 2> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  replies_26 = 0;
+  # DEBUG replies => replies_26
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _1 = rr_28(D)->klass;
+  if (_1 != 1)
+    goto <bb 3>; [INV]
+  else
+    goto <bb 5>; [INV]
+
+  <bb 3> :
+  _2 = rr_28(D)->klass;
+  if (_2 != 255)
+    goto <bb 4>; [INV]
+  else
+    goto <bb 5>; [INV]
+
+  <bb 4> :
+  # DEBUG BEGIN_STMT
+  _29 = 0;
+  // predicted unlikely by early return (on trees) predictor.
+  goto <bb 24>; [INV]
+
+  <bb 5> :
+  # DEBUG BEGIN_STMT
+  res_31 = mdns_build_dnssd_domain (&mydomain);
+  # DEBUG res => res_31
+  # DEBUG BEGIN_STMT
+  if (res_31 == 0)
+    goto <bb 6>; [INV]
+  else
+    goto <bb 10>; [INV]
+
+  <bb 6> :
+  _3 = &rr_28(D)->domain;
+  _4 = mdns_domain_eq (_3, &mydomain);
+  if (_4 != 0)
+    goto <bb 7>; [INV]
+  else
+    goto <bb 10>; [INV]
+
+  <bb 7> :
+  _5 = rr_28(D)->type;
+  if (_5 == 12)
+    goto <bb 9>; [INV]
+  else
+    goto <bb 8>; [INV]
+
+  <bb 8> :
+  _6 = rr_28(D)->type;
+  if (_6 == 255)
+    goto <bb 9>; [INV]
+  else
+    goto <bb 10>; [INV]
+
+  <bb 9> :
+  # DEBUG BEGIN_STMT
+  replies_33 = replies_26 | 16;
+  # DEBUG replies => replies_33
+
+  <bb 10> :
+  # replies_17 = PHI <replies_26(5), replies_26(6), replies_26(8), replies_33(9)>
+  # DEBUG replies => replies_17
+  # DEBUG BEGIN_STMT
+  res_36 = mdns_build_service_domain (&mydomain, service_34(D), 0);
+  # DEBUG res => res_36
+  # DEBUG BEGIN_STMT
+  if (res_36 == 0)
+    goto <bb 11>; [INV]
+  else
+    goto <bb 15>; [INV]
+
+  <bb 11> :
+  _7 = &rr_28(D)->domain;
+  _8 = mdns_domain_eq (_7, &mydomain);
+  if (_8 != 0)
+    goto <bb 12>; [INV]
+  else
+    goto <bb 15>; [INV]
+
+  <bb 12> :
+  _9 = rr_28(D)->type;
+  if (_9 == 12)
+    goto <bb 14>; [INV]
+  else
+    goto <bb 13>; [INV]
+
+  <bb 13> :
+  _10 = rr_28(D)->type;
+  if (_10 == 255)
+    goto <bb 14>; [INV]
+  else
+    goto <bb 15>; [INV]
+
+  <bb 14> :
+  # DEBUG BEGIN_STMT
+  replies_38 = replies_17 | 32;
+  # DEBUG replies => replies_38
+
+  <bb 15> :
+  # replies_18 = PHI <replies_17(10), replies_17(11), replies_17(13), replies_38(14)>
+  # DEBUG replies => replies_18
+  # DEBUG BEGIN_STMT
+  res_40 = mdns_build_service_domain (&mydomain, service_34(D), 1);
+  # DEBUG res => res_40
+  # DEBUG BEGIN_STMT
+  if (res_40 == 0)
+    goto <bb 16>; [INV]
+  else
+    goto <bb 23>; [INV]
+
+  <bb 16> :
+  _11 = &rr_28(D)->domain;
+  _12 = mdns_domain_eq (_11, &mydomain);
+  if (_12 != 0)
+    goto <bb 17>; [INV]
+  else
+    goto <bb 23>; [INV]
+
+  <bb 17> :
+  # DEBUG BEGIN_STMT
+  _13 = rr_28(D)->type;
+  if (_13 == 33)
+    goto <bb 19>; [INV]
+  else
+    goto <bb 18>; [INV]
+
+  <bb 18> :
+  _14 = rr_28(D)->type;
+  if (_14 == 255)
+    goto <bb 19>; [INV]
+  else
+    goto <bb 20>; [INV]
+
+  <bb 19> :
+  # DEBUG BEGIN_STMT
+  replies_42 = replies_18 | 64;
+  # DEBUG replies => replies_42
+
+  <bb 20> :
+  # replies_19 = PHI <replies_18(18), replies_42(19)>
+  # DEBUG replies => replies_19
+  # DEBUG BEGIN_STMT
+  _15 = rr_28(D)->type;
+  if (_15 == 16)
+    goto <bb 22>; [INV]
+  else
+    goto <bb 21>; [INV]
+
+  <bb 21> :
+  _16 = rr_28(D)->type;
+  if (_16 == 255)
+    goto <bb 22>; [INV]
+  else
+    goto <bb 23>; [INV]
+
+  <bb 22> :
+  # DEBUG BEGIN_STMT
+  replies_43 = replies_19 | 128;
+  # DEBUG replies => replies_43
+
+  <bb 23> :
+  # replies_20 = PHI <replies_18(15), replies_18(16), replies_19(21), replies_43(22)>
+  # DEBUG replies => replies_20
+  # DEBUG BEGIN_STMT
+  _44 = replies_20;
+
+  <bb 24> :
+  # _21 = PHI <_29(4), _44(23)>
+  mydomain ={v} {CLOBBER};
+  return _21;
+
+}
+
+
+check_host (struct netif * netif, struct mdns_rr_info * rr, u8_t * reverse_v6_reply)
+{
+  int i;
+  struct mdns_domain mydomain;
+  int replies;
+  err_t res;
+  short unsigned int _1;
+  short unsigned int _2;
+  short unsigned int _3;
+  short unsigned int _4;
+  unsigned char _5;
+  int _6;
+  int _7;
+  struct ip6_addr_t * _8;
+  struct mdns_domain * _9;
+  int _10;
+  unsigned char _11;
+  signed char _12;
+  int _13;
+  signed char _14;
+  signed char _15;
+  unsigned char _16;
+  struct ip4_addr_t * _17;
+  long unsigned int _18;
+  struct ip4_addr_t * _19;
+  struct mdns_domain * _20;
+  int _21;
+  unsigned char mdns_netif_client_id.75_22;
+  int _23;
+  void * _24;
+  struct mdns_domain * _25;
+  int _26;
+  struct ip4_addr_t * _27;
+  long unsigned int _28;
+  short unsigned int _29;
+  short unsigned int _30;
+  short unsigned int _31;
+  short unsigned int _32;
+  int _39;
+  int _48;
+  int _67;
+
+  <bb 2> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  replies_45 = 0;
+  # DEBUG replies => replies_45
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _1 = rr_47(D)->klass;
+  if (_1 != 1)
+    goto <bb 3>; [INV]
+  else
+    goto <bb 5>; [INV]
+
+  <bb 3> :
+  _2 = rr_47(D)->klass;
+  if (_2 != 255)
+    goto <bb 4>; [INV]
+  else
+    goto <bb 5>; [INV]
+
+  <bb 4> :
+  # DEBUG BEGIN_STMT
+  _48 = replies_45;
+  // predicted unlikely by early return (on trees) predictor.
+  goto <bb 29>; [INV]
+
+  <bb 5> :
+  # DEBUG BEGIN_STMT
+  _3 = rr_47(D)->type;
+  if (_3 == 12)
+    goto <bb 7>; [INV]
+  else
+    goto <bb 6>; [INV]
+
+  <bb 6> :
+  _4 = rr_47(D)->type;
+  if (_4 == 255)
+    goto <bb 7>; [INV]
+  else
+    goto <bb 19>; [INV]
+
+  <bb 7> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  i_49 = 0;
+  # DEBUG i => i_49
+  goto <bb 14>; [INV]
+
+  <bb 8> :
+  # DEBUG BEGIN_STMT
+  _5 = netif_50(D)->ip6_addr_state[i_38];
+  _6 = (int) _5;
+  _7 = _6 & 16;
+  if (_7 != 0)
+    goto <bb 9>; [INV]
+  else
+    goto <bb 13>; [INV]
+
+  <bb 9> :
+  # DEBUG BEGIN_STMT
+  _8 = &netif_50(D)->ip6_addr[i_38].u_addr.ip6;
+  res_56 = mdns_build_reverse_v6_domain (&mydomain, _8);
+  # DEBUG res => res_56
+  # DEBUG BEGIN_STMT
+  if (res_56 == 0)
+    goto <bb 10>; [INV]
+  else
+    goto <bb 13>; [INV]
+
+  <bb 10> :
+  _9 = &rr_47(D)->domain;
+  _10 = mdns_domain_eq (_9, &mydomain);
+  if (_10 != 0)
+    goto <bb 11>; [INV]
+  else
+    goto <bb 13>; [INV]
+
+  <bb 11> :
+  # DEBUG BEGIN_STMT
+  replies_58 = replies_34 | 8;
+  # DEBUG replies => replies_58
+  # DEBUG BEGIN_STMT
+  if (reverse_v6_reply_59(D) != 0B)
+    goto <bb 12>; [INV]
+  else
+    goto <bb 13>; [INV]
+
+  <bb 12> :
+  # DEBUG BEGIN_STMT
+  _11 = *reverse_v6_reply_59(D);
+  _12 = (signed char) _11;
+  _13 = 1 << i_38;
+  _14 = (signed char) _13;
+  _15 = _12 | _14;
+  _16 = (unsigned char) _15;
+  *reverse_v6_reply_59(D) = _16;
+
+  <bb 13> :
+  # replies_33 = PHI <replies_34(8), replies_34(9), replies_34(10), replies_58(11), replies_58(12)>
+  # DEBUG replies => replies_33
+  # DEBUG BEGIN_STMT
+  i_61 = i_38 + 1;
+  # DEBUG i => i_61
+
+  <bb 14> :
+  # replies_34 = PHI <replies_45(7), replies_33(13)>
+  # i_38 = PHI <i_49(7), i_61(13)>
+  # DEBUG i => i_38
+  # DEBUG replies => replies_34
+  # DEBUG BEGIN_STMT
+  if (i_38 <= 2)
+    goto <bb 8>; [INV]
+  else
+    goto <bb 15>; [INV]
+
+  <bb 15> :
+  # DEBUG BEGIN_STMT
+  _17 = &netif_50(D)->ip_addr.u_addr.ip4;
+  _18 = MEM[(const struct ip4_addr_t *)_17].addr;
+  if (_18 != 0)
+    goto <bb 16>; [INV]
+  else
+    goto <bb 19>; [INV]
+
+  <bb 16> :
+  # DEBUG BEGIN_STMT
+  _19 = &netif_50(D)->ip_addr.u_addr.ip4;
+  res_52 = mdns_build_reverse_v4_domain (&mydomain, _19);
+  # DEBUG res => res_52
+  # DEBUG BEGIN_STMT
+  if (res_52 == 0)
+    goto <bb 17>; [INV]
+  else
+    goto <bb 19>; [INV]
+
+  <bb 17> :
+  _20 = &rr_47(D)->domain;
+  _21 = mdns_domain_eq (_20, &mydomain);
+  if (_21 != 0)
+    goto <bb 18>; [INV]
+  else
+    goto <bb 19>; [INV]
+
+  <bb 18> :
+  # DEBUG BEGIN_STMT
+  replies_54 = replies_34 | 2;
+  # DEBUG replies => replies_54
+
+  <bb 19> :
+  # replies_35 = PHI <replies_45(6), replies_34(15), replies_34(16), replies_34(17), replies_54(18)>
+  # DEBUG replies => replies_35
+  # DEBUG BEGIN_STMT
+  mdns_netif_client_id.75_22 = mdns_netif_client_id;
+  _23 = (int) mdns_netif_client_id.75_22;
+  _24 = netif_50(D)->client_data[_23];
+  res_63 = mdns_build_host_domain (&mydomain, _24);
+  # DEBUG res => res_63
+  # DEBUG BEGIN_STMT
+  if (res_63 == 0)
+    goto <bb 20>; [INV]
+  else
+    goto <bb 28>; [INV]
+
+  <bb 20> :
+  _25 = &rr_47(D)->domain;
+  _26 = mdns_domain_eq (_25, &mydomain);
+  if (_26 != 0)
+    goto <bb 21>; [INV]
+  else
+    goto <bb 28>; [INV]
+
+  <bb 21> :
+  # DEBUG BEGIN_STMT
+  _27 = &netif_50(D)->ip_addr.u_addr.ip4;
+  _28 = MEM[(const struct ip4_addr_t *)_27].addr;
+  if (_28 != 0)
+    goto <bb 22>; [INV]
+  else
+    goto <bb 25>; [INV]
+
+  <bb 22> :
+  _29 = rr_47(D)->type;
+  if (_29 == 1)
+    goto <bb 24>; [INV]
+  else
+    goto <bb 23>; [INV]
+
+  <bb 23> :
+  _30 = rr_47(D)->type;
+  if (_30 == 255)
+    goto <bb 24>; [INV]
+  else
+    goto <bb 25>; [INV]
+
+  <bb 24> :
+  # DEBUG BEGIN_STMT
+  replies_65 = replies_35 | 1;
+  # DEBUG replies => replies_65
+
+  <bb 25> :
+  # replies_36 = PHI <replies_35(21), replies_35(23), replies_65(24)>
+  # DEBUG replies => replies_36
+  # DEBUG BEGIN_STMT
+  _31 = rr_47(D)->type;
+  if (_31 == 28)
+    goto <bb 27>; [INV]
+  else
+    goto <bb 26>; [INV]
+
+  <bb 26> :
+  _32 = rr_47(D)->type;
+  if (_32 == 255)
+    goto <bb 27>; [INV]
+  else
+    goto <bb 28>; [INV]
+
+  <bb 27> :
+  # DEBUG BEGIN_STMT
+  replies_66 = replies_36 | 4;
+  # DEBUG replies => replies_66
+
+  <bb 28> :
+  # replies_37 = PHI <replies_35(19), replies_35(20), replies_36(26), replies_66(27)>
+  # DEBUG replies => replies_37
+  # DEBUG BEGIN_STMT
+  _67 = replies_37;
+
+  <bb 29> :
+  # _39 = PHI <_48(4), _67(28)>
+  mydomain ={v} {CLOBBER};
+  return _39;
+
+}
+
+
+mdns_build_service_domain (struct mdns_domain * domain, struct mdns_service * service, int include_name)
+{
+  err_t res;
+  char[64] * _1;
+  char[64] * _2;
+  unsigned int _3;
+  unsigned char _4;
+  char[64] * _5;
+  char[64] * _6;
+  unsigned int _7;
+  unsigned char _8;
+  short unsigned int _9;
+  int _10;
+  const char * _11;
+  short unsigned int _12;
+  int _13;
+  const char * _14;
+  unsigned int _15;
+  unsigned char _16;
+  err_t _17;
+  err_t _27;
+  err_t _33;
+  err_t _34;
+  err_t _35;
+
+  <bb 2> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  memset (domain_21(D), 0, 260);
+  # DEBUG BEGIN_STMT
+  if (include_name_23(D) != 0)
+    goto <bb 3>; [INV]
+  else
+    goto <bb 5>; [INV]
+
+  <bb 3> :
+  # DEBUG BEGIN_STMT
+  _1 = &service_24(D)->name;
+  _2 = &service_24(D)->name;
+  _3 = strlen (_2);
+  _4 = (unsigned char) _3;
+  res_26 = mdns_domain_add_label (domain_21(D), _1, _4);
+  # DEBUG res => res_26
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  if (res_26 != 0)
+    goto <bb 4>; [INV]
+  else
+    goto <bb 5>; [INV]
+
+  <bb 4> :
+  # DEBUG BEGIN_STMT
+  _27 = res_26;
+  // predicted unlikely by early return (on trees) predictor.
+  goto <bb 10>; [INV]
+
+  <bb 5> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _5 = &service_24(D)->service;
+  _6 = &service_24(D)->service;
+  _7 = strlen (_6);
+  _8 = (unsigned char) _7;
+  res_29 = mdns_domain_add_label (domain_21(D), _5, _8);
+  # DEBUG res => res_29
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  if (res_29 != 0)
+    goto <bb 6>; [INV]
+  else
+    goto <bb 7>; [INV]
+
+  <bb 6> :
+  # DEBUG BEGIN_STMT
+  _35 = res_29;
+  // predicted unlikely by early return (on trees) predictor.
+  goto <bb 10>; [INV]
+
+  <bb 7> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _9 = service_24(D)->proto;
+  _10 = (int) _9;
+  _11 = dnssd_protos[_10];
+  _12 = service_24(D)->proto;
+  _13 = (int) _12;
+  _14 = dnssd_protos[_13];
+  _15 = strlen (_14);
+  _16 = (unsigned char) _15;
+  res_31 = mdns_domain_add_label (domain_21(D), _11, _16);
+  # DEBUG res => res_31
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  if (res_31 != 0)
+    goto <bb 8>; [INV]
+  else
+    goto <bb 9>; [INV]
+
+  <bb 8> :
+  # DEBUG BEGIN_STMT
+  _34 = res_31;
+  // predicted unlikely by early return (on trees) predictor.
+  goto <bb 10>; [INV]
+
+  <bb 9> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _33 = mdns_add_dotlocal (domain_21(D));
+
+  <bb 10> :
+  # _17 = PHI <_27(4), _35(6), _34(8), _33(9)>
+  return _17;
+
+}
+
+
+mdns_build_dnssd_domain (struct mdns_domain * domain)
+{
+  err_t res;
+  const char * _1;
+  const char * _2;
+  unsigned int _3;
+  unsigned char _4;
+  err_t _5;
+  err_t _17;
+  err_t _18;
+  err_t _19;
+  err_t _20;
+
+  <bb 2> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  memset (domain_8(D), 0, 260);
+  # DEBUG BEGIN_STMT
+  res_11 = mdns_domain_add_label (domain_8(D), "_services", 9);
+  # DEBUG res => res_11
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  if (res_11 != 0)
+    goto <bb 3>; [INV]
+  else
+    goto <bb 4>; [INV]
+
+  <bb 3> :
+  # DEBUG BEGIN_STMT
+  _20 = res_11;
+  // predicted unlikely by early return (on trees) predictor.
+  goto <bb 9>; [INV]
+
+  <bb 4> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  res_13 = mdns_domain_add_label (domain_8(D), "_dns-sd", 7);
+  # DEBUG res => res_13
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  if (res_13 != 0)
+    goto <bb 5>; [INV]
+  else
+    goto <bb 6>; [INV]
+
+  <bb 5> :
+  # DEBUG BEGIN_STMT
+  _19 = res_13;
+  // predicted unlikely by early return (on trees) predictor.
+  goto <bb 9>; [INV]
+
+  <bb 6> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _1 = dnssd_protos[0];
+  _2 = dnssd_protos[0];
+  _3 = strlen (_2);
+  _4 = (unsigned char) _3;
+  res_15 = mdns_domain_add_label (domain_8(D), _1, _4);
+  # DEBUG res => res_15
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  if (res_15 != 0)
+    goto <bb 7>; [INV]
+  else
+    goto <bb 8>; [INV]
+
+  <bb 7> :
+  # DEBUG BEGIN_STMT
+  _18 = res_15;
+  // predicted unlikely by early return (on trees) predictor.
+  goto <bb 9>; [INV]
+
+  <bb 8> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _17 = mdns_add_dotlocal (domain_8(D));
+
+  <bb 9> :
+  # _5 = PHI <_20(3), _19(5), _18(7), _17(8)>
+  return _5;
+
+}
+
+
+mdns_build_host_domain (struct mdns_domain * domain, struct mdns_host * mdns)
+{
+  err_t res;
+  char[64] * _1;
+  char[64] * _2;
+  unsigned int _3;
+  unsigned char _4;
+  err_t _5;
+  err_t _14;
+  err_t _15;
+  err_t _16;
+
+  <bb 2> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  memset (domain_8(D), 0, 260);
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  if (mdns_10(D) == 0B)
+    goto <bb 3>; [INV]
+  else
+    goto <bb 4>; [INV]
+
+  <bb 3> :
+  # DEBUG BEGIN_STMT
+  _16 = -6;
+  // predicted unlikely by early return (on trees) predictor.
+  goto <bb 7>; [INV]
+
+  <bb 4> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _1 = &mdns_10(D)->name;
+  _2 = &mdns_10(D)->name;
+  _3 = strlen (_2);
+  _4 = (unsigned char) _3;
+  res_12 = mdns_domain_add_label (domain_8(D), _1, _4);
+  # DEBUG res => res_12
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  if (res_12 != 0)
+    goto <bb 5>; [INV]
+  else
+    goto <bb 6>; [INV]
+
+  <bb 5> :
+  # DEBUG BEGIN_STMT
+  _15 = res_12;
+  // predicted unlikely by early return (on trees) predictor.
+  goto <bb 7>; [INV]
+
+  <bb 6> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _14 = mdns_add_dotlocal (domain_8(D));
+
+  <bb 7> :
+  # _5 = PHI <_16(3), _15(5), _14(6)>
+  return _5;
+
+}
+
+
+mdns_add_dotlocal (struct mdns_domain * domain)
+{
+  err_t res;
+  err_t _1;
+  err_t _8;
+  err_t _9;
+
+  <bb 2> :
+  # DEBUG BEGIN_STMT
+  res_6 = mdns_domain_add_label (domain_4(D), "local", 5);
+  # DEBUG res => res_6
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  if (res_6 != 0)
+    goto <bb 3>; [INV]
+  else
+    goto <bb 4>; [INV]
+
+  <bb 3> :
+  # DEBUG BEGIN_STMT
+  _9 = res_6;
+  // predicted unlikely by early return (on trees) predictor.
+  goto <bb 5>; [INV]
+
+  <bb 4> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _8 = mdns_domain_add_label (domain_4(D), 0B, 0);
+
+  <bb 5> :
+  # _1 = PHI <_9(3), _8(4)>
+  return _1;
+
+}
+
+
+mdns_build_reverse_v6_domain (struct mdns_domain * domain, const struct ip6_addr_t * addr)
+{
+  int j;
+  u8_t byte;
+  char buf;
+  const u8_t * ptr;
+  err_t res;
+  int i;
+  sizetype i.33_1;
+  const u8_t * _2;
+  int _3;
+  int _4;
+  char _5;
+  char _6;
+  char _7;
+  char _8;
+  err_t _12;
+  err_t _29;
+  err_t _30;
+  err_t _31;
+  err_t _32;
+  err_t _43;
+  err_t _45;
+
+  <bb 2> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  if (domain_17(D) == 0B)
+    goto <bb 4>; [INV]
+  else
+    goto <bb 3>; [INV]
+
+  <bb 3> :
+  if (addr_18(D) == 0B)
+    goto <bb 4>; [INV]
+  else
+    goto <bb 5>; [INV]
+
+  <bb 4> :
+  # DEBUG BEGIN_STMT
+  _45 = -16;
+  // predicted unlikely by early return (on trees) predictor.
+  goto <bb 23>; [INV]
+
+  <bb 5> :
+  # DEBUG BEGIN_STMT
+  memset (domain_17(D), 0, 260);
+  # DEBUG BEGIN_STMT
+  ptr_21 = addr_18(D);
+  # DEBUG ptr => ptr_21
+  # DEBUG BEGIN_STMT
+  i_22 = 15;
+  # DEBUG i => i_22
+  goto <bb 15>; [INV]
+
+  <bb 6> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  i.33_1 = (sizetype) i_9;
+  _2 = ptr_21 + i.33_1;
+  byte_33 = *_2;
+  # DEBUG byte => byte_33
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  j_34 = 0;
+  # DEBUG j => j_34
+  goto <bb 13>; [INV]
+
+  <bb 7> :
+  # DEBUG BEGIN_STMT
+  _3 = (int) byte_10;
+  _4 = _3 & 15;
+  if (_4 <= 9)
+    goto <bb 8>; [INV]
+  else
+    goto <bb 9>; [INV]
+
+  <bb 8> :
+  # DEBUG BEGIN_STMT
+  _5 = byte_10 & 15;
+  _6 = _5 + 48;
+  buf = _6;
+  goto <bb 10>; [INV]
+
+  <bb 9> :
+  # DEBUG BEGIN_STMT
+  _7 = byte_10 & 15;
+  _8 = _7 + 87;
+  buf = _8;
+
+  <bb 10> :
+  # DEBUG BEGIN_STMT
+  res_40 = mdns_domain_add_label (domain_17(D), &buf, 1);
+  # DEBUG res => res_40
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  if (res_40 != 0)
+    goto <bb 11>; [INV]
+  else
+    goto <bb 12>; [INV]
+
+  <bb 11> :
+  # DEBUG BEGIN_STMT
+  _43 = res_40;
+  // predicted unlikely by early return (on trees) predictor.
+  buf ={v} {CLOBBER};
+  goto <bb 23>; [INV]
+
+  <bb 12> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  byte_41 = byte_10 >> 4;
+  # DEBUG byte => byte_41
+  # DEBUG BEGIN_STMT
+  j_42 = j_11 + 1;
+  # DEBUG j => j_42
+
+  <bb 13> :
+  # byte_10 = PHI <byte_33(6), byte_41(12)>
+  # j_11 = PHI <j_34(6), j_42(12)>
+  # DEBUG j => j_11
+  # DEBUG byte => byte_10
+  # DEBUG BEGIN_STMT
+  if (j_11 <= 1)
+    goto <bb 7>; [INV]
+  else
+    goto <bb 14>; [INV]
+
+  <bb 14> :
+  buf ={v} {CLOBBER};
+  # DEBUG BEGIN_STMT
+  i_36 = i_9 + -1;
+  # DEBUG i => i_36
+
+  <bb 15> :
+  # i_9 = PHI <i_22(5), i_36(14)>
+  # DEBUG i => i_9
+  # DEBUG BEGIN_STMT
+  if (i_9 >= 0)
+    goto <bb 6>; [INV]
+  else
+    goto <bb 16>; [INV]
+
+  <bb 16> :
+  # DEBUG BEGIN_STMT
+  res_24 = mdns_domain_add_label (domain_17(D), "ip6", 3);
+  # DEBUG res => res_24
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  if (res_24 != 0)
+    goto <bb 17>; [INV]
+  else
+    goto <bb 18>; [INV]
+
+  <bb 17> :
+  # DEBUG BEGIN_STMT
+  _32 = res_24;
+  // predicted unlikely by early return (on trees) predictor.
+  goto <bb 23>; [INV]
+
+  <bb 18> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  res_26 = mdns_domain_add_label (domain_17(D), "arpa", 4);
+  # DEBUG res => res_26
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  if (res_26 != 0)
+    goto <bb 19>; [INV]
+  else
+    goto <bb 20>; [INV]
+
+  <bb 19> :
+  # DEBUG BEGIN_STMT
+  _31 = res_26;
+  // predicted unlikely by early return (on trees) predictor.
+  goto <bb 23>; [INV]
+
+  <bb 20> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  res_28 = mdns_domain_add_label (domain_17(D), 0B, 0);
+  # DEBUG res => res_28
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  if (res_28 != 0)
+    goto <bb 21>; [INV]
+  else
+    goto <bb 22>; [INV]
+
+  <bb 21> :
+  # DEBUG BEGIN_STMT
+  _30 = res_28;
+  // predicted unlikely by early return (on trees) predictor.
+  goto <bb 23>; [INV]
+
+  <bb 22> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _29 = 0;
+
+  <bb 23> :
+  # _12 = PHI <_45(4), _43(11), _32(17), _31(19), _30(21), _29(22)>
+  return _12;
+
+}
+
+
+mdns_build_reverse_v4_domain (struct mdns_domain * domain, const struct ip4_addr_t * addr)
+{
+  u8_t val;
+  char buf[4];
+  const u8_t * ptr;
+  err_t res;
+  int i;
+  sizetype i.30_1;
+  const u8_t * _2;
+  int _3;
+  unsigned int _4;
+  unsigned char _5;
+  err_t _7;
+  err_t _22;
+  err_t _23;
+  err_t _24;
+  err_t _25;
+  err_t _32;
+  err_t _34;
+
+  <bb 2> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  if (domain_10(D) == 0B)
+    goto <bb 4>; [INV]
+  else
+    goto <bb 3>; [INV]
+
+  <bb 3> :
+  if (addr_11(D) == 0B)
+    goto <bb 4>; [INV]
+  else
+    goto <bb 5>; [INV]
+
+  <bb 4> :
+  # DEBUG BEGIN_STMT
+  _34 = -16;
+  // predicted unlikely by early return (on trees) predictor.
+  goto <bb 17>; [INV]
+
+  <bb 5> :
+  # DEBUG BEGIN_STMT
+  memset (domain_10(D), 0, 260);
+  # DEBUG BEGIN_STMT
+  ptr_14 = addr_11(D);
+  # DEBUG ptr => ptr_14
+  # DEBUG BEGIN_STMT
+  i_15 = 3;
+  # DEBUG i => i_15
+  goto <bb 9>; [INV]
+
+  <bb 6> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  i.30_1 = (sizetype) i_6;
+  _2 = ptr_14 + i.30_1;
+  val_26 = *_2;
+  # DEBUG val => val_26
+  # DEBUG BEGIN_STMT
+  _3 = (int) val_26;
+  lwip_itoa (&buf, 4, _3);
+  # DEBUG BEGIN_STMT
+  _4 = strlen (&buf);
+  _5 = (unsigned char) _4;
+  res_29 = mdns_domain_add_label (domain_10(D), &buf, _5);
+  # DEBUG res => res_29
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  if (res_29 != 0)
+    goto <bb 7>; [INV]
+  else
+    goto <bb 8>; [INV]
+
+  <bb 7> :
+  # DEBUG BEGIN_STMT
+  _32 = res_29;
+  // predicted unlikely by early return (on trees) predictor.
+  buf ={v} {CLOBBER};
+  goto <bb 17>; [INV]
+
+  <bb 8> :
+  # DEBUG BEGIN_STMT
+  buf ={v} {CLOBBER};
+  # DEBUG BEGIN_STMT
+  i_31 = i_6 + -1;
+  # DEBUG i => i_31
+
+  <bb 9> :
+  # i_6 = PHI <i_15(5), i_31(8)>
+  # DEBUG i => i_6
+  # DEBUG BEGIN_STMT
+  if (i_6 >= 0)
+    goto <bb 6>; [INV]
+  else
+    goto <bb 10>; [INV]
+
+  <bb 10> :
+  # DEBUG BEGIN_STMT
+  res_17 = mdns_domain_add_label (domain_10(D), "in-addr", 7);
+  # DEBUG res => res_17
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  if (res_17 != 0)
+    goto <bb 11>; [INV]
+  else
+    goto <bb 12>; [INV]
+
+  <bb 11> :
+  # DEBUG BEGIN_STMT
+  _25 = res_17;
+  // predicted unlikely by early return (on trees) predictor.
+  goto <bb 17>; [INV]
+
+  <bb 12> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  res_19 = mdns_domain_add_label (domain_10(D), "arpa", 4);
+  # DEBUG res => res_19
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  if (res_19 != 0)
+    goto <bb 13>; [INV]
+  else
+    goto <bb 14>; [INV]
+
+  <bb 13> :
+  # DEBUG BEGIN_STMT
+  _24 = res_19;
+  // predicted unlikely by early return (on trees) predictor.
+  goto <bb 17>; [INV]
+
+  <bb 14> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  res_21 = mdns_domain_add_label (domain_10(D), 0B, 0);
+  # DEBUG res => res_21
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  if (res_21 != 0)
+    goto <bb 15>; [INV]
+  else
+    goto <bb 16>; [INV]
+
+  <bb 15> :
+  # DEBUG BEGIN_STMT
+  _23 = res_21;
+  // predicted unlikely by early return (on trees) predictor.
+  goto <bb 17>; [INV]
+
+  <bb 16> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _22 = 0;
+
+  <bb 17> :
+  # _7 = PHI <_34(4), _32(7), _25(11), _24(13), _23(15), _22(16)>
+  return _7;
+
+}
+
+
+mdns_prepare_txtdata (struct mdns_service * service)
+{
+  struct mdns_domain * _1;
+  void (*<T707>) (struct mdns_service *, void *) _2;
+  void (*<T707>) (struct mdns_service *, void *) _3;
+  void * _4;
+
+  <bb 2> :
+  # DEBUG BEGIN_STMT
+  _1 = &service_6(D)->txtdata;
+  memset (_1, 0, 260);
+  # DEBUG BEGIN_STMT
+  _2 = service_6(D)->txt_fn;
+  if (_2 != 0B)
+    goto <bb 3>; [INV]
+  else
+    goto <bb 4>; [INV]
+
+  <bb 3> :
+  # DEBUG BEGIN_STMT
+  _3 = service_6(D)->txt_fn;
+  _4 = service_6(D)->txt_userdata;
+  _3 (service_6(D), _4);
+
+  <bb 4> :
+  return;
+
+}
+
+
+mdns_domain_eq (struct mdns_domain * a, struct mdns_domain * b)
+{
+  int res;
+  u8_t len;
+  u8_t * ptrb;
+  u8_t * ptra;
+  short unsigned int _1;
+  short unsigned int _2;
+  unsigned char _3;
+  unsigned char _4;
+  unsigned int _5;
+  sizetype _6;
+  sizetype _7;
+  unsigned char _8;
+  unsigned char _9;
+  short unsigned int _10;
+  int _11;
+  u8_t * _12;
+  unsigned char _13;
+  unsigned char _14;
+  short unsigned int _15;
+  int _16;
+  u8_t * _17;
+  int _20;
+  int _35;
+  int _36;
+  int _37;
+  int _38;
+  int _39;
+
+  <bb 2> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _1 = a_24(D)->length;
+  _2 = b_25(D)->length;
+  if (_1 != _2)
+    goto <bb 3>; [INV]
+  else
+    goto <bb 4>; [INV]
+
+  <bb 3> :
+  # DEBUG BEGIN_STMT
+  _39 = 0;
+  // predicted unlikely by early return (on trees) predictor.
+  goto <bb 17>; [INV]
+
+  <bb 4> :
+  # DEBUG BEGIN_STMT
+  ptra_26 = &a_24(D)->name;
+  # DEBUG ptra => ptra_26
+  # DEBUG BEGIN_STMT
+  ptrb_27 = &b_25(D)->name;
+  # DEBUG ptrb => ptrb_27
+  # DEBUG BEGIN_STMT
+  goto <bb 10>; [INV]
+
+  <bb 5> :
+  # DEBUG BEGIN_STMT
+  _3 = *ptra_18;
+  _4 = *ptrb_19;
+  if (_3 != _4)
+    goto <bb 6>; [INV]
+  else
+    goto <bb 7>; [INV]
+
+  <bb 6> :
+  # DEBUG BEGIN_STMT
+  _36 = 0;
+  // predicted unlikely by early return (on trees) predictor.
+  goto <bb 17>; [INV]
+
+  <bb 7> :
+  # DEBUG BEGIN_STMT
+  len_28 = *ptra_18;
+  # DEBUG len => len_28
+  # DEBUG BEGIN_STMT
+  ptra_29 = ptra_18 + 1;
+  # DEBUG ptra => ptra_29
+  # DEBUG BEGIN_STMT
+  ptrb_30 = ptrb_19 + 1;
+  # DEBUG ptrb => ptrb_30
+  # DEBUG BEGIN_STMT
+  _5 = (unsigned int) len_28;
+  res_32 = lwip_strnicmp (ptra_29, ptrb_30, _5);
+  # DEBUG res => res_32
+  # DEBUG BEGIN_STMT
+  if (res_32 != 0)
+    goto <bb 8>; [INV]
+  else
+    goto <bb 9>; [INV]
+
+  <bb 8> :
+  # DEBUG BEGIN_STMT
+  _35 = 0;
+  // predicted unlikely by early return (on trees) predictor.
+  goto <bb 17>; [INV]
+
+  <bb 9> :
+  # DEBUG BEGIN_STMT
+  _6 = (sizetype) len_28;
+  ptra_33 = ptra_29 + _6;
+  # DEBUG ptra => ptra_33
+  # DEBUG BEGIN_STMT
+  _7 = (sizetype) len_28;
+  ptrb_34 = ptrb_30 + _7;
+  # DEBUG ptrb => ptrb_34
+
+  <bb 10> :
+  # ptra_18 = PHI <ptra_26(4), ptra_33(9)>
+  # ptrb_19 = PHI <ptrb_27(4), ptrb_34(9)>
+  # DEBUG ptrb => ptrb_19
+  # DEBUG ptra => ptra_18
+  # DEBUG BEGIN_STMT
+  _8 = *ptra_18;
+  if (_8 != 0)
+    goto <bb 11>; [INV]
+  else
+    goto <bb 13>; [INV]
+
+  <bb 11> :
+  _9 = *ptrb_19;
+  if (_9 != 0)
+    goto <bb 12>; [INV]
+  else
+    goto <bb 13>; [INV]
+
+  <bb 12> :
+  _10 = a_24(D)->length;
+  _11 = (int) _10;
+  _12 = &a_24(D)->name[_11];
+  if (ptra_18 < _12)
+    goto <bb 5>; [INV]
+  else
+    goto <bb 13>; [INV]
+
+  <bb 13> :
+  # DEBUG BEGIN_STMT
+  _13 = *ptra_18;
+  _14 = *ptrb_19;
+  if (_13 != _14)
+    goto <bb 14>; [INV]
+  else
+    goto <bb 16>; [INV]
+
+  <bb 14> :
+  _15 = a_24(D)->length;
+  _16 = (int) _15;
+  _17 = &a_24(D)->name[_16];
+  if (ptra_18 < _17)
+    goto <bb 15>; [INV]
+  else
+    goto <bb 16>; [INV]
+
+  <bb 15> :
+  # DEBUG BEGIN_STMT
+  _37 = 0;
+  // predicted unlikely by early return (on trees) predictor.
+  goto <bb 17>; [INV]
+
+  <bb 16> :
+  # DEBUG BEGIN_STMT
+  _38 = 1;
+
+  <bb 17> :
+  # _20 = PHI <_39(3), _36(6), _35(8), _37(15), _38(16)>
+  return _20;
+
+}
+
+
+mdns_domain_debug_print (struct mdns_domain * domain)
+{
+  u8_t label_len;
+  u8_t i;
+  u8_t * src;
+  unsigned char i.68_1;
+  sizetype _2;
+  unsigned char _3;
+
+  <bb 2> :
+  # DEBUG BEGIN_STMT
+  src_7 = &domain_6(D)->name;
+  # DEBUG src => src_7
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  goto <bb 7>; [INV]
+
+  <bb 3> :
+  # DEBUG BEGIN_STMT
+  label_len_9 = *src_4;
+  # DEBUG label_len => label_len_9
+  # DEBUG BEGIN_STMT
+  src_10 = src_4 + 1;
+  # DEBUG src => src_10
+  # DEBUG BEGIN_STMT
+  i_11 = 0;
+  # DEBUG i => i_11
+  goto <bb 5>; [INV]
+
+  <bb 4> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  i.68_1 = i_5;
+  i_13 = i.68_1 + 1;
+  # DEBUG i => i_13
+
+  <bb 5> :
+  # i_5 = PHI <i_11(3), i_13(4)>
+  # DEBUG i => i_5
+  # DEBUG BEGIN_STMT
+  if (i_5 < label_len_9)
+    goto <bb 4>; [INV]
+  else
+    goto <bb 6>; [INV]
+
+  <bb 6> :
+  # DEBUG BEGIN_STMT
+  _2 = (sizetype) label_len_9;
+  src_12 = src_10 + _2;
+  # DEBUG src => src_12
+
+  <bb 7> :
+  # src_4 = PHI <src_7(2), src_12(6)>
+  # DEBUG src => src_4
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _3 = *src_4;
+  if (_3 != 0)
+    goto <bb 3>; [INV]
+  else
+    goto <bb 8>; [INV]
+
+  <bb 8> :
+  return;
+
+}
+
+
+mdns_readname (struct pbuf * p, u16_t offset, struct mdns_domain * domain)
+{
+  u16_t _7;
+
+  <bb 2> :
+  # DEBUG BEGIN_STMT
+  memset (domain_2(D), 0, 260);
+  # DEBUG BEGIN_STMT
+  _7 = mdns_readname_loop (p_4(D), offset_5(D), domain_2(D), 0);
+  return _7;
+
+}
+
+
+mdns_readname_loop (struct pbuf * p, u16_t offset, struct mdns_domain * domain, unsigned int depth)
+{
+  err_t res;
+  u16_t res;
+  u16_t jumpaddr;
+  u8_t c;
+  short unsigned int offset.0_1;
+  int _2;
+  int _3;
+  short unsigned int _4;
+  int _5;
+  int _6;
+  signed short _7;
+  signed short _8;
+  unsigned char _9;
+  signed short _10;
+  signed short _11;
+  short unsigned int offset.1_12;
+  short unsigned int _13;
+  unsigned int _14;
+  int _15;
+  short unsigned int _16;
+  int _17;
+  int _18;
+  short unsigned int _19;
+  u16_t _22;
+  u16_t _33;
+  u16_t _38;
+  u16_t _39;
+  u16_t _45;
+  u16_t _46;
+  u16_t _47;
+  u16_t _48;
+  u16_t _49;
+
+  <bb 2> :
+  # offset_20 = PHI <offset_26(D)(0), offset_37(17)>
+  # DEBUG offset => offset_20
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  if (depth_28(D) > 5)
+    goto <bb 3>; [INV]
+  else
+    goto <bb 4>; [INV]
+
+  <bb 3> :
+  # DEBUG BEGIN_STMT
+  _49 = 65535;
+  // predicted unlikely by early return (on trees) predictor.
+  goto <bb 20>; [INV]
+
+  <bb 4> :
+  # DEBUG BEGIN_STMT
+  c_31 = pbuf_get_at (p_29(D), offset_20);
+  # DEBUG c => c_31
+  # DEBUG BEGIN_STMT
+  offset.0_1 = offset_20;
+  offset_32 = offset.0_1 + 1;
+  # DEBUG offset => offset_32
+  # DEBUG BEGIN_STMT
+  _2 = (int) c_31;
+  _3 = _2 & 192;
+  if (_3 == 192)
+    goto <bb 5>; [INV]
+  else
+    goto <bb 12>; [INV]
+
+  <bb 5> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _4 = p_29(D)->tot_len;
+  if (offset_32 >= _4)
+    goto <bb 6>; [INV]
+  else
+    goto <bb 7>; [INV]
+
+  <bb 6> :
+  # DEBUG BEGIN_STMT
+  _47 = 65535;
+  // predicted unlikely by early return (on trees) predictor.
+  goto <bb 20>; [INV]
+
+  <bb 7> :
+  # DEBUG BEGIN_STMT
+  _5 = (int) c_31;
+  _6 = _5 << 8;
+  _7 = (signed short) _6;
+  _8 = _7 & 16128;
+  _9 = pbuf_get_at (p_29(D), offset_32);
+  _10 = (signed short) _9;
+  _11 = _8 | _10;
+  jumpaddr_41 = (u16_t) _11;
+  # DEBUG jumpaddr => jumpaddr_41
+  # DEBUG BEGIN_STMT
+  offset.1_12 = offset_32;
+  offset_42 = offset.1_12 + 1;
+  # DEBUG offset => offset_42
+  # DEBUG BEGIN_STMT
+  if (jumpaddr_41 > 11)
+    goto <bb 8>; [INV]
+  else
+    goto <bb 11>; [INV]
+
+  <bb 8> :
+  _13 = p_29(D)->tot_len;
+  if (jumpaddr_41 < _13)
+    goto <bb 9>; [INV]
+  else
+    goto <bb 11>; [INV]
+
+  <bb 9> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _14 = depth_28(D) + 1;
+  res_44 = mdns_readname_loop (p_29(D), jumpaddr_41, domain_34(D), _14);
+  # DEBUG res => res_44
+  # DEBUG BEGIN_STMT
+  if (res_44 == 65535)
+    goto <bb 10>; [INV]
+  else
+    goto <bb 19>; [INV]
+
+  <bb 10> :
+  # DEBUG BEGIN_STMT
+  _45 = res_44;
+  // predicted unlikely by early return (on trees) predictor.
+  goto <bb 20>; [INV]
+
+  <bb 11> :
+  # DEBUG BEGIN_STMT
+  _46 = 65535;
+  // predicted unlikely by early return (on trees) predictor.
+  goto <bb 20>; [INV]
+
+  <bb 12> :
+  # DEBUG BEGIN_STMT
+  if (c_31 <= 63)
+    goto <bb 13>; [INV]
+  else
+    goto <bb 18>; [INV]
+
+  <bb 13> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _15 = (int) c_31;
+  _16 = domain_34(D)->length;
+  _17 = (int) _16;
+  _18 = _15 + _17;
+  if (_18 > 255)
+    goto <bb 14>; [INV]
+  else
+    goto <bb 15>; [INV]
+
+  <bb 14> :
+  # DEBUG BEGIN_STMT
+  _39 = 65535;
+  // predicted unlikely by early return (on trees) predictor.
+  goto <bb 20>; [INV]
+
+  <bb 15> :
+  # DEBUG BEGIN_STMT
+  res_36 = mdns_domain_add_label_pbuf (domain_34(D), p_29(D), offset_32, c_31);
+  # DEBUG res => res_36
+  # DEBUG BEGIN_STMT
+  if (res_36 != 0)
+    goto <bb 16>; [INV]
+  else
+    goto <bb 17>; [INV]
+
+  <bb 16> :
+  # DEBUG BEGIN_STMT
+  _38 = 65535;
+  // predicted unlikely by early return (on trees) predictor.
+  goto <bb 20>; [INV]
+
+  <bb 17> :
+  # DEBUG BEGIN_STMT
+  _19 = (short unsigned int) c_31;
+  offset_37 = offset_32 + _19;
+  # DEBUG offset => offset_37
+  # DEBUG BEGIN_STMT
+  if (c_31 != 0)
+    goto <bb 2>; [INV]
+  else
+    goto <bb 19>; [INV]
+
+  <bb 18> :
+  # DEBUG BEGIN_STMT
+  _33 = 65535;
+  // predicted unlikely by early return (on trees) predictor.
+  goto <bb 20>; [INV]
+
+  <bb 19> :
+  # offset_21 = PHI <offset_42(9), offset_37(17)>
+  # DEBUG offset => offset_21
+  # DEBUG BEGIN_STMT
+  _48 = offset_21;
+
+  <bb 20> :
+  # _22 = PHI <_49(3), _47(6), _45(10), _46(11), _39(14), _38(16), _33(18), _48(19)>
+  return _22;
+
+}
+
+
+mdns_domain_add_label_pbuf (struct mdns_domain * domain, const struct pbuf * p, u16_t offset, u8_t len)
+{
+  err_t err;
+  short unsigned int _1;
+  int _2;
+  u8_t * _3;
+  short unsigned int _4;
+  short unsigned int _5;
+  short unsigned int _6;
+  short unsigned int _7;
+  short unsigned int _8;
+  short unsigned int _9;
+  short unsigned int _10;
+  short unsigned int _11;
+  short unsigned int _12;
+  err_t _13;
+  err_t _26;
+  err_t _27;
+  err_t _28;
+
+  <bb 2> :
+  # DEBUG BEGIN_STMT
+  err_20 = mdns_domain_add_label_base (domain_17(D), len_18(D));
+  # DEBUG err => err_20
+  # DEBUG BEGIN_STMT
+  if (err_20 != 0)
+    goto <bb 3>; [INV]
+  else
+    goto <bb 4>; [INV]
+
+  <bb 3> :
+  # DEBUG BEGIN_STMT
+  _28 = err_20;
+  // predicted unlikely by early return (on trees) predictor.
+  goto <bb 9>; [INV]
+
+  <bb 4> :
+  # DEBUG BEGIN_STMT
+  if (len_18(D) != 0)
+    goto <bb 5>; [INV]
+  else
+    goto <bb 8>; [INV]
+
+  <bb 5> :
+  # DEBUG BEGIN_STMT
+  _1 = domain_17(D)->length;
+  _2 = (int) _1;
+  _3 = &domain_17(D)->name[_2];
+  _4 = (short unsigned int) len_18(D);
+  _5 = pbuf_copy_partial (p_21(D), _3, _4, offset_22(D));
+  _6 = (short unsigned int) len_18(D);
+  if (_5 != _6)
+    goto <bb 6>; [INV]
+  else
+    goto <bb 7>; [INV]
+
+  <bb 6> :
+  # DEBUG BEGIN_STMT
+  _7 = domain_17(D)->length;
+  _8 = _7;
+  _9 = _8 + 65535;
+  domain_17(D)->length = _9;
+  # DEBUG BEGIN_STMT
+  _26 = -16;
+  // predicted unlikely by early return (on trees) predictor.
+  goto <bb 9>; [INV]
+
+  <bb 7> :
+  # DEBUG BEGIN_STMT
+  _10 = domain_17(D)->length;
+  _11 = (short unsigned int) len_18(D);
+  _12 = _10 + _11;
+  domain_17(D)->length = _12;
+
+  <bb 8> :
+  # DEBUG BEGIN_STMT
+  _27 = 0;
+
+  <bb 9> :
+  # _13 = PHI <_28(3), _26(6), _27(8)>
+  return _13;
+
+}
+
+
+mdns_domain_add_label (struct mdns_domain * domain, const char * label, u8_t len)
+{
+  err_t err;
+  short unsigned int _1;
+  int _2;
+  u8_t * _3;
+  unsigned int _4;
+  short unsigned int _5;
+  short unsigned int _6;
+  short unsigned int _7;
+  err_t _8;
+  err_t _19;
+  err_t _20;
+
+  <bb 2> :
+  # DEBUG BEGIN_STMT
+  err_15 = mdns_domain_add_label_base (domain_12(D), len_13(D));
+  # DEBUG err => err_15
+  # DEBUG BEGIN_STMT
+  if (err_15 != 0)
+    goto <bb 3>; [INV]
+  else
+    goto <bb 4>; [INV]
+
+  <bb 3> :
+  # DEBUG BEGIN_STMT
+  _20 = err_15;
+  // predicted unlikely by early return (on trees) predictor.
+  goto <bb 7>; [INV]
+
+  <bb 4> :
+  # DEBUG BEGIN_STMT
+  if (len_13(D) != 0)
+    goto <bb 5>; [INV]
+  else
+    goto <bb 6>; [INV]
+
+  <bb 5> :
+  # DEBUG BEGIN_STMT
+  _1 = domain_12(D)->length;
+  _2 = (int) _1;
+  _3 = &domain_12(D)->name[_2];
+  _4 = (unsigned int) len_13(D);
+  memcpy (_3, label_16(D), _4);
+  # DEBUG BEGIN_STMT
+  _5 = domain_12(D)->length;
+  _6 = (short unsigned int) len_13(D);
+  _7 = _5 + _6;
+  domain_12(D)->length = _7;
+
+  <bb 6> :
+  # DEBUG BEGIN_STMT
+  _19 = 0;
+
+  <bb 7> :
+  # _8 = PHI <_20(3), _19(6)>
+  return _8;
+
+}
+
+
+mdns_domain_add_label_base (struct mdns_domain * domain, u8_t len)
+{
+  int _1;
+  int _2;
+  short unsigned int _3;
+  int _4;
+  int _5;
+  short unsigned int _6;
+  short unsigned int _7;
+  int _8;
+  short unsigned int _9;
+  short unsigned int _10;
+  short unsigned int _11;
+  err_t _12;
+  err_t _17;
+  err_t _18;
+  err_t _21;
+  err_t _22;
+
+  <bb 2> :
+  # DEBUG BEGIN_STMT
+  if (len_14(D) > 63)
+    goto <bb 3>; [INV]
+  else
+    goto <bb 4>; [INV]
+
+  <bb 3> :
+  # DEBUG BEGIN_STMT
+  _22 = -6;
+  // predicted unlikely by early return (on trees) predictor.
+  goto <bb 11>; [INV]
+
+  <bb 4> :
+  # DEBUG BEGIN_STMT
+  if (len_14(D) != 0)
+    goto <bb 5>; [INV]
+  else
+    goto <bb 7>; [INV]
+
+  <bb 5> :
+  _1 = (int) len_14(D);
+  _2 = _1 + 1;
+  _3 = domain_16(D)->length;
+  _4 = (int) _3;
+  _5 = _2 + _4;
+  if (_5 > 255)
+    goto <bb 6>; [INV]
+  else
+    goto <bb 7>; [INV]
+
+  <bb 6> :
+  # DEBUG BEGIN_STMT
+  _17 = -6;
+  // predicted unlikely by early return (on trees) predictor.
+  goto <bb 11>; [INV]
+
+  <bb 7> :
+  # DEBUG BEGIN_STMT
+  if (len_14(D) == 0)
+    goto <bb 8>; [INV]
+  else
+    goto <bb 10>; [INV]
+
+  <bb 8> :
+  _6 = domain_16(D)->length;
+  if (_6 > 255)
+    goto <bb 9>; [INV]
+  else
+    goto <bb 10>; [INV]
+
+  <bb 9> :
+  # DEBUG BEGIN_STMT
+  _18 = -6;
+  // predicted unlikely by early return (on trees) predictor.
+  goto <bb 11>; [INV]
+
+  <bb 10> :
+  # DEBUG BEGIN_STMT
+  _7 = domain_16(D)->length;
+  _8 = (int) _7;
+  domain_16(D)->name[_8] = len_14(D);
+  # DEBUG BEGIN_STMT
+  _9 = domain_16(D)->length;
+  _10 = _9;
+  _11 = _10 + 1;
+  domain_16(D)->length = _11;
+  # DEBUG BEGIN_STMT
+  _21 = 0;
+
+  <bb 11> :
+  # _12 = PHI <_22(3), _17(6), _18(9), _21(10)>
+  return _12;
+
+}
+
+

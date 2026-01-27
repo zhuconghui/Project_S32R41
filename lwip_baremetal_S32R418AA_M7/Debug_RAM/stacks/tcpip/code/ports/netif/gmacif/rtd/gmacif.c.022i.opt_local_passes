@@ -1,0 +1,1203 @@
+GmacIf_TxNotification (uint8 instance, uint8 channel)
+{
+  uint8_t i;
+  int _1;
+  struct pbuf * _2;
+  int _3;
+  struct pbuf * _4;
+  void * _5;
+  <unnamed type> _6;
+  int _7;
+  struct pbuf * _8;
+  int _9;
+  unsigned char i.10_10;
+
+  <bb 2> :
+  # DEBUG BEGIN_STMT
+  i_14 = 0;
+  # DEBUG i => i_14
+  # DEBUG BEGIN_STMT
+  i_15 = 0;
+  # DEBUG i => i_15
+  goto <bb 7>; [INV]
+
+  <bb 3> :
+  # DEBUG BEGIN_STMT
+  _1 = (int) i_11;
+  _2 ={v} tx_pbufs[_1];
+  if (_2 != 0B)
+    goto <bb 4>; [INV]
+  else
+    goto <bb 6>; [INV]
+
+  <bb 4> :
+  # DEBUG BEGIN_STMT
+  _3 = (int) i_11;
+  _4 ={v} tx_pbufs[_3];
+  _5 = _4->payload;
+  _6 = Gmac_Ip_GetTransmitStatus (instance_17(D), channel_18(D), _5, 0B);
+  if (_6 != 2)
+    goto <bb 5>; [INV]
+  else
+    goto <bb 6>; [INV]
+
+  <bb 5> :
+  # DEBUG BEGIN_STMT
+  _7 = (int) i_11;
+  _8 ={v} tx_pbufs[_7];
+  pbuf_free (_8);
+  # DEBUG BEGIN_STMT
+  _9 = (int) i_11;
+  tx_pbufs[_9] ={v} 0B;
+
+  <bb 6> :
+  # DEBUG BEGIN_STMT
+  i.10_10 = i_11;
+  i_22 = i.10_10 + 1;
+  # DEBUG i => i_22
+
+  <bb 7> :
+  # i_11 = PHI <i_15(2), i_22(6)>
+  # DEBUG i => i_11
+  # DEBUG BEGIN_STMT
+  if (i_11 <= 4)
+    goto <bb 3>; [INV]
+  else
+    goto <bb 8>; [INV]
+
+  <bb 8> :
+  return;
+
+}
+
+
+GmacIf_RxNotification (uint8 instance, uint8 channel)
+{
+  uint32_t i;
+  err_t ret;
+  Gmac_Ip_StatusType gmac_status;
+  struct Gmac_Ip_RxInfoType info;
+  struct Gmac_Ip_BufferType bd;
+  long unsigned int _1;
+  long unsigned int _2;
+  long unsigned int _3;
+  unsigned int (*<T8b8>) (uint8_t, struct Gmac_Ip_BufferType *) rx_buff_process_handler.8_4;
+  unsigned int (*<T8b8>) (uint8_t, struct Gmac_Ip_BufferType *) rx_buff_process_handler.9_5;
+  unsigned int _6;
+  struct netif_custom_t * _7;
+  unsigned char _8;
+  struct netif * _9;
+  uint8 * _10;
+  short unsigned int _11;
+
+  <bb 2> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  gmac_status_17 = 2561;
+  # DEBUG gmac_status => gmac_status_17
+  # DEBUG BEGIN_STMT
+  ret_18 = -6;
+  # DEBUG ret => ret_18
+
+  <bb 3> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  gmac_status_23 = Gmac_Ip_ReadFrame (instance_20(D), channel_21(D), &bd, &info);
+  # DEBUG gmac_status => gmac_status_23
+  # DEBUG BEGIN_STMT
+  if (gmac_status_23 == 0)
+    goto <bb 4>; [INV]
+  else
+    goto <bb 15>; [INV]
+
+  <bb 4> :
+  # DEBUG BEGIN_STMT
+  _1 = info.ErrMask;
+  if (_1 != 0)
+    goto <bb 5>; [INV]
+  else
+    goto <bb 7>; [INV]
+
+  <bb 5> :
+  # DEBUG BEGIN_STMT
+  ret_29 = -12;
+  # DEBUG ret => ret_29
+  # DEBUG BEGIN_STMT
+  _2 = info.ErrMask;
+  _3 = _2 | 2097152;
+  if (_3 != 2097152)
+    goto <bb 6>; [INV]
+  else
+    goto <bb 14>; [INV]
+
+  <bb 6> :
+  # DEBUG BEGIN_STMT
+  Gmac_Ip_ProvideRxBuff (instance_20(D), channel_21(D), &bd);
+  goto <bb 14>; [INV]
+
+  <bb 7> :
+  # DEBUG BEGIN_STMT
+  rx_buff_process_handler.8_4 = rx_buff_process_handler;
+  if (rx_buff_process_handler.8_4 == 0B)
+    goto <bb 9>; [INV]
+  else
+    goto <bb 8>; [INV]
+
+  <bb 8> :
+  rx_buff_process_handler.9_5 = rx_buff_process_handler;
+  _6 = rx_buff_process_handler.9_5 (instance_20(D), &bd);
+  if (_6 != 0)
+    goto <bb 9>; [INV]
+  else
+    goto <bb 14>; [INV]
+
+  <bb 9> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  i_25 = 0;
+  # DEBUG i => i_25
+  goto <bb 13>; [INV]
+
+  <bb 10> :
+  # DEBUG BEGIN_STMT
+  _7 = netif_cfg[i_12];
+  _8 = _7->num;
+  if (instance_20(D) == _8)
+    goto <bb 11>; [INV]
+  else
+    goto <bb 12>; [INV]
+
+  <bb 11> :
+  # DEBUG BEGIN_STMT
+  _9 = g_netif[i_12];
+  _10 = bd.Data;
+  _11 = bd.Length;
+  ret_28 = gmacif_input (_9, _10, _11);
+  # DEBUG ret => ret_28
+  # DEBUG BEGIN_STMT
+  goto <bb 14>; [INV]
+
+  <bb 12> :
+  # DEBUG BEGIN_STMT
+  i_26 = i_12 + 1;
+  # DEBUG i => i_26
+
+  <bb 13> :
+  # i_12 = PHI <i_25(9), i_26(12)>
+  # DEBUG i => i_12
+  # DEBUG BEGIN_STMT
+  if (i_12 == 0)
+    goto <bb 10>; [INV]
+  else
+    goto <bb 14>; [INV]
+
+  <bb 14> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  Gmac_Ip_ProvideRxBuff (instance_20(D), channel_21(D), &bd);
+
+  <bb 15> :
+  # DEBUG BEGIN_STMT
+  if (gmac_status_23 == 0)
+    goto <bb 3>; [INV]
+  else
+    goto <bb 16>; [INV]
+
+  <bb 16> :
+  bd ={v} {CLOBBER};
+  info ={v} {CLOBBER};
+  return;
+
+}
+
+
+memcpy_custom (void * dst, const void * src, unsigned int len)
+{
+  unsigned int alignment;
+  const char * ps;
+  char * pd;
+  unsigned int last_dest;
+  unsigned int last_src;
+  unsigned int _1;
+  unsigned int _2;
+  unsigned int _3;
+  sizetype _4;
+  sizetype _5;
+  unsigned int _6;
+
+  <bb 2> :
+  # DEBUG BEGIN_STMT
+  if (len_8(D) <= 32)
+    goto <bb 3>; [INV]
+  else
+    goto <bb 4>; [INV]
+
+  <bb 3> :
+  # DEBUG BEGIN_STMT
+  memcpy (dst_11(D), src_9(D), len_8(D));
+  goto <bb 8>; [INV]
+
+  <bb 4> :
+  # DEBUG BEGIN_STMT
+  last_src_10 = (unsigned int) src_9(D);
+  # DEBUG last_src => last_src_10
+  # DEBUG BEGIN_STMT
+  last_dest_12 = (unsigned int) dst_11(D);
+  # DEBUG last_dest => last_dest_12
+  # DEBUG BEGIN_STMT
+  pd_13 = dst_11(D);
+  # DEBUG pd => pd_13
+  # DEBUG BEGIN_STMT
+  ps_14 = src_9(D);
+  # DEBUG ps => ps_14
+  # DEBUG BEGIN_STMT
+  _1 = last_src_10 ^ last_dest_12;
+  _2 = _1 & 15;
+  if (_2 == 0)
+    goto <bb 5>; [INV]
+  else
+    goto <bb 7>; [INV]
+
+  <bb 5> :
+  # DEBUG BEGIN_STMT
+  alignment_17 = last_dest_12 & 15;
+  # DEBUG alignment => alignment_17
+  # DEBUG BEGIN_STMT
+  alignment_18 = 16 - alignment_17;
+  # DEBUG alignment => alignment_18
+  # DEBUG BEGIN_STMT
+  memcpy (pd_13, ps_14, alignment_18);
+  # DEBUG BEGIN_STMT
+  pd_20 = pd_13 + alignment_18;
+  # DEBUG pd => pd_20
+  # DEBUG BEGIN_STMT
+  ps_21 = ps_14 + alignment_18;
+  # DEBUG ps => ps_21
+  # DEBUG BEGIN_STMT
+  len_22 = len_8(D) - alignment_18;
+  # DEBUG len => len_22
+  # DEBUG BEGIN_STMT
+  memcpy_64 (pd_20, ps_21, len_22);
+  # DEBUG BEGIN_STMT
+  _3 = len_22 & 15;
+  if (_3 != 0)
+    goto <bb 6>; [INV]
+  else
+    goto <bb 8>; [INV]
+
+  <bb 6> :
+  # DEBUG BEGIN_STMT
+  _4 = len_22 & 4294967288;
+  pd_24 = pd_20 + _4;
+  # DEBUG pd => pd_24
+  # DEBUG BEGIN_STMT
+  _5 = len_22 & 4294967288;
+  ps_25 = ps_21 + _5;
+  # DEBUG ps => ps_25
+  # DEBUG BEGIN_STMT
+  _6 = len_22 & 15;
+  memcpy (pd_24, ps_25, _6);
+  goto <bb 8>; [INV]
+
+  <bb 7> :
+  # DEBUG BEGIN_STMT
+  memcpy (dst_11(D), src_9(D), len_8(D));
+
+  <bb 8> :
+  return;
+
+}
+
+
+memcpy_64 (uint64_t * dst, uint64_t * src, unsigned int len)
+{
+  uint64_t * src.5_1;
+  uint64_t * dst.6_2;
+  long long unsigned int _3;
+  unsigned int len.7_4;
+
+  <bb 2> :
+  # DEBUG BEGIN_STMT
+  len_10 = len_9(D) >> 3;
+  # DEBUG len => len_10
+  # DEBUG BEGIN_STMT
+  goto <bb 4>; [INV]
+
+  <bb 3> :
+  # DEBUG BEGIN_STMT
+  src.5_1 = src_6;
+  src_15 = src.5_1 + 8;
+  # DEBUG src => src_15
+  dst.6_2 = dst_5;
+  dst_16 = dst.6_2 + 8;
+  # DEBUG dst => dst_16
+  _3 = *src.5_1;
+  *dst.6_2 = _3;
+
+  <bb 4> :
+  # dst_5 = PHI <dst_11(D)(2), dst_16(3)>
+  # src_6 = PHI <src_12(D)(2), src_15(3)>
+  # len_7 = PHI <len_10(2), len_14(3)>
+  # DEBUG len => len_7
+  # DEBUG src => src_6
+  # DEBUG dst => dst_5
+  # DEBUG BEGIN_STMT
+  len.7_4 = len_7;
+  len_14 = len.7_4 + 4294967295;
+  # DEBUG len => len_14
+  if (len.7_4 != 0)
+    goto <bb 3>; [INV]
+  else
+    goto <bb 5>; [INV]
+
+  <bb 5> :
+  return;
+
+}
+
+
+gmacif_register_rx_buff_process_condition_handler (unsigned int (*rx_buff_process_condition_handler_t) (uint8_t, struct Gmac_Ip_BufferType *) handler)
+{
+  <bb 2> :
+  # DEBUG BEGIN_STMT
+  rx_buff_process_handler = handler_2(D);
+  return;
+
+}
+
+
+igmp_gmac_filter (struct netif * netif, const struct ip4_addr_t * group, netif_mac_filter_action action)
+{
+  uint8_t group_MAC[6];
+  const u32_t * _1;
+  const u8_t * _2;
+  unsigned char _3;
+  unsigned char _4;
+  const u32_t * _5;
+  const u8_t * _6;
+  unsigned char _7;
+  const u32_t * _8;
+  const u8_t * _9;
+  unsigned char _10;
+  unsigned char _11;
+  int _12;
+  struct netif_custom_t * _13;
+  unsigned char _14;
+  unsigned char _15;
+  int _16;
+  struct netif_custom_t * _17;
+  unsigned char _18;
+  err_t _32;
+
+  <bb 2> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  group_MAC[0] = 1;
+  # DEBUG BEGIN_STMT
+  group_MAC[1] = 0;
+  # DEBUG BEGIN_STMT
+  group_MAC[2] = 94;
+  # DEBUG BEGIN_STMT
+  _1 = &group_24(D)->addr;
+  _2 = _1 + 1;
+  _3 = *_2;
+  _4 = _3 & 127;
+  group_MAC[3] = _4;
+  # DEBUG BEGIN_STMT
+  _5 = &group_24(D)->addr;
+  _6 = _5 + 2;
+  _7 = *_6;
+  group_MAC[4] = _7;
+  # DEBUG BEGIN_STMT
+  _8 = &group_24(D)->addr;
+  _9 = _8 + 3;
+  _10 = *_9;
+  group_MAC[5] = _10;
+  # DEBUG BEGIN_STMT
+  if (action_28(D) != 0)
+    goto <bb 3>; [INV]
+  else
+    goto <bb 4>; [INV]
+
+  <bb 3> :
+  # DEBUG BEGIN_STMT
+  _11 = netif_29(D)->num;
+  _12 = (int) _11;
+  _13 = netif_cfg[_12];
+  _14 = _13->num;
+  Gmac_Ip_AddDstAddrToHashFilter (_14, &group_MAC);
+  goto <bb 5>; [INV]
+
+  <bb 4> :
+  # DEBUG BEGIN_STMT
+  _15 = netif_29(D)->num;
+  _16 = (int) _15;
+  _17 = netif_cfg[_16];
+  _18 = _17->num;
+  Gmac_Ip_RemoveDstAddrFromHashFilter (_18, &group_MAC);
+
+  <bb 5> :
+  # DEBUG BEGIN_STMT
+  _32 = 0;
+  group_MAC ={v} {CLOBBER};
+  return _32;
+
+}
+
+
+mld_gmac_filter (struct netif * netif, const struct ip6_addr_t * group, netif_mac_filter_action action)
+{
+  uint8_t group_MAC[6];
+  long unsigned int _1;
+  long unsigned int _2;
+  long unsigned int _3;
+  short unsigned int _4;
+  short unsigned int _5;
+  unsigned char _6;
+  long unsigned int _7;
+  long unsigned int _8;
+  long unsigned int _9;
+  unsigned char _10;
+  long unsigned int _11;
+  long unsigned int _12;
+  short unsigned int _13;
+  short unsigned int _14;
+  unsigned char _15;
+  long unsigned int _16;
+  long unsigned int _17;
+  unsigned char _18;
+  unsigned char _19;
+  int _20;
+  struct netif_custom_t * _21;
+  unsigned char _22;
+  unsigned char _23;
+  int _24;
+  struct netif_custom_t * _25;
+  unsigned char _26;
+  err_t _44;
+
+  <bb 2> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  group_MAC[0] = 51;
+  # DEBUG BEGIN_STMT
+  group_MAC[1] = 51;
+  # DEBUG BEGIN_STMT
+  _1 = group_31(D)->addr[3];
+  _2 = lwip_htonl (_1);
+  _3 = _2 >> 16;
+  _4 = (short unsigned int) _3;
+  _5 = _4 >> 8;
+  _6 = (unsigned char) _5;
+  group_MAC[2] = _6;
+  # DEBUG BEGIN_STMT
+  _7 = group_31(D)->addr[3];
+  _8 = lwip_htonl (_7);
+  _9 = _8 >> 16;
+  _10 = (unsigned char) _9;
+  group_MAC[3] = _10;
+  # DEBUG BEGIN_STMT
+  _11 = group_31(D)->addr[3];
+  _12 = lwip_htonl (_11);
+  _13 = (short unsigned int) _12;
+  _14 = _13 >> 8;
+  _15 = (unsigned char) _14;
+  group_MAC[4] = _15;
+  # DEBUG BEGIN_STMT
+  _16 = group_31(D)->addr[3];
+  _17 = lwip_htonl (_16);
+  _18 = (unsigned char) _17;
+  group_MAC[5] = _18;
+  # DEBUG BEGIN_STMT
+  if (action_40(D) != 0)
+    goto <bb 3>; [INV]
+  else
+    goto <bb 4>; [INV]
+
+  <bb 3> :
+  # DEBUG BEGIN_STMT
+  _19 = netif_41(D)->num;
+  _20 = (int) _19;
+  _21 = netif_cfg[_20];
+  _22 = _21->num;
+  Gmac_Ip_AddDstAddrToHashFilter (_22, &group_MAC);
+  goto <bb 5>; [INV]
+
+  <bb 4> :
+  # DEBUG BEGIN_STMT
+  _23 = netif_41(D)->num;
+  _24 = (int) _23;
+  _25 = netif_cfg[_24];
+  _26 = _25->num;
+  Gmac_Ip_RemoveDstAddrFromHashFilter (_26, &group_MAC);
+
+  <bb 5> :
+  # DEBUG BEGIN_STMT
+  _44 = 0;
+  group_MAC ={v} {CLOBBER};
+  return _44;
+
+}
+
+
+gmac_ethernetif_shutdown (struct netif * netif)
+{
+  unsigned char _1;
+  int _2;
+  struct netif_custom_t * _3;
+  unsigned char _4;
+
+  <bb 2> :
+  # DEBUG BEGIN_STMT
+  _1 = netif_6(D)->num;
+  _2 = (int) _1;
+  _3 = netif_cfg[_2];
+  _4 = _3->num;
+  Gmac_Ip_Deinit (_4);
+  return;
+
+}
+
+
+gmac_ethernetif_init (struct netif * netif)
+{
+  uint8_t i;
+  err_t ret;
+  int _1;
+  unsigned char i.0_2;
+  unsigned char _3;
+  int _4;
+  struct netif_custom_t * _5;
+  char _6;
+  unsigned char _7;
+  int _8;
+  struct netif_custom_t * _9;
+  char _10;
+  unsigned char _11;
+  int _12;
+  struct netif_custom_t * _13;
+  _Bool _14;
+  unsigned char _15;
+  int _16;
+  struct netif_custom_t * _17;
+  const char * _18;
+  unsigned char _19;
+  int _20;
+  struct netif_custom_t * _21;
+  const char * _22;
+  err_t _53;
+
+  <bb 2> :
+  # DEBUG BEGIN_STMT
+  ret_28 = 0;
+  # DEBUG ret => ret_28
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  if (netif_29(D) == 0B)
+    goto <bb 3>; [INV]
+  else
+    goto <bb 4>; [INV]
+
+  <bb 3> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  __asm__ __volatile__("BKPT #0
+	");
+  # DEBUG BEGIN_STMT
+  goto <bb 3>; [INV]
+
+  <bb 4> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  i_31 = 0;
+  # DEBUG i => i_31
+  goto <bb 6>; [INV]
+
+  <bb 5> :
+  # DEBUG BEGIN_STMT
+  _1 = (int) i_23;
+  tx_pbufs[_1] ={v} 0B;
+  # DEBUG BEGIN_STMT
+  i.0_2 = i_23;
+  i_55 = i.0_2 + 1;
+  # DEBUG i => i_55
+
+  <bb 6> :
+  # i_23 = PHI <i_31(4), i_55(5)>
+  # DEBUG i => i_23
+  # DEBUG BEGIN_STMT
+  if (i_23 <= 4)
+    goto <bb 5>; [INV]
+  else
+    goto <bb 7>; [INV]
+
+  <bb 7> :
+  # DEBUG BEGIN_STMT
+  _3 = netif_29(D)->num;
+  _4 = (int) _3;
+  _5 = netif_cfg[_4];
+  _6 = _5->name[0];
+  netif_29(D)->name[0] = _6;
+  # DEBUG BEGIN_STMT
+  _7 = netif_29(D)->num;
+  _8 = (int) _7;
+  _9 = netif_cfg[_8];
+  _10 = _9->name[1];
+  netif_29(D)->name[1] = _10;
+  # DEBUG BEGIN_STMT
+  netif_29(D)->output = etharp_output;
+  # DEBUG BEGIN_STMT
+  _11 = netif_29(D)->num;
+  _12 = (int) _11;
+  _13 = netif_cfg[_12];
+  _14 = _13->has_IPv6;
+  if (_14 != 0)
+    goto <bb 8>; [INV]
+  else
+    goto <bb 9>; [INV]
+
+  <bb 8> :
+  # DEBUG BEGIN_STMT
+  netif_29(D)->output_ip6 = ethip6_output;
+
+  <bb 9> :
+  # DEBUG BEGIN_STMT
+  netif_29(D)->linkoutput = gmacif_low_level_output;
+  # DEBUG BEGIN_STMT
+  _15 = netif_29(D)->num;
+  _16 = (int) _15;
+  _17 = netif_cfg[_16];
+  _18 = _17->hostname;
+  if (_18 != 0B)
+    goto <bb 10>; [INV]
+  else
+    goto <bb 11>; [INV]
+
+  <bb 10> :
+  # DEBUG BEGIN_STMT
+  _19 = netif_29(D)->num;
+  _20 = (int) _19;
+  _21 = netif_cfg[_20];
+  _22 = _21->hostname;
+  netif_29(D)->hostname = _22;
+
+  <bb 11> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  netif_29(D)->link_type = 6;
+  # DEBUG BEGIN_STMT
+  netif_29(D)->link_speed = 100000000;
+  # DEBUG BEGIN_STMT
+  netif_29(D)->ts = 0;
+  # DEBUG BEGIN_STMT
+  netif_29(D)->mib2_counters.ifinoctets = 0;
+  # DEBUG BEGIN_STMT
+  netif_29(D)->mib2_counters.ifinucastpkts = 0;
+  # DEBUG BEGIN_STMT
+  netif_29(D)->mib2_counters.ifinnucastpkts = 0;
+  # DEBUG BEGIN_STMT
+  netif_29(D)->mib2_counters.ifindiscards = 0;
+  # DEBUG BEGIN_STMT
+  netif_29(D)->mib2_counters.ifinerrors = 0;
+  # DEBUG BEGIN_STMT
+  netif_29(D)->mib2_counters.ifinunknownprotos = 0;
+  # DEBUG BEGIN_STMT
+  netif_29(D)->mib2_counters.ifoutoctets = 0;
+  # DEBUG BEGIN_STMT
+  netif_29(D)->mib2_counters.ifoutucastpkts = 0;
+  # DEBUG BEGIN_STMT
+  netif_29(D)->mib2_counters.ifoutnucastpkts = 0;
+  # DEBUG BEGIN_STMT
+  netif_29(D)->mib2_counters.ifoutdiscards = 0;
+  # DEBUG BEGIN_STMT
+  netif_29(D)->mib2_counters.ifouterrors = 0;
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  gmacif_low_level_init (netif_29(D));
+  # DEBUG BEGIN_STMT
+  _53 = ret_28;
+  return _53;
+
+}
+
+
+gmacif_low_level_init (struct netif * netif)
+{
+  struct ip6_addr_t ip6_allnodes_ll;
+  uint8_t i;
+  uint8_t i;
+  struct Gmac_Ip_BufferType bd;
+  unsigned char _1;
+  int _2;
+  struct netif_custom_t * _3;
+  int _4;
+  int _5;
+  unsigned char _6;
+  unsigned char i.3_7;
+  unsigned char _8;
+  unsigned char _9;
+  unsigned char _10;
+  int _11;
+  int _12;
+  int _13;
+  uint8 * _14;
+  unsigned char _15;
+  int _16;
+  struct netif_custom_t * _17;
+  unsigned char _18;
+  int _19;
+  unsigned char i.4_20;
+  unsigned char _21;
+  int _22;
+  struct netif_custom_t * _23;
+  unsigned char _24;
+  unsigned char _25;
+  int _26;
+  struct netif_custom_t * _27;
+  unsigned char _28;
+  unsigned char _29;
+  int _30;
+  struct netif_custom_t * _31;
+  _Bool _32;
+  unsigned char _33;
+  unsigned char _34;
+  err_t (*<T6ee>) (struct netif *, const struct ip6_addr_t *, netif_mac_filter_action) _35;
+
+  <bb 2> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  i_41 = 0;
+  # DEBUG i => i_41
+  # DEBUG BEGIN_STMT
+  netif_43(D)->hwaddr_len = 6;
+  # DEBUG BEGIN_STMT
+  i_45 = 0;
+  # DEBUG i => i_45
+  goto <bb 4>; [INV]
+
+  <bb 3> :
+  # DEBUG BEGIN_STMT
+  _1 = netif_43(D)->num;
+  _2 = (int) _1;
+  _3 = netif_cfg[_2];
+  _4 = (int) i_36;
+  _5 = (int) i_36;
+  _6 = _3->hwaddr[_4];
+  netif_43(D)->hwaddr[_5] = _6;
+  # DEBUG BEGIN_STMT
+  i.3_7 = i_36;
+  i_70 = i.3_7 + 1;
+  # DEBUG i => i_70
+
+  <bb 4> :
+  # i_36 = PHI <i_45(2), i_70(3)>
+  # DEBUG i => i_36
+  # DEBUG BEGIN_STMT
+  if (i_36 <= 5)
+    goto <bb 3>; [INV]
+  else
+    goto <bb 5>; [INV]
+
+  <bb 5> :
+  # DEBUG BEGIN_STMT
+  netif_43(D)->mtu = 1500;
+  # DEBUG BEGIN_STMT
+  netif_43(D)->flags = 26;
+  # DEBUG BEGIN_STMT
+  _8 = netif_43(D)->flags;
+  _9 = _8 | 32;
+  netif_43(D)->flags = _9;
+  # DEBUG BEGIN_STMT
+  netif_43(D)->igmp_mac_filter = igmp_gmac_filter;
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _10 = netif_43(D)->num;
+  _11 = (int) _10;
+  g_netif[_11] = netif_43(D);
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  i_51 = 0;
+  # DEBUG i => i_51
+  goto <bb 7>; [INV]
+
+  <bb 6> :
+  # DEBUG BEGIN_STMT
+  _12 = (int) i_37;
+  _13 = _12 * 1536;
+  _14 = &gmacif_DataBuffer[_13];
+  bd.Data = _14;
+  # DEBUG BEGIN_STMT
+  _15 = netif_43(D)->num;
+  _16 = (int) _15;
+  _17 = netif_cfg[_16];
+  _18 = _17->num;
+  Gmac_Ip_ProvideRxBuff (_18, 0, &bd);
+  # DEBUG BEGIN_STMT
+  _19 = (int) i_37;
+  rx_bufs[_19] = 0B;
+  # DEBUG BEGIN_STMT
+  i.4_20 = i_37;
+  i_68 = i.4_20 + 1;
+  # DEBUG i => i_68
+
+  <bb 7> :
+  # i_37 = PHI <i_51(5), i_68(6)>
+  # DEBUG i => i_37
+  # DEBUG BEGIN_STMT
+  if (i_37 <= 4)
+    goto <bb 6>; [INV]
+  else
+    goto <bb 8>; [INV]
+
+  <bb 8> :
+  # DEBUG BEGIN_STMT
+  _21 = netif_43(D)->num;
+  _22 = (int) _21;
+  _23 = netif_cfg[_22];
+  _24 = _23->num;
+  Gmac_Ip_EnableController (_24);
+  # DEBUG BEGIN_STMT
+  _25 = netif_43(D)->num;
+  _26 = (int) _25;
+  _27 = netif_cfg[_26];
+  _28 = _27->num;
+  Gmac_Ip_SetMulticastHashFilter (_28, 1);
+  # DEBUG BEGIN_STMT
+  _29 = netif_43(D)->num;
+  _30 = (int) _29;
+  _31 = netif_cfg[_30];
+  _32 = _31->has_IPv6;
+  if (_32 != 0)
+    goto <bb 9>; [INV]
+  else
+    goto <bb 10>; [INV]
+
+  <bb 9> :
+  # DEBUG BEGIN_STMT
+  _33 = netif_43(D)->flags;
+  _34 = _33 | 64;
+  netif_43(D)->flags = _34;
+  # DEBUG BEGIN_STMT
+  netif_43(D)->mld_mac_filter = mld_gmac_filter;
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  ip6_allnodes_ll.addr[0] = 767;
+  # DEBUG BEGIN_STMT
+  ip6_allnodes_ll.addr[1] = 0;
+  # DEBUG BEGIN_STMT
+  ip6_allnodes_ll.addr[2] = 0;
+  # DEBUG BEGIN_STMT
+  ip6_allnodes_ll.addr[3] = 16777216;
+  # DEBUG BEGIN_STMT
+  ip6_allnodes_ll.zone = 0;
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _35 = netif_43(D)->mld_mac_filter;
+  _35 (netif_43(D), &ip6_allnodes_ll, 1);
+  ip6_allnodes_ll ={v} {CLOBBER};
+
+  <bb 10> :
+  # DEBUG BEGIN_STMT
+  netif_set_link_up (netif_43(D));
+  bd ={v} {CLOBBER};
+  return;
+
+}
+
+
+gmacif_input (struct netif * netif, uint8_t * data, uint16_t size)
+{
+  struct pbuf * p;
+  err_t ret;
+  err_t (*<T6d2>) (struct pbuf *, struct netif *) _1;
+  signed char _2;
+  err_t _16;
+
+  <bb 2> :
+  # DEBUG BEGIN_STMT
+  ret_5 = -1;
+  # DEBUG ret => ret_5
+  # DEBUG BEGIN_STMT
+  p_9 = pbuf_alloc (0, size_7(D), 65);
+  # DEBUG p => p_9
+  # DEBUG BEGIN_STMT
+  if (p_9 != 0B)
+    goto <bb 3>; [INV]
+  else
+    goto <bb 5>; [INV]
+
+  <bb 3> :
+  # DEBUG BEGIN_STMT
+  ret_10 = 0;
+  # DEBUG ret => ret_10
+  # DEBUG BEGIN_STMT
+  p_9->payload = data_11(D);
+  # DEBUG BEGIN_STMT
+  _1 = netif_13(D)->input;
+  _2 = _1 (p_9, netif_13(D));
+  if (_2 != 0)
+    goto <bb 4>; [INV]
+  else
+    goto <bb 5>; [INV]
+
+  <bb 4> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  pbuf_free (p_9);
+
+  <bb 5> :
+  # ret_3 = PHI <ret_5(2), ret_10(3), ret_10(4)>
+  # DEBUG ret => ret_3
+  # DEBUG BEGIN_STMT
+  _16 = ret_3;
+  return _16;
+
+}
+
+
+gmacif_low_level_output (struct netif * netif, struct pbuf * p)
+{
+  uint8_t i;
+  uint8_t bufs_num;
+  struct Gmac_Ip_BufferType bd_array[24];
+  uint64_t retries;
+  uint8_t pbuf_chain_type;
+  struct Gmac_Ip_TxOptionsType options;
+  err_t pbuf_status;
+  Gmac_Ip_StatusType status;
+  struct pbuf * q;
+  short unsigned int _1;
+  int _2;
+  void * _3;
+  int _4;
+  short unsigned int _5;
+  unsigned char i.1_6;
+  int _7;
+  struct pbuf * _8;
+  unsigned char _9;
+  int _10;
+  struct netif_custom_t * _11;
+  unsigned char _12;
+  long unsigned int _13;
+  int _14;
+  unsigned char i.2_15;
+  int _16;
+  err_t _58;
+
+  <bb 2> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  status_36 = 1;
+  # DEBUG status => status_36
+  # DEBUG BEGIN_STMT
+  pbuf_status_37 = 0;
+  # DEBUG pbuf_status => pbuf_status_37
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  pbuf_chain_type_38 = 1;
+  # DEBUG pbuf_chain_type => pbuf_chain_type_38
+  # DEBUG BEGIN_STMT
+  retries_39 = 0;
+  # DEBUG retries => retries_39
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  if (p_40(D) == 0B)
+    goto <bb 3>; [INV]
+  else
+    goto <bb 4>; [INV]
+
+  <bb 3> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  __asm__ __volatile__("BKPT #0
+	");
+  # DEBUG BEGIN_STMT
+  goto <bb 3>; [INV]
+
+  <bb 4> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  pbuf_ref (p_40(D));
+  # DEBUG BEGIN_STMT
+  options.NoInt = 1;
+  # DEBUG BEGIN_STMT
+  options.CrcPadIns = 0;
+  # DEBUG BEGIN_STMT
+  options.ChecksumIns = 3;
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  options.NoInt = 0;
+  # DEBUG BEGIN_STMT
+  pbuf_status_47 = -2;
+  # DEBUG pbuf_status => pbuf_status_47
+  # DEBUG BEGIN_STMT
+  _1 = pbuf_clen (p_40(D));
+  bufs_num_49 = (uint8_t) _1;
+  # DEBUG bufs_num => bufs_num_49
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  if (bufs_num_49 > 24)
+    goto <bb 5>; [INV]
+  else
+    goto <bb 6>; [INV]
+
+  <bb 5> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  __asm__ __volatile__("BKPT #0
+	");
+  # DEBUG BEGIN_STMT
+  goto <bb 5>; [INV]
+
+  <bb 6> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  q_50 = p_40(D);
+  # DEBUG q => q_50
+  # DEBUG BEGIN_STMT
+  i_51 = 0;
+  # DEBUG i => i_51
+
+  <bb 7> :
+  # q_17 = PHI <q_50(6), q_55(7)>
+  # i_25 = PHI <i_51(6), i_54(7)>
+  # DEBUG i => i_25
+  # DEBUG q => q_17
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _2 = (int) i_25;
+  _3 = q_17->payload;
+  bd_array[_2].Data = _3;
+  # DEBUG BEGIN_STMT
+  _4 = (int) i_25;
+  _5 = q_17->len;
+  bd_array[_4].Length = _5;
+  # DEBUG BEGIN_STMT
+  i.1_6 = i_25;
+  i_54 = i.1_6 + 1;
+  # DEBUG i => i_54
+  # DEBUG BEGIN_STMT
+  q_55 = q_17->next;
+  # DEBUG q => q_55
+  if (q_55 != 0B)
+    goto <bb 7>; [INV]
+  else
+    goto <bb 15>; [INV]
+
+  <bb 8> :
+  # DEBUG BEGIN_STMT
+  i_62 = 0;
+  # DEBUG i => i_62
+  goto <bb 14>; [INV]
+
+  <bb 9> :
+  # DEBUG BEGIN_STMT
+  _7 = (int) i_26;
+  _8 ={v} tx_pbufs[_7];
+  if (_8 == 0B)
+    goto <bb 10>; [INV]
+  else
+    goto <bb 13>; [INV]
+
+  <bb 10> :
+  # DEBUG BEGIN_STMT
+  __asm__ __volatile__(" cpsid i");
+  # DEBUG BEGIN_STMT
+  _9 = netif_64(D)->num;
+  _10 = (int) _9;
+  _11 = netif_cfg[_10];
+  _12 = _11->num;
+  _13 = (long unsigned int) bufs_num_49;
+  status_66 = Gmac_Ip_SendMultiBufferFrame (_12, 0, &bd_array, &options, _13);
+  # DEBUG status => status_66
+  # DEBUG BEGIN_STMT
+  if (status_66 != 2562)
+    goto <bb 11>; [INV]
+  else
+    goto <bb 12>; [INV]
+
+  <bb 11> :
+  # DEBUG BEGIN_STMT
+  _14 = (int) i_26;
+  tx_pbufs[_14] ={v} p_40(D);
+  # DEBUG BEGIN_STMT
+  pbuf_status_68 = 0;
+  # DEBUG pbuf_status => pbuf_status_68
+
+  <bb 12> :
+  # pbuf_status_21 = PHI <pbuf_status_23(10), pbuf_status_68(11)>
+  # DEBUG pbuf_status => pbuf_status_21
+  # DEBUG BEGIN_STMT
+  __asm__ __volatile__(" cpsie i");
+  # DEBUG BEGIN_STMT
+  if (pbuf_status_21 == 0)
+    goto <bb 15>; [INV]
+  else
+    goto <bb 13>; [INV]
+
+  <bb 13> :
+  # status_18 = PHI <status_19(9), status_66(12)>
+  # pbuf_status_22 = PHI <pbuf_status_23(9), pbuf_status_21(12)>
+  # DEBUG pbuf_status => pbuf_status_22
+  # DEBUG status => status_18
+  # DEBUG BEGIN_STMT
+  i.2_15 = i_26;
+  i_70 = i.2_15 + 1;
+  # DEBUG i => i_70
+
+  <bb 14> :
+  # status_19 = PHI <status_20(8), status_18(13)>
+  # pbuf_status_23 = PHI <pbuf_status_24(8), pbuf_status_22(13)>
+  # i_26 = PHI <i_62(8), i_70(13)>
+  # DEBUG i => i_26
+  # DEBUG pbuf_status => pbuf_status_23
+  # DEBUG status => status_19
+  # DEBUG BEGIN_STMT
+  if (i_26 <= 4)
+    goto <bb 9>; [INV]
+  else
+    goto <bb 15>; [INV]
+
+  <bb 15> :
+  # status_20 = PHI <status_36(7), status_66(12), status_19(14)>
+  # pbuf_status_24 = PHI <pbuf_status_47(7), pbuf_status_21(12), pbuf_status_23(14)>
+  # i_27 = PHI <i_54(7), i_26(12), i_26(14)>
+  # DEBUG i => i_27
+  # DEBUG pbuf_status => pbuf_status_24
+  # DEBUG status => status_20
+  # DEBUG BEGIN_STMT
+  if (pbuf_status_24 == -2)
+    goto <bb 8>; [INV]
+  else
+    goto <bb 16>; [INV]
+
+  <bb 16> :
+  # DEBUG BEGIN_STMT
+  if (status_20 != 0)
+    goto <bb 17>; [INV]
+  else
+    goto <bb 18>; [INV]
+
+  <bb 17> :
+  # DEBUG BEGIN_STMT
+  pbuf_free (p_40(D));
+  # DEBUG BEGIN_STMT
+  _16 = (int) i_27;
+  tx_pbufs[_16] ={v} 0B;
+
+  <bb 18> :
+  # DEBUG BEGIN_STMT
+  _58 = pbuf_status_24;
+  options ={v} {CLOBBER};
+  bd_array ={v} {CLOBBER};
+  return _58;
+
+}
+
+

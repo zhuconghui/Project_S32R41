@@ -1,0 +1,2110 @@
+
+IPA constant propagation start:
+Determining dynamic type for call: mld6_send (netif_6, group_7, 131);
+  Starting walk at: mld6_send (netif_6, group_7, 131);
+  instance pointer: netif_6  Outer instance pointer: netif_6 offset: 0 (bits) vtbl reference: 
+  Function call may change dynamic type:mld6_send (netif_6, group_7, 131);
+Determining dynamic type for call: mld6_send (netif_6, group_7, 131);
+  Starting walk at: mld6_send (netif_6, group_7, 131);
+  instance pointer: group_7  Outer instance pointer: group_7 offset: 0 (bits) vtbl reference: 
+  Function call may change dynamic type:mld6_send (netif_6, group_7, 131);
+Determining dynamic type for call: group_35 = mld6_lookfor_group (netif_32(D), groupaddr_14);
+  Starting walk at: group_35 = mld6_lookfor_group (netif_32(D), groupaddr_14);
+  instance pointer: netif_32(D)  Outer instance pointer: netif_32(D) offset: 0 (bits) vtbl reference: 
+Determining dynamic type for call: group_35 = mld6_lookfor_group (netif_32(D), groupaddr_14);
+  Starting walk at: group_35 = mld6_lookfor_group (netif_32(D), groupaddr_14);
+  instance pointer: groupaddr_14  Outer instance pointer: groupaddr_14 offset: 0 (bits) vtbl reference: 
+Determining dynamic type for call: mld6_remove_group.isra.0 (_43, group_35);
+  Starting walk at: mld6_remove_group.isra.0 (_43, group_35);
+  instance pointer: _43  Outer instance pointer: netif_32(D) offset: 1600 (bits) vtbl reference: 
+Determining dynamic type for call: mld6_remove_group.isra.0 (_43, group_35);
+  Starting walk at: mld6_remove_group.isra.0 (_43, group_35);
+  instance pointer: group_35  Outer instance pointer: group_35 offset: 0 (bits) vtbl reference: 
+Determining dynamic type for call: mld6_send (netif_32(D), group_35, 132);
+  Starting walk at: mld6_send (netif_32(D), group_35, 132);
+  instance pointer: netif_32(D)  Outer instance pointer: netif_32(D) offset: 0 (bits) vtbl reference: 
+  Function call may change dynamic type:mld6_remove_group.isra.0 (_43, group_35);
+Determining dynamic type for call: mld6_send (netif_32(D), group_35, 132);
+  Starting walk at: mld6_send (netif_32(D), group_35, 132);
+  instance pointer: group_35  Outer instance pointer: group_35 offset: 0 (bits) vtbl reference: 
+  Function call may change dynamic type:mld6_remove_group.isra.0 (_43, group_35);
+Determining dynamic type for call: _12 (netif_32(D), groupaddr_14, 0);
+  Starting walk at: _12 (netif_32(D), groupaddr_14, 0);
+  instance pointer: netif_32(D)  Outer instance pointer: netif_32(D) offset: 0 (bits) vtbl reference: 
+  Function call may change dynamic type:mld6_remove_group.isra.0 (_43, group_35);
+  Function call may change dynamic type:mld6_send (netif_32(D), group_35, 132);
+Determining dynamic type for call: _12 (netif_32(D), groupaddr_14, 0);
+  Starting walk at: _12 (netif_32(D), groupaddr_14, 0);
+  instance pointer: groupaddr_14  Outer instance pointer: groupaddr_14 offset: 0 (bits) vtbl reference: 
+  Function call may change dynamic type:mld6_remove_group.isra.0 (_43, group_35);
+  Function call may change dynamic type:mld6_send (netif_32(D), group_35, 132);
+Determining dynamic type for call: res_19 = mld6_leavegroup_netif (netif_8, groupaddr_17(D));
+  Starting walk at: res_19 = mld6_leavegroup_netif (netif_8, groupaddr_17(D));
+  instance pointer: netif_8  Outer instance pointer: netif_8 offset: 0 (bits) vtbl reference: 
+  Function call may change dynamic type:_5 = netif_get_ip6_addr_match (netif_8, srcaddr_15(D));
+  Function call may change dynamic type:res_19 = mld6_leavegroup_netif (netif_8, groupaddr_17(D));
+Determining dynamic type for call: res_19 = mld6_leavegroup_netif (netif_8, groupaddr_17(D));
+  Starting walk at: res_19 = mld6_leavegroup_netif (netif_8, groupaddr_17(D));
+  instance pointer: groupaddr_17(D)  Outer instance pointer: groupaddr_17(D) offset: 0 (bits) vtbl reference: 
+  Function call may change dynamic type:_5 = netif_get_ip6_addr_match (netif_8, srcaddr_15(D));
+  Function call may change dynamic type:res_19 = mld6_leavegroup_netif (netif_8, groupaddr_17(D));
+Determining dynamic type for call: group_34 = mld6_lookfor_group (netif_31(D), groupaddr_13);
+  Starting walk at: group_34 = mld6_lookfor_group (netif_31(D), groupaddr_13);
+  instance pointer: netif_31(D)  Outer instance pointer: netif_31(D) offset: 0 (bits) vtbl reference: 
+Determining dynamic type for call: group_34 = mld6_lookfor_group (netif_31(D), groupaddr_13);
+  Starting walk at: group_34 = mld6_lookfor_group (netif_31(D), groupaddr_13);
+  instance pointer: groupaddr_13  Outer instance pointer: groupaddr_13 offset: 0 (bits) vtbl reference: 
+Determining dynamic type for call: group_36 = mld6_new_group.isra.0 (_43, groupaddr_13);
+  Starting walk at: group_36 = mld6_new_group.isra.0 (_43, groupaddr_13);
+  instance pointer: _43  Outer instance pointer: netif_31(D) offset: 1600 (bits) vtbl reference: 
+Determining dynamic type for call: group_36 = mld6_new_group.isra.0 (_43, groupaddr_13);
+  Starting walk at: group_36 = mld6_new_group.isra.0 (_43, groupaddr_13);
+  instance pointer: groupaddr_13  Outer instance pointer: groupaddr_13 offset: 0 (bits) vtbl reference: 
+Determining dynamic type for call: _8 (netif_31(D), groupaddr_13, 1);
+  Starting walk at: _8 (netif_31(D), groupaddr_13, 1);
+  instance pointer: netif_31(D)  Outer instance pointer: netif_31(D) offset: 0 (bits) vtbl reference: 
+  Function call may change dynamic type:group_36 = mld6_new_group.isra.0 (_43, groupaddr_13);
+Determining dynamic type for call: _8 (netif_31(D), groupaddr_13, 1);
+  Starting walk at: _8 (netif_31(D), groupaddr_13, 1);
+  instance pointer: groupaddr_13  Outer instance pointer: groupaddr_13 offset: 0 (bits) vtbl reference: 
+  Function call may change dynamic type:group_36 = mld6_new_group.isra.0 (_43, groupaddr_13);
+Determining dynamic type for call: mld6_send (netif_31(D), group_36, 131);
+  Starting walk at: mld6_send (netif_31(D), group_36, 131);
+  instance pointer: netif_31(D)  Outer instance pointer: netif_31(D) offset: 0 (bits) vtbl reference: 
+  Function call may change dynamic type:group_36 = mld6_new_group.isra.0 (_43, groupaddr_13);
+  Function call may change dynamic type:_8 (netif_31(D), groupaddr_13, 1);
+Determining dynamic type for call: mld6_send (netif_31(D), group_36, 131);
+  Starting walk at: mld6_send (netif_31(D), group_36, 131);
+  instance pointer: group_36  Outer instance pointer: group_36 offset: 0 (bits) vtbl reference: 
+  Function call may change dynamic type:group_36 = mld6_new_group.isra.0 (_43, groupaddr_13);
+  Function call may change dynamic type:_8 (netif_31(D), groupaddr_13, 1);
+Determining dynamic type for call: mld6_delayed_report (group_36, 500);
+  Starting walk at: mld6_delayed_report (group_36, 500);
+  instance pointer: group_36  Outer instance pointer: group_36 offset: 0 (bits) vtbl reference: 
+  Function call may change dynamic type:mld6_send (netif_31(D), group_36, 131);
+  Function call may change dynamic type:group_36 = mld6_new_group.isra.0 (_43, groupaddr_13);
+  Function call may change dynamic type:_8 (netif_31(D), groupaddr_13, 1);
+Determining dynamic type for call: err_21 = mld6_joingroup_netif (netif_8, groupaddr_19(D));
+  Starting walk at: err_21 = mld6_joingroup_netif (netif_8, groupaddr_19(D));
+  instance pointer: netif_8  Outer instance pointer: netif_8 offset: 0 (bits) vtbl reference: 
+  Function call may change dynamic type:_5 = netif_get_ip6_addr_match (netif_8, srcaddr_17(D));
+  Function call may change dynamic type:err_21 = mld6_joingroup_netif (netif_8, groupaddr_19(D));
+Determining dynamic type for call: err_21 = mld6_joingroup_netif (netif_8, groupaddr_19(D));
+  Starting walk at: err_21 = mld6_joingroup_netif (netif_8, groupaddr_19(D));
+  instance pointer: groupaddr_19(D)  Outer instance pointer: groupaddr_19(D) offset: 0 (bits) vtbl reference: 
+  Function call may change dynamic type:_5 = netif_get_ip6_addr_match (netif_8, srcaddr_17(D));
+  Function call may change dynamic type:err_21 = mld6_joingroup_netif (netif_8, groupaddr_19(D));
+Determining dynamic type for call: group_48 = mld6_lookfor_group (inp_47(D), &ip_data.current_iphdr_dest.u_addr.ip6);
+  Starting walk at: group_48 = mld6_lookfor_group (inp_47(D), &ip_data.current_iphdr_dest.u_addr.ip6);
+  instance pointer: inp_47(D)  Outer instance pointer: inp_47(D) offset: 0 (bits) vtbl reference: 
+Determining dynamic type for call: group_48 = mld6_lookfor_group (inp_47(D), &ip_data.current_iphdr_dest.u_addr.ip6);
+  Starting walk at: group_48 = mld6_lookfor_group (inp_47(D), &ip_data.current_iphdr_dest.u_addr.ip6);
+  instance pointer: &ip_data.current_iphdr_dest.u_addr.ip6  Outer instance pointer: ip_data offset: 352 (bits) vtbl reference: 
+Determining dynamic type for call: mld6_delayed_report (group_37, _25);
+  Starting walk at: mld6_delayed_report (group_37, _25);
+  instance pointer: group_37  Outer instance pointer: group_37 offset: 0 (bits) vtbl reference: 
+  Function call may change dynamic type:_25 = lwip_htons (_24);
+  Function call may change dynamic type:mld6_delayed_report (group_37, _25);
+  Function call may change dynamic type:_25 = lwip_htons (_24);
+Determining dynamic type for call: group_58 = mld6_lookfor_group (inp_47(D), &ip_data.current_iphdr_dest.u_addr.ip6);
+  Starting walk at: group_58 = mld6_lookfor_group (inp_47(D), &ip_data.current_iphdr_dest.u_addr.ip6);
+  instance pointer: inp_47(D)  Outer instance pointer: inp_47(D) offset: 0 (bits) vtbl reference: 
+Determining dynamic type for call: group_58 = mld6_lookfor_group (inp_47(D), &ip_data.current_iphdr_dest.u_addr.ip6);
+  Starting walk at: group_58 = mld6_lookfor_group (inp_47(D), &ip_data.current_iphdr_dest.u_addr.ip6);
+  instance pointer: &ip_data.current_iphdr_dest.u_addr.ip6  Outer instance pointer: ip_data offset: 352 (bits) vtbl reference: 
+Determining dynamic type for call: mld6_delayed_report (group_58, _29);
+  Starting walk at: mld6_delayed_report (group_58, _29);
+  instance pointer: group_58  Outer instance pointer: group_58 offset: 0 (bits) vtbl reference: 
+  Function call may change dynamic type:_29 = lwip_htons (_28);
+Determining dynamic type for call: mld6_delayed_report (group_1, 500);
+  Starting walk at: mld6_delayed_report (group_1, 500);
+  instance pointer: group_1  Outer instance pointer: group_1 offset: 0 (bits) vtbl reference: 
+  Function call may change dynamic type:mld6_delayed_report (group_1, 500);
+Determining dynamic type for call: _1 (netif_7(D), _2, 0);
+  Starting walk at: _1 (netif_7(D), _2, 0);
+  instance pointer: netif_7(D)  Outer instance pointer: netif_7(D) offset: 0 (bits) vtbl reference: 
+  Function call may change dynamic type:memp_free (12, group_3);
+  Function call may change dynamic type:_1 (netif_7(D), _2, 0);
+Determining dynamic type for call: _1 (netif_7(D), _2, 0);
+  Starting walk at: _1 (netif_7(D), _2, 0);
+  instance pointer: _2  Outer instance pointer: group_3 offset: 32 (bits) vtbl reference: 
+  Function call may change dynamic type:memp_free (12, group_3);
+  Function call may change dynamic type:_1 (netif_7(D), _2, 0);
+
+IPA structures before propagation:
+
+Jump functions:
+  Jump functions of caller  mld6_new_group.isra.0/30:
+  Jump functions of caller  mld6_remove_group.isra.0/29:
+  Jump functions of caller  ip6_output_if/28:
+  Jump functions of caller  ip6_options_add_hbh_ra/27:
+  Jump functions of caller  ip6_chksum_pseudo/26:
+  Jump functions of caller  pbuf_remove_header/24:
+  Jump functions of caller  pbuf_alloc/23:
+  Jump functions of caller  memp_malloc/22:
+  Jump functions of caller  netif_get_ip6_addr_match/21:
+  Jump functions of caller  lwip_htons/19:
+  Jump functions of caller  pbuf_free/17:
+  Jump functions of caller  rand/15:
+  Jump functions of caller  memp_free/14:
+  Jump functions of caller  mld6_send/13:
+  Jump functions of caller  mld6_delayed_report/12:
+  Jump functions of caller  mld6_tmr/11:
+    callsite  mld6_tmr/11 -> mld6_send/13 : 
+       param 0: UNKNOWN
+         value: 0x0, mask: 0xffffffff
+         Unknown VR
+       param 1: UNKNOWN
+         value: 0x0, mask: 0xffffffff
+         Unknown VR
+       param 2: CONST: 131
+         value: 0x83, mask: 0x0
+         Unknown VR
+  Jump functions of caller  mld6_leavegroup_netif/10:
+    callsite  mld6_leavegroup_netif/10 -> mld6_send/13 : 
+       param 0: PASS THROUGH: 0, op nop_expr
+         value: 0x0, mask: 0xffffffff
+         Unknown VR
+       param 1: UNKNOWN
+         value: 0x0, mask: 0xffffffff
+         Unknown VR
+       param 2: CONST: 132
+         value: 0x84, mask: 0x0
+         Unknown VR
+    callsite  mld6_leavegroup_netif/10 -> mld6_remove_group.isra.0/29 : 
+       param 0: UNKNOWN
+         value: 0x0, mask: 0xffffffff
+         VR  ~[0, 0]
+       param 1: UNKNOWN
+         value: 0x0, mask: 0xffffffff
+         Unknown VR
+    callsite  mld6_leavegroup_netif/10 -> mld6_lookfor_group/3 : 
+       param 0: PASS THROUGH: 0, op nop_expr, agg_preserved
+         value: 0x0, mask: 0xffffffff
+         Unknown VR
+       param 1: UNKNOWN
+         value: 0x0, mask: 0xffffffff
+         VR  ~[0, 0]
+    indirect aggregate callsite, calling param 0, offset 2304, by reference, for stmt _12 (netif_32(D), groupaddr_14, 0);
+       param 0: PASS THROUGH: 0, op nop_expr
+         value: 0x0, mask: 0xffffffff
+         Unknown VR
+       param 1: UNKNOWN
+         value: 0x0, mask: 0xffffffff
+         VR  ~[0, 0]
+       param 2: CONST: 0
+         value: 0x0, mask: 0x0
+         Unknown VR
+  Jump functions of caller  mld6_leavegroup/9:
+    callsite  mld6_leavegroup/9 -> mld6_leavegroup_netif/10 : 
+       param 0: UNKNOWN
+         value: 0x0, mask: 0xffffffff
+         Unknown VR
+       param 1: PASS THROUGH: 1, op nop_expr
+         value: 0x0, mask: 0xffffffff
+         Unknown VR
+  Jump functions of caller  mld6_joingroup_netif/8:
+    callsite  mld6_joingroup_netif/8 -> mld6_delayed_report/12 : 
+       param 0: UNKNOWN
+         value: 0x0, mask: 0xffffffff
+         Unknown VR
+       param 1: CONST: 500
+         value: 0x1f4, mask: 0x0
+         Unknown VR
+    callsite  mld6_joingroup_netif/8 -> mld6_send/13 : 
+       param 0: PASS THROUGH: 0, op nop_expr
+         value: 0x0, mask: 0xffffffff
+         Unknown VR
+       param 1: UNKNOWN
+         value: 0x0, mask: 0xffffffff
+         Unknown VR
+       param 2: CONST: 131
+         value: 0x83, mask: 0x0
+         Unknown VR
+    callsite  mld6_joingroup_netif/8 -> mld6_new_group.isra.0/30 : 
+       param 0: UNKNOWN
+         value: 0x0, mask: 0xffffffff
+         VR  ~[0, 0]
+       param 1: UNKNOWN
+         value: 0x0, mask: 0xffffffff
+         VR  ~[0, 0]
+    callsite  mld6_joingroup_netif/8 -> mld6_lookfor_group/3 : 
+       param 0: PASS THROUGH: 0, op nop_expr, agg_preserved
+         value: 0x0, mask: 0xffffffff
+         Unknown VR
+       param 1: UNKNOWN
+         value: 0x0, mask: 0xffffffff
+         VR  ~[0, 0]
+    indirect aggregate callsite, calling param 0, offset 2304, by reference, for stmt _8 (netif_31(D), groupaddr_13, 1);
+       param 0: PASS THROUGH: 0, op nop_expr
+         value: 0x0, mask: 0xffffffff
+         Unknown VR
+       param 1: UNKNOWN
+         value: 0x0, mask: 0xffffffff
+         VR  ~[0, 0]
+       param 2: CONST: 1
+         value: 0x1, mask: 0x0
+         Unknown VR
+  Jump functions of caller  mld6_joingroup/7:
+    callsite  mld6_joingroup/7 -> mld6_joingroup_netif/8 : 
+       param 0: UNKNOWN
+         value: 0x0, mask: 0xffffffff
+         Unknown VR
+       param 1: PASS THROUGH: 1, op nop_expr
+         value: 0x0, mask: 0xffffffff
+         Unknown VR
+  Jump functions of caller  mld6_input/6:
+    callsite  mld6_input/6 -> mld6_lookfor_group/3 : 
+       param 0: PASS THROUGH: 1, op nop_expr
+         value: 0x0, mask: 0xffffffff
+         Unknown VR
+       param 1: CONST: &ip_data.current_iphdr_dest.u_addr.ip6
+         value: 0x0, mask: 0xfffffffc
+         VR  ~[0, 0]
+    callsite  mld6_input/6 -> mld6_delayed_report/12 : 
+       param 0: UNKNOWN
+         value: 0x0, mask: 0xffffffff
+         Unknown VR
+       param 1: UNKNOWN
+         value: 0x0, mask: 0xffff
+         Unknown VR
+    callsite  mld6_input/6 -> mld6_lookfor_group/3 : 
+       param 0: PASS THROUGH: 1, op nop_expr
+         value: 0x0, mask: 0xffffffff
+         Unknown VR
+       param 1: CONST: &ip_data.current_iphdr_dest.u_addr.ip6
+         value: 0x0, mask: 0xfffffffc
+         VR  ~[0, 0]
+    callsite  mld6_input/6 -> mld6_delayed_report/12 : 
+       param 0: UNKNOWN
+         value: 0x0, mask: 0xffffffff
+         Unknown VR
+       param 1: UNKNOWN
+         value: 0x0, mask: 0xffff
+         Unknown VR
+  Jump functions of caller  mld6_lookfor_group/3:
+  Jump functions of caller  mld6_report_groups/2:
+    callsite  mld6_report_groups/2 -> mld6_delayed_report/12 : 
+       param 0: UNKNOWN
+         value: 0x0, mask: 0xffffffff
+         Unknown VR
+       param 1: CONST: 500
+         value: 0x1f4, mask: 0x0
+         Unknown VR
+  Jump functions of caller  mld6_stop/1:
+    indirect aggregate callsite, calling param 0, offset 2304, by reference, for stmt _1 (netif_7(D), _2, 0);
+       param 0: PASS THROUGH: 0, op nop_expr
+         value: 0x0, mask: 0xffffffff
+         Unknown VR
+       param 1: UNKNOWN
+         value: 0x0, mask: 0xffffffff
+         VR  ~[0, 0]
+       param 2: CONST: 0
+         value: 0x0, mask: 0x0
+         Unknown VR
+
+ Propagating constants:
+
+Not considering mld6_tmr for cloning; -fipa-cp-clone disabled.
+Not considering mld6_leavegroup_netif for cloning; -fipa-cp-clone disabled.
+Not considering mld6_leavegroup for cloning; -fipa-cp-clone disabled.
+Not considering mld6_joingroup_netif for cloning; -fipa-cp-clone disabled.
+Not considering mld6_joingroup for cloning; -fipa-cp-clone disabled.
+Not considering mld6_input for cloning; -fipa-cp-clone disabled.
+Not considering mld6_lookfor_group for cloning; -fipa-cp-clone disabled.
+Not considering mld6_report_groups for cloning; -fipa-cp-clone disabled.
+Not considering mld6_stop for cloning; -fipa-cp-clone disabled.
+
+overall_size: 564, max_new_size: 11001
+
+IPA lattices after all propagation:
+
+Lattices:
+  Node: mld6_new_group.isra.0/30:
+    param [0]: VARIABLE
+         ctxs: VARIABLE
+         Bits unusable (BOTTOM)
+         void * * ~[0B, 0B]
+        AGGS VARIABLE
+    param [1]: VARIABLE
+         ctxs: VARIABLE
+         Bits unusable (BOTTOM)
+         const struct ip6_addr_t * ~[0B, 0B]
+        AGGS VARIABLE
+  Node: mld6_remove_group.isra.0/29:
+    param [0]: VARIABLE
+         ctxs: VARIABLE
+         Bits unusable (BOTTOM)
+         void * * ~[0B, 0B]
+        AGGS VARIABLE
+    param [1]: VARIABLE
+         ctxs: VARIABLE
+         Bits unusable (BOTTOM)
+         VARYING
+        AGGS VARIABLE
+  Node: mld6_send/13:
+    param [0]: VARIABLE
+         ctxs: VARIABLE
+         Bits unusable (BOTTOM)
+         VARYING
+        AGGS VARIABLE
+    param [1]: VARIABLE
+         ctxs: VARIABLE
+         Bits unusable (BOTTOM)
+         VARYING
+        AGGS VARIABLE
+    param [2]: 132 [loc_time: 2, loc_size: 80, prop_time: 0, prop_size: 0]
+               131 [loc_time: 2, loc_size: 81, prop_time: 0, prop_size: 0]
+         ctxs: VARIABLE
+         Bits: value = 0x83, mask = 0x7
+         u8_t [131, 132]
+        AGGS VARIABLE
+  Node: mld6_delayed_report/12:
+    param [0]: VARIABLE
+         ctxs: VARIABLE
+         Bits unusable (BOTTOM)
+         VARYING
+        AGGS VARIABLE
+    param [1]: VARIABLE
+               500 [loc_time: 4, loc_size: 19, prop_time: 0, prop_size: 0]
+         ctxs: VARIABLE
+         Bits unusable (BOTTOM)
+         VARYING
+        AGGS VARIABLE
+  Node: mld6_tmr/11:
+  Node: mld6_leavegroup_netif/10:
+    param [0]: BOTTOM
+         ctxs: BOTTOM
+         Bits unusable (BOTTOM)
+         VARYING
+        AGGS BOTTOM
+    param [1]: BOTTOM
+         ctxs: BOTTOM
+         Bits unusable (BOTTOM)
+         VARYING
+        AGGS BOTTOM
+  Node: mld6_leavegroup/9:
+    param [0]: BOTTOM
+         ctxs: BOTTOM
+         Bits unusable (BOTTOM)
+         VARYING
+        AGGS BOTTOM
+    param [1]: BOTTOM
+         ctxs: BOTTOM
+         Bits unusable (BOTTOM)
+         VARYING
+        AGGS BOTTOM
+  Node: mld6_joingroup_netif/8:
+    param [0]: BOTTOM
+         ctxs: BOTTOM
+         Bits unusable (BOTTOM)
+         VARYING
+        AGGS BOTTOM
+    param [1]: BOTTOM
+         ctxs: BOTTOM
+         Bits unusable (BOTTOM)
+         VARYING
+        AGGS BOTTOM
+  Node: mld6_joingroup/7:
+    param [0]: BOTTOM
+         ctxs: BOTTOM
+         Bits unusable (BOTTOM)
+         VARYING
+        AGGS BOTTOM
+    param [1]: BOTTOM
+         ctxs: BOTTOM
+         Bits unusable (BOTTOM)
+         VARYING
+        AGGS BOTTOM
+  Node: mld6_input/6:
+    param [0]: BOTTOM
+         ctxs: BOTTOM
+         Bits unusable (BOTTOM)
+         VARYING
+        AGGS BOTTOM
+    param [1]: BOTTOM
+         ctxs: BOTTOM
+         Bits unusable (BOTTOM)
+         VARYING
+        AGGS BOTTOM
+  Node: mld6_lookfor_group/3:
+    param [0]: BOTTOM
+         ctxs: BOTTOM
+         Bits unusable (BOTTOM)
+         VARYING
+        AGGS BOTTOM
+    param [1]: BOTTOM
+         ctxs: BOTTOM
+         Bits unusable (BOTTOM)
+         VARYING
+        AGGS BOTTOM
+  Node: mld6_report_groups/2:
+    param [0]: BOTTOM
+         ctxs: BOTTOM
+         Bits unusable (BOTTOM)
+         VARYING
+        AGGS BOTTOM
+  Node: mld6_stop/1:
+    param [0]: BOTTOM
+         ctxs: BOTTOM
+         Bits unusable (BOTTOM)
+         VARYING
+        AGGS BOTTOM
+
+IPA decision stage:
+
+Propagated bits info for function mld6_send/13:
+ param 2: value = 0x83, mask = 0x7
+
+IPA constant propagation end
+
+Reclaiming functions:
+Reclaiming variables:
+Clearing address taken flags:
+Symbol table:
+
+mld6_new_group.isra.0/30 (mld6_new_group.isra.0) @06203700
+  Type: function definition analyzed
+  Visibility: prevailing_def_ironly artificial
+  References: 
+  Referring: 
+  Availability: local
+  Function flags: count:1073741824 (estimated locally) body local optimize_size
+  Called by: mld6_joingroup_netif/8 (187153200 (estimated locally),0.17 per call) 
+  Calls: memp_malloc/22 (1073741824 (estimated locally),1.00 per call) 
+mld6_remove_group.isra.0/29 (mld6_remove_group.isra.0) @05fb18c0
+  Type: function definition analyzed
+  Visibility: prevailing_def_ironly artificial
+  References: 
+  Referring: 
+  Availability: local
+  Function flags: count:164090760 (estimated locally) body local optimize_size
+  Called by: mld6_leavegroup_netif/10 (269231636 (estimated locally),0.25 per call) 
+  Calls: 
+ip6_output_if/28 (ip6_output_if) @061dc9a0
+  Type: function
+  Visibility: external public
+  References: 
+  Referring: 
+  Availability: not_available
+  Function flags: optimize_size
+  Called by: mld6_send/13 (591355579 (estimated locally),0.55 per call) 
+  Calls: 
+ip6_options_add_hbh_ra/27 (ip6_options_add_hbh_ra) @061dc7e0
+  Type: function
+  Visibility: external public
+  References: 
+  Referring: 
+  Availability: not_available
+  Function flags: optimize_size
+  Called by: mld6_send/13 (591355578 (estimated locally),0.55 per call) 
+  Calls: 
+ip6_chksum_pseudo/26 (ip6_chksum_pseudo) @061dc700
+  Type: function
+  Visibility: external public
+  References: 
+  Referring: 
+  Availability: not_available
+  Function flags: optimize_size
+  Called by: mld6_send/13 (591355578 (estimated locally),0.55 per call) 
+  Calls: 
+ip6_addr_any/25 (ip6_addr_any) @061e5ab0
+  Type: variable
+  Body removed by symtab_remove_unreachable_nodes
+  Visibility: external public
+  References: 
+  Referring: mld6_send/13 (addr)
+  Availability: not_available
+  Varpool flags: read-only
+pbuf_remove_header/24 (pbuf_remove_header) @061dc620
+  Type: function
+  Visibility: external public
+  References: 
+  Referring: 
+  Availability: not_available
+  Function flags: optimize_size
+  Called by: mld6_send/13 (741418729 (estimated locally),0.69 per call) 
+  Calls: 
+pbuf_alloc/23 (pbuf_alloc) @061dc540
+  Type: function
+  Visibility: external public
+  References: 
+  Referring: 
+  Availability: not_available
+  Function flags: optimize_size
+  Called by: mld6_send/13 (1073741823 (estimated locally),1.00 per call) 
+  Calls: 
+memp_malloc/22 (memp_malloc) @061dc380
+  Type: function
+  Visibility: external public
+  References: 
+  Referring: 
+  Availability: not_available
+  Function flags: optimize_size
+  Called by: mld6_new_group.isra.0/30 (1073741824 (estimated locally),1.00 per call) 
+  Calls: 
+netif_get_ip6_addr_match/21 (netif_get_ip6_addr_match) @06196d20
+  Type: function
+  Visibility: external public
+  References: 
+  Referring: 
+  Availability: not_available
+  Function flags: optimize_size
+  Called by: mld6_leavegroup/9 (722979775 (estimated locally),6.12 per call) mld6_joingroup/7 (767658303 (estimated locally),7.87 per call) 
+  Calls: 
+netif_list/20 (netif_list) @061d7d38
+  Type: variable
+  Body removed by symtab_remove_unreachable_nodes
+  Visibility: external public
+  References: 
+  Referring: mld6_joingroup/7 (read)mld6_leavegroup/9 (read)mld6_tmr/11 (read)
+  Availability: not_available
+  Varpool flags:
+lwip_htons/19 (lwip_htons) @06196e00
+  Type: function
+  Visibility: external public
+  References: 
+  Referring: 
+  Availability: not_available
+  Function flags: optimize_size
+  Called by: mld6_input/6 (114170570 (estimated locally),0.11 per call) mld6_input/6 (2970044 (estimated locally),0.00 per call) 
+  Calls: 
+ip_data/18 (ip_data) @061d76c0
+  Type: variable
+  Body removed by symtab_remove_unreachable_nodes
+  Visibility: external public
+  References: 
+  Referring: mld6_input/6 (read)mld6_input/6 (read)mld6_input/6 (read)mld6_input/6 (read)mld6_input/6 (addr)mld6_input/6 (addr)
+  Availability: not_available
+  Varpool flags:
+pbuf_free/17 (pbuf_free) @06196c40
+  Type: function
+  Visibility: external public
+  References: 
+  Referring: 
+  Availability: not_available
+  Function flags: optimize_size
+  Called by: mld6_input/6 (856416481 (estimated locally),0.80 per call) mld6_input/6 (217325345 (estimated locally),0.20 per call) mld6_send/13 (591355579 (estimated locally),0.55 per call) mld6_send/13 (150063151 (estimated locally),0.14 per call) 
+  Calls: 
+lwip_stats/16 (lwip_stats) @061d7630
+  Type: variable
+  Body removed by symtab_remove_unreachable_nodes
+  Visibility: external public
+  References: 
+  Referring: mld6_send/13 (read)mld6_send/13 (write)mld6_leavegroup_netif/10 (read)mld6_leavegroup_netif/10 (write)mld6_send/13 (read)mld6_send/13 (write)mld6_joingroup_netif/8 (read)mld6_joingroup_netif/8 (write)mld6_input/6 (read)mld6_input/6 (write)mld6_send/13 (read)mld6_send/13 (write)mld6_input/6 (read)mld6_input/6 (write)mld6_input/6 (read)mld6_input/6 (write)mld6_input/6 (read)mld6_input/6 (write)mld6_input/6 (read)mld6_input/6 (write)mld6_input/6 (read)mld6_input/6 (write)mld6_input/6 (read)mld6_input/6 (write)mld6_input/6 (read)mld6_input/6 (write)mld6_tmr/11 (read)mld6_tmr/11 (write)
+  Availability: not_available
+  Varpool flags:
+rand/15 (rand) @061967e0
+  Type: function
+  Visibility: external public
+  References: 
+  Referring: 
+  Availability: not_available
+  Function flags: optimize_size
+  Called by: mld6_delayed_report/12 (1073741824 (estimated locally),1.00 per call) 
+  Calls: 
+memp_free/14 (memp_free) @06196540
+  Type: function
+  Visibility: external public
+  References: 
+  Referring: 
+  Availability: not_available
+  Function flags: optimize_size
+  Called by: mld6_leavegroup_netif/10 (269231636 (estimated locally),0.25 per call) mld6_stop/1 (955630223 (estimated locally),8.09 per call) 
+  Calls: 
+mld6_send/13 (mld6_send) @061960e0
+  Type: function definition analyzed
+  Visibility: prevailing_def_ironly
+  References: lwip_stats/16 (read)lwip_stats/16 (write)lwip_stats/16 (read)lwip_stats/16 (write)ip6_addr_any/25 (addr)lwip_stats/16 (read)lwip_stats/16 (write)
+  Referring: 
+  Availability: local
+  Function flags: count:1073741823 (estimated locally) body local optimize_size
+  Called by: mld6_tmr/11 (48354889 (estimated locally),3.31 per call) mld6_leavegroup_netif/10 (88846440 (estimated locally),0.08 per call) mld6_joingroup_netif/8 (186311011 (estimated locally),0.17 per call) 
+  Calls: pbuf_free/17 (591355579 (estimated locally),0.55 per call) ip6_output_if/28 (591355579 (estimated locally),0.55 per call) ip6_options_add_hbh_ra/27 (591355578 (estimated locally),0.55 per call) ip6_chksum_pseudo/26 (591355578 (estimated locally),0.55 per call) pbuf_free/17 (150063151 (estimated locally),0.14 per call) pbuf_remove_header/24 (741418729 (estimated locally),0.69 per call) pbuf_alloc/23 (1073741823 (estimated locally),1.00 per call) 
+mld6_delayed_report/12 (mld6_delayed_report) @06182ee0
+  Type: function definition analyzed
+  Visibility: prevailing_def_ironly
+  References: 
+  Referring: 
+  Availability: local
+  Function flags: count:1073741824 (estimated locally) body local optimize_size
+  Called by: mld6_joingroup_netif/8 (186311011 (estimated locally),0.17 per call) mld6_input/6 (114170570 (estimated locally),0.11 per call) mld6_input/6 (2970044 (estimated locally),0.00 per call) mld6_report_groups/2 (955630223 (estimated locally),8.09 per call) 
+  Calls: rand/15 (1073741824 (estimated locally),1.00 per call) 
+mld6_tmr/11 (mld6_tmr) @06182c40
+  Type: function definition analyzed
+  Visibility: externally_visible public
+  References: netif_list/20 (read)lwip_stats/16 (read)lwip_stats/16 (write)
+  Referring: 
+  Availability: available
+  Function flags: count:14598062 (estimated locally) body optimize_size
+  Called by: 
+  Calls: mld6_send/13 (48354889 (estimated locally),3.31 per call) 
+mld6_leavegroup_netif/10 (mld6_leavegroup_netif) @061829a0
+  Type: function definition analyzed
+  Visibility: externally_visible public
+  References: lwip_stats/16 (read)lwip_stats/16 (write)
+  Referring: 
+  Availability: available
+  Function flags: count:1073741823 (estimated locally) body optimize_size
+  Called by: mld6_leavegroup/9 (659208515 (estimated locally),5.58 per call) 
+  Calls: memp_free/14 (269231636 (estimated locally),0.25 per call) mld6_send/13 (88846440 (estimated locally),0.08 per call) mld6_remove_group.isra.0/29 (269231636 (estimated locally),0.25 per call) mld6_lookfor_group/3 (1073741824 (estimated locally),1.00 per call) 
+   Indirect call(188462145 (estimated locally),0.18 per call)  of param:0 loaded from aggregate passed by reference at offset 2304 (vptr maybe changed)
+mld6_leavegroup/9 (mld6_leavegroup) @06182380
+  Type: function definition analyzed
+  Visibility: externally_visible public
+  References: netif_list/20 (read)
+  Referring: 
+  Availability: available
+  Function flags: count:118111600 (estimated locally) body optimize_size
+  Called by: 
+  Calls: mld6_leavegroup_netif/10 (659208515 (estimated locally),5.58 per call) netif_get_ip6_addr_match/21 (722979775 (estimated locally),6.12 per call) 
+mld6_joingroup_netif/8 (mld6_joingroup_netif) @06182000
+  Type: function definition analyzed
+  Visibility: externally_visible public
+  References: lwip_stats/16 (read)lwip_stats/16 (write)
+  Referring: 
+  Availability: available
+  Function flags: count:1073741823 (estimated locally) body optimize_size
+  Called by: mld6_joingroup/7 (699946122 (estimated locally),7.18 per call) 
+  Calls: mld6_delayed_report/12 (186311011 (estimated locally),0.17 per call) mld6_send/13 (186311011 (estimated locally),0.17 per call) mld6_new_group.isra.0/30 (187153200 (estimated locally),0.17 per call) mld6_lookfor_group/3 (1073741824 (estimated locally),1.00 per call) 
+   Indirect call(130417707 (estimated locally),0.12 per call)  of param:0 loaded from aggregate passed by reference at offset 2304 (vptr maybe changed)
+mld6_joingroup/7 (mld6_joingroup) @06168e00
+  Type: function definition analyzed
+  Visibility: externally_visible public
+  References: netif_list/20 (read)
+  Referring: 
+  Availability: available
+  Function flags: count:97552838 (estimated locally) body optimize_size
+  Called by: 
+  Calls: mld6_joingroup_netif/8 (699946122 (estimated locally),7.18 per call) netif_get_ip6_addr_match/21 (767658303 (estimated locally),7.87 per call) 
+mld6_input/6 (mld6_input) @06168a80
+  Type: function definition analyzed
+  Visibility: externally_visible public
+  References: lwip_stats/16 (read)lwip_stats/16 (write)lwip_stats/16 (read)lwip_stats/16 (write)lwip_stats/16 (read)lwip_stats/16 (write)ip_data/18 (read)ip_data/18 (read)ip_data/18 (read)ip_data/18 (read)lwip_stats/16 (read)lwip_stats/16 (write)lwip_stats/16 (read)lwip_stats/16 (write)ip_data/18 (addr)lwip_stats/16 (read)lwip_stats/16 (write)ip_data/18 (addr)lwip_stats/16 (read)lwip_stats/16 (write)lwip_stats/16 (read)lwip_stats/16 (write)
+  Referring: 
+  Availability: available
+  Function flags: count:1073741824 (estimated locally) body optimize_size
+  Called by: 
+  Calls: pbuf_free/17 (856416481 (estimated locally),0.80 per call) mld6_lookfor_group/3 (214104120 (estimated locally),0.20 per call) mld6_delayed_report/12 (114170570 (estimated locally),0.11 per call) lwip_htons/19 (114170570 (estimated locally),0.11 per call) mld6_lookfor_group/3 (213522666 (estimated locally),0.20 per call) mld6_delayed_report/12 (2970044 (estimated locally),0.00 per call) lwip_htons/19 (2970044 (estimated locally),0.00 per call) pbuf_free/17 (217325345 (estimated locally),0.20 per call) 
+mld6_lookfor_group/3 (mld6_lookfor_group) @0615b700
+  Type: function definition analyzed
+  Visibility: externally_visible public
+  References: 
+  Referring: 
+  Availability: available
+  Function flags: count:59801578 (estimated locally) body optimize_size
+  Called by: mld6_leavegroup_netif/10 (1073741824 (estimated locally),1.00 per call) mld6_joingroup_netif/8 (1073741824 (estimated locally),1.00 per call) mld6_input/6 (214104120 (estimated locally),0.20 per call) mld6_input/6 (213522666 (estimated locally),0.20 per call) 
+  Calls: 
+mld6_report_groups/2 (mld6_report_groups) @0615b8c0
+  Type: function definition analyzed
+  Visibility: externally_visible public
+  References: 
+  Referring: 
+  Availability: available
+  Function flags: count:118111600 (estimated locally) body optimize_size
+  Called by: 
+  Calls: mld6_delayed_report/12 (955630223 (estimated locally),8.09 per call) 
+mld6_stop/1 (mld6_stop) @0615b620
+  Type: function definition analyzed
+  Visibility: externally_visible public
+  References: 
+  Referring: 
+  Availability: available
+  Function flags: count:118111600 (estimated locally) body optimize_size
+  Called by: 
+  Calls: memp_free/14 (955630223 (estimated locally),8.09 per call) 
+   Indirect call(668941156 (estimated locally),5.66 per call)  of param:0 loaded from aggregate passed by reference at offset 2304 (vptr maybe changed)
+
+;; Function mld6_delayed_report (mld6_delayed_report, funcdef_no=12, decl_uid=7204, cgraph_uid=13, symbol_order=12)
+
+Modification phase of node mld6_delayed_report/12
+mld6_delayed_report (struct mld_group * group, u16_t maxresp_in)
+{
+  u16_t maxresp;
+  int _1;
+  long unsigned int _2;
+  long unsigned int _3;
+  long unsigned int _4;
+  unsigned char _5;
+  short unsigned int _7;
+
+  <bb 2> [local count: 1073741824]:
+  # DEBUG BEGIN_STMT
+  maxresp_11 = maxresp_in_10(D) / 100;
+  # DEBUG maxresp => maxresp_11
+  # DEBUG BEGIN_STMT
+  if (maxresp_in_10(D) <= 99)
+    goto <bb 3>; [50.00%]
+  else
+    goto <bb 4>; [50.00%]
+
+  <bb 3> [local count: 536870913]:
+  # DEBUG BEGIN_STMT
+  # DEBUG maxresp => 1
+
+  <bb 4> [local count: 1073741824]:
+  # maxresp_8 = PHI <maxresp_11(2), 1(3)>
+  # DEBUG maxresp => maxresp_8
+  # DEBUG BEGIN_STMT
+  _1 = rand ();
+  _2 = (long unsigned int) _1;
+  _3 = (long unsigned int) maxresp_8;
+  _4 = _2 % _3;
+  maxresp_14 = (u16_t) _4;
+  # DEBUG maxresp => maxresp_14
+  # DEBUG BEGIN_STMT
+  maxresp_6 = MAX_EXPR <1, maxresp_14>;
+  # DEBUG maxresp => maxresp_6
+  # DEBUG BEGIN_STMT
+  _5 = group_15(D)->group_state;
+  if (_5 == 2)
+    goto <bb 8>; [34.00%]
+  else
+    goto <bb 5>; [66.00%]
+
+  <bb 5> [local count: 708669605]:
+  if (_5 == 1)
+    goto <bb 6>; [34.00%]
+  else
+    goto <bb 9>; [66.00%]
+
+  <bb 6> [local count: 240947665]:
+  _7 = group_15(D)->timer;
+  if (_7 == 0)
+    goto <bb 8>; [50.00%]
+  else
+    goto <bb 7>; [50.00%]
+
+  <bb 7> [local count: 120473833]:
+  if (maxresp_6 < _7)
+    goto <bb 8>; [50.00%]
+  else
+    goto <bb 9>; [50.00%]
+
+  <bb 8> [local count: 545782970]:
+  # DEBUG BEGIN_STMT
+  group_15(D)->timer = maxresp_6;
+  # DEBUG BEGIN_STMT
+  group_15(D)->group_state = 1;
+
+  <bb 9> [local count: 1073741824]:
+  return;
+
+}
+
+
+
+;; Function mld6_send (mld6_send, funcdef_no=13, decl_uid=7208, cgraph_uid=14, symbol_order=13)
+
+Modification phase of node mld6_send/13
+Adjusting mask for param 2 to 0x7
+Setting value range of param 2 [-125, -124]
+mld6_send (struct netif * netif, struct mld_group * group, u8_t type)
+{
+  const struct ip6_addr_t * src_addr;
+  struct pbuf * p;
+  struct mld_header * mld_hdr;
+  short unsigned int _1;
+  short unsigned int _2;
+  unsigned char _3;
+  short unsigned int _4;
+  short unsigned int _5;
+  unsigned char _6;
+  long unsigned int _7;
+  long unsigned int _8;
+  long unsigned int _9;
+  long unsigned int _10;
+  short unsigned int _11;
+  struct ip6_addr_t * _12;
+  short unsigned int _13;
+  short unsigned int _14;
+  short unsigned int _15;
+  long unsigned int _16;
+  long unsigned int _17;
+  long unsigned int _18;
+  long unsigned int _19;
+  const struct ip6_addr_t * iftmp.11_21;
+  unsigned char _30;
+
+  <bb 2> [local count: 1073741823]:
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  p_26 = pbuf_alloc (54, 32, 640);
+  # DEBUG p => p_26
+  # DEBUG BEGIN_STMT
+  if (p_26 == 0B)
+    goto <bb 3>; [30.95%]
+  else
+    goto <bb 4>; [69.05%]
+
+  <bb 3> [local count: 332323094]:
+  # DEBUG BEGIN_STMT
+  _1 = lwip_stats.mld6.memerr;
+  _2 = _1 + 1;
+  lwip_stats.mld6.memerr = _2;
+  # DEBUG BEGIN_STMT
+  goto <bb 16>; [100.00%]
+
+  <bb 4> [local count: 741418729]:
+  # DEBUG BEGIN_STMT
+  _3 = pbuf_remove_header (p_26, 8);
+  if (_3 != 0)
+    goto <bb 5>; [20.24%]
+  else
+    goto <bb 6>; [79.76%]
+
+  <bb 5> [local count: 150063151]:
+  # DEBUG BEGIN_STMT
+  pbuf_free (p_26);
+  # DEBUG BEGIN_STMT
+  _4 = lwip_stats.mld6.lenerr;
+  _5 = _4 + 1;
+  lwip_stats.mld6.lenerr = _5;
+  # DEBUG BEGIN_STMT
+  goto <bb 16>; [100.00%]
+
+  <bb 6> [local count: 591355578]:
+  # DEBUG BEGIN_STMT
+  _6 = netif_28(D)->ip6_addr_state[0];
+  _30 = _6 & 16;
+  if (_30 == 0)
+    goto <bb 8>; [50.00%]
+  else
+    goto <bb 7>; [50.00%]
+
+  <bb 7> [local count: 295677789]:
+  # DEBUG BEGIN_STMT
+  src_addr_29 = &netif_28(D)->ip6_addr[0].u_addr.ip6;
+  # DEBUG src_addr => src_addr_29
+
+  <bb 8> [local count: 591355578]:
+  # src_addr_20 = PHI <&ip6_addr_any.u_addr.ip6(6), src_addr_29(7)>
+  # DEBUG src_addr => src_addr_20
+  # DEBUG BEGIN_STMT
+  mld_hdr_31 = p_26->payload;
+  # DEBUG mld_hdr => mld_hdr_31
+  # DEBUG BEGIN_STMT
+  mld_hdr_31->type = type_32(D);
+  # DEBUG BEGIN_STMT
+  mld_hdr_31->code = 0;
+  # DEBUG BEGIN_STMT
+  mld_hdr_31->chksum = 0;
+  # DEBUG BEGIN_STMT
+  mld_hdr_31->max_resp_delay = 0;
+  # DEBUG BEGIN_STMT
+  mld_hdr_31->reserved = 0;
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _7 = group_38(D)->group_address.addr[0];
+  mld_hdr_31->multicast_address.addr[0] = _7;
+  # DEBUG BEGIN_STMT
+  _8 = group_38(D)->group_address.addr[1];
+  mld_hdr_31->multicast_address.addr[1] = _8;
+  # DEBUG BEGIN_STMT
+  _9 = group_38(D)->group_address.addr[2];
+  mld_hdr_31->multicast_address.addr[2] = _9;
+  # DEBUG BEGIN_STMT
+  _10 = group_38(D)->group_address.addr[3];
+  mld_hdr_31->multicast_address.addr[3] = _10;
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _11 = p_26->len;
+  _12 = &group_38(D)->group_address;
+  _13 = ip6_chksum_pseudo (p_26, 58, _11, src_addr_20, _12);
+  mld_hdr_31->chksum = _13;
+  # DEBUG BEGIN_STMT
+  ip6_options_add_hbh_ra (p_26, 58, 0);
+  # DEBUG BEGIN_STMT
+  if (type_32(D) == 131)
+    goto <bb 9>; [34.00%]
+  else
+    goto <bb 10>; [66.00%]
+
+  <bb 9> [local count: 201060896]:
+  # DEBUG BEGIN_STMT
+  group_38(D)->last_reporter_flag = 1;
+
+  <bb 10> [local count: 591355578]:
+  # DEBUG BEGIN_STMT
+  _14 = lwip_stats.mld6.xmit;
+  _15 = _14 + 1;
+  lwip_stats.mld6.xmit = _15;
+  # DEBUG BEGIN_STMT
+  _16 = src_addr_20->addr[0];
+  if (_16 != 0)
+    goto <bb 15>; [50.00%]
+  else
+    goto <bb 11>; [50.00%]
+
+  <bb 11> [local count: 295677789]:
+  _17 = src_addr_20->addr[1];
+  if (_17 != 0)
+    goto <bb 15>; [50.00%]
+  else
+    goto <bb 12>; [50.00%]
+
+  <bb 12> [local count: 147838894]:
+  _18 = src_addr_20->addr[2];
+  if (_18 != 0)
+    goto <bb 15>; [50.00%]
+  else
+    goto <bb 13>; [50.00%]
+
+  <bb 13> [local count: 73919447]:
+  _19 = src_addr_20->addr[3];
+  if (_19 != 0)
+    goto <bb 15>; [50.00%]
+  else
+    goto <bb 14>; [50.00%]
+
+  <bb 14> [local count: 36959724]:
+
+  <bb 15> [local count: 591355579]:
+  # iftmp.11_21 = PHI <src_addr_20(11), 0B(14), src_addr_20(10), src_addr_20(13), src_addr_20(12)>
+  ip6_output_if (p_26, iftmp.11_21, _12, 1, 0, 0, netif_28(D));
+  # DEBUG BEGIN_STMT
+  pbuf_free (p_26);
+
+  <bb 16> [local count: 1073741824]:
+  return;
+
+}
+
+
+
+;; Function mld6_stop (mld6_stop, funcdef_no=1, decl_uid=6816, cgraph_uid=2, symbol_order=1)
+
+Modification phase of node mld6_stop/1
+mld6_stop (struct netif * netif)
+{
+  struct mld_group * next;
+  struct mld_group * group;
+  err_t (*<T6c6>) (struct netif *, const struct ip6_addr_t *, netif_mac_filter_action) _1;
+  struct ip6_addr_t * _2;
+
+  <bb 2> [local count: 118111600]:
+  # DEBUG BEGIN_STMT
+  group_8 = netif_7(D)->client_data[1];
+  # DEBUG group => group_8
+  # DEBUG BEGIN_STMT
+  netif_7(D)->client_data[1] = 0B;
+  # DEBUG BEGIN_STMT
+  goto <bb 6>; [100.00%]
+
+  <bb 3> [local count: 955630223]:
+  # DEBUG BEGIN_STMT
+  next_10 = group_3->next;
+  # DEBUG next => next_10
+  # DEBUG BEGIN_STMT
+  _1 = netif_7(D)->mld_mac_filter;
+  if (_1 != 0B)
+    goto <bb 4>; [70.00%]
+  else
+    goto <bb 5>; [30.00%]
+
+  <bb 4> [local count: 668941156]:
+  # DEBUG BEGIN_STMT
+  _2 = &group_3->group_address;
+  _1 (netif_7(D), _2, 0);
+
+  <bb 5> [local count: 955630223]:
+  # DEBUG BEGIN_STMT
+  memp_free (12, group_3);
+  # DEBUG BEGIN_STMT
+  # DEBUG group => next_10
+
+  <bb 6> [local count: 1073741824]:
+  # group_3 = PHI <group_8(2), next_10(5)>
+  # DEBUG group => group_3
+  # DEBUG BEGIN_STMT
+  if (group_3 != 0B)
+    goto <bb 3>; [89.00%]
+  else
+    goto <bb 7>; [11.00%]
+
+  <bb 7> [local count: 118111601]:
+  # DEBUG BEGIN_STMT
+  return 0;
+
+}
+
+
+
+;; Function mld6_report_groups (mld6_report_groups, funcdef_no=2, decl_uid=6818, cgraph_uid=3, symbol_order=2)
+
+Modification phase of node mld6_report_groups/2
+mld6_report_groups (struct netif * netif)
+{
+  struct mld_group * group;
+
+  <bb 2> [local count: 118111600]:
+  # DEBUG BEGIN_STMT
+  group_5 = netif_4(D)->client_data[1];
+  # DEBUG group => group_5
+  # DEBUG BEGIN_STMT
+  goto <bb 4>; [100.00%]
+
+  <bb 3> [local count: 955630223]:
+  # DEBUG BEGIN_STMT
+  mld6_delayed_report (group_1, 500);
+  # DEBUG BEGIN_STMT
+  group_7 = group_1->next;
+  # DEBUG group => group_7
+
+  <bb 4> [local count: 1073741824]:
+  # group_1 = PHI <group_5(2), group_7(3)>
+  # DEBUG group => group_1
+  # DEBUG BEGIN_STMT
+  if (group_1 != 0B)
+    goto <bb 3>; [89.00%]
+  else
+    goto <bb 5>; [11.00%]
+
+  <bb 5> [local count: 118111601]:
+  return;
+
+}
+
+
+
+;; Function mld6_lookfor_group (mld6_lookfor_group, funcdef_no=3, decl_uid=6823, cgraph_uid=4, symbol_order=3)
+
+Modification phase of node mld6_lookfor_group/3
+mld6_lookfor_group (struct netif * ifp, const struct ip6_addr_t * addr)
+{
+  struct mld_group * group;
+  long unsigned int _1;
+  long unsigned int _2;
+  long unsigned int _3;
+  long unsigned int _4;
+  long unsigned int _5;
+  long unsigned int _6;
+  long unsigned int _7;
+  long unsigned int _8;
+  unsigned char _9;
+  unsigned char _10;
+  struct mld_group * _12;
+
+  <bb 2> [local count: 59801578]:
+  # DEBUG BEGIN_STMT
+  group_15 = ifp_14(D)->client_data[1];
+  # DEBUG group => group_15
+  # DEBUG BEGIN_STMT
+  goto <bb 10>; [100.00%]
+
+  <bb 3> [local count: 1014686025]:
+  # DEBUG BEGIN_STMT
+  _1 = group_11->group_address.addr[0];
+  _2 = addr_16(D)->addr[0];
+  if (_1 == _2)
+    goto <bb 4>; [34.00%]
+  else
+    goto <bb 9>; [66.00%]
+
+  <bb 4> [local count: 344993248]:
+  _3 = group_11->group_address.addr[1];
+  _4 = addr_16(D)->addr[1];
+  if (_3 == _4)
+    goto <bb 5>; [34.00%]
+  else
+    goto <bb 9>; [66.00%]
+
+  <bb 5> [local count: 117297704]:
+  _5 = group_11->group_address.addr[2];
+  _6 = addr_16(D)->addr[2];
+  if (_5 == _6)
+    goto <bb 6>; [34.00%]
+  else
+    goto <bb 9>; [66.00%]
+
+  <bb 6> [local count: 39881220]:
+  _7 = group_11->group_address.addr[3];
+  _8 = addr_16(D)->addr[3];
+  if (_7 == _8)
+    goto <bb 7>; [34.00%]
+  else
+    goto <bb 9>; [66.00%]
+
+  <bb 7> [local count: 13559615]:
+  _9 = group_11->group_address.zone;
+  _10 = addr_16(D)->zone;
+  if (_9 == _10)
+    goto <bb 8>; [5.50%]
+  else
+    goto <bb 9>; [94.50%]
+
+  <bb 8> [local count: 745779]:
+  # group_17 = PHI <group_11(7)>
+  # DEBUG BEGIN_STMT
+  goto <bb 11>; [100.00%]
+
+  <bb 9> [local count: 1013940245]:
+  # DEBUG BEGIN_STMT
+  group_18 = group_11->next;
+  # DEBUG group => group_18
+
+  <bb 10> [local count: 1073741824]:
+  # group_11 = PHI <group_15(2), group_18(9)>
+  # DEBUG group => group_11
+  # DEBUG BEGIN_STMT
+  if (group_11 != 0B)
+    goto <bb 3>; [94.50%]
+  else
+    goto <bb 11>; [5.50%]
+
+  <bb 11> [local count: 59801579]:
+  # _12 = PHI <group_17(8), 0B(10)>
+  return _12;
+
+}
+
+
+
+;; Function mld6_input (mld6_input, funcdef_no=6, decl_uid=6826, cgraph_uid=7, symbol_order=6)
+
+Modification phase of node mld6_input/6
+mld6_input (struct pbuf * p, struct netif * inp)
+{
+  struct mld_group * group;
+  struct mld_header * mld_hdr;
+  short unsigned int _1;
+  short unsigned int _2;
+  short unsigned int _3;
+  short unsigned int _4;
+  short unsigned int _5;
+  short unsigned int _6;
+  short unsigned int _7;
+  unsigned char _8;
+  long unsigned int _9;
+  long unsigned int _10;
+  long unsigned int _11;
+  long unsigned int _12;
+  long unsigned int _13;
+  long unsigned int _14;
+  long unsigned int _15;
+  long unsigned int _16;
+  short unsigned int _17;
+  short unsigned int _18;
+  long unsigned int _19;
+  long unsigned int _20;
+  long unsigned int _21;
+  long unsigned int _22;
+  long unsigned int _23;
+  short unsigned int _24;
+  short unsigned int _25;
+  short unsigned int _26;
+  short unsigned int _27;
+  short unsigned int _28;
+  short unsigned int _29;
+  short unsigned int _30;
+  short unsigned int _31;
+  unsigned char _32;
+  short unsigned int _33;
+  short unsigned int _34;
+  short unsigned int _35;
+  short unsigned int _36;
+
+  <bb 2> [local count: 1073741824]:
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _1 = lwip_stats.mld6.recv;
+  _2 = _1 + 1;
+  lwip_stats.mld6.recv = _2;
+  # DEBUG BEGIN_STMT
+  _3 = p_44(D)->len;
+  if (_3 <= 23)
+    goto <bb 3>; [20.24%]
+  else
+    goto <bb 4>; [79.76%]
+
+  <bb 3> [local count: 217325345]:
+  # DEBUG BEGIN_STMT
+  pbuf_free (p_44(D));
+  # DEBUG BEGIN_STMT
+  _4 = lwip_stats.mld6.lenerr;
+  _5 = _4 + 1;
+  lwip_stats.mld6.lenerr = _5;
+  # DEBUG BEGIN_STMT
+  _6 = lwip_stats.mld6.drop;
+  _7 = _6 + 1;
+  lwip_stats.mld6.drop = _7;
+  # DEBUG BEGIN_STMT
+  goto <bb 29>; [100.00%]
+
+  <bb 4> [local count: 856416480]:
+  # DEBUG BEGIN_STMT
+  mld_hdr_45 = p_44(D)->payload;
+  # DEBUG mld_hdr => mld_hdr_45
+  # DEBUG BEGIN_STMT
+  _8 = mld_hdr_45->type;
+  switch (_8) <default: <L32> [25.00%], case 130: <L2> [25.00%], case 131: <L26> [25.00%], case 132: <L35> [25.00%]>
+
+  <bb 5> [local count: 214104120]:
+<L2>:
+  # DEBUG BEGIN_STMT
+  _9 = ip_data.current_iphdr_dest.u_addr.ip6.addr[0];
+  if (_9 == 767)
+    goto <bb 6>; [51.12%]
+  else
+    goto <bb 22>; [48.88%]
+
+  <bb 6> [local count: 109450026]:
+  _10 = ip_data.current_iphdr_dest.u_addr.ip6.addr[1];
+  if (_10 == 0)
+    goto <bb 7>; [50.00%]
+  else
+    goto <bb 22>; [50.00%]
+
+  <bb 7> [local count: 54725013]:
+  _11 = ip_data.current_iphdr_dest.u_addr.ip6.addr[2];
+  if (_11 == 0)
+    goto <bb 8>; [50.00%]
+  else
+    goto <bb 22>; [50.00%]
+
+  <bb 8> [local count: 27362507]:
+  _12 = ip_data.current_iphdr_dest.u_addr.ip6.addr[3];
+  if (_12 == 16777216)
+    goto <bb 9>; [34.00%]
+  else
+    goto <bb 22>; [66.00%]
+
+  <bb 9> [local count: 9303252]:
+  _13 = mld_hdr_45->multicast_address.addr[0];
+  if (_13 == 0)
+    goto <bb 10>; [50.00%]
+  else
+    goto <bb 22>; [50.00%]
+
+  <bb 10> [local count: 4651626]:
+  _14 = mld_hdr_45->multicast_address.addr[1];
+  if (_14 == 0)
+    goto <bb 11>; [50.00%]
+  else
+    goto <bb 22>; [50.00%]
+
+  <bb 11> [local count: 2325813]:
+  _15 = mld_hdr_45->multicast_address.addr[2];
+  if (_15 == 0)
+    goto <bb 12>; [50.00%]
+  else
+    goto <bb 22>; [50.00%]
+
+  <bb 12> [local count: 1162907]:
+  _16 = mld_hdr_45->multicast_address.addr[3];
+  if (_16 == 0)
+    goto <bb 13>; [50.00%]
+  else
+    goto <bb 22>; [50.00%]
+
+  <bb 13> [local count: 581453]:
+  # DEBUG BEGIN_STMT
+  _17 = lwip_stats.mld6.rx_general;
+  _18 = _17 + 1;
+  lwip_stats.mld6.rx_general = _18;
+  # DEBUG BEGIN_STMT
+  group_53 = inp_47(D)->client_data[1];
+  # DEBUG group => group_53
+  # DEBUG BEGIN_STMT
+  goto <bb 21>; [100.00%]
+
+  <bb 14> [local count: 4704486]:
+  # DEBUG BEGIN_STMT
+  _19 = group_37->group_address.addr[0];
+  _20 = _19 & 36863;
+  if (_20 != 511)
+    goto <bb 15>; [66.00%]
+  else
+    goto <bb 20>; [34.00%]
+
+  <bb 15> [local count: 3104960]:
+  if (_19 != 767)
+    goto <bb 19>; [48.88%]
+  else
+    goto <bb 16>; [51.12%]
+
+  <bb 16> [local count: 1587256]:
+  _21 = group_37->group_address.addr[1];
+  if (_21 != 0)
+    goto <bb 19>; [50.00%]
+  else
+    goto <bb 17>; [50.00%]
+
+  <bb 17> [local count: 793628]:
+  _22 = group_37->group_address.addr[2];
+  if (_22 != 0)
+    goto <bb 19>; [50.00%]
+  else
+    goto <bb 18>; [50.00%]
+
+  <bb 18> [local count: 396814]:
+  _23 = group_37->group_address.addr[3];
+  if (_23 != 16777216)
+    goto <bb 19>; [66.00%]
+  else
+    goto <bb 20>; [34.00%]
+
+  <bb 19> [local count: 2970044]:
+  # DEBUG BEGIN_STMT
+  _24 = mld_hdr_45->max_resp_delay;
+  _25 = lwip_htons (_24);
+  mld6_delayed_report (group_37, _25);
+
+  <bb 20> [local count: 4704486]:
+  # DEBUG BEGIN_STMT
+  group_56 = group_37->next;
+  # DEBUG group => group_56
+
+  <bb 21> [local count: 5285939]:
+  # group_37 = PHI <group_53(13), group_56(20)>
+  # DEBUG group => group_37
+  # DEBUG BEGIN_STMT
+  if (group_37 != 0B)
+    goto <bb 14>; [89.00%]
+  else
+    goto <bb 28>; [11.00%]
+
+  <bb 22> [local count: 213522666]:
+  # DEBUG BEGIN_STMT
+  _26 = lwip_stats.mld6.rx_group;
+  _27 = _26 + 1;
+  lwip_stats.mld6.rx_group = _27;
+  # DEBUG BEGIN_STMT
+  group_58 = mld6_lookfor_group (inp_47(D), &ip_data.current_iphdr_dest.u_addr.ip6);
+  # DEBUG group => group_58
+  # DEBUG BEGIN_STMT
+  if (group_58 != 0B)
+    goto <bb 23>; [53.47%]
+  else
+    goto <bb 28>; [46.53%]
+
+  <bb 23> [local count: 114170570]:
+  # DEBUG BEGIN_STMT
+  _28 = mld_hdr_45->max_resp_delay;
+  _29 = lwip_htons (_28);
+  mld6_delayed_report (group_58, _29);
+  goto <bb 28>; [100.00%]
+
+  <bb 24> [local count: 214104120]:
+<L26>:
+  # DEBUG BEGIN_STMT
+  _30 = lwip_stats.mld6.rx_report;
+  _31 = _30 + 1;
+  lwip_stats.mld6.rx_report = _31;
+  # DEBUG BEGIN_STMT
+  group_48 = mld6_lookfor_group (inp_47(D), &ip_data.current_iphdr_dest.u_addr.ip6);
+  # DEBUG group => group_48
+  # DEBUG BEGIN_STMT
+  if (group_48 != 0B)
+    goto <bb 25>; [70.00%]
+  else
+    goto <bb 28>; [30.00%]
+
+  <bb 25> [local count: 149872884]:
+  # DEBUG BEGIN_STMT
+  _32 = group_48->group_state;
+  if (_32 == 1)
+    goto <bb 26>; [34.00%]
+  else
+    goto <bb 28>; [66.00%]
+
+  <bb 26> [local count: 50956781]:
+  # DEBUG BEGIN_STMT
+  group_48->timer = 0;
+  # DEBUG BEGIN_STMT
+  group_48->group_state = 2;
+  # DEBUG BEGIN_STMT
+  group_48->last_reporter_flag = 0;
+  goto <bb 28>; [100.00%]
+
+  <bb 27> [local count: 214104120]:
+<L32>:
+  # DEBUG BEGIN_STMT
+  _33 = lwip_stats.mld6.proterr;
+  _34 = _33 + 1;
+  lwip_stats.mld6.proterr = _34;
+  # DEBUG BEGIN_STMT
+  _35 = lwip_stats.mld6.drop;
+  _36 = _35 + 1;
+  lwip_stats.mld6.drop = _36;
+  # DEBUG BEGIN_STMT
+
+  <bb 28> [local count: 856416481]:
+<L35>:
+  # DEBUG BEGIN_STMT
+  pbuf_free (p_44(D));
+
+  <bb 29> [local count: 1073741824]:
+  return;
+
+}
+
+
+
+;; Function mld6_joingroup_netif (mld6_joingroup_netif, funcdef_no=8, decl_uid=6832, cgraph_uid=9, symbol_order=8)
+
+Modification phase of node mld6_joingroup_netif/8
+mld6_joingroup_netif (struct netif * netif, const struct ip6_addr_t * groupaddr)
+{
+  struct ip6_addr_t ip6addr;
+  struct mld_group * group;
+  unsigned char _1;
+  long unsigned int _2;
+  long unsigned int _3;
+  long unsigned int _4;
+  long unsigned int _5;
+  long unsigned int _6;
+  unsigned char _7;
+  err_t (*<T6c6>) (struct netif *, const struct ip6_addr_t *, netif_mac_filter_action) _8;
+  short unsigned int _9;
+  short unsigned int _10;
+  unsigned char _11;
+  unsigned char _12;
+  const long unsigned int iftmp.0_15;
+  u8_t iftmp.5_16;
+  err_t _17;
+  const long unsigned int iftmp.1_25;
+  const long unsigned int iftmp.2_27;
+  const long unsigned int iftmp.3_29;
+  u8_t iftmp.5_32;
+  void * * _43;
+
+  <bb 2> [local count: 1073741823]:
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _1 = groupaddr_23(D)->zone;
+  if (_1 == 0)
+    goto <bb 3>; [50.00%]
+  else
+    goto <bb 11>; [50.00%]
+
+  <bb 3> [local count: 536870911]:
+  _2 = groupaddr_23(D)->addr[0];
+  _3 = _2 & 49407;
+  if (_3 == 33022)
+    goto <bb 6>; [34.00%]
+  else
+    goto <bb 4>; [66.00%]
+
+  <bb 4> [local count: 354334802]:
+  _4 = _2 & 36863;
+  if (_4 == 511)
+    goto <bb 6>; [34.00%]
+  else
+    goto <bb 5>; [66.00%]
+
+  <bb 5> [local count: 233860969]:
+  if (_4 == 767)
+    goto <bb 6>; [34.00%]
+  else
+    goto <bb 11>; [66.00%]
+
+  <bb 6> [local count: 382522672]:
+  # iftmp.0_15 = PHI <_2(3), _2(4), _2(5)>
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  ip6addr.addr[0] = iftmp.0_15;
+  # DEBUG BEGIN_STMT
+  iftmp.1_25 = groupaddr_23(D)->addr[1];
+  ip6addr.addr[1] = iftmp.1_25;
+  # DEBUG BEGIN_STMT
+  iftmp.2_27 = groupaddr_23(D)->addr[2];
+  ip6addr.addr[2] = iftmp.2_27;
+  # DEBUG BEGIN_STMT
+  iftmp.3_29 = groupaddr_23(D)->addr[3];
+  ip6addr.addr[3] = iftmp.3_29;
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _5 = iftmp.0_15 & 49407;
+  if (_5 == 33022)
+    goto <bb 9>; [34.00%]
+  else
+    goto <bb 7>; [66.00%]
+
+  <bb 7> [local count: 252464964]:
+  _6 = iftmp.0_15 & 36863;
+  if (_6 == 511)
+    goto <bb 9>; [34.00%]
+  else
+    goto <bb 8>; [66.00%]
+
+  <bb 8> [local count: 166626876]:
+  if (_6 == 767)
+    goto <bb 9>; [34.00%]
+  else
+    goto <bb 10>; [66.00%]
+
+  <bb 9> [local count: 272548934]:
+  _7 = netif_31(D)->num;
+  iftmp.5_32 = _7 + 1;
+
+  <bb 10> [local count: 382522673]:
+  # iftmp.5_16 = PHI <iftmp.5_32(9), 0(8)>
+  ip6addr.zone = iftmp.5_16;
+  # DEBUG BEGIN_STMT
+  # DEBUG groupaddr => &ip6addr
+
+  <bb 11> [local count: 1073741824]:
+  # groupaddr_13 = PHI <groupaddr_23(D)(2), groupaddr_23(D)(5), &ip6addr(10)>
+  # DEBUG groupaddr => groupaddr_13
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  group_34 = mld6_lookfor_group (netif_31(D), groupaddr_13);
+  # DEBUG group => group_34
+  # DEBUG BEGIN_STMT
+  if (group_34 == 0B)
+    goto <bb 12>; [17.43%]
+  else
+    goto <bb 16>; [82.57%]
+
+  <bb 12> [local count: 187153200]:
+  # DEBUG BEGIN_STMT
+  _43 = &MEM[(void * *)netif_31(D) + 200B];
+  # DEBUG D#2 => netif_31(D)
+  group_36 = mld6_new_group.isra.0 (_43, groupaddr_13);
+  # DEBUG group => group_36
+  # DEBUG BEGIN_STMT
+  if (group_36 == 0B)
+    goto <bb 17>; [0.45%]
+  else
+    goto <bb 13>; [99.55%]
+
+  <bb 13> [local count: 186311011]:
+  # DEBUG BEGIN_STMT
+  _8 = netif_31(D)->mld_mac_filter;
+  if (_8 != 0B)
+    goto <bb 14>; [70.00%]
+  else
+    goto <bb 15>; [30.00%]
+
+  <bb 14> [local count: 130417707]:
+  # DEBUG BEGIN_STMT
+  _8 (netif_31(D), groupaddr_13, 1);
+
+  <bb 15> [local count: 186311011]:
+  # DEBUG BEGIN_STMT
+  _9 = lwip_stats.mld6.tx_report;
+  _10 = _9 + 1;
+  lwip_stats.mld6.tx_report = _10;
+  # DEBUG BEGIN_STMT
+  mld6_send (netif_31(D), group_36, 131);
+  # DEBUG BEGIN_STMT
+  mld6_delayed_report (group_36, 500);
+
+  <bb 16> [local count: 1072899635]:
+  # group_14 = PHI <group_34(11), group_36(15)>
+  # DEBUG group => group_14
+  # DEBUG BEGIN_STMT
+  _11 = group_14->use;
+  _12 = _11 + 1;
+  group_14->use = _12;
+  # DEBUG BEGIN_STMT
+
+  <bb 17> [local count: 1073741823]:
+  # _17 = PHI <-1(12), 0(16)>
+  ip6addr ={v} {CLOBBER};
+  return _17;
+
+}
+
+
+
+;; Function mld6_joingroup (mld6_joingroup, funcdef_no=7, decl_uid=6829, cgraph_uid=8, symbol_order=7)
+
+Modification phase of node mld6_joingroup/7
+mld6_joingroup (const struct ip6_addr_t * srcaddr, const struct ip6_addr_t * groupaddr)
+{
+  struct netif * netif;
+  err_t err;
+  long unsigned int _1;
+  long unsigned int _2;
+  long unsigned int _3;
+  long unsigned int _4;
+  signed char _5;
+  err_t _9;
+
+  <bb 2> [local count: 97552838]:
+  # DEBUG BEGIN_STMT
+  # DEBUG err => -6
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  netif_15 = netif_list;
+  # DEBUG netif => netif_15
+  goto <bb 12>; [100.00%]
+
+  <bb 3> [local count: 1014686025]:
+  # DEBUG BEGIN_STMT
+  if (srcaddr_17(D) == 0B)
+    goto <bb 9>; [17.43%]
+  else
+    goto <bb 4>; [82.57%]
+
+  <bb 4> [local count: 837826251]:
+  _1 = srcaddr_17(D)->addr[0];
+  if (_1 == 0)
+    goto <bb 5>; [67.00%]
+  else
+    goto <bb 8>; [33.00%]
+
+  <bb 5> [local count: 561343588]:
+  _2 = srcaddr_17(D)->addr[1];
+  if (_2 == 0)
+    goto <bb 6>; [50.00%]
+  else
+    goto <bb 8>; [50.00%]
+
+  <bb 6> [local count: 280671794]:
+  _3 = srcaddr_17(D)->addr[2];
+  if (_3 == 0)
+    goto <bb 7>; [50.00%]
+  else
+    goto <bb 8>; [50.00%]
+
+  <bb 7> [local count: 140335897]:
+  _4 = srcaddr_17(D)->addr[3];
+  if (_4 == 0)
+    goto <bb 9>; [50.00%]
+  else
+    goto <bb 8>; [50.00%]
+
+  <bb 8> [local count: 767658303]:
+  _5 = netif_get_ip6_addr_match (netif_8, srcaddr_17(D));
+  if (_5 >= 0)
+    goto <bb 9>; [59.00%]
+  else
+    goto <bb 11>; [41.00%]
+
+  <bb 9> [local count: 699946122]:
+  # DEBUG BEGIN_STMT
+  err_21 = mld6_joingroup_netif (netif_8, groupaddr_19(D));
+  # DEBUG err => err_21
+  # DEBUG BEGIN_STMT
+  if (err_21 != 0)
+    goto <bb 10>; [5.50%]
+  else
+    goto <bb 11>; [94.50%]
+
+  <bb 10> [local count: 38497037]:
+  # err_16 = PHI <err_21(9)>
+  # DEBUG BEGIN_STMT
+  goto <bb 13>; [100.00%]
+
+  <bb 11> [local count: 976188990]:
+  # err_6 = PHI <err_7(8), err_21(9)>
+  # DEBUG err => err_6
+  # DEBUG BEGIN_STMT
+  netif_22 = netif_8->next;
+  # DEBUG netif => netif_22
+
+  <bb 12> [local count: 1073741824]:
+  # err_7 = PHI <-6(2), err_6(11)>
+  # netif_8 = PHI <netif_15(2), netif_22(11)>
+  # DEBUG netif => netif_8
+  # DEBUG err => err_7
+  # DEBUG BEGIN_STMT
+  if (netif_8 != 0B)
+    goto <bb 3>; [94.50%]
+  else
+    goto <bb 13>; [5.50%]
+
+  <bb 13> [local count: 97552837]:
+  # _9 = PHI <err_16(10), err_7(12)>
+  return _9;
+
+}
+
+
+
+;; Function mld6_leavegroup_netif (mld6_leavegroup_netif, funcdef_no=10, decl_uid=6838, cgraph_uid=11, symbol_order=10)
+
+Modification phase of node mld6_leavegroup_netif/10
+mld6_leavegroup_netif (struct netif * netif, const struct ip6_addr_t * groupaddr)
+{
+  struct ip6_addr_t ip6addr;
+  struct mld_group * group;
+  unsigned char _1;
+  long unsigned int _2;
+  long unsigned int _3;
+  long unsigned int _4;
+  long unsigned int _5;
+  long unsigned int _6;
+  unsigned char _7;
+  unsigned char _8;
+  unsigned char _9;
+  short unsigned int _10;
+  short unsigned int _11;
+  err_t (*<T6c6>) (struct netif *, const struct ip6_addr_t *, netif_mac_filter_action) _12;
+  unsigned char _13;
+  const long unsigned int iftmp.12_15;
+  u8_t iftmp.17_16;
+  err_t _17;
+  const long unsigned int iftmp.13_26;
+  const long unsigned int iftmp.14_28;
+  const long unsigned int iftmp.15_30;
+  u8_t iftmp.17_33;
+  void * * _43;
+
+  <bb 2> [local count: 1073741823]:
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _1 = groupaddr_24(D)->zone;
+  if (_1 == 0)
+    goto <bb 3>; [50.00%]
+  else
+    goto <bb 11>; [50.00%]
+
+  <bb 3> [local count: 536870911]:
+  _2 = groupaddr_24(D)->addr[0];
+  _3 = _2 & 49407;
+  if (_3 == 33022)
+    goto <bb 6>; [34.00%]
+  else
+    goto <bb 4>; [66.00%]
+
+  <bb 4> [local count: 354334802]:
+  _4 = _2 & 36863;
+  if (_4 == 511)
+    goto <bb 6>; [34.00%]
+  else
+    goto <bb 5>; [66.00%]
+
+  <bb 5> [local count: 233860969]:
+  if (_4 == 767)
+    goto <bb 6>; [34.00%]
+  else
+    goto <bb 11>; [66.00%]
+
+  <bb 6> [local count: 382522672]:
+  # iftmp.12_15 = PHI <_2(3), _2(4), _2(5)>
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  ip6addr.addr[0] = iftmp.12_15;
+  # DEBUG BEGIN_STMT
+  iftmp.13_26 = groupaddr_24(D)->addr[1];
+  ip6addr.addr[1] = iftmp.13_26;
+  # DEBUG BEGIN_STMT
+  iftmp.14_28 = groupaddr_24(D)->addr[2];
+  ip6addr.addr[2] = iftmp.14_28;
+  # DEBUG BEGIN_STMT
+  iftmp.15_30 = groupaddr_24(D)->addr[3];
+  ip6addr.addr[3] = iftmp.15_30;
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _5 = iftmp.12_15 & 49407;
+  if (_5 == 33022)
+    goto <bb 9>; [34.00%]
+  else
+    goto <bb 7>; [66.00%]
+
+  <bb 7> [local count: 252464964]:
+  _6 = iftmp.12_15 & 36863;
+  if (_6 == 511)
+    goto <bb 9>; [34.00%]
+  else
+    goto <bb 8>; [66.00%]
+
+  <bb 8> [local count: 166626876]:
+  if (_6 == 767)
+    goto <bb 9>; [34.00%]
+  else
+    goto <bb 10>; [66.00%]
+
+  <bb 9> [local count: 272548934]:
+  _7 = netif_32(D)->num;
+  iftmp.17_33 = _7 + 1;
+
+  <bb 10> [local count: 382522673]:
+  # iftmp.17_16 = PHI <iftmp.17_33(9), 0(8)>
+  ip6addr.zone = iftmp.17_16;
+  # DEBUG BEGIN_STMT
+  # DEBUG groupaddr => &ip6addr
+
+  <bb 11> [local count: 1073741824]:
+  # groupaddr_14 = PHI <groupaddr_24(D)(2), groupaddr_24(D)(5), &ip6addr(10)>
+  # DEBUG groupaddr => groupaddr_14
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  group_35 = mld6_lookfor_group (netif_32(D), groupaddr_14);
+  # DEBUG group => group_35
+  # DEBUG BEGIN_STMT
+  if (group_35 != 0B)
+    goto <bb 12>; [98.33%]
+  else
+    goto <bb 20>; [1.67%]
+
+  <bb 12> [local count: 1055810336]:
+  # DEBUG BEGIN_STMT
+  _8 = group_35->use;
+  if (_8 <= 1)
+    goto <bb 13>; [25.50%]
+  else
+    goto <bb 18>; [74.50%]
+
+  <bb 13> [local count: 269231636]:
+  # DEBUG BEGIN_STMT
+  _43 = &MEM[(void * *)netif_32(D) + 200B];
+  # DEBUG D#1 => netif_32(D)
+  mld6_remove_group.isra.0 (_43, group_35);
+  # DEBUG BEGIN_STMT
+  _9 = group_35->last_reporter_flag;
+  if (_9 != 0)
+    goto <bb 14>; [33.00%]
+  else
+    goto <bb 15>; [67.00%]
+
+  <bb 14> [local count: 88846440]:
+  # DEBUG BEGIN_STMT
+  _10 = lwip_stats.mld6.tx_leave;
+  _11 = _10 + 1;
+  lwip_stats.mld6.tx_leave = _11;
+  # DEBUG BEGIN_STMT
+  mld6_send (netif_32(D), group_35, 132);
+
+  <bb 15> [local count: 269231636]:
+  # DEBUG BEGIN_STMT
+  _12 = netif_32(D)->mld_mac_filter;
+  if (_12 != 0B)
+    goto <bb 16>; [70.00%]
+  else
+    goto <bb 17>; [30.00%]
+
+  <bb 16> [local count: 188462145]:
+  # DEBUG BEGIN_STMT
+  _12 (netif_32(D), groupaddr_14, 0);
+
+  <bb 17> [local count: 269231636]:
+  # DEBUG BEGIN_STMT
+  memp_free (12, group_35);
+  goto <bb 19>; [100.00%]
+
+  <bb 18> [local count: 786578701]:
+  # DEBUG BEGIN_STMT
+  _13 = _8 + 255;
+  group_35->use = _13;
+
+  <bb 19> [local count: 1055810336]:
+  # DEBUG BEGIN_STMT
+
+  <bb 20> [local count: 1073741824]:
+  # _17 = PHI <0(19), -6(11)>
+  ip6addr ={v} {CLOBBER};
+  return _17;
+
+}
+
+
+
+;; Function mld6_leavegroup (mld6_leavegroup, funcdef_no=9, decl_uid=6835, cgraph_uid=10, symbol_order=9)
+
+Modification phase of node mld6_leavegroup/9
+mld6_leavegroup (const struct ip6_addr_t * srcaddr, const struct ip6_addr_t * groupaddr)
+{
+  err_t res;
+  struct netif * netif;
+  err_t err;
+  long unsigned int _1;
+  long unsigned int _2;
+  long unsigned int _3;
+  long unsigned int _4;
+  signed char _5;
+
+  <bb 2> [local count: 118111600]:
+  # DEBUG BEGIN_STMT
+  # DEBUG err => -6
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  netif_13 = netif_list;
+  # DEBUG netif => netif_13
+  goto <bb 12>; [100.00%]
+
+  <bb 3> [local count: 955630223]:
+  # DEBUG BEGIN_STMT
+  if (srcaddr_15(D) == 0B)
+    goto <bb 9>; [17.43%]
+  else
+    goto <bb 4>; [82.57%]
+
+  <bb 4> [local count: 789063875]:
+  _1 = srcaddr_15(D)->addr[0];
+  if (_1 == 0)
+    goto <bb 5>; [67.00%]
+  else
+    goto <bb 8>; [33.00%]
+
+  <bb 5> [local count: 528672796]:
+  _2 = srcaddr_15(D)->addr[1];
+  if (_2 == 0)
+    goto <bb 6>; [50.00%]
+  else
+    goto <bb 8>; [50.00%]
+
+  <bb 6> [local count: 264336398]:
+  _3 = srcaddr_15(D)->addr[2];
+  if (_3 == 0)
+    goto <bb 7>; [50.00%]
+  else
+    goto <bb 8>; [50.00%]
+
+  <bb 7> [local count: 132168199]:
+  _4 = srcaddr_15(D)->addr[3];
+  if (_4 == 0)
+    goto <bb 9>; [50.00%]
+  else
+    goto <bb 8>; [50.00%]
+
+  <bb 8> [local count: 722979775]:
+  _5 = netif_get_ip6_addr_match (netif_8, srcaddr_15(D));
+  if (_5 >= 0)
+    goto <bb 9>; [59.00%]
+  else
+    goto <bb 11>; [41.00%]
+
+  <bb 9> [local count: 659208515]:
+  # DEBUG BEGIN_STMT
+  res_19 = mld6_leavegroup_netif (netif_8, groupaddr_17(D));
+  # DEBUG res => res_19
+  # DEBUG BEGIN_STMT
+  if (err_7 != 0)
+    goto <bb 10>; [50.00%]
+  else
+    goto <bb 11>; [50.00%]
+
+  <bb 10> [local count: 329604257]:
+  # DEBUG BEGIN_STMT
+  # DEBUG err => res_19
+
+  <bb 11> [local count: 955630223]:
+  # err_6 = PHI <err_7(8), err_7(9), res_19(10)>
+  # DEBUG err => err_6
+  # DEBUG BEGIN_STMT
+  netif_20 = netif_8->next;
+  # DEBUG netif => netif_20
+
+  <bb 12> [local count: 1073741824]:
+  # err_7 = PHI <-6(2), err_6(11)>
+  # netif_8 = PHI <netif_13(2), netif_20(11)>
+  # DEBUG netif => netif_8
+  # DEBUG err => err_7
+  # DEBUG BEGIN_STMT
+  if (netif_8 != 0B)
+    goto <bb 3>; [89.00%]
+  else
+    goto <bb 13>; [11.00%]
+
+  <bb 13> [local count: 118111601]:
+  # err_14 = PHI <err_7(12)>
+  # DEBUG BEGIN_STMT
+  return err_14;
+
+}
+
+
+
+;; Function mld6_tmr (mld6_tmr, funcdef_no=11, decl_uid=6820, cgraph_uid=12, symbol_order=11)
+
+Modification phase of node mld6_tmr/11
+mld6_tmr ()
+{
+  struct mld_group * group;
+  struct netif * netif;
+  short unsigned int _1;
+  short unsigned int _2;
+  unsigned char _3;
+  short unsigned int _4;
+  short unsigned int _5;
+
+  <bb 2> [local count: 14598062]:
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  netif_12 = netif_list;
+  # DEBUG netif => netif_12
+  goto <bb 11>; [100.00%]
+
+  <bb 3> [local count: 118111600]:
+  # DEBUG BEGIN_STMT
+  group_13 = netif_6->client_data[1];
+  # DEBUG group => group_13
+  # DEBUG BEGIN_STMT
+  goto <bb 9>; [100.00%]
+
+  <bb 4> [local count: 955630224]:
+  # DEBUG BEGIN_STMT
+  _1 = group_7->timer;
+  if (_1 != 0)
+    goto <bb 5>; [50.00%]
+  else
+    goto <bb 8>; [50.00%]
+
+  <bb 5> [local count: 477815112]:
+  # DEBUG BEGIN_STMT
+  _2 = _1 + 65535;
+  group_7->timer = _2;
+  # DEBUG BEGIN_STMT
+  if (_2 == 0)
+    goto <bb 6>; [50.00%]
+  else
+    goto <bb 8>; [50.00%]
+
+  <bb 6> [local count: 238907556]:
+  # DEBUG BEGIN_STMT
+  _3 = group_7->group_state;
+  if (_3 == 1)
+    goto <bb 7>; [20.24%]
+  else
+    goto <bb 8>; [79.76%]
+
+  <bb 7> [local count: 48354889]:
+  # DEBUG BEGIN_STMT
+  _4 = lwip_stats.mld6.tx_report;
+  _5 = _4 + 1;
+  lwip_stats.mld6.tx_report = _5;
+  # DEBUG BEGIN_STMT
+  mld6_send (netif_6, group_7, 131);
+  # DEBUG BEGIN_STMT
+  group_7->group_state = 2;
+
+  <bb 8> [local count: 955630226]:
+  # DEBUG BEGIN_STMT
+  group_19 = group_7->next;
+  # DEBUG group => group_19
+
+  <bb 9> [local count: 1073741824]:
+  # group_7 = PHI <group_13(3), group_19(8)>
+  # DEBUG group => group_7
+  # DEBUG BEGIN_STMT
+  if (group_7 != 0B)
+    goto <bb 4>; [89.00%]
+  else
+    goto <bb 10>; [11.00%]
+
+  <bb 10> [local count: 118111601]:
+  # DEBUG BEGIN_STMT
+  netif_14 = netif_6->next;
+  # DEBUG netif => netif_14
+
+  <bb 11> [local count: 132709663]:
+  # netif_6 = PHI <netif_12(2), netif_14(10)>
+  # DEBUG netif => netif_6
+  # DEBUG BEGIN_STMT
+  if (netif_6 != 0B)
+    goto <bb 3>; [89.00%]
+  else
+    goto <bb 12>; [11.00%]
+
+  <bb 12> [local count: 14598063]:
+  return;
+
+}
+
+

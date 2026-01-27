@@ -1,0 +1,103 @@
+fs_bytes_left (struct fs_file * file)
+{
+  int D.6408;
+
+  <bb 2> :
+  # DEBUG BEGIN_STMT
+  _1 = file->len;
+  _2 = file->index;
+  D.6408 = _1 - _2;
+  return D.6408;
+
+}
+
+
+fs_close (struct fs_file * file)
+{
+  <bb 2> :
+  # DEBUG BEGIN_STMT
+  return;
+
+}
+
+
+fs_open (struct fs_file * file, const char * name)
+{
+  const struct fsdata_file * f;
+  err_t D.6404;
+
+  <bb 2> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  if (file == 0B)
+    goto <bb 4>; [INV]
+  else
+    goto <bb 3>; [INV]
+
+  <bb 3> :
+  if (name == 0B)
+    goto <bb 4>; [INV]
+  else
+    goto <bb 5>; [INV]
+
+  <bb 4> :
+  # DEBUG BEGIN_STMT
+  D.6404 = -16;
+  // predicted unlikely by early return (on trees) predictor.
+  goto <bb 11>; [INV]
+
+  <bb 5> :
+  # DEBUG BEGIN_STMT
+  f = &file__index_html;
+  goto <bb 9>; [INV]
+
+  <bb 6> :
+  # DEBUG BEGIN_STMT
+  _1 = f->name;
+  _2 = strcmp (name, _1);
+  if (_2 == 0)
+    goto <bb 7>; [INV]
+  else
+    goto <bb 8>; [INV]
+
+  <bb 7> :
+  # DEBUG BEGIN_STMT
+  _3 = f->data;
+  file->data = _3;
+  # DEBUG BEGIN_STMT
+  _4 = f->len;
+  file->len = _4;
+  # DEBUG BEGIN_STMT
+  _5 = f->len;
+  file->index = _5;
+  # DEBUG BEGIN_STMT
+  file->pextension = 0B;
+  # DEBUG BEGIN_STMT
+  _6 = f->flags;
+  file->flags = _6;
+  # DEBUG BEGIN_STMT
+  D.6404 = 0;
+  // predicted unlikely by early return (on trees) predictor.
+  goto <bb 11>; [INV]
+
+  <bb 8> :
+  # DEBUG BEGIN_STMT
+  f = f->next;
+
+  <bb 9> :
+  # DEBUG BEGIN_STMT
+  if (f != 0B)
+    goto <bb 6>; [INV]
+  else
+    goto <bb 10>; [INV]
+
+  <bb 10> :
+  # DEBUG BEGIN_STMT
+  D.6404 = -6;
+
+  <bb 11> :
+  return D.6404;
+
+}
+
+

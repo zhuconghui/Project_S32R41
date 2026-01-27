@@ -1,0 +1,600 @@
+tcpecho_raw_recv.part.0 (void * arg, struct tcp_pcb * tpcb, struct pbuf * p)
+{
+  struct tcpecho_raw_state * es;
+  err_t ret_err;
+  struct pbuf * ptr;
+  err_t err;
+  unsigned char _2;
+  struct pbuf * * _4;
+  struct pbuf * _6;
+  struct pbuf * * _7;
+  short unsigned int _8;
+
+  <bb 10> [local count: 1073741824]:
+  # DEBUG D#5 s=> err
+  # DEBUG err => D#5
+
+  <bb 2> [local count: 1073741824]:
+  # DEBUG BEGIN_STMT
+  _2 = MEM[(struct tcpecho_raw_state *)arg_1(D)].state;
+  if (_2 == 1)
+    goto <bb 3>; [20.24%]
+  else
+    goto <bb 4>; [79.76%]
+
+  <bb 3> [local count: 217325345]:
+  # DEBUG BEGIN_STMT
+  MEM[(struct tcpecho_raw_state *)arg_1(D)].state = 2;
+  # DEBUG BEGIN_STMT
+  MEM[(struct tcpecho_raw_state *)arg_1(D)].p = p_3(D);
+  # DEBUG BEGIN_STMT
+  _4 = &MEM[(struct pbuf * *)arg_1(D) + 8B];
+  # DEBUG D#1 => arg_1(D)
+  tcpecho_raw_send.isra.0 (tpcb_5(D), _4);
+  # DEBUG BEGIN_STMT
+  # DEBUG ret_err => 0
+  goto <bb 9>; [100.00%]
+
+  <bb 4> [local count: 856416480]:
+  # DEBUG BEGIN_STMT
+  if (_2 == 2)
+    goto <bb 5>; [51.12%]
+  else
+    goto <bb 8>; [48.88%]
+
+  <bb 5> [local count: 437800104]:
+  # DEBUG BEGIN_STMT
+  _6 = MEM[(struct tcpecho_raw_state *)arg_1(D)].p;
+  if (_6 == 0B)
+    goto <bb 6>; [30.00%]
+  else
+    goto <bb 7>; [70.00%]
+
+  <bb 6> [local count: 131340031]:
+  # DEBUG BEGIN_STMT
+  MEM[(struct tcpecho_raw_state *)arg_1(D)].p = p_3(D);
+  # DEBUG BEGIN_STMT
+  _7 = &MEM[(struct pbuf * *)arg_1(D) + 8B];
+  # DEBUG D#1 => arg_1(D)
+  tcpecho_raw_send.isra.0 (tpcb_5(D), _7);
+  goto <bb 9>; [100.00%]
+
+  <bb 7> [local count: 306460073]:
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG ptr => _6
+  # DEBUG BEGIN_STMT
+  pbuf_cat (_6, p_3(D));
+  goto <bb 9>; [100.00%]
+
+  <bb 8> [local count: 418616375]:
+  # DEBUG BEGIN_STMT
+  _8 = p_3(D)->tot_len;
+  tcp_recved (tpcb_5(D), _8);
+  # DEBUG BEGIN_STMT
+  pbuf_free (p_3(D));
+  # DEBUG BEGIN_STMT
+  # DEBUG ret_err => 0
+
+  <bb 9> [local count: 1073741824]:
+  # ret_err_9 = PHI <0(3), 0(6), 0(7), 0(8)>
+  # DEBUG ret_err => ret_err_9
+  # DEBUG BEGIN_STMT
+  return ret_err_9;
+
+}
+
+
+tcpecho_raw_poll.part.0 (void * arg, struct tcp_pcb * tpcb)
+{
+  err_t ret_err;
+  struct tcpecho_raw_state * es;
+  unsigned char _2;
+
+  <bb 5> [local count: 1073741824]:
+
+  <bb 2> [local count: 1073741824]:
+  # DEBUG BEGIN_STMT
+  _2 = MEM[(struct tcpecho_raw_state *)arg_1(D)].state;
+  if (_2 == 3)
+    goto <bb 3>; [20.24%]
+  else
+    goto <bb 4>; [79.76%]
+
+  <bb 3> [local count: 217325345]:
+  # DEBUG BEGIN_STMT
+  tcpecho_raw_close (tpcb_3(D), arg_1(D));
+
+  <bb 4> [local count: 1073741824]:
+  # ret_err_4 = PHI <0(2), 0(3)>
+  # DEBUG ret_err => ret_err_4
+  # DEBUG BEGIN_STMT
+  return ret_err_4;
+
+}
+
+
+tcpecho_raw_sent.part.0 (void * arg, struct tcp_pcb * tpcb)
+{
+  struct tcpecho_raw_state * es;
+  u16_t len;
+  unsigned char _2;
+
+  <bb 5> [local count: 1073741824]:
+  # DEBUG D#3 s=> len
+  # DEBUG len => D#3
+
+  <bb 2> [local count: 1073741824]:
+  # DEBUG BEGIN_STMT
+  _2 = MEM[(struct tcpecho_raw_state *)arg_1(D)].state;
+  if (_2 == 3)
+    goto <bb 3>; [20.24%]
+  else
+    goto <bb 4>; [79.76%]
+
+  <bb 3> [local count: 217325345]:
+  # DEBUG BEGIN_STMT
+  tcpecho_raw_close (tpcb_3(D), arg_1(D));
+
+  <bb 4> [local count: 1073741824]:
+  return;
+
+}
+
+
+tcpecho_raw_send.isra.0 (struct tcp_pcb * tpcb, struct pbuf * * ISRA.6)
+{
+  err_t wr_err;
+  u16_t plen;
+  struct pbuf * _1;
+  void * _2;
+  short unsigned int _4;
+  struct pbuf * _7;
+  short unsigned int _10;
+
+  <bb 14> [local count: 113634470]:
+  # DEBUG es s=> es
+
+  <bb 2> [local count: 113634470]:
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG wr_err => 0
+  # DEBUG BEGIN_STMT
+  goto <bb 10>; [100.00%]
+
+  <bb 3> [local count: 960107354]:
+  # DEBUG BEGIN_STMT
+  # DEBUG ptr => _1
+  # DEBUG BEGIN_STMT
+  _2 = _1->payload;
+  wr_err_5 = tcp_write (tpcb_3(D), _2, _4, 1);
+  # DEBUG wr_err => wr_err_5
+  # DEBUG BEGIN_STMT
+  if (wr_err_5 == 0)
+    goto <bb 4>; [50.00%]
+  else
+    goto <bb 7>; [50.00%]
+
+  <bb 4> [local count: 480053677]:
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  plen_6 = _1->len;
+  # DEBUG plen => plen_6
+  # DEBUG BEGIN_STMT
+  _7 = _1->next;
+  *ISRA.6_22(D) = _7;
+  # DEBUG BEGIN_STMT
+  if (_7 != 0B)
+    goto <bb 5>; [53.47%]
+  else
+    goto <bb 6>; [46.53%]
+
+  <bb 5> [local count: 256684701]:
+  # DEBUG BEGIN_STMT
+  pbuf_ref (_7);
+
+  <bb 6> [local count: 480053677]:
+  # DEBUG BEGIN_STMT
+  pbuf_free (_1);
+  # DEBUG BEGIN_STMT
+  tcp_recved (tpcb_3(D), plen_6);
+  goto <bb 9>; [100.00%]
+
+  <bb 7> [local count: 480053677]:
+  # DEBUG BEGIN_STMT
+  if (wr_err_5 == -1)
+    goto <bb 8>; [34.00%]
+  else
+    goto <bb 9>; [66.00%]
+
+  <bb 8> [local count: 163218250]:
+  # DEBUG BEGIN_STMT
+  *ISRA.6_22(D) = _1;
+
+  <bb 9> [local count: 960107354]:
+  # wr_err_11 = PHI <0(6), wr_err_5(7), -1(8)>
+
+  <bb 10> [local count: 1073741824]:
+  # wr_err_9 = PHI <0(2), wr_err_11(9)>
+  # DEBUG wr_err => wr_err_9
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  if (wr_err_9 == 0)
+    goto <bb 11>; [96.34%]
+  else
+    goto <bb 13>; [3.66%]
+
+  <bb 11> [local count: 1034442874]:
+  _1 = *ISRA.6_22(D);
+  if (_1 != 0B)
+    goto <bb 12>; [96.34%]
+  else
+    goto <bb 13>; [3.66%]
+
+  <bb 12> [local count: 996582265]:
+  _4 = _1->len;
+  _10 = tpcb_3(D)->snd_buf;
+  if (_4 <= _10)
+    goto <bb 3>; [96.34%]
+  else
+    goto <bb 13>; [3.66%]
+
+  <bb 13> [local count: 113634471]:
+  return;
+
+}
+
+
+tcpecho_raw_init ()
+{
+  err_t err;
+  struct tcp_pcb * _1;
+  struct tcp_pcb * tcpecho_raw_pcb.2_2;
+  struct tcp_pcb * _3;
+
+  <bb 2> [local count: 1073741824]:
+  # DEBUG BEGIN_STMT
+  _1 = tcp_new_ip_type (46);
+  tcpecho_raw_pcb = _1;
+  # DEBUG BEGIN_STMT
+  if (_1 != 0B)
+    goto <bb 3>; [53.47%]
+  else
+    goto <bb 5>; [46.53%]
+
+  <bb 3> [local count: 574129754]:
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  err_9 = tcp_bind (_1, &ip_addr_any_type, 7);
+  # DEBUG err => err_9
+  # DEBUG BEGIN_STMT
+  if (err_9 == 0)
+    goto <bb 4>; [33.00%]
+  else
+    goto <bb 5>; [67.00%]
+
+  <bb 4> [local count: 189462818]:
+  # DEBUG BEGIN_STMT
+  tcpecho_raw_pcb.2_2 = tcpecho_raw_pcb;
+  _3 = tcp_listen_with_backlog (tcpecho_raw_pcb.2_2, 255);
+  tcpecho_raw_pcb = _3;
+  # DEBUG BEGIN_STMT
+  tcp_accept (_3, tcpecho_raw_accept);
+
+  <bb 5> [local count: 1073741824]:
+  # DEBUG BEGIN_STMT
+  return;
+
+}
+
+
+tcpecho_raw_accept (void * arg, struct tcp_pcb * newpcb, err_t err)
+{
+  struct tcpecho_raw_state * es;
+  err_t _1;
+
+  <bb 2> [local count: 1073741824]:
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  if (err_3(D) != 0)
+    goto <bb 6>; [1.04%]
+  else
+    goto <bb 3>; [98.96%]
+
+  <bb 3> [local count: 1062574910]:
+  if (newpcb_4(D) == 0B)
+    goto <bb 6>; [0.91%]
+  else
+    goto <bb 4>; [99.09%]
+
+  <bb 4> [local count: 1052905478]:
+  # DEBUG BEGIN_STMT
+  tcp_setprio (newpcb_4(D), 1);
+  # DEBUG BEGIN_STMT
+  es_8 = mem_malloc (12);
+  # DEBUG es => es_8
+  # DEBUG BEGIN_STMT
+  if (es_8 != 0B)
+    goto <bb 5>; [98.26%]
+  else
+    goto <bb 6>; [1.74%]
+
+  <bb 5> [local count: 1034584922]:
+  # DEBUG BEGIN_STMT
+  es_8->state = 1;
+  # DEBUG BEGIN_STMT
+  es_8->pcb = newpcb_4(D);
+  # DEBUG BEGIN_STMT
+  es_8->retries = 0;
+  # DEBUG BEGIN_STMT
+  es_8->p = 0B;
+  # DEBUG BEGIN_STMT
+  tcp_arg (newpcb_4(D), es_8);
+  # DEBUG BEGIN_STMT
+  tcp_recv (newpcb_4(D), tcpecho_raw_recv);
+  # DEBUG BEGIN_STMT
+  tcp_err (newpcb_4(D), tcpecho_raw_error);
+  # DEBUG BEGIN_STMT
+  tcp_poll (newpcb_4(D), tcpecho_raw_poll, 0);
+  # DEBUG BEGIN_STMT
+  tcp_sent (newpcb_4(D), tcpecho_raw_sent);
+  # DEBUG BEGIN_STMT
+  # DEBUG ret_err => 0
+
+  <bb 6> [local count: 1073741824]:
+  # _1 = PHI <-6(3), -1(4), 0(5), -6(2)>
+  # DEBUG ret_err => NULL
+  return _1;
+
+}
+
+
+tcpecho_raw_recv (void * arg, struct tcp_pcb * tpcb, struct pbuf * p, err_t err)
+{
+  err_t ret_err;
+  struct pbuf * _1;
+  struct pbuf * * _17;
+
+  <bb 2> [local count: 357913]:
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  if (arg_7(D) == 0B)
+    goto <bb 12>; [30.00%]
+  else
+    goto <bb 4>; [70.00%]
+
+  <bb 12> [local count: 107374]:
+
+  <bb 3> [local count: 1073741824]:
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  __asm__ __volatile__("BKPT #0
+	");
+  # DEBUG BEGIN_STMT
+
+  <bb 13> [local count: 1073741824]:
+  goto <bb 3>; [100.00%]
+
+  <bb 4> [local count: 250539]:
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG es => arg_7(D)
+  # DEBUG BEGIN_STMT
+  if (p_9(D) == 0B)
+    goto <bb 5>; [30.00%]
+  else
+    goto <bb 8>; [70.00%]
+
+  <bb 5> [local count: 75162]:
+  # DEBUG BEGIN_STMT
+  MEM[(struct tcpecho_raw_state *)arg_7(D)].state = 3;
+  # DEBUG BEGIN_STMT
+  _1 = MEM[(struct tcpecho_raw_state *)arg_7(D)].p;
+  if (_1 == 0B)
+    goto <bb 6>; [30.00%]
+  else
+    goto <bb 7>; [70.00%]
+
+  <bb 6> [local count: 22549]:
+  # DEBUG BEGIN_STMT
+  tcpecho_raw_close (tpcb_11(D), arg_7(D));
+  goto <bb 11>; [100.00%]
+
+  <bb 7> [local count: 52613]:
+  # DEBUG BEGIN_STMT
+  _17 = &MEM[(struct pbuf * *)arg_7(D) + 8B];
+  # DEBUG D#1 => arg_7(D)
+  tcpecho_raw_send.isra.0 (tpcb_11(D), _17);
+  goto <bb 11>; [100.00%]
+
+  <bb 8> [local count: 175378]:
+  # DEBUG BEGIN_STMT
+  if (err_10(D) != 0)
+    goto <bb 9>; [33.00%]
+  else
+    goto <bb 10>; [67.00%]
+
+  <bb 9> [local count: 57875]:
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  pbuf_free (p_9(D));
+  # DEBUG BEGIN_STMT
+  # DEBUG ret_err => err_10(D)
+  goto <bb 11>; [100.00%]
+
+  <bb 10> [local count: 117503]:
+  # DEBUG D#4 => err_10(D)
+  ret_err_4 = tcpecho_raw_recv.part.0 (arg_7(D), tpcb_11(D), p_9(D));
+
+  <bb 11> [local count: 250539]:
+  # ret_err_2 = PHI <0(7), err_10(D)(9), ret_err_4(10), 0(6)>
+  # DEBUG ret_err => ret_err_2
+  # DEBUG BEGIN_STMT
+  return ret_err_2;
+
+}
+
+
+tcpecho_raw_sent (void * arg, struct tcp_pcb * tpcb, u16_t len)
+{
+  struct pbuf * _1;
+  struct pbuf * * _10;
+
+  <bb 2> [local count: 1073741824]:
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG es => arg_2(D)
+  # DEBUG BEGIN_STMT
+  MEM[(struct tcpecho_raw_state *)arg_2(D)].retries = 0;
+  # DEBUG BEGIN_STMT
+  _1 = MEM[(struct tcpecho_raw_state *)arg_2(D)].p;
+  if (_1 != 0B)
+    goto <bb 3>; [53.47%]
+  else
+    goto <bb 4>; [46.53%]
+
+  <bb 3> [local count: 574129754]:
+  # DEBUG BEGIN_STMT
+  tcp_sent (tpcb_6(D), tcpecho_raw_sent);
+  # DEBUG BEGIN_STMT
+  _10 = &MEM[(struct pbuf * *)arg_2(D) + 8B];
+  # DEBUG D#1 => arg_2(D)
+  tcpecho_raw_send.isra.0 (tpcb_6(D), _10);
+  goto <bb 5>; [100.00%]
+
+  <bb 4> [local count: 499612072]:
+  # DEBUG D#2 => len_3(D)
+  tcpecho_raw_sent.part.0 (arg_2(D), tpcb_6(D));
+
+  <bb 5> [local count: 1073741824]:
+  # DEBUG BEGIN_STMT
+  return 0;
+
+}
+
+
+tcpecho_raw_poll (void * arg, struct tcp_pcb * tpcb)
+{
+  err_t ret_err;
+  struct pbuf * _1;
+  struct pbuf * * _11;
+
+  <bb 2> [local count: 1073741824]:
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG es => arg_4(D)
+  # DEBUG BEGIN_STMT
+  if (arg_4(D) != 0B)
+    goto <bb 3>; [99.57%]
+  else
+    goto <bb 6>; [0.43%]
+
+  <bb 3> [local count: 1069124735]:
+  # DEBUG BEGIN_STMT
+  _1 = MEM[(struct tcpecho_raw_state *)arg_4(D)].p;
+  if (_1 != 0B)
+    goto <bb 4>; [53.47%]
+  else
+    goto <bb 5>; [46.53%]
+
+  <bb 4> [local count: 571660996]:
+  # DEBUG BEGIN_STMT
+  _11 = &MEM[(struct pbuf * *)arg_4(D) + 8B];
+  # DEBUG D#1 => arg_4(D)
+  tcpecho_raw_send.isra.0 (tpcb_7(D), _11);
+  goto <bb 7>; [100.00%]
+
+  <bb 5> [local count: 497463740]:
+  ret_err_3 = tcpecho_raw_poll.part.0 (arg_4(D), tpcb_7(D));
+  goto <bb 7>; [100.00%]
+
+  <bb 6> [local count: 4617090]:
+  # DEBUG BEGIN_STMT
+  tcp_abort (tpcb_7(D));
+  # DEBUG BEGIN_STMT
+  # DEBUG ret_err => -13
+
+  <bb 7> [local count: 1073741824]:
+  # ret_err_2 = PHI <ret_err_3(5), -13(6), 0(4)>
+  # DEBUG ret_err => ret_err_2
+  # DEBUG BEGIN_STMT
+  return ret_err_2;
+
+}
+
+
+tcpecho_raw_error (void * arg, err_t err)
+{
+  <bb 2> [local count: 1073741824]:
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG es => arg_1(D)
+  # DEBUG BEGIN_STMT
+  tcpecho_raw_free (arg_1(D));
+  return;
+
+}
+
+
+tcpecho_raw_close (struct tcp_pcb * tpcb, struct tcpecho_raw_state * es)
+{
+  <bb 2> [local count: 1073741824]:
+  # DEBUG BEGIN_STMT
+  tcp_arg (tpcb_2(D), 0B);
+  # DEBUG BEGIN_STMT
+  tcp_sent (tpcb_2(D), 0B);
+  # DEBUG BEGIN_STMT
+  tcp_recv (tpcb_2(D), 0B);
+  # DEBUG BEGIN_STMT
+  tcp_err (tpcb_2(D), 0B);
+  # DEBUG BEGIN_STMT
+  tcp_poll (tpcb_2(D), 0B, 0);
+  # DEBUG BEGIN_STMT
+  tcpecho_raw_free (es_8(D));
+  # DEBUG BEGIN_STMT
+  tcp_close (tpcb_2(D));
+  return;
+
+}
+
+
+tcpecho_raw_free (struct tcpecho_raw_state * es)
+{
+  struct pbuf * _1;
+
+  <bb 2> [local count: 1073741824]:
+  # DEBUG BEGIN_STMT
+  if (es_4(D) != 0B)
+    goto <bb 3>; [70.00%]
+  else
+    goto <bb 6>; [30.00%]
+
+  <bb 3> [local count: 751619278]:
+  # DEBUG BEGIN_STMT
+  _1 = es_4(D)->p;
+  if (_1 != 0B)
+    goto <bb 4>; [53.47%]
+  else
+    goto <bb 5>; [46.53%]
+
+  <bb 4> [local count: 401890828]:
+  # DEBUG BEGIN_STMT
+  pbuf_free (_1);
+
+  <bb 5> [local count: 751619278]:
+  # DEBUG BEGIN_STMT
+  mem_free (es_4(D));
+
+  <bb 6> [local count: 1073741824]:
+  return;
+
+}
+
+

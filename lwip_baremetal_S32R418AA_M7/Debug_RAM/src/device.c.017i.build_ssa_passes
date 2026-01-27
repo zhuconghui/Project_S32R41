@@ -1,0 +1,120 @@
+device_init ()
+{
+  StatusType err;
+
+  <bb 2> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _1 = 1074627328B;
+  _2 = _1->GMAC_0_CTRL_STS;
+  _3 = 1074627328B;
+  _4 = _2 | 4;
+  _3->GMAC_0_CTRL_STS = _4;
+  # DEBUG BEGIN_STMT
+  err = Siul2_Port_Ip_Init (9, &g_pin_mux_InitConfigArr_PortContainer_0_BOARD_InitPeripherals);
+  # DEBUG BEGIN_STMT
+  _5 = err == 0;
+  DevAssert (_5);
+  # DEBUG BEGIN_STMT
+  err = Clock_Ip_Init (&Clock_Ip_aClockConfig[0]);
+  # DEBUG BEGIN_STMT
+  _6 = err == 0;
+  DevAssert (_6);
+  # DEBUG BEGIN_STMT
+  IntCtrl_Ip_InstallHandler (53, PIT_0_ISR, 0B);
+  # DEBUG BEGIN_STMT
+  IntCtrl_Ip_SetPriority (53, 9);
+  # DEBUG BEGIN_STMT
+  IntCtrl_Ip_EnableIrq (53);
+  # DEBUG BEGIN_STMT
+  IntCtrl_Ip_InstallHandler (58, GMAC0_CH0_TX_IRQHandler, 0B);
+  # DEBUG BEGIN_STMT
+  IntCtrl_Ip_SetPriority (58, 8);
+  # DEBUG BEGIN_STMT
+  IntCtrl_Ip_EnableIrq (58);
+  # DEBUG BEGIN_STMT
+  IntCtrl_Ip_InstallHandler (59, GMAC0_CH0_RX_IRQHandler, 0B);
+  # DEBUG BEGIN_STMT
+  IntCtrl_Ip_SetPriority (59, 7);
+  # DEBUG BEGIN_STMT
+  IntCtrl_Ip_EnableIrq (59);
+  # DEBUG BEGIN_STMT
+  Eth_T_EnableIRQs ();
+  # DEBUG BEGIN_STMT
+  OsIf_Init (0B);
+  # DEBUG BEGIN_STMT
+  Pit_Ip_Init (0, &PIT_0_InitConfig_PB_BOARD_InitPeripherals);
+  # DEBUG BEGIN_STMT
+  Pit_Ip_InitChannel (0, &PIT_0_ChannelConfig_PB_BOARD_InitPeripherals[0]);
+  # DEBUG BEGIN_STMT
+  Pit_Ip_EnableChannelInterrupt (0, 0);
+  # DEBUG BEGIN_STMT
+  err = Pit_Ip_StartChannel (0, 0, 100000);
+  # DEBUG BEGIN_STMT
+  _7 = err == 0;
+  DevAssert (_7);
+  # DEBUG BEGIN_STMT
+  OsIf_SetTimerFrequency (400000000, 0);
+  # DEBUG BEGIN_STMT
+  _8 = Gmac_Ip_Init (0, &Gmac_0_ConfigPB_BOARD_INITPERIPHERALS);
+  err = (StatusType) _8;
+  # DEBUG BEGIN_STMT
+  _9 = err == 0;
+  DevAssert (_9);
+  return;
+
+}
+
+
+Eth_T_EnableIRQs ()
+{
+  uint32 instance;
+
+  <bb 2> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  instance = 0;
+  goto <bb 4>; [INV]
+
+  <bb 3> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  instance = instance + 1;
+
+  <bb 4> :
+  # DEBUG BEGIN_STMT
+  if (instance <= 1)
+    goto <bb 3>; [INV]
+  else
+    goto <bb 5>; [INV]
+
+  <bb 5> :
+  return;
+
+}
+
+
+DevAssert (volatile boolean x)
+{
+  <bb 2> :
+  # DEBUG BEGIN_STMT
+  x.0_1 = x;
+  if (x.0_1 != 0)
+    goto <bb 4>; [INV]
+  else
+    goto <bb 3>; [INV]
+
+  <bb 3> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  __asm__ __volatile__("BKPT #0");
+  # DEBUG BEGIN_STMT
+  goto <bb 3>; [INV]
+
+  <bb 4> :
+  # DEBUG BEGIN_STMT
+  return;
+
+}
+
+

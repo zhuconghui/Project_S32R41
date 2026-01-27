@@ -1,0 +1,436 @@
+mainLoopTask.isra.0 ()
+{
+  uint32 time_now;
+  int i;
+
+  <bb 8> [local count: 11811]:
+  # DEBUG pvParameters s=> pvParameters
+
+  <bb 2> [local count: 11811]:
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  sys_init ();
+  # DEBUG BEGIN_STMT
+  lwip_init ();
+  # DEBUG BEGIN_STMT
+  # DEBUG D#1 => 0B
+  test_init.isra.0 ();
+
+  <bb 3> [local count: 118111600]:
+
+  <bb 4> [local count: 1073741824]:
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  sys_check_timeouts ();
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG i => 0
+  # DEBUG i => NULL
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  time_now_1 = OsIf_GetMilliseconds ();
+  # DEBUG time_now => time_now_1
+  # DEBUG BEGIN_STMT
+  if (time_now_1 > 1199999)
+    goto <bb 9>; [11.00%]
+  else
+    goto <bb 10>; [89.00%]
+
+  <bb 10> [local count: 955630224]:
+  goto <bb 4>; [100.00%]
+
+  <bb 9> [local count: 118111601]:
+  goto <bb 6>; [100.00%]
+
+  <bb 5> [local count: 118111601]:
+  # DEBUG BEGIN_STMT
+  gmac_ethernetif_shutdown (&MEM[(void *)&network_interfaces]);
+  # DEBUG BEGIN_STMT
+  # DEBUG i => 1
+
+  <bb 6> [local count: 236223201]:
+  # i_2 = PHI <1(5), 0(9)>
+  # DEBUG i => i_2
+  # DEBUG BEGIN_STMT
+  if (i_2 == 0)
+    goto <bb 5>; [50.00%]
+  else
+    goto <bb 7>; [50.00%]
+
+  <bb 7> [local count: 118111601]:
+  # DEBUG BEGIN_STMT
+  end_tcpip_execution (0B);
+  goto <bb 3>; [100.00%]
+
+}
+
+
+test_init.isra.0 ()
+{
+  <bb 3> [local count: 1073741824]:
+  # DEBUG arg s=> arg
+
+  <bb 2> [local count: 1073741824]:
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  interface_init ();
+  # DEBUG BEGIN_STMT
+  apps_init ();
+  return;
+
+}
+
+
+start_example ()
+{
+  <bb 2> [local count: 1073741824]:
+  # DEBUG BEGIN_STMT
+  # DEBUG D#2 => 0B
+  mainLoopTask.isra.0 ();
+
+}
+
+
+apps_init ()
+{
+  struct netif * netif_default.0_1;
+  const char * _2;
+
+  <bb 2> [local count: 1073741824]:
+  # DEBUG BEGIN_STMT
+  mdns_resp_init ();
+  # DEBUG BEGIN_STMT
+  netif_default.0_1 = netif_default;
+  _2 = netif_default.0_1->hostname;
+  mdns_resp_add_netif (netif_default.0_1, _2, 3600);
+  # DEBUG BEGIN_STMT
+  lwiperf_start_tcp_server_default (lwiperf_report, 0B);
+  # DEBUG BEGIN_STMT
+  my_udp_init ();
+  return;
+
+}
+
+
+my_udp_init ()
+{
+  struct udp_pcb * _1;
+
+  <bb 2> [local count: 1073741824]:
+  # DEBUG BEGIN_STMT
+  _1 = udp_new ();
+  my_udp_pcb = _1;
+  # DEBUG BEGIN_STMT
+  if (_1 != 0B)
+    goto <bb 3>; [53.47%]
+  else
+    goto <bb 4>; [46.53%]
+
+  <bb 3> [local count: 574129754]:
+  # DEBUG BEGIN_STMT
+  udp_bind (_1, &ip_addr_any, 0);
+  # DEBUG BEGIN_STMT
+  sys_timeout (1000, my_udp_send_callback, 0B);
+
+  <bb 4> [local count: 1073741824]:
+  return;
+
+}
+
+
+my_udp_send_callback (void * arg)
+{
+  struct ip_addr_t dest_addr;
+  struct pbuf * p;
+  int _1;
+  struct udp_pcb * my_udp_pcb.4_2;
+
+  <bb 2> [local count: 1073741824]:
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  memset (&my_udp_buffer, 65, 1024);
+  # DEBUG BEGIN_STMT
+  p_8 = pbuf_alloc (74, 1024, 640);
+  # DEBUG p => p_8
+  # DEBUG BEGIN_STMT
+  if (p_8 != 0B)
+    goto <bb 3>; [53.47%]
+  else
+    goto <bb 6>; [46.53%]
+
+  <bb 3> [local count: 574129754]:
+  # DEBUG BEGIN_STMT
+  pbuf_take (p_8, &my_udp_buffer, 1024);
+  # DEBUG BEGIN_STMT
+  _1 = ipaddr_aton ("192.168.0.8", &dest_addr);
+  if (_1 != 0)
+    goto <bb 4>; [33.00%]
+  else
+    goto <bb 5>; [67.00%]
+
+  <bb 4> [local count: 189462818]:
+  # DEBUG BEGIN_STMT
+  my_udp_pcb.4_2 = my_udp_pcb;
+  udp_sendto (my_udp_pcb.4_2, p_8, &dest_addr, 5000);
+
+  <bb 5> [local count: 574129754]:
+  # DEBUG BEGIN_STMT
+  pbuf_free (p_8);
+
+  <bb 6> [local count: 1073741824]:
+  # DEBUG BEGIN_STMT
+  sys_timeout (1000, my_udp_send_callback, 0B);
+  dest_addr ={v} {CLOBBER};
+  return;
+
+}
+
+
+lwiperf_report (void * arg, lwiperf_report_type report_type, const struct ip_addr_t * local_addr, u16_t local_port, const struct ip_addr_t * remote_addr, u16_t remote_port, u32_t bytes_transferred, u32_t ms_duration, u32_t bandwidth_kbitpsec)
+{
+  <bb 2> [local count: 1073741824]:
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  return;
+
+}
+
+
+interface_init ()
+{
+  struct ip4_addr_t gw;
+  struct ip4_addr_t netmask;
+  struct ip4_addr_t ipaddr;
+  int i;
+  struct netif_custom_t * _1;
+  _Bool _2;
+  _Bool _3;
+  unsigned char _4;
+  long unsigned int _5;
+  long unsigned int _6;
+  unsigned char _7;
+  long unsigned int _8;
+  long unsigned int _9;
+  long unsigned int _10;
+  unsigned char _11;
+  long unsigned int _12;
+  long unsigned int _13;
+  long unsigned int _14;
+  unsigned char _15;
+  long unsigned int _16;
+  long unsigned int _17;
+  long unsigned int _18;
+  long unsigned int _19;
+  long unsigned int _20;
+  long unsigned int _21;
+  long unsigned int _22;
+  long unsigned int _23;
+  long unsigned int _24;
+  long unsigned int _25;
+  long unsigned int _26;
+  unsigned char _27;
+  long unsigned int _28;
+  long unsigned int _29;
+  unsigned char _30;
+  long unsigned int _31;
+  long unsigned int _32;
+  long unsigned int _33;
+  unsigned char _34;
+  long unsigned int _35;
+  long unsigned int _36;
+  long unsigned int _37;
+  unsigned char _38;
+  long unsigned int _39;
+  long unsigned int _40;
+  long unsigned int _41;
+  long unsigned int _42;
+  long unsigned int _43;
+  long unsigned int _44;
+  long unsigned int _45;
+  long unsigned int _46;
+  long unsigned int _47;
+  long unsigned int _48;
+  long unsigned int _49;
+  unsigned char _50;
+  long unsigned int _51;
+  long unsigned int _52;
+  unsigned char _53;
+  long unsigned int _54;
+  long unsigned int _55;
+  long unsigned int _56;
+  unsigned char _57;
+  long unsigned int _58;
+  long unsigned int _59;
+  long unsigned int _60;
+  unsigned char _61;
+  long unsigned int _62;
+  long unsigned int _63;
+  long unsigned int _64;
+  long unsigned int _65;
+  long unsigned int _66;
+  long unsigned int _67;
+  long unsigned int _68;
+  long unsigned int _69;
+  long unsigned int _70;
+  long unsigned int _71;
+  long unsigned int _72;
+  struct netif * _73;
+  struct netif_custom_t * _74;
+  _Bool _75;
+
+  <bb 2> [local count: 536870913]:
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG i => 0
+  goto <bb 9>; [100.00%]
+
+  <bb 3> [local count: 536870913]:
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  gw.addr = 0;
+  # DEBUG BEGIN_STMT
+  ipaddr.addr = 0;
+  # DEBUG BEGIN_STMT
+  netmask.addr = 0;
+  # DEBUG BEGIN_STMT
+  _1 = netif_cfg[0];
+  _2 = _1->has_dhcp;
+  if (_2 != 0)
+    goto <bb 6>; [50.00%]
+  else
+    goto <bb 4>; [50.00%]
+
+  <bb 4> [local count: 268435456]:
+  _3 = _1->has_auto_ip;
+  if (_3 != 0)
+    goto <bb 6>; [50.00%]
+  else
+    goto <bb 5>; [50.00%]
+
+  <bb 5> [local count: 134217728]:
+  # DEBUG BEGIN_STMT
+  _4 = _1->gw[0];
+  _5 = (long unsigned int) _4;
+  _6 = _5 << 24;
+  _7 = _1->gw[1];
+  _8 = (long unsigned int) _7;
+  _9 = _8 << 16;
+  _10 = _6 | _9;
+  _11 = _1->gw[2];
+  _12 = (long unsigned int) _11;
+  _13 = _12 << 8;
+  _14 = _10 | _13;
+  _15 = _1->gw[3];
+  _16 = (long unsigned int) _15;
+  _17 = _14 | _16;
+  _18 = _17 << 24;
+  _19 = _17 << 8;
+  _20 = _19 & 16711680;
+  _21 = _18 | _20;
+  _22 = _17 >> 8;
+  _23 = _22 & 65280;
+  _24 = _21 | _23;
+  _25 = _17 >> 24;
+  _26 = _24 | _25;
+  gw.addr = _26;
+  # DEBUG BEGIN_STMT
+  _27 = _1->ip_addr[0];
+  _28 = (long unsigned int) _27;
+  _29 = _28 << 24;
+  _30 = _1->ip_addr[1];
+  _31 = (long unsigned int) _30;
+  _32 = _31 << 16;
+  _33 = _29 | _32;
+  _34 = _1->ip_addr[2];
+  _35 = (long unsigned int) _34;
+  _36 = _35 << 8;
+  _37 = _33 | _36;
+  _38 = _1->ip_addr[3];
+  _39 = (long unsigned int) _38;
+  _40 = _37 | _39;
+  _41 = _40 << 24;
+  _42 = _40 << 8;
+  _43 = _42 & 16711680;
+  _44 = _41 | _43;
+  _45 = _40 >> 8;
+  _46 = _45 & 65280;
+  _47 = _44 | _46;
+  _48 = _40 >> 24;
+  _49 = _47 | _48;
+  ipaddr.addr = _49;
+  # DEBUG BEGIN_STMT
+  _50 = _1->netmask[0];
+  _51 = (long unsigned int) _50;
+  _52 = _51 << 24;
+  _53 = _1->netmask[1];
+  _54 = (long unsigned int) _53;
+  _55 = _54 << 16;
+  _56 = _52 | _55;
+  _57 = _1->netmask[2];
+  _58 = (long unsigned int) _57;
+  _59 = _58 << 8;
+  _60 = _56 | _59;
+  _61 = _1->netmask[3];
+  _62 = (long unsigned int) _61;
+  _63 = _60 | _62;
+  _64 = _63 << 24;
+  _65 = _63 << 8;
+  _66 = _65 & 16711680;
+  _67 = _64 | _66;
+  _68 = _63 >> 8;
+  _69 = _68 & 65280;
+  _70 = _67 | _69;
+  _71 = _63 >> 24;
+  _72 = _70 | _71;
+  netmask.addr = _72;
+
+  <bb 6> [local count: 536870913]:
+  # DEBUG BEGIN_STMT
+  _73 = netif_add (&MEM[(void *)&network_interfaces], &ipaddr, &netmask, &gw, 0B, gmac_ethernetif_init, netif_input);
+  netif_set_default (_73);
+  # DEBUG BEGIN_STMT
+  _74 = netif_cfg[0];
+  _75 = _74->has_IPv6;
+  if (_75 != 0)
+    goto <bb 7>; [33.00%]
+  else
+    goto <bb 8>; [67.00%]
+
+  <bb 7> [local count: 177167401]:
+  # DEBUG BEGIN_STMT
+  netif_create_ip6_linklocal_address (&MEM[(void *)&network_interfaces], 1);
+
+  <bb 8> [local count: 536870913]:
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  netif_set_up (&MEM[(void *)&network_interfaces]);
+  ipaddr ={v} {CLOBBER};
+  netmask ={v} {CLOBBER};
+  gw ={v} {CLOBBER};
+  # DEBUG BEGIN_STMT
+  # DEBUG i => 1
+
+  <bb 9> [local count: 1073741824]:
+  # i_76 = PHI <0(2), 1(8)>
+  # DEBUG i => i_76
+  # DEBUG BEGIN_STMT
+  if (i_76 == 0)
+    goto <bb 3>; [50.00%]
+  else
+    goto <bb 10>; [50.00%]
+
+  <bb 10> [local count: 536870913]:
+  return;
+
+}
+
+

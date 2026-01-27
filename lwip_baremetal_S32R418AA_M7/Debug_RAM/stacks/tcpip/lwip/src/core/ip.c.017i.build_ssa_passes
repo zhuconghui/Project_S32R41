@@ -1,0 +1,239 @@
+ip_input (struct pbuf * p, struct netif * inp)
+{
+  err_t D.7011;
+
+  <bb 2> :
+  # DEBUG BEGIN_STMT
+  if (p != 0B)
+    goto <bb 3>; [INV]
+  else
+    goto <bb 6>; [INV]
+
+  <bb 3> :
+  # DEBUG BEGIN_STMT
+  _1 = p->payload;
+  _2 = MEM[(u8_t *)_1];
+  _3 = _2 >> 4;
+  if (_3 == 6)
+    goto <bb 4>; [INV]
+  else
+    goto <bb 5>; [INV]
+
+  <bb 4> :
+  # DEBUG BEGIN_STMT
+  D.7011 = ip6_input (p, inp);
+  // predicted unlikely by early return (on trees) predictor.
+  goto <bb 7>; [INV]
+
+  <bb 5> :
+  # DEBUG BEGIN_STMT
+  D.7011 = ip4_input (p, inp);
+  // predicted unlikely by early return (on trees) predictor.
+  goto <bb 7>; [INV]
+
+  <bb 6> :
+  # DEBUG BEGIN_STMT
+  D.7011 = -6;
+
+  <bb 7> :
+  return D.7011;
+
+}
+
+
+ipaddr_aton (const char * cp, struct ip_addr_t * addr)
+{
+  const char * c;
+  int D.7002;
+
+  <bb 2> :
+  # DEBUG BEGIN_STMT
+  if (cp != 0B)
+    goto <bb 3>; [INV]
+  else
+    goto <bb 14>; [INV]
+
+  <bb 3> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  c = cp;
+  goto <bb 10>; [INV]
+
+  <bb 4> :
+  # DEBUG BEGIN_STMT
+  _1 = *c;
+  if (_1 == 58)
+    goto <bb 5>; [INV]
+  else
+    goto <bb 8>; [INV]
+
+  <bb 5> :
+  # DEBUG BEGIN_STMT
+  if (addr != 0B)
+    goto <bb 6>; [INV]
+  else
+    goto <bb 7>; [INV]
+
+  <bb 6> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  addr->type = 6;
+
+  <bb 7> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _2 = &addr->u_addr.ip6;
+  D.7002 = ip6addr_aton (cp, _2);
+  // predicted unlikely by early return (on trees) predictor.
+  goto <bb 15>; [INV]
+
+  <bb 8> :
+  # DEBUG BEGIN_STMT
+  _3 = *c;
+  if (_3 == 46)
+    goto <bb 11>; [INV]
+  else
+    goto <bb 9>; [INV]
+
+  <bb 9> :
+  # DEBUG BEGIN_STMT
+  c = c + 1;
+
+  <bb 10> :
+  # DEBUG BEGIN_STMT
+  _4 = *c;
+  if (_4 != 0)
+    goto <bb 4>; [INV]
+  else
+    goto <bb 11>; [INV]
+
+  <bb 11> :
+  # DEBUG BEGIN_STMT
+  if (addr != 0B)
+    goto <bb 12>; [INV]
+  else
+    goto <bb 13>; [INV]
+
+  <bb 12> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  addr->type = 0;
+
+  <bb 13> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _5 = &addr->u_addr.ip4;
+  D.7002 = ip4addr_aton (cp, _5);
+  // predicted unlikely by early return (on trees) predictor.
+  goto <bb 15>; [INV]
+
+  <bb 14> :
+  # DEBUG BEGIN_STMT
+  D.7002 = 0;
+
+  <bb 15> :
+  return D.7002;
+
+}
+
+
+ipaddr_ntoa_r (const struct ip_addr_t * addr, char * buf, int buflen)
+{
+  char * D.6991;
+
+  <bb 2> :
+  # DEBUG BEGIN_STMT
+  if (addr == 0B)
+    goto <bb 3>; [INV]
+  else
+    goto <bb 4>; [INV]
+
+  <bb 3> :
+  # DEBUG BEGIN_STMT
+  D.6991 = 0B;
+  // predicted unlikely by early return (on trees) predictor.
+  goto <bb 8>; [INV]
+
+  <bb 4> :
+  # DEBUG BEGIN_STMT
+  if (addr != 0B)
+    goto <bb 5>; [INV]
+  else
+    goto <bb 7>; [INV]
+
+  <bb 5> :
+  _1 = addr->type;
+  if (_1 == 6)
+    goto <bb 6>; [INV]
+  else
+    goto <bb 7>; [INV]
+
+  <bb 6> :
+  # DEBUG BEGIN_STMT
+  _2 = &addr->u_addr.ip6;
+  D.6991 = ip6addr_ntoa_r (_2, buf, buflen);
+  // predicted unlikely by early return (on trees) predictor.
+  goto <bb 8>; [INV]
+
+  <bb 7> :
+  # DEBUG BEGIN_STMT
+  _3 = &addr->u_addr.ip4;
+  D.6991 = ip4addr_ntoa_r (_3, buf, buflen);
+  // predicted unlikely by early return (on trees) predictor.
+
+  <bb 8> :
+  return D.6991;
+
+}
+
+
+ipaddr_ntoa (const struct ip_addr_t * addr)
+{
+  char * D.6984;
+
+  <bb 2> :
+  # DEBUG BEGIN_STMT
+  if (addr == 0B)
+    goto <bb 3>; [INV]
+  else
+    goto <bb 4>; [INV]
+
+  <bb 3> :
+  # DEBUG BEGIN_STMT
+  D.6984 = 0B;
+  // predicted unlikely by early return (on trees) predictor.
+  goto <bb 8>; [INV]
+
+  <bb 4> :
+  # DEBUG BEGIN_STMT
+  if (addr != 0B)
+    goto <bb 5>; [INV]
+  else
+    goto <bb 7>; [INV]
+
+  <bb 5> :
+  _1 = addr->type;
+  if (_1 == 6)
+    goto <bb 6>; [INV]
+  else
+    goto <bb 7>; [INV]
+
+  <bb 6> :
+  # DEBUG BEGIN_STMT
+  _2 = &addr->u_addr.ip6;
+  D.6984 = ip6addr_ntoa (_2);
+  // predicted unlikely by early return (on trees) predictor.
+  goto <bb 8>; [INV]
+
+  <bb 7> :
+  # DEBUG BEGIN_STMT
+  _3 = &addr->u_addr.ip4;
+  D.6984 = ip4addr_ntoa (_3);
+  // predicted unlikely by early return (on trees) predictor.
+
+  <bb 8> :
+  return D.6984;
+
+}
+
+

@@ -1,0 +1,379 @@
+
+Marking local functions:
+
+
+Marking externally visible functions: Core_Cache_Init Core_MPU_Init Core_FPU_Init Core_IC_Init Core_registerIsrHandler Core_clearPendingIsrSource Core_enableIsrSource Core_disableIsrSource
+
+
+Marking externally visible variables:
+
+
+Reclaiming functions:
+Reclaiming variables:
+Clearing address taken flags:
+Symbol table:
+
+NVIC_SetPriorityGrouping/17 (NVIC_SetPriorityGrouping) @05fe87e0
+  Type: function
+  Visibility: external public
+  References: 
+  Referring: 
+  Availability: not_available
+  Function flags: optimize_size
+  Called by: Core_IC_Init/7 
+  Calls: 
+NVIC_EnableIRQ/16 (NVIC_EnableIRQ) @05fe8460
+  Type: function
+  Visibility: external public
+  References: 
+  Referring: 
+  Availability: not_available
+  Function flags: optimize_size
+  Called by: Core_enableIsrSource/3 
+  Calls: 
+NVIC_SetPriority/15 (NVIC_SetPriority) @05fe8380
+  Type: function
+  Visibility: external public
+  References: 
+  Referring: 
+  Availability: not_available
+  Function flags: optimize_size
+  Called by: Core_enableIsrSource/3 
+  Calls: 
+NVIC_DisableIRQ/14 (NVIC_DisableIRQ) @05fe1b60
+  Type: function
+  Visibility: external public
+  References: 
+  Referring: 
+  Availability: not_available
+  Function flags: optimize_size
+  Called by: Core_disableIsrSource/2 
+  Calls: 
+Core_Cache_Init/13 (Core_Cache_Init) @05fe1a80
+  Type: function definition analyzed
+  Visibility: externally_visible public section:.systeminit
+  References: 
+  Referring: 
+  Availability: available
+  Function flags: body optimize_size
+  Called by: 
+  Calls: 
+Core_MPU_Init/11 (Core_MPU_Init) @05fe1540
+  Type: function definition analyzed
+  Visibility: externally_visible public section:.systeminit
+  References: rbar/0 (read)rasr/1 (read)
+  Referring: 
+  Availability: available
+  Function flags: body optimize_size
+  Called by: 
+  Calls: 
+Core_FPU_Init/9 (Core_FPU_Init) @05fe1ee0
+  Type: function definition analyzed
+  Visibility: externally_visible public section:.systeminit
+  References: 
+  Referring: 
+  Availability: available
+  Function flags: body optimize_size
+  Called by: 
+  Calls: 
+Core_IC_Init/7 (Core_IC_Init) @05fe1c40
+  Type: function definition analyzed
+  Visibility: externally_visible public section:.systeminit
+  References: 
+  Referring: 
+  Availability: available
+  Function flags: body optimize_size
+  Called by: 
+  Calls: NVIC_SetPriorityGrouping/17 
+Core_registerIsrHandler/5 (Core_registerIsrHandler) @05fe19a0
+  Type: function definition analyzed
+  Visibility: externally_visible public
+  References: 
+  Referring: 
+  Availability: available
+  Function flags: body optimize_size
+  Called by: 
+  Calls: 
+Core_clearPendingIsrSource/4 (Core_clearPendingIsrSource) @05fe1700
+  Type: function definition analyzed
+  Visibility: externally_visible public
+  References: 
+  Referring: 
+  Availability: available
+  Function flags: body optimize_size
+  Called by: 
+  Calls: 
+Core_enableIsrSource/3 (Core_enableIsrSource) @05fe1460
+  Type: function definition analyzed
+  Visibility: externally_visible public
+  References: 
+  Referring: 
+  Availability: available
+  Function flags: body optimize_size
+  Called by: 
+  Calls: NVIC_EnableIRQ/16 NVIC_SetPriority/15 
+Core_disableIsrSource/2 (Core_disableIsrSource) @05fe11c0
+  Type: function definition analyzed
+  Visibility: externally_visible public
+  References: 
+  Referring: 
+  Availability: available
+  Function flags: body optimize_size
+  Called by: 
+  Calls: NVIC_DisableIRQ/14 
+rasr/1 (rasr) @05fbd3a8
+  Type: variable definition analyzed
+  Visibility: prevailing_def_ironly
+  References: 
+  Referring: Core_MPU_Init/11 (read)
+  Availability: available
+  Varpool flags: initialized read-only const-value-known
+rbar/0 (rbar) @05fbd318
+  Type: variable definition analyzed
+  Visibility: prevailing_def_ironly
+  References: 
+  Referring: Core_MPU_Init/11 (read)
+  Availability: available
+  Varpool flags: initialized read-only const-value-known
+__attribute__((section (".systeminit")))
+Core_Cache_Init ()
+{
+  uint32 ways;
+  uint32 sets;
+  uint32 ccsidr;
+
+  <bb 2> :
+  # DEBUG BEGIN_STMT
+  ccsidr = 0;
+  # DEBUG BEGIN_STMT
+  sets = 0;
+  # DEBUG BEGIN_STMT
+  ways = 0;
+  # DEBUG BEGIN_STMT
+  _1 = 3758153728B;
+  _1->CSSELR = 0;
+  # DEBUG BEGIN_STMT
+  __asm__ __volatile__("dsb");
+  # DEBUG BEGIN_STMT
+  _2 = 3758153728B;
+  ccsidr = _2->CCSIDR;
+  # DEBUG BEGIN_STMT
+  _3 = ccsidr >> 13;
+  sets = _3 & 32767;
+
+  <bb 3> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _4 = ccsidr >> 3;
+  ways = _4 & 1023;
+
+  <bb 4> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _5 = sets << 5;
+  _6 = _5 & 16352;
+  _7 = ways << 30;
+  _8 = 3758153728B;
+  _9 = _6 | _7;
+  _8->DCISW = _9;
+  # DEBUG BEGIN_STMT
+  ways.1_10 = ways;
+  ways = ways.1_10 + 4294967295;
+  if (ways.1_10 != 0)
+    goto <bb 4>; [INV]
+  else
+    goto <bb 5>; [INV]
+
+  <bb 5> :
+  # DEBUG BEGIN_STMT
+  sets.2_11 = sets;
+  sets = sets.2_11 + 4294967295;
+  if (sets.2_11 != 0)
+    goto <bb 3>; [INV]
+  else
+    goto <bb 6>; [INV]
+
+  <bb 6> :
+  # DEBUG BEGIN_STMT
+  __asm__ __volatile__("dsb");
+  # DEBUG BEGIN_STMT
+  _12 = 3758153728B;
+  _13 = _12->CCR;
+  _14 = 3758153728B;
+  _15 = _13 | 65536;
+  _14->CCR = _15;
+  # DEBUG BEGIN_STMT
+  __asm__ __volatile__("dsb");
+  # DEBUG BEGIN_STMT
+  __asm__ __volatile__("isb");
+  # DEBUG BEGIN_STMT
+  __asm__ __volatile__("dsb");
+  # DEBUG BEGIN_STMT
+  __asm__ __volatile__("isb");
+  # DEBUG BEGIN_STMT
+  _16 = 3758153728B;
+  _16->ICIALLU = 0;
+  # DEBUG BEGIN_STMT
+  __asm__ __volatile__("dsb");
+  # DEBUG BEGIN_STMT
+  __asm__ __volatile__("isb");
+  # DEBUG BEGIN_STMT
+  _17 = 3758153728B;
+  _18 = _17->CCR;
+  _19 = 3758153728B;
+  _20 = _18 | 131072;
+  _19->CCR = _20;
+  # DEBUG BEGIN_STMT
+  __asm__ __volatile__("dsb");
+  # DEBUG BEGIN_STMT
+  __asm__ __volatile__("isb");
+  return;
+
+}
+
+
+__attribute__((section (".systeminit")))
+Core_MPU_Init ()
+{
+  uint32 regionNum;
+
+  <bb 2> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  __asm__ __volatile__("dsb");
+  # DEBUG BEGIN_STMT
+  __asm__ __volatile__("isb");
+  # DEBUG BEGIN_STMT
+  regionNum = 0;
+  goto <bb 4>; [INV]
+
+  <bb 3> :
+  # DEBUG BEGIN_STMT
+  _1 = 3758153728B;
+  _1->RNR = regionNum;
+  # DEBUG BEGIN_STMT
+  _2 = 3758153728B;
+  _3 = rbar[regionNum];
+  _2->RBAR = _3;
+  # DEBUG BEGIN_STMT
+  _4 = 3758153728B;
+  _5 = rasr[regionNum];
+  _4->RASR = _5;
+  # DEBUG BEGIN_STMT
+  regionNum = regionNum + 1;
+
+  <bb 4> :
+  # DEBUG BEGIN_STMT
+  if (regionNum <= 9)
+    goto <bb 3>; [INV]
+  else
+    goto <bb 5>; [INV]
+
+  <bb 5> :
+  # DEBUG BEGIN_STMT
+  _6 = 3758153728B;
+  _7 = _6->CTRL;
+  _8 = 3758153728B;
+  _9 = _7 | 1;
+  _8->CTRL = _9;
+  # DEBUG BEGIN_STMT
+  __asm__ __volatile__("dsb");
+  # DEBUG BEGIN_STMT
+  __asm__ __volatile__("isb");
+  return;
+
+}
+
+
+__attribute__((section (".systeminit")))
+Core_FPU_Init ()
+{
+  <bb 2> :
+  # DEBUG BEGIN_STMT
+  _1 = 3758153728B;
+  _2 = _1->CPACR;
+  _3 = 3758153728B;
+  _4 = _2 | 15728640;
+  _3->CPACR = _4;
+  # DEBUG BEGIN_STMT
+  __asm__ __volatile__("dsb");
+  # DEBUG BEGIN_STMT
+  __asm__ __volatile__("isb");
+  return;
+
+}
+
+
+__attribute__((section (".systeminit")))
+Core_IC_Init ()
+{
+  <bb 2> :
+  # DEBUG BEGIN_STMT
+  NVIC_SetPriorityGrouping (0);
+  # DEBUG BEGIN_STMT
+  _1 = 3758153728B;
+  _2 = _1->CCR;
+  _3 = 3758153728B;
+  _4 = _2 | 1;
+  _3->CCR = _4;
+  # DEBUG BEGIN_STMT
+  _5 = 3758153728B;
+  _5->SHPR3 = 0;
+  return;
+
+}
+
+
+Core_registerIsrHandler (uint16 irq_id, void (*<T4a3>) (void) isr_handler)
+{
+  <bb 2> :
+  # DEBUG BEGIN_STMT
+  _1 = 3758157064B;
+  _2 = *_1;
+  _3 = (int) irq_id;
+  _4 = _3 + 16;
+  _5 = _4 << 2;
+  _6 = (long unsigned int) _5;
+  _7 = _2 + _6;
+  _8 = (volatile uint32 *) _7;
+  isr_handler.0_9 = (long unsigned int) isr_handler;
+  *_8 = isr_handler.0_9;
+  return;
+
+}
+
+
+Core_clearPendingIsrSource (uint16 id)
+{
+  <bb 2> :
+  # DEBUG BEGIN_STMT
+  return;
+
+}
+
+
+Core_enableIsrSource (uint16 id, uint8 prio)
+{
+  <bb 2> :
+  # DEBUG BEGIN_STMT
+  _1 = (unsigned char) id;
+  NVIC_SetPriority (_1, prio);
+  # DEBUG BEGIN_STMT
+  _2 = (unsigned char) id;
+  NVIC_EnableIRQ (_2);
+  return;
+
+}
+
+
+Core_disableIsrSource (uint16 id)
+{
+  <bb 2> :
+  # DEBUG BEGIN_STMT
+  _1 = (unsigned char) id;
+  NVIC_DisableIRQ (_1);
+  return;
+
+}
+
+

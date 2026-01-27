@@ -1,0 +1,586 @@
+icmp6_send_response_with_addrs_and_netif (struct pbuf * p, u8_t code, u32_t data, u8_t type, const struct ip6_addr_t * reply_src, const struct ip6_addr_t * reply_dest, struct netif * netif)
+{
+  err_t res;
+  u16_t len;
+  u16_t offset;
+  u16_t datalen;
+  struct icmp6_hdr * icmp6hdr;
+  struct pbuf * q;
+  short unsigned int _1;
+  short unsigned int _2;
+  short unsigned int _3;
+  short unsigned int _4;
+  short unsigned int _5;
+  long unsigned int _6;
+  short unsigned int _7;
+  void * _8;
+  short unsigned int _9;
+  short unsigned int _10;
+  short unsigned int _11;
+  short unsigned int _12;
+
+  <bb 2> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _1 = p_21(D)->tot_len;
+  datalen_22 = MIN_EXPR <_1, 1232>;
+  # DEBUG datalen => datalen_22
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _2 = datalen_22 + 8;
+  q_24 = pbuf_alloc (54, _2, 640);
+  # DEBUG q => q_24
+  # DEBUG BEGIN_STMT
+  if (q_24 == 0B)
+    goto <bb 3>; [INV]
+  else
+    goto <bb 4>; [INV]
+
+  <bb 3> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _3 = lwip_stats.icmp6.memerr;
+  _4 = _3 + 1;
+  lwip_stats.icmp6.memerr = _4;
+  # DEBUG BEGIN_STMT
+  // predicted unlikely by early return (on trees) predictor.
+  goto <bb 12>; [INV]
+
+  <bb 4> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _5 = q_24->len;
+  if (_5 <= 7)
+    goto <bb 5>; [INV]
+  else
+    goto <bb 6>; [INV]
+
+  <bb 5> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  __asm__ __volatile__("BKPT #0
+	");
+  # DEBUG BEGIN_STMT
+  goto <bb 5>; [INV]
+
+  <bb 6> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  icmp6hdr_25 = q_24->payload;
+  # DEBUG icmp6hdr => icmp6hdr_25
+  # DEBUG BEGIN_STMT
+  icmp6hdr_25->type = type_26(D);
+  # DEBUG BEGIN_STMT
+  icmp6hdr_25->code = code_28(D);
+  # DEBUG BEGIN_STMT
+  _6 = lwip_htonl (data_30(D));
+  icmp6hdr_25->data = _6;
+  # DEBUG BEGIN_STMT
+  offset_33 = 8;
+  # DEBUG offset => offset_33
+  # DEBUG BEGIN_STMT
+  goto <bb 9>; [INV]
+
+  <bb 7> :
+  # DEBUG BEGIN_STMT
+  _7 = p_13->len;
+  len_34 = MIN_EXPR <datalen_14, _7>;
+  # DEBUG len => len_34
+  # DEBUG BEGIN_STMT
+  _8 = p_13->payload;
+  res_36 = pbuf_take_at (q_24, _8, len_34, offset_15);
+  # DEBUG res => res_36
+  # DEBUG BEGIN_STMT
+  if (res_36 != 0)
+    goto <bb 11>; [INV]
+  else
+    goto <bb 8>; [INV]
+
+  <bb 8> :
+  # DEBUG BEGIN_STMT
+  datalen_37 = datalen_14 - len_34;
+  # DEBUG datalen => datalen_37
+  # DEBUG BEGIN_STMT
+  offset_38 = offset_15 + len_34;
+  # DEBUG offset => offset_38
+  # DEBUG BEGIN_STMT
+  p_39 = p_13->next;
+  # DEBUG p => p_39
+
+  <bb 9> :
+  # p_13 = PHI <p_21(D)(6), p_39(8)>
+  # datalen_14 = PHI <datalen_22(6), datalen_37(8)>
+  # offset_15 = PHI <offset_33(6), offset_38(8)>
+  # DEBUG offset => offset_15
+  # DEBUG datalen => datalen_14
+  # DEBUG p => p_13
+  # DEBUG BEGIN_STMT
+  if (p_13 != 0B)
+    goto <bb 10>; [INV]
+  else
+    goto <bb 11>; [INV]
+
+  <bb 10> :
+  if (datalen_14 != 0)
+    goto <bb 7>; [INV]
+  else
+    goto <bb 11>; [INV]
+
+  <bb 11> :
+  # DEBUG BEGIN_STMT
+  icmp6hdr_25->chksum = 0;
+  # DEBUG BEGIN_STMT
+  _9 = q_24->tot_len;
+  _10 = ip6_chksum_pseudo (q_24, 58, _9, reply_src_41(D), reply_dest_42(D));
+  icmp6hdr_25->chksum = _10;
+  # DEBUG BEGIN_STMT
+  _11 = lwip_stats.icmp6.xmit;
+  _12 = _11 + 1;
+  lwip_stats.icmp6.xmit = _12;
+  # DEBUG BEGIN_STMT
+  ip6_output_if (q_24, reply_src_41(D), reply_dest_42(D), 255, 0, 58, netif_46(D));
+  # DEBUG BEGIN_STMT
+  pbuf_free (q_24);
+
+  <bb 12> :
+  return;
+
+}
+
+
+icmp6_send_response_with_addrs (struct pbuf * p, u8_t code, u32_t data, u8_t type, const struct ip6_addr_t * src_addr, const struct ip6_addr_t * dest_addr)
+{
+  struct netif * netif;
+  const struct ip6_addr * reply_dest;
+  const struct ip6_addr * reply_src;
+  short unsigned int _1;
+  short unsigned int _2;
+
+  <bb 2> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  if (src_addr_6(D) == 0B)
+    goto <bb 3>; [INV]
+  else
+    goto <bb 4>; [INV]
+
+  <bb 3> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  __asm__ __volatile__("BKPT #0
+	");
+  # DEBUG BEGIN_STMT
+  goto <bb 3>; [INV]
+
+  <bb 4> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  if (dest_addr_8(D) == 0B)
+    goto <bb 5>; [INV]
+  else
+    goto <bb 6>; [INV]
+
+  <bb 5> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  __asm__ __volatile__("BKPT #0
+	");
+  # DEBUG BEGIN_STMT
+  goto <bb 5>; [INV]
+
+  <bb 6> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  reply_dest_9 = src_addr_6(D);
+  # DEBUG reply_dest => reply_dest_9
+  # DEBUG BEGIN_STMT
+  reply_src_10 = dest_addr_8(D);
+  # DEBUG reply_src => reply_src_10
+  # DEBUG BEGIN_STMT
+  netif_12 = ip6_route (reply_src_10, reply_dest_9);
+  # DEBUG netif => netif_12
+  # DEBUG BEGIN_STMT
+  if (netif_12 == 0B)
+    goto <bb 7>; [INV]
+  else
+    goto <bb 8>; [INV]
+
+  <bb 7> :
+  # DEBUG BEGIN_STMT
+  _1 = lwip_stats.icmp6.rterr;
+  _2 = _1 + 1;
+  lwip_stats.icmp6.rterr = _2;
+  # DEBUG BEGIN_STMT
+  // predicted unlikely by early return (on trees) predictor.
+  goto <bb 9>; [INV]
+
+  <bb 8> :
+  # DEBUG BEGIN_STMT
+  icmp6_send_response_with_addrs_and_netif (p_13(D), code_14(D), data_15(D), type_16(D), reply_src_10, reply_dest_9, netif_12);
+
+  <bb 9> :
+  return;
+
+}
+
+
+icmp6_send_response (struct pbuf * p, u8_t code, u32_t data, u8_t type)
+{
+  struct netif * netif;
+  const struct ip6_addr * reply_dest;
+  const struct ip6_addr * reply_src;
+  const struct ip_addr_t * _1;
+  short unsigned int _2;
+  short unsigned int _3;
+
+  <bb 2> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  netif_7 = ip_data.current_netif;
+  # DEBUG netif => netif_7
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  if (netif_7 == 0B)
+    goto <bb 3>; [INV]
+  else
+    goto <bb 4>; [INV]
+
+  <bb 3> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  __asm__ __volatile__("BKPT #0
+	");
+  # DEBUG BEGIN_STMT
+  goto <bb 3>; [INV]
+
+  <bb 4> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  reply_dest_8 = &ip_data.current_iphdr_src.u_addr.ip6;
+  # DEBUG reply_dest => reply_dest_8
+  # DEBUG BEGIN_STMT
+  _1 = ip6_select_source_address (netif_7, reply_dest_8);
+  reply_src_10 = &_1->u_addr.ip6;
+  # DEBUG reply_src => reply_src_10
+  # DEBUG BEGIN_STMT
+  if (reply_src_10 == 0B)
+    goto <bb 5>; [INV]
+  else
+    goto <bb 6>; [INV]
+
+  <bb 5> :
+  # DEBUG BEGIN_STMT
+  _2 = lwip_stats.icmp6.rterr;
+  _3 = _2 + 1;
+  lwip_stats.icmp6.rterr = _3;
+  # DEBUG BEGIN_STMT
+  // predicted unlikely by early return (on trees) predictor.
+  goto <bb 7>; [INV]
+
+  <bb 6> :
+  # DEBUG BEGIN_STMT
+  icmp6_send_response_with_addrs_and_netif (p_11(D), code_12(D), data_13(D), type_14(D), reply_src_10, reply_dest_8, netif_7);
+
+  <bb 7> :
+  return;
+
+}
+
+
+icmp6_param_problem (struct pbuf * p, icmp6_pp_code c, const void * pointer)
+{
+  u32_t pointer_u32;
+  struct ip6_hdr * _1;
+  int _2;
+
+  <bb 2> :
+  # DEBUG BEGIN_STMT
+  _1 = ip_data.current_ip6_header;
+  _2 = pointer_4(D) - _1;
+  pointer_u32_5 = (u32_t) _2;
+  # DEBUG pointer_u32 => pointer_u32_5
+  # DEBUG BEGIN_STMT
+  icmp6_send_response (p_6(D), c_7(D), pointer_u32_5, 4);
+  return;
+
+}
+
+
+icmp6_time_exceeded_with_addrs (struct pbuf * p, icmp6_te_code c, const struct ip6_addr_t * src_addr, const struct ip6_addr_t * dest_addr)
+{
+  <bb 2> :
+  # DEBUG BEGIN_STMT
+  icmp6_send_response_with_addrs (p_2(D), c_3(D), 0, 3, src_addr_4(D), dest_addr_5(D));
+  return;
+
+}
+
+
+icmp6_time_exceeded (struct pbuf * p, icmp6_te_code c)
+{
+  <bb 2> :
+  # DEBUG BEGIN_STMT
+  icmp6_send_response (p_2(D), c_3(D), 0, 3);
+  return;
+
+}
+
+
+icmp6_packet_too_big (struct pbuf * p, u32_t mtu)
+{
+  <bb 2> :
+  # DEBUG BEGIN_STMT
+  icmp6_send_response (p_2(D), 0, mtu_3(D), 2);
+  return;
+
+}
+
+
+icmp6_dest_unreach (struct pbuf * p, icmp6_dur_code c)
+{
+  <bb 2> :
+  # DEBUG BEGIN_STMT
+  icmp6_send_response (p_2(D), c_3(D), 0, 1);
+  return;
+
+}
+
+
+icmp6_input (struct pbuf * p, struct netif * inp)
+{
+  const struct ip6_addr_t * reply_src;
+  struct pbuf * r;
+  struct icmp6_hdr * icmp6hdr;
+  short unsigned int _1;
+  short unsigned int _2;
+  short unsigned int _3;
+  short unsigned int _4;
+  short unsigned int _5;
+  short unsigned int _6;
+  short unsigned int _7;
+  short unsigned int _8;
+  short unsigned int _9;
+  short unsigned int _10;
+  short unsigned int _11;
+  short unsigned int _12;
+  short unsigned int _13;
+  unsigned char _14;
+  int _15;
+  long unsigned int _16;
+  long unsigned int _17;
+  short unsigned int _18;
+  short unsigned int _19;
+  short unsigned int _20;
+  short unsigned int _21;
+  short unsigned int _22;
+  signed char _23;
+  short unsigned int _24;
+  short unsigned int _25;
+  void * _26;
+  void * _27;
+  short unsigned int _28;
+  void * _29;
+  short unsigned int _30;
+  short unsigned int _31;
+  short unsigned int _32;
+  short unsigned int _33;
+  short unsigned int _34;
+  short unsigned int _35;
+  short unsigned int _36;
+
+  <bb 2> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _1 = lwip_stats.icmp6.recv;
+  _2 = _1 + 1;
+  lwip_stats.icmp6.recv = _2;
+  # DEBUG BEGIN_STMT
+  _3 = p_41(D)->len;
+  if (_3 <= 7)
+    goto <bb 3>; [INV]
+  else
+    goto <bb 4>; [INV]
+
+  <bb 3> :
+  # DEBUG BEGIN_STMT
+  pbuf_free (p_41(D));
+  # DEBUG BEGIN_STMT
+  _4 = lwip_stats.icmp6.lenerr;
+  _5 = _4 + 1;
+  lwip_stats.icmp6.lenerr = _5;
+  # DEBUG BEGIN_STMT
+  _6 = lwip_stats.icmp6.drop;
+  _7 = _6 + 1;
+  lwip_stats.icmp6.drop = _7;
+  # DEBUG BEGIN_STMT
+  // predicted unlikely by early return (on trees) predictor.
+  goto <bb 18>; [INV]
+
+  <bb 4> :
+  # DEBUG BEGIN_STMT
+  icmp6hdr_42 = p_41(D)->payload;
+  # DEBUG icmp6hdr => icmp6hdr_42
+  # DEBUG BEGIN_STMT
+  _8 = p_41(D)->tot_len;
+  _9 = ip6_chksum_pseudo (p_41(D), 58, _8, &ip_data.current_iphdr_src.u_addr.ip6, &ip_data.current_iphdr_dest.u_addr.ip6);
+  if (_9 != 0)
+    goto <bb 5>; [INV]
+  else
+    goto <bb 6>; [INV]
+
+  <bb 5> :
+  # DEBUG BEGIN_STMT
+  pbuf_free (p_41(D));
+  # DEBUG BEGIN_STMT
+  _10 = lwip_stats.icmp6.chkerr;
+  _11 = _10 + 1;
+  lwip_stats.icmp6.chkerr = _11;
+  # DEBUG BEGIN_STMT
+  _12 = lwip_stats.icmp6.drop;
+  _13 = _12 + 1;
+  lwip_stats.icmp6.drop = _13;
+  # DEBUG BEGIN_STMT
+  // predicted unlikely by early return (on trees) predictor.
+  goto <bb 18>; [INV]
+
+  <bb 6> :
+  # DEBUG BEGIN_STMT
+  _14 = icmp6hdr_42->type;
+  _15 = (int) _14;
+  switch (_15) <default: <L20> [INV], case 2: <L4> [INV], case 128: <L13> [INV], case 130 ... 132: <L10> [INV], case 133: <L23> [INV], case 134 ... 137: <L4> [INV]>
+
+  <bb 7> :
+<L4>:
+  # DEBUG BEGIN_STMT
+  nd6_input (p_41(D), inp_44(D));
+  # DEBUG BEGIN_STMT
+  goto <bb 18>; [INV]
+
+  <bb 8> :
+<L10>:
+  # DEBUG BEGIN_STMT
+  mld6_input (p_41(D), inp_44(D));
+  # DEBUG BEGIN_STMT
+  goto <bb 18>; [INV]
+
+  <bb 9> :
+<L13>:
+  # DEBUG BEGIN_STMT
+  _16 = ip_data.current_iphdr_dest.u_addr.ip6.addr[0];
+  _17 = _16 & 255;
+  if (_17 == 255)
+    goto <bb 10>; [INV]
+  else
+    goto <bb 11>; [INV]
+
+  <bb 10> :
+  # DEBUG BEGIN_STMT
+  pbuf_free (p_41(D));
+  # DEBUG BEGIN_STMT
+  _18 = lwip_stats.icmp6.drop;
+  _19 = _18 + 1;
+  lwip_stats.icmp6.drop = _19;
+  # DEBUG BEGIN_STMT
+  // predicted unlikely by early return (on trees) predictor.
+  goto <bb 18>; [INV]
+
+  <bb 11> :
+  # DEBUG BEGIN_STMT
+  _20 = p_41(D)->tot_len;
+  r_47 = pbuf_alloc (54, _20, 640);
+  # DEBUG r => r_47
+  # DEBUG BEGIN_STMT
+  if (r_47 == 0B)
+    goto <bb 12>; [INV]
+  else
+    goto <bb 13>; [INV]
+
+  <bb 12> :
+  # DEBUG BEGIN_STMT
+  pbuf_free (p_41(D));
+  # DEBUG BEGIN_STMT
+  _21 = lwip_stats.icmp6.memerr;
+  _22 = _21 + 1;
+  lwip_stats.icmp6.memerr = _22;
+  # DEBUG BEGIN_STMT
+  // predicted unlikely by early return (on trees) predictor.
+  goto <bb 18>; [INV]
+
+  <bb 13> :
+  # DEBUG BEGIN_STMT
+  _23 = pbuf_copy (r_47, p_41(D));
+  if (_23 != 0)
+    goto <bb 14>; [INV]
+  else
+    goto <bb 15>; [INV]
+
+  <bb 14> :
+  # DEBUG BEGIN_STMT
+  pbuf_free (p_41(D));
+  # DEBUG BEGIN_STMT
+  pbuf_free (r_47);
+  # DEBUG BEGIN_STMT
+  _24 = lwip_stats.icmp6.err;
+  _25 = _24 + 1;
+  lwip_stats.icmp6.err = _25;
+  # DEBUG BEGIN_STMT
+  // predicted unlikely by early return (on trees) predictor.
+  goto <bb 18>; [INV]
+
+  <bb 15> :
+  # DEBUG BEGIN_STMT
+  reply_src_49 = &ip_data.current_iphdr_dest.u_addr.ip6;
+  # DEBUG reply_src => reply_src_49
+  # DEBUG BEGIN_STMT
+  _26 = r_47->payload;
+  MEM[(struct icmp6_echo_hdr *)_26].type = 129;
+  # DEBUG BEGIN_STMT
+  _27 = r_47->payload;
+  MEM[(struct icmp6_echo_hdr *)_27].chksum = 0;
+  # DEBUG BEGIN_STMT
+  _28 = r_47->tot_len;
+  _29 = r_47->payload;
+  _30 = ip6_chksum_pseudo (r_47, 58, _28, reply_src_49, &ip_data.current_iphdr_src.u_addr.ip6);
+  MEM[(struct icmp6_echo_hdr *)_29].chksum = _30;
+  # DEBUG BEGIN_STMT
+  _31 = lwip_stats.icmp6.xmit;
+  _32 = _31 + 1;
+  lwip_stats.icmp6.xmit = _32;
+  # DEBUG BEGIN_STMT
+  ip6_output_if (r_47, reply_src_49, &ip_data.current_iphdr_src.u_addr.ip6, 255, 0, 58, inp_44(D));
+  # DEBUG BEGIN_STMT
+  pbuf_free (r_47);
+  # DEBUG BEGIN_STMT
+  goto <bb 17>; [INV]
+
+  <bb 16> :
+<L20>:
+  # DEBUG BEGIN_STMT
+  _33 = lwip_stats.icmp6.proterr;
+  _34 = _33 + 1;
+  lwip_stats.icmp6.proterr = _34;
+  # DEBUG BEGIN_STMT
+  _35 = lwip_stats.icmp6.drop;
+  _36 = _35 + 1;
+  lwip_stats.icmp6.drop = _36;
+  # DEBUG BEGIN_STMT
+
+  <bb 17> :
+<L23>:
+  # DEBUG BEGIN_STMT
+  pbuf_free (p_41(D));
+
+  <bb 18> :
+  return;
+
+}
+
+

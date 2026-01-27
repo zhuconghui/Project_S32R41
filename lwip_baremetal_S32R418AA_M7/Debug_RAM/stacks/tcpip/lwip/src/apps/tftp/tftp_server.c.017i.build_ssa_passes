@@ -1,0 +1,1044 @@
+tftp_cleanup ()
+{
+  <bb 2> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _1 = tftp_state.upcb;
+  if (_1 == 0B)
+    goto <bb 3>; [INV]
+  else
+    goto <bb 4>; [INV]
+
+  <bb 3> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  __asm__ __volatile__("BKPT #0
+	");
+  # DEBUG BEGIN_STMT
+  goto <bb 3>; [INV]
+
+  <bb 4> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _2 = tftp_state.upcb;
+  udp_remove (_2);
+  # DEBUG BEGIN_STMT
+  close_handle ();
+  # DEBUG BEGIN_STMT
+  memset (&tftp_state, 0, 56);
+  return;
+
+}
+
+
+tftp_init (const struct tftp_context * ctx)
+{
+  struct udp_pcb * pcb;
+  err_t ret;
+  err_t D.7280;
+
+  <bb 2> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  pcb = udp_new_ip_type (46);
+  # DEBUG BEGIN_STMT
+  if (pcb == 0B)
+    goto <bb 3>; [INV]
+  else
+    goto <bb 4>; [INV]
+
+  <bb 3> :
+  # DEBUG BEGIN_STMT
+  D.7280 = -1;
+  // predicted unlikely by early return (on trees) predictor.
+  goto <bb 7>; [INV]
+
+  <bb 4> :
+  # DEBUG BEGIN_STMT
+  ret = udp_bind (pcb, &ip_addr_any_type, 69);
+  # DEBUG BEGIN_STMT
+  if (ret != 0)
+    goto <bb 5>; [INV]
+  else
+    goto <bb 6>; [INV]
+
+  <bb 5> :
+  # DEBUG BEGIN_STMT
+  udp_remove (pcb);
+  # DEBUG BEGIN_STMT
+  D.7280 = ret;
+  // predicted unlikely by early return (on trees) predictor.
+  goto <bb 7>; [INV]
+
+  <bb 6> :
+  # DEBUG BEGIN_STMT
+  tftp_state.handle = 0B;
+  # DEBUG BEGIN_STMT
+  tftp_state.port = 0;
+  # DEBUG BEGIN_STMT
+  tftp_state.ctx = ctx;
+  # DEBUG BEGIN_STMT
+  tftp_state.timer = 0;
+  # DEBUG BEGIN_STMT
+  tftp_state.last_data = 0B;
+  # DEBUG BEGIN_STMT
+  tftp_state.upcb = pcb;
+  # DEBUG BEGIN_STMT
+  udp_recv (pcb, recv, 0B);
+  # DEBUG BEGIN_STMT
+  D.7280 = 0;
+
+  <bb 7> :
+  return D.7280;
+
+}
+
+
+tftp_tmr (void * arg)
+{
+  <bb 2> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _1 = tftp_state.timer;
+  _2 = _1 + 1;
+  tftp_state.timer = _2;
+  # DEBUG BEGIN_STMT
+  _3 = tftp_state.handle;
+  if (_3 == 0B)
+    goto <bb 3>; [INV]
+  else
+    goto <bb 4>; [INV]
+
+  <bb 3> :
+  # DEBUG BEGIN_STMT
+  // predicted unlikely by early return (on trees) predictor.
+  goto <bb 9>; [INV]
+
+  <bb 4> :
+  # DEBUG BEGIN_STMT
+  sys_timeout (1000, tftp_tmr, 0B);
+  # DEBUG BEGIN_STMT
+  _4 = tftp_state.timer;
+  _5 = tftp_state.last_pkt;
+  _6 = _4 - _5;
+  if (_6 > 10)
+    goto <bb 5>; [INV]
+  else
+    goto <bb 9>; [INV]
+
+  <bb 5> :
+  # DEBUG BEGIN_STMT
+  _7 = tftp_state.last_data;
+  if (_7 != 0B)
+    goto <bb 6>; [INV]
+  else
+    goto <bb 8>; [INV]
+
+  <bb 6> :
+  _8 = tftp_state.retries;
+  if (_8 <= 4)
+    goto <bb 7>; [INV]
+  else
+    goto <bb 8>; [INV]
+
+  <bb 7> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  resend_data ();
+  # DEBUG BEGIN_STMT
+  _9 = tftp_state.retries;
+  _10 = _9;
+  _11 = _10 + 1;
+  tftp_state.retries = _11;
+  goto <bb 9>; [INV]
+
+  <bb 8> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  close_handle ();
+
+  <bb 9> :
+  return;
+
+}
+
+
+recv (void * arg, struct udp_pcb * upcb, struct pbuf * p, const struct ip_addr_t * addr, u16_t port)
+{
+  int lastpkt;
+  u16_t blknum;
+  u16_t blknum;
+  int ret;
+  u16_t mode_end_offset;
+  u16_t filename_end_offset;
+  char mode[8];
+  char filename[21];
+  const char tftp_null;
+  int opcode;
+  u16_t * sbuf;
+  int iftmp.1;
+  int iftmp.0;
+
+  <bb 2> :
+  # DEBUG BEGIN_STMT
+  sbuf = p->payload;
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _1 = tftp_state.port;
+  if (_1 != 0)
+    goto <bb 3>; [INV]
+  else
+    goto <bb 4>; [INV]
+
+  <bb 3> :
+  _2 = tftp_state.port;
+  if (port != _2)
+    goto <bb 24>; [INV]
+  else
+    goto <bb 4>; [INV]
+
+  <bb 4> :
+  _3 = tftp_state.addr.type;
+  if (_3 == 6)
+    goto <bb 5>; [INV]
+  else
+    goto <bb 12>; [INV]
+
+  <bb 5> :
+  _4 = tftp_state.addr.u_addr.ip6.addr[0];
+  if (_4 != 0)
+    goto <bb 9>; [INV]
+  else
+    goto <bb 6>; [INV]
+
+  <bb 6> :
+  _5 = tftp_state.addr.u_addr.ip6.addr[1];
+  if (_5 != 0)
+    goto <bb 9>; [INV]
+  else
+    goto <bb 7>; [INV]
+
+  <bb 7> :
+  _6 = tftp_state.addr.u_addr.ip6.addr[2];
+  if (_6 != 0)
+    goto <bb 9>; [INV]
+  else
+    goto <bb 8>; [INV]
+
+  <bb 8> :
+  _7 = tftp_state.addr.u_addr.ip6.addr[3];
+  if (_7 != 0)
+    goto <bb 9>; [INV]
+  else
+    goto <bb 10>; [INV]
+
+  <bb 9> :
+  iftmp.0 = 1;
+  goto <bb 11>; [INV]
+
+  <bb 10> :
+  iftmp.0 = 0;
+
+  <bb 11> :
+  _8 = (_Bool) iftmp.0;
+  if (_8 != 0)
+    goto <bb 13>; [INV]
+  else
+    goto <bb 25>; [INV]
+
+  <bb 12> :
+  _9 = tftp_state.addr.u_addr.ip4.addr;
+  if (_9 != 0)
+    goto <bb 13>; [INV]
+  else
+    goto <bb 25>; [INV]
+
+  <bb 13> :
+  _10 = tftp_state.addr.type;
+  _11 = addr->type;
+  if (_10 == _11)
+    goto <bb 14>; [INV]
+  else
+    goto <bb 24>; [INV]
+
+  <bb 14> :
+  _12 = tftp_state.addr.type;
+  if (_12 == 6)
+    goto <bb 15>; [INV]
+  else
+    goto <bb 23>; [INV]
+
+  <bb 15> :
+  _13 = tftp_state.addr.u_addr.ip6.addr[0];
+  _14 = addr->u_addr.ip6.addr[0];
+  if (_13 != _14)
+    goto <bb 20>; [INV]
+  else
+    goto <bb 16>; [INV]
+
+  <bb 16> :
+  _15 = tftp_state.addr.u_addr.ip6.addr[1];
+  _16 = addr->u_addr.ip6.addr[1];
+  if (_15 != _16)
+    goto <bb 20>; [INV]
+  else
+    goto <bb 17>; [INV]
+
+  <bb 17> :
+  _17 = tftp_state.addr.u_addr.ip6.addr[2];
+  _18 = addr->u_addr.ip6.addr[2];
+  if (_17 != _18)
+    goto <bb 20>; [INV]
+  else
+    goto <bb 18>; [INV]
+
+  <bb 18> :
+  _19 = tftp_state.addr.u_addr.ip6.addr[3];
+  _20 = addr->u_addr.ip6.addr[3];
+  if (_19 != _20)
+    goto <bb 20>; [INV]
+  else
+    goto <bb 19>; [INV]
+
+  <bb 19> :
+  _21 = tftp_state.addr.u_addr.ip6.zone;
+  _22 = addr->u_addr.ip6.zone;
+  if (_21 != _22)
+    goto <bb 20>; [INV]
+  else
+    goto <bb 21>; [INV]
+
+  <bb 20> :
+  iftmp.1 = 1;
+  goto <bb 22>; [INV]
+
+  <bb 21> :
+  iftmp.1 = 0;
+
+  <bb 22> :
+  _23 = (_Bool) iftmp.1;
+  if (_23 != 0)
+    goto <bb 24>; [INV]
+  else
+    goto <bb 25>; [INV]
+
+  <bb 23> :
+  _24 = tftp_state.addr.u_addr.ip4.addr;
+  _25 = addr->u_addr.ip4.addr;
+  if (_24 != _25)
+    goto <bb 24>; [INV]
+  else
+    goto <bb 25>; [INV]
+
+  <bb 24> :
+  # DEBUG BEGIN_STMT
+  send_error (addr, port, 2, "Only one connection at a time is supported");
+  # DEBUG BEGIN_STMT
+  pbuf_free (p);
+  # DEBUG BEGIN_STMT
+  // predicted unlikely by early return (on trees) predictor.
+  goto <bb 70>; [INV]
+
+  <bb 25> :
+  # DEBUG BEGIN_STMT
+  _26 = *sbuf;
+  opcode = (int) _26;
+  # DEBUG BEGIN_STMT
+  _27 = tftp_state.timer;
+  tftp_state.last_pkt = _27;
+  # DEBUG BEGIN_STMT
+  tftp_state.retries = 0;
+  # DEBUG BEGIN_STMT
+  switch (opcode) <default: <L77> [INV], case 256: <L26> [INV], case 512: <L26> [INV], case 768: <L48> [INV], case 1024: <L65> [INV]>
+
+  <bb 26> :
+<L26>:
+  # DEBUG BEGIN_STMT
+  tftp_null = 0;
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _28 = tftp_state.handle;
+  if (_28 != 0B)
+    goto <bb 27>; [INV]
+  else
+    goto <bb 28>; [INV]
+
+  <bb 27> :
+  # DEBUG BEGIN_STMT
+  send_error (addr, port, 2, "Only one connection at a time is supported");
+  # DEBUG BEGIN_STMT
+  goto <bb 42>; [INV]
+
+  <bb 28> :
+  # DEBUG BEGIN_STMT
+  sys_timeout (1000, tftp_tmr, 0B);
+  # DEBUG BEGIN_STMT
+  filename_end_offset = pbuf_memfind (p, &tftp_null, 1, 2);
+  # DEBUG BEGIN_STMT
+  _29 = filename_end_offset + 65535;
+  if (_29 > 21)
+    goto <bb 29>; [INV]
+  else
+    goto <bb 30>; [INV]
+
+  <bb 29> :
+  # DEBUG BEGIN_STMT
+  send_error (addr, port, 2, "Filename too long/not NULL terminated");
+  # DEBUG BEGIN_STMT
+  goto <bb 42>; [INV]
+
+  <bb 30> :
+  # DEBUG BEGIN_STMT
+  _30 = filename_end_offset + 65535;
+  pbuf_copy_partial (p, &filename, _30, 2);
+  # DEBUG BEGIN_STMT
+  _31 = filename_end_offset + 1;
+  mode_end_offset = pbuf_memfind (p, &tftp_null, 1, _31);
+  # DEBUG BEGIN_STMT
+  _32 = mode_end_offset - filename_end_offset;
+  if (_32 > 8)
+    goto <bb 31>; [INV]
+  else
+    goto <bb 32>; [INV]
+
+  <bb 31> :
+  # DEBUG BEGIN_STMT
+  send_error (addr, port, 2, "Mode too long/not NULL terminated");
+  # DEBUG BEGIN_STMT
+  goto <bb 42>; [INV]
+
+  <bb 32> :
+  # DEBUG BEGIN_STMT
+  _33 = mode_end_offset - filename_end_offset;
+  _34 = filename_end_offset + 1;
+  pbuf_copy_partial (p, &mode, _33, _34);
+  # DEBUG BEGIN_STMT
+  _35 = tftp_state.ctx;
+  _36 = _35->open;
+  _37 = opcode == 512;
+  _38 = (unsigned char) _37;
+  _39 = _36 (&filename, &mode, _38);
+  tftp_state.handle = _39;
+  # DEBUG BEGIN_STMT
+  tftp_state.blknum = 1;
+  # DEBUG BEGIN_STMT
+  _40 = tftp_state.handle;
+  if (_40 == 0B)
+    goto <bb 33>; [INV]
+  else
+    goto <bb 34>; [INV]
+
+  <bb 33> :
+  # DEBUG BEGIN_STMT
+  send_error (addr, port, 1, "Unable to open requested file.");
+  # DEBUG BEGIN_STMT
+  goto <bb 42>; [INV]
+
+  <bb 34> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  if (addr != 0B)
+    goto <bb 35>; [INV]
+  else
+    goto <bb 36>; [INV]
+
+  <bb 35> :
+  _41 = addr->type;
+
+  <bb 36> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _42 = addr->type;
+  tftp_state.addr.type = _42;
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _43 = addr->type;
+  if (_43 == 6)
+    goto <bb 37>; [INV]
+  else
+    goto <bb 38>; [INV]
+
+  <bb 37> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _44 = addr->u_addr.ip6.addr[0];
+  tftp_state.addr.u_addr.ip6.addr[0] = _44;
+  # DEBUG BEGIN_STMT
+  _45 = addr->u_addr.ip6.addr[1];
+  tftp_state.addr.u_addr.ip6.addr[1] = _45;
+  # DEBUG BEGIN_STMT
+  _46 = addr->u_addr.ip6.addr[2];
+  tftp_state.addr.u_addr.ip6.addr[2] = _46;
+  # DEBUG BEGIN_STMT
+  _47 = addr->u_addr.ip6.addr[3];
+  tftp_state.addr.u_addr.ip6.addr[3] = _47;
+  # DEBUG BEGIN_STMT
+  _48 = addr->u_addr.ip6.zone;
+  tftp_state.addr.u_addr.ip6.zone = _48;
+  # DEBUG BEGIN_STMT
+  goto <bb 39>; [INV]
+
+  <bb 38> :
+  # DEBUG BEGIN_STMT
+  _49 = addr->u_addr.ip4.addr;
+  tftp_state.addr.u_addr.ip4.addr = _49;
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  tftp_state.addr.u_addr.ip6.addr[3] = 0;
+  _50 = tftp_state.addr.u_addr.ip6.addr[3];
+  tftp_state.addr.u_addr.ip6.addr[2] = _50;
+  _51 = tftp_state.addr.u_addr.ip6.addr[2];
+  tftp_state.addr.u_addr.ip6.addr[1] = _51;
+  # DEBUG BEGIN_STMT
+  tftp_state.addr.u_addr.ip6.zone = 0;
+
+  <bb 39> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  tftp_state.port = port;
+  # DEBUG BEGIN_STMT
+  if (opcode == 512)
+    goto <bb 40>; [INV]
+  else
+    goto <bb 41>; [INV]
+
+  <bb 40> :
+  # DEBUG BEGIN_STMT
+  tftp_state.mode_write = 1;
+  # DEBUG BEGIN_STMT
+  send_ack (0);
+  goto <bb 42>; [INV]
+
+  <bb 41> :
+  # DEBUG BEGIN_STMT
+  tftp_state.mode_write = 0;
+  # DEBUG BEGIN_STMT
+  send_data ();
+
+  <bb 42> :
+  tftp_null = {CLOBBER};
+  filename = {CLOBBER};
+  mode = {CLOBBER};
+  goto <bb 69>; [INV]
+
+  <bb 43> :
+<L48>:
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _52 = tftp_state.handle;
+  if (_52 == 0B)
+    goto <bb 44>; [INV]
+  else
+    goto <bb 45>; [INV]
+
+  <bb 44> :
+  # DEBUG BEGIN_STMT
+  send_error (addr, port, 2, "No connection");
+  # DEBUG BEGIN_STMT
+  goto <bb 69>; [INV]
+
+  <bb 45> :
+  # DEBUG BEGIN_STMT
+  _53 = tftp_state.mode_write;
+  if (_53 != 1)
+    goto <bb 46>; [INV]
+  else
+    goto <bb 47>; [INV]
+
+  <bb 46> :
+  # DEBUG BEGIN_STMT
+  send_error (addr, port, 2, "Not a write connection");
+  # DEBUG BEGIN_STMT
+  goto <bb 69>; [INV]
+
+  <bb 47> :
+  # DEBUG BEGIN_STMT
+  _54 = sbuf + 2;
+  _55 = *_54;
+  blknum = lwip_htons (_55);
+  # DEBUG BEGIN_STMT
+  _56 = tftp_state.blknum;
+  if (blknum == _56)
+    goto <bb 48>; [INV]
+  else
+    goto <bb 54>; [INV]
+
+  <bb 48> :
+  # DEBUG BEGIN_STMT
+  pbuf_remove_header (p, 4);
+  # DEBUG BEGIN_STMT
+  _57 = tftp_state.ctx;
+  _58 = _57->write;
+  _59 = tftp_state.handle;
+  ret = _58 (_59, p);
+  # DEBUG BEGIN_STMT
+  if (ret < 0)
+    goto <bb 49>; [INV]
+  else
+    goto <bb 50>; [INV]
+
+  <bb 49> :
+  # DEBUG BEGIN_STMT
+  send_error (addr, port, 2, "error writing file");
+  # DEBUG BEGIN_STMT
+  close_handle ();
+  goto <bb 51>; [INV]
+
+  <bb 50> :
+  # DEBUG BEGIN_STMT
+  send_ack (blknum);
+
+  <bb 51> :
+  # DEBUG BEGIN_STMT
+  _60 = p->tot_len;
+  if (_60 <= 511)
+    goto <bb 52>; [INV]
+  else
+    goto <bb 53>; [INV]
+
+  <bb 52> :
+  # DEBUG BEGIN_STMT
+  close_handle ();
+  goto <bb 69>; [INV]
+
+  <bb 53> :
+  # DEBUG BEGIN_STMT
+  _61 = tftp_state.blknum;
+  _62 = _61;
+  _63 = _62 + 1;
+  tftp_state.blknum = _63;
+  goto <bb 69>; [INV]
+
+  <bb 54> :
+  # DEBUG BEGIN_STMT
+  _64 = blknum + 1;
+  _65 = tftp_state.blknum;
+  if (_64 == _65)
+    goto <bb 55>; [INV]
+  else
+    goto <bb 56>; [INV]
+
+  <bb 55> :
+  # DEBUG BEGIN_STMT
+  send_ack (blknum);
+  goto <bb 69>; [INV]
+
+  <bb 56> :
+  # DEBUG BEGIN_STMT
+  send_error (addr, port, 5, "Wrong block number");
+  goto <bb 69>; [INV]
+
+  <bb 57> :
+<L65>:
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _66 = tftp_state.handle;
+  if (_66 == 0B)
+    goto <bb 58>; [INV]
+  else
+    goto <bb 59>; [INV]
+
+  <bb 58> :
+  # DEBUG BEGIN_STMT
+  send_error (addr, port, 2, "No connection");
+  # DEBUG BEGIN_STMT
+  goto <bb 69>; [INV]
+
+  <bb 59> :
+  # DEBUG BEGIN_STMT
+  _67 = tftp_state.mode_write;
+  if (_67 != 0)
+    goto <bb 60>; [INV]
+  else
+    goto <bb 61>; [INV]
+
+  <bb 60> :
+  # DEBUG BEGIN_STMT
+  send_error (addr, port, 2, "Not a read connection");
+  # DEBUG BEGIN_STMT
+  goto <bb 69>; [INV]
+
+  <bb 61> :
+  # DEBUG BEGIN_STMT
+  _68 = sbuf + 2;
+  _69 = *_68;
+  blknum = lwip_htons (_69);
+  # DEBUG BEGIN_STMT
+  _70 = tftp_state.blknum;
+  if (blknum != _70)
+    goto <bb 62>; [INV]
+  else
+    goto <bb 63>; [INV]
+
+  <bb 62> :
+  # DEBUG BEGIN_STMT
+  send_error (addr, port, 5, "Wrong block number");
+  # DEBUG BEGIN_STMT
+  goto <bb 69>; [INV]
+
+  <bb 63> :
+  # DEBUG BEGIN_STMT
+  lastpkt = 0;
+  # DEBUG BEGIN_STMT
+  _71 = tftp_state.last_data;
+  if (_71 != 0B)
+    goto <bb 64>; [INV]
+  else
+    goto <bb 65>; [INV]
+
+  <bb 64> :
+  # DEBUG BEGIN_STMT
+  _72 = tftp_state.last_data;
+  _73 = _72->tot_len;
+  _74 = _73 != 516;
+  lastpkt = (int) _74;
+
+  <bb 65> :
+  # DEBUG BEGIN_STMT
+  if (lastpkt == 0)
+    goto <bb 66>; [INV]
+  else
+    goto <bb 67>; [INV]
+
+  <bb 66> :
+  # DEBUG BEGIN_STMT
+  _75 = tftp_state.blknum;
+  _76 = _75;
+  _77 = _76 + 1;
+  tftp_state.blknum = _77;
+  # DEBUG BEGIN_STMT
+  send_data ();
+  goto <bb 69>; [INV]
+
+  <bb 67> :
+  # DEBUG BEGIN_STMT
+  close_handle ();
+  goto <bb 69>; [INV]
+
+  <bb 68> :
+<L77>:
+  # DEBUG BEGIN_STMT
+  send_error (addr, port, 4, "Unknown operation");
+  # DEBUG BEGIN_STMT
+
+  <bb 69> :
+  # DEBUG BEGIN_STMT
+  pbuf_free (p);
+
+  <bb 70> :
+  return;
+
+}
+
+
+send_data ()
+{
+  int ret;
+  u16_t * payload;
+
+  <bb 2> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _1 = tftp_state.last_data;
+  if (_1 != 0B)
+    goto <bb 3>; [INV]
+  else
+    goto <bb 4>; [INV]
+
+  <bb 3> :
+  # DEBUG BEGIN_STMT
+  _2 = tftp_state.last_data;
+  pbuf_free (_2);
+
+  <bb 4> :
+  # DEBUG BEGIN_STMT
+  _3 = pbuf_alloc (74, 516, 640);
+  tftp_state.last_data = _3;
+  # DEBUG BEGIN_STMT
+  _4 = tftp_state.last_data;
+  if (_4 == 0B)
+    goto <bb 5>; [INV]
+  else
+    goto <bb 6>; [INV]
+
+  <bb 5> :
+  # DEBUG BEGIN_STMT
+  // predicted unlikely by early return (on trees) predictor.
+  goto <bb 9>; [INV]
+
+  <bb 6> :
+  # DEBUG BEGIN_STMT
+  _5 = tftp_state.last_data;
+  payload = _5->payload;
+  # DEBUG BEGIN_STMT
+  *payload = 768;
+  # DEBUG BEGIN_STMT
+  _6 = tftp_state.blknum;
+  _7 = payload + 2;
+  _8 = lwip_htons (_6);
+  *_7 = _8;
+  # DEBUG BEGIN_STMT
+  _9 = tftp_state.ctx;
+  _10 = _9->read;
+  _11 = tftp_state.handle;
+  _12 = payload + 4;
+  ret = _10 (_11, _12, 512);
+  # DEBUG BEGIN_STMT
+  if (ret < 0)
+    goto <bb 7>; [INV]
+  else
+    goto <bb 8>; [INV]
+
+  <bb 7> :
+  # DEBUG BEGIN_STMT
+  _13 = tftp_state.port;
+  send_error (&tftp_state.addr, _13, 2, "Error occured while reading the file.");
+  # DEBUG BEGIN_STMT
+  close_handle ();
+  # DEBUG BEGIN_STMT
+  // predicted unlikely by early return (on trees) predictor.
+  goto <bb 9>; [INV]
+
+  <bb 8> :
+  # DEBUG BEGIN_STMT
+  _14 = tftp_state.last_data;
+  _15 = (short unsigned int) ret;
+  _16 = _15 + 4;
+  pbuf_realloc (_14, _16);
+  # DEBUG BEGIN_STMT
+  resend_data ();
+
+  <bb 9> :
+  return;
+
+}
+
+
+resend_data ()
+{
+  struct pbuf * p;
+
+  <bb 2> :
+  # DEBUG BEGIN_STMT
+  _1 = tftp_state.last_data;
+  _2 = _1->len;
+  p = pbuf_alloc (74, _2, 640);
+  # DEBUG BEGIN_STMT
+  if (p == 0B)
+    goto <bb 3>; [INV]
+  else
+    goto <bb 4>; [INV]
+
+  <bb 3> :
+  # DEBUG BEGIN_STMT
+  // predicted unlikely by early return (on trees) predictor.
+  goto <bb 7>; [INV]
+
+  <bb 4> :
+  # DEBUG BEGIN_STMT
+  _3 = tftp_state.last_data;
+  _4 = pbuf_copy (p, _3);
+  if (_4 != 0)
+    goto <bb 5>; [INV]
+  else
+    goto <bb 6>; [INV]
+
+  <bb 5> :
+  # DEBUG BEGIN_STMT
+  pbuf_free (p);
+  # DEBUG BEGIN_STMT
+  // predicted unlikely by early return (on trees) predictor.
+  goto <bb 7>; [INV]
+
+  <bb 6> :
+  # DEBUG BEGIN_STMT
+  _5 = tftp_state.upcb;
+  _6 = tftp_state.port;
+  udp_sendto (_5, p, &tftp_state.addr, _6);
+  # DEBUG BEGIN_STMT
+  pbuf_free (p);
+
+  <bb 7> :
+  return;
+
+}
+
+
+send_ack (u16_t blknum)
+{
+  u16_t * payload;
+  struct pbuf * p;
+
+  <bb 2> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  p = pbuf_alloc (74, 4, 640);
+  # DEBUG BEGIN_STMT
+  if (p == 0B)
+    goto <bb 3>; [INV]
+  else
+    goto <bb 4>; [INV]
+
+  <bb 3> :
+  # DEBUG BEGIN_STMT
+  // predicted unlikely by early return (on trees) predictor.
+  goto <bb 5>; [INV]
+
+  <bb 4> :
+  # DEBUG BEGIN_STMT
+  payload = p->payload;
+  # DEBUG BEGIN_STMT
+  *payload = 1024;
+  # DEBUG BEGIN_STMT
+  _1 = payload + 2;
+  _2 = lwip_htons (blknum);
+  *_1 = _2;
+  # DEBUG BEGIN_STMT
+  _3 = tftp_state.upcb;
+  _4 = tftp_state.port;
+  udp_sendto (_3, p, &tftp_state.addr, _4);
+  # DEBUG BEGIN_STMT
+  pbuf_free (p);
+
+  <bb 5> :
+  return;
+
+}
+
+
+send_error (const struct ip_addr_t * addr, u16_t port, tftp_error code, const char * str)
+{
+  u16_t * payload;
+  struct pbuf * p;
+  int str_length;
+
+  <bb 2> :
+  # DEBUG BEGIN_STMT
+  _1 = strlen (str);
+  str_length = (int) _1;
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _2 = (short unsigned int) str_length;
+  _3 = _2 + 5;
+  p = pbuf_alloc (74, _3, 640);
+  # DEBUG BEGIN_STMT
+  if (p == 0B)
+    goto <bb 3>; [INV]
+  else
+    goto <bb 4>; [INV]
+
+  <bb 3> :
+  # DEBUG BEGIN_STMT
+  // predicted unlikely by early return (on trees) predictor.
+  goto <bb 5>; [INV]
+
+  <bb 4> :
+  # DEBUG BEGIN_STMT
+  payload = p->payload;
+  # DEBUG BEGIN_STMT
+  *payload = 1280;
+  # DEBUG BEGIN_STMT
+  _4 = (short unsigned int) code;
+  _5 = payload + 2;
+  _6 = lwip_htons (_4);
+  *_5 = _6;
+  # DEBUG BEGIN_STMT
+  _7 = payload + 4;
+  _8 = str_length + 1;
+  _9 = (unsigned int) _8;
+  memcpy (_7, str, _9);
+  # DEBUG BEGIN_STMT
+  _10 = tftp_state.upcb;
+  udp_sendto (_10, p, addr, port);
+  # DEBUG BEGIN_STMT
+  pbuf_free (p);
+
+  <bb 5> :
+  return;
+
+}
+
+
+close_handle ()
+{
+  <bb 2> :
+  # DEBUG BEGIN_STMT
+  tftp_state.port = 0;
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  tftp_state.addr.u_addr.ip4.addr = 0;
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  tftp_state.addr.type = 0;
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  tftp_state.addr.u_addr.ip6.addr[3] = 0;
+  _1 = tftp_state.addr.u_addr.ip6.addr[3];
+  tftp_state.addr.u_addr.ip6.addr[2] = _1;
+  _2 = tftp_state.addr.u_addr.ip6.addr[2];
+  tftp_state.addr.u_addr.ip6.addr[1] = _2;
+  # DEBUG BEGIN_STMT
+  tftp_state.addr.u_addr.ip6.zone = 0;
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _3 = tftp_state.last_data;
+  if (_3 != 0B)
+    goto <bb 3>; [INV]
+  else
+    goto <bb 4>; [INV]
+
+  <bb 3> :
+  # DEBUG BEGIN_STMT
+  _4 = tftp_state.last_data;
+  pbuf_free (_4);
+  # DEBUG BEGIN_STMT
+  tftp_state.last_data = 0B;
+
+  <bb 4> :
+  # DEBUG BEGIN_STMT
+  sys_untimeout (tftp_tmr, 0B);
+  # DEBUG BEGIN_STMT
+  _5 = tftp_state.handle;
+  if (_5 != 0B)
+    goto <bb 5>; [INV]
+  else
+    goto <bb 6>; [INV]
+
+  <bb 5> :
+  # DEBUG BEGIN_STMT
+  _6 = tftp_state.ctx;
+  _7 = _6->close;
+  _8 = tftp_state.handle;
+  _7 (_8);
+  # DEBUG BEGIN_STMT
+  tftp_state.handle = 0B;
+
+  <bb 6> :
+  # DEBUG BEGIN_STMT
+  return;
+
+}
+
+

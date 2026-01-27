@@ -1,0 +1,702 @@
+sys_timeouts_sleeptime ()
+{
+  u32_t ret;
+  u32_t now;
+  struct sys_timeo * next_timeout.12_1;
+  struct sys_timeo * next_timeout.13_2;
+  long unsigned int _3;
+  long unsigned int _4;
+  unsigned int _5;
+  _Bool _6;
+  struct sys_timeo * next_timeout.14_7;
+  long unsigned int _8;
+  signed int ret.15_9;
+  u32_t _10;
+  u32_t _17;
+  u32_t _19;
+  u32_t _20;
+
+  <bb 2> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  next_timeout.12_1 = next_timeout;
+  if (next_timeout.12_1 == 0B)
+    goto <bb 3>; [INV]
+  else
+    goto <bb 4>; [INV]
+
+  <bb 3> :
+  # DEBUG BEGIN_STMT
+  _20 = 4294967295;
+  // predicted unlikely by early return (on trees) predictor.
+  goto <bb 9>; [INV]
+
+  <bb 4> :
+  # DEBUG BEGIN_STMT
+  now_15 = sys_now ();
+  # DEBUG now => now_15
+  # DEBUG BEGIN_STMT
+  next_timeout.13_2 = next_timeout;
+  _3 = next_timeout.13_2->time;
+  _4 = _3 - now_15;
+  _5 = _4 >> 31;
+  _6 = (_Bool) _5;
+  if (_6 != 0)
+    goto <bb 5>; [INV]
+  else
+    goto <bb 6>; [INV]
+
+  <bb 5> :
+  # DEBUG BEGIN_STMT
+  _19 = 0;
+  // predicted unlikely by early return (on trees) predictor.
+  goto <bb 9>; [INV]
+
+  <bb 6> :
+  # DEBUG BEGIN_STMT
+  next_timeout.14_7 = next_timeout;
+  _8 = next_timeout.14_7->time;
+  ret_16 = _8 - now_15;
+  # DEBUG ret => ret_16
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  ret.15_9 = (signed int) ret_16;
+  if (ret.15_9 < 0)
+    goto <bb 7>; [INV]
+  else
+    goto <bb 8>; [INV]
+
+  <bb 7> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  __asm__ __volatile__("BKPT #0
+	");
+  # DEBUG BEGIN_STMT
+  goto <bb 7>; [INV]
+
+  <bb 8> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _17 = ret_16;
+  // predicted unlikely by early return (on trees) predictor.
+
+  <bb 9> :
+  # _10 = PHI <_20(3), _19(5), _17(8)>
+  return _10;
+
+}
+
+
+sys_restart_timeouts ()
+{
+  struct sys_timeo * t;
+  u32_t base;
+  u32_t now;
+  struct sys_timeo * next_timeout.10_1;
+  struct sys_timeo * next_timeout.11_2;
+  long unsigned int _3;
+  long unsigned int _4;
+  long unsigned int _5;
+
+  <bb 2> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  next_timeout.10_1 = next_timeout;
+  if (next_timeout.10_1 == 0B)
+    goto <bb 3>; [INV]
+  else
+    goto <bb 4>; [INV]
+
+  <bb 3> :
+  # DEBUG BEGIN_STMT
+  // predicted unlikely by early return (on trees) predictor.
+  goto <bb 7>; [INV]
+
+  <bb 4> :
+  # DEBUG BEGIN_STMT
+  now_11 = sys_now ();
+  # DEBUG now => now_11
+  # DEBUG BEGIN_STMT
+  next_timeout.11_2 = next_timeout;
+  base_12 = next_timeout.11_2->time;
+  # DEBUG base => base_12
+  # DEBUG BEGIN_STMT
+  t_13 = next_timeout;
+  # DEBUG t => t_13
+  goto <bb 6>; [INV]
+
+  <bb 5> :
+  # DEBUG BEGIN_STMT
+  _3 = t_6->time;
+  _4 = _3 - base_12;
+  _5 = now_11 + _4;
+  t_6->time = _5;
+  # DEBUG BEGIN_STMT
+  t_15 = t_6->next;
+  # DEBUG t => t_15
+
+  <bb 6> :
+  # t_6 = PHI <t_13(4), t_15(5)>
+  # DEBUG t => t_6
+  # DEBUG BEGIN_STMT
+  if (t_6 != 0B)
+    goto <bb 5>; [INV]
+  else
+    goto <bb 7>; [INV]
+
+  <bb 7> :
+  return;
+
+}
+
+
+sys_check_timeouts ()
+{
+  void * arg;
+  void (*sys_timeout_handler) (void *) handler;
+  struct sys_timeo * tmptimeout;
+  u32_t now;
+  long unsigned int _1;
+  long unsigned int _2;
+  unsigned int _3;
+  _Bool _4;
+  struct sys_timeo * _5;
+  long unsigned int _6;
+
+  <bb 2> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  now_10 = sys_now ();
+  # DEBUG now => now_10
+
+  <bb 3> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  tmptimeout_11 = next_timeout;
+  # DEBUG tmptimeout => tmptimeout_11
+  # DEBUG BEGIN_STMT
+  if (tmptimeout_11 == 0B)
+    goto <bb 4>; [INV]
+  else
+    goto <bb 5>; [INV]
+
+  <bb 4> :
+  # DEBUG BEGIN_STMT
+  // predicted unlikely by early return (on trees) predictor.
+  goto <bb 9>; [INV]
+
+  <bb 5> :
+  # DEBUG BEGIN_STMT
+  _1 = tmptimeout_11->time;
+  _2 = now_10 - _1;
+  _3 = _2 >> 31;
+  _4 = (_Bool) _3;
+  if (_4 != 0)
+    goto <bb 6>; [INV]
+  else
+    goto <bb 7>; [INV]
+
+  <bb 6> :
+  # DEBUG BEGIN_STMT
+  // predicted unlikely by early return (on trees) predictor.
+  goto <bb 9>; [INV]
+
+  <bb 7> :
+  # DEBUG BEGIN_STMT
+  _5 = tmptimeout_11->next;
+  next_timeout = _5;
+  # DEBUG BEGIN_STMT
+  handler_13 = tmptimeout_11->h;
+  # DEBUG handler => handler_13
+  # DEBUG BEGIN_STMT
+  arg_14 = tmptimeout_11->arg;
+  # DEBUG arg => arg_14
+  # DEBUG BEGIN_STMT
+  _6 = tmptimeout_11->time;
+  current_timeout_due_time = _6;
+  # DEBUG BEGIN_STMT
+  memp_free (9, tmptimeout_11);
+  # DEBUG BEGIN_STMT
+  if (handler_13 != 0B)
+    goto <bb 8>; [INV]
+  else
+    goto <bb 3>; [INV]
+
+  <bb 8> :
+  # DEBUG BEGIN_STMT
+  handler_13 (arg_14);
+  goto <bb 3>; [INV]
+
+  <bb 9> :
+  return;
+
+}
+
+
+sys_untimeout (void (*sys_timeout_handler) (void *) handler, void * arg)
+{
+  struct sys_timeo * t;
+  struct sys_timeo * prev_t;
+  struct sys_timeo * next_timeout.9_1;
+  void (*<Te3>) (void *) _2;
+  void * _3;
+  struct sys_timeo * _4;
+  struct sys_timeo * _5;
+
+  <bb 2> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  next_timeout.9_1 = next_timeout;
+  if (next_timeout.9_1 == 0B)
+    goto <bb 3>; [INV]
+  else
+    goto <bb 4>; [INV]
+
+  <bb 3> :
+  # DEBUG BEGIN_STMT
+  // predicted unlikely by early return (on trees) predictor.
+  goto <bb 13>; [INV]
+
+  <bb 4> :
+  # DEBUG BEGIN_STMT
+  t_11 = next_timeout;
+  # DEBUG t => t_11
+  prev_t_12 = 0B;
+  # DEBUG prev_t => prev_t_12
+  goto <bb 12>; [INV]
+
+  <bb 5> :
+  # DEBUG BEGIN_STMT
+  _2 = t_7->h;
+  if (handler_13(D) == _2)
+    goto <bb 6>; [INV]
+  else
+    goto <bb 11>; [INV]
+
+  <bb 6> :
+  _3 = t_7->arg;
+  if (arg_14(D) == _3)
+    goto <bb 7>; [INV]
+  else
+    goto <bb 11>; [INV]
+
+  <bb 7> :
+  # DEBUG BEGIN_STMT
+  if (prev_t_6 == 0B)
+    goto <bb 8>; [INV]
+  else
+    goto <bb 9>; [INV]
+
+  <bb 8> :
+  # DEBUG BEGIN_STMT
+  _4 = t_7->next;
+  next_timeout = _4;
+  goto <bb 10>; [INV]
+
+  <bb 9> :
+  # DEBUG BEGIN_STMT
+  _5 = t_7->next;
+  prev_t_6->next = _5;
+
+  <bb 10> :
+  # DEBUG BEGIN_STMT
+  memp_free (9, t_7);
+  # DEBUG BEGIN_STMT
+  // predicted unlikely by early return (on trees) predictor.
+  goto <bb 13>; [INV]
+
+  <bb 11> :
+  # DEBUG BEGIN_STMT
+  prev_t_18 = t_7;
+  # DEBUG prev_t => prev_t_18
+  t_19 = t_7->next;
+  # DEBUG t => t_19
+
+  <bb 12> :
+  # prev_t_6 = PHI <prev_t_12(4), prev_t_18(11)>
+  # t_7 = PHI <t_11(4), t_19(11)>
+  # DEBUG t => t_7
+  # DEBUG prev_t => prev_t_6
+  # DEBUG BEGIN_STMT
+  if (t_7 != 0B)
+    goto <bb 5>; [INV]
+  else
+    goto <bb 13>; [INV]
+
+  <bb 13> :
+  return;
+
+}
+
+
+sys_timeout (u32_t msecs, void (*sys_timeout_handler) (void *) handler, void * arg)
+{
+  u32_t next_timeout_time;
+  long unsigned int _1;
+
+  <bb 2> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  if (msecs_3(D) > 1073741823)
+    goto <bb 3>; [INV]
+  else
+    goto <bb 4>; [INV]
+
+  <bb 3> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  __asm__ __volatile__("BKPT #0
+	");
+  # DEBUG BEGIN_STMT
+  goto <bb 3>; [INV]
+
+  <bb 4> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _1 = sys_now ();
+  next_timeout_time_6 = msecs_3(D) + _1;
+  # DEBUG next_timeout_time => next_timeout_time_6
+  # DEBUG BEGIN_STMT
+  sys_timeout_abs (next_timeout_time_6, handler_7(D), arg_8(D));
+  return;
+
+}
+
+
+sys_timeouts_init ()
+{
+  size_t i;
+  long unsigned int _1;
+  const struct lwip_cyclic_timer * _2;
+
+  <bb 2> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  i_5 = 1;
+  # DEBUG i => i_5
+  goto <bb 4>; [INV]
+
+  <bb 3> :
+  # DEBUG BEGIN_STMT
+  _1 = lwip_cyclic_timers[i_3].interval_ms;
+  _2 = &lwip_cyclic_timers[i_3];
+  sys_timeout (_1, lwip_cyclic_timer, _2);
+  # DEBUG BEGIN_STMT
+  i_8 = i_3 + 1;
+  # DEBUG i => i_8
+
+  <bb 4> :
+  # i_3 = PHI <i_5(2), i_8(3)>
+  # DEBUG i => i_3
+  # DEBUG BEGIN_STMT
+  if (i_3 <= 7)
+    goto <bb 3>; [INV]
+  else
+    goto <bb 5>; [INV]
+
+  <bb 5> :
+  return;
+
+}
+
+
+lwip_cyclic_timer (void * arg)
+{
+  const struct lwip_cyclic_timer * cyclic;
+  u32_t next_timeout_time;
+  u32_t now;
+  void (*<T4eb>) (void) _1;
+  long unsigned int _2;
+  long unsigned int current_timeout_due_time.5_3;
+  long unsigned int _4;
+  unsigned int _5;
+  _Bool _6;
+  long unsigned int _7;
+  long unsigned int _8;
+
+  <bb 2> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  cyclic_11 = arg_10(D);
+  # DEBUG cyclic => cyclic_11
+  # DEBUG BEGIN_STMT
+  _1 = cyclic_11->handler;
+  _1 ();
+  # DEBUG BEGIN_STMT
+  now_15 = sys_now ();
+  # DEBUG now => now_15
+  # DEBUG BEGIN_STMT
+  _2 = cyclic_11->interval_ms;
+  current_timeout_due_time.5_3 = current_timeout_due_time;
+  next_timeout_time_16 = _2 + current_timeout_due_time.5_3;
+  # DEBUG next_timeout_time => next_timeout_time_16
+  # DEBUG BEGIN_STMT
+  _4 = next_timeout_time_16 - now_15;
+  _5 = _4 >> 31;
+  _6 = (_Bool) _5;
+  if (_6 != 0)
+    goto <bb 3>; [INV]
+  else
+    goto <bb 4>; [INV]
+
+  <bb 3> :
+  # DEBUG BEGIN_STMT
+  _7 = cyclic_11->interval_ms;
+  _8 = now_15 + _7;
+  sys_timeout_abs (_8, lwip_cyclic_timer, arg_10(D));
+  goto <bb 5>; [INV]
+
+  <bb 4> :
+  # DEBUG BEGIN_STMT
+  sys_timeout_abs (next_timeout_time_16, lwip_cyclic_timer, arg_10(D));
+
+  <bb 5> :
+  return;
+
+}
+
+
+sys_timeout_abs (u32_t abs_time, void (*sys_timeout_handler) (void *) handler, void * arg)
+{
+  struct sys_timeo * t;
+  struct sys_timeo * timeout;
+  struct sys_timeo * next_timeout.6_1;
+  long unsigned int _2;
+  struct sys_timeo * next_timeout.7_3;
+  long unsigned int _4;
+  long unsigned int _5;
+  unsigned int _6;
+  _Bool _7;
+  struct sys_timeo * next_timeout.8_8;
+  struct sys_timeo * _9;
+  long unsigned int _10;
+  struct sys_timeo * _11;
+  long unsigned int _12;
+  long unsigned int _13;
+  unsigned int _14;
+  _Bool _15;
+  struct sys_timeo * _16;
+
+  <bb 2> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  timeout_22 = memp_malloc (9);
+  # DEBUG timeout => timeout_22
+  # DEBUG BEGIN_STMT
+  if (timeout_22 == 0B)
+    goto <bb 3>; [INV]
+  else
+    goto <bb 6>; [INV]
+
+  <bb 3> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  if (timeout_22 == 0B)
+    goto <bb 4>; [INV]
+  else
+    goto <bb 5>; [INV]
+
+  <bb 4> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  __asm__ __volatile__("BKPT #0
+	");
+  # DEBUG BEGIN_STMT
+  goto <bb 4>; [INV]
+
+  <bb 5> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  // predicted unlikely by early return (on trees) predictor.
+  goto <bb 16>; [INV]
+
+  <bb 6> :
+  # DEBUG BEGIN_STMT
+  timeout_22->next = 0B;
+  # DEBUG BEGIN_STMT
+  timeout_22->h = handler_24(D);
+  # DEBUG BEGIN_STMT
+  timeout_22->arg = arg_26(D);
+  # DEBUG BEGIN_STMT
+  timeout_22->time = abs_time_28(D);
+  # DEBUG BEGIN_STMT
+  next_timeout.6_1 = next_timeout;
+  if (next_timeout.6_1 == 0B)
+    goto <bb 7>; [INV]
+  else
+    goto <bb 8>; [INV]
+
+  <bb 7> :
+  # DEBUG BEGIN_STMT
+  next_timeout = timeout_22;
+  # DEBUG BEGIN_STMT
+  // predicted unlikely by early return (on trees) predictor.
+  goto <bb 16>; [INV]
+
+  <bb 8> :
+  # DEBUG BEGIN_STMT
+  _2 = timeout_22->time;
+  next_timeout.7_3 = next_timeout;
+  _4 = next_timeout.7_3->time;
+  _5 = _2 - _4;
+  _6 = _5 >> 31;
+  _7 = (_Bool) _6;
+  if (_7 != 0)
+    goto <bb 9>; [INV]
+  else
+    goto <bb 10>; [INV]
+
+  <bb 9> :
+  # DEBUG BEGIN_STMT
+  next_timeout.8_8 = next_timeout;
+  timeout_22->next = next_timeout.8_8;
+  # DEBUG BEGIN_STMT
+  next_timeout = timeout_22;
+  goto <bb 16>; [INV]
+
+  <bb 10> :
+  # DEBUG BEGIN_STMT
+  t_30 = next_timeout;
+  # DEBUG t => t_30
+  goto <bb 15>; [INV]
+
+  <bb 11> :
+  # DEBUG BEGIN_STMT
+  _9 = t_17->next;
+  if (_9 == 0B)
+    goto <bb 13>; [INV]
+  else
+    goto <bb 12>; [INV]
+
+  <bb 12> :
+  _10 = timeout_22->time;
+  _11 = t_17->next;
+  _12 = _11->time;
+  _13 = _10 - _12;
+  _14 = _13 >> 31;
+  _15 = (_Bool) _14;
+  if (_15 != 0)
+    goto <bb 13>; [INV]
+  else
+    goto <bb 14>; [INV]
+
+  <bb 13> :
+  # DEBUG BEGIN_STMT
+  _16 = t_17->next;
+  timeout_22->next = _16;
+  # DEBUG BEGIN_STMT
+  t_17->next = timeout_22;
+  # DEBUG BEGIN_STMT
+  goto <bb 16>; [INV]
+
+  <bb 14> :
+  # DEBUG BEGIN_STMT
+  t_31 = t_17->next;
+  # DEBUG t => t_31
+
+  <bb 15> :
+  # t_17 = PHI <t_30(10), t_31(14)>
+  # DEBUG t => t_17
+  # DEBUG BEGIN_STMT
+  if (t_17 != 0B)
+    goto <bb 11>; [INV]
+  else
+    goto <bb 16>; [INV]
+
+  <bb 16> :
+  return;
+
+}
+
+
+tcp_timer_needed ()
+{
+  int tcpip_tcp_timer_active.0_1;
+  struct tcp_pcb * tcp_active_pcbs.1_2;
+  struct tcp_pcb * tcp_tw_pcbs.2_3;
+
+  <bb 2> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  tcpip_tcp_timer_active.0_1 = tcpip_tcp_timer_active;
+  if (tcpip_tcp_timer_active.0_1 == 0)
+    goto <bb 3>; [INV]
+  else
+    goto <bb 6>; [INV]
+
+  <bb 3> :
+  tcp_active_pcbs.1_2 = tcp_active_pcbs;
+  if (tcp_active_pcbs.1_2 != 0B)
+    goto <bb 5>; [INV]
+  else
+    goto <bb 4>; [INV]
+
+  <bb 4> :
+  tcp_tw_pcbs.2_3 = tcp_tw_pcbs;
+  if (tcp_tw_pcbs.2_3 != 0B)
+    goto <bb 5>; [INV]
+  else
+    goto <bb 6>; [INV]
+
+  <bb 5> :
+  # DEBUG BEGIN_STMT
+  tcpip_tcp_timer_active = 1;
+  # DEBUG BEGIN_STMT
+  sys_timeout (250, tcpip_tcp_timer, 0B);
+
+  <bb 6> :
+  return;
+
+}
+
+
+tcpip_tcp_timer (void * arg)
+{
+  struct tcp_pcb * tcp_active_pcbs.3_1;
+  struct tcp_pcb * tcp_tw_pcbs.4_2;
+
+  <bb 2> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  tcp_tmr ();
+  # DEBUG BEGIN_STMT
+  tcp_active_pcbs.3_1 = tcp_active_pcbs;
+  if (tcp_active_pcbs.3_1 != 0B)
+    goto <bb 4>; [INV]
+  else
+    goto <bb 3>; [INV]
+
+  <bb 3> :
+  tcp_tw_pcbs.4_2 = tcp_tw_pcbs;
+  if (tcp_tw_pcbs.4_2 != 0B)
+    goto <bb 4>; [INV]
+  else
+    goto <bb 5>; [INV]
+
+  <bb 4> :
+  # DEBUG BEGIN_STMT
+  sys_timeout (250, tcpip_tcp_timer, 0B);
+  goto <bb 6>; [INV]
+
+  <bb 5> :
+  # DEBUG BEGIN_STMT
+  tcpip_tcp_timer_active = 0;
+
+  <bb 6> :
+  return;
+
+}
+
+

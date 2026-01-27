@@ -1,0 +1,817 @@
+start_example ()
+{
+  <bb 2> :
+  # DEBUG BEGIN_STMT
+  mainLoopTask (0B);
+  return;
+
+}
+
+
+mainLoopTask (void * pvParameters)
+{
+  int i;
+  int i;
+  uint32 time_now;
+  struct netif * _1;
+
+  <bb 2> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  sys_init ();
+  # DEBUG BEGIN_STMT
+  lwip_init ();
+  # DEBUG BEGIN_STMT
+  test_init (0B);
+
+  <bb 3> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  sys_check_timeouts ();
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  i_11 = 0;
+  # DEBUG i => i_11
+  goto <bb 5>; [INV]
+
+  <bb 4> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  i_18 = i_2 + 1;
+  # DEBUG i => i_18
+
+  <bb 5> :
+  # i_2 = PHI <i_11(3), i_18(4)>
+  # DEBUG i => i_2
+  # DEBUG BEGIN_STMT
+  if (i_2 <= 0)
+    goto <bb 4>; [INV]
+  else
+    goto <bb 6>; [INV]
+
+  <bb 6> :
+  # DEBUG BEGIN_STMT
+  time_now_13 = OsIf_GetMilliseconds ();
+  # DEBUG time_now => time_now_13
+  # DEBUG BEGIN_STMT
+  if (time_now_13 > 1199999)
+    goto <bb 7>; [INV]
+  else
+    goto <bb 3>; [INV]
+
+  <bb 7> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  i_14 = 0;
+  # DEBUG i => i_14
+  goto <bb 9>; [INV]
+
+  <bb 8> :
+  # DEBUG BEGIN_STMT
+  _1 = &network_interfaces[i_3];
+  gmac_ethernetif_shutdown (_1);
+  # DEBUG BEGIN_STMT
+  i_17 = i_3 + 1;
+  # DEBUG i => i_17
+
+  <bb 9> :
+  # i_3 = PHI <i_14(7), i_17(8)>
+  # DEBUG i => i_3
+  # DEBUG BEGIN_STMT
+  if (i_3 <= 0)
+    goto <bb 8>; [INV]
+  else
+    goto <bb 10>; [INV]
+
+  <bb 10> :
+  # DEBUG BEGIN_STMT
+  end_tcpip_execution (0B);
+  goto <bb 3>; [INV]
+
+}
+
+
+test_init (void * arg)
+{
+  <bb 2> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  interface_init ();
+  # DEBUG BEGIN_STMT
+  apps_init ();
+  return;
+
+}
+
+
+apps_init ()
+{
+  struct netif * netif_default.0_1;
+  struct netif * netif_default.1_2;
+  const char * _3;
+
+  <bb 2> :
+  # DEBUG BEGIN_STMT
+  mdns_resp_init ();
+  # DEBUG BEGIN_STMT
+  netif_default.0_1 = netif_default;
+  netif_default.1_2 = netif_default;
+  _3 = netif_default.1_2->hostname;
+  mdns_resp_add_netif (netif_default.0_1, _3, 3600);
+  # DEBUG BEGIN_STMT
+  lwiperf_start_tcp_server_default (lwiperf_report, 0B);
+  # DEBUG BEGIN_STMT
+  my_udp_init ();
+  return;
+
+}
+
+
+my_udp_init ()
+{
+  struct udp_pcb * _1;
+  struct udp_pcb * my_udp_pcb.2_2;
+  struct udp_pcb * my_udp_pcb.3_3;
+
+  <bb 2> :
+  # DEBUG BEGIN_STMT
+  _1 = udp_new ();
+  my_udp_pcb = _1;
+  # DEBUG BEGIN_STMT
+  my_udp_pcb.2_2 = my_udp_pcb;
+  if (my_udp_pcb.2_2 != 0B)
+    goto <bb 3>; [INV]
+  else
+    goto <bb 4>; [INV]
+
+  <bb 3> :
+  # DEBUG BEGIN_STMT
+  my_udp_pcb.3_3 = my_udp_pcb;
+  udp_bind (my_udp_pcb.3_3, &ip_addr_any, 0);
+  # DEBUG BEGIN_STMT
+  sys_timeout (1000, my_udp_send_callback, 0B);
+
+  <bb 4> :
+  return;
+
+}
+
+
+my_udp_send_callback (void * arg)
+{
+  struct ip_addr_t dest_addr;
+  struct pbuf * p;
+  int _1;
+  struct udp_pcb * my_udp_pcb.4_2;
+
+  <bb 2> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  memset (&my_udp_buffer, 65, 1024);
+  # DEBUG BEGIN_STMT
+  p_8 = pbuf_alloc (74, 1024, 640);
+  # DEBUG p => p_8
+  # DEBUG BEGIN_STMT
+  if (p_8 != 0B)
+    goto <bb 3>; [INV]
+  else
+    goto <bb 6>; [INV]
+
+  <bb 3> :
+  # DEBUG BEGIN_STMT
+  pbuf_take (p_8, &my_udp_buffer, 1024);
+  # DEBUG BEGIN_STMT
+  _1 = ipaddr_aton ("192.168.0.8", &dest_addr);
+  if (_1 != 0)
+    goto <bb 4>; [INV]
+  else
+    goto <bb 5>; [INV]
+
+  <bb 4> :
+  # DEBUG BEGIN_STMT
+  my_udp_pcb.4_2 = my_udp_pcb;
+  udp_sendto (my_udp_pcb.4_2, p_8, &dest_addr, 5000);
+
+  <bb 5> :
+  # DEBUG BEGIN_STMT
+  pbuf_free (p_8);
+
+  <bb 6> :
+  # DEBUG BEGIN_STMT
+  sys_timeout (1000, my_udp_send_callback, 0B);
+  dest_addr ={v} {CLOBBER};
+  return;
+
+}
+
+
+lwiperf_report (void * arg, lwiperf_report_type report_type, const struct ip_addr_t * local_addr, u16_t local_port, const struct ip_addr_t * remote_addr, u16_t remote_port, u32_t bytes_transferred, u32_t ms_duration, u32_t bandwidth_kbitpsec)
+{
+  <bb 2> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  return;
+
+}
+
+
+interface_init ()
+{
+  struct ip4_addr_t gw;
+  struct ip4_addr_t netmask;
+  struct ip4_addr_t ipaddr;
+  int i;
+  struct netif_custom_t * _1;
+  _Bool _2;
+  _Bool _3;
+  struct netif_custom_t * _4;
+  _Bool _5;
+  _Bool _6;
+  struct netif_custom_t * _7;
+  unsigned char _8;
+  long unsigned int _9;
+  long unsigned int _10;
+  struct netif_custom_t * _11;
+  unsigned char _12;
+  long unsigned int _13;
+  long unsigned int _14;
+  long unsigned int _15;
+  struct netif_custom_t * _16;
+  unsigned char _17;
+  long unsigned int _18;
+  long unsigned int _19;
+  long unsigned int _20;
+  struct netif_custom_t * _21;
+  unsigned char _22;
+  long unsigned int _23;
+  long unsigned int _24;
+  long unsigned int _25;
+  struct netif_custom_t * _26;
+  unsigned char _27;
+  long unsigned int _28;
+  long unsigned int _29;
+  struct netif_custom_t * _30;
+  unsigned char _31;
+  long unsigned int _32;
+  long unsigned int _33;
+  long unsigned int _34;
+  struct netif_custom_t * _35;
+  unsigned char _36;
+  long unsigned int _37;
+  long unsigned int _38;
+  long unsigned int _39;
+  struct netif_custom_t * _40;
+  unsigned char _41;
+  long unsigned int _42;
+  long unsigned int _43;
+  long unsigned int _44;
+  long unsigned int _45;
+  long unsigned int _46;
+  struct netif_custom_t * _47;
+  unsigned char _48;
+  long unsigned int _49;
+  long unsigned int _50;
+  struct netif_custom_t * _51;
+  unsigned char _52;
+  long unsigned int _53;
+  long unsigned int _54;
+  long unsigned int _55;
+  struct netif_custom_t * _56;
+  unsigned char _57;
+  long unsigned int _58;
+  long unsigned int _59;
+  long unsigned int _60;
+  struct netif_custom_t * _61;
+  unsigned char _62;
+  long unsigned int _63;
+  long unsigned int _64;
+  long unsigned int _65;
+  long unsigned int _66;
+  long unsigned int _67;
+  struct netif_custom_t * _68;
+  unsigned char _69;
+  long unsigned int _70;
+  long unsigned int _71;
+  struct netif_custom_t * _72;
+  unsigned char _73;
+  long unsigned int _74;
+  long unsigned int _75;
+  long unsigned int _76;
+  struct netif_custom_t * _77;
+  unsigned char _78;
+  long unsigned int _79;
+  long unsigned int _80;
+  long unsigned int _81;
+  struct netif_custom_t * _82;
+  unsigned char _83;
+  long unsigned int _84;
+  long unsigned int _85;
+  long unsigned int _86;
+  long unsigned int _87;
+  struct netif_custom_t * _88;
+  unsigned char _89;
+  long unsigned int _90;
+  long unsigned int _91;
+  struct netif_custom_t * _92;
+  unsigned char _93;
+  long unsigned int _94;
+  long unsigned int _95;
+  long unsigned int _96;
+  struct netif_custom_t * _97;
+  unsigned char _98;
+  long unsigned int _99;
+  long unsigned int _100;
+  long unsigned int _101;
+  struct netif_custom_t * _102;
+  unsigned char _103;
+  long unsigned int _104;
+  long unsigned int _105;
+  long unsigned int _106;
+  struct netif_custom_t * _107;
+  unsigned char _108;
+  long unsigned int _109;
+  long unsigned int _110;
+  struct netif_custom_t * _111;
+  unsigned char _112;
+  long unsigned int _113;
+  long unsigned int _114;
+  long unsigned int _115;
+  struct netif_custom_t * _116;
+  unsigned char _117;
+  long unsigned int _118;
+  long unsigned int _119;
+  long unsigned int _120;
+  struct netif_custom_t * _121;
+  unsigned char _122;
+  long unsigned int _123;
+  long unsigned int _124;
+  long unsigned int _125;
+  long unsigned int _126;
+  long unsigned int _127;
+  struct netif_custom_t * _128;
+  unsigned char _129;
+  long unsigned int _130;
+  long unsigned int _131;
+  struct netif_custom_t * _132;
+  unsigned char _133;
+  long unsigned int _134;
+  long unsigned int _135;
+  long unsigned int _136;
+  struct netif_custom_t * _137;
+  unsigned char _138;
+  long unsigned int _139;
+  long unsigned int _140;
+  long unsigned int _141;
+  struct netif_custom_t * _142;
+  unsigned char _143;
+  long unsigned int _144;
+  long unsigned int _145;
+  long unsigned int _146;
+  long unsigned int _147;
+  long unsigned int _148;
+  struct netif_custom_t * _149;
+  unsigned char _150;
+  long unsigned int _151;
+  long unsigned int _152;
+  struct netif_custom_t * _153;
+  unsigned char _154;
+  long unsigned int _155;
+  long unsigned int _156;
+  long unsigned int _157;
+  struct netif_custom_t * _158;
+  unsigned char _159;
+  long unsigned int _160;
+  long unsigned int _161;
+  long unsigned int _162;
+  struct netif_custom_t * _163;
+  unsigned char _164;
+  long unsigned int _165;
+  long unsigned int _166;
+  long unsigned int _167;
+  long unsigned int _168;
+  struct netif_custom_t * _169;
+  unsigned char _170;
+  long unsigned int _171;
+  long unsigned int _172;
+  struct netif_custom_t * _173;
+  unsigned char _174;
+  long unsigned int _175;
+  long unsigned int _176;
+  long unsigned int _177;
+  struct netif_custom_t * _178;
+  unsigned char _179;
+  long unsigned int _180;
+  long unsigned int _181;
+  long unsigned int _182;
+  struct netif_custom_t * _183;
+  unsigned char _184;
+  long unsigned int _185;
+  long unsigned int _186;
+  long unsigned int _187;
+  struct netif_custom_t * _188;
+  unsigned char _189;
+  long unsigned int _190;
+  long unsigned int _191;
+  struct netif_custom_t * _192;
+  unsigned char _193;
+  long unsigned int _194;
+  long unsigned int _195;
+  long unsigned int _196;
+  struct netif_custom_t * _197;
+  unsigned char _198;
+  long unsigned int _199;
+  long unsigned int _200;
+  long unsigned int _201;
+  struct netif_custom_t * _202;
+  unsigned char _203;
+  long unsigned int _204;
+  long unsigned int _205;
+  long unsigned int _206;
+  long unsigned int _207;
+  long unsigned int _208;
+  struct netif_custom_t * _209;
+  unsigned char _210;
+  long unsigned int _211;
+  long unsigned int _212;
+  struct netif_custom_t * _213;
+  unsigned char _214;
+  long unsigned int _215;
+  long unsigned int _216;
+  long unsigned int _217;
+  struct netif_custom_t * _218;
+  unsigned char _219;
+  long unsigned int _220;
+  long unsigned int _221;
+  long unsigned int _222;
+  struct netif_custom_t * _223;
+  unsigned char _224;
+  long unsigned int _225;
+  long unsigned int _226;
+  long unsigned int _227;
+  long unsigned int _228;
+  long unsigned int _229;
+  struct netif_custom_t * _230;
+  unsigned char _231;
+  long unsigned int _232;
+  long unsigned int _233;
+  struct netif_custom_t * _234;
+  unsigned char _235;
+  long unsigned int _236;
+  long unsigned int _237;
+  long unsigned int _238;
+  struct netif_custom_t * _239;
+  unsigned char _240;
+  long unsigned int _241;
+  long unsigned int _242;
+  long unsigned int _243;
+  struct netif_custom_t * _244;
+  unsigned char _245;
+  long unsigned int _246;
+  long unsigned int _247;
+  long unsigned int _248;
+  long unsigned int _249;
+  struct netif * _250;
+  struct netif * _251;
+  struct netif_custom_t * _252;
+  _Bool _253;
+  struct netif * _254;
+  struct netif * _255;
+
+  <bb 2> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  i_260 = 0;
+  # DEBUG i => i_260
+  goto <bb 9>; [INV]
+
+  <bb 3> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  gw.addr = 0;
+  # DEBUG BEGIN_STMT
+  ipaddr.addr = 0;
+  # DEBUG BEGIN_STMT
+  netmask.addr = 0;
+  # DEBUG BEGIN_STMT
+  _1 = netif_cfg[i_256];
+  _2 = _1->has_dhcp;
+  _3 = ~_2;
+  if (_3 != 0)
+    goto <bb 4>; [INV]
+  else
+    goto <bb 6>; [INV]
+
+  <bb 4> :
+  _4 = netif_cfg[i_256];
+  _5 = _4->has_auto_ip;
+  _6 = ~_5;
+  if (_6 != 0)
+    goto <bb 5>; [INV]
+  else
+    goto <bb 6>; [INV]
+
+  <bb 5> :
+  # DEBUG BEGIN_STMT
+  _7 = netif_cfg[i_256];
+  _8 = _7->gw[0];
+  _9 = (long unsigned int) _8;
+  _10 = _9 << 24;
+  _11 = netif_cfg[i_256];
+  _12 = _11->gw[1];
+  _13 = (long unsigned int) _12;
+  _14 = _13 << 16;
+  _15 = _10 | _14;
+  _16 = netif_cfg[i_256];
+  _17 = _16->gw[2];
+  _18 = (long unsigned int) _17;
+  _19 = _18 << 8;
+  _20 = _15 | _19;
+  _21 = netif_cfg[i_256];
+  _22 = _21->gw[3];
+  _23 = (long unsigned int) _22;
+  _24 = _20 | _23;
+  _25 = _24 << 24;
+  _26 = netif_cfg[i_256];
+  _27 = _26->gw[0];
+  _28 = (long unsigned int) _27;
+  _29 = _28 << 24;
+  _30 = netif_cfg[i_256];
+  _31 = _30->gw[1];
+  _32 = (long unsigned int) _31;
+  _33 = _32 << 16;
+  _34 = _29 | _33;
+  _35 = netif_cfg[i_256];
+  _36 = _35->gw[2];
+  _37 = (long unsigned int) _36;
+  _38 = _37 << 8;
+  _39 = _34 | _38;
+  _40 = netif_cfg[i_256];
+  _41 = _40->gw[3];
+  _42 = (long unsigned int) _41;
+  _43 = _39 | _42;
+  _44 = _43 << 8;
+  _45 = _44 & 16711680;
+  _46 = _25 | _45;
+  _47 = netif_cfg[i_256];
+  _48 = _47->gw[0];
+  _49 = (long unsigned int) _48;
+  _50 = _49 << 24;
+  _51 = netif_cfg[i_256];
+  _52 = _51->gw[1];
+  _53 = (long unsigned int) _52;
+  _54 = _53 << 16;
+  _55 = _50 | _54;
+  _56 = netif_cfg[i_256];
+  _57 = _56->gw[2];
+  _58 = (long unsigned int) _57;
+  _59 = _58 << 8;
+  _60 = _55 | _59;
+  _61 = netif_cfg[i_256];
+  _62 = _61->gw[3];
+  _63 = (long unsigned int) _62;
+  _64 = _60 | _63;
+  _65 = _64 >> 8;
+  _66 = _65 & 65280;
+  _67 = _46 | _66;
+  _68 = netif_cfg[i_256];
+  _69 = _68->gw[0];
+  _70 = (long unsigned int) _69;
+  _71 = _70 << 24;
+  _72 = netif_cfg[i_256];
+  _73 = _72->gw[1];
+  _74 = (long unsigned int) _73;
+  _75 = _74 << 16;
+  _76 = _71 | _75;
+  _77 = netif_cfg[i_256];
+  _78 = _77->gw[2];
+  _79 = (long unsigned int) _78;
+  _80 = _79 << 8;
+  _81 = _76 | _80;
+  _82 = netif_cfg[i_256];
+  _83 = _82->gw[3];
+  _84 = (long unsigned int) _83;
+  _85 = _81 | _84;
+  _86 = _85 >> 24;
+  _87 = _67 | _86;
+  gw.addr = _87;
+  # DEBUG BEGIN_STMT
+  _88 = netif_cfg[i_256];
+  _89 = _88->ip_addr[0];
+  _90 = (long unsigned int) _89;
+  _91 = _90 << 24;
+  _92 = netif_cfg[i_256];
+  _93 = _92->ip_addr[1];
+  _94 = (long unsigned int) _93;
+  _95 = _94 << 16;
+  _96 = _91 | _95;
+  _97 = netif_cfg[i_256];
+  _98 = _97->ip_addr[2];
+  _99 = (long unsigned int) _98;
+  _100 = _99 << 8;
+  _101 = _96 | _100;
+  _102 = netif_cfg[i_256];
+  _103 = _102->ip_addr[3];
+  _104 = (long unsigned int) _103;
+  _105 = _101 | _104;
+  _106 = _105 << 24;
+  _107 = netif_cfg[i_256];
+  _108 = _107->ip_addr[0];
+  _109 = (long unsigned int) _108;
+  _110 = _109 << 24;
+  _111 = netif_cfg[i_256];
+  _112 = _111->ip_addr[1];
+  _113 = (long unsigned int) _112;
+  _114 = _113 << 16;
+  _115 = _110 | _114;
+  _116 = netif_cfg[i_256];
+  _117 = _116->ip_addr[2];
+  _118 = (long unsigned int) _117;
+  _119 = _118 << 8;
+  _120 = _115 | _119;
+  _121 = netif_cfg[i_256];
+  _122 = _121->ip_addr[3];
+  _123 = (long unsigned int) _122;
+  _124 = _120 | _123;
+  _125 = _124 << 8;
+  _126 = _125 & 16711680;
+  _127 = _106 | _126;
+  _128 = netif_cfg[i_256];
+  _129 = _128->ip_addr[0];
+  _130 = (long unsigned int) _129;
+  _131 = _130 << 24;
+  _132 = netif_cfg[i_256];
+  _133 = _132->ip_addr[1];
+  _134 = (long unsigned int) _133;
+  _135 = _134 << 16;
+  _136 = _131 | _135;
+  _137 = netif_cfg[i_256];
+  _138 = _137->ip_addr[2];
+  _139 = (long unsigned int) _138;
+  _140 = _139 << 8;
+  _141 = _136 | _140;
+  _142 = netif_cfg[i_256];
+  _143 = _142->ip_addr[3];
+  _144 = (long unsigned int) _143;
+  _145 = _141 | _144;
+  _146 = _145 >> 8;
+  _147 = _146 & 65280;
+  _148 = _127 | _147;
+  _149 = netif_cfg[i_256];
+  _150 = _149->ip_addr[0];
+  _151 = (long unsigned int) _150;
+  _152 = _151 << 24;
+  _153 = netif_cfg[i_256];
+  _154 = _153->ip_addr[1];
+  _155 = (long unsigned int) _154;
+  _156 = _155 << 16;
+  _157 = _152 | _156;
+  _158 = netif_cfg[i_256];
+  _159 = _158->ip_addr[2];
+  _160 = (long unsigned int) _159;
+  _161 = _160 << 8;
+  _162 = _157 | _161;
+  _163 = netif_cfg[i_256];
+  _164 = _163->ip_addr[3];
+  _165 = (long unsigned int) _164;
+  _166 = _162 | _165;
+  _167 = _166 >> 24;
+  _168 = _148 | _167;
+  ipaddr.addr = _168;
+  # DEBUG BEGIN_STMT
+  _169 = netif_cfg[i_256];
+  _170 = _169->netmask[0];
+  _171 = (long unsigned int) _170;
+  _172 = _171 << 24;
+  _173 = netif_cfg[i_256];
+  _174 = _173->netmask[1];
+  _175 = (long unsigned int) _174;
+  _176 = _175 << 16;
+  _177 = _172 | _176;
+  _178 = netif_cfg[i_256];
+  _179 = _178->netmask[2];
+  _180 = (long unsigned int) _179;
+  _181 = _180 << 8;
+  _182 = _177 | _181;
+  _183 = netif_cfg[i_256];
+  _184 = _183->netmask[3];
+  _185 = (long unsigned int) _184;
+  _186 = _182 | _185;
+  _187 = _186 << 24;
+  _188 = netif_cfg[i_256];
+  _189 = _188->netmask[0];
+  _190 = (long unsigned int) _189;
+  _191 = _190 << 24;
+  _192 = netif_cfg[i_256];
+  _193 = _192->netmask[1];
+  _194 = (long unsigned int) _193;
+  _195 = _194 << 16;
+  _196 = _191 | _195;
+  _197 = netif_cfg[i_256];
+  _198 = _197->netmask[2];
+  _199 = (long unsigned int) _198;
+  _200 = _199 << 8;
+  _201 = _196 | _200;
+  _202 = netif_cfg[i_256];
+  _203 = _202->netmask[3];
+  _204 = (long unsigned int) _203;
+  _205 = _201 | _204;
+  _206 = _205 << 8;
+  _207 = _206 & 16711680;
+  _208 = _187 | _207;
+  _209 = netif_cfg[i_256];
+  _210 = _209->netmask[0];
+  _211 = (long unsigned int) _210;
+  _212 = _211 << 24;
+  _213 = netif_cfg[i_256];
+  _214 = _213->netmask[1];
+  _215 = (long unsigned int) _214;
+  _216 = _215 << 16;
+  _217 = _212 | _216;
+  _218 = netif_cfg[i_256];
+  _219 = _218->netmask[2];
+  _220 = (long unsigned int) _219;
+  _221 = _220 << 8;
+  _222 = _217 | _221;
+  _223 = netif_cfg[i_256];
+  _224 = _223->netmask[3];
+  _225 = (long unsigned int) _224;
+  _226 = _222 | _225;
+  _227 = _226 >> 8;
+  _228 = _227 & 65280;
+  _229 = _208 | _228;
+  _230 = netif_cfg[i_256];
+  _231 = _230->netmask[0];
+  _232 = (long unsigned int) _231;
+  _233 = _232 << 24;
+  _234 = netif_cfg[i_256];
+  _235 = _234->netmask[1];
+  _236 = (long unsigned int) _235;
+  _237 = _236 << 16;
+  _238 = _233 | _237;
+  _239 = netif_cfg[i_256];
+  _240 = _239->netmask[2];
+  _241 = (long unsigned int) _240;
+  _242 = _241 << 8;
+  _243 = _238 | _242;
+  _244 = netif_cfg[i_256];
+  _245 = _244->netmask[3];
+  _246 = (long unsigned int) _245;
+  _247 = _243 | _246;
+  _248 = _247 >> 24;
+  _249 = _229 | _248;
+  netmask.addr = _249;
+
+  <bb 6> :
+  # DEBUG BEGIN_STMT
+  _250 = &network_interfaces[i_256];
+  _251 = netif_add (_250, &ipaddr, &netmask, &gw, 0B, gmac_ethernetif_init, netif_input);
+  netif_set_default (_251);
+  # DEBUG BEGIN_STMT
+  _252 = netif_cfg[i_256];
+  _253 = _252->has_IPv6;
+  if (_253 != 0)
+    goto <bb 7>; [INV]
+  else
+    goto <bb 8>; [INV]
+
+  <bb 7> :
+  # DEBUG BEGIN_STMT
+  _254 = &network_interfaces[i_256];
+  netif_create_ip6_linklocal_address (_254, 1);
+
+  <bb 8> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _255 = &network_interfaces[i_256];
+  netif_set_up (_255);
+  ipaddr ={v} {CLOBBER};
+  netmask ={v} {CLOBBER};
+  gw ={v} {CLOBBER};
+  # DEBUG BEGIN_STMT
+  i_275 = i_256 + 1;
+  # DEBUG i => i_275
+
+  <bb 9> :
+  # i_256 = PHI <i_260(2), i_275(8)>
+  # DEBUG i => i_256
+  # DEBUG BEGIN_STMT
+  if (i_256 <= 0)
+    goto <bb 3>; [INV]
+  else
+    goto <bb 10>; [INV]
+
+  <bb 10> :
+  return;
+
+}
+
+

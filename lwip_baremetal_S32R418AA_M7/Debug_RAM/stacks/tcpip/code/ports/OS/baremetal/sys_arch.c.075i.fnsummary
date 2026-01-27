@@ -1,0 +1,156 @@
+
+Analyzing function: sys_now/3
+;; 1 loops found
+;;
+;; Loop 0
+;;  header 0, latch 1
+;;  depth 0, outer -1
+;;  nodes: 0 1 2
+;; 2 succs { 1 }
+
+Analyzing function body size: sys_now
+
+IPA function summary for sys_now/3 inlinable
+  global time:     13.000000
+  self size:       5
+  global size:     0
+  min size:       0
+  self stack:      0
+  global stack:    0
+    size:0.000000, time:0.000000
+    size:3.000000, time:2.000000,  executed if:(not inlined)
+  calls:
+    OsIf_GetMilliseconds/5 function body not available
+      loop depth: 0 freq:1.00 size: 2 time: 11
+
+
+Analyzing function: sys_jiffies/2
+;; 1 loops found
+;;
+;; Loop 0
+;;  header 0, latch 1
+;;  depth 0, outer -1
+;;  nodes: 0 1 2
+;; 2 succs { 1 }
+
+Analyzing function body size: sys_jiffies
+
+IPA function summary for sys_jiffies/2 inlinable
+  global time:     13.000000
+  self size:       5
+  global size:     0
+  min size:       0
+  self stack:      0
+  global stack:    0
+    size:0.000000, time:0.000000
+    size:3.000000, time:2.000000,  executed if:(not inlined)
+  calls:
+    OsIf_GetMilliseconds/5 function body not available
+      loop depth: 0 freq:1.00 size: 2 time: 11
+
+
+Analyzing function: sys_init/1
+;; 1 loops found
+;;
+;; Loop 0
+;;  header 0, latch 1
+;;  depth 0, outer -1
+;;  nodes: 0 1 2
+;; 2 succs { 1 }
+
+Analyzing function body size: sys_init
+
+IPA function summary for sys_init/1 inlinable
+  global time:     13.000000
+  self size:       5
+  global size:     0
+  min size:       0
+  self stack:      0
+  global stack:    0
+    size:0.000000, time:0.000000
+    size:3.000000, time:2.000000,  executed if:(not inlined)
+  calls:
+    OsIf_Init/4 function body not available
+      loop depth: 0 freq:1.00 size: 2 time: 11
+       op0 is compile time invariant
+
+Symbol table:
+
+OsIf_GetMilliseconds/5 (OsIf_GetMilliseconds) @060362a0
+  Type: function
+  Visibility: external public
+  References: 
+  Referring: 
+  Availability: not_available
+  Function flags: optimize_size
+  Called by: sys_jiffies/2 (1073741824 (estimated locally),1.00 per call) 
+  Calls: 
+OsIf_Init/4 (OsIf_Init) @06036e00
+  Type: function
+  Visibility: external public
+  References: 
+  Referring: 
+  Availability: not_available
+  Function flags: optimize_size
+  Called by: sys_init/1 (1073741824 (estimated locally),1.00 per call) 
+  Calls: 
+sys_now/3 (sys_now) @060369a0
+  Type: function definition analyzed
+  Visibility: externally_visible public
+  References: 
+  Referring: 
+  Availability: available
+  Function flags: count:1073741824 (estimated locally) body icf_merged optimize_size
+  Called by: 
+  Calls: sys_jiffies/2 (1073741824 (estimated locally),1.00 per call) 
+sys_jiffies/2 (sys_jiffies) @06036700
+  Type: function definition analyzed
+  Visibility: externally_visible public
+  References: 
+  Referring: 
+  Availability: available
+  Function flags: count:1073741824 (estimated locally) body icf_merged optimize_size
+  Called by: sys_now/3 (1073741824 (estimated locally),1.00 per call) 
+  Calls: OsIf_GetMilliseconds/5 (1073741824 (estimated locally),1.00 per call) 
+sys_init/1 (sys_init) @06036460
+  Type: function definition analyzed
+  Visibility: externally_visible public
+  References: 
+  Referring: 
+  Availability: available
+  Function flags: count:1073741824 (estimated locally) body optimize_size
+  Called by: 
+  Calls: OsIf_Init/4 (1073741824 (estimated locally),1.00 per call) 
+sys_now ()
+{
+  u32_t retval.3;
+
+  <bb 2> [local count: 1073741824]:
+  retval.3_3 = sys_jiffies (); [tail call]
+  return retval.3_3;
+
+}
+
+
+sys_jiffies ()
+{
+  u32_t _3;
+
+  <bb 2> [local count: 1073741824]:
+  # DEBUG BEGIN_STMT
+  _3 = OsIf_GetMilliseconds ();
+  return _3;
+
+}
+
+
+sys_init ()
+{
+  <bb 2> [local count: 1073741824]:
+  # DEBUG BEGIN_STMT
+  OsIf_Init (0B);
+  return;
+
+}
+
+

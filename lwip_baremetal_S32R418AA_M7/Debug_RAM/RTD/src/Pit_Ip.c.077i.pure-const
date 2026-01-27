@@ -1,0 +1,2783 @@
+
+
+ local analysis of PIT_0_ISR
+   scanning: Pit_Ip_ProcessCommonInterrupt (0, channel_1);
+  scanning: channel_5 = channel_1 + 1;
+  scanning: if (channel_1 != 7)
+  scanning: return;
+;; 2 loops found
+;;
+;; Loop 0
+;;  header 0, latch 1
+;;  depth 0, outer -1
+;;  nodes: 0 1 2 3 4 5
+;;
+;; Loop 1
+;;  header 4, latch 3
+;;  depth 1, outer 0
+;;  nodes: 4 3
+;; 2 succs { 4 }
+;; 3 succs { 4 }
+;; 4 succs { 3 5 }
+;; 5 succs { 1 }
+Function is locally const.
+
+
+ local analysis of Pit_Ip_GetLifetimeTimer
+   scanning: SchM_Enter_Gpt_GPT_EXCLUSIVE_AREA_09 ();
+  scanning: _10 = (int) instance_6(D);
+  scanning: _11 = pitBase[_10];
+  scanning: upperValue_12 ={v} _11->LTMR64H;
+    Volatile stmt is not const/pure
+    Indirect ref read is not const
+  scanning: lowerValue_9 ={v} _11->LTMR64L;
+    Volatile stmt is not const/pure
+    Indirect ref read is not const
+  scanning: SchM_Exit_Gpt_GPT_EXCLUSIVE_AREA_09 ();
+  scanning: _1 = (long long unsigned int) upperValue_12;
+  scanning: _2 = _1 << 32;
+  scanning: _3 = (long long unsigned int) lowerValue_9;
+  scanning: lifeTimeValue_8 = _2 + _3;
+  scanning: return lifeTimeValue_8;
+
+
+ local analysis of Pit_Ip_SetLifetimeTimer
+   scanning: _7 = (int) instance_2(D);
+  scanning: _8 = pitBase[_7];
+  scanning: _8->TIMER[1].LDVAL ={v} 4294967295;
+    Volatile stmt is not const/pure
+    Indirect ref write is not const/pure
+  scanning: Pit_Ip_SetEnableInterruptFlag (instance_2(D), 1, 0);
+  scanning: Pit_Ip_SetChainMode (instance_2(D), 1, 1);
+  scanning: Pit_Ip_EnableTimer (instance_2(D), 1, 1);
+  scanning: _8->TIMER[0].LDVAL ={v} 4294967295;
+    Volatile stmt is not const/pure
+    Indirect ref write is not const/pure
+  scanning: Pit_Ip_EnableTimer (instance_2(D), 0, 1);
+  scanning: return;
+
+
+ local analysis of Pit_Ip_DisableChannelInterrupt
+   scanning: Pit_Ip_SetEnableInterruptFlag (instance_2(D), channel_3(D), 0);
+  scanning: Pit_Ip_ClearInterruptStatusFlag (instance_2(D), channel_3(D));
+  scanning: return;
+Function is locally const.
+
+
+ local analysis of Pit_Ip_EnableChannelInterrupt
+   scanning: Pit_Ip_ClearInterruptStatusFlag (instance_2(D), channel_3(D));
+  scanning: Pit_Ip_SetEnableInterruptFlag (instance_2(D), channel_3(D), 1);
+  scanning: return;
+Function is locally const.
+
+
+ local analysis of Pit_Ip_GetCurrentTimer
+   scanning: _5 = (int) instance_2(D);
+  scanning: _6 = pitBase[_5];
+  scanning: _7 = (int) channel_3(D);
+  scanning: counterValue_8 ={v} _6->TIMER[_7].CVAL;
+    Volatile stmt is not const/pure
+    Indirect ref read is not const
+  scanning: counterValue_4 = (uint64) counterValue_8;
+  scanning: return counterValue_4;
+
+
+ local analysis of Pit_Ip_StopChannel
+   scanning: Pit_Ip_EnableTimer (instance_2(D), channel_3(D), 0);
+  scanning: Pit_Ip_ClearInterruptStatusFlag (instance_2(D), channel_3(D));
+  scanning: return;
+Function is locally const.
+
+
+ local analysis of Pit_Ip_StartChannel
+   scanning: _9 = (int) instance_5(D);
+  scanning: _10 = pitBase[_9];
+  scanning: _11 = (int) channel_6(D);
+  scanning: _12 ={v} _10->TIMER[_11].TCTRL;
+    Volatile stmt is not const/pure
+    Indirect ref read is not const
+  scanning: isRunning_13 = (boolean) _12;
+  scanning: if (isRunning_13 != 0)
+  scanning: _1 = countValue_7(D) + 4294967295;
+  scanning: _10->TIMER[_11].LDVAL ={v} _1;
+    Volatile stmt is not const/pure
+    Indirect ref write is not const/pure
+  scanning: Pit_Ip_EnableTimer (instance_5(D), channel_6(D), 1);
+  scanning: return status_2;
+
+
+ local analysis of Pit_Ip_Deinit
+   scanning: switch (instance_3(D)) <default: <L2> [50.00%], case 0: <L4> [50.00%], case 2: <L4> [50.00%]>
+  scanning: <L2>:
+  scanning: <L4>:
+  scanning: Pit_Ip_Reset (instance_3(D), channelNum_1, 0, mdisBitExists_2);
+  scanning: return;
+Function is locally const.
+
+
+ local analysis of Pit_Ip_InitChannel
+   scanning: _12 = (int) instance_11(D);
+  scanning: _21 = pitBase[_12];
+  scanning: if (_21 != 0B)
+  scanning: _1 = chnlConfig_13(D)->hwChannel;
+    Indirect ref read is not const
+  scanning: Pit_Ip_EnableTimer (instance_11(D), _1, 0);
+  scanning: _2 = chnlConfig_13(D)->hwChannel;
+    Indirect ref read is not const
+  scanning: Pit_Ip_SetEnableInterruptFlag (instance_11(D), _2, 0);
+  scanning: _3 = chnlConfig_13(D)->hwChannel;
+    Indirect ref read is not const
+  scanning: Pit_Ip_ClearInterruptStatusFlag (instance_11(D), _3);
+  scanning: _4 = chnlConfig_13(D)->hwChannel;
+    Indirect ref read is not const
+  scanning: _5 = (int) _4;
+  scanning: Pit_Ip_u32ChState[_12][_5].chInit = 1;
+  scanning: _6 = chnlConfig_13(D)->callback;
+    Indirect ref read is not const
+  scanning: Pit_Ip_u32ChState[_12][_5].callback = _6;
+  scanning: _7 = chnlConfig_13(D)->callbackParam;
+    Indirect ref read is not const
+  scanning: Pit_Ip_u32ChState[_12][_5].callbackParam = _7;
+  scanning: _8 = chnlConfig_13(D)->channelMode;
+    Indirect ref read is not const
+  scanning: Pit_Ip_u32ChState[_12][_5].channelMode = _8;
+  scanning: return;
+Function is locally pure.
+
+
+ local analysis of Pit_Ip_Init
+   scanning: _7 = (int) instance_6(D);
+  scanning: _11 = pitBase[_7];
+  scanning: if (_11 != 0B)
+  scanning: _1 = config_8(D)->enableStandardTimers;
+    Indirect ref read is not const
+  scanning: if (_1 != 0)
+  scanning: Pit_Ip_EnableModule (instance_6(D), 0);
+  scanning: _2 = config_8(D)->stopRunInDebug;
+    Indirect ref read is not const
+  scanning: Pit_Ip_SetDebugMode (instance_6(D), _2);
+  scanning: return;
+Function is locally pure.
+
+
+ local analysis of Pit_Ip_ProcessCommonInterrupt
+   scanning: if (instance_4(D) <= 2)
+  scanning: if (channel_6(D) <= 6)
+  scanning: SchM_Enter_Gpt_GPT_EXCLUSIVE_AREA_03 ();
+  scanning: _18 = (int) instance_4(D);
+  scanning: _19 = pitBase[_18];
+  scanning: _20 = (int) channel_6(D);
+  scanning: _21 ={v} _19->TIMER[_20].TCTRL;
+    Volatile stmt is not const/pure
+    Indirect ref read is not const
+  scanning: _22 = _21 & 2;
+  scanning: _16 ={v} _19->TIMER[_20].TFLG;
+    Volatile stmt is not const/pure
+    Indirect ref read is not const
+  scanning: returnFlag_17 = (boolean) _16;
+  scanning: if (_22 != 0)
+  scanning: if (returnFlag_17 != 0)
+  scanning: Pit_Ip_ClearInterruptStatusFlag (instance_4(D), channel_6(D));
+  scanning: SchM_Exit_Gpt_GPT_EXCLUSIVE_AREA_03 ();
+  scanning: if (_22 != 0)
+  scanning: if (returnFlag_17 != 0)
+  scanning: chInit_10 = Pit_Ip_u32ChState[_18][_20].chInit;
+  scanning: callback_11 = Pit_Ip_u32ChState[_18][_20].callback;
+  scanning: channelMode_12 = Pit_Ip_u32ChState[_18][_20].channelMode;
+  scanning: callbackParam_13 = Pit_Ip_u32ChState[_18][_20].callbackParam;
+  scanning: if (channelMode_12 == 1)
+  scanning: Pit_Ip_StopChannel (instance_4(D), channel_6(D));
+  scanning: if (chInit_10 != 0)
+  scanning: if (callback_11 != 0B)
+  scanning: callback_11 (callbackParam_13);
+  scanning: return;
+
+
+ local analysis of Pit_Ip_ClearInterruptStatusFlag
+   scanning: _1 = (int) instance_6(D);
+  scanning: _2 = pitBase[_1];
+  scanning: _3 = (int) channel_8(D);
+  scanning: _4 ={v} _2->TIMER[_3].TFLG;
+    Volatile stmt is not const/pure
+    Indirect ref read is not const
+  scanning: _5 = _4 | 1;
+  scanning: _2->TIMER[_3].TFLG ={v} _5;
+    Volatile stmt is not const/pure
+    Indirect ref write is not const/pure
+  scanning: return;
+
+
+ local analysis of Pit_Ip_SetEnableInterruptFlag
+   scanning: SchM_Enter_Gpt_GPT_EXCLUSIVE_AREA_02 ();
+  scanning: if (enable_14(D) != 0)
+  scanning: _1 = (int) instance_15(D);
+  scanning: _2 = pitBase[_1];
+  scanning: _3 = (int) channel_16(D);
+  scanning: _4 ={v} _2->TIMER[_3].TCTRL;
+    Volatile stmt is not const/pure
+    Indirect ref read is not const
+  scanning: _5 = _4 | 2;
+  scanning: _2->TIMER[_3].TCTRL ={v} _5;
+    Volatile stmt is not const/pure
+    Indirect ref write is not const/pure
+  scanning: _6 = (int) instance_15(D);
+  scanning: _7 = pitBase[_6];
+  scanning: _8 = (int) channel_16(D);
+  scanning: _9 ={v} _7->TIMER[_8].TCTRL;
+    Volatile stmt is not const/pure
+    Indirect ref read is not const
+  scanning: _10 = _9 & 4294967293;
+  scanning: _7->TIMER[_8].TCTRL ={v} _10;
+    Volatile stmt is not const/pure
+    Indirect ref write is not const/pure
+  scanning: SchM_Exit_Gpt_GPT_EXCLUSIVE_AREA_02 ();
+  scanning: return;
+
+
+ local analysis of Pit_Ip_Reset
+   scanning: if (available_11(D) != 0)
+  scanning: channelIndex_13 = channelNum_10(D) + 255;
+  scanning: if (bitExists_12(D) != 0)
+  scanning: _1 = (int) instance_15(D);
+  scanning: _2 = pitBase[_1];
+  scanning: _3 = (int) i_8;
+  scanning: _2->TIMER[_3].TCTRL ={v} 0;
+    Volatile stmt is not const/pure
+    Indirect ref write is not const/pure
+  scanning: _2->TIMER[_3].LDVAL ={v} 0;
+    Volatile stmt is not const/pure
+    Indirect ref write is not const/pure
+  scanning: _2->TIMER[_3].TFLG ={v} 1;
+    Volatile stmt is not const/pure
+    Indirect ref write is not const/pure
+  scanning: i_20 = i_8 + 1;
+  scanning: if (channelIndex_7 > i_8)
+  scanning: _4 = (int) instance_15(D);
+  scanning: _5 = pitBase[_4];
+  scanning: _5->MCR ={v} mask_6;
+    Volatile stmt is not const/pure
+    Indirect ref write is not const/pure
+  scanning: return;
+
+
+ local analysis of Pit_Ip_SetChainMode
+   scanning: SchM_Enter_Gpt_GPT_EXCLUSIVE_AREA_01 ();
+  scanning: if (enable_14(D) != 0)
+  scanning: if (channel_15(D) != 0)
+  scanning: _1 = (int) instance_16(D);
+  scanning: _2 = pitBase[_1];
+  scanning: _3 = (int) channel_15(D);
+  scanning: _4 ={v} _2->TIMER[_3].TCTRL;
+    Volatile stmt is not const/pure
+    Indirect ref read is not const
+  scanning: _5 = _4 | 4;
+  scanning: _2->TIMER[_3].TCTRL ={v} _5;
+    Volatile stmt is not const/pure
+    Indirect ref write is not const/pure
+  scanning: _6 = (int) instance_16(D);
+  scanning: _7 = pitBase[_6];
+  scanning: _8 = (int) channel_15(D);
+  scanning: _9 ={v} _7->TIMER[_8].TCTRL;
+    Volatile stmt is not const/pure
+    Indirect ref read is not const
+  scanning: _10 = _9 & 4294967291;
+  scanning: _7->TIMER[_8].TCTRL ={v} _10;
+    Volatile stmt is not const/pure
+    Indirect ref write is not const/pure
+  scanning: SchM_Exit_Gpt_GPT_EXCLUSIVE_AREA_01 ();
+  scanning: return;
+
+
+ local analysis of Pit_Ip_SetDebugMode
+   scanning: if (stopRun_10(D) != 0)
+  scanning: _1 = (int) instance_11(D);
+  scanning: _2 = pitBase[_1];
+  scanning: _3 ={v} _2->MCR;
+    Volatile stmt is not const/pure
+    Indirect ref read is not const
+  scanning: _4 = _3 | 1;
+  scanning: _2->MCR ={v} _4;
+    Volatile stmt is not const/pure
+    Indirect ref write is not const/pure
+  scanning: _5 = (int) instance_11(D);
+  scanning: _6 = pitBase[_5];
+  scanning: _7 ={v} _6->MCR;
+    Volatile stmt is not const/pure
+    Indirect ref read is not const
+  scanning: _8 = _7 & 4294967294;
+  scanning: _6->MCR ={v} _8;
+    Volatile stmt is not const/pure
+    Indirect ref write is not const/pure
+  scanning: return;
+
+
+ local analysis of Pit_Ip_EnableTimer
+   scanning: SchM_Enter_Gpt_GPT_EXCLUSIVE_AREA_00 ();
+  scanning: if (enable_14(D) != 0)
+  scanning: _1 = (int) instance_15(D);
+  scanning: _2 = pitBase[_1];
+  scanning: _3 = (int) channel_16(D);
+  scanning: _4 ={v} _2->TIMER[_3].TCTRL;
+    Volatile stmt is not const/pure
+    Indirect ref read is not const
+  scanning: _5 = _4 | 1;
+  scanning: _2->TIMER[_3].TCTRL ={v} _5;
+    Volatile stmt is not const/pure
+    Indirect ref write is not const/pure
+  scanning: _6 = (int) instance_15(D);
+  scanning: _7 = pitBase[_6];
+  scanning: _8 = (int) channel_16(D);
+  scanning: _9 ={v} _7->TIMER[_8].TCTRL;
+    Volatile stmt is not const/pure
+    Indirect ref read is not const
+  scanning: _10 = _9 & 4294967294;
+  scanning: _7->TIMER[_8].TCTRL ={v} _10;
+    Volatile stmt is not const/pure
+    Indirect ref write is not const/pure
+  scanning: SchM_Exit_Gpt_GPT_EXCLUSIVE_AREA_00 ();
+  scanning: return;
+
+
+ local analysis of Pit_Ip_EnableModule
+   scanning: if (timerType_6(D) == 0)
+  scanning: _1 = (int) instance_8(D);
+  scanning: _2 = pitBase[_1];
+  scanning: _3 ={v} _2->MCR;
+    Volatile stmt is not const/pure
+    Indirect ref read is not const
+  scanning: _4 = _3 & 4294967293;
+  scanning: _2->MCR ={v} _4;
+    Volatile stmt is not const/pure
+    Indirect ref write is not const/pure
+  scanning: return;
+
+
+ local analysis of Pit_Ip_GetLoadValue
+   scanning: _1 = (int) instance_4(D);
+  scanning: _2 = pitBase[_1];
+  scanning: _3 = (int) channel_6(D);
+  scanning: periodValue_7 ={v} _2->TIMER[_3].LDVAL;
+    Volatile stmt is not const/pure
+    Indirect ref read is not const
+  scanning: return periodValue_7;
+callgraph:
+
+Pit_Ip_EnableTimer/57 (Pit_Ip_EnableTimer) @0632ab60
+  Type: function definition analyzed
+  Visibility:
+  next sharing asm name: 55
+  Aux: @05e9f018
+  References: pitBase/1 (read)pitBase/1 (read)
+  Referring: 
+  Function Pit_Ip_EnableTimer/57 is inline copy in Pit_Ip_StartChannel/22
+  Clone of Pit_Ip_EnableTimer/5
+  Availability: local
+  Function flags: count:354334802 (estimated locally) body local optimize_size
+  Called by: Pit_Ip_StartChannel/22 (inlined) (354334802 (estimated locally),0.33 per call) 
+  Calls: SchM_Enter_Gpt_GPT_EXCLUSIVE_AREA_00/30 (354334802 (estimated locally),0.33 per call) SchM_Exit_Gpt_GPT_EXCLUSIVE_AREA_00/31 (354334802 (estimated locally),0.33 per call) 
+Pit_Ip_ClearInterruptStatusFlag/56 (Pit_Ip_ClearInterruptStatusFlag) @0632a9a0
+  Type: function definition analyzed
+  Visibility:
+  next sharing asm name: 49
+  Aux: @05e9f058
+  References: pitBase/1 (read)
+  Referring: 
+  Function Pit_Ip_ClearInterruptStatusFlag/56 is inline copy in Pit_Ip_InitChannel/20
+  Clone of Pit_Ip_ClearInterruptStatusFlag/13
+  Availability: local
+  Function flags: count:574129754 (estimated locally) body local optimize_size
+  Called by: Pit_Ip_InitChannel/20 (inlined) (574129754 (estimated locally),0.53 per call) 
+  Calls: 
+Pit_Ip_EnableTimer/55 (Pit_Ip_EnableTimer) @0632a7e0
+  Type: function definition analyzed
+  Visibility:
+  next sharing asm name: 54
+  previous sharing asm name: 57
+  Aux: @05e9f178
+  References: pitBase/1 (read)pitBase/1 (read)
+  Referring: 
+  Function Pit_Ip_EnableTimer/55 is inline copy in Pit_Ip_SetLifetimeTimer/27
+  Clone of Pit_Ip_EnableTimer/5
+  Availability: local
+  Function flags: count:1073741824 (estimated locally) body local optimize_size
+  Called by: Pit_Ip_SetLifetimeTimer/27 (inlined) (1073741824 (estimated locally),1.00 per call) 
+  Calls: SchM_Enter_Gpt_GPT_EXCLUSIVE_AREA_00/30 (1073741824 (estimated locally),1.00 per call) SchM_Exit_Gpt_GPT_EXCLUSIVE_AREA_00/31 (1073741824 (estimated locally),1.00 per call) 
+Pit_Ip_EnableTimer/54 (Pit_Ip_EnableTimer) @0632a620
+  Type: function definition analyzed
+  Visibility:
+  next sharing asm name: 52
+  previous sharing asm name: 55
+  Aux: @05e9f098
+  References: pitBase/1 (read)pitBase/1 (read)
+  Referring: 
+  Function Pit_Ip_EnableTimer/54 is inline copy in Pit_Ip_SetLifetimeTimer/27
+  Clone of Pit_Ip_EnableTimer/5
+  Availability: local
+  Function flags: count:1073741824 (estimated locally) body local optimize_size
+  Called by: Pit_Ip_SetLifetimeTimer/27 (inlined) (1073741824 (estimated locally),1.00 per call) 
+  Calls: SchM_Enter_Gpt_GPT_EXCLUSIVE_AREA_00/30 (1073741824 (estimated locally),1.00 per call) SchM_Exit_Gpt_GPT_EXCLUSIVE_AREA_00/31 (1073741824 (estimated locally),1.00 per call) 
+Pit_Ip_SetEnableInterruptFlag/53 (Pit_Ip_SetEnableInterruptFlag) @0632a380
+  Type: function definition analyzed
+  Visibility:
+  next sharing asm name: 51
+  Aux: @05e9f378
+  References: pitBase/1 (read)pitBase/1 (read)
+  Referring: 
+  Function Pit_Ip_SetEnableInterruptFlag/53 is inline copy in Pit_Ip_SetLifetimeTimer/27
+  Clone of Pit_Ip_SetEnableInterruptFlag/12
+  Availability: local
+  Function flags: count:1073741824 (estimated locally) body local optimize_size
+  Called by: Pit_Ip_SetLifetimeTimer/27 (inlined) (1073741824 (estimated locally),1.00 per call) 
+  Calls: SchM_Enter_Gpt_GPT_EXCLUSIVE_AREA_02/32 (1073741824 (estimated locally),1.00 per call) SchM_Exit_Gpt_GPT_EXCLUSIVE_AREA_02/33 (1073741824 (estimated locally),1.00 per call) 
+Pit_Ip_EnableTimer/52 (Pit_Ip_EnableTimer) @0632a1c0
+  Type: function definition analyzed
+  Visibility:
+  next sharing asm name: 5
+  previous sharing asm name: 54
+  Aux: @05e9f038
+  References: pitBase/1 (read)pitBase/1 (read)
+  Referring: 
+  Function Pit_Ip_EnableTimer/52 is inline copy in Pit_Ip_StopChannel/23
+  Clone of Pit_Ip_EnableTimer/5
+  Availability: local
+  Function flags: count:1073741824 (estimated locally) body local optimize_size
+  Called by: Pit_Ip_StopChannel/23 (inlined) (1073741824 (estimated locally),1.00 per call) 
+  Calls: SchM_Enter_Gpt_GPT_EXCLUSIVE_AREA_00/30 (1073741824 (estimated locally),1.00 per call) SchM_Exit_Gpt_GPT_EXCLUSIVE_AREA_00/31 (1073741824 (estimated locally),1.00 per call) 
+Pit_Ip_SetEnableInterruptFlag/51 (Pit_Ip_SetEnableInterruptFlag) @06199700
+  Type: function definition analyzed
+  Visibility:
+  next sharing asm name: 50
+  previous sharing asm name: 53
+  Aux: @05e9f118
+  References: pitBase/1 (read)pitBase/1 (read)
+  Referring: 
+  Function Pit_Ip_SetEnableInterruptFlag/51 is inline copy in Pit_Ip_DisableChannelInterrupt/26
+  Clone of Pit_Ip_SetEnableInterruptFlag/12
+  Availability: local
+  Function flags: count:1073741824 (estimated locally) body local optimize_size
+  Called by: Pit_Ip_DisableChannelInterrupt/26 (inlined) (1073741824 (estimated locally),1.00 per call) 
+  Calls: SchM_Enter_Gpt_GPT_EXCLUSIVE_AREA_02/32 (1073741824 (estimated locally),1.00 per call) SchM_Exit_Gpt_GPT_EXCLUSIVE_AREA_02/33 (1073741824 (estimated locally),1.00 per call) 
+Pit_Ip_SetEnableInterruptFlag/50 (Pit_Ip_SetEnableInterruptFlag) @061b8380
+  Type: function definition analyzed
+  Visibility:
+  next sharing asm name: 12
+  previous sharing asm name: 51
+  Aux: @05e9f1d8
+  References: pitBase/1 (read)pitBase/1 (read)
+  Referring: 
+  Function Pit_Ip_SetEnableInterruptFlag/50 is inline copy in Pit_Ip_EnableChannelInterrupt/25
+  Clone of Pit_Ip_SetEnableInterruptFlag/12
+  Availability: local
+  Function flags: count:1073741824 (estimated locally) body local optimize_size
+  Called by: Pit_Ip_EnableChannelInterrupt/25 (inlined) (1073741824 (estimated locally),1.00 per call) 
+  Calls: SchM_Enter_Gpt_GPT_EXCLUSIVE_AREA_02/32 (1073741824 (estimated locally),1.00 per call) SchM_Exit_Gpt_GPT_EXCLUSIVE_AREA_02/33 (1073741824 (estimated locally),1.00 per call) 
+Pit_Ip_ClearInterruptStatusFlag/49 (Pit_Ip_ClearInterruptStatusFlag) @061b8ee0
+  Type: function definition analyzed
+  Visibility:
+  next sharing asm name: 48
+  previous sharing asm name: 56
+  Aux: @05e9f198
+  References: pitBase/1 (read)
+  Referring: 
+  Function Pit_Ip_ClearInterruptStatusFlag/49 is inline copy in Pit_Ip_EnableChannelInterrupt/25
+  Clone of Pit_Ip_ClearInterruptStatusFlag/13
+  Availability: local
+  Function flags: count:1073741824 (estimated locally) body local optimize_size
+  Called by: Pit_Ip_EnableChannelInterrupt/25 (inlined) (1073741824 (estimated locally),1.00 per call) 
+  Calls: 
+Pit_Ip_ClearInterruptStatusFlag/48 (Pit_Ip_ClearInterruptStatusFlag) @05f980e0
+  Type: function definition analyzed
+  Visibility:
+  next sharing asm name: 47
+  previous sharing asm name: 49
+  Aux: @05e9f1b8
+  References: pitBase/1 (read)
+  Referring: 
+  Function Pit_Ip_ClearInterruptStatusFlag/48 is inline copy in Pit_Ip_StopChannel/23
+  Clone of Pit_Ip_ClearInterruptStatusFlag/13
+  Availability: local
+  Function flags: count:1073741824 (estimated locally) body local optimize_size
+  Called by: Pit_Ip_StopChannel/23 (inlined) (1073741824 (estimated locally),1.00 per call) 
+  Calls: 
+Pit_Ip_ClearInterruptStatusFlag/47 (Pit_Ip_ClearInterruptStatusFlag) @060a41c0
+  Type: function definition analyzed
+  Visibility:
+  next sharing asm name: 13
+  previous sharing asm name: 48
+  Aux: @05e9f138
+  References: pitBase/1 (read)
+  Referring: 
+  Function Pit_Ip_ClearInterruptStatusFlag/47 is inline copy in Pit_Ip_DisableChannelInterrupt/26
+  Clone of Pit_Ip_ClearInterruptStatusFlag/13
+  Availability: local
+  Function flags: count:1073741824 (estimated locally) body local optimize_size
+  Called by: Pit_Ip_DisableChannelInterrupt/26 (inlined) (1073741824 (estimated locally),1.00 per call) 
+  Calls: 
+Pit_Ip_EnableModule.constprop.0/46 (Pit_Ip_EnableModule.constprop) @061b88c0
+  Type: function definition analyzed
+  Visibility:
+  Aux: @05e9f2b8
+  References: pitBase/1 (read)
+  Referring: 
+  Function Pit_Ip_EnableModule.constprop/46 is inline copy in Pit_Ip_Init/19
+  Clone of Pit_Ip_EnableModule/4
+  Availability: local
+  Function flags: count:248034361 (estimated locally) local optimize_size
+  Called by: Pit_Ip_Init/19 (inlined) (248034361 (estimated locally),0.23 per call) 
+  Calls: 
+Pit_Ip_SetChainMode.constprop.0/45 (Pit_Ip_SetChainMode.constprop) @061b8620
+  Type: function definition analyzed
+  Visibility:
+  Aux: @05e9f1f8
+  References: pitBase/1 (read)pitBase/1 (read)
+  Referring: 
+  Function Pit_Ip_SetChainMode.constprop/45 is inline copy in Pit_Ip_SetLifetimeTimer/27
+  Clone of Pit_Ip_SetChainMode/7
+  Availability: local
+  Function flags: count:1073741824 (estimated locally) local optimize_size
+  Called by: Pit_Ip_SetLifetimeTimer/27 (inlined) (1073741824 (estimated locally),1.00 per call) 
+  Calls: SchM_Enter_Gpt_GPT_EXCLUSIVE_AREA_01/34 (1073741824 (estimated locally),1.00 per call) SchM_Exit_Gpt_GPT_EXCLUSIVE_AREA_01/35 (1073741824 (estimated locally),1.00 per call) 
+Pit_Ip_Reset.constprop.0/44 (Pit_Ip_Reset.constprop) @061b89a0
+  Type: function definition analyzed
+  Visibility:
+  Aux: @05e9f218
+  References: pitBase/1 (read)pitBase/1 (read)
+  Referring: 
+  Function Pit_Ip_Reset.constprop/44 is inline copy in Pit_Ip_Deinit/21
+  Clone of Pit_Ip_Reset/8
+  Availability: local
+  Function flags: count:1073741824 (estimated locally) local optimize_size
+  Called by: Pit_Ip_Deinit/21 (inlined) (1073741824 (estimated locally),1.00 per call) 
+  Calls: 
+Pit_Ip_ProcessCommonInterrupt.constprop.0/43 (Pit_Ip_ProcessCommonInterrupt.constprop) @061b8460
+  Type: function definition analyzed
+  Visibility:
+  Aux: @05e9f238
+  References: pitBase/1 (read)Pit_Ip_u32ChState/2 (read)Pit_Ip_u32ChState/2 (read)Pit_Ip_u32ChState/2 (read)Pit_Ip_u32ChState/2 (read)
+  Referring: 
+  Function Pit_Ip_ProcessCommonInterrupt.constprop/43 is inline copy in PIT_0_ISR/29
+  Clone of Pit_Ip_ProcessCommonInterrupt/18
+  Availability: local
+  Function flags: count:939524097 (estimated locally) local optimize_size
+  Called by: PIT_0_ISR/29 (inlined) (939524097 (estimated locally),7.00 per call) 
+  Calls: SchM_Enter_Gpt_GPT_EXCLUSIVE_AREA_03/38 (155021476 (estimated locally),1.16 per call) Pit_Ip_ClearInterruptStatusFlag/13 (inlined) (25578543 (estimated locally),0.19 per call) SchM_Exit_Gpt_GPT_EXCLUSIVE_AREA_03/39 (155021476 (estimated locally),1.16 per call) Pit_Ip_StopChannel/23 (7844086 (estimated locally),0.06 per call) 
+   Indirect call(13564380 (estimated locally),0.10 per call) 
+SchM_Exit_Gpt_GPT_EXCLUSIVE_AREA_03/39 (SchM_Exit_Gpt_GPT_EXCLUSIVE_AREA_03) @060cb8c0
+  Type: function
+  Visibility: external public
+  References: 
+  Referring: 
+  Availability: not_available
+  Function flags: optimize_size
+  Called by: Pit_Ip_ProcessCommonInterrupt.constprop/43 (155021476 (estimated locally),1.16 per call) 
+  Calls: 
+SchM_Enter_Gpt_GPT_EXCLUSIVE_AREA_03/38 (SchM_Enter_Gpt_GPT_EXCLUSIVE_AREA_03) @060cb7e0
+  Type: function
+  Visibility: external public
+  References: 
+  Referring: 
+  Availability: not_available
+  Function flags: optimize_size
+  Called by: Pit_Ip_ProcessCommonInterrupt.constprop/43 (155021476 (estimated locally),1.16 per call) 
+  Calls: 
+SchM_Exit_Gpt_GPT_EXCLUSIVE_AREA_09/37 (SchM_Exit_Gpt_GPT_EXCLUSIVE_AREA_09) @060cb380
+  Type: function
+  Visibility: external public
+  References: 
+  Referring: 
+  Availability: not_available
+  Function flags: optimize_size
+  Called by: Pit_Ip_GetLifetimeTimer/28 (1073741824 (estimated locally),1.00 per call) 
+  Calls: 
+SchM_Enter_Gpt_GPT_EXCLUSIVE_AREA_09/36 (SchM_Enter_Gpt_GPT_EXCLUSIVE_AREA_09) @060cb2a0
+  Type: function
+  Visibility: external public
+  References: 
+  Referring: 
+  Availability: not_available
+  Function flags: optimize_size
+  Called by: Pit_Ip_GetLifetimeTimer/28 (1073741824 (estimated locally),1.00 per call) 
+  Calls: 
+SchM_Exit_Gpt_GPT_EXCLUSIVE_AREA_01/35 (SchM_Exit_Gpt_GPT_EXCLUSIVE_AREA_01) @060cb0e0
+  Type: function
+  Visibility: external public
+  References: 
+  Referring: 
+  Availability: not_available
+  Function flags: optimize_size
+  Called by: Pit_Ip_SetChainMode.constprop/45 (1073741824 (estimated locally),1.00 per call) 
+  Calls: 
+SchM_Enter_Gpt_GPT_EXCLUSIVE_AREA_01/34 (SchM_Enter_Gpt_GPT_EXCLUSIVE_AREA_01) @060cb000
+  Type: function
+  Visibility: external public
+  References: 
+  Referring: 
+  Availability: not_available
+  Function flags: optimize_size
+  Called by: Pit_Ip_SetChainMode.constprop/45 (1073741824 (estimated locally),1.00 per call) 
+  Calls: 
+SchM_Exit_Gpt_GPT_EXCLUSIVE_AREA_02/33 (SchM_Exit_Gpt_GPT_EXCLUSIVE_AREA_02) @060be380
+  Type: function
+  Visibility: external public
+  References: 
+  Referring: 
+  Availability: not_available
+  Function flags: optimize_size
+  Called by: Pit_Ip_SetEnableInterruptFlag/53 (1073741824 (estimated locally),1.00 per call) Pit_Ip_SetEnableInterruptFlag/51 (1073741824 (estimated locally),1.00 per call) Pit_Ip_SetEnableInterruptFlag/50 (1073741824 (estimated locally),1.00 per call) Pit_Ip_SetEnableInterruptFlag/12 (574129754 (estimated locally),0.53 per call) 
+  Calls: 
+SchM_Enter_Gpt_GPT_EXCLUSIVE_AREA_02/32 (SchM_Enter_Gpt_GPT_EXCLUSIVE_AREA_02) @060be2a0
+  Type: function
+  Visibility: external public
+  References: 
+  Referring: 
+  Availability: not_available
+  Function flags: optimize_size
+  Called by: Pit_Ip_SetEnableInterruptFlag/53 (1073741824 (estimated locally),1.00 per call) Pit_Ip_SetEnableInterruptFlag/51 (1073741824 (estimated locally),1.00 per call) Pit_Ip_SetEnableInterruptFlag/50 (1073741824 (estimated locally),1.00 per call) Pit_Ip_SetEnableInterruptFlag/12 (574129754 (estimated locally),0.53 per call) 
+  Calls: 
+SchM_Exit_Gpt_GPT_EXCLUSIVE_AREA_00/31 (SchM_Exit_Gpt_GPT_EXCLUSIVE_AREA_00) @060be0e0
+  Type: function
+  Visibility: external public
+  References: 
+  Referring: 
+  Availability: not_available
+  Function flags: optimize_size
+  Called by: Pit_Ip_EnableTimer/57 (354334802 (estimated locally),0.33 per call) Pit_Ip_EnableTimer/55 (1073741824 (estimated locally),1.00 per call) Pit_Ip_EnableTimer/54 (1073741824 (estimated locally),1.00 per call) Pit_Ip_EnableTimer/52 (1073741824 (estimated locally),1.00 per call) Pit_Ip_EnableTimer/5 (574129754 (estimated locally),0.53 per call) 
+  Calls: 
+SchM_Enter_Gpt_GPT_EXCLUSIVE_AREA_00/30 (SchM_Enter_Gpt_GPT_EXCLUSIVE_AREA_00) @060be000
+  Type: function
+  Visibility: external public
+  References: 
+  Referring: 
+  Availability: not_available
+  Function flags: optimize_size
+  Called by: Pit_Ip_EnableTimer/57 (354334802 (estimated locally),0.33 per call) Pit_Ip_EnableTimer/55 (1073741824 (estimated locally),1.00 per call) Pit_Ip_EnableTimer/54 (1073741824 (estimated locally),1.00 per call) Pit_Ip_EnableTimer/52 (1073741824 (estimated locally),1.00 per call) Pit_Ip_EnableTimer/5 (574129754 (estimated locally),0.53 per call) 
+  Calls: 
+PIT_0_ISR/29 (PIT_0_ISR) @060b39a0
+  Type: function definition analyzed
+  Visibility: externally_visible public
+  Aux: @05e9f2f8
+  References: 
+  Referring: 
+  Availability: available
+  Function flags: count:134217728 (estimated locally) body optimize_size
+  Called by: 
+  Calls: Pit_Ip_ProcessCommonInterrupt.constprop/43 (inlined) (939524097 (estimated locally),7.00 per call) 
+Pit_Ip_GetLifetimeTimer/28 (Pit_Ip_GetLifetimeTimer) @060b3700
+  Type: function definition analyzed
+  Visibility: externally_visible public
+  Aux: @05e9f318
+  References: pitBase/1 (read)
+  Referring: 
+  Availability: available
+  Function flags: count:1073741824 (estimated locally) body optimize_size
+  Called by: 
+  Calls: SchM_Exit_Gpt_GPT_EXCLUSIVE_AREA_09/37 (1073741824 (estimated locally),1.00 per call) SchM_Enter_Gpt_GPT_EXCLUSIVE_AREA_09/36 (1073741824 (estimated locally),1.00 per call) 
+Pit_Ip_SetLifetimeTimer/27 (Pit_Ip_SetLifetimeTimer) @060b3460
+  Type: function definition analyzed
+  Visibility: externally_visible public
+  Aux: @05e9f358
+  References: pitBase/1 (read)
+  Referring: 
+  Availability: available
+  Function flags: count:1073741824 (estimated locally) body optimize_size
+  Called by: 
+  Calls: Pit_Ip_EnableTimer/55 (inlined) (1073741824 (estimated locally),1.00 per call) Pit_Ip_EnableTimer/54 (inlined) (1073741824 (estimated locally),1.00 per call) Pit_Ip_SetChainMode.constprop/45 (inlined) (1073741824 (estimated locally),1.00 per call) Pit_Ip_SetEnableInterruptFlag/53 (inlined) (1073741824 (estimated locally),1.00 per call) 
+Pit_Ip_DisableChannelInterrupt/26 (Pit_Ip_DisableChannelInterrupt) @060b31c0
+  Type: function definition analyzed
+  Visibility: externally_visible public
+  Aux: @05f81b30
+  References: 
+  Referring: 
+  Availability: available
+  Function flags: count:1073741824 (estimated locally) body optimize_size
+  Called by: 
+  Calls: Pit_Ip_ClearInterruptStatusFlag/47 (inlined) (1073741824 (estimated locally),1.00 per call) Pit_Ip_SetEnableInterruptFlag/51 (inlined) (1073741824 (estimated locally),1.00 per call) 
+Pit_Ip_EnableChannelInterrupt/25 (Pit_Ip_EnableChannelInterrupt) @060a4d20
+  Type: function definition analyzed
+  Visibility: externally_visible public
+  Aux: @05f819f0
+  References: 
+  Referring: 
+  Availability: available
+  Function flags: count:1073741824 (estimated locally) body optimize_size
+  Called by: 
+  Calls: Pit_Ip_SetEnableInterruptFlag/50 (inlined) (1073741824 (estimated locally),1.00 per call) Pit_Ip_ClearInterruptStatusFlag/49 (inlined) (1073741824 (estimated locally),1.00 per call) 
+Pit_Ip_GetCurrentTimer/24 (Pit_Ip_GetCurrentTimer) @060a47e0
+  Type: function definition analyzed
+  Visibility: externally_visible public
+  Aux: @05f81a10
+  References: pitBase/1 (read)
+  Referring: 
+  Availability: available
+  Function flags: count:1073741824 (estimated locally) body optimize_size
+  Called by: 
+  Calls: 
+Pit_Ip_StopChannel/23 (Pit_Ip_StopChannel) @060a42a0
+  Type: function definition analyzed
+  Visibility: externally_visible public
+  Aux: @05f81870
+  References: 
+  Referring: 
+  Availability: available
+  Function flags: count:1073741824 (estimated locally) body optimize_size
+  Called by: Pit_Ip_ProcessCommonInterrupt.constprop/43 (7844086 (estimated locally),0.06 per call) 
+  Calls: Pit_Ip_ClearInterruptStatusFlag/48 (inlined) (1073741824 (estimated locally),1.00 per call) Pit_Ip_EnableTimer/52 (inlined) (1073741824 (estimated locally),1.00 per call) 
+Pit_Ip_StartChannel/22 (Pit_Ip_StartChannel) @060a4ee0
+  Type: function definition analyzed
+  Visibility: externally_visible public
+  Aux: @05f81fb0
+  References: pitBase/1 (read)
+  Referring: 
+  Availability: available
+  Function flags: count:1073741824 (estimated locally) body optimize_size
+  Called by: 
+  Calls: Pit_Ip_EnableTimer/57 (inlined) (354334802 (estimated locally),0.33 per call) 
+Pit_Ip_Deinit/21 (Pit_Ip_Deinit) @060a4c40
+  Type: function definition analyzed
+  Visibility: externally_visible public
+  Aux: @05f81eb0
+  References: 
+  Referring: 
+  Availability: available
+  Function flags: count:1073741824 (estimated locally) body optimize_size
+  Called by: 
+  Calls: Pit_Ip_Reset.constprop/44 (inlined) (1073741824 (estimated locally),1.00 per call) 
+Pit_Ip_InitChannel/20 (Pit_Ip_InitChannel) @060a49a0
+  Type: function definition analyzed
+  Visibility: externally_visible public
+  Aux: @05f81e50
+  References: pitBase/1 (read)Pit_Ip_u32ChState/2 (write)Pit_Ip_u32ChState/2 (write)Pit_Ip_u32ChState/2 (write)Pit_Ip_u32ChState/2 (write)
+  Referring: 
+  Availability: available
+  Function flags: count:1073741824 (estimated locally) body optimize_size
+  Called by: 
+  Calls: Pit_Ip_ClearInterruptStatusFlag/56 (inlined) (574129754 (estimated locally),0.53 per call) Pit_Ip_SetEnableInterruptFlag/12 (inlined) (574129754 (estimated locally),0.53 per call) Pit_Ip_EnableTimer/5 (inlined) (574129754 (estimated locally),0.53 per call) 
+Pit_Ip_Init/19 (Pit_Ip_Init) @060a4700
+  Type: function definition analyzed
+  Visibility: externally_visible public
+  Aux: @05f81d50
+  References: pitBase/1 (read)
+  Referring: 
+  Availability: available
+  Function flags: count:1073741824 (estimated locally) body optimize_size
+  Called by: 
+  Calls: Pit_Ip_SetDebugMode/6 (inlined) (751619278 (estimated locally),0.70 per call) Pit_Ip_EnableModule.constprop/46 (inlined) (248034361 (estimated locally),0.23 per call) 
+Pit_Ip_ProcessCommonInterrupt/18 (Pit_Ip_ProcessCommonInterrupt) @060a4460
+  Type: function
+  Body removed by symtab_remove_unreachable_nodes
+  Visibility: prevailing_def_ironly
+  References: 
+  Referring: 
+  Availability: not_available
+  Function flags: count:1073741823 (estimated locally) body optimize_size
+  Called by: 
+  Calls: 
+Pit_Ip_ClearInterruptStatusFlag/13 (Pit_Ip_ClearInterruptStatusFlag) @061b8e00
+  Type: function definition analyzed
+  Visibility: prevailing_def_ironly
+  previous sharing asm name: 47
+  Aux: @05f81cb0
+  References: pitBase/1 (read)
+  Referring: 
+  Function Pit_Ip_ClearInterruptStatusFlag/13 is inline copy in PIT_0_ISR/29
+  Availability: local
+  Function flags: count:25578543 (estimated locally) body local optimize_size
+  Called by: Pit_Ip_ProcessCommonInterrupt.constprop/43 (inlined) (25578543 (estimated locally),0.19 per call) 
+  Calls: 
+Pit_Ip_SetEnableInterruptFlag/12 (Pit_Ip_SetEnableInterruptFlag) @061b8b60
+  Type: function definition analyzed
+  Visibility: prevailing_def_ironly
+  previous sharing asm name: 50
+  Aux: @05f81e10
+  References: pitBase/1 (read)pitBase/1 (read)
+  Referring: 
+  Function Pit_Ip_SetEnableInterruptFlag/12 is inline copy in Pit_Ip_InitChannel/20
+  Availability: local
+  Function flags: count:574129754 (estimated locally) body local optimize_size
+  Called by: Pit_Ip_InitChannel/20 (inlined) (574129754 (estimated locally),0.53 per call) 
+  Calls: SchM_Exit_Gpt_GPT_EXCLUSIVE_AREA_02/33 (574129754 (estimated locally),0.53 per call) SchM_Enter_Gpt_GPT_EXCLUSIVE_AREA_02/32 (574129754 (estimated locally),0.53 per call) 
+Pit_Ip_Reset/8 (Pit_Ip_Reset) @061b80e0
+  Type: function
+  Body removed by symtab_remove_unreachable_nodes
+  Visibility: prevailing_def_ironly
+  References: 
+  Referring: 
+  Availability: not_available
+  Function flags: count:134217728 (estimated locally) body optimize_size
+  Called by: 
+  Calls: 
+Pit_Ip_SetChainMode/7 (Pit_Ip_SetChainMode) @061b2d20
+  Type: function
+  Body removed by symtab_remove_unreachable_nodes
+  Visibility: prevailing_def_ironly
+  References: 
+  Referring: 
+  Availability: not_available
+  Function flags: count:1073741824 (estimated locally) body optimize_size
+  Called by: 
+  Calls: 
+Pit_Ip_SetDebugMode/6 (Pit_Ip_SetDebugMode) @061b2a80
+  Type: function definition analyzed
+  Visibility: prevailing_def_ironly
+  Aux: @05f81fd0
+  References: pitBase/1 (read)pitBase/1 (read)
+  Referring: 
+  Function Pit_Ip_SetDebugMode/6 is inline copy in Pit_Ip_Init/19
+  Availability: local
+  Function flags: count:751619278 (estimated locally) body local optimize_size
+  Called by: Pit_Ip_Init/19 (inlined) (751619278 (estimated locally),0.70 per call) 
+  Calls: 
+Pit_Ip_EnableTimer/5 (Pit_Ip_EnableTimer) @061b27e0
+  Type: function definition analyzed
+  Visibility: prevailing_def_ironly
+  previous sharing asm name: 52
+  Aux: @05f81e30
+  References: pitBase/1 (read)pitBase/1 (read)
+  Referring: 
+  Function Pit_Ip_EnableTimer/5 is inline copy in Pit_Ip_InitChannel/20
+  Availability: local
+  Function flags: count:574129754 (estimated locally) body local optimize_size
+  Called by: Pit_Ip_InitChannel/20 (inlined) (574129754 (estimated locally),0.53 per call) 
+  Calls: SchM_Exit_Gpt_GPT_EXCLUSIVE_AREA_00/31 (574129754 (estimated locally),0.53 per call) SchM_Enter_Gpt_GPT_EXCLUSIVE_AREA_00/30 (574129754 (estimated locally),0.53 per call) 
+Pit_Ip_EnableModule/4 (Pit_Ip_EnableModule) @061b2540
+  Type: function
+  Body removed by symtab_remove_unreachable_nodes
+  Visibility: prevailing_def_ironly
+  References: 
+  Referring: 
+  Availability: not_available
+  Function flags: count:1073741824 (estimated locally) body optimize_size
+  Called by: 
+  Calls: 
+Pit_Ip_GetLoadValue/3 (Pit_Ip_GetLoadValue) @061b22a0
+  Type: function definition analyzed
+  Visibility: externally_visible public
+  Aux: @05f82010
+  References: pitBase/1 (read)
+  Referring: 
+  Availability: available
+  Function flags: count:1073741824 (estimated locally) body optimize_size
+  Called by: 
+  Calls: 
+
+
+ ordered call graph: reduced for nothrow
+Pit_Ip_EnableTimer/57 (Pit_Ip_EnableTimer) @0632ab60
+  Type: function definition analyzed
+  Visibility:
+  next sharing asm name: 55
+  Aux: @05e9f018
+  References: pitBase/1 (read)pitBase/1 (read)
+  Referring: 
+  Function Pit_Ip_EnableTimer/57 is inline copy in Pit_Ip_StartChannel/22
+  Clone of Pit_Ip_EnableTimer/5
+  Availability: local
+  Function flags: count:354334802 (estimated locally) body local optimize_size
+  Called by: Pit_Ip_StartChannel/22 (inlined) (354334802 (estimated locally),0.33 per call) 
+  Calls: SchM_Enter_Gpt_GPT_EXCLUSIVE_AREA_00/30 (354334802 (estimated locally),0.33 per call) SchM_Exit_Gpt_GPT_EXCLUSIVE_AREA_00/31 (354334802 (estimated locally),0.33 per call) 
+Pit_Ip_ClearInterruptStatusFlag/56 (Pit_Ip_ClearInterruptStatusFlag) @0632a9a0
+  Type: function definition analyzed
+  Visibility:
+  next sharing asm name: 49
+  Aux: @05e9f058
+  References: pitBase/1 (read)
+  Referring: 
+  Function Pit_Ip_ClearInterruptStatusFlag/56 is inline copy in Pit_Ip_InitChannel/20
+  Clone of Pit_Ip_ClearInterruptStatusFlag/13
+  Availability: local
+  Function flags: count:574129754 (estimated locally) body local optimize_size
+  Called by: Pit_Ip_InitChannel/20 (inlined) (574129754 (estimated locally),0.53 per call) 
+  Calls: 
+Pit_Ip_EnableTimer/55 (Pit_Ip_EnableTimer) @0632a7e0
+  Type: function definition analyzed
+  Visibility:
+  next sharing asm name: 54
+  previous sharing asm name: 57
+  Aux: @05e9f178
+  References: pitBase/1 (read)pitBase/1 (read)
+  Referring: 
+  Function Pit_Ip_EnableTimer/55 is inline copy in Pit_Ip_SetLifetimeTimer/27
+  Clone of Pit_Ip_EnableTimer/5
+  Availability: local
+  Function flags: count:1073741824 (estimated locally) body local optimize_size
+  Called by: Pit_Ip_SetLifetimeTimer/27 (inlined) (1073741824 (estimated locally),1.00 per call) 
+  Calls: SchM_Enter_Gpt_GPT_EXCLUSIVE_AREA_00/30 (1073741824 (estimated locally),1.00 per call) SchM_Exit_Gpt_GPT_EXCLUSIVE_AREA_00/31 (1073741824 (estimated locally),1.00 per call) 
+Pit_Ip_EnableTimer/54 (Pit_Ip_EnableTimer) @0632a620
+  Type: function definition analyzed
+  Visibility:
+  next sharing asm name: 52
+  previous sharing asm name: 55
+  Aux: @05e9f098
+  References: pitBase/1 (read)pitBase/1 (read)
+  Referring: 
+  Function Pit_Ip_EnableTimer/54 is inline copy in Pit_Ip_SetLifetimeTimer/27
+  Clone of Pit_Ip_EnableTimer/5
+  Availability: local
+  Function flags: count:1073741824 (estimated locally) body local optimize_size
+  Called by: Pit_Ip_SetLifetimeTimer/27 (inlined) (1073741824 (estimated locally),1.00 per call) 
+  Calls: SchM_Enter_Gpt_GPT_EXCLUSIVE_AREA_00/30 (1073741824 (estimated locally),1.00 per call) SchM_Exit_Gpt_GPT_EXCLUSIVE_AREA_00/31 (1073741824 (estimated locally),1.00 per call) 
+Pit_Ip_SetEnableInterruptFlag/53 (Pit_Ip_SetEnableInterruptFlag) @0632a380
+  Type: function definition analyzed
+  Visibility:
+  next sharing asm name: 51
+  Aux: @05e9f378
+  References: pitBase/1 (read)pitBase/1 (read)
+  Referring: 
+  Function Pit_Ip_SetEnableInterruptFlag/53 is inline copy in Pit_Ip_SetLifetimeTimer/27
+  Clone of Pit_Ip_SetEnableInterruptFlag/12
+  Availability: local
+  Function flags: count:1073741824 (estimated locally) body local optimize_size
+  Called by: Pit_Ip_SetLifetimeTimer/27 (inlined) (1073741824 (estimated locally),1.00 per call) 
+  Calls: SchM_Enter_Gpt_GPT_EXCLUSIVE_AREA_02/32 (1073741824 (estimated locally),1.00 per call) SchM_Exit_Gpt_GPT_EXCLUSIVE_AREA_02/33 (1073741824 (estimated locally),1.00 per call) 
+Pit_Ip_EnableTimer/52 (Pit_Ip_EnableTimer) @0632a1c0
+  Type: function definition analyzed
+  Visibility:
+  next sharing asm name: 5
+  previous sharing asm name: 54
+  Aux: @05e9f038
+  References: pitBase/1 (read)pitBase/1 (read)
+  Referring: 
+  Function Pit_Ip_EnableTimer/52 is inline copy in Pit_Ip_StopChannel/23
+  Clone of Pit_Ip_EnableTimer/5
+  Availability: local
+  Function flags: count:1073741824 (estimated locally) body local optimize_size
+  Called by: Pit_Ip_StopChannel/23 (inlined) (1073741824 (estimated locally),1.00 per call) 
+  Calls: SchM_Enter_Gpt_GPT_EXCLUSIVE_AREA_00/30 (1073741824 (estimated locally),1.00 per call) SchM_Exit_Gpt_GPT_EXCLUSIVE_AREA_00/31 (1073741824 (estimated locally),1.00 per call) 
+Pit_Ip_SetEnableInterruptFlag/51 (Pit_Ip_SetEnableInterruptFlag) @06199700
+  Type: function definition analyzed
+  Visibility:
+  next sharing asm name: 50
+  previous sharing asm name: 53
+  Aux: @05e9f118
+  References: pitBase/1 (read)pitBase/1 (read)
+  Referring: 
+  Function Pit_Ip_SetEnableInterruptFlag/51 is inline copy in Pit_Ip_DisableChannelInterrupt/26
+  Clone of Pit_Ip_SetEnableInterruptFlag/12
+  Availability: local
+  Function flags: count:1073741824 (estimated locally) body local optimize_size
+  Called by: Pit_Ip_DisableChannelInterrupt/26 (inlined) (1073741824 (estimated locally),1.00 per call) 
+  Calls: SchM_Enter_Gpt_GPT_EXCLUSIVE_AREA_02/32 (1073741824 (estimated locally),1.00 per call) SchM_Exit_Gpt_GPT_EXCLUSIVE_AREA_02/33 (1073741824 (estimated locally),1.00 per call) 
+Pit_Ip_SetEnableInterruptFlag/50 (Pit_Ip_SetEnableInterruptFlag) @061b8380
+  Type: function definition analyzed
+  Visibility:
+  next sharing asm name: 12
+  previous sharing asm name: 51
+  Aux: @05e9f1d8
+  References: pitBase/1 (read)pitBase/1 (read)
+  Referring: 
+  Function Pit_Ip_SetEnableInterruptFlag/50 is inline copy in Pit_Ip_EnableChannelInterrupt/25
+  Clone of Pit_Ip_SetEnableInterruptFlag/12
+  Availability: local
+  Function flags: count:1073741824 (estimated locally) body local optimize_size
+  Called by: Pit_Ip_EnableChannelInterrupt/25 (inlined) (1073741824 (estimated locally),1.00 per call) 
+  Calls: SchM_Enter_Gpt_GPT_EXCLUSIVE_AREA_02/32 (1073741824 (estimated locally),1.00 per call) SchM_Exit_Gpt_GPT_EXCLUSIVE_AREA_02/33 (1073741824 (estimated locally),1.00 per call) 
+Pit_Ip_ClearInterruptStatusFlag/49 (Pit_Ip_ClearInterruptStatusFlag) @061b8ee0
+  Type: function definition analyzed
+  Visibility:
+  next sharing asm name: 48
+  previous sharing asm name: 56
+  Aux: @05e9f198
+  References: pitBase/1 (read)
+  Referring: 
+  Function Pit_Ip_ClearInterruptStatusFlag/49 is inline copy in Pit_Ip_EnableChannelInterrupt/25
+  Clone of Pit_Ip_ClearInterruptStatusFlag/13
+  Availability: local
+  Function flags: count:1073741824 (estimated locally) body local optimize_size
+  Called by: Pit_Ip_EnableChannelInterrupt/25 (inlined) (1073741824 (estimated locally),1.00 per call) 
+  Calls: 
+Pit_Ip_ClearInterruptStatusFlag/48 (Pit_Ip_ClearInterruptStatusFlag) @05f980e0
+  Type: function definition analyzed
+  Visibility:
+  next sharing asm name: 47
+  previous sharing asm name: 49
+  Aux: @05e9f1b8
+  References: pitBase/1 (read)
+  Referring: 
+  Function Pit_Ip_ClearInterruptStatusFlag/48 is inline copy in Pit_Ip_StopChannel/23
+  Clone of Pit_Ip_ClearInterruptStatusFlag/13
+  Availability: local
+  Function flags: count:1073741824 (estimated locally) body local optimize_size
+  Called by: Pit_Ip_StopChannel/23 (inlined) (1073741824 (estimated locally),1.00 per call) 
+  Calls: 
+Pit_Ip_ClearInterruptStatusFlag/47 (Pit_Ip_ClearInterruptStatusFlag) @060a41c0
+  Type: function definition analyzed
+  Visibility:
+  next sharing asm name: 13
+  previous sharing asm name: 48
+  Aux: @05e9f138
+  References: pitBase/1 (read)
+  Referring: 
+  Function Pit_Ip_ClearInterruptStatusFlag/47 is inline copy in Pit_Ip_DisableChannelInterrupt/26
+  Clone of Pit_Ip_ClearInterruptStatusFlag/13
+  Availability: local
+  Function flags: count:1073741824 (estimated locally) body local optimize_size
+  Called by: Pit_Ip_DisableChannelInterrupt/26 (inlined) (1073741824 (estimated locally),1.00 per call) 
+  Calls: 
+Pit_Ip_EnableModule.constprop.0/46 (Pit_Ip_EnableModule.constprop) @061b88c0
+  Type: function definition analyzed
+  Visibility:
+  Aux: @05e9f2b8
+  References: pitBase/1 (read)
+  Referring: 
+  Function Pit_Ip_EnableModule.constprop/46 is inline copy in Pit_Ip_Init/19
+  Clone of Pit_Ip_EnableModule/4
+  Availability: local
+  Function flags: count:248034361 (estimated locally) local optimize_size
+  Called by: Pit_Ip_Init/19 (inlined) (248034361 (estimated locally),0.23 per call) 
+  Calls: 
+Pit_Ip_SetChainMode.constprop.0/45 (Pit_Ip_SetChainMode.constprop) @061b8620
+  Type: function definition analyzed
+  Visibility:
+  Aux: @05e9f1f8
+  References: pitBase/1 (read)pitBase/1 (read)
+  Referring: 
+  Function Pit_Ip_SetChainMode.constprop/45 is inline copy in Pit_Ip_SetLifetimeTimer/27
+  Clone of Pit_Ip_SetChainMode/7
+  Availability: local
+  Function flags: count:1073741824 (estimated locally) local optimize_size
+  Called by: Pit_Ip_SetLifetimeTimer/27 (inlined) (1073741824 (estimated locally),1.00 per call) 
+  Calls: SchM_Enter_Gpt_GPT_EXCLUSIVE_AREA_01/34 (1073741824 (estimated locally),1.00 per call) SchM_Exit_Gpt_GPT_EXCLUSIVE_AREA_01/35 (1073741824 (estimated locally),1.00 per call) 
+Pit_Ip_Reset.constprop.0/44 (Pit_Ip_Reset.constprop) @061b89a0
+  Type: function definition analyzed
+  Visibility:
+  Aux: @05e9f218
+  References: pitBase/1 (read)pitBase/1 (read)
+  Referring: 
+  Function Pit_Ip_Reset.constprop/44 is inline copy in Pit_Ip_Deinit/21
+  Clone of Pit_Ip_Reset/8
+  Availability: local
+  Function flags: count:1073741824 (estimated locally) local optimize_size
+  Called by: Pit_Ip_Deinit/21 (inlined) (1073741824 (estimated locally),1.00 per call) 
+  Calls: 
+Pit_Ip_ProcessCommonInterrupt.constprop.0/43 (Pit_Ip_ProcessCommonInterrupt.constprop) @061b8460
+  Type: function definition analyzed
+  Visibility:
+  Aux: @05e9f238
+  References: pitBase/1 (read)Pit_Ip_u32ChState/2 (read)Pit_Ip_u32ChState/2 (read)Pit_Ip_u32ChState/2 (read)Pit_Ip_u32ChState/2 (read)
+  Referring: 
+  Function Pit_Ip_ProcessCommonInterrupt.constprop/43 is inline copy in PIT_0_ISR/29
+  Clone of Pit_Ip_ProcessCommonInterrupt/18
+  Availability: local
+  Function flags: count:939524097 (estimated locally) local optimize_size
+  Called by: PIT_0_ISR/29 (inlined) (939524097 (estimated locally),7.00 per call) 
+  Calls: SchM_Enter_Gpt_GPT_EXCLUSIVE_AREA_03/38 (155021476 (estimated locally),1.16 per call) Pit_Ip_ClearInterruptStatusFlag/13 (inlined) (25578543 (estimated locally),0.19 per call) SchM_Exit_Gpt_GPT_EXCLUSIVE_AREA_03/39 (155021476 (estimated locally),1.16 per call) Pit_Ip_StopChannel/23 (7844086 (estimated locally),0.06 per call) 
+   Indirect call(13564380 (estimated locally),0.10 per call) 
+PIT_0_ISR/29 (PIT_0_ISR) @060b39a0
+  Type: function definition analyzed
+  Visibility: externally_visible public
+  Aux: @05e9f2f8
+  References: 
+  Referring: 
+  Availability: available
+  Function flags: count:134217728 (estimated locally) body optimize_size
+  Called by: 
+  Calls: Pit_Ip_ProcessCommonInterrupt.constprop/43 (inlined) (939524097 (estimated locally),7.00 per call) 
+Pit_Ip_GetLifetimeTimer/28 (Pit_Ip_GetLifetimeTimer) @060b3700
+  Type: function definition analyzed
+  Visibility: externally_visible public
+  Aux: @05e9f318
+  References: pitBase/1 (read)
+  Referring: 
+  Availability: available
+  Function flags: count:1073741824 (estimated locally) body optimize_size
+  Called by: 
+  Calls: SchM_Exit_Gpt_GPT_EXCLUSIVE_AREA_09/37 (1073741824 (estimated locally),1.00 per call) SchM_Enter_Gpt_GPT_EXCLUSIVE_AREA_09/36 (1073741824 (estimated locally),1.00 per call) 
+Pit_Ip_SetLifetimeTimer/27 (Pit_Ip_SetLifetimeTimer) @060b3460
+  Type: function definition analyzed
+  Visibility: externally_visible public
+  Aux: @05e9f358
+  References: pitBase/1 (read)
+  Referring: 
+  Availability: available
+  Function flags: count:1073741824 (estimated locally) body optimize_size
+  Called by: 
+  Calls: Pit_Ip_EnableTimer/55 (inlined) (1073741824 (estimated locally),1.00 per call) Pit_Ip_EnableTimer/54 (inlined) (1073741824 (estimated locally),1.00 per call) Pit_Ip_SetChainMode.constprop/45 (inlined) (1073741824 (estimated locally),1.00 per call) Pit_Ip_SetEnableInterruptFlag/53 (inlined) (1073741824 (estimated locally),1.00 per call) 
+Pit_Ip_DisableChannelInterrupt/26 (Pit_Ip_DisableChannelInterrupt) @060b31c0
+  Type: function definition analyzed
+  Visibility: externally_visible public
+  Aux: @05f81b30
+  References: 
+  Referring: 
+  Availability: available
+  Function flags: count:1073741824 (estimated locally) body optimize_size
+  Called by: 
+  Calls: Pit_Ip_ClearInterruptStatusFlag/47 (inlined) (1073741824 (estimated locally),1.00 per call) Pit_Ip_SetEnableInterruptFlag/51 (inlined) (1073741824 (estimated locally),1.00 per call) 
+Pit_Ip_EnableChannelInterrupt/25 (Pit_Ip_EnableChannelInterrupt) @060a4d20
+  Type: function definition analyzed
+  Visibility: externally_visible public
+  Aux: @05f819f0
+  References: 
+  Referring: 
+  Availability: available
+  Function flags: count:1073741824 (estimated locally) body optimize_size
+  Called by: 
+  Calls: Pit_Ip_SetEnableInterruptFlag/50 (inlined) (1073741824 (estimated locally),1.00 per call) Pit_Ip_ClearInterruptStatusFlag/49 (inlined) (1073741824 (estimated locally),1.00 per call) 
+Pit_Ip_GetCurrentTimer/24 (Pit_Ip_GetCurrentTimer) @060a47e0
+  Type: function definition analyzed
+  Visibility: externally_visible public
+  Aux: @05f81a10
+  References: pitBase/1 (read)
+  Referring: 
+  Availability: available
+  Function flags: count:1073741824 (estimated locally) body optimize_size
+  Called by: 
+  Calls: 
+Pit_Ip_StopChannel/23 (Pit_Ip_StopChannel) @060a42a0
+  Type: function definition analyzed
+  Visibility: externally_visible public
+  Aux: @05f81870
+  References: 
+  Referring: 
+  Availability: available
+  Function flags: count:1073741824 (estimated locally) body optimize_size
+  Called by: Pit_Ip_ProcessCommonInterrupt.constprop/43 (7844086 (estimated locally),0.06 per call) 
+  Calls: Pit_Ip_ClearInterruptStatusFlag/48 (inlined) (1073741824 (estimated locally),1.00 per call) Pit_Ip_EnableTimer/52 (inlined) (1073741824 (estimated locally),1.00 per call) 
+Pit_Ip_StartChannel/22 (Pit_Ip_StartChannel) @060a4ee0
+  Type: function definition analyzed
+  Visibility: externally_visible public
+  Aux: @05f81fb0
+  References: pitBase/1 (read)
+  Referring: 
+  Availability: available
+  Function flags: count:1073741824 (estimated locally) body optimize_size
+  Called by: 
+  Calls: Pit_Ip_EnableTimer/57 (inlined) (354334802 (estimated locally),0.33 per call) 
+Pit_Ip_Deinit/21 (Pit_Ip_Deinit) @060a4c40
+  Type: function definition analyzed
+  Visibility: externally_visible public
+  Aux: @05f81eb0
+  References: 
+  Referring: 
+  Availability: available
+  Function flags: count:1073741824 (estimated locally) body optimize_size
+  Called by: 
+  Calls: Pit_Ip_Reset.constprop/44 (inlined) (1073741824 (estimated locally),1.00 per call) 
+Pit_Ip_InitChannel/20 (Pit_Ip_InitChannel) @060a49a0
+  Type: function definition analyzed
+  Visibility: externally_visible public
+  Aux: @05f81e50
+  References: pitBase/1 (read)Pit_Ip_u32ChState/2 (write)Pit_Ip_u32ChState/2 (write)Pit_Ip_u32ChState/2 (write)Pit_Ip_u32ChState/2 (write)
+  Referring: 
+  Availability: available
+  Function flags: count:1073741824 (estimated locally) body optimize_size
+  Called by: 
+  Calls: Pit_Ip_ClearInterruptStatusFlag/56 (inlined) (574129754 (estimated locally),0.53 per call) Pit_Ip_SetEnableInterruptFlag/12 (inlined) (574129754 (estimated locally),0.53 per call) Pit_Ip_EnableTimer/5 (inlined) (574129754 (estimated locally),0.53 per call) 
+Pit_Ip_Init/19 (Pit_Ip_Init) @060a4700
+  Type: function definition analyzed
+  Visibility: externally_visible public
+  Aux: @05f81d50
+  References: pitBase/1 (read)
+  Referring: 
+  Availability: available
+  Function flags: count:1073741824 (estimated locally) body optimize_size
+  Called by: 
+  Calls: Pit_Ip_SetDebugMode/6 (inlined) (751619278 (estimated locally),0.70 per call) Pit_Ip_EnableModule.constprop/46 (inlined) (248034361 (estimated locally),0.23 per call) 
+Pit_Ip_ClearInterruptStatusFlag/13 (Pit_Ip_ClearInterruptStatusFlag) @061b8e00
+  Type: function definition analyzed
+  Visibility: prevailing_def_ironly
+  previous sharing asm name: 47
+  Aux: @05f81cb0
+  References: pitBase/1 (read)
+  Referring: 
+  Function Pit_Ip_ClearInterruptStatusFlag/13 is inline copy in PIT_0_ISR/29
+  Availability: local
+  Function flags: count:25578543 (estimated locally) body local optimize_size
+  Called by: Pit_Ip_ProcessCommonInterrupt.constprop/43 (inlined) (25578543 (estimated locally),0.19 per call) 
+  Calls: 
+Pit_Ip_SetEnableInterruptFlag/12 (Pit_Ip_SetEnableInterruptFlag) @061b8b60
+  Type: function definition analyzed
+  Visibility: prevailing_def_ironly
+  previous sharing asm name: 50
+  Aux: @05f81e10
+  References: pitBase/1 (read)pitBase/1 (read)
+  Referring: 
+  Function Pit_Ip_SetEnableInterruptFlag/12 is inline copy in Pit_Ip_InitChannel/20
+  Availability: local
+  Function flags: count:574129754 (estimated locally) body local optimize_size
+  Called by: Pit_Ip_InitChannel/20 (inlined) (574129754 (estimated locally),0.53 per call) 
+  Calls: SchM_Exit_Gpt_GPT_EXCLUSIVE_AREA_02/33 (574129754 (estimated locally),0.53 per call) SchM_Enter_Gpt_GPT_EXCLUSIVE_AREA_02/32 (574129754 (estimated locally),0.53 per call) 
+Pit_Ip_SetDebugMode/6 (Pit_Ip_SetDebugMode) @061b2a80
+  Type: function definition analyzed
+  Visibility: prevailing_def_ironly
+  Aux: @05f81fd0
+  References: pitBase/1 (read)pitBase/1 (read)
+  Referring: 
+  Function Pit_Ip_SetDebugMode/6 is inline copy in Pit_Ip_Init/19
+  Availability: local
+  Function flags: count:751619278 (estimated locally) body local optimize_size
+  Called by: Pit_Ip_Init/19 (inlined) (751619278 (estimated locally),0.70 per call) 
+  Calls: 
+Pit_Ip_EnableTimer/5 (Pit_Ip_EnableTimer) @061b27e0
+  Type: function definition analyzed
+  Visibility: prevailing_def_ironly
+  previous sharing asm name: 52
+  Aux: @05f81e30
+  References: pitBase/1 (read)pitBase/1 (read)
+  Referring: 
+  Function Pit_Ip_EnableTimer/5 is inline copy in Pit_Ip_InitChannel/20
+  Availability: local
+  Function flags: count:574129754 (estimated locally) body local optimize_size
+  Called by: Pit_Ip_InitChannel/20 (inlined) (574129754 (estimated locally),0.53 per call) 
+  Calls: SchM_Exit_Gpt_GPT_EXCLUSIVE_AREA_00/31 (574129754 (estimated locally),0.53 per call) SchM_Enter_Gpt_GPT_EXCLUSIVE_AREA_00/30 (574129754 (estimated locally),0.53 per call) 
+Pit_Ip_GetLoadValue/3 (Pit_Ip_GetLoadValue) @061b22a0
+  Type: function definition analyzed
+  Visibility: externally_visible public
+  Aux: @05f82010
+  References: pitBase/1 (read)
+  Referring: 
+  Availability: available
+  Function flags: count:1073741824 (estimated locally) body optimize_size
+  Called by: 
+  Calls: 
+
+
+
+MALLOC LATTICE Initial:
+Pit_Ip_EnableTimer: malloc_bottom
+Pit_Ip_ClearInterruptStatusFlag: malloc_bottom
+Pit_Ip_EnableTimer: malloc_bottom
+Pit_Ip_EnableTimer: malloc_bottom
+Pit_Ip_SetEnableInterruptFlag: malloc_bottom
+Pit_Ip_EnableTimer: malloc_bottom
+Pit_Ip_SetEnableInterruptFlag: malloc_bottom
+Pit_Ip_SetEnableInterruptFlag: malloc_bottom
+Pit_Ip_ClearInterruptStatusFlag: malloc_bottom
+Pit_Ip_ClearInterruptStatusFlag: malloc_bottom
+Pit_Ip_ClearInterruptStatusFlag: malloc_bottom
+Pit_Ip_EnableModule.constprop: malloc_bottom
+Pit_Ip_SetChainMode.constprop: malloc_bottom
+Pit_Ip_Reset.constprop: malloc_bottom
+Pit_Ip_ProcessCommonInterrupt.constprop: malloc_bottom
+PIT_0_ISR: malloc_bottom
+Pit_Ip_GetLifetimeTimer: malloc_bottom
+Pit_Ip_SetLifetimeTimer: malloc_bottom
+Pit_Ip_DisableChannelInterrupt: malloc_bottom
+Pit_Ip_EnableChannelInterrupt: malloc_bottom
+Pit_Ip_GetCurrentTimer: malloc_bottom
+Pit_Ip_StopChannel: malloc_bottom
+Pit_Ip_StartChannel: malloc_bottom
+Pit_Ip_Deinit: malloc_bottom
+Pit_Ip_InitChannel: malloc_bottom
+Pit_Ip_Init: malloc_bottom
+Pit_Ip_ProcessCommonInterrupt: malloc_bottom
+Pit_Ip_ClearInterruptStatusFlag: malloc_bottom
+Pit_Ip_SetEnableInterruptFlag: malloc_bottom
+Pit_Ip_Reset: malloc_bottom
+Pit_Ip_SetChainMode: malloc_bottom
+Pit_Ip_SetDebugMode: malloc_bottom
+Pit_Ip_EnableTimer: malloc_bottom
+Pit_Ip_EnableModule: malloc_bottom
+Pit_Ip_GetLoadValue: malloc_bottom
+
+
+MALLOC LATTICE after propagation:
+Pit_Ip_EnableTimer: malloc_bottom
+Pit_Ip_ClearInterruptStatusFlag: malloc_bottom
+Pit_Ip_EnableTimer: malloc_bottom
+Pit_Ip_EnableTimer: malloc_bottom
+Pit_Ip_SetEnableInterruptFlag: malloc_bottom
+Pit_Ip_EnableTimer: malloc_bottom
+Pit_Ip_SetEnableInterruptFlag: malloc_bottom
+Pit_Ip_SetEnableInterruptFlag: malloc_bottom
+Pit_Ip_ClearInterruptStatusFlag: malloc_bottom
+Pit_Ip_ClearInterruptStatusFlag: malloc_bottom
+Pit_Ip_ClearInterruptStatusFlag: malloc_bottom
+Pit_Ip_EnableModule.constprop: malloc_bottom
+Pit_Ip_SetChainMode.constprop: malloc_bottom
+Pit_Ip_Reset.constprop: malloc_bottom
+Pit_Ip_ProcessCommonInterrupt.constprop: malloc_bottom
+PIT_0_ISR: malloc_bottom
+Pit_Ip_GetLifetimeTimer: malloc_bottom
+Pit_Ip_SetLifetimeTimer: malloc_bottom
+Pit_Ip_DisableChannelInterrupt: malloc_bottom
+Pit_Ip_EnableChannelInterrupt: malloc_bottom
+Pit_Ip_GetCurrentTimer: malloc_bottom
+Pit_Ip_StopChannel: malloc_bottom
+Pit_Ip_StartChannel: malloc_bottom
+Pit_Ip_Deinit: malloc_bottom
+Pit_Ip_InitChannel: malloc_bottom
+Pit_Ip_Init: malloc_bottom
+Pit_Ip_ProcessCommonInterrupt: malloc_bottom
+Pit_Ip_ClearInterruptStatusFlag: malloc_bottom
+Pit_Ip_SetEnableInterruptFlag: malloc_bottom
+Pit_Ip_Reset: malloc_bottom
+Pit_Ip_SetChainMode: malloc_bottom
+Pit_Ip_SetDebugMode: malloc_bottom
+Pit_Ip_EnableTimer: malloc_bottom
+Pit_Ip_EnableModule: malloc_bottom
+Pit_Ip_GetLoadValue: malloc_bottom
+callgraph:
+
+Pit_Ip_EnableTimer/57 (Pit_Ip_EnableTimer) @0632ab60
+  Type: function definition analyzed
+  Visibility:
+  next sharing asm name: 55
+  Aux: @05f81d90
+  References: pitBase/1 (read)pitBase/1 (read)
+  Referring: 
+  Function Pit_Ip_EnableTimer/57 is inline copy in Pit_Ip_StartChannel/22
+  Clone of Pit_Ip_EnableTimer/5
+  Availability: local
+  Function flags: count:354334802 (estimated locally) body local optimize_size
+  Called by: Pit_Ip_StartChannel/22 (inlined) (354334802 (estimated locally),0.33 per call) 
+  Calls: SchM_Enter_Gpt_GPT_EXCLUSIVE_AREA_00/30 (354334802 (estimated locally),0.33 per call) SchM_Exit_Gpt_GPT_EXCLUSIVE_AREA_00/31 (354334802 (estimated locally),0.33 per call) 
+Pit_Ip_ClearInterruptStatusFlag/56 (Pit_Ip_ClearInterruptStatusFlag) @0632a9a0
+  Type: function definition analyzed
+  Visibility:
+  next sharing asm name: 49
+  Aux: @05f81e10
+  References: pitBase/1 (read)
+  Referring: 
+  Function Pit_Ip_ClearInterruptStatusFlag/56 is inline copy in Pit_Ip_InitChannel/20
+  Clone of Pit_Ip_ClearInterruptStatusFlag/13
+  Availability: local
+  Function flags: count:574129754 (estimated locally) body local optimize_size
+  Called by: Pit_Ip_InitChannel/20 (inlined) (574129754 (estimated locally),0.53 per call) 
+  Calls: 
+Pit_Ip_EnableTimer/55 (Pit_Ip_EnableTimer) @0632a7e0
+  Type: function definition analyzed
+  Visibility:
+  next sharing asm name: 54
+  previous sharing asm name: 57
+  Aux: @05f81f30
+  References: pitBase/1 (read)pitBase/1 (read)
+  Referring: 
+  Function Pit_Ip_EnableTimer/55 is inline copy in Pit_Ip_SetLifetimeTimer/27
+  Clone of Pit_Ip_EnableTimer/5
+  Availability: local
+  Function flags: count:1073741824 (estimated locally) body local optimize_size
+  Called by: Pit_Ip_SetLifetimeTimer/27 (inlined) (1073741824 (estimated locally),1.00 per call) 
+  Calls: SchM_Enter_Gpt_GPT_EXCLUSIVE_AREA_00/30 (1073741824 (estimated locally),1.00 per call) SchM_Exit_Gpt_GPT_EXCLUSIVE_AREA_00/31 (1073741824 (estimated locally),1.00 per call) 
+Pit_Ip_EnableTimer/54 (Pit_Ip_EnableTimer) @0632a620
+  Type: function definition analyzed
+  Visibility:
+  next sharing asm name: 52
+  previous sharing asm name: 55
+  Aux: @05f81d50
+  References: pitBase/1 (read)pitBase/1 (read)
+  Referring: 
+  Function Pit_Ip_EnableTimer/54 is inline copy in Pit_Ip_SetLifetimeTimer/27
+  Clone of Pit_Ip_EnableTimer/5
+  Availability: local
+  Function flags: count:1073741824 (estimated locally) body local optimize_size
+  Called by: Pit_Ip_SetLifetimeTimer/27 (inlined) (1073741824 (estimated locally),1.00 per call) 
+  Calls: SchM_Enter_Gpt_GPT_EXCLUSIVE_AREA_00/30 (1073741824 (estimated locally),1.00 per call) SchM_Exit_Gpt_GPT_EXCLUSIVE_AREA_00/31 (1073741824 (estimated locally),1.00 per call) 
+Pit_Ip_SetEnableInterruptFlag/53 (Pit_Ip_SetEnableInterruptFlag) @0632a380
+  Type: function definition analyzed
+  Visibility:
+  next sharing asm name: 51
+  Aux: @05f82010
+  References: pitBase/1 (read)pitBase/1 (read)
+  Referring: 
+  Function Pit_Ip_SetEnableInterruptFlag/53 is inline copy in Pit_Ip_SetLifetimeTimer/27
+  Clone of Pit_Ip_SetEnableInterruptFlag/12
+  Availability: local
+  Function flags: count:1073741824 (estimated locally) body local optimize_size
+  Called by: Pit_Ip_SetLifetimeTimer/27 (inlined) (1073741824 (estimated locally),1.00 per call) 
+  Calls: SchM_Enter_Gpt_GPT_EXCLUSIVE_AREA_02/32 (1073741824 (estimated locally),1.00 per call) SchM_Exit_Gpt_GPT_EXCLUSIVE_AREA_02/33 (1073741824 (estimated locally),1.00 per call) 
+Pit_Ip_EnableTimer/52 (Pit_Ip_EnableTimer) @0632a1c0
+  Type: function definition analyzed
+  Visibility:
+  next sharing asm name: 5
+  previous sharing asm name: 54
+  Aux: @05f81db0
+  References: pitBase/1 (read)pitBase/1 (read)
+  Referring: 
+  Function Pit_Ip_EnableTimer/52 is inline copy in Pit_Ip_StopChannel/23
+  Clone of Pit_Ip_EnableTimer/5
+  Availability: local
+  Function flags: count:1073741824 (estimated locally) body local optimize_size
+  Called by: Pit_Ip_StopChannel/23 (inlined) (1073741824 (estimated locally),1.00 per call) 
+  Calls: SchM_Enter_Gpt_GPT_EXCLUSIVE_AREA_00/30 (1073741824 (estimated locally),1.00 per call) SchM_Exit_Gpt_GPT_EXCLUSIVE_AREA_00/31 (1073741824 (estimated locally),1.00 per call) 
+Pit_Ip_SetEnableInterruptFlag/51 (Pit_Ip_SetEnableInterruptFlag) @06199700
+  Type: function definition analyzed
+  Visibility:
+  next sharing asm name: 50
+  previous sharing asm name: 53
+  Aux: @05f81f10
+  References: pitBase/1 (read)pitBase/1 (read)
+  Referring: 
+  Function Pit_Ip_SetEnableInterruptFlag/51 is inline copy in Pit_Ip_DisableChannelInterrupt/26
+  Clone of Pit_Ip_SetEnableInterruptFlag/12
+  Availability: local
+  Function flags: count:1073741824 (estimated locally) body local optimize_size
+  Called by: Pit_Ip_DisableChannelInterrupt/26 (inlined) (1073741824 (estimated locally),1.00 per call) 
+  Calls: SchM_Enter_Gpt_GPT_EXCLUSIVE_AREA_02/32 (1073741824 (estimated locally),1.00 per call) SchM_Exit_Gpt_GPT_EXCLUSIVE_AREA_02/33 (1073741824 (estimated locally),1.00 per call) 
+Pit_Ip_SetEnableInterruptFlag/50 (Pit_Ip_SetEnableInterruptFlag) @061b8380
+  Type: function definition analyzed
+  Visibility:
+  next sharing asm name: 12
+  previous sharing asm name: 51
+  Aux: @05f81df0
+  References: pitBase/1 (read)pitBase/1 (read)
+  Referring: 
+  Function Pit_Ip_SetEnableInterruptFlag/50 is inline copy in Pit_Ip_EnableChannelInterrupt/25
+  Clone of Pit_Ip_SetEnableInterruptFlag/12
+  Availability: local
+  Function flags: count:1073741824 (estimated locally) body local optimize_size
+  Called by: Pit_Ip_EnableChannelInterrupt/25 (inlined) (1073741824 (estimated locally),1.00 per call) 
+  Calls: SchM_Enter_Gpt_GPT_EXCLUSIVE_AREA_02/32 (1073741824 (estimated locally),1.00 per call) SchM_Exit_Gpt_GPT_EXCLUSIVE_AREA_02/33 (1073741824 (estimated locally),1.00 per call) 
+Pit_Ip_ClearInterruptStatusFlag/49 (Pit_Ip_ClearInterruptStatusFlag) @061b8ee0
+  Type: function definition analyzed
+  Visibility:
+  next sharing asm name: 48
+  previous sharing asm name: 56
+  Aux: @05f81e90
+  References: pitBase/1 (read)
+  Referring: 
+  Function Pit_Ip_ClearInterruptStatusFlag/49 is inline copy in Pit_Ip_EnableChannelInterrupt/25
+  Clone of Pit_Ip_ClearInterruptStatusFlag/13
+  Availability: local
+  Function flags: count:1073741824 (estimated locally) body local optimize_size
+  Called by: Pit_Ip_EnableChannelInterrupt/25 (inlined) (1073741824 (estimated locally),1.00 per call) 
+  Calls: 
+Pit_Ip_ClearInterruptStatusFlag/48 (Pit_Ip_ClearInterruptStatusFlag) @05f980e0
+  Type: function definition analyzed
+  Visibility:
+  next sharing asm name: 47
+  previous sharing asm name: 49
+  Aux: @05f81ed0
+  References: pitBase/1 (read)
+  Referring: 
+  Function Pit_Ip_ClearInterruptStatusFlag/48 is inline copy in Pit_Ip_StopChannel/23
+  Clone of Pit_Ip_ClearInterruptStatusFlag/13
+  Availability: local
+  Function flags: count:1073741824 (estimated locally) body local optimize_size
+  Called by: Pit_Ip_StopChannel/23 (inlined) (1073741824 (estimated locally),1.00 per call) 
+  Calls: 
+Pit_Ip_ClearInterruptStatusFlag/47 (Pit_Ip_ClearInterruptStatusFlag) @060a41c0
+  Type: function definition analyzed
+  Visibility:
+  next sharing asm name: 13
+  previous sharing asm name: 48
+  Aux: @05f81e30
+  References: pitBase/1 (read)
+  Referring: 
+  Function Pit_Ip_ClearInterruptStatusFlag/47 is inline copy in Pit_Ip_DisableChannelInterrupt/26
+  Clone of Pit_Ip_ClearInterruptStatusFlag/13
+  Availability: local
+  Function flags: count:1073741824 (estimated locally) body local optimize_size
+  Called by: Pit_Ip_DisableChannelInterrupt/26 (inlined) (1073741824 (estimated locally),1.00 per call) 
+  Calls: 
+Pit_Ip_EnableModule.constprop.0/46 (Pit_Ip_EnableModule.constprop) @061b88c0
+  Type: function definition analyzed
+  Visibility:
+  Aux: @05f81d30
+  References: pitBase/1 (read)
+  Referring: 
+  Function Pit_Ip_EnableModule.constprop/46 is inline copy in Pit_Ip_Init/19
+  Clone of Pit_Ip_EnableModule/4
+  Availability: local
+  Function flags: count:248034361 (estimated locally) local optimize_size
+  Called by: Pit_Ip_Init/19 (inlined) (248034361 (estimated locally),0.23 per call) 
+  Calls: 
+Pit_Ip_SetChainMode.constprop.0/45 (Pit_Ip_SetChainMode.constprop) @061b8620
+  Type: function definition analyzed
+  Visibility:
+  Aux: @05f81e50
+  References: pitBase/1 (read)pitBase/1 (read)
+  Referring: 
+  Function Pit_Ip_SetChainMode.constprop/45 is inline copy in Pit_Ip_SetLifetimeTimer/27
+  Clone of Pit_Ip_SetChainMode/7
+  Availability: local
+  Function flags: count:1073741824 (estimated locally) local optimize_size
+  Called by: Pit_Ip_SetLifetimeTimer/27 (inlined) (1073741824 (estimated locally),1.00 per call) 
+  Calls: SchM_Enter_Gpt_GPT_EXCLUSIVE_AREA_01/34 (1073741824 (estimated locally),1.00 per call) SchM_Exit_Gpt_GPT_EXCLUSIVE_AREA_01/35 (1073741824 (estimated locally),1.00 per call) 
+Pit_Ip_Reset.constprop.0/44 (Pit_Ip_Reset.constprop) @061b89a0
+  Type: function definition analyzed
+  Visibility:
+  Aux: @05f81eb0
+  References: pitBase/1 (read)pitBase/1 (read)
+  Referring: 
+  Function Pit_Ip_Reset.constprop/44 is inline copy in Pit_Ip_Deinit/21
+  Clone of Pit_Ip_Reset/8
+  Availability: local
+  Function flags: count:1073741824 (estimated locally) local optimize_size
+  Called by: Pit_Ip_Deinit/21 (inlined) (1073741824 (estimated locally),1.00 per call) 
+  Calls: 
+Pit_Ip_ProcessCommonInterrupt.constprop.0/43 (Pit_Ip_ProcessCommonInterrupt.constprop) @061b8460
+  Type: function definition analyzed
+  Visibility:
+  Aux: @05f81f50
+  References: pitBase/1 (read)Pit_Ip_u32ChState/2 (read)Pit_Ip_u32ChState/2 (read)Pit_Ip_u32ChState/2 (read)Pit_Ip_u32ChState/2 (read)
+  Referring: 
+  Function Pit_Ip_ProcessCommonInterrupt.constprop/43 is inline copy in PIT_0_ISR/29
+  Clone of Pit_Ip_ProcessCommonInterrupt/18
+  Availability: local
+  Function flags: count:939524097 (estimated locally) local optimize_size
+  Called by: PIT_0_ISR/29 (inlined) (939524097 (estimated locally),7.00 per call) 
+  Calls: SchM_Enter_Gpt_GPT_EXCLUSIVE_AREA_03/38 (155021476 (estimated locally),1.16 per call) Pit_Ip_ClearInterruptStatusFlag/13 (inlined) (25578543 (estimated locally),0.19 per call) SchM_Exit_Gpt_GPT_EXCLUSIVE_AREA_03/39 (155021476 (estimated locally),1.16 per call) Pit_Ip_StopChannel/23 (7844086 (estimated locally),0.06 per call) 
+   Indirect call(13564380 (estimated locally),0.10 per call) 
+SchM_Exit_Gpt_GPT_EXCLUSIVE_AREA_03/39 (SchM_Exit_Gpt_GPT_EXCLUSIVE_AREA_03) @060cb8c0
+  Type: function
+  Visibility: external public
+  References: 
+  Referring: 
+  Availability: not_available
+  Function flags: optimize_size
+  Called by: Pit_Ip_ProcessCommonInterrupt.constprop/43 (155021476 (estimated locally),1.16 per call) 
+  Calls: 
+SchM_Enter_Gpt_GPT_EXCLUSIVE_AREA_03/38 (SchM_Enter_Gpt_GPT_EXCLUSIVE_AREA_03) @060cb7e0
+  Type: function
+  Visibility: external public
+  References: 
+  Referring: 
+  Availability: not_available
+  Function flags: optimize_size
+  Called by: Pit_Ip_ProcessCommonInterrupt.constprop/43 (155021476 (estimated locally),1.16 per call) 
+  Calls: 
+SchM_Exit_Gpt_GPT_EXCLUSIVE_AREA_09/37 (SchM_Exit_Gpt_GPT_EXCLUSIVE_AREA_09) @060cb380
+  Type: function
+  Visibility: external public
+  References: 
+  Referring: 
+  Availability: not_available
+  Function flags: optimize_size
+  Called by: Pit_Ip_GetLifetimeTimer/28 (1073741824 (estimated locally),1.00 per call) 
+  Calls: 
+SchM_Enter_Gpt_GPT_EXCLUSIVE_AREA_09/36 (SchM_Enter_Gpt_GPT_EXCLUSIVE_AREA_09) @060cb2a0
+  Type: function
+  Visibility: external public
+  References: 
+  Referring: 
+  Availability: not_available
+  Function flags: optimize_size
+  Called by: Pit_Ip_GetLifetimeTimer/28 (1073741824 (estimated locally),1.00 per call) 
+  Calls: 
+SchM_Exit_Gpt_GPT_EXCLUSIVE_AREA_01/35 (SchM_Exit_Gpt_GPT_EXCLUSIVE_AREA_01) @060cb0e0
+  Type: function
+  Visibility: external public
+  References: 
+  Referring: 
+  Availability: not_available
+  Function flags: optimize_size
+  Called by: Pit_Ip_SetChainMode.constprop/45 (1073741824 (estimated locally),1.00 per call) 
+  Calls: 
+SchM_Enter_Gpt_GPT_EXCLUSIVE_AREA_01/34 (SchM_Enter_Gpt_GPT_EXCLUSIVE_AREA_01) @060cb000
+  Type: function
+  Visibility: external public
+  References: 
+  Referring: 
+  Availability: not_available
+  Function flags: optimize_size
+  Called by: Pit_Ip_SetChainMode.constprop/45 (1073741824 (estimated locally),1.00 per call) 
+  Calls: 
+SchM_Exit_Gpt_GPT_EXCLUSIVE_AREA_02/33 (SchM_Exit_Gpt_GPT_EXCLUSIVE_AREA_02) @060be380
+  Type: function
+  Visibility: external public
+  References: 
+  Referring: 
+  Availability: not_available
+  Function flags: optimize_size
+  Called by: Pit_Ip_SetEnableInterruptFlag/53 (1073741824 (estimated locally),1.00 per call) Pit_Ip_SetEnableInterruptFlag/51 (1073741824 (estimated locally),1.00 per call) Pit_Ip_SetEnableInterruptFlag/50 (1073741824 (estimated locally),1.00 per call) Pit_Ip_SetEnableInterruptFlag/12 (574129754 (estimated locally),0.53 per call) 
+  Calls: 
+SchM_Enter_Gpt_GPT_EXCLUSIVE_AREA_02/32 (SchM_Enter_Gpt_GPT_EXCLUSIVE_AREA_02) @060be2a0
+  Type: function
+  Visibility: external public
+  References: 
+  Referring: 
+  Availability: not_available
+  Function flags: optimize_size
+  Called by: Pit_Ip_SetEnableInterruptFlag/53 (1073741824 (estimated locally),1.00 per call) Pit_Ip_SetEnableInterruptFlag/51 (1073741824 (estimated locally),1.00 per call) Pit_Ip_SetEnableInterruptFlag/50 (1073741824 (estimated locally),1.00 per call) Pit_Ip_SetEnableInterruptFlag/12 (574129754 (estimated locally),0.53 per call) 
+  Calls: 
+SchM_Exit_Gpt_GPT_EXCLUSIVE_AREA_00/31 (SchM_Exit_Gpt_GPT_EXCLUSIVE_AREA_00) @060be0e0
+  Type: function
+  Visibility: external public
+  References: 
+  Referring: 
+  Availability: not_available
+  Function flags: optimize_size
+  Called by: Pit_Ip_EnableTimer/57 (354334802 (estimated locally),0.33 per call) Pit_Ip_EnableTimer/55 (1073741824 (estimated locally),1.00 per call) Pit_Ip_EnableTimer/54 (1073741824 (estimated locally),1.00 per call) Pit_Ip_EnableTimer/52 (1073741824 (estimated locally),1.00 per call) Pit_Ip_EnableTimer/5 (574129754 (estimated locally),0.53 per call) 
+  Calls: 
+SchM_Enter_Gpt_GPT_EXCLUSIVE_AREA_00/30 (SchM_Enter_Gpt_GPT_EXCLUSIVE_AREA_00) @060be000
+  Type: function
+  Visibility: external public
+  References: 
+  Referring: 
+  Availability: not_available
+  Function flags: optimize_size
+  Called by: Pit_Ip_EnableTimer/57 (354334802 (estimated locally),0.33 per call) Pit_Ip_EnableTimer/55 (1073741824 (estimated locally),1.00 per call) Pit_Ip_EnableTimer/54 (1073741824 (estimated locally),1.00 per call) Pit_Ip_EnableTimer/52 (1073741824 (estimated locally),1.00 per call) Pit_Ip_EnableTimer/5 (574129754 (estimated locally),0.53 per call) 
+  Calls: 
+PIT_0_ISR/29 (PIT_0_ISR) @060b39a0
+  Type: function definition analyzed
+  Visibility: externally_visible public
+  Aux: @05f81ef0
+  References: 
+  Referring: 
+  Availability: available
+  Function flags: count:134217728 (estimated locally) body optimize_size
+  Called by: 
+  Calls: Pit_Ip_ProcessCommonInterrupt.constprop/43 (inlined) (939524097 (estimated locally),7.00 per call) 
+Pit_Ip_GetLifetimeTimer/28 (Pit_Ip_GetLifetimeTimer) @060b3700
+  Type: function definition analyzed
+  Visibility: externally_visible public
+  Aux: @05f81f70
+  References: pitBase/1 (read)
+  Referring: 
+  Availability: available
+  Function flags: count:1073741824 (estimated locally) body optimize_size
+  Called by: 
+  Calls: SchM_Exit_Gpt_GPT_EXCLUSIVE_AREA_09/37 (1073741824 (estimated locally),1.00 per call) SchM_Enter_Gpt_GPT_EXCLUSIVE_AREA_09/36 (1073741824 (estimated locally),1.00 per call) 
+Pit_Ip_SetLifetimeTimer/27 (Pit_Ip_SetLifetimeTimer) @060b3460
+  Type: function definition analyzed
+  Visibility: externally_visible public
+  Aux: @05f81fb0
+  References: pitBase/1 (read)
+  Referring: 
+  Availability: available
+  Function flags: count:1073741824 (estimated locally) body optimize_size
+  Called by: 
+  Calls: Pit_Ip_EnableTimer/55 (inlined) (1073741824 (estimated locally),1.00 per call) Pit_Ip_EnableTimer/54 (inlined) (1073741824 (estimated locally),1.00 per call) Pit_Ip_SetChainMode.constprop/45 (inlined) (1073741824 (estimated locally),1.00 per call) Pit_Ip_SetEnableInterruptFlag/53 (inlined) (1073741824 (estimated locally),1.00 per call) 
+Pit_Ip_DisableChannelInterrupt/26 (Pit_Ip_DisableChannelInterrupt) @060b31c0
+  Type: function definition analyzed
+  Visibility: externally_visible public
+  Aux: @05f81fd0
+  References: 
+  Referring: 
+  Availability: available
+  Function flags: count:1073741824 (estimated locally) body optimize_size
+  Called by: 
+  Calls: Pit_Ip_ClearInterruptStatusFlag/47 (inlined) (1073741824 (estimated locally),1.00 per call) Pit_Ip_SetEnableInterruptFlag/51 (inlined) (1073741824 (estimated locally),1.00 per call) 
+Pit_Ip_EnableChannelInterrupt/25 (Pit_Ip_EnableChannelInterrupt) @060a4d20
+  Type: function definition analyzed
+  Visibility: externally_visible public
+  Aux: @05f81ff0
+  References: 
+  Referring: 
+  Availability: available
+  Function flags: count:1073741824 (estimated locally) body optimize_size
+  Called by: 
+  Calls: Pit_Ip_SetEnableInterruptFlag/50 (inlined) (1073741824 (estimated locally),1.00 per call) Pit_Ip_ClearInterruptStatusFlag/49 (inlined) (1073741824 (estimated locally),1.00 per call) 
+Pit_Ip_GetCurrentTimer/24 (Pit_Ip_GetCurrentTimer) @060a47e0
+  Type: function definition analyzed
+  Visibility: externally_visible public
+  Aux: @05f81cb0
+  References: pitBase/1 (read)
+  Referring: 
+  Availability: available
+  Function flags: count:1073741824 (estimated locally) body optimize_size
+  Called by: 
+  Calls: 
+Pit_Ip_StopChannel/23 (Pit_Ip_StopChannel) @060a42a0
+  Type: function definition analyzed
+  Visibility: externally_visible public
+  Aux: @05f81cd0
+  References: 
+  Referring: 
+  Availability: available
+  Function flags: count:1073741824 (estimated locally) body optimize_size
+  Called by: Pit_Ip_ProcessCommonInterrupt.constprop/43 (7844086 (estimated locally),0.06 per call) 
+  Calls: Pit_Ip_ClearInterruptStatusFlag/48 (inlined) (1073741824 (estimated locally),1.00 per call) Pit_Ip_EnableTimer/52 (inlined) (1073741824 (estimated locally),1.00 per call) 
+Pit_Ip_StartChannel/22 (Pit_Ip_StartChannel) @060a4ee0
+  Type: function definition analyzed
+  Visibility: externally_visible public
+  Aux: @05f81cf0
+  References: pitBase/1 (read)
+  Referring: 
+  Availability: available
+  Function flags: count:1073741824 (estimated locally) body optimize_size
+  Called by: 
+  Calls: Pit_Ip_EnableTimer/57 (inlined) (354334802 (estimated locally),0.33 per call) 
+Pit_Ip_Deinit/21 (Pit_Ip_Deinit) @060a4c40
+  Type: function definition analyzed
+  Visibility: externally_visible public
+  Aux: @05f819f0
+  References: 
+  Referring: 
+  Availability: available
+  Function flags: count:1073741824 (estimated locally) body optimize_size
+  Called by: 
+  Calls: Pit_Ip_Reset.constprop/44 (inlined) (1073741824 (estimated locally),1.00 per call) 
+Pit_Ip_InitChannel/20 (Pit_Ip_InitChannel) @060a49a0
+  Type: function definition analyzed
+  Visibility: externally_visible public
+  Aux: @05f81870
+  References: pitBase/1 (read)Pit_Ip_u32ChState/2 (write)Pit_Ip_u32ChState/2 (write)Pit_Ip_u32ChState/2 (write)Pit_Ip_u32ChState/2 (write)
+  Referring: 
+  Availability: available
+  Function flags: count:1073741824 (estimated locally) body optimize_size
+  Called by: 
+  Calls: Pit_Ip_ClearInterruptStatusFlag/56 (inlined) (574129754 (estimated locally),0.53 per call) Pit_Ip_SetEnableInterruptFlag/12 (inlined) (574129754 (estimated locally),0.53 per call) Pit_Ip_EnableTimer/5 (inlined) (574129754 (estimated locally),0.53 per call) 
+Pit_Ip_Init/19 (Pit_Ip_Init) @060a4700
+  Type: function definition analyzed
+  Visibility: externally_visible public
+  Aux: @05f81a10
+  References: pitBase/1 (read)
+  Referring: 
+  Availability: available
+  Function flags: count:1073741824 (estimated locally) body optimize_size
+  Called by: 
+  Calls: Pit_Ip_SetDebugMode/6 (inlined) (751619278 (estimated locally),0.70 per call) Pit_Ip_EnableModule.constprop/46 (inlined) (248034361 (estimated locally),0.23 per call) 
+Pit_Ip_ProcessCommonInterrupt/18 (Pit_Ip_ProcessCommonInterrupt) @060a4460
+  Type: function
+  Body removed by symtab_remove_unreachable_nodes
+  Visibility: prevailing_def_ironly
+  References: 
+  Referring: 
+  Availability: not_available
+  Function flags: count:1073741823 (estimated locally) body optimize_size
+  Called by: 
+  Calls: 
+Pit_Ip_ClearInterruptStatusFlag/13 (Pit_Ip_ClearInterruptStatusFlag) @061b8e00
+  Type: function definition analyzed
+  Visibility: prevailing_def_ironly
+  previous sharing asm name: 47
+  Aux: @05f81b30
+  References: pitBase/1 (read)
+  Referring: 
+  Function Pit_Ip_ClearInterruptStatusFlag/13 is inline copy in PIT_0_ISR/29
+  Availability: local
+  Function flags: count:25578543 (estimated locally) body local optimize_size
+  Called by: Pit_Ip_ProcessCommonInterrupt.constprop/43 (inlined) (25578543 (estimated locally),0.19 per call) 
+  Calls: 
+Pit_Ip_SetEnableInterruptFlag/12 (Pit_Ip_SetEnableInterruptFlag) @061b8b60
+  Type: function definition analyzed
+  Visibility: prevailing_def_ironly
+  previous sharing asm name: 50
+  Aux: @05e9f118
+  References: pitBase/1 (read)pitBase/1 (read)
+  Referring: 
+  Function Pit_Ip_SetEnableInterruptFlag/12 is inline copy in Pit_Ip_InitChannel/20
+  Availability: local
+  Function flags: count:574129754 (estimated locally) body local optimize_size
+  Called by: Pit_Ip_InitChannel/20 (inlined) (574129754 (estimated locally),0.53 per call) 
+  Calls: SchM_Exit_Gpt_GPT_EXCLUSIVE_AREA_02/33 (574129754 (estimated locally),0.53 per call) SchM_Enter_Gpt_GPT_EXCLUSIVE_AREA_02/32 (574129754 (estimated locally),0.53 per call) 
+Pit_Ip_Reset/8 (Pit_Ip_Reset) @061b80e0
+  Type: function
+  Body removed by symtab_remove_unreachable_nodes
+  Visibility: prevailing_def_ironly
+  References: 
+  Referring: 
+  Availability: not_available
+  Function flags: count:134217728 (estimated locally) body optimize_size
+  Called by: 
+  Calls: 
+Pit_Ip_SetChainMode/7 (Pit_Ip_SetChainMode) @061b2d20
+  Type: function
+  Body removed by symtab_remove_unreachable_nodes
+  Visibility: prevailing_def_ironly
+  References: 
+  Referring: 
+  Availability: not_available
+  Function flags: count:1073741824 (estimated locally) body optimize_size
+  Called by: 
+  Calls: 
+Pit_Ip_SetDebugMode/6 (Pit_Ip_SetDebugMode) @061b2a80
+  Type: function definition analyzed
+  Visibility: prevailing_def_ironly
+  Aux: @05e9f218
+  References: pitBase/1 (read)pitBase/1 (read)
+  Referring: 
+  Function Pit_Ip_SetDebugMode/6 is inline copy in Pit_Ip_Init/19
+  Availability: local
+  Function flags: count:751619278 (estimated locally) body local optimize_size
+  Called by: Pit_Ip_Init/19 (inlined) (751619278 (estimated locally),0.70 per call) 
+  Calls: 
+Pit_Ip_EnableTimer/5 (Pit_Ip_EnableTimer) @061b27e0
+  Type: function definition analyzed
+  Visibility: prevailing_def_ironly
+  previous sharing asm name: 52
+  Aux: @05e9f138
+  References: pitBase/1 (read)pitBase/1 (read)
+  Referring: 
+  Function Pit_Ip_EnableTimer/5 is inline copy in Pit_Ip_InitChannel/20
+  Availability: local
+  Function flags: count:574129754 (estimated locally) body local optimize_size
+  Called by: Pit_Ip_InitChannel/20 (inlined) (574129754 (estimated locally),0.53 per call) 
+  Calls: SchM_Exit_Gpt_GPT_EXCLUSIVE_AREA_00/31 (574129754 (estimated locally),0.53 per call) SchM_Enter_Gpt_GPT_EXCLUSIVE_AREA_00/30 (574129754 (estimated locally),0.53 per call) 
+Pit_Ip_EnableModule/4 (Pit_Ip_EnableModule) @061b2540
+  Type: function
+  Body removed by symtab_remove_unreachable_nodes
+  Visibility: prevailing_def_ironly
+  References: 
+  Referring: 
+  Availability: not_available
+  Function flags: count:1073741824 (estimated locally) body optimize_size
+  Called by: 
+  Calls: 
+Pit_Ip_GetLoadValue/3 (Pit_Ip_GetLoadValue) @061b22a0
+  Type: function definition analyzed
+  Visibility: externally_visible public
+  Aux: @05e9f238
+  References: pitBase/1 (read)
+  Referring: 
+  Availability: available
+  Function flags: count:1073741824 (estimated locally) body optimize_size
+  Called by: 
+  Calls: 
+
+
+ ordered call graph: reduced
+PIT_0_ISR/29 (PIT_0_ISR) @060b39a0
+  Type: function definition analyzed
+  Visibility: externally_visible public
+  Aux: @05f81ef0
+  References: 
+  Referring: 
+  Availability: available
+  Function flags: count:134217728 (estimated locally) body optimize_size
+  Called by: 
+  Calls: Pit_Ip_ProcessCommonInterrupt.constprop/43 (inlined) (939524097 (estimated locally),7.00 per call) 
+Pit_Ip_ProcessCommonInterrupt.constprop.0/43 (Pit_Ip_ProcessCommonInterrupt.constprop) @061b8460
+  Type: function definition analyzed
+  Visibility:
+  Aux: @05f81f50
+  References: pitBase/1 (read)Pit_Ip_u32ChState/2 (read)Pit_Ip_u32ChState/2 (read)Pit_Ip_u32ChState/2 (read)Pit_Ip_u32ChState/2 (read)
+  Referring: 
+  Function Pit_Ip_ProcessCommonInterrupt.constprop/43 is inline copy in PIT_0_ISR/29
+  Clone of Pit_Ip_ProcessCommonInterrupt/18
+  Availability: local
+  Function flags: count:939524097 (estimated locally) local optimize_size
+  Called by: PIT_0_ISR/29 (inlined) (939524097 (estimated locally),7.00 per call) 
+  Calls: SchM_Enter_Gpt_GPT_EXCLUSIVE_AREA_03/38 (155021476 (estimated locally),1.16 per call) Pit_Ip_ClearInterruptStatusFlag/13 (inlined) (25578543 (estimated locally),0.19 per call) SchM_Exit_Gpt_GPT_EXCLUSIVE_AREA_03/39 (155021476 (estimated locally),1.16 per call) Pit_Ip_StopChannel/23 (7844086 (estimated locally),0.06 per call) 
+   Indirect call(13564380 (estimated locally),0.10 per call) 
+Pit_Ip_GetLifetimeTimer/28 (Pit_Ip_GetLifetimeTimer) @060b3700
+  Type: function definition analyzed
+  Visibility: externally_visible public
+  Aux: @05f81f70
+  References: pitBase/1 (read)
+  Referring: 
+  Availability: available
+  Function flags: count:1073741824 (estimated locally) body optimize_size
+  Called by: 
+  Calls: SchM_Exit_Gpt_GPT_EXCLUSIVE_AREA_09/37 (1073741824 (estimated locally),1.00 per call) SchM_Enter_Gpt_GPT_EXCLUSIVE_AREA_09/36 (1073741824 (estimated locally),1.00 per call) 
+Pit_Ip_SetLifetimeTimer/27 (Pit_Ip_SetLifetimeTimer) @060b3460
+  Type: function definition analyzed
+  Visibility: externally_visible public
+  Aux: @05f81fb0
+  References: pitBase/1 (read)
+  Referring: 
+  Availability: available
+  Function flags: count:1073741824 (estimated locally) body optimize_size
+  Called by: 
+  Calls: Pit_Ip_EnableTimer/55 (inlined) (1073741824 (estimated locally),1.00 per call) Pit_Ip_EnableTimer/54 (inlined) (1073741824 (estimated locally),1.00 per call) Pit_Ip_SetChainMode.constprop/45 (inlined) (1073741824 (estimated locally),1.00 per call) Pit_Ip_SetEnableInterruptFlag/53 (inlined) (1073741824 (estimated locally),1.00 per call) 
+Pit_Ip_SetEnableInterruptFlag/53 (Pit_Ip_SetEnableInterruptFlag) @0632a380
+  Type: function definition analyzed
+  Visibility:
+  next sharing asm name: 51
+  Aux: @05f82010
+  References: pitBase/1 (read)pitBase/1 (read)
+  Referring: 
+  Function Pit_Ip_SetEnableInterruptFlag/53 is inline copy in Pit_Ip_SetLifetimeTimer/27
+  Clone of Pit_Ip_SetEnableInterruptFlag/12
+  Availability: local
+  Function flags: count:1073741824 (estimated locally) body local optimize_size
+  Called by: Pit_Ip_SetLifetimeTimer/27 (inlined) (1073741824 (estimated locally),1.00 per call) 
+  Calls: SchM_Enter_Gpt_GPT_EXCLUSIVE_AREA_02/32 (1073741824 (estimated locally),1.00 per call) SchM_Exit_Gpt_GPT_EXCLUSIVE_AREA_02/33 (1073741824 (estimated locally),1.00 per call) 
+Pit_Ip_SetChainMode.constprop.0/45 (Pit_Ip_SetChainMode.constprop) @061b8620
+  Type: function definition analyzed
+  Visibility:
+  Aux: @05f81e50
+  References: pitBase/1 (read)pitBase/1 (read)
+  Referring: 
+  Function Pit_Ip_SetChainMode.constprop/45 is inline copy in Pit_Ip_SetLifetimeTimer/27
+  Clone of Pit_Ip_SetChainMode/7
+  Availability: local
+  Function flags: count:1073741824 (estimated locally) local optimize_size
+  Called by: Pit_Ip_SetLifetimeTimer/27 (inlined) (1073741824 (estimated locally),1.00 per call) 
+  Calls: SchM_Enter_Gpt_GPT_EXCLUSIVE_AREA_01/34 (1073741824 (estimated locally),1.00 per call) SchM_Exit_Gpt_GPT_EXCLUSIVE_AREA_01/35 (1073741824 (estimated locally),1.00 per call) 
+Pit_Ip_EnableTimer/54 (Pit_Ip_EnableTimer) @0632a620
+  Type: function definition analyzed
+  Visibility:
+  next sharing asm name: 52
+  previous sharing asm name: 55
+  Aux: @05f81d50
+  References: pitBase/1 (read)pitBase/1 (read)
+  Referring: 
+  Function Pit_Ip_EnableTimer/54 is inline copy in Pit_Ip_SetLifetimeTimer/27
+  Clone of Pit_Ip_EnableTimer/5
+  Availability: local
+  Function flags: count:1073741824 (estimated locally) body local optimize_size
+  Called by: Pit_Ip_SetLifetimeTimer/27 (inlined) (1073741824 (estimated locally),1.00 per call) 
+  Calls: SchM_Enter_Gpt_GPT_EXCLUSIVE_AREA_00/30 (1073741824 (estimated locally),1.00 per call) SchM_Exit_Gpt_GPT_EXCLUSIVE_AREA_00/31 (1073741824 (estimated locally),1.00 per call) 
+Pit_Ip_EnableTimer/55 (Pit_Ip_EnableTimer) @0632a7e0
+  Type: function definition analyzed
+  Visibility:
+  next sharing asm name: 54
+  previous sharing asm name: 57
+  Aux: @05f81f30
+  References: pitBase/1 (read)pitBase/1 (read)
+  Referring: 
+  Function Pit_Ip_EnableTimer/55 is inline copy in Pit_Ip_SetLifetimeTimer/27
+  Clone of Pit_Ip_EnableTimer/5
+  Availability: local
+  Function flags: count:1073741824 (estimated locally) body local optimize_size
+  Called by: Pit_Ip_SetLifetimeTimer/27 (inlined) (1073741824 (estimated locally),1.00 per call) 
+  Calls: SchM_Enter_Gpt_GPT_EXCLUSIVE_AREA_00/30 (1073741824 (estimated locally),1.00 per call) SchM_Exit_Gpt_GPT_EXCLUSIVE_AREA_00/31 (1073741824 (estimated locally),1.00 per call) 
+Pit_Ip_DisableChannelInterrupt/26 (Pit_Ip_DisableChannelInterrupt) @060b31c0
+  Type: function definition analyzed
+  Visibility: externally_visible public
+  Aux: @05f81fd0
+  References: 
+  Referring: 
+  Availability: available
+  Function flags: count:1073741824 (estimated locally) body optimize_size
+  Called by: 
+  Calls: Pit_Ip_ClearInterruptStatusFlag/47 (inlined) (1073741824 (estimated locally),1.00 per call) Pit_Ip_SetEnableInterruptFlag/51 (inlined) (1073741824 (estimated locally),1.00 per call) 
+Pit_Ip_SetEnableInterruptFlag/51 (Pit_Ip_SetEnableInterruptFlag) @06199700
+  Type: function definition analyzed
+  Visibility:
+  next sharing asm name: 50
+  previous sharing asm name: 53
+  Aux: @05f81f10
+  References: pitBase/1 (read)pitBase/1 (read)
+  Referring: 
+  Function Pit_Ip_SetEnableInterruptFlag/51 is inline copy in Pit_Ip_DisableChannelInterrupt/26
+  Clone of Pit_Ip_SetEnableInterruptFlag/12
+  Availability: local
+  Function flags: count:1073741824 (estimated locally) body local optimize_size
+  Called by: Pit_Ip_DisableChannelInterrupt/26 (inlined) (1073741824 (estimated locally),1.00 per call) 
+  Calls: SchM_Enter_Gpt_GPT_EXCLUSIVE_AREA_02/32 (1073741824 (estimated locally),1.00 per call) SchM_Exit_Gpt_GPT_EXCLUSIVE_AREA_02/33 (1073741824 (estimated locally),1.00 per call) 
+Pit_Ip_ClearInterruptStatusFlag/47 (Pit_Ip_ClearInterruptStatusFlag) @060a41c0
+  Type: function definition analyzed
+  Visibility:
+  next sharing asm name: 13
+  previous sharing asm name: 48
+  Aux: @05f81e30
+  References: pitBase/1 (read)
+  Referring: 
+  Function Pit_Ip_ClearInterruptStatusFlag/47 is inline copy in Pit_Ip_DisableChannelInterrupt/26
+  Clone of Pit_Ip_ClearInterruptStatusFlag/13
+  Availability: local
+  Function flags: count:1073741824 (estimated locally) body local optimize_size
+  Called by: Pit_Ip_DisableChannelInterrupt/26 (inlined) (1073741824 (estimated locally),1.00 per call) 
+  Calls: 
+Pit_Ip_EnableChannelInterrupt/25 (Pit_Ip_EnableChannelInterrupt) @060a4d20
+  Type: function definition analyzed
+  Visibility: externally_visible public
+  Aux: @05f81ff0
+  References: 
+  Referring: 
+  Availability: available
+  Function flags: count:1073741824 (estimated locally) body optimize_size
+  Called by: 
+  Calls: Pit_Ip_SetEnableInterruptFlag/50 (inlined) (1073741824 (estimated locally),1.00 per call) Pit_Ip_ClearInterruptStatusFlag/49 (inlined) (1073741824 (estimated locally),1.00 per call) 
+Pit_Ip_ClearInterruptStatusFlag/49 (Pit_Ip_ClearInterruptStatusFlag) @061b8ee0
+  Type: function definition analyzed
+  Visibility:
+  next sharing asm name: 48
+  previous sharing asm name: 56
+  Aux: @05f81e90
+  References: pitBase/1 (read)
+  Referring: 
+  Function Pit_Ip_ClearInterruptStatusFlag/49 is inline copy in Pit_Ip_EnableChannelInterrupt/25
+  Clone of Pit_Ip_ClearInterruptStatusFlag/13
+  Availability: local
+  Function flags: count:1073741824 (estimated locally) body local optimize_size
+  Called by: Pit_Ip_EnableChannelInterrupt/25 (inlined) (1073741824 (estimated locally),1.00 per call) 
+  Calls: 
+Pit_Ip_SetEnableInterruptFlag/50 (Pit_Ip_SetEnableInterruptFlag) @061b8380
+  Type: function definition analyzed
+  Visibility:
+  next sharing asm name: 12
+  previous sharing asm name: 51
+  Aux: @05f81df0
+  References: pitBase/1 (read)pitBase/1 (read)
+  Referring: 
+  Function Pit_Ip_SetEnableInterruptFlag/50 is inline copy in Pit_Ip_EnableChannelInterrupt/25
+  Clone of Pit_Ip_SetEnableInterruptFlag/12
+  Availability: local
+  Function flags: count:1073741824 (estimated locally) body local optimize_size
+  Called by: Pit_Ip_EnableChannelInterrupt/25 (inlined) (1073741824 (estimated locally),1.00 per call) 
+  Calls: SchM_Enter_Gpt_GPT_EXCLUSIVE_AREA_02/32 (1073741824 (estimated locally),1.00 per call) SchM_Exit_Gpt_GPT_EXCLUSIVE_AREA_02/33 (1073741824 (estimated locally),1.00 per call) 
+Pit_Ip_GetCurrentTimer/24 (Pit_Ip_GetCurrentTimer) @060a47e0
+  Type: function definition analyzed
+  Visibility: externally_visible public
+  Aux: @05f81cb0
+  References: pitBase/1 (read)
+  Referring: 
+  Availability: available
+  Function flags: count:1073741824 (estimated locally) body optimize_size
+  Called by: 
+  Calls: 
+Pit_Ip_StopChannel/23 (Pit_Ip_StopChannel) @060a42a0
+  Type: function definition analyzed
+  Visibility: externally_visible public
+  Aux: @05f81cd0
+  References: 
+  Referring: 
+  Availability: available
+  Function flags: count:1073741824 (estimated locally) body optimize_size
+  Called by: Pit_Ip_ProcessCommonInterrupt.constprop/43 (7844086 (estimated locally),0.06 per call) 
+  Calls: Pit_Ip_ClearInterruptStatusFlag/48 (inlined) (1073741824 (estimated locally),1.00 per call) Pit_Ip_EnableTimer/52 (inlined) (1073741824 (estimated locally),1.00 per call) 
+Pit_Ip_EnableTimer/52 (Pit_Ip_EnableTimer) @0632a1c0
+  Type: function definition analyzed
+  Visibility:
+  next sharing asm name: 5
+  previous sharing asm name: 54
+  Aux: @05f81db0
+  References: pitBase/1 (read)pitBase/1 (read)
+  Referring: 
+  Function Pit_Ip_EnableTimer/52 is inline copy in Pit_Ip_StopChannel/23
+  Clone of Pit_Ip_EnableTimer/5
+  Availability: local
+  Function flags: count:1073741824 (estimated locally) body local optimize_size
+  Called by: Pit_Ip_StopChannel/23 (inlined) (1073741824 (estimated locally),1.00 per call) 
+  Calls: SchM_Enter_Gpt_GPT_EXCLUSIVE_AREA_00/30 (1073741824 (estimated locally),1.00 per call) SchM_Exit_Gpt_GPT_EXCLUSIVE_AREA_00/31 (1073741824 (estimated locally),1.00 per call) 
+Pit_Ip_ClearInterruptStatusFlag/48 (Pit_Ip_ClearInterruptStatusFlag) @05f980e0
+  Type: function definition analyzed
+  Visibility:
+  next sharing asm name: 47
+  previous sharing asm name: 49
+  Aux: @05f81ed0
+  References: pitBase/1 (read)
+  Referring: 
+  Function Pit_Ip_ClearInterruptStatusFlag/48 is inline copy in Pit_Ip_StopChannel/23
+  Clone of Pit_Ip_ClearInterruptStatusFlag/13
+  Availability: local
+  Function flags: count:1073741824 (estimated locally) body local optimize_size
+  Called by: Pit_Ip_StopChannel/23 (inlined) (1073741824 (estimated locally),1.00 per call) 
+  Calls: 
+Pit_Ip_StartChannel/22 (Pit_Ip_StartChannel) @060a4ee0
+  Type: function definition analyzed
+  Visibility: externally_visible public
+  Aux: @05f81cf0
+  References: pitBase/1 (read)
+  Referring: 
+  Availability: available
+  Function flags: count:1073741824 (estimated locally) body optimize_size
+  Called by: 
+  Calls: Pit_Ip_EnableTimer/57 (inlined) (354334802 (estimated locally),0.33 per call) 
+Pit_Ip_EnableTimer/57 (Pit_Ip_EnableTimer) @0632ab60
+  Type: function definition analyzed
+  Visibility:
+  next sharing asm name: 55
+  Aux: @05f81d90
+  References: pitBase/1 (read)pitBase/1 (read)
+  Referring: 
+  Function Pit_Ip_EnableTimer/57 is inline copy in Pit_Ip_StartChannel/22
+  Clone of Pit_Ip_EnableTimer/5
+  Availability: local
+  Function flags: count:354334802 (estimated locally) body local optimize_size
+  Called by: Pit_Ip_StartChannel/22 (inlined) (354334802 (estimated locally),0.33 per call) 
+  Calls: SchM_Enter_Gpt_GPT_EXCLUSIVE_AREA_00/30 (354334802 (estimated locally),0.33 per call) SchM_Exit_Gpt_GPT_EXCLUSIVE_AREA_00/31 (354334802 (estimated locally),0.33 per call) 
+Pit_Ip_Deinit/21 (Pit_Ip_Deinit) @060a4c40
+  Type: function definition analyzed
+  Visibility: externally_visible public
+  Aux: @05f819f0
+  References: 
+  Referring: 
+  Availability: available
+  Function flags: count:1073741824 (estimated locally) body optimize_size
+  Called by: 
+  Calls: Pit_Ip_Reset.constprop/44 (inlined) (1073741824 (estimated locally),1.00 per call) 
+Pit_Ip_Reset.constprop.0/44 (Pit_Ip_Reset.constprop) @061b89a0
+  Type: function definition analyzed
+  Visibility:
+  Aux: @05f81eb0
+  References: pitBase/1 (read)pitBase/1 (read)
+  Referring: 
+  Function Pit_Ip_Reset.constprop/44 is inline copy in Pit_Ip_Deinit/21
+  Clone of Pit_Ip_Reset/8
+  Availability: local
+  Function flags: count:1073741824 (estimated locally) local optimize_size
+  Called by: Pit_Ip_Deinit/21 (inlined) (1073741824 (estimated locally),1.00 per call) 
+  Calls: 
+Pit_Ip_InitChannel/20 (Pit_Ip_InitChannel) @060a49a0
+  Type: function definition analyzed
+  Visibility: externally_visible public
+  Aux: @05f81870
+  References: pitBase/1 (read)Pit_Ip_u32ChState/2 (write)Pit_Ip_u32ChState/2 (write)Pit_Ip_u32ChState/2 (write)Pit_Ip_u32ChState/2 (write)
+  Referring: 
+  Availability: available
+  Function flags: count:1073741824 (estimated locally) body optimize_size
+  Called by: 
+  Calls: Pit_Ip_ClearInterruptStatusFlag/56 (inlined) (574129754 (estimated locally),0.53 per call) Pit_Ip_SetEnableInterruptFlag/12 (inlined) (574129754 (estimated locally),0.53 per call) Pit_Ip_EnableTimer/5 (inlined) (574129754 (estimated locally),0.53 per call) 
+Pit_Ip_ClearInterruptStatusFlag/56 (Pit_Ip_ClearInterruptStatusFlag) @0632a9a0
+  Type: function definition analyzed
+  Visibility:
+  next sharing asm name: 49
+  Aux: @05f81e10
+  References: pitBase/1 (read)
+  Referring: 
+  Function Pit_Ip_ClearInterruptStatusFlag/56 is inline copy in Pit_Ip_InitChannel/20
+  Clone of Pit_Ip_ClearInterruptStatusFlag/13
+  Availability: local
+  Function flags: count:574129754 (estimated locally) body local optimize_size
+  Called by: Pit_Ip_InitChannel/20 (inlined) (574129754 (estimated locally),0.53 per call) 
+  Calls: 
+Pit_Ip_Init/19 (Pit_Ip_Init) @060a4700
+  Type: function definition analyzed
+  Visibility: externally_visible public
+  Aux: @05f81a10
+  References: pitBase/1 (read)
+  Referring: 
+  Availability: available
+  Function flags: count:1073741824 (estimated locally) body optimize_size
+  Called by: 
+  Calls: Pit_Ip_SetDebugMode/6 (inlined) (751619278 (estimated locally),0.70 per call) Pit_Ip_EnableModule.constprop/46 (inlined) (248034361 (estimated locally),0.23 per call) 
+Pit_Ip_EnableModule.constprop.0/46 (Pit_Ip_EnableModule.constprop) @061b88c0
+  Type: function definition analyzed
+  Visibility:
+  Aux: @05f81d30
+  References: pitBase/1 (read)
+  Referring: 
+  Function Pit_Ip_EnableModule.constprop/46 is inline copy in Pit_Ip_Init/19
+  Clone of Pit_Ip_EnableModule/4
+  Availability: local
+  Function flags: count:248034361 (estimated locally) local optimize_size
+  Called by: Pit_Ip_Init/19 (inlined) (248034361 (estimated locally),0.23 per call) 
+  Calls: 
+Pit_Ip_ClearInterruptStatusFlag/13 (Pit_Ip_ClearInterruptStatusFlag) @061b8e00
+  Type: function definition analyzed
+  Visibility: prevailing_def_ironly
+  previous sharing asm name: 47
+  Aux: @05f81b30
+  References: pitBase/1 (read)
+  Referring: 
+  Function Pit_Ip_ClearInterruptStatusFlag/13 is inline copy in PIT_0_ISR/29
+  Availability: local
+  Function flags: count:25578543 (estimated locally) body local optimize_size
+  Called by: Pit_Ip_ProcessCommonInterrupt.constprop/43 (inlined) (25578543 (estimated locally),0.19 per call) 
+  Calls: 
+Pit_Ip_SetEnableInterruptFlag/12 (Pit_Ip_SetEnableInterruptFlag) @061b8b60
+  Type: function definition analyzed
+  Visibility: prevailing_def_ironly
+  previous sharing asm name: 50
+  Aux: @05e9f118
+  References: pitBase/1 (read)pitBase/1 (read)
+  Referring: 
+  Function Pit_Ip_SetEnableInterruptFlag/12 is inline copy in Pit_Ip_InitChannel/20
+  Availability: local
+  Function flags: count:574129754 (estimated locally) body local optimize_size
+  Called by: Pit_Ip_InitChannel/20 (inlined) (574129754 (estimated locally),0.53 per call) 
+  Calls: SchM_Exit_Gpt_GPT_EXCLUSIVE_AREA_02/33 (574129754 (estimated locally),0.53 per call) SchM_Enter_Gpt_GPT_EXCLUSIVE_AREA_02/32 (574129754 (estimated locally),0.53 per call) 
+Pit_Ip_SetDebugMode/6 (Pit_Ip_SetDebugMode) @061b2a80
+  Type: function definition analyzed
+  Visibility: prevailing_def_ironly
+  Aux: @05e9f218
+  References: pitBase/1 (read)pitBase/1 (read)
+  Referring: 
+  Function Pit_Ip_SetDebugMode/6 is inline copy in Pit_Ip_Init/19
+  Availability: local
+  Function flags: count:751619278 (estimated locally) body local optimize_size
+  Called by: Pit_Ip_Init/19 (inlined) (751619278 (estimated locally),0.70 per call) 
+  Calls: 
+Pit_Ip_EnableTimer/5 (Pit_Ip_EnableTimer) @061b27e0
+  Type: function definition analyzed
+  Visibility: prevailing_def_ironly
+  previous sharing asm name: 52
+  Aux: @05e9f138
+  References: pitBase/1 (read)pitBase/1 (read)
+  Referring: 
+  Function Pit_Ip_EnableTimer/5 is inline copy in Pit_Ip_InitChannel/20
+  Availability: local
+  Function flags: count:574129754 (estimated locally) body local optimize_size
+  Called by: Pit_Ip_InitChannel/20 (inlined) (574129754 (estimated locally),0.53 per call) 
+  Calls: SchM_Exit_Gpt_GPT_EXCLUSIVE_AREA_00/31 (574129754 (estimated locally),0.53 per call) SchM_Enter_Gpt_GPT_EXCLUSIVE_AREA_00/30 (574129754 (estimated locally),0.53 per call) 
+Pit_Ip_GetLoadValue/3 (Pit_Ip_GetLoadValue) @061b22a0
+  Type: function definition analyzed
+  Visibility: externally_visible public
+  Aux: @05e9f238
+  References: pitBase/1 (read)
+  Referring: 
+  Availability: available
+  Function flags: count:1073741824 (estimated locally) body optimize_size
+  Called by: 
+  Calls: 
+
+Function found not to call free: Pit_Ip_GetLoadValue
+Function found not to call free: Pit_Ip_SetDebugMode
+Function found not to call free: Pit_Ip_ClearInterruptStatusFlag
+Function found not to call free: Pit_Ip_EnableModule.constprop
+Function found not to call free: Pit_Ip_Init
+Function found not to call free: Pit_Ip_ClearInterruptStatusFlag
+Function found not to call free: Pit_Ip_Reset.constprop
+Function found not to call free: Pit_Ip_Deinit
+Function found not to call free: Pit_Ip_ClearInterruptStatusFlag
+Function found not to call free: Pit_Ip_GetCurrentTimer
+Function found not to call free: Pit_Ip_ClearInterruptStatusFlag
+Function found not to call free: Pit_Ip_ClearInterruptStatusFlag
+PIT_0_ISR ()
+{
+  uint8 channel;
+
+  <bb 2> [local count: 134217728]:
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG instance => 0
+  # DEBUG BEGIN_STMT
+  # DEBUG channel => 0
+  goto <bb 4>; [100.00%]
+
+  <bb 3> [local count: 939524097]:
+  # DEBUG BEGIN_STMT
+  Pit_Ip_ProcessCommonInterrupt (0, channel_1);
+  # DEBUG BEGIN_STMT
+  channel_5 = channel_1 + 1;
+  # DEBUG channel => channel_5
+
+  <bb 4> [local count: 1073741824]:
+  # channel_1 = PHI <0(2), channel_5(3)>
+  # DEBUG channel => channel_1
+  # DEBUG BEGIN_STMT
+  if (channel_1 != 7)
+    goto <bb 3>; [87.50%]
+  else
+    goto <bb 5>; [12.50%]
+
+  <bb 5> [local count: 134217728]:
+  return;
+
+}
+
+
+Pit_Ip_GetLifetimeTimer (uint8 instance)
+{
+  uint32 upperValue;
+  uint32 lowerValue;
+  uint64 lifeTimeValue;
+  long long unsigned int _1;
+  long long unsigned int _2;
+  long long unsigned int _3;
+  int _10;
+  struct PIT_Type * _11;
+
+  <bb 2> [local count: 1073741824]:
+  # DEBUG BEGIN_STMT
+  # DEBUG lifeTimeValue => 0
+  # DEBUG BEGIN_STMT
+  # DEBUG valueH => 0
+  # DEBUG BEGIN_STMT
+  # DEBUG valueL => 0
+  # DEBUG BEGIN_STMT
+  SchM_Enter_Gpt_GPT_EXCLUSIVE_AREA_09 ();
+  # DEBUG BEGIN_STMT
+  # DEBUG instance => instance_6(D)
+  # DEBUG INLINE_ENTRY Pit_Ip_GetUpperLifetimerValue
+  # DEBUG BEGIN_STMT
+  # DEBUG upperValue => 0
+  # DEBUG BEGIN_STMT
+  _10 = (int) instance_6(D);
+  _11 = pitBase[_10];
+  upperValue_12 ={v} _11->LTMR64H;
+  # DEBUG upperValue => upperValue_12
+  # DEBUG BEGIN_STMT
+  # DEBUG instance => NULL
+  # DEBUG upperValue => NULL
+  # DEBUG valueH => upperValue_12
+  # DEBUG BEGIN_STMT
+  # DEBUG instance => instance_6(D)
+  # DEBUG INLINE_ENTRY Pit_Ip_GetLowerLifetimerValue
+  # DEBUG BEGIN_STMT
+  # DEBUG lowerValue => 0
+  # DEBUG BEGIN_STMT
+  lowerValue_9 ={v} _11->LTMR64L;
+  # DEBUG lowerValue => lowerValue_9
+  # DEBUG BEGIN_STMT
+  # DEBUG instance => NULL
+  # DEBUG lowerValue => NULL
+  # DEBUG valueL => lowerValue_9
+  # DEBUG BEGIN_STMT
+  SchM_Exit_Gpt_GPT_EXCLUSIVE_AREA_09 ();
+  # DEBUG BEGIN_STMT
+  _1 = (long long unsigned int) upperValue_12;
+  _2 = _1 << 32;
+  _3 = (long long unsigned int) lowerValue_9;
+  lifeTimeValue_8 = _2 + _3;
+  # DEBUG lifeTimeValue => lifeTimeValue_8
+  # DEBUG BEGIN_STMT
+  return lifeTimeValue_8;
+
+}
+
+
+Pit_Ip_SetLifetimeTimer (uint8 instance)
+{
+  int _7;
+  struct PIT_Type * _8;
+
+  <bb 2> [local count: 1073741824]:
+  # DEBUG BEGIN_STMT
+  # DEBUG instance => instance_2(D)
+  # DEBUG channel => 1
+  # DEBUG value => 4294967295
+  # DEBUG INLINE_ENTRY Pit_Ip_SetCounterValue
+  # DEBUG BEGIN_STMT
+  _7 = (int) instance_2(D);
+  _8 = pitBase[_7];
+  _8->TIMER[1].LDVAL ={v} 4294967295;
+  # DEBUG instance => NULL
+  # DEBUG channel => NULL
+  # DEBUG value => NULL
+  # DEBUG BEGIN_STMT
+  Pit_Ip_SetEnableInterruptFlag (instance_2(D), 1, 0);
+  # DEBUG BEGIN_STMT
+  Pit_Ip_SetChainMode (instance_2(D), 1, 1);
+  # DEBUG BEGIN_STMT
+  Pit_Ip_EnableTimer (instance_2(D), 1, 1);
+  # DEBUG BEGIN_STMT
+  # DEBUG instance => instance_2(D)
+  # DEBUG channel => 0
+  # DEBUG value => 4294967295
+  # DEBUG INLINE_ENTRY Pit_Ip_SetCounterValue
+  # DEBUG BEGIN_STMT
+  _8->TIMER[0].LDVAL ={v} 4294967295;
+  # DEBUG instance => NULL
+  # DEBUG channel => NULL
+  # DEBUG value => NULL
+  # DEBUG BEGIN_STMT
+  Pit_Ip_EnableTimer (instance_2(D), 0, 1);
+  return;
+
+}
+
+
+Pit_Ip_DisableChannelInterrupt (uint8 instance, uint8 channel)
+{
+  <bb 2> [local count: 1073741824]:
+  # DEBUG BEGIN_STMT
+  Pit_Ip_SetEnableInterruptFlag (instance_2(D), channel_3(D), 0);
+  # DEBUG BEGIN_STMT
+  Pit_Ip_ClearInterruptStatusFlag (instance_2(D), channel_3(D));
+  return;
+
+}
+
+
+Pit_Ip_EnableChannelInterrupt (uint8 instance, uint8 channel)
+{
+  <bb 2> [local count: 1073741824]:
+  # DEBUG BEGIN_STMT
+  Pit_Ip_ClearInterruptStatusFlag (instance_2(D), channel_3(D));
+  # DEBUG BEGIN_STMT
+  Pit_Ip_SetEnableInterruptFlag (instance_2(D), channel_3(D), 1);
+  return;
+
+}
+
+
+Pit_Ip_GetCurrentTimer (uint8 instance, uint8 channel)
+{
+  uint32 counterValue;
+  uint64 counterValue;
+  int _5;
+  struct PIT_Type * _6;
+  int _7;
+
+  <bb 2> [local count: 1073741824]:
+  # DEBUG BEGIN_STMT
+  # DEBUG counterValue => 0
+  # DEBUG BEGIN_STMT
+  # DEBUG instance => instance_2(D)
+  # DEBUG channel => channel_3(D)
+  # DEBUG INLINE_ENTRY Pit_Ip_GetCounterValue
+  # DEBUG BEGIN_STMT
+  # DEBUG counterValue => 0
+  # DEBUG BEGIN_STMT
+  _5 = (int) instance_2(D);
+  _6 = pitBase[_5];
+  _7 = (int) channel_3(D);
+  counterValue_8 ={v} _6->TIMER[_7].CVAL;
+  # DEBUG counterValue => counterValue_8
+  # DEBUG BEGIN_STMT
+  # DEBUG instance => NULL
+  # DEBUG channel => NULL
+  # DEBUG counterValue => NULL
+  counterValue_4 = (uint64) counterValue_8;
+  # DEBUG counterValue => counterValue_4
+  # DEBUG BEGIN_STMT
+  return counterValue_4;
+
+}
+
+
+Pit_Ip_StopChannel (uint8 instance, uint8 channel)
+{
+  <bb 2> [local count: 1073741824]:
+  # DEBUG BEGIN_STMT
+  Pit_Ip_EnableTimer (instance_2(D), channel_3(D), 0);
+  # DEBUG BEGIN_STMT
+  Pit_Ip_ClearInterruptStatusFlag (instance_2(D), channel_3(D));
+  return;
+
+}
+
+
+Pit_Ip_StartChannel (uint8 instance, uint8 channel, uint32 countValue)
+{
+  boolean isRunning;
+  Pit_Ip_StatusType status;
+  long unsigned int _1;
+  int _9;
+  struct PIT_Type * _10;
+  int _11;
+  long unsigned int _12;
+
+  <bb 2> [local count: 1073741824]:
+  # DEBUG BEGIN_STMT
+  # DEBUG isRunning => 0
+  # DEBUG BEGIN_STMT
+  # DEBUG status => 1
+  # DEBUG BEGIN_STMT
+  # DEBUG instance => instance_5(D)
+  # DEBUG channel => channel_6(D)
+  # DEBUG INLINE_ENTRY Pit_Ip_IsChannelRunning
+  # DEBUG BEGIN_STMT
+  # DEBUG isRunning => 0
+  # DEBUG BEGIN_STMT
+  _9 = (int) instance_5(D);
+  _10 = pitBase[_9];
+  _11 = (int) channel_6(D);
+  _12 ={v} _10->TIMER[_11].TCTRL;
+  isRunning_13 = (boolean) _12;
+  # DEBUG isRunning => isRunning_13
+  # DEBUG BEGIN_STMT
+  # DEBUG instance => NULL
+  # DEBUG channel => NULL
+  # DEBUG isRunning => NULL
+  # DEBUG isRunning => isRunning_13
+  # DEBUG BEGIN_STMT
+  if (isRunning_13 != 0)
+    goto <bb 4>; [67.00%]
+  else
+    goto <bb 3>; [33.00%]
+
+  <bb 3> [local count: 354334802]:
+  # DEBUG BEGIN_STMT
+  _1 = countValue_7(D) + 4294967295;
+  # DEBUG instance => instance_5(D)
+  # DEBUG channel => channel_6(D)
+  # DEBUG value => _1
+  # DEBUG INLINE_ENTRY Pit_Ip_SetCounterValue
+  # DEBUG BEGIN_STMT
+  _10->TIMER[_11].LDVAL ={v} _1;
+  # DEBUG instance => NULL
+  # DEBUG channel => NULL
+  # DEBUG value => NULL
+  # DEBUG BEGIN_STMT
+  Pit_Ip_EnableTimer (instance_5(D), channel_6(D), 1);
+  # DEBUG BEGIN_STMT
+  # DEBUG status => 0
+
+  <bb 4> [local count: 1073741824]:
+  # status_2 = PHI <1(2), 0(3)>
+  # DEBUG status => status_2
+  # DEBUG BEGIN_STMT
+  return status_2;
+
+}
+
+
+Pit_Ip_Deinit (uint8 instance)
+{
+  boolean mdisBitExists;
+  uint8 channelNum;
+
+  <bb 2> [local count: 1073741824]:
+  # DEBUG BEGIN_STMT
+  # DEBUG channelNum => 0
+  # DEBUG BEGIN_STMT
+  # DEBUG rtiChannelExists => 0
+  # DEBUG BEGIN_STMT
+  # DEBUG mdisBitExists => 0
+  # DEBUG BEGIN_STMT
+  switch (instance_3(D)) <default: <L2> [50.00%], case 0: <L4> [50.00%], case 2: <L4> [50.00%]>
+
+  <bb 3> [local count: 536870913]:
+<L2>:
+  # DEBUG BEGIN_STMT
+  # DEBUG channelNum => 0
+  # DEBUG BEGIN_STMT
+
+  <bb 4> [local count: 1073741824]:
+  # channelNum_1 = PHI <7(2), 0(3)>
+  # mdisBitExists_2 = PHI <1(2), 0(3)>
+<L4>:
+  # DEBUG mdisBitExists => mdisBitExists_2
+  # DEBUG channelNum => channelNum_1
+  # DEBUG BEGIN_STMT
+  Pit_Ip_Reset (instance_3(D), channelNum_1, 0, mdisBitExists_2);
+  return;
+
+}
+
+
+Pit_Ip_InitChannel (uint8 instance, const struct Pit_Ip_ChannelConfigType * chnlConfig)
+{
+  unsigned char _1;
+  unsigned char _2;
+  unsigned char _3;
+  unsigned char _4;
+  int _5;
+  void (*<T4b6>) (uint8) _6;
+  unsigned char _7;
+  <unnamed type> _8;
+  int _12;
+  struct PIT_Type * _21;
+
+  <bb 2> [local count: 1073741824]:
+  # DEBUG BEGIN_STMT
+  # DEBUG instance => instance_11(D)
+  # DEBUG INLINE_ENTRY Pit_Ip_ValidateInstCall
+  # DEBUG BEGIN_STMT
+  _12 = (int) instance_11(D);
+  _21 = pitBase[_12];
+  # DEBUG D#2 => _21 == 0B
+  # DEBUG instance => NULL
+  # DEBUG status => (<unnamed type>) D#2
+  # DEBUG BEGIN_STMT
+  if (_21 != 0B)
+    goto <bb 3>; [53.47%]
+  else
+    goto <bb 4>; [46.53%]
+
+  <bb 3> [local count: 574129754]:
+  # DEBUG BEGIN_STMT
+  _1 = chnlConfig_13(D)->hwChannel;
+  Pit_Ip_EnableTimer (instance_11(D), _1, 0);
+  # DEBUG BEGIN_STMT
+  _2 = chnlConfig_13(D)->hwChannel;
+  Pit_Ip_SetEnableInterruptFlag (instance_11(D), _2, 0);
+  # DEBUG BEGIN_STMT
+  _3 = chnlConfig_13(D)->hwChannel;
+  Pit_Ip_ClearInterruptStatusFlag (instance_11(D), _3);
+  # DEBUG BEGIN_STMT
+  _4 = chnlConfig_13(D)->hwChannel;
+  _5 = (int) _4;
+  Pit_Ip_u32ChState[_12][_5].chInit = 1;
+  # DEBUG BEGIN_STMT
+  _6 = chnlConfig_13(D)->callback;
+  Pit_Ip_u32ChState[_12][_5].callback = _6;
+  # DEBUG BEGIN_STMT
+  _7 = chnlConfig_13(D)->callbackParam;
+  Pit_Ip_u32ChState[_12][_5].callbackParam = _7;
+  # DEBUG BEGIN_STMT
+  _8 = chnlConfig_13(D)->channelMode;
+  Pit_Ip_u32ChState[_12][_5].channelMode = _8;
+
+  <bb 4> [local count: 1073741824]:
+  return;
+
+}
+
+
+Pit_Ip_Init (uint8 instance, const struct Pit_Ip_InstanceConfigType * config)
+{
+  _Bool _1;
+  _Bool _2;
+  int _7;
+  struct PIT_Type * _11;
+
+  <bb 2> [local count: 1073741824]:
+  # DEBUG BEGIN_STMT
+  # DEBUG instance => instance_6(D)
+  # DEBUG INLINE_ENTRY Pit_Ip_ValidateInstCall
+  # DEBUG BEGIN_STMT
+  _7 = (int) instance_6(D);
+  _11 = pitBase[_7];
+  # DEBUG D#1 => _11 == 0B
+  # DEBUG instance => NULL
+  # DEBUG status => (<unnamed type>) D#1
+  # DEBUG BEGIN_STMT
+  if (_11 != 0B)
+    goto <bb 3>; [70.00%]
+  else
+    goto <bb 6>; [30.00%]
+
+  <bb 3> [local count: 751619278]:
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _1 = config_8(D)->enableStandardTimers;
+  if (_1 != 0)
+    goto <bb 4>; [33.00%]
+  else
+    goto <bb 5>; [67.00%]
+
+  <bb 4> [local count: 248034361]:
+  # DEBUG BEGIN_STMT
+  Pit_Ip_EnableModule (instance_6(D), 0);
+
+  <bb 5> [local count: 751619278]:
+  # DEBUG BEGIN_STMT
+  _2 = config_8(D)->stopRunInDebug;
+  Pit_Ip_SetDebugMode (instance_6(D), _2);
+
+  <bb 6> [local count: 1073741824]:
+  return;
+
+}
+
+
+Pit_Ip_ClearInterruptStatusFlag (uint8 instance, uint8 channel)
+{
+  int _1;
+  struct PIT_Type * _2;
+  int _3;
+  long unsigned int _4;
+  long unsigned int _5;
+
+  <bb 2> [local count: 1073741824]:
+  # DEBUG BEGIN_STMT
+  _1 = (int) instance_6(D);
+  _2 = pitBase[_1];
+  _3 = (int) channel_8(D);
+  _4 ={v} _2->TIMER[_3].TFLG;
+  _5 = _4 | 1;
+  _2->TIMER[_3].TFLG ={v} _5;
+  return;
+
+}
+
+
+Pit_Ip_SetEnableInterruptFlag (uint8 instance, uint8 channel, boolean enable)
+{
+  int _1;
+  struct PIT_Type * _2;
+  int _3;
+  long unsigned int _4;
+  long unsigned int _5;
+  int _6;
+  struct PIT_Type * _7;
+  int _8;
+  long unsigned int _9;
+  long unsigned int _10;
+
+  <bb 2> [local count: 1073741824]:
+  # DEBUG BEGIN_STMT
+  SchM_Enter_Gpt_GPT_EXCLUSIVE_AREA_02 ();
+  # DEBUG BEGIN_STMT
+  if (enable_14(D) != 0)
+    goto <bb 3>; [50.00%]
+  else
+    goto <bb 4>; [50.00%]
+
+  <bb 3> [local count: 536870913]:
+  # DEBUG BEGIN_STMT
+  _1 = (int) instance_15(D);
+  _2 = pitBase[_1];
+  _3 = (int) channel_16(D);
+  _4 ={v} _2->TIMER[_3].TCTRL;
+  _5 = _4 | 2;
+  _2->TIMER[_3].TCTRL ={v} _5;
+  goto <bb 5>; [100.00%]
+
+  <bb 4> [local count: 536870913]:
+  # DEBUG BEGIN_STMT
+  _6 = (int) instance_15(D);
+  _7 = pitBase[_6];
+  _8 = (int) channel_16(D);
+  _9 ={v} _7->TIMER[_8].TCTRL;
+  _10 = _9 & 4294967293;
+  _7->TIMER[_8].TCTRL ={v} _10;
+
+  <bb 5> [local count: 1073741824]:
+  # DEBUG BEGIN_STMT
+  SchM_Exit_Gpt_GPT_EXCLUSIVE_AREA_02 ();
+  return;
+
+}
+
+
+Pit_Ip_SetDebugMode (uint8 instance, boolean stopRun)
+{
+  int _1;
+  struct PIT_Type * _2;
+  long unsigned int _3;
+  long unsigned int _4;
+  int _5;
+  struct PIT_Type * _6;
+  long unsigned int _7;
+  long unsigned int _8;
+
+  <bb 2> [local count: 1073741824]:
+  # DEBUG BEGIN_STMT
+  if (stopRun_10(D) != 0)
+    goto <bb 3>; [50.00%]
+  else
+    goto <bb 4>; [50.00%]
+
+  <bb 3> [local count: 536870913]:
+  # DEBUG BEGIN_STMT
+  _1 = (int) instance_11(D);
+  _2 = pitBase[_1];
+  _3 ={v} _2->MCR;
+  _4 = _3 | 1;
+  _2->MCR ={v} _4;
+  goto <bb 5>; [100.00%]
+
+  <bb 4> [local count: 536870913]:
+  # DEBUG BEGIN_STMT
+  _5 = (int) instance_11(D);
+  _6 = pitBase[_5];
+  _7 ={v} _6->MCR;
+  _8 = _7 & 4294967294;
+  _6->MCR ={v} _8;
+
+  <bb 5> [local count: 1073741824]:
+  return;
+
+}
+
+
+Pit_Ip_EnableTimer (uint8 instance, uint8 channel, boolean enable)
+{
+  int _1;
+  struct PIT_Type * _2;
+  int _3;
+  long unsigned int _4;
+  long unsigned int _5;
+  int _6;
+  struct PIT_Type * _7;
+  int _8;
+  long unsigned int _9;
+  long unsigned int _10;
+
+  <bb 2> [local count: 1073741824]:
+  # DEBUG BEGIN_STMT
+  SchM_Enter_Gpt_GPT_EXCLUSIVE_AREA_00 ();
+  # DEBUG BEGIN_STMT
+  if (enable_14(D) != 0)
+    goto <bb 3>; [50.00%]
+  else
+    goto <bb 4>; [50.00%]
+
+  <bb 3> [local count: 536870913]:
+  # DEBUG BEGIN_STMT
+  _1 = (int) instance_15(D);
+  _2 = pitBase[_1];
+  _3 = (int) channel_16(D);
+  _4 ={v} _2->TIMER[_3].TCTRL;
+  _5 = _4 | 1;
+  _2->TIMER[_3].TCTRL ={v} _5;
+  goto <bb 5>; [100.00%]
+
+  <bb 4> [local count: 536870913]:
+  # DEBUG BEGIN_STMT
+  _6 = (int) instance_15(D);
+  _7 = pitBase[_6];
+  _8 = (int) channel_16(D);
+  _9 ={v} _7->TIMER[_8].TCTRL;
+  _10 = _9 & 4294967294;
+  _7->TIMER[_8].TCTRL ={v} _10;
+
+  <bb 5> [local count: 1073741824]:
+  # DEBUG BEGIN_STMT
+  SchM_Exit_Gpt_GPT_EXCLUSIVE_AREA_00 ();
+  return;
+
+}
+
+
+Pit_Ip_GetLoadValue (uint8 instance, uint8 channel)
+{
+  uint32 periodValue;
+  int _1;
+  struct PIT_Type * _2;
+  int _3;
+
+  <bb 2> [local count: 1073741824]:
+  # DEBUG BEGIN_STMT
+  # DEBUG periodValue => 0
+  # DEBUG BEGIN_STMT
+  _1 = (int) instance_4(D);
+  _2 = pitBase[_1];
+  _3 = (int) channel_6(D);
+  periodValue_7 ={v} _2->TIMER[_3].LDVAL;
+  # DEBUG periodValue => periodValue_7
+  # DEBUG BEGIN_STMT
+  return periodValue_7;
+
+}
+
+

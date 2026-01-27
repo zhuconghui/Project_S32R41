@@ -1,0 +1,556 @@
+
+IPA constant propagation start:
+Determining dynamic type for call: bridgeif_fdb_age_one_second (arg_1(D));
+  Starting walk at: bridgeif_fdb_age_one_second (arg_1(D));
+  instance pointer: arg_1(D)  Outer instance pointer: arg_1(D) offset: 0 (bits) vtbl reference: 
+Determining dynamic type for call: bridgeif_age_tmr.part.0 (arg_2(D));
+  Starting walk at: bridgeif_age_tmr.part.0 (arg_2(D));
+  instance pointer: arg_2(D)  Outer instance pointer: arg_2(D) offset: 0 (bits) vtbl reference: 
+
+IPA structures before propagation:
+
+Jump functions:
+  Jump functions of caller  bridgeif_age_tmr.part.0/10:
+    callsite  bridgeif_age_tmr.part.0/10 -> bridgeif_fdb_age_one_second/3 : 
+       param 0: PASS THROUGH: 0, op nop_expr, agg_preserved
+         value: 0x0, mask: 0xffffffff
+         Unknown VR
+  Jump functions of caller  sys_timeout/9:
+  Jump functions of caller  mem_calloc/8:
+  Jump functions of caller  memcpy/7:
+  Jump functions of caller  memcmp/6:
+  Jump functions of caller  bridgeif_fdb_init/5:
+  Jump functions of caller  bridgeif_age_tmr/4:
+    callsite  bridgeif_age_tmr/4 -> bridgeif_age_tmr.part.0/10 : 
+       param 0: PASS THROUGH: 0, op nop_expr, agg_preserved
+         value: 0x0, mask: 0xffffffff
+         Unknown VR
+  Jump functions of caller  bridgeif_fdb_age_one_second/3:
+  Jump functions of caller  bridgeif_fdb_get_dst_ports/2:
+  Jump functions of caller  bridgeif_fdb_update_src/1:
+
+ Propagating constants:
+
+Not considering bridgeif_fdb_init for cloning; -fipa-cp-clone disabled.
+Not considering bridgeif_age_tmr for cloning; -fipa-cp-clone disabled.
+Not considering bridgeif_fdb_get_dst_ports for cloning; -fipa-cp-clone disabled.
+Not considering bridgeif_fdb_update_src for cloning; -fipa-cp-clone disabled.
+
+overall_size: 131, max_new_size: 11001
+
+IPA lattices after all propagation:
+
+Lattices:
+  Node: bridgeif_age_tmr.part.0/10:
+    param [0]: VARIABLE
+         ctxs: VARIABLE
+         Bits unusable (BOTTOM)
+         VARYING
+        AGGS VARIABLE
+  Node: bridgeif_fdb_init/5:
+    param [0]: BOTTOM
+         ctxs: BOTTOM
+         Bits unusable (BOTTOM)
+         VARYING
+        AGGS BOTTOM
+  Node: bridgeif_age_tmr/4:
+    param [0]: BOTTOM
+         ctxs: BOTTOM
+         Bits unusable (BOTTOM)
+         VARYING
+        AGGS BOTTOM
+  Node: bridgeif_fdb_age_one_second/3:
+    param [0]: VARIABLE
+         ctxs: VARIABLE
+         Bits unusable (BOTTOM)
+         VARYING
+        AGGS VARIABLE
+  Node: bridgeif_fdb_get_dst_ports/2:
+    param [0]: BOTTOM
+         ctxs: BOTTOM
+         Bits unusable (BOTTOM)
+         VARYING
+        AGGS BOTTOM
+    param [1]: BOTTOM
+         ctxs: BOTTOM
+         Bits unusable (BOTTOM)
+         VARYING
+        AGGS BOTTOM
+  Node: bridgeif_fdb_update_src/1:
+    param [0]: BOTTOM
+         ctxs: BOTTOM
+         Bits unusable (BOTTOM)
+         VARYING
+        AGGS BOTTOM
+    param [1]: BOTTOM
+         ctxs: BOTTOM
+         Bits unusable (BOTTOM)
+         VARYING
+        AGGS BOTTOM
+    param [2]: BOTTOM
+         ctxs: BOTTOM
+         Bits unusable (BOTTOM)
+         VARYING
+        AGGS BOTTOM
+
+IPA decision stage:
+
+
+IPA constant propagation end
+
+Reclaiming functions:
+Reclaiming variables:
+Clearing address taken flags:
+Symbol table:
+
+bridgeif_age_tmr.part.0/10 (bridgeif_age_tmr.part.0) @06b718c0
+  Type: function definition analyzed
+  Visibility: prevailing_def_ironly artificial
+  References: bridgeif_age_tmr/4 (addr)
+  Referring: 
+  Availability: local
+  Function flags: count:1073741824 (estimated locally) first_run:1 body local split_part optimize_size
+  Called by: bridgeif_age_tmr/4 (123389 (estimated locally),0.53 per call) 
+  Calls: bridgeif_fdb_age_one_second/3 (1073741824 (estimated locally),1.00 per call) sys_timeout/9 (1073741824 (estimated locally),1.00 per call) 
+sys_timeout/9 (sys_timeout) @06c4a700
+  Type: function
+  Visibility: external public
+  References: 
+  Referring: 
+  Availability: not_available
+  Function flags: optimize_size
+  Called by: bridgeif_fdb_init/5 (907633965 (estimated locally),0.85 per call) bridgeif_age_tmr.part.0/10 (1073741824 (estimated locally),1.00 per call) 
+  Calls: 
+mem_calloc/8 (mem_calloc) @06c4a620
+  Type: function
+  Visibility: external public
+  References: 
+  Referring: 
+  Availability: not_available
+  Function flags: optimize_size
+  Called by: bridgeif_fdb_init/5 (1073741824 (estimated locally),1.00 per call) 
+  Calls: 
+memcpy/7 (memcpy) @06c4a380
+  Type: function
+  Visibility: external public
+  References: 
+  Referring: 
+  Availability: not_available
+  Function flags: optimize_size
+  Called by: bridgeif_fdb_update_src/1 (34639003 (estimated locally),0.47 per call) 
+  Calls: 
+memcmp/6 (memcmp) @06c4a2a0
+  Type: function
+  Visibility: external public
+  References: 
+  Referring: 
+  Availability: not_available
+  Function flags: optimize_size
+  Called by: bridgeif_fdb_get_dst_ports/2 (253671506 (estimated locally),3.47 per call) bridgeif_fdb_update_src/1 (253671506 (estimated locally),3.47 per call) 
+  Calls: 
+bridgeif_fdb_init/5 (bridgeif_fdb_init) @06ace620
+  Type: function definition analyzed
+  Visibility: externally_visible public
+  References: bridgeif_age_tmr/4 (addr)
+  Referring: 
+  Availability: available
+  Function flags: count:1073741824 (estimated locally) body optimize_size
+  Called by: 
+  Calls: sys_timeout/9 (907633965 (estimated locally),0.85 per call) mem_calloc/8 (1073741824 (estimated locally),1.00 per call) 
+bridgeif_age_tmr/4 (bridgeif_age_tmr) @06aced20
+  Type: function definition analyzed
+  Visibility: prevailing_def_ironly
+  Address is taken.
+  References: 
+  Referring: bridgeif_age_tmr.part.0/10 (addr)bridgeif_fdb_init/5 (addr)
+  Availability: available
+  Function flags: count:230763 (estimated locally) body optimize_size
+  Called by: 
+  Calls: bridgeif_age_tmr.part.0/10 (123389 (estimated locally),0.53 per call) 
+bridgeif_fdb_age_one_second/3 (bridgeif_fdb_age_one_second) @06acea80
+  Type: function definition analyzed
+  Visibility: prevailing_def_ironly
+  References: 
+  Referring: 
+  Availability: local
+  Function flags: count:118111600 (estimated locally) body local optimize_size
+  Called by: bridgeif_age_tmr.part.0/10 (1073741824 (estimated locally),1.00 per call) 
+  Calls: 
+bridgeif_fdb_get_dst_ports/2 (bridgeif_fdb_get_dst_ports) @06ace7e0
+  Type: function definition analyzed
+  Visibility: externally_visible public
+  References: 
+  Referring: 
+  Availability: available
+  Function flags: count:73007732 (estimated locally) body optimize_size
+  Called by: 
+  Calls: memcmp/6 (253671506 (estimated locally),3.47 per call) 
+bridgeif_fdb_update_src/1 (bridgeif_fdb_update_src) @06ace540
+  Type: function definition analyzed
+  Visibility: externally_visible public
+  References: 
+  Referring: 
+  Availability: available
+  Function flags: count:73007732 (estimated locally) body optimize_size
+  Called by: 
+  Calls: memcpy/7 (34639003 (estimated locally),0.47 per call) memcmp/6 (253671506 (estimated locally),3.47 per call) 
+
+;; Function bridgeif_age_tmr (bridgeif_age_tmr, funcdef_no=4, decl_uid=6473, cgraph_uid=5, symbol_order=4)
+
+Modification phase of node bridgeif_age_tmr/4
+bridgeif_age_tmr (void * arg)
+{
+  <bb 2> [local count: 230763]:
+  # DEBUG BEGIN_STMT
+  # DEBUG fdb => arg_2(D)
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  if (arg_2(D) == 0B)
+    goto <bb 5>; [46.53%]
+  else
+    goto <bb 4>; [53.47%]
+
+  <bb 5> [local count: 107374]:
+
+  <bb 3> [local count: 1073741824]:
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  __asm__ __volatile__("BKPT #0
+	");
+  # DEBUG BEGIN_STMT
+
+  <bb 6> [local count: 1073741824]:
+  goto <bb 3>; [100.00%]
+
+  <bb 4> [local count: 123389]:
+  bridgeif_age_tmr.part.0 (arg_2(D));
+  return;
+
+}
+
+
+
+;; Function bridgeif_fdb_update_src (bridgeif_fdb_update_src, funcdef_no=1, decl_uid=6283, cgraph_uid=2, symbol_order=1)
+
+Modification phase of node bridgeif_fdb_update_src/1
+bridgeif_fdb_update_src (void * fdb_ptr, struct eth_addr * src_addr, u8_t port_idx)
+{
+  struct bridgeif_dfdb_entry_t * e;
+  struct bridgeif_dfdb_entry_t * e;
+  int i;
+  struct bridgeif_dfdb_entry_t * _1;
+  unsigned int i.0_2;
+  unsigned int _3;
+  unsigned char _4;
+  long unsigned int _5;
+  struct eth_addr * _6;
+  int _7;
+  short unsigned int _8;
+  int _9;
+  struct bridgeif_dfdb_entry_t * _10;
+  unsigned int i.1_11;
+  unsigned int _12;
+  unsigned char _13;
+  long unsigned int _14;
+  long unsigned int _16;
+  struct eth_addr * _17;
+  int _18;
+
+  <bb 2> [local count: 73007732]:
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG fdb => fdb_ptr_23(D)
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG i => 0
+  goto <bb 8>; [100.00%]
+
+  <bb 3> [local count: 1014686025]:
+  # DEBUG BEGIN_STMT
+  _1 = MEM[(struct bridgeif_dfdb_t *)fdb_ptr_23(D)].fdb;
+  i.0_2 = (unsigned int) i_20;
+  _3 = i.0_2 * 16;
+  e_33 = _1 + _3;
+  # DEBUG e => e_33
+  # DEBUG BEGIN_STMT
+  _4 = e_33->used;
+  if (_4 != 0)
+    goto <bb 4>; [50.00%]
+  else
+    goto <bb 7>; [50.00%]
+
+  <bb 4> [local count: 507343012]:
+  _5 = e_33->ts;
+  if (_5 != 0)
+    goto <bb 5>; [50.00%]
+  else
+    goto <bb 7>; [50.00%]
+
+  <bb 5> [local count: 253671506]:
+  # DEBUG BEGIN_STMT
+  _6 = &e_33->addr;
+  _7 = memcmp (_6, src_addr_26(D), 6);
+  if (_7 == 0)
+    goto <bb 6>; [5.50%]
+  else
+    goto <bb 7>; [94.50%]
+
+  <bb 6> [local count: 13951933]:
+  # e_15 = PHI <e_33(5)>
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  e_15->ts = 300;
+  # DEBUG BEGIN_STMT
+  e_15->port = port_idx_29(D);
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  goto <bb 17>; [100.00%]
+
+  <bb 7> [local count: 1000734092]:
+  # DEBUG BEGIN_STMT
+  i_36 = i_20 + 1;
+  # DEBUG i => i_36
+
+  <bb 8> [local count: 1073741824]:
+  # i_20 = PHI <0(2), i_36(7)>
+  # DEBUG i => i_20
+  # DEBUG BEGIN_STMT
+  _8 = MEM[(struct bridgeif_dfdb_t *)fdb_ptr_23(D)].max_fdb_entries;
+  _9 = (int) _8;
+  if (_9 > i_20)
+    goto <bb 3>; [94.50%]
+  else
+    goto <bb 9>; [5.50%]
+
+  <bb 9> [local count: 59055800]:
+  # _18 = PHI <_9(8)>
+  goto <bb 16>; [100.00%]
+
+  <bb 10> [local count: 642708799]:
+  # DEBUG BEGIN_STMT
+  _10 = MEM[(struct bridgeif_dfdb_t *)fdb_ptr_23(D)].fdb;
+  i.1_11 = (unsigned int) i_21;
+  _12 = i.1_11 * 16;
+  e_25 = _10 + _12;
+  # DEBUG e => e_25
+  # DEBUG BEGIN_STMT
+  _13 = e_25->used;
+  if (_13 == 0)
+    goto <bb 12>; [50.00%]
+  else
+    goto <bb 11>; [50.00%]
+
+  <bb 11> [local count: 321354399]:
+  _14 = e_25->ts;
+  if (_14 == 0)
+    goto <bb 12>; [50.00%]
+  else
+    goto <bb 15>; [50.00%]
+
+  <bb 12> [local count: 482031599]:
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  if (_13 == 0)
+    goto <bb 14>; [3.66%]
+  else
+    goto <bb 13>; [96.34%]
+
+  <bb 13> [local count: 464389242]:
+  _16 = e_25->ts;
+  if (_16 == 0)
+    goto <bb 14>; [3.66%]
+  else
+    goto <bb 15>; [96.34%]
+
+  <bb 14> [local count: 34639003]:
+  # e_19 = PHI <e_25(12), e_25(13)>
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _17 = &e_19->addr;
+  memcpy (_17, src_addr_26(D), 6);
+  # DEBUG BEGIN_STMT
+  e_19->ts = 300;
+  # DEBUG BEGIN_STMT
+  e_19->port = port_idx_29(D);
+  # DEBUG BEGIN_STMT
+  e_19->used = 1;
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  goto <bb 17>; [100.00%]
+
+  <bb 15> [local count: 608069797]:
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  i_32 = i_21 + 1;
+  # DEBUG i => i_32
+
+  <bb 16> [local count: 667125596]:
+  # i_21 = PHI <i_32(15), 0(9)>
+  # DEBUG i => i_21
+  # DEBUG BEGIN_STMT
+  if (_18 > i_21)
+    goto <bb 10>; [96.34%]
+  else
+    goto <bb 17>; [3.66%]
+
+  <bb 17> [local count: 73007732]:
+  # DEBUG BEGIN_STMT
+  return;
+
+}
+
+
+
+;; Function bridgeif_fdb_get_dst_ports (bridgeif_fdb_get_dst_ports, funcdef_no=2, decl_uid=6286, cgraph_uid=3, symbol_order=2)
+
+Modification phase of node bridgeif_fdb_get_dst_ports/2
+bridgeif_fdb_get_dst_ports (void * fdb_ptr, struct eth_addr * dst_addr)
+{
+  bridgeif_portmask_t ret;
+  struct bridgeif_dfdb_entry_t * e;
+  int i;
+  struct bridgeif_dfdb_entry_t * _1;
+  unsigned int i.2_2;
+  unsigned int _3;
+  unsigned char _4;
+  long unsigned int _5;
+  struct eth_addr * _6;
+  int _7;
+  unsigned char _8;
+  int _9;
+  int _10;
+  short unsigned int _11;
+  int _12;
+  bridgeif_portmask_t _14;
+
+  <bb 2> [local count: 73007732]:
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG fdb => fdb_ptr_15(D)
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG i => 0
+  goto <bb 8>; [100.00%]
+
+  <bb 3> [local count: 1014686025]:
+  # DEBUG BEGIN_STMT
+  _1 = MEM[(struct bridgeif_dfdb_t *)fdb_ptr_15(D)].fdb;
+  i.2_2 = (unsigned int) i_13;
+  _3 = i.2_2 * 16;
+  e_18 = _1 + _3;
+  # DEBUG e => e_18
+  # DEBUG BEGIN_STMT
+  _4 = e_18->used;
+  if (_4 != 0)
+    goto <bb 4>; [50.00%]
+  else
+    goto <bb 7>; [50.00%]
+
+  <bb 4> [local count: 507343012]:
+  _5 = e_18->ts;
+  if (_5 != 0)
+    goto <bb 5>; [50.00%]
+  else
+    goto <bb 7>; [50.00%]
+
+  <bb 5> [local count: 253671506]:
+  # DEBUG BEGIN_STMT
+  _6 = &e_18->addr;
+  _7 = memcmp (_6, dst_addr_19(D), 6);
+  if (_7 == 0)
+    goto <bb 6>; [5.50%]
+  else
+    goto <bb 7>; [94.50%]
+
+  <bb 6> [local count: 13951933]:
+  # e_16 = PHI <e_18(5)>
+  # DEBUG BEGIN_STMT
+  _8 = e_16->port;
+  _9 = (int) _8;
+  _10 = 1 << _9;
+  ret_20 = (bridgeif_portmask_t) _10;
+  # DEBUG ret => ret_20
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  goto <bb 9>; [100.00%]
+
+  <bb 7> [local count: 1000734092]:
+  # DEBUG BEGIN_STMT
+  i_21 = i_13 + 1;
+  # DEBUG i => i_21
+
+  <bb 8> [local count: 1073741824]:
+  # i_13 = PHI <0(2), i_21(7)>
+  # DEBUG i => i_13
+  # DEBUG BEGIN_STMT
+  _11 = MEM[(struct bridgeif_dfdb_t *)fdb_ptr_15(D)].max_fdb_entries;
+  _12 = (int) _11;
+  if (_12 > i_13)
+    goto <bb 3>; [94.50%]
+  else
+    goto <bb 9>; [5.50%]
+
+  <bb 9> [local count: 73007733]:
+  # _14 = PHI <ret_20(6), 255(8)>
+  return _14;
+
+}
+
+
+
+;; Function bridgeif_fdb_init (bridgeif_fdb_init, funcdef_no=5, decl_uid=6288, cgraph_uid=6, symbol_order=5)
+
+Modification phase of node bridgeif_fdb_init/5
+bridgeif_fdb_init (u16_t max_fdb_entries)
+{
+  size_t alloc_len_sizet;
+  struct bridgeif_dfdb_t * fdb;
+  unsigned int _1;
+  unsigned int _2;
+  struct bridgeif_dfdb_t * _3;
+  void * _4;
+
+  <bb 2> [local count: 1073741824]:
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _1 = (unsigned int) max_fdb_entries_6(D);
+  _2 = _1 * 16;
+  alloc_len_sizet_7 = _2 + 8;
+  # DEBUG alloc_len_sizet => alloc_len_sizet_7
+  # DEBUG BEGIN_STMT
+  # DEBUG alloc_len => alloc_len_sizet_7
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  fdb_10 = mem_calloc (1, alloc_len_sizet_7);
+  # DEBUG fdb => fdb_10
+  # DEBUG BEGIN_STMT
+  if (fdb_10 == 0B)
+    goto <bb 4>; [15.47%]
+  else
+    goto <bb 3>; [84.53%]
+
+  <bb 3> [local count: 907633965]:
+  # DEBUG BEGIN_STMT
+  fdb_10->max_fdb_entries = max_fdb_entries_6(D);
+  # DEBUG BEGIN_STMT
+  _3 = fdb_10 + 8;
+  fdb_10->fdb = _3;
+  # DEBUG BEGIN_STMT
+  sys_timeout (1000, bridgeif_age_tmr, fdb_10);
+  # DEBUG BEGIN_STMT
+
+  <bb 4> [local count: 1073741824]:
+  # _4 = PHI <0B(2), fdb_10(3)>
+  return _4;
+
+}
+
+

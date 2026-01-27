@@ -1,0 +1,131 @@
+Parsed function:ethip6_output
+Dump after hash based groups
+Congruence classes: 1 (unique hash values: 1), with total: 1 items
+Class size histogram [num of members]: number of classe number of classess
+[1]: 1 classes
+
+
+Dump after WPA based types groups
+Congruence classes: 1 (unique hash values: 1), with total: 1 items
+Class size histogram [num of members]: number of classe number of classess
+[1]: 1 classes
+
+
+Worklist has been filled with: 0
+Address reference subdivision created: 0 new classes.
+Dump after callgraph-based congruence reduction
+Congruence classes: 1 (unique hash values: 1), with total: 1 items
+Class size histogram [num of members]: number of classe number of classess
+[1]: 1 classes
+
+
+Init called for 0 items (0.00%).
+Dump after full equality comparison of groups
+Congruence classes: 1 (unique hash values: 1), with total: 1 items
+Class size histogram [num of members]: number of classe number of classess
+[1]: 1 classes
+
+
+Worklist has been filled with: 0
+Address reference subdivision created: 0 new classes.
+Congruence classes: 1 (unique hash values: 1), with total: 1 items
+Class size histogram [num of members]: number of classe number of classess
+[1]: 1 classes
+
+
+
+Item count: 1
+Congruent classes before: 1, after: 1
+Average class size before: 1.00, after: 1.00
+Average non-singular class size: 0.00, count: 0
+Equal symbols: 0
+Fraction of visited symbols: 0.00%
+
+ethip6_output (struct netif * netif, struct pbuf * q, const struct ip6_addr_t * ip6addr)
+{
+  err_t result;
+  const u8_t * hwaddr;
+  struct eth_addr dest;
+  long unsigned int _1;
+  long unsigned int _2;
+  unsigned char _3;
+  unsigned char _4;
+  unsigned char _5;
+  unsigned char _6;
+  u8_t[6] * _7;
+  const u8_t * hwaddr.0_8;
+  u8_t[6] * _9;
+  err_t _10;
+  err_t _20;
+  err_t _28;
+
+  <bb 2> [local count: 1073741824]:
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _1 = ip6addr_13(D)->addr[0];
+  _2 = _1 & 255;
+  if (_2 == 255)
+    goto <bb 3>; [20.97%]
+  else
+    goto <bb 4>; [79.03%]
+
+  <bb 3> [local count: 225163661]:
+  # DEBUG BEGIN_STMT
+  dest.addr[0] = 51;
+  # DEBUG BEGIN_STMT
+  dest.addr[1] = 51;
+  # DEBUG BEGIN_STMT
+  _3 = MEM[(const u8_t *)ip6addr_13(D) + 12B];
+  dest.addr[2] = _3;
+  # DEBUG BEGIN_STMT
+  _4 = MEM[(const u8_t *)ip6addr_13(D) + 13B];
+  dest.addr[3] = _4;
+  # DEBUG BEGIN_STMT
+  _5 = MEM[(const u8_t *)ip6addr_13(D) + 14B];
+  dest.addr[4] = _5;
+  # DEBUG BEGIN_STMT
+  _6 = MEM[(const u8_t *)ip6addr_13(D) + 15B];
+  dest.addr[5] = _6;
+  # DEBUG BEGIN_STMT
+  _7 = &netif_14(D)->hwaddr;
+  _28 = ethernet_output (netif_14(D), q_15(D), _7, &dest, 34525);
+  goto <bb 7>; [100.00%]
+
+  <bb 4> [local count: 848578164]:
+  # DEBUG BEGIN_STMT
+  result_17 = nd6_get_next_hop_addr_or_queue (netif_14(D), q_15(D), ip6addr_13(D), &hwaddr);
+  # DEBUG result => result_17
+  # DEBUG BEGIN_STMT
+  if (result_17 != 0)
+    goto <bb 7>; [34.00%]
+  else
+    goto <bb 5>; [66.00%]
+
+  <bb 5> [local count: 560061588]:
+  # DEBUG BEGIN_STMT
+  hwaddr.0_8 = hwaddr;
+  if (hwaddr.0_8 == 0B)
+    goto <bb 7>; [30.95%]
+  else
+    goto <bb 6>; [69.05%]
+
+  <bb 6> [local count: 386722526]:
+  # DEBUG BEGIN_STMT
+  MEM[(char * {ref-all})&dest] = MEM[(char * {ref-all})hwaddr.0_8];
+  # DEBUG BEGIN_STMT
+  _9 = &netif_14(D)->hwaddr;
+  _20 = ethernet_output (netif_14(D), q_15(D), _9, &dest, 34525);
+
+  <bb 7> [local count: 1073741824]:
+  # _10 = PHI <_28(3), result_17(4), 0(5), _20(6)>
+  dest ={v} {CLOBBER};
+  hwaddr ={v} {CLOBBER};
+  return _10;
+
+}
+
+

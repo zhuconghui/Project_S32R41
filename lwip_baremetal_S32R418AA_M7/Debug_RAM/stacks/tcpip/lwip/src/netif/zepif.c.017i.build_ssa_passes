@@ -1,0 +1,689 @@
+zepif_init (struct netif * netif)
+{
+  u8_t i;
+  struct zepif_state * state;
+  struct zepif_init * init_state;
+  err_t err;
+  err_t D.7279;
+
+  <bb 2> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  init_state = netif->state;
+  # DEBUG BEGIN_STMT
+  state = mem_malloc (32);
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _1 = netif->input;
+  if (_1 == 0B)
+    goto <bb 3>; [INV]
+  else
+    goto <bb 4>; [INV]
+
+  <bb 3> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  __asm__ __volatile__("BKPT #0
+	");
+  # DEBUG BEGIN_STMT
+  goto <bb 3>; [INV]
+
+  <bb 4> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  if (state == 0B)
+    goto <bb 5>; [INV]
+  else
+    goto <bb 6>; [INV]
+
+  <bb 5> :
+  # DEBUG BEGIN_STMT
+  D.7279 = -1;
+  // predicted unlikely by early return (on trees) predictor.
+  goto <bb 37>; [INV]
+
+  <bb 6> :
+  # DEBUG BEGIN_STMT
+  memset (state, 0, 32);
+  # DEBUG BEGIN_STMT
+  if (init_state != 0B)
+    goto <bb 7>; [INV]
+  else
+    goto <bb 8>; [INV]
+
+  <bb 7> :
+  # DEBUG BEGIN_STMT
+  _2 = &state->init;
+  memcpy (_2, init_state, 24);
+
+  <bb 8> :
+  # DEBUG BEGIN_STMT
+  _3 = state->init.zep_src_udp_port;
+  if (_3 == 0)
+    goto <bb 9>; [INV]
+  else
+    goto <bb 10>; [INV]
+
+  <bb 9> :
+  # DEBUG BEGIN_STMT
+  state->init.zep_src_udp_port = 17754;
+
+  <bb 10> :
+  # DEBUG BEGIN_STMT
+  _4 = state->init.zep_dst_udp_port;
+  if (_4 == 0)
+    goto <bb 11>; [INV]
+  else
+    goto <bb 12>; [INV]
+
+  <bb 11> :
+  # DEBUG BEGIN_STMT
+  state->init.zep_dst_udp_port = 17754;
+
+  <bb 12> :
+  # DEBUG BEGIN_STMT
+  _5 = state->init.zep_dst_ip_addr;
+  if (_5 == 0B)
+    goto <bb 13>; [INV]
+  else
+    goto <bb 14>; [INV]
+
+  <bb 13> :
+  # DEBUG BEGIN_STMT
+  state->init.zep_dst_ip_addr = &ip_addr_broadcast;
+
+  <bb 14> :
+  # DEBUG BEGIN_STMT
+  netif->state = 0B;
+  # DEBUG BEGIN_STMT
+  _6 = udp_new_ip_type (46);
+  state->pcb = _6;
+  # DEBUG BEGIN_STMT
+  _7 = state->pcb;
+  if (_7 == 0B)
+    goto <bb 15>; [INV]
+  else
+    goto <bb 16>; [INV]
+
+  <bb 15> :
+  # DEBUG BEGIN_STMT
+  err = -1;
+  # DEBUG BEGIN_STMT
+  // predicted unlikely by goto predictor.
+  goto <bb 34>; [INV]
+
+  <bb 16> :
+  # DEBUG BEGIN_STMT
+  _8 = state->pcb;
+  _9 = state->init.zep_src_ip_addr;
+  _10 = state->init.zep_src_udp_port;
+  err = udp_bind (_8, _9, _10);
+  # DEBUG BEGIN_STMT
+  if (err != 0)
+    goto <bb 17>; [INV]
+  else
+    goto <bb 18>; [INV]
+
+  <bb 17> :
+  # DEBUG BEGIN_STMT
+  // predicted unlikely by goto predictor.
+  goto <bb 34>; [INV]
+
+  <bb 18> :
+  # DEBUG BEGIN_STMT
+  _11 = state->init.zep_netif;
+  if (_11 != 0B)
+    goto <bb 19>; [INV]
+  else
+    goto <bb 20>; [INV]
+
+  <bb 19> :
+  # DEBUG BEGIN_STMT
+  _12 = state->pcb;
+  _13 = state->init.zep_netif;
+  udp_bind_netif (_12, _13);
+
+  <bb 20> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  if (err != 0)
+    goto <bb 21>; [INV]
+  else
+    goto <bb 22>; [INV]
+
+  <bb 21> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  __asm__ __volatile__("BKPT #0
+	");
+  # DEBUG BEGIN_STMT
+  goto <bb 21>; [INV]
+
+  <bb 22> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _14 = state->pcb;
+  _15 = _14->so_options;
+  _16 = state->pcb;
+  _17 = _15 | 32;
+  _16->so_options = _17;
+  # DEBUG BEGIN_STMT
+  _18 = state->pcb;
+  udp_recv (_18, zepif_udp_recv, netif);
+  # DEBUG BEGIN_STMT
+  err = lowpan6_if_init (netif);
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _19 = netif->state;
+  if (_19 != 0B)
+    goto <bb 23>; [INV]
+  else
+    goto <bb 24>; [INV]
+
+  <bb 23> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  __asm__ __volatile__("BKPT #0
+	");
+  # DEBUG BEGIN_STMT
+  goto <bb 23>; [INV]
+
+  <bb 24> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  if (err == 0)
+    goto <bb 25>; [INV]
+  else
+    goto <bb 34>; [INV]
+
+  <bb 25> :
+  # DEBUG BEGIN_STMT
+  netif->state = state;
+  # DEBUG BEGIN_STMT
+  netif->hwaddr_len = 6;
+  # DEBUG BEGIN_STMT
+  if (init_state != 0B)
+    goto <bb 26>; [INV]
+  else
+    goto <bb 27>; [INV]
+
+  <bb 26> :
+  # DEBUG BEGIN_STMT
+  _20 = &netif->hwaddr;
+  _21 = &init_state->addr;
+  memcpy (_20, _21, 6);
+  goto <bb 31>; [INV]
+
+  <bb 27> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  i = 0;
+  goto <bb 29>; [INV]
+
+  <bb 28> :
+  # DEBUG BEGIN_STMT
+  _22 = (int) i;
+  netif->hwaddr[_22] = i;
+  # DEBUG BEGIN_STMT
+  i.0_23 = i;
+  i = i.0_23 + 1;
+
+  <bb 29> :
+  # DEBUG BEGIN_STMT
+  if (i <= 5)
+    goto <bb 28>; [INV]
+  else
+    goto <bb 30>; [INV]
+
+  <bb 30> :
+  # DEBUG BEGIN_STMT
+  _24 = netif->hwaddr[0];
+  _25 = _24 & 252;
+  netif->hwaddr[0] = _25;
+
+  <bb 31> :
+  # DEBUG BEGIN_STMT
+  netif->linkoutput = zepif_linkoutput;
+  # DEBUG BEGIN_STMT
+  zep_lowpan_timer_running.1_26 = zep_lowpan_timer_running;
+  if (zep_lowpan_timer_running.1_26 == 0)
+    goto <bb 32>; [INV]
+  else
+    goto <bb 33>; [INV]
+
+  <bb 32> :
+  # DEBUG BEGIN_STMT
+  sys_timeout (1000, zep_lowpan_timer, 0B);
+  # DEBUG BEGIN_STMT
+  zep_lowpan_timer_running = 1;
+
+  <bb 33> :
+  # DEBUG BEGIN_STMT
+  D.7279 = 0;
+  // predicted unlikely by early return (on trees) predictor.
+  goto <bb 37>; [INV]
+
+  <bb 34> :
+err_ret:
+  # DEBUG BEGIN_STMT
+  _27 = state->pcb;
+  if (_27 != 0B)
+    goto <bb 35>; [INV]
+  else
+    goto <bb 36>; [INV]
+
+  <bb 35> :
+  # DEBUG BEGIN_STMT
+  _28 = state->pcb;
+  udp_remove (_28);
+
+  <bb 36> :
+  # DEBUG BEGIN_STMT
+  mem_free (state);
+  # DEBUG BEGIN_STMT
+  D.7279 = err;
+
+  <bb 37> :
+  return D.7279;
+
+}
+
+
+zepif_linkoutput (struct netif * netif, struct pbuf * p)
+{
+  struct zepif_state * state;
+  struct zep_hdr * zep;
+  struct pbuf * q;
+  err_t err;
+  err_t D.7316;
+
+  <bb 2> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  if (netif == 0B)
+    goto <bb 3>; [INV]
+  else
+    goto <bb 4>; [INV]
+
+  <bb 3> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  __asm__ __volatile__("BKPT #0
+	");
+  # DEBUG BEGIN_STMT
+  goto <bb 3>; [INV]
+
+  <bb 4> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  if (p == 0B)
+    goto <bb 5>; [INV]
+  else
+    goto <bb 6>; [INV]
+
+  <bb 5> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  __asm__ __volatile__("BKPT #0
+	");
+  # DEBUG BEGIN_STMT
+  goto <bb 5>; [INV]
+
+  <bb 6> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _1 = p->tot_len;
+  if (_1 > 127)
+    goto <bb 7>; [INV]
+  else
+    goto <bb 8>; [INV]
+
+  <bb 7> :
+  # DEBUG BEGIN_STMT
+  D.7316 = -6;
+  // predicted unlikely by early return (on trees) predictor.
+  goto <bb 17>; [INV]
+
+  <bb 8> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _2 = p->next;
+  if (_2 != 0B)
+    goto <bb 9>; [INV]
+  else
+    goto <bb 10>; [INV]
+
+  <bb 9> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  __asm__ __volatile__("BKPT #0
+	");
+  # DEBUG BEGIN_STMT
+  goto <bb 9>; [INV]
+
+  <bb 10> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  state = netif->state;
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _3 = state->pcb;
+  if (_3 == 0B)
+    goto <bb 11>; [INV]
+  else
+    goto <bb 12>; [INV]
+
+  <bb 11> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  __asm__ __volatile__("BKPT #0
+	");
+  # DEBUG BEGIN_STMT
+  goto <bb 11>; [INV]
+
+  <bb 12> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _4 = p->tot_len;
+  _5 = _4 + 32;
+  q = pbuf_alloc (74, _5, 640);
+  # DEBUG BEGIN_STMT
+  if (q == 0B)
+    goto <bb 13>; [INV]
+  else
+    goto <bb 14>; [INV]
+
+  <bb 13> :
+  # DEBUG BEGIN_STMT
+  D.7316 = -1;
+  // predicted unlikely by early return (on trees) predictor.
+  goto <bb 17>; [INV]
+
+  <bb 14> :
+  # DEBUG BEGIN_STMT
+  zep = q->payload;
+  # DEBUG BEGIN_STMT
+  memset (zep, 0, 32);
+  # DEBUG BEGIN_STMT
+  zep->prot_id[0] = 69;
+  # DEBUG BEGIN_STMT
+  zep->prot_id[1] = 88;
+  # DEBUG BEGIN_STMT
+  zep->prot_version = 2;
+  # DEBUG BEGIN_STMT
+  zep->type = 1;
+  # DEBUG BEGIN_STMT
+  zep->channel_id = 0;
+  # DEBUG BEGIN_STMT
+  _6 = lwip_htons (1);
+  zep->device_id = _6;
+  # DEBUG BEGIN_STMT
+  zep->crc_mode = 1;
+  # DEBUG BEGIN_STMT
+  zep->unknown_1 = 255;
+  # DEBUG BEGIN_STMT
+  _7 = state->seqno;
+  _8 = lwip_htonl (_7);
+  zep->seq_num = _8;
+  # DEBUG BEGIN_STMT
+  _9 = state->seqno;
+  _10 = _9 + 1;
+  state->seqno = _10;
+  # DEBUG BEGIN_STMT
+  _11 = p->tot_len;
+  _12 = (unsigned char) _11;
+  zep->len = _12;
+  # DEBUG BEGIN_STMT
+  _13 = p->tot_len;
+  err = pbuf_copy_partial_pbuf (q, p, _13, 32);
+  # DEBUG BEGIN_STMT
+  if (err == 0)
+    goto <bb 15>; [INV]
+  else
+    goto <bb 16>; [INV]
+
+  <bb 15> :
+  # DEBUG BEGIN_STMT
+  _14 = state->pcb;
+  _15 = state->init.zep_dst_ip_addr;
+  _16 = state->init.zep_dst_udp_port;
+  err = udp_sendto (_14, q, _15, _16);
+
+  <bb 16> :
+  # DEBUG BEGIN_STMT
+  pbuf_free (q);
+  # DEBUG BEGIN_STMT
+  D.7316 = err;
+
+  <bb 17> :
+  return D.7316;
+
+}
+
+
+zepif_udp_recv (void * arg, struct udp_pcb * pcb, struct pbuf * p, const struct ip_addr_t * addr, u16_t port)
+{
+  struct zep_hdr * zep;
+  struct netif * netif_lowpan6;
+  err_t err;
+
+  <bb 2> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  netif_lowpan6 = arg;
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  if (arg == 0B)
+    goto <bb 3>; [INV]
+  else
+    goto <bb 4>; [INV]
+
+  <bb 3> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  __asm__ __volatile__("BKPT #0
+	");
+  # DEBUG BEGIN_STMT
+  goto <bb 3>; [INV]
+
+  <bb 4> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  if (pcb == 0B)
+    goto <bb 5>; [INV]
+  else
+    goto <bb 6>; [INV]
+
+  <bb 5> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  __asm__ __volatile__("BKPT #0
+	");
+  # DEBUG BEGIN_STMT
+  goto <bb 5>; [INV]
+
+  <bb 6> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  if (p == 0B)
+    goto <bb 7>; [INV]
+  else
+    goto <bb 8>; [INV]
+
+  <bb 7> :
+  # DEBUG BEGIN_STMT
+  // predicted unlikely by early return (on trees) predictor.
+  goto <bb 27>; [INV]
+
+  <bb 8> :
+  # DEBUG BEGIN_STMT
+  _1 = p->len;
+  if (_1 <= 31)
+    goto <bb 9>; [INV]
+  else
+    goto <bb 10>; [INV]
+
+  <bb 9> :
+  # DEBUG BEGIN_STMT
+  // predicted unlikely by goto predictor.
+  goto <bb 26>; [INV]
+
+  <bb 10> :
+  # DEBUG BEGIN_STMT
+  zep = p->payload;
+  # DEBUG BEGIN_STMT
+  _2 = zep->prot_id[0];
+  if (_2 != 69)
+    goto <bb 11>; [INV]
+  else
+    goto <bb 12>; [INV]
+
+  <bb 11> :
+  # DEBUG BEGIN_STMT
+  // predicted unlikely by goto predictor.
+  goto <bb 26>; [INV]
+
+  <bb 12> :
+  # DEBUG BEGIN_STMT
+  _3 = zep->prot_id[1];
+  if (_3 != 88)
+    goto <bb 13>; [INV]
+  else
+    goto <bb 14>; [INV]
+
+  <bb 13> :
+  # DEBUG BEGIN_STMT
+  // predicted unlikely by goto predictor.
+  goto <bb 26>; [INV]
+
+  <bb 14> :
+  # DEBUG BEGIN_STMT
+  _4 = zep->prot_version;
+  if (_4 != 2)
+    goto <bb 15>; [INV]
+  else
+    goto <bb 16>; [INV]
+
+  <bb 15> :
+  # DEBUG BEGIN_STMT
+  // predicted unlikely by goto predictor.
+  goto <bb 26>; [INV]
+
+  <bb 16> :
+  # DEBUG BEGIN_STMT
+  _5 = zep->type;
+  if (_5 != 1)
+    goto <bb 17>; [INV]
+  else
+    goto <bb 18>; [INV]
+
+  <bb 17> :
+  # DEBUG BEGIN_STMT
+  // predicted unlikely by goto predictor.
+  goto <bb 26>; [INV]
+
+  <bb 18> :
+  # DEBUG BEGIN_STMT
+  _6 = zep->crc_mode;
+  if (_6 != 1)
+    goto <bb 19>; [INV]
+  else
+    goto <bb 20>; [INV]
+
+  <bb 19> :
+  # DEBUG BEGIN_STMT
+  // predicted unlikely by goto predictor.
+  goto <bb 26>; [INV]
+
+  <bb 20> :
+  # DEBUG BEGIN_STMT
+  _7 = zep->len;
+  _8 = (unsigned int) _7;
+  _9 = p->tot_len;
+  _10 = (unsigned int) _9;
+  _11 = _10 + 4294967264;
+  if (_8 != _11)
+    goto <bb 21>; [INV]
+  else
+    goto <bb 22>; [INV]
+
+  <bb 21> :
+  # DEBUG BEGIN_STMT
+  // predicted unlikely by goto predictor.
+  goto <bb 26>; [INV]
+
+  <bb 22> :
+  # DEBUG BEGIN_STMT
+  _12 = pbuf_remove_header (p, 32);
+  if (_12 != 0)
+    goto <bb 23>; [INV]
+  else
+    goto <bb 24>; [INV]
+
+  <bb 23> :
+  # DEBUG BEGIN_STMT
+  // predicted unlikely by goto predictor.
+  goto <bb 26>; [INV]
+
+  <bb 24> :
+  # DEBUG BEGIN_STMT
+  _13 = p->tot_len;
+  _14 = _13 + 65534;
+  pbuf_realloc (p, _14);
+  # DEBUG BEGIN_STMT
+  _15 = netif_lowpan6->input;
+  err = _15 (p, netif_lowpan6);
+  # DEBUG BEGIN_STMT
+  if (err == 0)
+    goto <bb 25>; [INV]
+  else
+    goto <bb 26>; [INV]
+
+  <bb 25> :
+  # DEBUG BEGIN_STMT
+  // predicted unlikely by early return (on trees) predictor.
+  goto <bb 27>; [INV]
+
+  <bb 26> :
+err_return:
+  # DEBUG BEGIN_STMT
+  pbuf_free (p);
+
+  <bb 27> :
+  return;
+
+}
+
+
+zep_lowpan_timer (void * arg)
+{
+  <bb 2> :
+  # DEBUG BEGIN_STMT
+  lowpan6_tmr ();
+  # DEBUG BEGIN_STMT
+  zep_lowpan_timer_running.2_1 = zep_lowpan_timer_running;
+  if (zep_lowpan_timer_running.2_1 != 0)
+    goto <bb 3>; [INV]
+  else
+    goto <bb 4>; [INV]
+
+  <bb 3> :
+  # DEBUG BEGIN_STMT
+  sys_timeout (1000, zep_lowpan_timer, arg);
+
+  <bb 4> :
+  return;
+
+}
+
+

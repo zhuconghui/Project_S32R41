@@ -1,0 +1,2970 @@
+dns_gethostbyname_addrtype (const char * hostname, struct ip_addr_t * addr, void (*dns_found_callback) (const char *, const struct ip_addr_t *, void *) found, void * callback_arg, u8_t dns_addrtype)
+{
+  u8_t fallback;
+  size_t hostnamelen;
+  int iftmp.9;
+  _Bool iftmp.8;
+  err_t D.7541;
+
+  <bb 2> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  if (addr == 0B)
+    goto <bb 5>; [INV]
+  else
+    goto <bb 3>; [INV]
+
+  <bb 3> :
+  if (hostname == 0B)
+    goto <bb 5>; [INV]
+  else
+    goto <bb 4>; [INV]
+
+  <bb 4> :
+  _1 = *hostname;
+  if (_1 == 0)
+    goto <bb 5>; [INV]
+  else
+    goto <bb 6>; [INV]
+
+  <bb 5> :
+  # DEBUG BEGIN_STMT
+  D.7541 = -16;
+  // predicted unlikely by early return (on trees) predictor.
+  goto <bb 36>; [INV]
+
+  <bb 6> :
+  # DEBUG BEGIN_STMT
+  hostnamelen = strlen (hostname);
+  # DEBUG BEGIN_STMT
+  if (hostnamelen > 255)
+    goto <bb 7>; [INV]
+  else
+    goto <bb 8>; [INV]
+
+  <bb 7> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  D.7541 = -16;
+  // predicted unlikely by early return (on trees) predictor.
+  goto <bb 36>; [INV]
+
+  <bb 8> :
+  # DEBUG BEGIN_STMT
+  _2 = ipaddr_aton (hostname, addr);
+  if (_2 != 0)
+    goto <bb 9>; [INV]
+  else
+    goto <bb 16>; [INV]
+
+  <bb 9> :
+  # DEBUG BEGIN_STMT
+  if (addr != 0B)
+    goto <bb 10>; [INV]
+  else
+    goto <bb 12>; [INV]
+
+  <bb 10> :
+  _3 = addr->type;
+  if (_3 == 6)
+    goto <bb 11>; [INV]
+  else
+    goto <bb 12>; [INV]
+
+  <bb 11> :
+  if (dns_addrtype != 0)
+    goto <bb 15>; [INV]
+  else
+    goto <bb 12>; [INV]
+
+  <bb 12> :
+  if (addr == 0B)
+    goto <bb 14>; [INV]
+  else
+    goto <bb 13>; [INV]
+
+  <bb 13> :
+  _4 = addr->type;
+  if (_4 == 0)
+    goto <bb 14>; [INV]
+  else
+    goto <bb 16>; [INV]
+
+  <bb 14> :
+  if (dns_addrtype != 1)
+    goto <bb 15>; [INV]
+  else
+    goto <bb 16>; [INV]
+
+  <bb 15> :
+  # DEBUG BEGIN_STMT
+  D.7541 = 0;
+  // predicted unlikely by early return (on trees) predictor.
+  goto <bb 36>; [INV]
+
+  <bb 16> :
+  # DEBUG BEGIN_STMT
+  _5 = dns_lookup (hostname, addr, dns_addrtype);
+  if (_5 == 0)
+    goto <bb 17>; [INV]
+  else
+    goto <bb 18>; [INV]
+
+  <bb 17> :
+  # DEBUG BEGIN_STMT
+  D.7541 = 0;
+  // predicted unlikely by early return (on trees) predictor.
+  goto <bb 36>; [INV]
+
+  <bb 18> :
+  # DEBUG BEGIN_STMT
+  _6 = dns_addrtype + 254;
+  if (_6 <= 1)
+    goto <bb 19>; [INV]
+  else
+    goto <bb 24>; [INV]
+
+  <bb 19> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  if (dns_addrtype == 2)
+    goto <bb 20>; [INV]
+  else
+    goto <bb 21>; [INV]
+
+  <bb 20> :
+  # DEBUG BEGIN_STMT
+  fallback = 1;
+  goto <bb 22>; [INV]
+
+  <bb 21> :
+  # DEBUG BEGIN_STMT
+  fallback = 0;
+
+  <bb 22> :
+  # DEBUG BEGIN_STMT
+  _7 = dns_lookup (hostname, addr, fallback);
+  if (_7 == 0)
+    goto <bb 23>; [INV]
+  else
+    goto <bb 24>; [INV]
+
+  <bb 23> :
+  # DEBUG BEGIN_STMT
+  D.7541 = 0;
+  // predicted unlikely by early return (on trees) predictor.
+  goto <bb 36>; [INV]
+
+  <bb 24> :
+  # DEBUG BEGIN_STMT
+  _8 = dns_servers[0].type;
+  if (_8 == 6)
+    goto <bb 25>; [INV]
+  else
+    goto <bb 32>; [INV]
+
+  <bb 25> :
+  _9 = dns_servers[0].u_addr.ip6.addr[0];
+  if (_9 == 0)
+    goto <bb 26>; [INV]
+  else
+    goto <bb 30>; [INV]
+
+  <bb 26> :
+  _10 = dns_servers[0].u_addr.ip6.addr[1];
+  if (_10 == 0)
+    goto <bb 27>; [INV]
+  else
+    goto <bb 30>; [INV]
+
+  <bb 27> :
+  _11 = dns_servers[0].u_addr.ip6.addr[2];
+  if (_11 == 0)
+    goto <bb 28>; [INV]
+  else
+    goto <bb 30>; [INV]
+
+  <bb 28> :
+  _12 = dns_servers[0].u_addr.ip6.addr[3];
+  if (_12 == 0)
+    goto <bb 29>; [INV]
+  else
+    goto <bb 30>; [INV]
+
+  <bb 29> :
+  iftmp.9 = 1;
+  goto <bb 31>; [INV]
+
+  <bb 30> :
+  iftmp.9 = 0;
+
+  <bb 31> :
+  iftmp.8 = (_Bool) iftmp.9;
+  goto <bb 33>; [INV]
+
+  <bb 32> :
+  _13 = dns_servers[0].u_addr.ip4.addr;
+  iftmp.8 = _13 == 0;
+
+  <bb 33> :
+  if (iftmp.8 != 0)
+    goto <bb 34>; [INV]
+  else
+    goto <bb 35>; [INV]
+
+  <bb 34> :
+  # DEBUG BEGIN_STMT
+  D.7541 = -6;
+  // predicted unlikely by early return (on trees) predictor.
+  goto <bb 36>; [INV]
+
+  <bb 35> :
+  # DEBUG BEGIN_STMT
+  D.7541 = dns_enqueue (hostname, hostnamelen, found, callback_arg, dns_addrtype);
+
+  <bb 36> :
+  return D.7541;
+
+}
+
+
+dns_gethostbyname (const char * hostname, struct ip_addr_t * addr, void (*dns_found_callback) (const char *, const struct ip_addr_t *, void *) found, void * callback_arg)
+{
+  err_t D.7535;
+
+  <bb 2> :
+  # DEBUG BEGIN_STMT
+  D.7535 = dns_gethostbyname_addrtype (hostname, addr, found, callback_arg, 2);
+  return D.7535;
+
+}
+
+
+dns_enqueue (const char * name, size_t hostnamelen, void (*dns_found_callback) (const char *, const struct ip_addr_t *, void *) found, void * callback_arg, u8_t dns_addrtype)
+{
+  u8_t age;
+  u8_t r;
+  struct dns_req_entry * req;
+  size_t namelen;
+  struct dns_table_entry * entry;
+  u8_t lseqi;
+  u8_t lseq;
+  u8_t i;
+  err_t D.7614;
+
+  <bb 2> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  entry = 0B;
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  i = 0;
+  goto <bb 13>; [INV]
+
+  <bb 3> :
+  # DEBUG BEGIN_STMT
+  _1 = (int) i;
+  _2 = dns_table[_1].state;
+  if (_2 == 2)
+    goto <bb 4>; [INV]
+  else
+    goto <bb 12>; [INV]
+
+  <bb 4> :
+  _3 = (int) i;
+  _4 = &dns_table[_3].name;
+  _5 = lwip_strnicmp (name, _4, 256);
+  if (_5 == 0)
+    goto <bb 5>; [INV]
+  else
+    goto <bb 12>; [INV]
+
+  <bb 5> :
+  # DEBUG BEGIN_STMT
+  _6 = (int) i;
+  _7 = dns_table[_6].reqaddrtype;
+  if (dns_addrtype != _7)
+    goto <bb 6>; [INV]
+  else
+    goto <bb 7>; [INV]
+
+  <bb 6> :
+  # DEBUG BEGIN_STMT
+  // predicted unlikely by continue predictor.
+  goto <bb 12>; [INV]
+
+  <bb 7> :
+  # DEBUG BEGIN_STMT
+  r = 0;
+  goto <bb 11>; [INV]
+
+  <bb 8> :
+  # DEBUG BEGIN_STMT
+  _8 = (int) r;
+  _9 = dns_requests[_8].found;
+  if (_9 == 0B)
+    goto <bb 9>; [INV]
+  else
+    goto <bb 10>; [INV]
+
+  <bb 9> :
+  # DEBUG BEGIN_STMT
+  _10 = (int) r;
+  dns_requests[_10].found = found;
+  # DEBUG BEGIN_STMT
+  _11 = (int) r;
+  dns_requests[_11].arg = callback_arg;
+  # DEBUG BEGIN_STMT
+  _12 = (int) r;
+  dns_requests[_12].dns_table_idx = i;
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _13 = (int) r;
+  dns_requests[_13].reqaddrtype = dns_addrtype;
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  D.7614 = -5;
+  // predicted unlikely by early return (on trees) predictor.
+  goto <bb 36>; [INV]
+
+  <bb 10> :
+  # DEBUG BEGIN_STMT
+  r.13_14 = r;
+  r = r.13_14 + 1;
+
+  <bb 11> :
+  # DEBUG BEGIN_STMT
+  if (r <= 3)
+    goto <bb 8>; [INV]
+  else
+    goto <bb 12>; [INV]
+
+  <bb 12> :
+  # DEBUG BEGIN_STMT
+  i.14_15 = i;
+  i = i.14_15 + 1;
+
+  <bb 13> :
+  # DEBUG BEGIN_STMT
+  if (i <= 3)
+    goto <bb 3>; [INV]
+  else
+    goto <bb 14>; [INV]
+
+  <bb 14> :
+  # DEBUG BEGIN_STMT
+  lseq = 0;
+  # DEBUG BEGIN_STMT
+  lseqi = 4;
+  # DEBUG BEGIN_STMT
+  i = 0;
+  goto <bb 20>; [INV]
+
+  <bb 15> :
+  # DEBUG BEGIN_STMT
+  _16 = (int) i;
+  entry = &dns_table[_16];
+  # DEBUG BEGIN_STMT
+  _17 = entry->state;
+  if (_17 == 0)
+    goto <bb 21>; [INV]
+  else
+    goto <bb 16>; [INV]
+
+  <bb 16> :
+  # DEBUG BEGIN_STMT
+  _18 = entry->state;
+  if (_18 == 3)
+    goto <bb 17>; [INV]
+  else
+    goto <bb 19>; [INV]
+
+  <bb 17> :
+  # DEBUG BEGIN_STMT
+  dns_seqno.15_19 = dns_seqno;
+  _20 = entry->seqno;
+  age = dns_seqno.15_19 - _20;
+  # DEBUG BEGIN_STMT
+  if (age > lseq)
+    goto <bb 18>; [INV]
+  else
+    goto <bb 19>; [INV]
+
+  <bb 18> :
+  # DEBUG BEGIN_STMT
+  lseq = age;
+  # DEBUG BEGIN_STMT
+  lseqi = i;
+
+  <bb 19> :
+  # DEBUG BEGIN_STMT
+  i = i + 1;
+
+  <bb 20> :
+  # DEBUG BEGIN_STMT
+  if (i <= 3)
+    goto <bb 15>; [INV]
+  else
+    goto <bb 21>; [INV]
+
+  <bb 21> :
+  # DEBUG BEGIN_STMT
+  if (i == 4)
+    goto <bb 22>; [INV]
+  else
+    goto <bb 26>; [INV]
+
+  <bb 22> :
+  # DEBUG BEGIN_STMT
+  if (lseqi > 3)
+    goto <bb 24>; [INV]
+  else
+    goto <bb 23>; [INV]
+
+  <bb 23> :
+  _21 = (int) lseqi;
+  _22 = dns_table[_21].state;
+  if (_22 != 3)
+    goto <bb 24>; [INV]
+  else
+    goto <bb 25>; [INV]
+
+  <bb 24> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  D.7614 = -1;
+  // predicted unlikely by early return (on trees) predictor.
+  goto <bb 36>; [INV]
+
+  <bb 25> :
+  # DEBUG BEGIN_STMT
+  i = lseqi;
+  # DEBUG BEGIN_STMT
+  _23 = (int) i;
+  entry = &dns_table[_23];
+
+  <bb 26> :
+  # DEBUG BEGIN_STMT
+  req = 0B;
+  # DEBUG BEGIN_STMT
+  r = 0;
+  goto <bb 30>; [INV]
+
+  <bb 27> :
+  # DEBUG BEGIN_STMT
+  _24 = (int) r;
+  _25 = dns_requests[_24].found;
+  if (_25 == 0B)
+    goto <bb 28>; [INV]
+  else
+    goto <bb 29>; [INV]
+
+  <bb 28> :
+  # DEBUG BEGIN_STMT
+  _26 = (int) r;
+  req = &dns_requests[_26];
+  # DEBUG BEGIN_STMT
+  goto <bb 31>; [INV]
+
+  <bb 29> :
+  # DEBUG BEGIN_STMT
+  r.16_27 = r;
+  r = r.16_27 + 1;
+
+  <bb 30> :
+  # DEBUG BEGIN_STMT
+  if (r <= 3)
+    goto <bb 27>; [INV]
+  else
+    goto <bb 31>; [INV]
+
+  <bb 31> :
+  # DEBUG BEGIN_STMT
+  if (req == 0B)
+    goto <bb 32>; [INV]
+  else
+    goto <bb 33>; [INV]
+
+  <bb 32> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  D.7614 = -1;
+  // predicted unlikely by early return (on trees) predictor.
+  goto <bb 36>; [INV]
+
+  <bb 33> :
+  # DEBUG BEGIN_STMT
+  req->dns_table_idx = i;
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  entry->state = 1;
+  # DEBUG BEGIN_STMT
+  dns_seqno.17_28 = dns_seqno;
+  entry->seqno = dns_seqno.17_28;
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  entry->reqaddrtype = dns_addrtype;
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  req->reqaddrtype = dns_addrtype;
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  req->found = found;
+  # DEBUG BEGIN_STMT
+  req->arg = callback_arg;
+  # DEBUG BEGIN_STMT
+  namelen = MIN_EXPR <hostnamelen, 255>;
+  # DEBUG BEGIN_STMT
+  _29 = &entry->name;
+  memcpy (_29, name, namelen);
+  # DEBUG BEGIN_STMT
+  entry->name[namelen] = 0;
+  # DEBUG BEGIN_STMT
+  _30 = dns_alloc_pcb ();
+  entry->pcb_idx = _30;
+  # DEBUG BEGIN_STMT
+  _31 = entry->pcb_idx;
+  if (_31 > 3)
+    goto <bb 34>; [INV]
+  else
+    goto <bb 35>; [INV]
+
+  <bb 34> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  entry->state = 0;
+  # DEBUG BEGIN_STMT
+  req->found = 0B;
+  # DEBUG BEGIN_STMT
+  D.7614 = -1;
+  // predicted unlikely by early return (on trees) predictor.
+  goto <bb 36>; [INV]
+
+  <bb 35> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  dns_seqno.18_32 = dns_seqno;
+  dns_seqno.19_33 = dns_seqno.18_32;
+  _34 = dns_seqno.19_33 + 1;
+  dns_seqno = _34;
+  # DEBUG BEGIN_STMT
+  dns_check_entry (i);
+  # DEBUG BEGIN_STMT
+  D.7614 = -5;
+
+  <bb 36> :
+  return D.7614;
+
+}
+
+
+dns_recv (void * arg, struct udp_pcb * pcb, struct pbuf * p, const struct ip_addr_t * addr, u16_t port)
+{
+  struct ip6_addr_p_t ip6addr;
+  struct ip4_addr_t ip4addr;
+  struct dns_table_entry * entry;
+  u16_t nanswers;
+  u16_t nquestions;
+  struct dns_query qry;
+  struct dns_answer ans;
+  struct dns_hdr hdr;
+  u16_t res_idx;
+  u16_t txid;
+  u8_t i;
+  int iftmp.26;
+  _Bool iftmp.25;
+  _Bool iftmp.24;
+
+  <bb 2> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _1 = p->tot_len;
+  if (_1 <= 15)
+    goto <bb 3>; [INV]
+  else
+    goto <bb 4>; [INV]
+
+  <bb 3> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  // predicted unlikely by goto predictor.
+  goto <bb 78>; [INV]
+
+  <bb 4> :
+  # DEBUG BEGIN_STMT
+  _2 = pbuf_copy_partial (p, &hdr, 12, 0);
+  if (_2 == 12)
+    goto <bb 5>; [INV]
+  else
+    goto <bb 78>; [INV]
+
+  <bb 5> :
+  # DEBUG BEGIN_STMT
+  _3 = hdr.id;
+  txid = lwip_htons (_3);
+  # DEBUG BEGIN_STMT
+  i = 0;
+  goto <bb 77>; [INV]
+
+  <bb 6> :
+  # DEBUG BEGIN_STMT
+  _4 = (int) i;
+  entry = &dns_table[_4];
+  # DEBUG BEGIN_STMT
+  _5 = entry->state;
+  if (_5 == 2)
+    goto <bb 7>; [INV]
+  else
+    goto <bb 76>; [INV]
+
+  <bb 7> :
+  _6 = entry->txid;
+  if (txid == _6)
+    goto <bb 8>; [INV]
+  else
+    goto <bb 76>; [INV]
+
+  <bb 8> :
+  # DEBUG BEGIN_STMT
+  _7 = hdr.numquestions;
+  nquestions = lwip_htons (_7);
+  # DEBUG BEGIN_STMT
+  _8 = hdr.numanswers;
+  nanswers = lwip_htons (_8);
+  # DEBUG BEGIN_STMT
+  _9 = hdr.flags1;
+  _10 = (signed char) _9;
+  if (_10 >= 0)
+    goto <bb 9>; [INV]
+  else
+    goto <bb 10>; [INV]
+
+  <bb 9> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  // predicted unlikely by goto predictor.
+  goto <bb 78>; [INV]
+
+  <bb 10> :
+  # DEBUG BEGIN_STMT
+  if (nquestions != 1)
+    goto <bb 11>; [INV]
+  else
+    goto <bb 12>; [INV]
+
+  <bb 11> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  // predicted unlikely by goto predictor.
+  goto <bb 78>; [INV]
+
+  <bb 12> :
+  # DEBUG BEGIN_STMT
+  _11 = addr->type;
+  _12 = entry->server_idx;
+  _13 = (int) _12;
+  _14 = dns_servers[_13].type;
+  if (_11 == _14)
+    goto <bb 13>; [INV]
+  else
+    goto <bb 24>; [INV]
+
+  <bb 13> :
+  _15 = addr->type;
+  if (_15 == 6)
+    goto <bb 14>; [INV]
+  else
+    goto <bb 22>; [INV]
+
+  <bb 14> :
+  _16 = addr->u_addr.ip6.addr[0];
+  _17 = entry->server_idx;
+  _18 = (int) _17;
+  _19 = dns_servers[_18].u_addr.ip6.addr[0];
+  if (_16 != _19)
+    goto <bb 19>; [INV]
+  else
+    goto <bb 15>; [INV]
+
+  <bb 15> :
+  _20 = addr->u_addr.ip6.addr[1];
+  _21 = entry->server_idx;
+  _22 = (int) _21;
+  _23 = dns_servers[_22].u_addr.ip6.addr[1];
+  if (_20 != _23)
+    goto <bb 19>; [INV]
+  else
+    goto <bb 16>; [INV]
+
+  <bb 16> :
+  _24 = addr->u_addr.ip6.addr[2];
+  _25 = entry->server_idx;
+  _26 = (int) _25;
+  _27 = dns_servers[_26].u_addr.ip6.addr[2];
+  if (_24 != _27)
+    goto <bb 19>; [INV]
+  else
+    goto <bb 17>; [INV]
+
+  <bb 17> :
+  _28 = addr->u_addr.ip6.addr[3];
+  _29 = entry->server_idx;
+  _30 = (int) _29;
+  _31 = dns_servers[_30].u_addr.ip6.addr[3];
+  if (_28 != _31)
+    goto <bb 19>; [INV]
+  else
+    goto <bb 18>; [INV]
+
+  <bb 18> :
+  _32 = addr->u_addr.ip6.zone;
+  _33 = entry->server_idx;
+  _34 = (int) _33;
+  _35 = dns_servers[_34].u_addr.ip6.zone;
+  if (_32 != _35)
+    goto <bb 19>; [INV]
+  else
+    goto <bb 20>; [INV]
+
+  <bb 19> :
+  iftmp.26 = 1;
+  goto <bb 21>; [INV]
+
+  <bb 20> :
+  iftmp.26 = 0;
+
+  <bb 21> :
+  iftmp.25 = (_Bool) iftmp.26;
+  goto <bb 23>; [INV]
+
+  <bb 22> :
+  _36 = addr->u_addr.ip4.addr;
+  _37 = entry->server_idx;
+  _38 = (int) _37;
+  _39 = dns_servers[_38].u_addr.ip4.addr;
+  iftmp.25 = _36 != _39;
+
+  <bb 23> :
+  iftmp.24 = iftmp.25;
+  goto <bb 25>; [INV]
+
+  <bb 24> :
+  iftmp.24 = 1;
+
+  <bb 25> :
+  if (iftmp.24 != 0)
+    goto <bb 26>; [INV]
+  else
+    goto <bb 27>; [INV]
+
+  <bb 26> :
+  # DEBUG BEGIN_STMT
+  // predicted unlikely by goto predictor.
+  goto <bb 78>; [INV]
+
+  <bb 27> :
+  # DEBUG BEGIN_STMT
+  _40 = &entry->name;
+  res_idx = dns_compare_name (_40, p, 12);
+  # DEBUG BEGIN_STMT
+  if (res_idx == 65535)
+    goto <bb 28>; [INV]
+  else
+    goto <bb 29>; [INV]
+
+  <bb 28> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  // predicted unlikely by goto predictor.
+  goto <bb 78>; [INV]
+
+  <bb 29> :
+  # DEBUG BEGIN_STMT
+  _41 = pbuf_copy_partial (p, &qry, 4, res_idx);
+  if (_41 != 4)
+    goto <bb 30>; [INV]
+  else
+    goto <bb 31>; [INV]
+
+  <bb 30> :
+  # DEBUG BEGIN_STMT
+  // predicted unlikely by goto predictor.
+  goto <bb 78>; [INV]
+
+  <bb 31> :
+  # DEBUG BEGIN_STMT
+  _42 = qry.cls;
+  if (_42 != 256)
+    goto <bb 38>; [INV]
+  else
+    goto <bb 32>; [INV]
+
+  <bb 32> :
+  _43 = entry->reqaddrtype;
+  if (_43 == 3)
+    goto <bb 34>; [INV]
+  else
+    goto <bb 33>; [INV]
+
+  <bb 33> :
+  _44 = entry->reqaddrtype;
+  if (_44 == 1)
+    goto <bb 34>; [INV]
+  else
+    goto <bb 35>; [INV]
+
+  <bb 34> :
+  _45 = qry.type;
+  if (_45 != 7168)
+    goto <bb 38>; [INV]
+  else
+    goto <bb 35>; [INV]
+
+  <bb 35> :
+  _46 = entry->reqaddrtype;
+  if (_46 != 3)
+    goto <bb 36>; [INV]
+  else
+    goto <bb 39>; [INV]
+
+  <bb 36> :
+  _47 = entry->reqaddrtype;
+  if (_47 != 1)
+    goto <bb 37>; [INV]
+  else
+    goto <bb 39>; [INV]
+
+  <bb 37> :
+  _48 = qry.type;
+  if (_48 != 256)
+    goto <bb 38>; [INV]
+  else
+    goto <bb 39>; [INV]
+
+  <bb 38> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  // predicted unlikely by goto predictor.
+  goto <bb 78>; [INV]
+
+  <bb 39> :
+  # DEBUG BEGIN_STMT
+  if (res_idx > 65531)
+    goto <bb 40>; [INV]
+  else
+    goto <bb 41>; [INV]
+
+  <bb 40> :
+  # DEBUG BEGIN_STMT
+  // predicted unlikely by goto predictor.
+  goto <bb 78>; [INV]
+
+  <bb 41> :
+  # DEBUG BEGIN_STMT
+  res_idx = res_idx + 4;
+  # DEBUG BEGIN_STMT
+  _49 = hdr.flags2;
+  _50 = (int) _49;
+  _51 = _50 & 15;
+  if (_51 != 0)
+    goto <bb 42>; [INV]
+  else
+    goto <bb 68>; [INV]
+
+  <bb 42> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _52 = dns_backupserver_available (entry);
+  if (_52 != 0)
+    goto <bb 43>; [INV]
+  else
+    goto <bb 75>; [INV]
+
+  <bb 43> :
+  # DEBUG BEGIN_STMT
+  entry->retries = 3;
+  # DEBUG BEGIN_STMT
+  entry->tmr = 1;
+  # DEBUG BEGIN_STMT
+  dns_check_entry (i);
+  # DEBUG BEGIN_STMT
+  // predicted unlikely by goto predictor.
+  goto <bb 78>; [INV]
+
+  <bb 44> :
+  # DEBUG BEGIN_STMT
+  res_idx = dns_skip_name (p, res_idx);
+  # DEBUG BEGIN_STMT
+  if (res_idx == 65535)
+    goto <bb 45>; [INV]
+  else
+    goto <bb 46>; [INV]
+
+  <bb 45> :
+  # DEBUG BEGIN_STMT
+  // predicted unlikely by goto predictor.
+  goto <bb 78>; [INV]
+
+  <bb 46> :
+  # DEBUG BEGIN_STMT
+  _53 = pbuf_copy_partial (p, &ans, 10, res_idx);
+  if (_53 != 10)
+    goto <bb 47>; [INV]
+  else
+    goto <bb 48>; [INV]
+
+  <bb 47> :
+  # DEBUG BEGIN_STMT
+  // predicted unlikely by goto predictor.
+  goto <bb 78>; [INV]
+
+  <bb 48> :
+  # DEBUG BEGIN_STMT
+  if (res_idx > 65525)
+    goto <bb 49>; [INV]
+  else
+    goto <bb 50>; [INV]
+
+  <bb 49> :
+  # DEBUG BEGIN_STMT
+  // predicted unlikely by goto predictor.
+  goto <bb 78>; [INV]
+
+  <bb 50> :
+  # DEBUG BEGIN_STMT
+  res_idx = res_idx + 10;
+  # DEBUG BEGIN_STMT
+  _54 = ans.cls;
+  if (_54 == 256)
+    goto <bb 51>; [INV]
+  else
+    goto <bb 65>; [INV]
+
+  <bb 51> :
+  # DEBUG BEGIN_STMT
+  _55 = ans.type;
+  if (_55 == 256)
+    goto <bb 52>; [INV]
+  else
+    goto <bb 58>; [INV]
+
+  <bb 52> :
+  _56 = ans.len;
+  if (_56 == 1024)
+    goto <bb 53>; [INV]
+  else
+    goto <bb 58>; [INV]
+
+  <bb 53> :
+  # DEBUG BEGIN_STMT
+  _57 = entry->reqaddrtype;
+  if (_57 != 3)
+    goto <bb 54>; [INV]
+  else
+    goto <bb 58>; [INV]
+
+  <bb 54> :
+  _58 = entry->reqaddrtype;
+  if (_58 != 1)
+    goto <bb 55>; [INV]
+  else
+    goto <bb 58>; [INV]
+
+  <bb 55> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _59 = pbuf_copy_partial (p, &ip4addr, 4, res_idx);
+  if (_59 != 4)
+    goto <bb 56>; [INV]
+  else
+    goto <bb 57>; [INV]
+
+  <bb 56> :
+  # DEBUG BEGIN_STMT
+  // predicted unlikely by goto predictor.
+  ip4addr = {CLOBBER};
+  goto <bb 78>; [INV]
+
+  <bb 57> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _60 = (int) i;
+  _61 = ip4addr.addr;
+  dns_table[_60].ipaddr.u_addr.ip4.addr = _61;
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _62 = (int) i;
+  dns_table[_62].ipaddr.type = 0;
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _63 = (int) i;
+  dns_table[_63].ipaddr.u_addr.ip6.addr[3] = 0;
+  _64 = (int) i;
+  _65 = dns_table[_63].ipaddr.u_addr.ip6.addr[3];
+  dns_table[_64].ipaddr.u_addr.ip6.addr[2] = _65;
+  _66 = (int) i;
+  _67 = dns_table[_64].ipaddr.u_addr.ip6.addr[2];
+  dns_table[_66].ipaddr.u_addr.ip6.addr[1] = _67;
+  # DEBUG BEGIN_STMT
+  _68 = (int) i;
+  dns_table[_68].ipaddr.u_addr.ip6.zone = 0;
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  pbuf_free (p);
+  # DEBUG BEGIN_STMT
+  _69 = ans.ttl;
+  _70 = lwip_htonl (_69);
+  dns_correct_response (i, _70);
+  # DEBUG BEGIN_STMT
+  // predicted unlikely by early return (on trees) predictor.
+  ip4addr = {CLOBBER};
+  goto <bb 79>; [INV]
+
+  <bb 58> :
+  # DEBUG BEGIN_STMT
+  _71 = ans.type;
+  if (_71 == 7168)
+    goto <bb 59>; [INV]
+  else
+    goto <bb 65>; [INV]
+
+  <bb 59> :
+  _72 = ans.len;
+  if (_72 == 4096)
+    goto <bb 60>; [INV]
+  else
+    goto <bb 65>; [INV]
+
+  <bb 60> :
+  # DEBUG BEGIN_STMT
+  _73 = entry->reqaddrtype;
+  if (_73 == 3)
+    goto <bb 62>; [INV]
+  else
+    goto <bb 61>; [INV]
+
+  <bb 61> :
+  _74 = entry->reqaddrtype;
+  if (_74 == 1)
+    goto <bb 62>; [INV]
+  else
+    goto <bb 65>; [INV]
+
+  <bb 62> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _75 = pbuf_copy_partial (p, &ip6addr, 16, res_idx);
+  if (_75 != 16)
+    goto <bb 63>; [INV]
+  else
+    goto <bb 64>; [INV]
+
+  <bb 63> :
+  # DEBUG BEGIN_STMT
+  // predicted unlikely by goto predictor.
+  ip6addr = {CLOBBER};
+  goto <bb 78>; [INV]
+
+  <bb 64> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _76 = (int) i;
+  _77 = ip6addr.addr[0];
+  dns_table[_76].ipaddr.u_addr.ip6.addr[0] = _77;
+  # DEBUG BEGIN_STMT
+  _78 = (int) i;
+  _79 = ip6addr.addr[1];
+  dns_table[_78].ipaddr.u_addr.ip6.addr[1] = _79;
+  # DEBUG BEGIN_STMT
+  _80 = (int) i;
+  _81 = ip6addr.addr[2];
+  dns_table[_80].ipaddr.u_addr.ip6.addr[2] = _81;
+  # DEBUG BEGIN_STMT
+  _82 = (int) i;
+  _83 = ip6addr.addr[3];
+  dns_table[_82].ipaddr.u_addr.ip6.addr[3] = _83;
+  # DEBUG BEGIN_STMT
+  _84 = (int) i;
+  dns_table[_84].ipaddr.u_addr.ip6.zone = 0;
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _85 = (int) i;
+  dns_table[_85].ipaddr.type = 6;
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  pbuf_free (p);
+  # DEBUG BEGIN_STMT
+  _86 = ans.ttl;
+  _87 = lwip_htonl (_86);
+  dns_correct_response (i, _87);
+  # DEBUG BEGIN_STMT
+  // predicted unlikely by early return (on trees) predictor.
+  ip6addr = {CLOBBER};
+  goto <bb 79>; [INV]
+
+  <bb 65> :
+  # DEBUG BEGIN_STMT
+  _88 = (int) res_idx;
+  _89 = ans.len;
+  _90 = lwip_htons (_89);
+  _91 = (int) _90;
+  _92 = _88 + _91;
+  if (_92 > 65535)
+    goto <bb 66>; [INV]
+  else
+    goto <bb 67>; [INV]
+
+  <bb 66> :
+  # DEBUG BEGIN_STMT
+  // predicted unlikely by goto predictor.
+  goto <bb 78>; [INV]
+
+  <bb 67> :
+  # DEBUG BEGIN_STMT
+  _93 = ans.len;
+  _94 = lwip_htons (_93);
+  res_idx = res_idx + _94;
+  # DEBUG BEGIN_STMT
+  nanswers = nanswers + 65535;
+
+  <bb 68> :
+  # DEBUG BEGIN_STMT
+  if (nanswers != 0)
+    goto <bb 69>; [INV]
+  else
+    goto <bb 70>; [INV]
+
+  <bb 69> :
+  _95 = p->tot_len;
+  if (res_idx < _95)
+    goto <bb 44>; [INV]
+  else
+    goto <bb 70>; [INV]
+
+  <bb 70> :
+  # DEBUG BEGIN_STMT
+  _96 = entry->reqaddrtype;
+  _97 = _96 + 254;
+  if (_97 <= 1)
+    goto <bb 71>; [INV]
+  else
+    goto <bb 75>; [INV]
+
+  <bb 71> :
+  # DEBUG BEGIN_STMT
+  _98 = entry->reqaddrtype;
+  if (_98 == 2)
+    goto <bb 72>; [INV]
+  else
+    goto <bb 73>; [INV]
+
+  <bb 72> :
+  # DEBUG BEGIN_STMT
+  _99 = (int) i;
+  dns_table[_99].reqaddrtype = 1;
+  goto <bb 74>; [INV]
+
+  <bb 73> :
+  # DEBUG BEGIN_STMT
+  _100 = (int) i;
+  dns_table[_100].reqaddrtype = 0;
+
+  <bb 74> :
+  # DEBUG BEGIN_STMT
+  pbuf_free (p);
+  # DEBUG BEGIN_STMT
+  _101 = (int) i;
+  dns_table[_101].state = 1;
+  # DEBUG BEGIN_STMT
+  dns_check_entry (i);
+  # DEBUG BEGIN_STMT
+  // predicted unlikely by early return (on trees) predictor.
+  goto <bb 79>; [INV]
+
+  <bb 75> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  pbuf_free (p);
+  # DEBUG BEGIN_STMT
+  dns_call_found (i, 0B);
+  # DEBUG BEGIN_STMT
+  _102 = (int) i;
+  dns_table[_102].state = 0;
+  # DEBUG BEGIN_STMT
+  // predicted unlikely by early return (on trees) predictor.
+  goto <bb 79>; [INV]
+
+  <bb 76> :
+  # DEBUG BEGIN_STMT
+  i.27_103 = i;
+  i = i.27_103 + 1;
+
+  <bb 77> :
+  # DEBUG BEGIN_STMT
+  if (i <= 3)
+    goto <bb 6>; [INV]
+  else
+    goto <bb 78>; [INV]
+
+  <bb 78> :
+ignore_packet:
+  # DEBUG BEGIN_STMT
+  pbuf_free (p);
+  # DEBUG BEGIN_STMT
+
+  <bb 79> :
+  hdr = {CLOBBER};
+  ans = {CLOBBER};
+  qry = {CLOBBER};
+  return;
+
+}
+
+
+dns_correct_response (u8_t idx, u32_t ttl)
+{
+  struct dns_table_entry * entry;
+
+  <bb 2> :
+  # DEBUG BEGIN_STMT
+  _1 = (int) idx;
+  entry = &dns_table[_1];
+  # DEBUG BEGIN_STMT
+  entry->state = 3;
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _2 = entry->ipaddr.type;
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  entry->ttl = ttl;
+  # DEBUG BEGIN_STMT
+  _3 = entry->ttl;
+  if (_3 > 604800)
+    goto <bb 3>; [INV]
+  else
+    goto <bb 4>; [INV]
+
+  <bb 3> :
+  # DEBUG BEGIN_STMT
+  entry->ttl = 604800;
+
+  <bb 4> :
+  # DEBUG BEGIN_STMT
+  _4 = &entry->ipaddr;
+  dns_call_found (idx, _4);
+  # DEBUG BEGIN_STMT
+  _5 = entry->ttl;
+  if (_5 == 0)
+    goto <bb 5>; [INV]
+  else
+    goto <bb 7>; [INV]
+
+  <bb 5> :
+  # DEBUG BEGIN_STMT
+  _6 = entry->state;
+  if (_6 == 3)
+    goto <bb 6>; [INV]
+  else
+    goto <bb 7>; [INV]
+
+  <bb 6> :
+  # DEBUG BEGIN_STMT
+  entry->state = 0;
+
+  <bb 7> :
+  return;
+
+}
+
+
+dns_check_entries ()
+{
+  u8_t i;
+
+  <bb 2> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  i = 0;
+  goto <bb 4>; [INV]
+
+  <bb 3> :
+  # DEBUG BEGIN_STMT
+  dns_check_entry (i);
+  # DEBUG BEGIN_STMT
+  i = i + 1;
+
+  <bb 4> :
+  # DEBUG BEGIN_STMT
+  if (i <= 3)
+    goto <bb 3>; [INV]
+  else
+    goto <bb 5>; [INV]
+
+  <bb 5> :
+  return;
+
+}
+
+
+dns_check_entry (u8_t i)
+{
+  struct dns_table_entry * entry;
+  err_t err;
+
+  <bb 2> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _1 = (int) i;
+  entry = &dns_table[_1];
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  if (i > 3)
+    goto <bb 3>; [INV]
+  else
+    goto <bb 4>; [INV]
+
+  <bb 3> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  __asm__ __volatile__("BKPT #0
+	");
+  # DEBUG BEGIN_STMT
+  goto <bb 3>; [INV]
+
+  <bb 4> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _2 = entry->state;
+  _3 = (int) _2;
+  switch (_3) <default: <L28> [INV], case 0: <L27> [INV], case 1: <L3> [INV], case 2: <L6> [INV], case 3: <L17> [INV]>
+
+  <bb 5> :
+<L3>:
+  # DEBUG BEGIN_STMT
+  _4 = dns_create_txid ();
+  entry->txid = _4;
+  # DEBUG BEGIN_STMT
+  entry->state = 2;
+  # DEBUG BEGIN_STMT
+  entry->server_idx = 0;
+  # DEBUG BEGIN_STMT
+  entry->tmr = 1;
+  # DEBUG BEGIN_STMT
+  entry->retries = 0;
+  # DEBUG BEGIN_STMT
+  err = dns_send (i);
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  goto <bb 17>; [INV]
+
+  <bb 6> :
+<L6>:
+  # DEBUG BEGIN_STMT
+  _5 = entry->tmr;
+  _6 = _5 + 255;
+  entry->tmr = _6;
+  _7 = entry->tmr;
+  if (_7 == 0)
+    goto <bb 7>; [INV]
+  else
+    goto <bb 17>; [INV]
+
+  <bb 7> :
+  # DEBUG BEGIN_STMT
+  _8 = entry->retries;
+  _9 = _8 + 1;
+  entry->retries = _9;
+  _10 = entry->retries;
+  if (_10 == 4)
+    goto <bb 8>; [INV]
+  else
+    goto <bb 11>; [INV]
+
+  <bb 8> :
+  # DEBUG BEGIN_STMT
+  _11 = dns_backupserver_available (entry);
+  if (_11 != 0)
+    goto <bb 9>; [INV]
+  else
+    goto <bb 10>; [INV]
+
+  <bb 9> :
+  # DEBUG BEGIN_STMT
+  _12 = entry->server_idx;
+  _13 = _12;
+  _14 = _13 + 1;
+  entry->server_idx = _14;
+  # DEBUG BEGIN_STMT
+  entry->tmr = 1;
+  # DEBUG BEGIN_STMT
+  entry->retries = 0;
+  goto <bb 12>; [INV]
+
+  <bb 10> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  dns_call_found (i, 0B);
+  # DEBUG BEGIN_STMT
+  entry->state = 0;
+  # DEBUG BEGIN_STMT
+  goto <bb 17>; [INV]
+
+  <bb 11> :
+  # DEBUG BEGIN_STMT
+  _15 = entry->retries;
+  entry->tmr = _15;
+
+  <bb 12> :
+  # DEBUG BEGIN_STMT
+  err = dns_send (i);
+  # DEBUG BEGIN_STMT
+  goto <bb 17>; [INV]
+
+  <bb 13> :
+<L17>:
+  # DEBUG BEGIN_STMT
+  _16 = entry->ttl;
+  if (_16 == 0)
+    goto <bb 15>; [INV]
+  else
+    goto <bb 14>; [INV]
+
+  <bb 14> :
+  _17 = entry->ttl;
+  _18 = _17 + 4294967295;
+  entry->ttl = _18;
+  _19 = entry->ttl;
+  if (_19 == 0)
+    goto <bb 15>; [INV]
+  else
+    goto <bb 17>; [INV]
+
+  <bb 15> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  entry->state = 0;
+  goto <bb 17>; [INV]
+
+  <bb 16> :
+<L28>:
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  __asm__ __volatile__("BKPT #0
+	");
+  # DEBUG BEGIN_STMT
+  goto <bb 16>; [INV]
+
+  <bb 17> :
+<L27>:
+  return;
+
+}
+
+
+dns_backupserver_available (struct dns_table_entry * pentry)
+{
+  u8_t ret;
+  u8_t D.7481;
+  int iftmp.2;
+  _Bool iftmp.1;
+
+  <bb 2> :
+  # DEBUG BEGIN_STMT
+  ret = 0;
+  # DEBUG BEGIN_STMT
+  if (pentry != 0B)
+    goto <bb 3>; [INV]
+  else
+    goto <bb 15>; [INV]
+
+  <bb 3> :
+  # DEBUG BEGIN_STMT
+  _1 = pentry->server_idx;
+  if (_1 == 0)
+    goto <bb 4>; [INV]
+  else
+    goto <bb 15>; [INV]
+
+  <bb 4> :
+  _2 = pentry->server_idx;
+  _3 = (int) _2;
+  _4 = _3 + 1;
+  _5 = dns_servers[_4].type;
+  if (_5 == 6)
+    goto <bb 5>; [INV]
+  else
+    goto <bb 12>; [INV]
+
+  <bb 5> :
+  _6 = pentry->server_idx;
+  _7 = (int) _6;
+  _8 = _7 + 1;
+  _9 = dns_servers[_8].u_addr.ip6.addr[0];
+  if (_9 != 0)
+    goto <bb 9>; [INV]
+  else
+    goto <bb 6>; [INV]
+
+  <bb 6> :
+  _10 = pentry->server_idx;
+  _11 = (int) _10;
+  _12 = _11 + 1;
+  _13 = dns_servers[_12].u_addr.ip6.addr[1];
+  if (_13 != 0)
+    goto <bb 9>; [INV]
+  else
+    goto <bb 7>; [INV]
+
+  <bb 7> :
+  _14 = pentry->server_idx;
+  _15 = (int) _14;
+  _16 = _15 + 1;
+  _17 = dns_servers[_16].u_addr.ip6.addr[2];
+  if (_17 != 0)
+    goto <bb 9>; [INV]
+  else
+    goto <bb 8>; [INV]
+
+  <bb 8> :
+  _18 = pentry->server_idx;
+  _19 = (int) _18;
+  _20 = _19 + 1;
+  _21 = dns_servers[_20].u_addr.ip6.addr[3];
+  if (_21 != 0)
+    goto <bb 9>; [INV]
+  else
+    goto <bb 10>; [INV]
+
+  <bb 9> :
+  iftmp.2 = 1;
+  goto <bb 11>; [INV]
+
+  <bb 10> :
+  iftmp.2 = 0;
+
+  <bb 11> :
+  iftmp.1 = (_Bool) iftmp.2;
+  goto <bb 13>; [INV]
+
+  <bb 12> :
+  _22 = pentry->server_idx;
+  _23 = (int) _22;
+  _24 = _23 + 1;
+  _25 = dns_servers[_24].u_addr.ip4.addr;
+  iftmp.1 = _25 != 0;
+
+  <bb 13> :
+  if (iftmp.1 != 0)
+    goto <bb 14>; [INV]
+  else
+    goto <bb 15>; [INV]
+
+  <bb 14> :
+  # DEBUG BEGIN_STMT
+  ret = 1;
+
+  <bb 15> :
+  # DEBUG BEGIN_STMT
+  D.7481 = ret;
+  return D.7481;
+
+}
+
+
+dns_create_txid ()
+{
+  u8_t i;
+  u16_t txid;
+  u16_t D.7462;
+
+  <bb 2> :
+again:
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _1 = rand ();
+  txid = (u16_t) _1;
+  # DEBUG BEGIN_STMT
+  i = 0;
+  goto <bb 7>; [INV]
+
+  <bb 3> :
+  # DEBUG BEGIN_STMT
+  _2 = (int) i;
+  _3 = dns_table[_2].state;
+  if (_3 == 2)
+    goto <bb 4>; [INV]
+  else
+    goto <bb 6>; [INV]
+
+  <bb 4> :
+  _4 = (int) i;
+  _5 = dns_table[_4].txid;
+  if (txid == _5)
+    goto <bb 5>; [INV]
+  else
+    goto <bb 6>; [INV]
+
+  <bb 5> :
+  # DEBUG BEGIN_STMT
+  // predicted unlikely by goto predictor.
+  goto <bb 2>; [INV]
+
+  <bb 6> :
+  # DEBUG BEGIN_STMT
+  i.0_6 = i;
+  i = i.0_6 + 1;
+
+  <bb 7> :
+  # DEBUG BEGIN_STMT
+  if (i <= 3)
+    goto <bb 3>; [INV]
+  else
+    goto <bb 8>; [INV]
+
+  <bb 8> :
+  # DEBUG BEGIN_STMT
+  D.7462 = txid;
+  return D.7462;
+
+}
+
+
+dns_call_found (u8_t idx, struct ip_addr_t * addr)
+{
+  u8_t i;
+
+  <bb 2> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  if (addr != 0B)
+    goto <bb 3>; [INV]
+  else
+    goto <bb 12>; [INV]
+
+  <bb 3> :
+  # DEBUG BEGIN_STMT
+  _1 = addr->type;
+  if (_1 == 6)
+    goto <bb 4>; [INV]
+  else
+    goto <bb 8>; [INV]
+
+  <bb 4> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _2 = (int) idx;
+  _3 = dns_table[_2].reqaddrtype;
+  if (_3 != 3)
+    goto <bb 5>; [INV]
+  else
+    goto <bb 7>; [INV]
+
+  <bb 5> :
+  _4 = (int) idx;
+  _5 = dns_table[_4].reqaddrtype;
+  if (_5 != 1)
+    goto <bb 6>; [INV]
+  else
+    goto <bb 7>; [INV]
+
+  <bb 6> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  __asm__ __volatile__("BKPT #0
+	");
+  # DEBUG BEGIN_STMT
+  goto <bb 6>; [INV]
+
+  <bb 7> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _6 = (int) idx;
+  dns_table[_6].reqaddrtype = 1;
+  goto <bb 12>; [INV]
+
+  <bb 8> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _7 = (int) idx;
+  _8 = dns_table[_7].reqaddrtype;
+  if (_8 == 3)
+    goto <bb 10>; [INV]
+  else
+    goto <bb 9>; [INV]
+
+  <bb 9> :
+  _9 = (int) idx;
+  _10 = dns_table[_9].reqaddrtype;
+  if (_10 == 1)
+    goto <bb 10>; [INV]
+  else
+    goto <bb 11>; [INV]
+
+  <bb 10> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  __asm__ __volatile__("BKPT #0
+	");
+  # DEBUG BEGIN_STMT
+  goto <bb 10>; [INV]
+
+  <bb 11> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _11 = (int) idx;
+  dns_table[_11].reqaddrtype = 0;
+
+  <bb 12> :
+  # DEBUG BEGIN_STMT
+  i = 0;
+  goto <bb 17>; [INV]
+
+  <bb 13> :
+  # DEBUG BEGIN_STMT
+  _12 = (int) i;
+  _13 = dns_requests[_12].found;
+  if (_13 != 0B)
+    goto <bb 14>; [INV]
+  else
+    goto <bb 16>; [INV]
+
+  <bb 14> :
+  _14 = (int) i;
+  _15 = dns_requests[_14].dns_table_idx;
+  if (idx == _15)
+    goto <bb 15>; [INV]
+  else
+    goto <bb 16>; [INV]
+
+  <bb 15> :
+  # DEBUG BEGIN_STMT
+  _16 = (int) i;
+  _17 = dns_requests[_16].found;
+  _18 = (int) idx;
+  _19 = &dns_table[_18].name;
+  _20 = (int) i;
+  _21 = dns_requests[_20].arg;
+  _17 (_19, addr, _21);
+  # DEBUG BEGIN_STMT
+  _22 = (int) i;
+  dns_requests[_22].found = 0B;
+
+  <bb 16> :
+  # DEBUG BEGIN_STMT
+  i.3_23 = i;
+  i = i.3_23 + 1;
+
+  <bb 17> :
+  # DEBUG BEGIN_STMT
+  if (i <= 3)
+    goto <bb 13>; [INV]
+  else
+    goto <bb 18>; [INV]
+
+  <bb 18> :
+  # DEBUG BEGIN_STMT
+  i = 0;
+  goto <bb 25>; [INV]
+
+  <bb 19> :
+  # DEBUG BEGIN_STMT
+  if (i == idx)
+    goto <bb 20>; [INV]
+  else
+    goto <bb 21>; [INV]
+
+  <bb 20> :
+  # DEBUG BEGIN_STMT
+  // predicted unlikely by continue predictor.
+  goto <bb 24>; [INV]
+
+  <bb 21> :
+  # DEBUG BEGIN_STMT
+  _24 = (int) i;
+  _25 = dns_table[_24].state;
+  if (_25 == 2)
+    goto <bb 22>; [INV]
+  else
+    goto <bb 24>; [INV]
+
+  <bb 22> :
+  # DEBUG BEGIN_STMT
+  _26 = (int) i;
+  _27 = dns_table[_26].pcb_idx;
+  _28 = (int) idx;
+  _29 = dns_table[_28].pcb_idx;
+  if (_27 == _29)
+    goto <bb 23>; [INV]
+  else
+    goto <bb 24>; [INV]
+
+  <bb 23> :
+  # DEBUG BEGIN_STMT
+  _30 = (int) idx;
+  dns_table[_30].pcb_idx = 4;
+  # DEBUG BEGIN_STMT
+  goto <bb 26>; [INV]
+
+  <bb 24> :
+  # DEBUG BEGIN_STMT
+  i.4_31 = i;
+  i = i.4_31 + 1;
+
+  <bb 25> :
+  # DEBUG BEGIN_STMT
+  if (i <= 3)
+    goto <bb 19>; [INV]
+  else
+    goto <bb 26>; [INV]
+
+  <bb 26> :
+  # DEBUG BEGIN_STMT
+  _32 = (int) idx;
+  _33 = dns_table[_32].pcb_idx;
+  if (_33 <= 3)
+    goto <bb 27>; [INV]
+  else
+    goto <bb 28>; [INV]
+
+  <bb 27> :
+  # DEBUG BEGIN_STMT
+  _34 = (int) idx;
+  _35 = dns_table[_34].pcb_idx;
+  _36 = (int) _35;
+  _37 = dns_pcbs[_36];
+  udp_remove (_37);
+  # DEBUG BEGIN_STMT
+  _38 = (int) idx;
+  _39 = dns_table[_38].pcb_idx;
+  _40 = (int) _39;
+  dns_pcbs[_40] = 0B;
+  # DEBUG BEGIN_STMT
+  _41 = (int) idx;
+  dns_table[_41].pcb_idx = 4;
+
+  <bb 28> :
+  return;
+
+}
+
+
+dns_alloc_pcb ()
+{
+  u8_t idx;
+  u8_t i;
+  u8_t D.7637;
+
+  <bb 2> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  i = 0;
+  goto <bb 5>; [INV]
+
+  <bb 3> :
+  # DEBUG BEGIN_STMT
+  _1 = (int) i;
+  _2 = dns_pcbs[_1];
+  if (_2 == 0B)
+    goto <bb 6>; [INV]
+  else
+    goto <bb 4>; [INV]
+
+  <bb 4> :
+  # DEBUG BEGIN_STMT
+  i.20_3 = i;
+  i = i.20_3 + 1;
+
+  <bb 5> :
+  # DEBUG BEGIN_STMT
+  if (i <= 3)
+    goto <bb 3>; [INV]
+  else
+    goto <bb 6>; [INV]
+
+  <bb 6> :
+  # DEBUG BEGIN_STMT
+  if (i <= 3)
+    goto <bb 7>; [INV]
+  else
+    goto <bb 9>; [INV]
+
+  <bb 7> :
+  # DEBUG BEGIN_STMT
+  _4 = (int) i;
+  _5 = dns_alloc_random_port ();
+  dns_pcbs[_4] = _5;
+  # DEBUG BEGIN_STMT
+  _6 = (int) i;
+  _7 = dns_pcbs[_6];
+  if (_7 != 0B)
+    goto <bb 8>; [INV]
+  else
+    goto <bb 9>; [INV]
+
+  <bb 8> :
+  # DEBUG BEGIN_STMT
+  dns_last_pcb_idx = i;
+  # DEBUG BEGIN_STMT
+  D.7637 = i;
+  // predicted unlikely by early return (on trees) predictor.
+  goto <bb 17>; [INV]
+
+  <bb 9> :
+  # DEBUG BEGIN_STMT
+  i = 0;
+  dns_last_pcb_idx.21_8 = dns_last_pcb_idx;
+  idx = dns_last_pcb_idx.21_8 + 1;
+  goto <bb 15>; [INV]
+
+  <bb 10> :
+  # DEBUG BEGIN_STMT
+  if (idx > 3)
+    goto <bb 11>; [INV]
+  else
+    goto <bb 12>; [INV]
+
+  <bb 11> :
+  # DEBUG BEGIN_STMT
+  idx = 0;
+
+  <bb 12> :
+  # DEBUG BEGIN_STMT
+  _9 = (int) idx;
+  _10 = dns_pcbs[_9];
+  if (_10 != 0B)
+    goto <bb 13>; [INV]
+  else
+    goto <bb 14>; [INV]
+
+  <bb 13> :
+  # DEBUG BEGIN_STMT
+  dns_last_pcb_idx = idx;
+  # DEBUG BEGIN_STMT
+  D.7637 = idx;
+  // predicted unlikely by early return (on trees) predictor.
+  goto <bb 17>; [INV]
+
+  <bb 14> :
+  # DEBUG BEGIN_STMT
+  i.22_11 = i;
+  i = i.22_11 + 1;
+  idx.23_12 = idx;
+  idx = idx.23_12 + 1;
+
+  <bb 15> :
+  # DEBUG BEGIN_STMT
+  if (i <= 3)
+    goto <bb 10>; [INV]
+  else
+    goto <bb 16>; [INV]
+
+  <bb 16> :
+  # DEBUG BEGIN_STMT
+  D.7637 = 4;
+
+  <bb 17> :
+  return D.7637;
+
+}
+
+
+dns_alloc_random_port ()
+{
+  u16_t port;
+  struct udp_pcb * pcb;
+  err_t err;
+  struct udp_pcb * D.7645;
+
+  <bb 2> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  pcb = udp_new_ip_type (46);
+  # DEBUG BEGIN_STMT
+  if (pcb == 0B)
+    goto <bb 3>; [INV]
+  else
+    goto <bb 4>; [INV]
+
+  <bb 3> :
+  # DEBUG BEGIN_STMT
+  D.7645 = 0B;
+  // predicted unlikely by early return (on trees) predictor.
+  goto <bb 11>; [INV]
+
+  <bb 4> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _1 = rand ();
+  port = (u16_t) _1;
+  # DEBUG BEGIN_STMT
+  if (port > 1023)
+    goto <bb 5>; [INV]
+  else
+    goto <bb 6>; [INV]
+
+  <bb 5> :
+  # DEBUG BEGIN_STMT
+  err = udp_bind (pcb, &ip_addr_any_type, port);
+  goto <bb 7>; [INV]
+
+  <bb 6> :
+  # DEBUG BEGIN_STMT
+  err = -8;
+
+  <bb 7> :
+  # DEBUG BEGIN_STMT
+  if (err == -8)
+    goto <bb 4>; [INV]
+  else
+    goto <bb 8>; [INV]
+
+  <bb 8> :
+  # DEBUG BEGIN_STMT
+  if (err != 0)
+    goto <bb 9>; [INV]
+  else
+    goto <bb 10>; [INV]
+
+  <bb 9> :
+  # DEBUG BEGIN_STMT
+  udp_remove (pcb);
+  # DEBUG BEGIN_STMT
+  D.7645 = 0B;
+  // predicted unlikely by early return (on trees) predictor.
+  goto <bb 11>; [INV]
+
+  <bb 10> :
+  # DEBUG BEGIN_STMT
+  udp_recv (pcb, dns_recv, 0B);
+  # DEBUG BEGIN_STMT
+  D.7645 = pcb;
+
+  <bb 11> :
+  return D.7645;
+
+}
+
+
+dns_send (u8_t idx)
+{
+  u16_t dst_port;
+  const struct ip_addr_t * dst;
+  struct dns_table_entry * entry;
+  u8_t pcb_idx;
+  u8_t n;
+  const char * hostname_part;
+  const char * hostname;
+  u16_t copy_len;
+  u16_t query_idx;
+  struct pbuf * p;
+  struct dns_query qry;
+  struct dns_hdr hdr;
+  err_t err;
+  err_t D.7522;
+  int iftmp.6;
+  _Bool iftmp.5;
+
+  <bb 2> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _1 = (int) idx;
+  entry = &dns_table[_1];
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _2 = entry->server_idx;
+  if (_2 > 1)
+    goto <bb 3>; [INV]
+  else
+    goto <bb 4>; [INV]
+
+  <bb 3> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  __asm__ __volatile__("BKPT #0
+	");
+  # DEBUG BEGIN_STMT
+  goto <bb 3>; [INV]
+
+  <bb 4> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _3 = entry->server_idx;
+  _4 = (int) _3;
+  _5 = dns_servers[_4].type;
+  if (_5 == 6)
+    goto <bb 5>; [INV]
+  else
+    goto <bb 12>; [INV]
+
+  <bb 5> :
+  _6 = entry->server_idx;
+  _7 = (int) _6;
+  _8 = dns_servers[_7].u_addr.ip6.addr[0];
+  if (_8 == 0)
+    goto <bb 6>; [INV]
+  else
+    goto <bb 10>; [INV]
+
+  <bb 6> :
+  _9 = entry->server_idx;
+  _10 = (int) _9;
+  _11 = dns_servers[_10].u_addr.ip6.addr[1];
+  if (_11 == 0)
+    goto <bb 7>; [INV]
+  else
+    goto <bb 10>; [INV]
+
+  <bb 7> :
+  _12 = entry->server_idx;
+  _13 = (int) _12;
+  _14 = dns_servers[_13].u_addr.ip6.addr[2];
+  if (_14 == 0)
+    goto <bb 8>; [INV]
+  else
+    goto <bb 10>; [INV]
+
+  <bb 8> :
+  _15 = entry->server_idx;
+  _16 = (int) _15;
+  _17 = dns_servers[_16].u_addr.ip6.addr[3];
+  if (_17 == 0)
+    goto <bb 9>; [INV]
+  else
+    goto <bb 10>; [INV]
+
+  <bb 9> :
+  iftmp.6 = 1;
+  goto <bb 11>; [INV]
+
+  <bb 10> :
+  iftmp.6 = 0;
+
+  <bb 11> :
+  iftmp.5 = (_Bool) iftmp.6;
+  goto <bb 13>; [INV]
+
+  <bb 12> :
+  _18 = entry->server_idx;
+  _19 = (int) _18;
+  _20 = dns_servers[_19].u_addr.ip4.addr;
+  iftmp.5 = _20 == 0;
+
+  <bb 13> :
+  if (iftmp.5 != 0)
+    goto <bb 14>; [INV]
+  else
+    goto <bb 15>; [INV]
+
+  <bb 14> :
+  # DEBUG BEGIN_STMT
+  dns_call_found (idx, 0B);
+  # DEBUG BEGIN_STMT
+  entry->state = 0;
+  # DEBUG BEGIN_STMT
+  D.7522 = 0;
+  // predicted unlikely by early return (on trees) predictor.
+  goto <bb 31>; [INV]
+
+  <bb 15> :
+  # DEBUG BEGIN_STMT
+  _21 = &entry->name;
+  _22 = strlen (_21);
+  _23 = (short unsigned int) _22;
+  _24 = _23 + 18;
+  p = pbuf_alloc (74, _24, 640);
+  # DEBUG BEGIN_STMT
+  if (p != 0B)
+    goto <bb 16>; [INV]
+  else
+    goto <bb 29>; [INV]
+
+  <bb 16> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  memset (&hdr, 0, 12);
+  # DEBUG BEGIN_STMT
+  _25 = entry->txid;
+  _26 = lwip_htons (_25);
+  hdr.id = _26;
+  # DEBUG BEGIN_STMT
+  hdr.flags1 = 1;
+  # DEBUG BEGIN_STMT
+  hdr.numquestions = 256;
+  # DEBUG BEGIN_STMT
+  pbuf_take (p, &hdr, 12);
+  # DEBUG BEGIN_STMT
+  hostname = &entry->name;
+  # DEBUG BEGIN_STMT
+  hostname = hostname + 4294967295;
+  # DEBUG BEGIN_STMT
+  query_idx = 12;
+
+  <bb 17> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  hostname = hostname + 1;
+  # DEBUG BEGIN_STMT
+  hostname_part = hostname;
+  # DEBUG BEGIN_STMT
+  n = 0;
+  goto <bb 19>; [INV]
+
+  <bb 18> :
+  # DEBUG BEGIN_STMT
+  n = n + 1;
+  # DEBUG BEGIN_STMT
+  hostname = hostname + 1;
+
+  <bb 19> :
+  # DEBUG BEGIN_STMT
+  _27 = *hostname;
+  if (_27 != 46)
+    goto <bb 20>; [INV]
+  else
+    goto <bb 21>; [INV]
+
+  <bb 20> :
+  _28 = *hostname;
+  if (_28 != 0)
+    goto <bb 18>; [INV]
+  else
+    goto <bb 21>; [INV]
+
+  <bb 21> :
+  # DEBUG BEGIN_STMT
+  _29 = hostname - hostname_part;
+  copy_len = (u16_t) _29;
+  # DEBUG BEGIN_STMT
+  _30 = (int) query_idx;
+  _31 = (int) n;
+  _32 = _30 + _31;
+  if (_32 > 65534)
+    goto <bb 22>; [INV]
+  else
+    goto <bb 23>; [INV]
+
+  <bb 22> :
+  # DEBUG BEGIN_STMT
+  // predicted unlikely by goto predictor.
+  # DEBUG overflow_return => NULL
+  # DEBUG BEGIN_STMT
+  pbuf_free (p);
+  # DEBUG BEGIN_STMT
+  D.7522 = -6;
+  goto <bb 31>; [INV]
+
+  <bb 23> :
+  # DEBUG BEGIN_STMT
+  pbuf_put_at (p, query_idx, n);
+  # DEBUG BEGIN_STMT
+  _33 = query_idx + 1;
+  pbuf_take_at (p, hostname_part, copy_len, _33);
+  # DEBUG BEGIN_STMT
+  _34 = (short unsigned int) n;
+  _35 = query_idx + _34;
+  query_idx = _35 + 1;
+  # DEBUG BEGIN_STMT
+  _36 = *hostname;
+  if (_36 != 0)
+    goto <bb 17>; [INV]
+  else
+    goto <bb 24>; [INV]
+
+  <bb 24> :
+  # DEBUG BEGIN_STMT
+  pbuf_put_at (p, query_idx, 0);
+  # DEBUG BEGIN_STMT
+  query_idx.7_37 = query_idx;
+  query_idx = query_idx.7_37 + 1;
+  # DEBUG BEGIN_STMT
+  _38 = entry->reqaddrtype;
+  if (_38 == 3)
+    goto <bb 26>; [INV]
+  else
+    goto <bb 25>; [INV]
+
+  <bb 25> :
+  _39 = entry->reqaddrtype;
+  if (_39 == 1)
+    goto <bb 26>; [INV]
+  else
+    goto <bb 27>; [INV]
+
+  <bb 26> :
+  # DEBUG BEGIN_STMT
+  qry.type = 7168;
+  goto <bb 28>; [INV]
+
+  <bb 27> :
+  # DEBUG BEGIN_STMT
+  qry.type = 256;
+
+  <bb 28> :
+  # DEBUG BEGIN_STMT
+  qry.cls = 256;
+  # DEBUG BEGIN_STMT
+  pbuf_take_at (p, &qry, 4, query_idx);
+  # DEBUG BEGIN_STMT
+  pcb_idx = entry->pcb_idx;
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  dst_port = 53;
+  # DEBUG BEGIN_STMT
+  _40 = entry->server_idx;
+  _41 = (int) _40;
+  dst = &dns_servers[_41];
+  # DEBUG BEGIN_STMT
+  _42 = (int) pcb_idx;
+  _43 = dns_pcbs[_42];
+  err = udp_sendto (_43, p, dst, dst_port);
+  # DEBUG BEGIN_STMT
+  pbuf_free (p);
+  goto <bb 30>; [INV]
+
+  <bb 29> :
+  # DEBUG BEGIN_STMT
+  err = -1;
+
+  <bb 30> :
+  # DEBUG BEGIN_STMT
+  D.7522 = err;
+
+  <bb 31> :
+  hdr = {CLOBBER};
+  qry = {CLOBBER};
+  return D.7522;
+
+}
+
+
+dns_skip_name (struct pbuf * p, u16_t query_idx)
+{
+  u16_t offset;
+  int n;
+  u16_t D.7770;
+
+  <bb 2> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  offset = query_idx;
+
+  <bb 3> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  offset.32_1 = offset;
+  offset = offset.32_1 + 1;
+  n = pbuf_try_get_at (p, offset.32_1);
+  # DEBUG BEGIN_STMT
+  if (n < 0)
+    goto <bb 5>; [INV]
+  else
+    goto <bb 4>; [INV]
+
+  <bb 4> :
+  if (offset == 0)
+    goto <bb 5>; [INV]
+  else
+    goto <bb 6>; [INV]
+
+  <bb 5> :
+  # DEBUG BEGIN_STMT
+  D.7770 = 65535;
+  // predicted unlikely by early return (on trees) predictor.
+  goto <bb 15>; [INV]
+
+  <bb 6> :
+  # DEBUG BEGIN_STMT
+  _2 = n & 192;
+  if (_2 == 192)
+    goto <bb 12>; [INV]
+  else
+    goto <bb 7>; [INV]
+
+  <bb 7> :
+  # DEBUG BEGIN_STMT
+  _3 = (int) offset;
+  _4 = n + _3;
+  _5 = p->tot_len;
+  _6 = (int) _5;
+  if (_4 >= _6)
+    goto <bb 8>; [INV]
+  else
+    goto <bb 9>; [INV]
+
+  <bb 8> :
+  # DEBUG BEGIN_STMT
+  D.7770 = 65535;
+  // predicted unlikely by early return (on trees) predictor.
+  goto <bb 15>; [INV]
+
+  <bb 9> :
+  # DEBUG BEGIN_STMT
+  _7 = (short unsigned int) n;
+  offset = offset + _7;
+  # DEBUG BEGIN_STMT
+  n = pbuf_try_get_at (p, offset);
+  # DEBUG BEGIN_STMT
+  if (n < 0)
+    goto <bb 10>; [INV]
+  else
+    goto <bb 11>; [INV]
+
+  <bb 10> :
+  # DEBUG BEGIN_STMT
+  D.7770 = 65535;
+  // predicted unlikely by early return (on trees) predictor.
+  goto <bb 15>; [INV]
+
+  <bb 11> :
+  # DEBUG BEGIN_STMT
+  if (n != 0)
+    goto <bb 3>; [INV]
+  else
+    goto <bb 12>; [INV]
+
+  <bb 12> :
+  # DEBUG BEGIN_STMT
+  if (offset == 65535)
+    goto <bb 13>; [INV]
+  else
+    goto <bb 14>; [INV]
+
+  <bb 13> :
+  # DEBUG BEGIN_STMT
+  D.7770 = 65535;
+  // predicted unlikely by early return (on trees) predictor.
+  goto <bb 15>; [INV]
+
+  <bb 14> :
+  # DEBUG BEGIN_STMT
+  D.7770 = offset + 1;
+
+  <bb 15> :
+  return D.7770;
+
+}
+
+
+dns_compare_name (const char * query, struct pbuf * p, u16_t start_offset)
+{
+  unsigned char __x;
+  unsigned char __x;
+  int c;
+  u16_t response_offset;
+  int n;
+  int iftmp.30;
+  int D.7244;
+  int iftmp.29;
+  int D.7242;
+  u16_t D.7745;
+
+  <bb 2> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  response_offset = start_offset;
+
+  <bb 3> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  n = pbuf_try_get_at (p, response_offset);
+  # DEBUG BEGIN_STMT
+  if (n < 0)
+    goto <bb 5>; [INV]
+  else
+    goto <bb 4>; [INV]
+
+  <bb 4> :
+  if (response_offset == 65535)
+    goto <bb 5>; [INV]
+  else
+    goto <bb 6>; [INV]
+
+  <bb 5> :
+  # DEBUG BEGIN_STMT
+  D.7745 = 65535;
+  // predicted unlikely by early return (on trees) predictor.
+  goto <bb 28>; [INV]
+
+  <bb 6> :
+  # DEBUG BEGIN_STMT
+  response_offset.28_1 = response_offset;
+  response_offset = response_offset.28_1 + 1;
+  # DEBUG BEGIN_STMT
+  _2 = n & 192;
+  if (_2 == 192)
+    goto <bb 7>; [INV]
+  else
+    goto <bb 21>; [INV]
+
+  <bb 7> :
+  # DEBUG BEGIN_STMT
+  D.7745 = 65535;
+  // predicted unlikely by early return (on trees) predictor.
+  goto <bb 28>; [INV]
+
+  <bb 8> :
+  # DEBUG BEGIN_STMT
+  c = pbuf_try_get_at (p, response_offset);
+  # DEBUG BEGIN_STMT
+  if (c < 0)
+    goto <bb 9>; [INV]
+  else
+    goto <bb 10>; [INV]
+
+  <bb 9> :
+  # DEBUG BEGIN_STMT
+  D.7745 = 65535;
+  // predicted unlikely by early return (on trees) predictor.
+  goto <bb 28>; [INV]
+
+  <bb 10> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  __x = *query;
+  # DEBUG BEGIN_STMT
+  _3 = (sizetype) __x;
+  _4 = _3 + 1;
+  _5 = &_ctype_ + _4;
+  _6 = *_5;
+  _7 = (int) _6;
+  _8 = _7 & 3;
+  if (_8 == 1)
+    goto <bb 11>; [INV]
+  else
+    goto <bb 12>; [INV]
+
+  <bb 11> :
+  _9 = (int) __x;
+  iftmp.29 = _9 + 32;
+  goto <bb 13>; [INV]
+
+  <bb 12> :
+  iftmp.29 = (int) __x;
+
+  <bb 13> :
+  D.7242 = iftmp.29;
+  # DEBUG BEGIN_STMT
+  __x = (unsigned char) c;
+  # DEBUG BEGIN_STMT
+  _10 = (sizetype) __x;
+  _11 = _10 + 1;
+  _12 = &_ctype_ + _11;
+  _13 = *_12;
+  _14 = (int) _13;
+  _15 = _14 & 3;
+  if (_15 == 1)
+    goto <bb 14>; [INV]
+  else
+    goto <bb 15>; [INV]
+
+  <bb 14> :
+  _16 = (int) __x;
+  iftmp.30 = _16 + 32;
+  goto <bb 16>; [INV]
+
+  <bb 15> :
+  iftmp.30 = (int) __x;
+
+  <bb 16> :
+  D.7244 = iftmp.30;
+  if (D.7242 != D.7244)
+    goto <bb 17>; [INV]
+  else
+    goto <bb 18>; [INV]
+
+  <bb 17> :
+  # DEBUG BEGIN_STMT
+  D.7745 = 65535;
+  // predicted unlikely by early return (on trees) predictor.
+  goto <bb 28>; [INV]
+
+  <bb 18> :
+  # DEBUG BEGIN_STMT
+  if (response_offset == 65535)
+    goto <bb 19>; [INV]
+  else
+    goto <bb 20>; [INV]
+
+  <bb 19> :
+  # DEBUG BEGIN_STMT
+  D.7745 = 65535;
+  // predicted unlikely by early return (on trees) predictor.
+  goto <bb 28>; [INV]
+
+  <bb 20> :
+  # DEBUG BEGIN_STMT
+  response_offset.31_17 = response_offset;
+  response_offset = response_offset.31_17 + 1;
+  # DEBUG BEGIN_STMT
+  query = query + 1;
+  # DEBUG BEGIN_STMT
+  n = n + -1;
+
+  <bb 21> :
+  # DEBUG BEGIN_STMT
+  if (n > 0)
+    goto <bb 8>; [INV]
+  else
+    goto <bb 22>; [INV]
+
+  <bb 22> :
+  # DEBUG BEGIN_STMT
+  query = query + 1;
+  # DEBUG BEGIN_STMT
+  n = pbuf_try_get_at (p, response_offset);
+  # DEBUG BEGIN_STMT
+  if (n < 0)
+    goto <bb 23>; [INV]
+  else
+    goto <bb 24>; [INV]
+
+  <bb 23> :
+  # DEBUG BEGIN_STMT
+  D.7745 = 65535;
+  // predicted unlikely by early return (on trees) predictor.
+  goto <bb 28>; [INV]
+
+  <bb 24> :
+  # DEBUG BEGIN_STMT
+  if (n != 0)
+    goto <bb 3>; [INV]
+  else
+    goto <bb 25>; [INV]
+
+  <bb 25> :
+  # DEBUG BEGIN_STMT
+  if (response_offset == 65535)
+    goto <bb 26>; [INV]
+  else
+    goto <bb 27>; [INV]
+
+  <bb 26> :
+  # DEBUG BEGIN_STMT
+  D.7745 = 65535;
+  // predicted unlikely by early return (on trees) predictor.
+  goto <bb 28>; [INV]
+
+  <bb 27> :
+  # DEBUG BEGIN_STMT
+  D.7745 = response_offset + 1;
+
+  <bb 28> :
+  return D.7745;
+
+}
+
+
+dns_lookup (const char * name, struct ip_addr_t * addr, u8_t dns_addrtype)
+{
+  u8_t i;
+  err_t D.7604;
+  int iftmp.12;
+  int iftmp.11;
+  _Bool iftmp.10;
+
+  <bb 2> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  i = 0;
+  goto <bb 23>; [INV]
+
+  <bb 3> :
+  # DEBUG BEGIN_STMT
+  _1 = (int) i;
+  _2 = dns_table[_1].state;
+  if (_2 == 3)
+    goto <bb 4>; [INV]
+  else
+    goto <bb 22>; [INV]
+
+  <bb 4> :
+  _3 = (int) i;
+  _4 = &dns_table[_3].name;
+  _5 = lwip_strnicmp (name, _4, 256);
+  if (_5 == 0)
+    goto <bb 5>; [INV]
+  else
+    goto <bb 22>; [INV]
+
+  <bb 5> :
+  _6 = (int) i;
+  _7 = dns_table[_6].ipaddr.type;
+  if (_7 == 6)
+    goto <bb 6>; [INV]
+  else
+    goto <bb 11>; [INV]
+
+  <bb 6> :
+  if (dns_addrtype == 3)
+    goto <bb 8>; [INV]
+  else
+    goto <bb 7>; [INV]
+
+  <bb 7> :
+  if (dns_addrtype == 1)
+    goto <bb 8>; [INV]
+  else
+    goto <bb 9>; [INV]
+
+  <bb 8> :
+  iftmp.11 = 1;
+  goto <bb 10>; [INV]
+
+  <bb 9> :
+  iftmp.11 = 0;
+
+  <bb 10> :
+  iftmp.10 = (_Bool) iftmp.11;
+  goto <bb 16>; [INV]
+
+  <bb 11> :
+  if (dns_addrtype != 3)
+    goto <bb 12>; [INV]
+  else
+    goto <bb 14>; [INV]
+
+  <bb 12> :
+  if (dns_addrtype != 1)
+    goto <bb 13>; [INV]
+  else
+    goto <bb 14>; [INV]
+
+  <bb 13> :
+  iftmp.12 = 1;
+  goto <bb 15>; [INV]
+
+  <bb 14> :
+  iftmp.12 = 0;
+
+  <bb 15> :
+  iftmp.10 = (_Bool) iftmp.12;
+
+  <bb 16> :
+  if (iftmp.10 != 0)
+    goto <bb 17>; [INV]
+  else
+    goto <bb 22>; [INV]
+
+  <bb 17> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _8 = (int) i;
+  _9 = dns_table[_8].ipaddr.type;
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  if (addr != 0B)
+    goto <bb 18>; [INV]
+  else
+    goto <bb 21>; [INV]
+
+  <bb 18> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _10 = (int) i;
+  _11 = dns_table[_10].ipaddr.type;
+  addr->type = _11;
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _12 = (int) i;
+  _13 = dns_table[_12].ipaddr.type;
+  if (_13 == 6)
+    goto <bb 19>; [INV]
+  else
+    goto <bb 20>; [INV]
+
+  <bb 19> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _14 = (int) i;
+  _15 = dns_table[_14].ipaddr.u_addr.ip6.addr[0];
+  addr->u_addr.ip6.addr[0] = _15;
+  # DEBUG BEGIN_STMT
+  _16 = (int) i;
+  _17 = dns_table[_16].ipaddr.u_addr.ip6.addr[1];
+  addr->u_addr.ip6.addr[1] = _17;
+  # DEBUG BEGIN_STMT
+  _18 = (int) i;
+  _19 = dns_table[_18].ipaddr.u_addr.ip6.addr[2];
+  addr->u_addr.ip6.addr[2] = _19;
+  # DEBUG BEGIN_STMT
+  _20 = (int) i;
+  _21 = dns_table[_20].ipaddr.u_addr.ip6.addr[3];
+  addr->u_addr.ip6.addr[3] = _21;
+  # DEBUG BEGIN_STMT
+  _22 = (int) i;
+  _23 = dns_table[_22].ipaddr.u_addr.ip6.zone;
+  addr->u_addr.ip6.zone = _23;
+  # DEBUG BEGIN_STMT
+  goto <bb 21>; [INV]
+
+  <bb 20> :
+  # DEBUG BEGIN_STMT
+  _24 = (int) i;
+  _25 = dns_table[_24].ipaddr.u_addr.ip4.addr;
+  addr->u_addr.ip4.addr = _25;
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  addr->u_addr.ip6.addr[3] = 0;
+  _26 = addr->u_addr.ip6.addr[3];
+  addr->u_addr.ip6.addr[2] = _26;
+  _27 = addr->u_addr.ip6.addr[2];
+  addr->u_addr.ip6.addr[1] = _27;
+  # DEBUG BEGIN_STMT
+  addr->u_addr.ip6.zone = 0;
+
+  <bb 21> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  D.7604 = 0;
+  // predicted unlikely by early return (on trees) predictor.
+  goto <bb 25>; [INV]
+
+  <bb 22> :
+  # DEBUG BEGIN_STMT
+  i = i + 1;
+
+  <bb 23> :
+  # DEBUG BEGIN_STMT
+  if (i <= 3)
+    goto <bb 3>; [INV]
+  else
+    goto <bb 24>; [INV]
+
+  <bb 24> :
+  # DEBUG BEGIN_STMT
+  D.7604 = -16;
+
+  <bb 25> :
+  return D.7604;
+
+}
+
+
+dns_tmr ()
+{
+  <bb 2> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  dns_check_entries ();
+  return;
+
+}
+
+
+dns_getserver (u8_t numdns)
+{
+  const struct ip_addr_t * D.7435;
+
+  <bb 2> :
+  # DEBUG BEGIN_STMT
+  if (numdns <= 1)
+    goto <bb 3>; [INV]
+  else
+    goto <bb 4>; [INV]
+
+  <bb 3> :
+  # DEBUG BEGIN_STMT
+  _1 = (int) numdns;
+  D.7435 = &dns_servers[_1];
+  // predicted unlikely by early return (on trees) predictor.
+  goto <bb 5>; [INV]
+
+  <bb 4> :
+  # DEBUG BEGIN_STMT
+  D.7435 = &ip_addr_any;
+  // predicted unlikely by early return (on trees) predictor.
+
+  <bb 5> :
+  return D.7435;
+
+}
+
+
+dns_setserver (u8_t numdns, const struct ip_addr_t * dnsserver)
+{
+  <bb 2> :
+  # DEBUG BEGIN_STMT
+  if (numdns <= 1)
+    goto <bb 3>; [INV]
+  else
+    goto <bb 6>; [INV]
+
+  <bb 3> :
+  # DEBUG BEGIN_STMT
+  if (dnsserver != 0B)
+    goto <bb 4>; [INV]
+  else
+    goto <bb 5>; [INV]
+
+  <bb 4> :
+  # DEBUG BEGIN_STMT
+  _1 = (int) numdns;
+  dns_servers[_1] = *dnsserver;
+  goto <bb 6>; [INV]
+
+  <bb 5> :
+  # DEBUG BEGIN_STMT
+  _2 = (int) numdns;
+  dns_servers[_2] = ip_addr_any;
+
+  <bb 6> :
+  return;
+
+}
+
+
+dns_init ()
+{
+  <bb 2> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  return;
+
+}
+
+

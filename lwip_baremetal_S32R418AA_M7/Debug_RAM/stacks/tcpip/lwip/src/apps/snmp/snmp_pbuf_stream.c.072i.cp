@@ -1,0 +1,640 @@
+
+IPA constant propagation start:
+Determining dynamic type for call: _9 = snmp_pbuf_stream_seek (pbuf_stream_5(D), rel_offset_7);
+  Starting walk at: _9 = snmp_pbuf_stream_seek (pbuf_stream_5(D), rel_offset_7);
+  instance pointer: pbuf_stream_5(D)  Outer instance pointer: pbuf_stream_5(D) offset: 0 (bits) vtbl reference: 
+Determining dynamic type for call: err_30 = snmp_pbuf_stream_writebuf (target_pbuf_stream_22(D), _10, chunk_len_28);
+  Starting walk at: err_30 = snmp_pbuf_stream_writebuf (target_pbuf_stream_22(D), _10, chunk_len_28);
+  instance pointer: target_pbuf_stream_22(D)  Outer instance pointer: target_pbuf_stream_22(D) offset: 0 (bits) vtbl reference: 
+  Function call may change dynamic type:pbuf_27 = pbuf_skip (_4, _5, &target_offset);
+  Function call may change dynamic type:err_30 = snmp_pbuf_stream_writebuf (target_pbuf_stream_22(D), _10, chunk_len_28);
+  Function call may change dynamic type:pbuf_27 = pbuf_skip (_4, _5, &target_offset);
+Determining dynamic type for call: err_30 = snmp_pbuf_stream_writebuf (target_pbuf_stream_22(D), _10, chunk_len_28);
+  Starting walk at: err_30 = snmp_pbuf_stream_writebuf (target_pbuf_stream_22(D), _10, chunk_len_28);
+  instance pointer: _10  Outer instance pointer: _10 offset: 0 (bits) vtbl reference: 
+  Function call may change dynamic type:pbuf_27 = pbuf_skip (_4, _5, &target_offset);
+  Function call may change dynamic type:err_30 = snmp_pbuf_stream_writebuf (target_pbuf_stream_22(D), _10, chunk_len_28);
+  Function call may change dynamic type:pbuf_27 = pbuf_skip (_4, _5, &target_offset);
+Determining dynamic type for call: _4 = snmp_pbuf_stream_writebuf (pbuf_stream_2(D), &data, 1);
+  Starting walk at: _4 = snmp_pbuf_stream_writebuf (pbuf_stream_2(D), &data, 1);
+  instance pointer: pbuf_stream_2(D)  Outer instance pointer: pbuf_stream_2(D) offset: 0 (bits) vtbl reference: 
+Determining dynamic type for call: _4 = snmp_pbuf_stream_writebuf (pbuf_stream_2(D), &data, 1);
+  Starting walk at: _4 = snmp_pbuf_stream_writebuf (pbuf_stream_2(D), &data, 1);
+  instance pointer: &data  Outer instance pointer: data offset: 0 (bits) vtbl reference: 
+
+IPA structures before propagation:
+
+Jump functions:
+  Jump functions of caller  pbuf_skip/10:
+  Jump functions of caller  pbuf_take_at/9:
+  Jump functions of caller  pbuf_copy_partial/8:
+  Jump functions of caller  snmp_pbuf_stream_seek_abs/7:
+    callsite  snmp_pbuf_stream_seek_abs/7 -> snmp_pbuf_stream_seek/6 : 
+       param 0: PASS THROUGH: 0, op nop_expr, agg_preserved
+         value: 0x0, mask: 0xffffffff
+         Unknown VR
+       param 1: UNKNOWN
+         value: 0x0, mask: 0xffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff
+         Unknown VR
+  Jump functions of caller  snmp_pbuf_stream_seek/6:
+  Jump functions of caller  snmp_pbuf_stream_writeto/5:
+    callsite  snmp_pbuf_stream_writeto/5 -> snmp_pbuf_stream_writebuf/4 : 
+       param 0: PASS THROUGH: 1, op nop_expr
+         value: 0x0, mask: 0xffffffff
+         Unknown VR
+       param 1: UNKNOWN
+         value: 0x0, mask: 0xffffffff
+         Unknown VR
+       param 2: UNKNOWN
+         value: 0x0, mask: 0xffff
+         VR  [1, -1]
+  Jump functions of caller  snmp_pbuf_stream_writebuf/4:
+  Jump functions of caller  snmp_pbuf_stream_write/3:
+    callsite  snmp_pbuf_stream_write/3 -> snmp_pbuf_stream_writebuf/4 : 
+       param 0: PASS THROUGH: 0, op nop_expr, agg_preserved
+         value: 0x0, mask: 0xffffffff
+         Unknown VR
+       param 1: UNKNOWN
+         value: 0x0, mask: 0xffffffff
+         VR  ~[0, 0]
+       param 2: CONST: 1
+         value: 0x1, mask: 0x0
+         Unknown VR
+  Jump functions of caller  snmp_pbuf_stream_read/2:
+  Jump functions of caller  snmp_pbuf_stream_init/1:
+
+ Propagating constants:
+
+Not considering snmp_pbuf_stream_seek_abs for cloning; -fipa-cp-clone disabled.
+Not considering snmp_pbuf_stream_seek for cloning; -fipa-cp-clone disabled.
+Not considering snmp_pbuf_stream_writeto for cloning; -fipa-cp-clone disabled.
+Not considering snmp_pbuf_stream_writebuf for cloning; -fipa-cp-clone disabled.
+Not considering snmp_pbuf_stream_write for cloning; -fipa-cp-clone disabled.
+Not considering snmp_pbuf_stream_read for cloning; -fipa-cp-clone disabled.
+Not considering snmp_pbuf_stream_init for cloning; -fipa-cp-clone disabled.
+
+overall_size: 128, max_new_size: 11001
+
+IPA lattices after all propagation:
+
+Lattices:
+  Node: snmp_pbuf_stream_seek_abs/7:
+    param [0]: BOTTOM
+         ctxs: BOTTOM
+         Bits unusable (BOTTOM)
+         VARYING
+        AGGS BOTTOM
+    param [1]: BOTTOM
+         ctxs: BOTTOM
+         Bits unusable (BOTTOM)
+         VARYING
+        AGGS BOTTOM
+  Node: snmp_pbuf_stream_seek/6:
+    param [0]: BOTTOM
+         ctxs: BOTTOM
+         Bits unusable (BOTTOM)
+         VARYING
+        AGGS BOTTOM
+    param [1]: BOTTOM
+         ctxs: BOTTOM
+         Bits unusable (BOTTOM)
+         VARYING
+        AGGS BOTTOM
+  Node: snmp_pbuf_stream_writeto/5:
+    param [0]: BOTTOM
+         ctxs: BOTTOM
+         Bits unusable (BOTTOM)
+         VARYING
+        AGGS BOTTOM
+    param [1]: BOTTOM
+         ctxs: BOTTOM
+         Bits unusable (BOTTOM)
+         VARYING
+        AGGS BOTTOM
+    param [2]: BOTTOM
+         ctxs: BOTTOM
+         Bits unusable (BOTTOM)
+         VARYING
+        AGGS BOTTOM
+  Node: snmp_pbuf_stream_writebuf/4:
+    param [0]: BOTTOM
+         ctxs: BOTTOM
+         Bits unusable (BOTTOM)
+         VARYING
+        AGGS BOTTOM
+    param [1]: BOTTOM
+         ctxs: BOTTOM
+         Bits unusable (BOTTOM)
+         VARYING
+        AGGS BOTTOM
+    param [2]: BOTTOM
+         ctxs: BOTTOM
+         Bits unusable (BOTTOM)
+         VARYING
+        AGGS BOTTOM
+  Node: snmp_pbuf_stream_write/3:
+    param [0]: BOTTOM
+         ctxs: BOTTOM
+         Bits unusable (BOTTOM)
+         VARYING
+        AGGS BOTTOM
+    param [1]: BOTTOM
+         ctxs: BOTTOM
+         Bits unusable (BOTTOM)
+         VARYING
+        AGGS BOTTOM
+  Node: snmp_pbuf_stream_read/2:
+    param [0]: BOTTOM
+         ctxs: BOTTOM
+         Bits unusable (BOTTOM)
+         VARYING
+        AGGS BOTTOM
+    param [1]: BOTTOM
+         ctxs: BOTTOM
+         Bits unusable (BOTTOM)
+         VARYING
+        AGGS BOTTOM
+  Node: snmp_pbuf_stream_init/1:
+    param [0]: BOTTOM
+         ctxs: BOTTOM
+         Bits unusable (BOTTOM)
+         VARYING
+        AGGS BOTTOM
+    param [1]: BOTTOM
+         ctxs: BOTTOM
+         Bits unusable (BOTTOM)
+         VARYING
+        AGGS BOTTOM
+    param [2]: BOTTOM
+         ctxs: BOTTOM
+         Bits unusable (BOTTOM)
+         VARYING
+        AGGS BOTTOM
+    param [3]: BOTTOM
+         ctxs: BOTTOM
+         Bits unusable (BOTTOM)
+         VARYING
+        AGGS BOTTOM
+
+IPA decision stage:
+
+
+IPA constant propagation end
+
+Reclaiming functions:
+Reclaiming variables:
+Clearing address taken flags:
+Symbol table:
+
+pbuf_skip/10 (pbuf_skip) @061230e0
+  Type: function
+  Visibility: external public
+  References: 
+  Referring: 
+  Availability: not_available
+  Function flags: optimize_size
+  Called by: snmp_pbuf_stream_writeto/5 (1044213926 (estimated locally),8.94 per call) 
+  Calls: 
+pbuf_take_at/9 (pbuf_take_at) @05fa38c0
+  Type: function
+  Visibility: external public
+  References: 
+  Referring: 
+  Availability: not_available
+  Function flags: optimize_size
+  Called by: snmp_pbuf_stream_writebuf/4 (1051300621 (estimated locally),0.98 per call) 
+  Calls: 
+pbuf_copy_partial/8 (pbuf_copy_partial) @05fa30e0
+  Type: function
+  Visibility: external public
+  References: 
+  Referring: 
+  Availability: not_available
+  Function flags: optimize_size
+  Called by: snmp_pbuf_stream_read/2 (1051300621 (estimated locally),0.98 per call) 
+  Calls: 
+snmp_pbuf_stream_seek_abs/7 (snmp_pbuf_stream_seek_abs) @05fa3a80
+  Type: function definition analyzed
+  Visibility: externally_visible public
+  References: 
+  Referring: 
+  Availability: available
+  Function flags: count:1073741824 (estimated locally) body optimize_size
+  Called by: 
+  Calls: snmp_pbuf_stream_seek/6 (1073741824 (estimated locally),1.00 per call) 
+snmp_pbuf_stream_seek/6 (snmp_pbuf_stream_seek) @05fa37e0
+  Type: function definition analyzed
+  Visibility: externally_visible public
+  References: 
+  Referring: 
+  Availability: available
+  Function flags: count:1073741824 (estimated locally) body optimize_size
+  Called by: snmp_pbuf_stream_seek_abs/7 (1073741824 (estimated locally),1.00 per call) 
+  Calls: 
+snmp_pbuf_stream_writeto/5 (snmp_pbuf_stream_writeto) @05fa3540
+  Type: function definition analyzed
+  Visibility: externally_visible public
+  References: 
+  Referring: 
+  Availability: available
+  Function flags: count:116771297 (estimated locally) body optimize_size
+  Called by: 
+  Calls: snmp_pbuf_stream_writebuf/4 (987571846 (estimated locally),8.46 per call) pbuf_skip/10 (1044213926 (estimated locally),8.94 per call) 
+snmp_pbuf_stream_writebuf/4 (snmp_pbuf_stream_writebuf) @05fa32a0
+  Type: function definition analyzed
+  Visibility: externally_visible public
+  References: 
+  Referring: 
+  Availability: available
+  Function flags: count:1073741824 (estimated locally) body optimize_size
+  Called by: snmp_pbuf_stream_writeto/5 (987571846 (estimated locally),8.46 per call) snmp_pbuf_stream_write/3 (1073741824 (estimated locally),1.00 per call) 
+  Calls: pbuf_take_at/9 (1051300621 (estimated locally),0.98 per call) 
+snmp_pbuf_stream_write/3 (snmp_pbuf_stream_write) @05fa3000
+  Type: function definition analyzed
+  Visibility: externally_visible public
+  References: 
+  Referring: 
+  Availability: available
+  Function flags: count:1073741824 (estimated locally) body optimize_size
+  Called by: 
+  Calls: snmp_pbuf_stream_writebuf/4 (1073741824 (estimated locally),1.00 per call) 
+snmp_pbuf_stream_read/2 (snmp_pbuf_stream_read) @05f9cc40
+  Type: function definition analyzed
+  Visibility: externally_visible public
+  References: 
+  Referring: 
+  Availability: available
+  Function flags: count:1073741824 (estimated locally) body optimize_size
+  Called by: 
+  Calls: pbuf_copy_partial/8 (1051300621 (estimated locally),0.98 per call) 
+snmp_pbuf_stream_init/1 (snmp_pbuf_stream_init) @05f9c8c0
+  Type: function definition analyzed
+  Visibility: externally_visible public
+  References: 
+  Referring: 
+  Availability: available
+  Function flags: count:1073741824 (estimated locally) body optimize_size
+  Called by: 
+  Calls: 
+
+;; Function snmp_pbuf_stream_init (snmp_pbuf_stream_init, funcdef_no=1, decl_uid=6385, cgraph_uid=2, symbol_order=1)
+
+Modification phase of node snmp_pbuf_stream_init/1
+snmp_pbuf_stream_init (struct snmp_pbuf_stream * pbuf_stream, struct pbuf * p, u16_t offset, u16_t length)
+{
+  <bb 2> [local count: 1073741824]:
+  # DEBUG BEGIN_STMT
+  pbuf_stream_2(D)->offset = offset_3(D);
+  # DEBUG BEGIN_STMT
+  pbuf_stream_2(D)->length = length_5(D);
+  # DEBUG BEGIN_STMT
+  pbuf_stream_2(D)->pbuf = p_7(D);
+  # DEBUG BEGIN_STMT
+  return 0;
+
+}
+
+
+
+;; Function snmp_pbuf_stream_read (snmp_pbuf_stream_read, funcdef_no=2, decl_uid=6388, cgraph_uid=3, symbol_order=2)
+
+Modification phase of node snmp_pbuf_stream_read/2
+snmp_pbuf_stream_read (struct snmp_pbuf_stream * pbuf_stream, u8_t * data)
+{
+  short unsigned int _1;
+  struct pbuf * _2;
+  short unsigned int _3;
+  short unsigned int _4;
+  short unsigned int _5;
+  short unsigned int _6;
+  short unsigned int _7;
+  short unsigned int _8;
+  err_t _9;
+
+  <bb 2> [local count: 1073741824]:
+  # DEBUG BEGIN_STMT
+  _1 = pbuf_stream_12(D)->length;
+  if (_1 == 0)
+    goto <bb 5>; [2.09%]
+  else
+    goto <bb 3>; [97.91%]
+
+  <bb 3> [local count: 1051300621]:
+  # DEBUG BEGIN_STMT
+  _2 = pbuf_stream_12(D)->pbuf;
+  _3 = pbuf_stream_12(D)->offset;
+  _4 = pbuf_copy_partial (_2, data_13(D), 1, _3);
+  if (_4 == 0)
+    goto <bb 5>; [1.04%]
+  else
+    goto <bb 4>; [98.96%]
+
+  <bb 4> [local count: 1040367094]:
+  # DEBUG BEGIN_STMT
+  _5 = pbuf_stream_12(D)->offset;
+  _6 = _5 + 1;
+  pbuf_stream_12(D)->offset = _6;
+  # DEBUG BEGIN_STMT
+  _7 = pbuf_stream_12(D)->length;
+  _8 = _7 + 65535;
+  pbuf_stream_12(D)->length = _8;
+  # DEBUG BEGIN_STMT
+
+  <bb 5> [local count: 1073741824]:
+  # _9 = PHI <-2(2), -2(3), 0(4)>
+  return _9;
+
+}
+
+
+
+;; Function snmp_pbuf_stream_writebuf (snmp_pbuf_stream_writebuf, funcdef_no=4, decl_uid=6395, cgraph_uid=5, symbol_order=4)
+
+Modification phase of node snmp_pbuf_stream_writebuf/4
+snmp_pbuf_stream_writebuf (struct snmp_pbuf_stream * pbuf_stream, const void * buf, u16_t buf_len)
+{
+  short unsigned int _1;
+  struct pbuf * _2;
+  short unsigned int _3;
+  signed char _4;
+  short unsigned int _5;
+  short unsigned int _6;
+  short unsigned int _7;
+  short unsigned int _8;
+  err_t _9;
+
+  <bb 2> [local count: 1073741824]:
+  # DEBUG BEGIN_STMT
+  _1 = pbuf_stream_12(D)->length;
+  if (_1 < buf_len_13(D))
+    goto <bb 5>; [2.09%]
+  else
+    goto <bb 3>; [97.91%]
+
+  <bb 3> [local count: 1051300621]:
+  # DEBUG BEGIN_STMT
+  _2 = pbuf_stream_12(D)->pbuf;
+  _3 = pbuf_stream_12(D)->offset;
+  _4 = pbuf_take_at (_2, buf_14(D), buf_len_13(D), _3);
+  if (_4 != 0)
+    goto <bb 5>; [1.04%]
+  else
+    goto <bb 4>; [98.96%]
+
+  <bb 4> [local count: 1040367094]:
+  # DEBUG BEGIN_STMT
+  _5 = pbuf_stream_12(D)->offset;
+  _6 = _5 + buf_len_13(D);
+  pbuf_stream_12(D)->offset = _6;
+  # DEBUG BEGIN_STMT
+  _7 = pbuf_stream_12(D)->length;
+  _8 = _7 - buf_len_13(D);
+  pbuf_stream_12(D)->length = _8;
+  # DEBUG BEGIN_STMT
+
+  <bb 5> [local count: 1073741824]:
+  # _9 = PHI <-2(2), -2(3), 0(4)>
+  return _9;
+
+}
+
+
+
+;; Function snmp_pbuf_stream_write (snmp_pbuf_stream_write, funcdef_no=3, decl_uid=6391, cgraph_uid=4, symbol_order=3)
+
+Modification phase of node snmp_pbuf_stream_write/3
+snmp_pbuf_stream_write (struct snmp_pbuf_stream * pbuf_stream, u8_t data)
+{
+  err_t _4;
+
+  <bb 2> [local count: 1073741824]:
+  # DEBUG BEGIN_STMT
+  _4 = snmp_pbuf_stream_writebuf (pbuf_stream_2(D), &data, 1);
+  return _4;
+
+}
+
+
+
+;; Function snmp_pbuf_stream_writeto (snmp_pbuf_stream_writeto, funcdef_no=5, decl_uid=6399, cgraph_uid=6, symbol_order=5)
+
+Modification phase of node snmp_pbuf_stream_writeto/5
+snmp_pbuf_stream_writeto (struct snmp_pbuf_stream * pbuf_stream, struct snmp_pbuf_stream * target_pbuf_stream, u16_t len)
+{
+  struct pbuf * pbuf;
+  u16_t target_offset;
+  err_t err;
+  u16_t chunk_len;
+  short unsigned int _1;
+  short unsigned int _2;
+  struct pbuf * _4;
+  short unsigned int _5;
+  short unsigned int _6;
+  void * _7;
+  short unsigned int target_offset.0_8;
+  sizetype _9;
+  const void * _10;
+  short unsigned int _11;
+  short unsigned int _12;
+  short unsigned int _13;
+  short unsigned int _14;
+  err_t _16;
+  err_t _17;
+
+  <bb 2> [local count: 116771297]:
+  # DEBUG BEGIN_STMT
+  if (pbuf_stream_21(D) == 0B)
+    goto <bb 16>; [0.45%]
+  else
+    goto <bb 3>; [99.55%]
+
+  <bb 3> [local count: 116245826]:
+  if (target_pbuf_stream_22(D) == 0B)
+    goto <bb 16>; [0.45%]
+  else
+    goto <bb 4>; [99.55%]
+
+  <bb 4> [local count: 115722720]:
+  # DEBUG BEGIN_STMT
+  _1 = pbuf_stream_21(D)->length;
+  if (_1 < len_24(D))
+    goto <bb 16>; [1.04%]
+  else
+    goto <bb 5>; [98.96%]
+
+  <bb 5> [local count: 114519204]:
+  _2 = target_pbuf_stream_22(D)->length;
+  if (_2 < len_24(D))
+    goto <bb 16>; [1.04%]
+  else
+    goto <bb 6>; [98.96%]
+
+  <bb 6> [local count: 113328204]:
+  # DEBUG BEGIN_STMT
+  if (len_24(D) == 0)
+    goto <bb 7>; [50.00%]
+  else
+    goto <bb 8>; [50.00%]
+
+  <bb 7> [local count: 56664102]:
+  # DEBUG BEGIN_STMT
+  len_25 = MIN_EXPR <_1, _2>;
+  # DEBUG len => len_25
+
+  <bb 8> [local count: 113328204]:
+  # len_36 = PHI <len_24(D)(6), len_25(7)>
+  goto <bb 15>; [100.00%]
+
+  <bb 9> [local count: 1044213926]:
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _4 = pbuf_stream_21(D)->pbuf;
+  _5 = pbuf_stream_21(D)->offset;
+  pbuf_27 = pbuf_skip (_4, _5, &target_offset);
+  # DEBUG pbuf => pbuf_27
+  # DEBUG BEGIN_STMT
+  if (pbuf_27 == 0B)
+    goto <bb 14>; [2.75%]
+  else
+    goto <bb 10>; [97.25%]
+
+  <bb 10> [local count: 1015498043]:
+  _6 = pbuf_27->len;
+  if (_6 == 0)
+    goto <bb 14>; [2.75%]
+  else
+    goto <bb 11>; [97.25%]
+
+  <bb 11> [local count: 987571846]:
+  # DEBUG BEGIN_STMT
+  chunk_len_28 = MIN_EXPR <_6, len_15>;
+  # DEBUG chunk_len => chunk_len_28
+  # DEBUG BEGIN_STMT
+  _7 = pbuf_27->payload;
+  target_offset.0_8 = target_offset;
+  _9 = (sizetype) target_offset.0_8;
+  _10 = _7 + _9;
+  err_30 = snmp_pbuf_stream_writebuf (target_pbuf_stream_22(D), _10, chunk_len_28);
+  # DEBUG err => err_30
+  # DEBUG BEGIN_STMT
+  if (err_30 != 0)
+    goto <bb 12>; [2.75%]
+  else
+    goto <bb 13>; [97.25%]
+
+  <bb 12> [local count: 27158226]:
+  # err_3 = PHI <err_30(11)>
+  # DEBUG BEGIN_STMT
+  goto <bb 14>; [100.00%]
+
+  <bb 13> [local count: 960413619]:
+  # DEBUG BEGIN_STMT
+  _11 = pbuf_stream_21(D)->offset;
+  _12 = _11 + chunk_len_28;
+  pbuf_stream_21(D)->offset = _12;
+  # DEBUG BEGIN_STMT
+  _13 = pbuf_stream_21(D)->length;
+  _14 = _13 - chunk_len_28;
+  pbuf_stream_21(D)->length = _14;
+  # DEBUG BEGIN_STMT
+  len_33 = len_15 - chunk_len_28;
+  # DEBUG len => len_33
+  target_offset ={v} {CLOBBER};
+  goto <bb 15>; [100.00%]
+
+  <bb 14> [local count: 83800305]:
+  # _16 = PHI <-2(10), err_3(12), -2(9)>
+  target_offset ={v} {CLOBBER};
+  goto <bb 16>; [100.00%]
+
+  <bb 15> [local count: 1073741824]:
+  # len_15 = PHI <len_36(8), len_33(13)>
+  # DEBUG len => len_15
+  # DEBUG BEGIN_STMT
+  if (len_15 != 0)
+    goto <bb 9>; [97.25%]
+  else
+    goto <bb 16>; [2.75%]
+
+  <bb 16> [local count: 116771298]:
+  # _17 = PHI <-16(3), -16(5), _16(14), 0(15), -16(2), -16(4)>
+  return _17;
+
+}
+
+
+
+;; Function snmp_pbuf_stream_seek (snmp_pbuf_stream_seek, funcdef_no=6, decl_uid=6402, cgraph_uid=7, symbol_order=6)
+
+Modification phase of node snmp_pbuf_stream_seek/6
+snmp_pbuf_stream_seek (struct snmp_pbuf_stream * pbuf_stream, s32_t offset)
+{
+  short unsigned int _1;
+  long int _2;
+  short unsigned int _3;
+  short unsigned int _4;
+  short unsigned int _5;
+  short unsigned int _6;
+  err_t _7;
+
+  <bb 2> [local count: 1073741824]:
+  # DEBUG BEGIN_STMT
+  if (offset_9(D) < 0)
+    goto <bb 5>; [0.73%]
+  else
+    goto <bb 3>; [99.27%]
+
+  <bb 3> [local count: 1065903509]:
+  _1 = pbuf_stream_11(D)->length;
+  _2 = (long int) _1;
+  if (_2 < offset_9(D))
+    goto <bb 5>; [1.04%]
+  else
+    goto <bb 4>; [98.96%]
+
+  <bb 4> [local count: 1054818113]:
+  # DEBUG BEGIN_STMT
+  _3 = pbuf_stream_11(D)->offset;
+  _4 = (short unsigned int) offset_9(D);
+  _5 = _3 + _4;
+  pbuf_stream_11(D)->offset = _5;
+  # DEBUG BEGIN_STMT
+  _6 = _1 - _4;
+  pbuf_stream_11(D)->length = _6;
+  # DEBUG BEGIN_STMT
+
+  <bb 5> [local count: 1073741824]:
+  # _7 = PHI <-16(3), 0(4), -16(2)>
+  return _7;
+
+}
+
+
+
+;; Function snmp_pbuf_stream_seek_abs (snmp_pbuf_stream_seek_abs, funcdef_no=7, decl_uid=6405, cgraph_uid=8, symbol_order=7)
+
+Modification phase of node snmp_pbuf_stream_seek_abs/7
+snmp_pbuf_stream_seek_abs (struct snmp_pbuf_stream * pbuf_stream, u32_t offset)
+{
+  s32_t rel_offset;
+  short unsigned int _1;
+  long unsigned int _2;
+  long unsigned int _3;
+  err_t _9;
+
+  <bb 2> [local count: 1073741824]:
+  # DEBUG BEGIN_STMT
+  _1 = pbuf_stream_5(D)->offset;
+  _2 = (long unsigned int) _1;
+  _3 = offset_6(D) - _2;
+  rel_offset_7 = (s32_t) _3;
+  # DEBUG rel_offset => rel_offset_7
+  # DEBUG BEGIN_STMT
+  _9 = snmp_pbuf_stream_seek (pbuf_stream_5(D), rel_offset_7);
+  return _9;
+
+}
+
+

@@ -1,0 +1,253 @@
+Clock_Ip_ClockUpdateGateMcMePartitionCollectionClockRequest (Clock_Ip_NameType ClockName, boolean Gate)
+{
+  struct Clock_Ip_GateConfigType Config;
+
+  <bb 2> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  Config.Name = ClockName;
+  # DEBUG BEGIN_STMT
+  if (Gate != 0)
+    goto <bb 3>; [INV]
+  else
+    goto <bb 4>; [INV]
+
+  <bb 3> :
+  # DEBUG BEGIN_STMT
+  Config.Enable = 0;
+  goto <bb 5>; [INV]
+
+  <bb 4> :
+  # DEBUG BEGIN_STMT
+  Config.Enable = 1;
+
+  <bb 5> :
+  # DEBUG BEGIN_STMT
+  Clock_Ip_ClockSetGateMcMePartitionCollectionClockRequest (&Config);
+  Config = {CLOBBER};
+  return;
+
+}
+
+
+Clock_Ip_ClockSetGateMcMePartitionCollectionClockRequest (const struct Clock_Ip_GateConfigType * Config)
+{
+  uint32 EnableRequest;
+  uint32 Collection;
+  uint32 Partition;
+  const struct Clock_Ip_GateInfoType * GateInformation;
+  uint32 TimeoutTicks;
+  uint32 ElapsedTime;
+  uint32 StartTime;
+  boolean TimeoutOccurred;
+
+  <bb 2> :
+  # DEBUG BEGIN_STMT
+  TimeoutOccurred = 0;
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  if (Config != 0B)
+    goto <bb 3>; [INV]
+  else
+    goto <bb 16>; [INV]
+
+  <bb 3> :
+  # DEBUG BEGIN_STMT
+  _1 = Config->Name;
+  _2 = (int) _1;
+  _3 = Clock_Ip_au8ClockFeatures[_2][6];
+  _4 = (int) _3;
+  GateInformation = &Clock_Ip_axGateInfo[_4];
+  # DEBUG BEGIN_STMT
+  _5 = GateInformation->PartitionValue;
+  Partition = (uint32) _5;
+  # DEBUG BEGIN_STMT
+  _6 = GateInformation->ColectionValue;
+  Collection = (uint32) _6;
+  # DEBUG BEGIN_STMT
+  EnableRequest = GateInformation->RequestValueMask;
+  # DEBUG BEGIN_STMT
+  _7 = Config->Enable;
+  if (_7 != 0)
+    goto <bb 4>; [INV]
+  else
+    goto <bb 10>; [INV]
+
+  <bb 4> :
+  # DEBUG BEGIN_STMT
+  _8 = Clock_Ip_apxMcMeSetPartitions[Partition];
+  _9 = _8->PRTN_COFB_CLKEN[Collection];
+  _10 = EnableRequest & _9;
+  if (_10 == 0)
+    goto <bb 5>; [INV]
+  else
+    goto <bb 16>; [INV]
+
+  <bb 5> :
+  # DEBUG BEGIN_STMT
+  _11 = Clock_Ip_apxMcMeSetPartitions[Partition];
+  _12 = _11->PRTN_COFB_CLKEN[Collection];
+  _13 = Clock_Ip_apxMcMeSetPartitions[Partition];
+  _14 = EnableRequest | _12;
+  _13->PRTN_COFB_CLKEN[Collection] = _14;
+  # DEBUG BEGIN_STMT
+  _15 = Clock_Ip_apxMcMeTriggerPartitions[Partition];
+  _16 = _15->PRTN_PCONF;
+  _17 = Clock_Ip_apxMcMeTriggerPartitions[Partition];
+  _18 = _16 | 1;
+  _17->PRTN_PCONF = _18;
+  # DEBUG BEGIN_STMT
+  _19 = Clock_Ip_apxMcMeTriggerPartitions[Partition];
+  _20 = _19->PRTN_PUPD;
+  _21 = Clock_Ip_apxMcMeTriggerPartitions[Partition];
+  _22 = _20 | 1;
+  _21->PRTN_PUPD = _22;
+  # DEBUG BEGIN_STMT
+  Clock_Ip_McMeEnterKey ();
+  # DEBUG BEGIN_STMT
+  Clock_Ip_StartTimeout (&StartTime, &ElapsedTime, &TimeoutTicks, 50000);
+
+  <bb 6> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  TimeoutTicks.0_23 = TimeoutTicks;
+  TimeoutOccurred = Clock_Ip_TimeoutExpired (&StartTime, &ElapsedTime, TimeoutTicks.0_23);
+  # DEBUG BEGIN_STMT
+  _24 = Clock_Ip_apxMcMeGetPartitions[Partition];
+  _25 = _24->PRTN_COFB_STAT[Collection];
+  _26 = EnableRequest & _25;
+  if (_26 == 0)
+    goto <bb 7>; [INV]
+  else
+    goto <bb 8>; [INV]
+
+  <bb 7> :
+  _27 = ~TimeoutOccurred;
+  if (_27 != 0)
+    goto <bb 6>; [INV]
+  else
+    goto <bb 8>; [INV]
+
+  <bb 8> :
+  # DEBUG BEGIN_STMT
+  if (TimeoutOccurred != 0)
+    goto <bb 9>; [INV]
+  else
+    goto <bb 16>; [INV]
+
+  <bb 9> :
+  # DEBUG BEGIN_STMT
+  _28 = Config->Name;
+  Clock_Ip_ReportClockErrors (1, _28);
+  goto <bb 16>; [INV]
+
+  <bb 10> :
+  # DEBUG BEGIN_STMT
+  _29 = Clock_Ip_apxMcMeSetPartitions[Partition];
+  _30 = _29->PRTN_COFB_CLKEN[Collection];
+  _31 = EnableRequest & _30;
+  if (_31 != 0)
+    goto <bb 11>; [INV]
+  else
+    goto <bb 16>; [INV]
+
+  <bb 11> :
+  # DEBUG BEGIN_STMT
+  _32 = Clock_Ip_apxMcMeSetPartitions[Partition];
+  _33 = _32->PRTN_COFB_CLKEN[Collection];
+  _34 = ~EnableRequest;
+  _35 = Clock_Ip_apxMcMeSetPartitions[Partition];
+  _36 = _33 & _34;
+  _35->PRTN_COFB_CLKEN[Collection] = _36;
+  # DEBUG BEGIN_STMT
+  _37 = Clock_Ip_apxMcMeTriggerPartitions[Partition];
+  _38 = _37->PRTN_PCONF;
+  _39 = Clock_Ip_apxMcMeTriggerPartitions[Partition];
+  _40 = _38 | 1;
+  _39->PRTN_PCONF = _40;
+  # DEBUG BEGIN_STMT
+  _41 = Clock_Ip_apxMcMeTriggerPartitions[Partition];
+  _42 = _41->PRTN_PUPD;
+  _43 = Clock_Ip_apxMcMeTriggerPartitions[Partition];
+  _44 = _42 | 1;
+  _43->PRTN_PUPD = _44;
+  # DEBUG BEGIN_STMT
+  Clock_Ip_McMeEnterKey ();
+  # DEBUG BEGIN_STMT
+  Clock_Ip_StartTimeout (&StartTime, &ElapsedTime, &TimeoutTicks, 50000);
+
+  <bb 12> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  TimeoutTicks.1_45 = TimeoutTicks;
+  TimeoutOccurred = Clock_Ip_TimeoutExpired (&StartTime, &ElapsedTime, TimeoutTicks.1_45);
+  # DEBUG BEGIN_STMT
+  _46 = Clock_Ip_apxMcMeGetPartitions[Partition];
+  _47 = _46->PRTN_COFB_STAT[Collection];
+  _48 = EnableRequest & _47;
+  if (_48 != 0)
+    goto <bb 13>; [INV]
+  else
+    goto <bb 14>; [INV]
+
+  <bb 13> :
+  _49 = ~TimeoutOccurred;
+  if (_49 != 0)
+    goto <bb 12>; [INV]
+  else
+    goto <bb 14>; [INV]
+
+  <bb 14> :
+  # DEBUG BEGIN_STMT
+  if (TimeoutOccurred != 0)
+    goto <bb 15>; [INV]
+  else
+    goto <bb 16>; [INV]
+
+  <bb 15> :
+  # DEBUG BEGIN_STMT
+  _50 = Config->Name;
+  Clock_Ip_ReportClockErrors (1, _50);
+
+  <bb 16> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  StartTime = {CLOBBER};
+  ElapsedTime = {CLOBBER};
+  TimeoutTicks = {CLOBBER};
+  return;
+
+}
+
+
+Clock_Ip_ClockUpdateGateEmpty (Clock_Ip_NameType ClockName, boolean Gate)
+{
+  <bb 2> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  return;
+
+}
+
+
+Clock_Ip_ClockSetGateEmpty (const struct Clock_Ip_GateConfigType * Config)
+{
+  <bb 2> :
+  # DEBUG BEGIN_STMT
+  return;
+
+}
+
+

@@ -1,0 +1,3767 @@
+
+IPA constant propagation start:
+Determining dynamic type for call: _59 = _58 (netif_10(D), p_14(D), dest_55);
+  Starting walk at: _59 = _58 (netif_10(D), p_14(D), dest_55);
+  instance pointer: netif_10(D)  Outer instance pointer: netif_10(D) offset: 0 (bits) vtbl reference: 
+  Function call may change dynamic type:_34 = lwip_htons (_33);
+  Function call may change dynamic type:_31 = lwip_htonl (_30);
+  Function call may change dynamic type:_15 = pbuf_add_header (p_14(D), 40);
+  Function call may change dynamic type:_56 = nd6_get_destination_mtu (dest_55, netif_10(D));
+Determining dynamic type for call: _59 = _58 (netif_10(D), p_14(D), dest_55);
+  Starting walk at: _59 = _58 (netif_10(D), p_14(D), dest_55);
+  instance pointer: p_14(D)  Outer instance pointer: p_14(D) offset: 0 (bits) vtbl reference: 
+  Function call may change dynamic type:_34 = lwip_htons (_33);
+  Function call may change dynamic type:_31 = lwip_htonl (_30);
+  Function call may change dynamic type:_15 = pbuf_add_header (p_14(D), 40);
+  Function call may change dynamic type:_56 = nd6_get_destination_mtu (dest_55, netif_10(D));
+Determining dynamic type for call: _59 = _58 (netif_10(D), p_14(D), dest_55);
+  Starting walk at: _59 = _58 (netif_10(D), p_14(D), dest_55);
+  instance pointer: dest_55  Outer instance pointer: dest_55 offset: 0 (bits) vtbl reference: 
+  Function call may change dynamic type:_34 = lwip_htons (_33);
+  Function call may change dynamic type:_31 = lwip_htonl (_30);
+  Function call may change dynamic type:_15 = pbuf_add_header (p_14(D), 40);
+  Function call may change dynamic type:_56 = nd6_get_destination_mtu (dest_55, netif_10(D));
+Determining dynamic type for call: netif_33 = ip6_route (&src_addr, &dest_addr);
+  Starting walk at: netif_33 = ip6_route (&src_addr, &dest_addr);
+  instance pointer: &src_addr  Outer instance pointer: src_addr offset: 0 (bits) vtbl reference: 
+Determining dynamic type for call: netif_33 = ip6_route (&src_addr, &dest_addr);
+  Starting walk at: netif_33 = ip6_route (&src_addr, &dest_addr);
+  instance pointer: &dest_addr  Outer instance pointer: dest_addr offset: 0 (bits) vtbl reference: 
+Determining dynamic type for call: netif_36 = ip6_route (src_34(D), dest_20(D));
+  Starting walk at: netif_36 = ip6_route (src_34(D), dest_20(D));
+  instance pointer: src_34(D)  Outer instance pointer: src_34(D) offset: 0 (bits) vtbl reference: 
+Determining dynamic type for call: netif_36 = ip6_route (src_34(D), dest_20(D));
+  Starting walk at: netif_36 = ip6_route (src_34(D), dest_20(D));
+  instance pointer: dest_20(D)  Outer instance pointer: dest_20(D) offset: 0 (bits) vtbl reference: 
+Determining dynamic type for call: _41 = ip6_output_if (p_19(D), src_34(D), dest_12, hl_37(D), tc_38(D), nexth_39(D), netif_13);
+  Starting walk at: _41 = ip6_output_if (p_19(D), src_34(D), dest_12, hl_37(D), tc_38(D), nexth_39(D), netif_13);
+  instance pointer: p_19(D)  Outer instance pointer: p_19(D) offset: 0 (bits) vtbl reference: 
+  Function call may change dynamic type:netif_36 = ip6_route (src_34(D), dest_20(D));
+  Function call may change dynamic type:netif_33 = ip6_route (&src_addr, &dest_addr);
+Determining dynamic type for call: _41 = ip6_output_if (p_19(D), src_34(D), dest_12, hl_37(D), tc_38(D), nexth_39(D), netif_13);
+  Starting walk at: _41 = ip6_output_if (p_19(D), src_34(D), dest_12, hl_37(D), tc_38(D), nexth_39(D), netif_13);
+  instance pointer: src_34(D)  Outer instance pointer: src_34(D) offset: 0 (bits) vtbl reference: 
+  Function call may change dynamic type:netif_36 = ip6_route (src_34(D), dest_20(D));
+  Function call may change dynamic type:netif_33 = ip6_route (&src_addr, &dest_addr);
+Determining dynamic type for call: _41 = ip6_output_if (p_19(D), src_34(D), dest_12, hl_37(D), tc_38(D), nexth_39(D), netif_13);
+  Starting walk at: _41 = ip6_output_if (p_19(D), src_34(D), dest_12, hl_37(D), tc_38(D), nexth_39(D), netif_13);
+  instance pointer: dest_12  Outer instance pointer: dest_12 offset: 0 (bits) vtbl reference: 
+  Function call may change dynamic type:netif_36 = ip6_route (src_34(D), dest_20(D));
+  Function call may change dynamic type:netif_33 = ip6_route (&src_addr, &dest_addr);
+Determining dynamic type for call: _41 = ip6_output_if (p_19(D), src_34(D), dest_12, hl_37(D), tc_38(D), nexth_39(D), netif_13);
+  Starting walk at: _41 = ip6_output_if (p_19(D), src_34(D), dest_12, hl_37(D), tc_38(D), nexth_39(D), netif_13);
+  instance pointer: netif_13  Outer instance pointer: netif_13 offset: 0 (bits) vtbl reference: 
+  Function call may change dynamic type:netif_36 = ip6_route (src_34(D), dest_20(D));
+  Function call may change dynamic type:netif_33 = ip6_route (&src_addr, &dest_addr);
+Determining dynamic type for call: _6 = ip6_output_if_src.part.0 (p_4(D), src_12(D), dest_5(D), hl_9(D), tc_11(D), nexth_10(D), netif_7(D));
+  Starting walk at: _6 = ip6_output_if_src.part.0 (p_4(D), src_12(D), dest_5(D), hl_9(D), tc_11(D), nexth_10(D), netif_7(D));
+  instance pointer: p_4(D)  Outer instance pointer: p_4(D) offset: 0 (bits) vtbl reference: 
+Determining dynamic type for call: _6 = ip6_output_if_src.part.0 (p_4(D), src_12(D), dest_5(D), hl_9(D), tc_11(D), nexth_10(D), netif_7(D));
+  Starting walk at: _6 = ip6_output_if_src.part.0 (p_4(D), src_12(D), dest_5(D), hl_9(D), tc_11(D), nexth_10(D), netif_7(D));
+  instance pointer: src_12(D)  Outer instance pointer: src_12(D) offset: 0 (bits) vtbl reference: 
+Determining dynamic type for call: _6 = ip6_output_if_src.part.0 (p_4(D), src_12(D), dest_5(D), hl_9(D), tc_11(D), nexth_10(D), netif_7(D));
+  Starting walk at: _6 = ip6_output_if_src.part.0 (p_4(D), src_12(D), dest_5(D), hl_9(D), tc_11(D), nexth_10(D), netif_7(D));
+  instance pointer: dest_5(D)  Outer instance pointer: dest_5(D) offset: 0 (bits) vtbl reference: 
+Determining dynamic type for call: _6 = ip6_output_if_src.part.0 (p_4(D), src_12(D), dest_5(D), hl_9(D), tc_11(D), nexth_10(D), netif_7(D));
+  Starting walk at: _6 = ip6_output_if_src.part.0 (p_4(D), src_12(D), dest_5(D), hl_9(D), tc_11(D), nexth_10(D), netif_7(D));
+  instance pointer: netif_7(D)  Outer instance pointer: netif_7(D) offset: 0 (bits) vtbl reference: 
+Determining dynamic type for call: _5 = ip6_select_source_address (netif_19(D), dest_17(D));
+  Starting walk at: _5 = ip6_select_source_address (netif_19(D), dest_17(D));
+  instance pointer: netif_19(D)  Outer instance pointer: netif_19(D) offset: 0 (bits) vtbl reference: 
+Determining dynamic type for call: _5 = ip6_select_source_address (netif_19(D), dest_17(D));
+  Starting walk at: _5 = ip6_select_source_address (netif_19(D), dest_17(D));
+  instance pointer: dest_17(D)  Outer instance pointer: dest_17(D) offset: 0 (bits) vtbl reference: 
+Determining dynamic type for call: _28 = ip6_output_if_src (p_23(D), src_used_12, dest_17(D), hl_24(D), tc_25(D), nexth_26(D), netif_19(D));
+  Starting walk at: _28 = ip6_output_if_src (p_23(D), src_used_12, dest_17(D), hl_24(D), tc_25(D), nexth_26(D), netif_19(D));
+  instance pointer: p_23(D)  Outer instance pointer: p_23(D) offset: 0 (bits) vtbl reference: 
+  Function call may change dynamic type:_5 = ip6_select_source_address (netif_19(D), dest_17(D));
+Determining dynamic type for call: _28 = ip6_output_if_src (p_23(D), src_used_12, dest_17(D), hl_24(D), tc_25(D), nexth_26(D), netif_19(D));
+  Starting walk at: _28 = ip6_output_if_src (p_23(D), src_used_12, dest_17(D), hl_24(D), tc_25(D), nexth_26(D), netif_19(D));
+  instance pointer: src_used_12  Outer instance pointer: src_used_12 offset: 0 (bits) vtbl reference: 
+  Function call may change dynamic type:_5 = ip6_select_source_address (netif_19(D), dest_17(D));
+Determining dynamic type for call: _28 = ip6_output_if_src (p_23(D), src_used_12, dest_17(D), hl_24(D), tc_25(D), nexth_26(D), netif_19(D));
+  Starting walk at: _28 = ip6_output_if_src (p_23(D), src_used_12, dest_17(D), hl_24(D), tc_25(D), nexth_26(D), netif_19(D));
+  instance pointer: dest_17(D)  Outer instance pointer: dest_17(D) offset: 0 (bits) vtbl reference: 
+  Function call may change dynamic type:_5 = ip6_select_source_address (netif_19(D), dest_17(D));
+Determining dynamic type for call: _28 = ip6_output_if_src (p_23(D), src_used_12, dest_17(D), hl_24(D), tc_25(D), nexth_26(D), netif_19(D));
+  Starting walk at: _28 = ip6_output_if_src (p_23(D), src_used_12, dest_17(D), hl_24(D), tc_25(D), nexth_26(D), netif_19(D));
+  instance pointer: netif_19(D)  Outer instance pointer: netif_19(D) offset: 0 (bits) vtbl reference: 
+  Function call may change dynamic type:_5 = ip6_select_source_address (netif_19(D), dest_17(D));
+Determining dynamic type for call: _63 = ip6_input_accept (inp_237(D));
+  Starting walk at: _63 = ip6_input_accept (inp_237(D));
+  instance pointer: inp_237(D)  Outer instance pointer: inp_237(D) offset: 0 (bits) vtbl reference: 
+  Function call may change dynamic type:pbuf_realloc (p_218(D), _25);
+  Function call may change dynamic type:_24 = lwip_htons (_23);
+  Function call may change dynamic type:_16 = lwip_htons (_15);
+  Function call may change dynamic type:_4 = lwip_htonl (_3);
+Determining dynamic type for call: _76 = ip6_input_accept (netif_192);
+  Starting walk at: _76 = ip6_input_accept (netif_192);
+  instance pointer: netif_192  Outer instance pointer: netif_192 offset: 0 (bits) vtbl reference: 
+  Function call may change dynamic type:pbuf_realloc (p_218(D), _25);
+  Function call may change dynamic type:_24 = lwip_htons (_23);
+  Function call may change dynamic type:_16 = lwip_htons (_15);
+  Function call may change dynamic type:_4 = lwip_htonl (_3);
+Determining dynamic type for call: _3 = ip6_input_accept.part.0 (netif_7(D));
+  Starting walk at: _3 = ip6_input_accept.part.0 (netif_7(D));
+  instance pointer: netif_7(D)  Outer instance pointer: netif_7(D) offset: 0 (bits) vtbl reference: 
+
+IPA structures before propagation:
+
+Jump functions:
+  Jump functions of caller  ip6_output_if_src.part.0/32:
+    indirect aggregate callsite, calling param 6, offset 1504, by reference, for stmt _59 = _58 (netif_10(D), p_14(D), dest_55);
+       param 0: PASS THROUGH: 6, op nop_expr
+         value: 0x0, mask: 0xffffffff
+         Unknown VR
+       param 1: PASS THROUGH: 0, op nop_expr
+         value: 0x0, mask: 0xffffffff
+         Unknown VR
+       param 2: UNKNOWN
+         value: 0x0, mask: 0xffffffff
+         Unknown VR
+  Jump functions of caller  ip6_input_accept.part.0/31:
+  Jump functions of caller  ip6_frag/30:
+  Jump functions of caller  nd6_get_destination_mtu/29:
+  Jump functions of caller  pbuf_add_header/27:
+  Jump functions of caller  icmp6_input/26:
+  Jump functions of caller  tcp_input/25:
+  Jump functions of caller  udp_input/24:
+  Jump functions of caller  raw_input/23:
+  Jump functions of caller  pbuf_add_header_force/22:
+  Jump functions of caller  ip6_reass/21:
+  Jump functions of caller  icmp6_param_problem/20:
+  Jump functions of caller  pbuf_remove_header/19:
+  Jump functions of caller  mld6_lookfor_group/18:
+  Jump functions of caller  pbuf_realloc/17:
+  Jump functions of caller  lwip_htons/16:
+  Jump functions of caller  pbuf_free/15:
+  Jump functions of caller  lwip_htonl/13:
+  Jump functions of caller  nd6_find_route/11:
+  Jump functions of caller  ip6_options_add_hbh_ra/9:
+  Jump functions of caller  ip6_output/8:
+    callsite  ip6_output/8 -> ip6_output_if/6 : 
+       param 0: PASS THROUGH: 0, op nop_expr
+         value: 0x0, mask: 0xffffffff
+         Unknown VR
+       param 1: PASS THROUGH: 1, op nop_expr
+         value: 0x0, mask: 0xffffffff
+         Unknown VR
+       param 2: UNKNOWN
+         value: 0x0, mask: 0xffffffff
+         Unknown VR
+       param 3: PASS THROUGH: 3, op nop_expr
+         value: 0x0, mask: 0xff
+         Unknown VR
+       param 4: PASS THROUGH: 4, op nop_expr
+         value: 0x0, mask: 0xff
+         Unknown VR
+       param 5: PASS THROUGH: 5, op nop_expr
+         value: 0x0, mask: 0xff
+         Unknown VR
+       param 6: UNKNOWN
+         value: 0x0, mask: 0xffffffff
+         Unknown VR
+    callsite  ip6_output/8 -> ip6_route/1 : 
+       param 0: UNKNOWN
+         Aggregate passed by reference:
+           offset: 128, cst: 0
+         value: 0x0, mask: 0xfffffffc
+         VR  ~[0, 0]
+       param 1: UNKNOWN
+         Aggregate passed by reference:
+           offset: 128, cst: 0
+         value: 0x0, mask: 0xfffffffc
+         VR  ~[0, 0]
+    callsite  ip6_output/8 -> ip6_route/1 : 
+       param 0: PASS THROUGH: 1, op nop_expr, agg_preserved
+         value: 0x0, mask: 0xffffffff
+         Unknown VR
+       param 1: PASS THROUGH: 2, op nop_expr, agg_preserved
+         value: 0x0, mask: 0xffffffff
+         Unknown VR
+  Jump functions of caller  ip6_output_if_src/7:
+    callsite  ip6_output_if_src/7 -> ip6_output_if_src.part.0/32 : 
+       param 0: PASS THROUGH: 0, op nop_expr, agg_preserved
+         value: 0x0, mask: 0xffffffff
+         Unknown VR
+       param 1: PASS THROUGH: 1, op nop_expr, agg_preserved
+         value: 0x0, mask: 0xffffffff
+         Unknown VR
+       param 2: PASS THROUGH: 2, op nop_expr, agg_preserved
+         value: 0x0, mask: 0xffffffff
+         Unknown VR
+       param 3: PASS THROUGH: 3, op nop_expr
+         value: 0x0, mask: 0xff
+         Unknown VR
+       param 4: PASS THROUGH: 4, op nop_expr
+         value: 0x0, mask: 0xff
+         Unknown VR
+       param 5: PASS THROUGH: 5, op nop_expr
+         value: 0x0, mask: 0xff
+         Unknown VR
+       param 6: PASS THROUGH: 6, op nop_expr, agg_preserved
+         value: 0x0, mask: 0xffffffff
+         Unknown VR
+  Jump functions of caller  ip6_output_if/6:
+    callsite  ip6_output_if/6 -> ip6_output_if_src/7 : 
+       param 0: PASS THROUGH: 0, op nop_expr
+         value: 0x0, mask: 0xffffffff
+         Unknown VR
+       param 1: UNKNOWN
+         value: 0x0, mask: 0xffffffff
+         Unknown VR
+       param 2: PASS THROUGH: 2, op nop_expr
+         value: 0x0, mask: 0xffffffff
+         Unknown VR
+       param 3: PASS THROUGH: 3, op nop_expr
+         value: 0x0, mask: 0xff
+         Unknown VR
+       param 4: PASS THROUGH: 4, op nop_expr
+         value: 0x0, mask: 0xff
+         Unknown VR
+       param 5: PASS THROUGH: 5, op nop_expr
+         value: 0x0, mask: 0xff
+         Unknown VR
+       param 6: PASS THROUGH: 6, op nop_expr
+         value: 0x0, mask: 0xffffffff
+         Unknown VR
+    callsite  ip6_output_if/6 -> ip6_select_source_address/2 : 
+       param 0: PASS THROUGH: 6, op nop_expr, agg_preserved
+         value: 0x0, mask: 0xffffffff
+         Unknown VR
+       param 1: PASS THROUGH: 2, op nop_expr, agg_preserved
+         value: 0x0, mask: 0xffffffff
+         Unknown VR
+  Jump functions of caller  ip6_input/5:
+    callsite  ip6_input/5 -> ip6_input_accept/3 : 
+       param 0: UNKNOWN
+         value: 0x0, mask: 0xffffffff
+         Unknown VR
+    callsite  ip6_input/5 -> ip6_input_accept/3 : 
+       param 0: PASS THROUGH: 1, op nop_expr
+         value: 0x0, mask: 0xffffffff
+         Unknown VR
+  Jump functions of caller  ip6_input_accept/3:
+    callsite  ip6_input_accept/3 -> ip6_input_accept.part.0/31 : 
+       param 0: PASS THROUGH: 0, op nop_expr, agg_preserved
+         value: 0x0, mask: 0xffffffff
+         Unknown VR
+  Jump functions of caller  ip6_select_source_address/2:
+  Jump functions of caller  ip6_route/1:
+
+ Propagating constants:
+
+Not considering ip6_options_add_hbh_ra for cloning; -fipa-cp-clone disabled.
+Not considering ip6_output for cloning; -fipa-cp-clone disabled.
+Not considering ip6_output_if_src for cloning; -fipa-cp-clone disabled.
+Not considering ip6_output_if for cloning; -fipa-cp-clone disabled.
+Not considering ip6_input for cloning; -fipa-cp-clone disabled.
+Not considering ip6_select_source_address for cloning; -fipa-cp-clone disabled.
+Not considering ip6_route for cloning; -fipa-cp-clone disabled.
+
+overall_size: 1157, max_new_size: 11001
+
+IPA lattices after all propagation:
+
+Lattices:
+  Node: ip6_output_if_src.part.0/32:
+    param [0]: VARIABLE
+         ctxs: VARIABLE
+         Bits unusable (BOTTOM)
+         VARYING
+        AGGS VARIABLE
+    param [1]: VARIABLE
+         ctxs: VARIABLE
+         Bits unusable (BOTTOM)
+         VARYING
+        AGGS VARIABLE
+    param [2]: VARIABLE
+         ctxs: VARIABLE
+         Bits unusable (BOTTOM)
+         VARYING
+        AGGS VARIABLE
+    param [3]: VARIABLE
+         ctxs: VARIABLE
+         Bits unusable (BOTTOM)
+         VARYING
+        AGGS VARIABLE
+    param [4]: VARIABLE
+         ctxs: VARIABLE
+         Bits unusable (BOTTOM)
+         VARYING
+        AGGS VARIABLE
+    param [5]: VARIABLE
+         ctxs: VARIABLE
+         Bits unusable (BOTTOM)
+         VARYING
+        AGGS VARIABLE
+    param [6]: VARIABLE
+         ctxs: VARIABLE
+         Bits unusable (BOTTOM)
+         VARYING
+        AGGS VARIABLE
+  Node: ip6_input_accept.part.0/31:
+    param [0]: VARIABLE
+         ctxs: VARIABLE
+         Bits unusable (BOTTOM)
+         VARYING
+        AGGS VARIABLE
+  Node: ip6_options_add_hbh_ra/9:
+    param [0]: BOTTOM
+         ctxs: BOTTOM
+         Bits unusable (BOTTOM)
+         VARYING
+        AGGS BOTTOM
+    param [1]: BOTTOM
+         ctxs: BOTTOM
+         Bits unusable (BOTTOM)
+         VARYING
+        AGGS BOTTOM
+    param [2]: BOTTOM
+         ctxs: BOTTOM
+         Bits unusable (BOTTOM)
+         VARYING
+        AGGS BOTTOM
+  Node: ip6_output/8:
+    param [0]: BOTTOM
+         ctxs: BOTTOM
+         Bits unusable (BOTTOM)
+         VARYING
+        AGGS BOTTOM
+    param [1]: BOTTOM
+         ctxs: BOTTOM
+         Bits unusable (BOTTOM)
+         VARYING
+        AGGS BOTTOM
+    param [2]: BOTTOM
+         ctxs: BOTTOM
+         Bits unusable (BOTTOM)
+         VARYING
+        AGGS BOTTOM
+    param [3]: BOTTOM
+         ctxs: BOTTOM
+         Bits unusable (BOTTOM)
+         VARYING
+        AGGS BOTTOM
+    param [4]: BOTTOM
+         ctxs: BOTTOM
+         Bits unusable (BOTTOM)
+         VARYING
+        AGGS BOTTOM
+    param [5]: BOTTOM
+         ctxs: BOTTOM
+         Bits unusable (BOTTOM)
+         VARYING
+        AGGS BOTTOM
+  Node: ip6_output_if_src/7:
+    param [0]: BOTTOM
+         ctxs: BOTTOM
+         Bits unusable (BOTTOM)
+         VARYING
+        AGGS BOTTOM
+    param [1]: BOTTOM
+         ctxs: BOTTOM
+         Bits unusable (BOTTOM)
+         VARYING
+        AGGS BOTTOM
+    param [2]: BOTTOM
+         ctxs: BOTTOM
+         Bits unusable (BOTTOM)
+         VARYING
+        AGGS BOTTOM
+    param [3]: BOTTOM
+         ctxs: BOTTOM
+         Bits unusable (BOTTOM)
+         VARYING
+        AGGS BOTTOM
+    param [4]: BOTTOM
+         ctxs: BOTTOM
+         Bits unusable (BOTTOM)
+         VARYING
+        AGGS BOTTOM
+    param [5]: BOTTOM
+         ctxs: BOTTOM
+         Bits unusable (BOTTOM)
+         VARYING
+        AGGS BOTTOM
+    param [6]: BOTTOM
+         ctxs: BOTTOM
+         Bits unusable (BOTTOM)
+         VARYING
+        AGGS BOTTOM
+  Node: ip6_output_if/6:
+    param [0]: BOTTOM
+         ctxs: BOTTOM
+         Bits unusable (BOTTOM)
+         VARYING
+        AGGS BOTTOM
+    param [1]: BOTTOM
+         ctxs: BOTTOM
+         Bits unusable (BOTTOM)
+         VARYING
+        AGGS BOTTOM
+    param [2]: BOTTOM
+         ctxs: BOTTOM
+         Bits unusable (BOTTOM)
+         VARYING
+        AGGS BOTTOM
+    param [3]: BOTTOM
+         ctxs: BOTTOM
+         Bits unusable (BOTTOM)
+         VARYING
+        AGGS BOTTOM
+    param [4]: BOTTOM
+         ctxs: BOTTOM
+         Bits unusable (BOTTOM)
+         VARYING
+        AGGS BOTTOM
+    param [5]: BOTTOM
+         ctxs: BOTTOM
+         Bits unusable (BOTTOM)
+         VARYING
+        AGGS BOTTOM
+    param [6]: BOTTOM
+         ctxs: BOTTOM
+         Bits unusable (BOTTOM)
+         VARYING
+        AGGS BOTTOM
+  Node: ip6_input/5:
+    param [0]: BOTTOM
+         ctxs: BOTTOM
+         Bits unusable (BOTTOM)
+         VARYING
+        AGGS BOTTOM
+    param [1]: BOTTOM
+         ctxs: BOTTOM
+         Bits unusable (BOTTOM)
+         VARYING
+        AGGS BOTTOM
+  Node: ip6_input_accept/3:
+    param [0]: VARIABLE
+         ctxs: VARIABLE
+         Bits unusable (BOTTOM)
+         VARYING
+        AGGS VARIABLE
+  Node: ip6_select_source_address/2:
+    param [0]: BOTTOM
+         ctxs: BOTTOM
+         Bits unusable (BOTTOM)
+         VARYING
+        AGGS BOTTOM
+    param [1]: BOTTOM
+         ctxs: BOTTOM
+         Bits unusable (BOTTOM)
+         VARYING
+        AGGS BOTTOM
+  Node: ip6_route/1:
+    param [0]: BOTTOM
+         ctxs: BOTTOM
+         Bits unusable (BOTTOM)
+         VARYING
+        AGGS BOTTOM
+    param [1]: BOTTOM
+         ctxs: BOTTOM
+         Bits unusable (BOTTOM)
+         VARYING
+        AGGS BOTTOM
+
+IPA decision stage:
+
+
+IPA constant propagation end
+
+Reclaiming functions:
+Reclaiming variables:
+Clearing address taken flags:
+Symbol table:
+
+ip6_output_if_src.part.0/32 (ip6_output_if_src.part.0) @063a0a80
+  Type: function definition analyzed
+  Visibility: prevailing_def_ironly artificial
+  References: lwip_stats/14 (read)lwip_stats/14 (write)ip6_addr_any/28 (addr)lwip_stats/14 (read)lwip_stats/14 (write)
+  Referring: 
+  Availability: local
+  Function flags: count:231348 (estimated locally) first_run:1 body local split_part optimize_size
+  Called by: ip6_output_if_src/7 (55314 (estimated locally),0.34 per call) 
+  Calls: pbuf_add_header/27 (161944 (estimated locally),0.70 per call) lwip_htonl/13 (52886 (estimated locally),0.23 per call) lwip_htons/16 (52886 (estimated locally),0.23 per call) nd6_get_destination_mtu/29 (40356 (estimated locally),0.17 per call) ip6_frag/30 (8168 (estimated locally),0.04 per call) 
+   Indirect call(114122 (estimated locally),0.49 per call)  of param:6 loaded from aggregate passed by reference at offset 1504 (vptr maybe changed)
+ip6_input_accept.part.0/31 (ip6_input_accept.part.0) @060098c0
+  Type: function definition analyzed
+  Visibility: prevailing_def_ironly artificial
+  References: ip_data/4 (read)ip_data/4 (read)ip_data/4 (read)ip_data/4 (read)ip_data/4 (read)
+  Referring: 
+  Availability: local
+  Function flags: count:268731400 (estimated locally) first_run:1 body local split_part optimize_size
+  Called by: ip6_input_accept/3 (268731400 (estimated locally),0.50 per call) 
+  Calls: 
+ip6_frag/30 (ip6_frag) @0636f9a0
+  Type: function
+  Visibility: external public
+  References: 
+  Referring: 
+  Availability: not_available
+  Function flags: optimize_size
+  Called by: ip6_output_if_src.part.0/32 (8168 (estimated locally),0.04 per call) 
+  Calls: 
+nd6_get_destination_mtu/29 (nd6_get_destination_mtu) @0636f8c0
+  Type: function
+  Visibility: external public
+  References: 
+  Referring: 
+  Availability: not_available
+  Function flags: optimize_size
+  Called by: ip6_output_if_src.part.0/32 (40356 (estimated locally),0.17 per call) 
+  Calls: 
+ip6_addr_any/28 (ip6_addr_any) @06384630
+  Type: variable
+  Body removed by symtab_remove_unreachable_nodes
+  Visibility: external public
+  References: 
+  Referring: ip6_output_if_src.part.0/32 (addr)
+  Availability: not_available
+  Varpool flags: read-only
+pbuf_add_header/27 (pbuf_add_header) @0636f7e0
+  Type: function
+  Visibility: external public
+  References: 
+  Referring: 
+  Availability: not_available
+  Function flags: optimize_size
+  Called by: ip6_options_add_hbh_ra/9 (1073741824 (estimated locally),1.00 per call) ip6_output_if_src.part.0/32 (161944 (estimated locally),0.70 per call) 
+  Calls: 
+icmp6_input/26 (icmp6_input) @0636f2a0
+  Type: function
+  Visibility: external public
+  References: 
+  Referring: 
+  Availability: not_available
+  Function flags: optimize_size
+  Called by: ip6_input/5 (4720902 (estimated locally),0.00 per call) 
+  Calls: 
+tcp_input/25 (tcp_input) @0636f1c0
+  Type: function
+  Visibility: external public
+  References: 
+  Referring: 
+  Availability: not_available
+  Function flags: optimize_size
+  Called by: ip6_input/5 (4720902 (estimated locally),0.00 per call) 
+  Calls: 
+udp_input/24 (udp_input) @0636f0e0
+  Type: function
+  Visibility: external public
+  References: 
+  Referring: 
+  Availability: not_available
+  Function flags: optimize_size
+  Called by: ip6_input/5 (4720902 (estimated locally),0.00 per call) 
+  Calls: 
+raw_input/23 (raw_input) @0636f000
+  Type: function
+  Visibility: external public
+  References: 
+  Referring: 
+  Availability: not_available
+  Function flags: optimize_size
+  Called by: ip6_input/5 (48290737 (estimated locally),0.04 per call) 
+  Calls: 
+pbuf_add_header_force/22 (pbuf_add_header_force) @062c7e00
+  Type: function
+  Visibility: external public
+  References: 
+  Referring: 
+  Availability: not_available
+  Function flags: optimize_size
+  Called by: ip6_input/5 (2307577 (estimated locally),0.00 per call) ip6_input/5 (48290737 (estimated locally),0.04 per call) 
+  Calls: 
+ip6_reass/21 (ip6_reass) @062c7d20
+  Type: function
+  Visibility: external public
+  References: 
+  Referring: 
+  Availability: not_available
+  Function flags: optimize_size
+  Called by: ip6_input/5 (21329781 (estimated locally),0.02 per call) 
+  Calls: 
+icmp6_param_problem/20 (icmp6_param_problem) @062c7a80
+  Type: function
+  Visibility: external public
+  References: 
+  Referring: 
+  Availability: not_available
+  Function flags: optimize_size
+  Called by: ip6_input/5 (744443 (estimated locally),0.00 per call) ip6_input/5 (1952971 (estimated locally),0.00 per call) ip6_input/5 (283424 (estimated locally),0.00 per call) ip6_input/5 (552649 (estimated locally),0.00 per call) ip6_input/5 (563927 (estimated locally),0.00 per call) ip6_input/5 (5599412 (estimated locally),0.01 per call) ip6_input/5 (11455426 (estimated locally),0.01 per call) ip6_input/5 (5769294 (estimated locally),0.01 per call) ip6_input/5 (11802974 (estimated locally),0.01 per call) 
+  Calls: 
+pbuf_remove_header/19 (pbuf_remove_header) @062c79a0
+  Type: function
+  Visibility: external public
+  References: 
+  Referring: 
+  Availability: not_available
+  Function flags: optimize_size
+  Called by: ip6_input/5 (23604512 (estimated locally),0.02 per call) ip6_input/5 (20903185 (estimated locally),0.02 per call) ip6_input/5 (21329781 (estimated locally),0.02 per call) ip6_input/5 (40967549 (estimated locally),0.04 per call) ip6_input/5 (7772822 (estimated locally),0.01 per call) ip6_input/5 (6675204 (estimated locally),0.01 per call) ip6_input/5 (127872656 (estimated locally),0.12 per call) 
+  Calls: 
+mld6_lookfor_group/18 (mld6_lookfor_group) @062c78c0
+  Type: function
+  Visibility: external public
+  References: 
+  Referring: 
+  Availability: not_available
+  Function flags: optimize_size
+  Called by: ip6_input/5 (53305800 (estimated locally),0.05 per call) 
+  Calls: 
+pbuf_realloc/17 (pbuf_realloc) @062c72a0
+  Type: function
+  Visibility: external public
+  References: 
+  Referring: 
+  Availability: not_available
+  Function flags: optimize_size
+  Called by: ip6_input/5 (232074578 (estimated locally),0.22 per call) 
+  Calls: 
+lwip_htons/16 (lwip_htons) @062c7540
+  Type: function
+  Visibility: external public
+  References: 
+  Referring: 
+  Availability: not_available
+  Function flags: optimize_size
+  Called by: ip6_output_if_src.part.0/32 (52886 (estimated locally),0.23 per call) ip6_input/5 (14171185 (estimated locally),0.01 per call) ip6_input/5 (42942985 (estimated locally),0.04 per call) ip6_input/5 (232074578 (estimated locally),0.22 per call) ip6_input/5 (487295611 (estimated locally),0.45 per call) ip6_input/5 (474784325 (estimated locally),0.44 per call) 
+  Calls: 
+pbuf_free/15 (pbuf_free) @062c7000
+  Type: function
+  Visibility: external public
+  References: 
+  Referring: 
+  Availability: not_available
+  Function flags: optimize_size
+  Called by: ip6_input/5 (4720902 (estimated locally),0.00 per call) ip6_input/5 (4720902 (estimated locally),0.00 per call) ip6_input/5 (1952971 (estimated locally),0.00 per call) ip6_input/5 (283424 (estimated locally),0.00 per call) ip6_input/5 (876387 (estimated locally),0.00 per call) ip6_input/5 (552649 (estimated locally),0.00 per call) ip6_input/5 (563927 (estimated locally),0.00 per call) ip6_input/5 (1735247 (estimated locally),0.00 per call) ip6_input/5 (11455426 (estimated locally),0.01 per call) ip6_input/5 (11455426 (estimated locally),0.01 per call) ip6_input/5 (11455426 (estimated locally),0.01 per call) ip6_input/5 (1735247 (estimated locally),0.00 per call) ip6_input/5 (11802974 (estimated locally),0.01 per call) ip6_input/5 (11802974 (estimated locally),0.01 per call) ip6_input/5 (11802974 (estimated locally),0.01 per call) ip6_input/5 (1735247 (estimated locally),0.00 per call) ip6_input/5 (28240952 (estimated locally),0.03 per call) ip6_input/5 (8568622 (estimated locally),0.01 per call) ip6_input/5 (67392348 (estimated locally),0.06 per call) ip6_input/5 (487295611 (estimated locally),0.45 per call) ip6_input/5 (354316660 (estimated locally),0.33 per call) 
+  Calls: 
+lwip_stats/14 (lwip_stats) @0636a168
+  Type: variable
+  Body removed by symtab_remove_unreachable_nodes
+  Visibility: external public
+  References: 
+  Referring: ip6_output/8 (read)ip6_output/8 (write)ip6_output_if_src.part.0/32 (read)ip6_output_if_src.part.0/32 (write)ip6_output_if/6 (read)ip6_output_if/6 (write)ip6_input/5 (read)ip6_input/5 (write)ip6_input/5 (read)ip6_input/5 (write)ip6_input/5 (read)ip6_input/5 (write)ip6_input/5 (read)ip6_input/5 (write)ip6_input/5 (read)ip6_input/5 (write)ip6_input/5 (read)ip6_input/5 (write)ip6_input/5 (read)ip6_input/5 (write)ip6_input/5 (read)ip6_input/5 (write)ip6_input/5 (read)ip6_input/5 (write)ip6_input/5 (read)ip6_input/5 (write)ip6_input/5 (read)ip6_input/5 (write)ip6_input/5 (read)ip6_input/5 (write)ip6_input/5 (read)ip6_input/5 (write)ip6_input/5 (read)ip6_input/5 (write)ip6_input/5 (read)ip6_input/5 (write)ip6_input/5 (read)ip6_input/5 (write)ip6_input/5 (read)ip6_input/5 (write)ip6_input/5 (read)ip6_input/5 (write)ip6_input/5 (read)ip6_input/5 (write)ip6_input/5 (read)ip6_input/5 (write)ip6_input/5 (read)ip6_input/5 (write)ip6_input/5 (read)ip6_input/5 (write)ip6_input/5 (read)ip6_input/5 (write)ip6_input/5 (read)ip6_input/5 (write)ip6_input/5 (read)ip6_input/5 (write)ip6_input/5 (read)ip6_input/5 (write)ip6_input/5 (read)ip6_input/5 (write)ip6_input/5 (read)ip6_input/5 (write)ip6_output_if_src.part.0/32 (read)ip6_output_if_src.part.0/32 (write)ip6_options_add_hbh_ra/9 (read)ip6_options_add_hbh_ra/9 (write)
+  Availability: not_available
+  Varpool flags:
+lwip_htonl/13 (lwip_htonl) @062c7ee0
+  Type: function
+  Visibility: external public
+  References: 
+  Referring: 
+  Availability: not_available
+  Function flags: optimize_size
+  Called by: ip6_output_if_src.part.0/32 (52886 (estimated locally),0.23 per call) ip6_input/5 (1073686850 (estimated locally),1.00 per call) ip6_select_source_address/2 (15237269 (estimated locally),0.06 per call) 
+  Calls: 
+netif_default/12 (netif_default) @062fb4c8
+  Type: variable
+  Body removed by symtab_remove_unreachable_nodes
+  Visibility: external public
+  References: 
+  Referring: ip6_route/1 (read)
+  Availability: not_available
+  Varpool flags:
+nd6_find_route/11 (nd6_find_route) @062c7b60
+  Type: function
+  Visibility: external public
+  References: 
+  Referring: 
+  Availability: not_available
+  Function flags: optimize_size
+  Called by: ip6_route/1 (12081071 (estimated locally),0.07 per call) 
+  Calls: 
+netif_list/10 (netif_list) @062fb438
+  Type: variable
+  Body removed by symtab_remove_unreachable_nodes
+  Visibility: external public
+  References: 
+  Referring: ip6_route/1 (read)ip6_route/1 (read)ip6_input/5 (read)
+  Availability: not_available
+  Varpool flags:
+ip6_options_add_hbh_ra/9 (ip6_options_add_hbh_ra) @062c7460
+  Type: function definition analyzed
+  Visibility: externally_visible public
+  References: lwip_stats/14 (read)lwip_stats/14 (write)
+  Referring: 
+  Availability: available
+  Function flags: count:1073741824 (estimated locally) body optimize_size
+  Called by: 
+  Calls: pbuf_add_header/27 (1073741824 (estimated locally),1.00 per call) 
+ip6_output/8 (ip6_output) @062c71c0
+  Type: function definition analyzed
+  Visibility: externally_visible public
+  References: lwip_stats/14 (read)lwip_stats/14 (write)
+  Referring: 
+  Availability: available
+  Function flags: count:162688 (estimated locally) body optimize_size
+  Called by: 
+  Calls: ip6_output_if/6 (54811 (estimated locally),0.34 per call) ip6_route/1 (16594 (estimated locally),0.10 per call) ip6_route/1 (38720 (estimated locally),0.24 per call) 
+ip6_output_if_src/7 (ip6_output_if_src) @062a39a0
+  Type: function definition analyzed
+  Visibility: externally_visible public
+  References: 
+  Referring: 
+  Availability: available
+  Function flags: count:162688 (estimated locally) body optimize_size
+  Called by: ip6_output_if/6 (1073593492 (estimated locally),1.00 per call) 
+  Calls: ip6_output_if_src.part.0/32 (55314 (estimated locally),0.34 per call) 
+ip6_output_if/6 (ip6_output_if) @062a38c0
+  Type: function definition analyzed
+  Visibility: externally_visible public
+  References: lwip_stats/14 (read)lwip_stats/14 (write)
+  Referring: 
+  Availability: available
+  Function flags: count:1073741823 (estimated locally) body optimize_size
+  Called by: ip6_output/8 (54811 (estimated locally),0.34 per call) 
+  Calls: ip6_output_if_src/7 (1073593492 (estimated locally),1.00 per call) ip6_select_source_address/2 (25600246 (estimated locally),0.02 per call) 
+ip6_input/5 (ip6_input) @062a3380
+  Type: function definition analyzed
+  Visibility: externally_visible public
+  References: lwip_stats/14 (read)lwip_stats/14 (write)lwip_stats/14 (read)lwip_stats/14 (write)lwip_stats/14 (read)lwip_stats/14 (write)lwip_stats/14 (read)lwip_stats/14 (write)lwip_stats/14 (read)lwip_stats/14 (write)ip_data/4 (write)ip_data/4 (write)ip_data/4 (write)ip_data/4 (write)ip_data/4 (write)ip_data/4 (write)ip_data/4 (write)ip_data/4 (write)ip_data/4 (write)ip_data/4 (write)ip_data/4 (write)ip_data/4 (write)lwip_stats/14 (read)lwip_stats/14 (write)lwip_stats/14 (read)lwip_stats/14 (write)ip_data/4 (write)ip_data/4 (write)ip_data/4 (write)ip_data/4 (write)ip_data/4 (write)ip_data/4 (addr)netif_list/10 (read)ip_data/4 (read)ip_data/4 (read)ip_data/4 (read)ip_data/4 (read)ip_data/4 (read)ip_data/4 (read)ip_data/4 (read)lwip_stats/14 (read)lwip_stats/14 (write)ip_data/4 (write)lwip_stats/14 (read)lwip_stats/14 (write)lwip_stats/14 (read)lwip_stats/14 (write)lwip_stats/14 (read)lwip_stats/14 (write)lwip_stats/14 (read)lwip_stats/14 (write)ip_data/4 (read)lwip_stats/14 (read)lwip_stats/14 (write)lwip_stats/14 (read)lwip_stats/14 (write)lwip_stats/14 (read)lwip_stats/14 (write)lwip_stats/14 (read)lwip_stats/14 (write)lwip_stats/14 (read)lwip_stats/14 (write)ip_data/4 (read)lwip_stats/14 (read)lwip_stats/14 (write)lwip_stats/14 (read)lwip_stats/14 (write)lwip_stats/14 (read)lwip_stats/14 (write)lwip_stats/14 (read)lwip_stats/14 (write)lwip_stats/14 (read)lwip_stats/14 (write)lwip_stats/14 (read)lwip_stats/14 (write)lwip_stats/14 (read)lwip_stats/14 (write)lwip_stats/14 (read)lwip_stats/14 (write)ip_data/4 (write)lwip_stats/14 (read)lwip_stats/14 (write)ip_data/4 (write)ip_data/4 (read)lwip_stats/14 (read)lwip_stats/14 (write)lwip_stats/14 (read)lwip_stats/14 (write)ip_data/4 (write)ip_data/4 (write)ip_data/4 (write)ip_data/4 (write)ip_data/4 (write)ip_data/4 (write)ip_data/4 (write)ip_data/4 (write)ip_data/4 (write)ip_data/4 (write)ip_data/4 (write)ip_data/4 (write)ip_data/4 (write)ip_data/4 (write)
+  Referring: 
+  Availability: available
+  Function flags: count:1073686850 (estimated locally) body optimize_size
+  Called by: 
+  Calls: pbuf_free/15 (4720902 (estimated locally),0.00 per call) icmp6_param_problem/20 (744443 (estimated locally),0.00 per call) pbuf_add_header_force/22 (2307577 (estimated locally),0.00 per call) icmp6_input/26 (4720902 (estimated locally),0.00 per call) tcp_input/25 (4720902 (estimated locally),0.00 per call) udp_input/24 (4720902 (estimated locally),0.00 per call) pbuf_free/15 (4720902 (estimated locally),0.00 per call) pbuf_remove_header/19 (23604512 (estimated locally),0.02 per call) raw_input/23 (48290737 (estimated locally),0.04 per call) pbuf_add_header_force/22 (48290737 (estimated locally),0.04 per call) pbuf_free/15 (1952971 (estimated locally),0.00 per call) icmp6_param_problem/20 (1952971 (estimated locally),0.00 per call) pbuf_remove_header/19 (20903185 (estimated locally),0.02 per call) ip6_reass/21 (21329781 (estimated locally),0.02 per call) pbuf_remove_header/19 (21329781 (estimated locally),0.02 per call) pbuf_free/15 (283424 (estimated locally),0.00 per call) icmp6_param_problem/20 (283424 (estimated locally),0.00 per call) lwip_htons/16 (14171185 (estimated locally),0.01 per call) lwip_htons/16 (42942985 (estimated locally),0.04 per call) pbuf_free/15 (876387 (estimated locally),0.00 per call) pbuf_remove_header/19 (40967549 (estimated locally),0.04 per call) pbuf_free/15 (552649 (estimated locally),0.00 per call) icmp6_param_problem/20 (552649 (estimated locally),0.00 per call) pbuf_free/15 (563927 (estimated locally),0.00 per call) icmp6_param_problem/20 (563927 (estimated locally),0.00 per call) pbuf_free/15 (1735247 (estimated locally),0.00 per call) pbuf_remove_header/19 (7772822 (estimated locally),0.01 per call) pbuf_free/15 (11455426 (estimated locally),0.01 per call) icmp6_param_problem/20 (5599412 (estimated locally),0.01 per call) pbuf_free/15 (11455426 (estimated locally),0.01 per call) icmp6_param_problem/20 (11455426 (estimated locally),0.01 per call) pbuf_free/15 (11455426 (estimated locally),0.01 per call) pbuf_free/15 (1735247 (estimated locally),0.00 per call) pbuf_remove_header/19 (6675204 (estimated locally),0.01 per call) pbuf_free/15 (11802974 (estimated locally),0.01 per call) icmp6_param_problem/20 (5769294 (estimated locally),0.01 per call) pbuf_free/15 (11802974 (estimated locally),0.01 per call) icmp6_param_problem/20 (11802974 (estimated locally),0.01 per call) pbuf_free/15 (11802974 (estimated locally),0.01 per call) pbuf_free/15 (1735247 (estimated locally),0.00 per call) pbuf_remove_header/19 (127872656 (estimated locally),0.12 per call) pbuf_free/15 (28240952 (estimated locally),0.03 per call) pbuf_free/15 (8568622 (estimated locally),0.01 per call) ip6_input_accept/3 (256492422 (estimated locally),0.24 per call) ip6_input_accept/3 (108690272 (estimated locally),0.10 per call) mld6_lookfor_group/18 (53305800 (estimated locally),0.05 per call) pbuf_free/15 (67392348 (estimated locally),0.06 per call) pbuf_realloc/17 (232074578 (estimated locally),0.22 per call) lwip_htons/16 (232074578 (estimated locally),0.22 per call) pbuf_free/15 (487295611 (estimated locally),0.45 per call) lwip_htons/16 (487295611 (estimated locally),0.45 per call) lwip_htons/16 (474784325 (estimated locally),0.44 per call) pbuf_free/15 (354316660 (estimated locally),0.33 per call) lwip_htonl/13 (1073686850 (estimated locally),1.00 per call) 
+ip_data/4 (ip_data) @062811f8
+  Type: variable
+  Body removed by symtab_remove_unreachable_nodes
+  Visibility: external public
+  References: 
+  Referring: ip6_input_accept.part.0/31 (read)ip6_input_accept.part.0/31 (read)ip6_input_accept.part.0/31 (read)ip6_input_accept.part.0/31 (read)ip6_input_accept.part.0/31 (read)ip6_input/5 (write)ip6_input/5 (write)ip6_input/5 (write)ip6_input/5 (write)ip6_input/5 (write)ip6_input/5 (write)ip6_input/5 (write)ip6_input/5 (write)ip6_input/5 (write)ip6_input/5 (write)ip6_input/5 (write)ip6_input/5 (write)ip6_input/5 (write)ip6_input/5 (write)ip6_input/5 (write)ip6_input/5 (write)ip6_input/5 (write)ip6_input/5 (addr)ip6_input/5 (read)ip6_input/5 (read)ip6_input/5 (read)ip6_input/5 (read)ip6_input/5 (read)ip6_input/5 (read)ip6_input/5 (read)ip6_input/5 (write)ip6_input/5 (read)ip6_input/5 (read)ip6_input/5 (write)ip6_input/5 (write)ip6_input/5 (read)ip6_input/5 (write)ip6_input/5 (write)ip6_input/5 (write)ip6_input/5 (write)ip6_input/5 (write)ip6_input/5 (write)ip6_input/5 (write)ip6_input/5 (write)ip6_input/5 (write)ip6_input/5 (write)ip6_input/5 (write)ip6_input/5 (write)ip6_input/5 (write)ip6_input/5 (write)
+  Availability: not_available
+  Varpool flags:
+ip6_input_accept/3 (ip6_input_accept) @062218c0
+  Type: function definition analyzed
+  Visibility: prevailing_def_ironly
+  References: 
+  Referring: 
+  Availability: local
+  Function flags: count:537462801 (estimated locally) body local optimize_size
+  Called by: ip6_input/5 (256492422 (estimated locally),0.24 per call) ip6_input/5 (108690272 (estimated locally),0.10 per call) 
+  Calls: ip6_input_accept.part.0/31 (268731400 (estimated locally),0.50 per call) 
+ip6_select_source_address/2 (ip6_select_source_address) @062211c0
+  Type: function definition analyzed
+  Visibility: externally_visible public
+  References: 
+  Referring: 
+  Availability: available
+  Function flags: count:273480299 (estimated locally) body optimize_size
+  Called by: ip6_output_if/6 (25600246 (estimated locally),0.02 per call) 
+  Calls: lwip_htonl/13 (15237269 (estimated locally),0.06 per call) 
+ip6_route/1 (ip6_route) @062131c0
+  Type: function definition analyzed
+  Visibility: externally_visible public
+  References: netif_list/10 (read)netif_list/10 (read)netif_default/12 (read)
+  Referring: 
+  Availability: available
+  Function flags: count:173526871 (estimated locally) body optimize_size
+  Called by: ip6_output/8 (16594 (estimated locally),0.10 per call) ip6_output/8 (38720 (estimated locally),0.24 per call) 
+  Calls: nd6_find_route/11 (12081071 (estimated locally),0.07 per call) 
+
+;; Function ip6_input_accept (ip6_input_accept, funcdef_no=3, decl_uid=7644, cgraph_uid=4, symbol_order=3)
+
+Modification phase of node ip6_input_accept/3
+ip6_input_accept (struct netif * netif)
+{
+  u8_t i;
+  unsigned char _1;
+  _Bool _2;
+  int _3;
+  int _5;
+
+  <bb 2> [local count: 537462801]:
+  # DEBUG BEGIN_STMT
+  _1 = netif_7(D)->flags;
+  _2 = (_Bool) _1;
+  if (_2 != 0)
+    goto <bb 3>; [50.00%]
+  else
+    goto <bb 4>; [50.00%]
+
+  <bb 3> [local count: 268731400]:
+  # i_4 = PHI <0(2)>
+  _3 = ip6_input_accept.part.0 (netif_7(D));
+
+  <bb 4> [local count: 537462801]:
+  # _5 = PHI <_3(3), 0(2)>
+  return _5;
+
+}
+
+
+
+;; Function ip6_route (ip6_route, funcdef_no=1, decl_uid=6903, cgraph_uid=2, symbol_order=1)
+
+Modification phase of node ip6_route/1
+ip6_route (const struct ip6_addr_t * src, const struct ip6_addr_t * dest)
+{
+  s8_t i;
+  struct netif * netif;
+  struct netif * netif_list.0_1;
+  struct netif * _3;
+  unsigned char _5;
+  unsigned char _6;
+  unsigned char _9;
+  unsigned char _10;
+  unsigned char _11;
+  unsigned char _12;
+  unsigned char _13;
+  unsigned char _14;
+  _Bool _15;
+  unsigned int _16;
+  unsigned int _17;
+  _Bool _18;
+  long unsigned int _19;
+  long unsigned int _20;
+  long unsigned int _22;
+  long unsigned int _23;
+  long unsigned int _24;
+  long unsigned int _25;
+  long unsigned int _26;
+  long unsigned int _27;
+  unsigned char _28;
+  unsigned char _29;
+  _Bool _30;
+  unsigned int _31;
+  unsigned int _32;
+  _Bool _33;
+  unsigned char _34;
+  unsigned char _35;
+  unsigned char _36;
+  int _37;
+  unsigned char _38;
+  long unsigned int _39;
+  long unsigned int _40;
+  long unsigned int _41;
+  long unsigned int _42;
+  long unsigned int _43;
+  long unsigned int _44;
+  long unsigned int _45;
+  long unsigned int _46;
+  unsigned char i.5_47;
+  unsigned char _48;
+  unsigned char _49;
+  int _50;
+  unsigned char _51;
+  long unsigned int _52;
+  long unsigned int _53;
+  long unsigned int _54;
+  unsigned char _55;
+  long unsigned int _56;
+  long unsigned int _57;
+  long unsigned int _58;
+  long unsigned int _59;
+  long unsigned int _60;
+  unsigned char i.7_61;
+  unsigned char _62;
+  long unsigned int _63;
+  long unsigned int _64;
+  long unsigned int _65;
+  long unsigned int _66;
+  unsigned char _67;
+  int _68;
+  unsigned char _69;
+  long unsigned int _70;
+  long unsigned int _71;
+  long unsigned int _72;
+  long unsigned int _73;
+  long unsigned int _74;
+  long unsigned int _75;
+  long unsigned int _76;
+  unsigned char _77;
+  unsigned char _78;
+  unsigned char i.9_79;
+  unsigned char _80;
+  struct netif * netif_default.10_81;
+  unsigned char _82;
+  struct netif * _91;
+  unsigned char _96;
+  unsigned char _101;
+  unsigned char _104;
+  unsigned char _105;
+  unsigned char _106;
+  unsigned char _109;
+  unsigned char _113;
+  unsigned char _114;
+
+  <bb 2> [local count: 173526871]:
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  netif_list.0_1 = netif_list;
+  if (netif_list.0_1 != 0B)
+    goto <bb 3>; [70.00%]
+  else
+    goto <bb 8>; [30.00%]
+
+  <bb 3> [local count: 121468810]:
+  _3 = netif_list.0_1->next;
+  if (_3 == 0B)
+    goto <bb 4>; [30.00%]
+  else
+    goto <bb 8>; [70.00%]
+
+  <bb 4> [local count: 36440643]:
+  # DEBUG BEGIN_STMT
+  _5 = netif_list.0_1->flags;
+  _114 = _5 & 5;
+  if (_114 != 5)
+    goto <bb 79>; [29.00%]
+  else
+    goto <bb 5>; [71.00%]
+
+  <bb 5> [local count: 25872856]:
+  _6 = dest_94(D)->zone;
+  if (_6 != 0)
+    goto <bb 6>; [66.00%]
+  else
+    goto <bb 7>; [34.00%]
+
+  <bb 6> [local count: 17076085]:
+  _9 = netif_list.0_1->num;
+  _10 = _9 + 1;
+  if (_6 != _10)
+    goto <bb 79>; [44.22%]
+  else
+    goto <bb 7>; [55.78%]
+
+  <bb 7> [local count: 18321812]:
+  # DEBUG BEGIN_STMT
+  goto <bb 79>; [100.00%]
+
+  <bb 8> [local count: 137086228]:
+  # DEBUG BEGIN_STMT
+  _11 = dest_94(D)->zone;
+  if (_11 != 0)
+    goto <bb 80>; [50.00%]
+  else
+    goto <bb 15>; [50.00%]
+
+  <bb 80> [local count: 68543114]:
+  goto <bb 14>; [100.00%]
+
+  <bb 9> [local count: 1014686024]:
+  # DEBUG BEGIN_STMT
+  _12 = netif_83->num;
+  _13 = _12 + 1;
+  if (_11 == _13)
+    goto <bb 10>; [34.00%]
+  else
+    goto <bb 13>; [66.00%]
+
+  <bb 10> [local count: 344993248]:
+  _14 = netif_83->flags;
+  _15 = (_Bool) _14;
+  if (_15 != 0)
+    goto <bb 11>; [50.00%]
+  else
+    goto <bb 13>; [50.00%]
+
+  <bb 11> [local count: 172496624]:
+  _16 = (unsigned int) _14;
+  _17 = _16 >> 2;
+  _18 = (_Bool) _17;
+  if (_18 != 0)
+    goto <bb 12>; [5.50%]
+  else
+    goto <bb 13>; [94.50%]
+
+  <bb 12> [local count: 9487314]:
+  # netif_4 = PHI <netif_83(11)>
+  # DEBUG BEGIN_STMT
+  goto <bb 79>; [100.00%]
+
+  <bb 13> [local count: 1005198709]:
+  # DEBUG BEGIN_STMT
+  netif_115 = netif_83->next;
+  # DEBUG netif => netif_115
+
+  <bb 14> [local count: 1073741824]:
+  # netif_83 = PHI <netif_115(13), netif_list.0_1(80)>
+  # DEBUG netif => netif_83
+  # DEBUG BEGIN_STMT
+  if (netif_83 != 0B)
+    goto <bb 9>; [94.50%]
+  else
+    goto <bb 79>; [5.50%]
+
+  <bb 15> [local count: 68543114]:
+  # DEBUG BEGIN_STMT
+  _19 = dest_94(D)->addr[0];
+  _20 = _19 & 49407;
+  if (_20 == 33022)
+    goto <bb 24>; [34.00%]
+  else
+    goto <bb 16>; [66.00%]
+
+  <bb 16> [local count: 45238455]:
+  _22 = _19 & 36863;
+  if (_22 == 511)
+    goto <bb 24>; [34.00%]
+  else
+    goto <bb 17>; [66.00%]
+
+  <bb 17> [local count: 29857380]:
+  if (_22 == 767)
+    goto <bb 24>; [34.00%]
+  else
+    goto <bb 18>; [66.00%]
+
+  <bb 18> [local count: 19705871]:
+  _23 = src_97(D)->addr[0];
+  _24 = _23 & 49407;
+  if (_24 == 33022)
+    goto <bb 24>; [34.00%]
+  else
+    goto <bb 19>; [66.00%]
+
+  <bb 19> [local count: 13005875]:
+  if (_23 == 0)
+    goto <bb 20>; [50.00%]
+  else
+    goto <bb 22>; [50.00%]
+
+  <bb 20> [local count: 6502937]:
+  _25 = src_97(D)->addr[1];
+  if (_25 == 0)
+    goto <bb 21>; [50.00%]
+  else
+    goto <bb 22>; [50.00%]
+
+  <bb 21> [local count: 3251469]:
+  _26 = src_97(D)->addr[2];
+  if (_26 == 0)
+    goto <bb 23>; [50.00%]
+  else
+    goto <bb 22>; [50.00%]
+
+  <bb 22> [local count: 12453125]:
+  # netif_2 = PHI <netif_list.0_1(21), netif_list.0_1(19), netif_list.0_1(20), netif_list.0_1(23)>
+  goto <bb 56>; [100.00%]
+
+  <bb 23> [local count: 1625734]:
+  _27 = src_97(D)->addr[3];
+  if (_27 == 16777216)
+    goto <bb 24>; [34.00%]
+  else
+    goto <bb 22>; [66.00%]
+
+  <bb 24> [local count: 56089989]:
+  # DEBUG BEGIN_STMT
+  _28 = src_97(D)->zone;
+  if (_28 != 0)
+    goto <bb 81>; [50.00%]
+  else
+    goto <bb 82>; [50.00%]
+
+  <bb 82> [local count: 28044995]:
+  goto <bb 42>; [100.00%]
+
+  <bb 81> [local count: 28044995]:
+  goto <bb 30>; [100.00%]
+
+  <bb 25> [local count: 389778768]:
+  # DEBUG BEGIN_STMT
+  _29 = netif_84->flags;
+  _30 = (_Bool) _29;
+  if (_30 != 0)
+    goto <bb 26>; [50.00%]
+  else
+    goto <bb 29>; [50.00%]
+
+  <bb 26> [local count: 194889384]:
+  _31 = (unsigned int) _29;
+  _32 = _31 >> 2;
+  _33 = (_Bool) _32;
+  if (_33 != 0)
+    goto <bb 27>; [50.00%]
+  else
+    goto <bb 29>; [50.00%]
+
+  <bb 27> [local count: 97444692]:
+  _34 = netif_84->num;
+  _35 = _34 + 1;
+  if (_28 == _35)
+    goto <bb 28>; [5.50%]
+  else
+    goto <bb 29>; [94.50%]
+
+  <bb 28> [local count: 5359458]:
+  # netif_7 = PHI <netif_84(27)>
+  # DEBUG BEGIN_STMT
+  goto <bb 79>; [100.00%]
+
+  <bb 29> [local count: 384419311]:
+  # DEBUG BEGIN_STMT
+  netif_112 = netif_84->next;
+  # DEBUG netif => netif_112
+
+  <bb 30> [local count: 412464305]:
+  # netif_84 = PHI <netif_112(29), netif_list.0_1(81)>
+  # DEBUG netif => netif_84
+  # DEBUG BEGIN_STMT
+  if (netif_84 != 0B)
+    goto <bb 25>; [94.50%]
+  else
+    goto <bb 79>; [5.50%]
+
+  <bb 31> [local count: 474514604]:
+  # DEBUG BEGIN_STMT
+  _36 = netif_85->flags;
+  _109 = _36 & 5;
+  if (_109 != 5)
+    goto <bb 32>; [72.11%]
+  else
+    goto <bb 83>; [27.89%]
+
+  <bb 83> [local count: 132342122]:
+  goto <bb 40>; [100.00%]
+
+  <bb 32> [local count: 342172481]:
+  # DEBUG BEGIN_STMT
+  // predicted unlikely by continue predictor.
+  goto <bb 41>; [100.00%]
+
+  <bb 33> [local count: 395743142]:
+  # DEBUG BEGIN_STMT
+  _37 = (int) i_88;
+  _38 = netif_85->ip6_addr_state[_37];
+  _113 = _38 & 16;
+  if (_113 != 0)
+    goto <bb 34>; [50.00%]
+  else
+    goto <bb 39>; [50.00%]
+
+  <bb 34> [local count: 197871571]:
+  _39 = src_97(D)->addr[0];
+  _40 = MEM[(const struct ip6_addr_t *)netif_85].ip6_addr[_37].u_addr.ip6.addr[0];
+  if (_39 == _40)
+    goto <bb 35>; [34.00%]
+  else
+    goto <bb 39>; [66.00%]
+
+  <bb 35> [local count: 67276334]:
+  _41 = src_97(D)->addr[1];
+  _42 = MEM[(const struct ip6_addr_t *)netif_85].ip6_addr[_37].u_addr.ip6.addr[1];
+  if (_41 == _42)
+    goto <bb 36>; [34.00%]
+  else
+    goto <bb 39>; [66.00%]
+
+  <bb 36> [local count: 22873954]:
+  _43 = src_97(D)->addr[2];
+  _44 = MEM[(const struct ip6_addr_t *)netif_85].ip6_addr[_37].u_addr.ip6.addr[2];
+  if (_43 == _44)
+    goto <bb 37>; [34.00%]
+  else
+    goto <bb 39>; [66.00%]
+
+  <bb 37> [local count: 7777144]:
+  _45 = src_97(D)->addr[3];
+  _46 = MEM[(const struct ip6_addr_t *)netif_85].ip6_addr[_37].u_addr.ip6.addr[3];
+  if (_45 == _46)
+    goto <bb 38>; [5.50%]
+  else
+    goto <bb 39>; [94.50%]
+
+  <bb 38> [local count: 427743]:
+  # netif_8 = PHI <netif_85(37)>
+  # DEBUG BEGIN_STMT
+  goto <bb 79>; [100.00%]
+
+  <bb 39> [local count: 395315400]:
+  # DEBUG BEGIN_STMT
+  i.5_47 = (unsigned char) i_88;
+  _48 = i.5_47 + 1;
+  i_110 = (s8_t) _48;
+  # DEBUG i => i_110
+
+  <bb 40> [local count: 527657523]:
+  # i_88 = PHI <i_110(39), 0(83)>
+  # DEBUG i => i_88
+  # DEBUG BEGIN_STMT
+  if (i_88 != 3)
+    goto <bb 33>; [75.00%]
+  else
+    goto <bb 41>; [25.00%]
+
+  <bb 41> [local count: 474086862]:
+  # DEBUG BEGIN_STMT
+  netif_111 = netif_85->next;
+  # DEBUG netif => netif_111
+
+  <bb 42> [local count: 502131857]:
+  # netif_85 = PHI <netif_111(41), netif_list.0_1(82)>
+  # DEBUG netif => netif_85
+  # DEBUG BEGIN_STMT
+  if (netif_85 != 0B)
+    goto <bb 31>; [94.50%]
+  else
+    goto <bb 79>; [5.50%]
+
+  <bb 43> [local count: 318002847]:
+  # DEBUG BEGIN_STMT
+  _49 = netif_86->flags;
+  _105 = _49 & 5;
+  if (_105 != 5)
+    goto <bb 44>; [72.11%]
+  else
+    goto <bb 85>; [27.89%]
+
+  <bb 85> [local count: 88690993]:
+  goto <bb 54>; [100.00%]
+
+  <bb 44> [local count: 229311853]:
+  # DEBUG BEGIN_STMT
+  // predicted unlikely by continue predictor.
+  goto <bb 55>; [100.00%]
+
+  <bb 45> [local count: 264956820]:
+  # DEBUG BEGIN_STMT
+  _50 = (int) i_89;
+  _51 = netif_86->ip6_addr_state[_50];
+  _106 = _51 & 16;
+  if (_106 != 0)
+    goto <bb 46>; [50.00%]
+  else
+    goto <bb 53>; [50.00%]
+
+  <bb 46> [local count: 132478410]:
+  _52 = MEM[(const struct ip6_addr_t *)netif_86].ip6_addr[_50].u_addr.ip6.addr[0];
+  if (_19 == _52)
+    goto <bb 47>; [34.00%]
+  else
+    goto <bb 53>; [66.00%]
+
+  <bb 47> [local count: 45042659]:
+  _53 = dest_94(D)->addr[1];
+  _54 = MEM[(const struct ip6_addr_t *)netif_86].ip6_addr[_50].u_addr.ip6.addr[1];
+  if (_53 == _54)
+    goto <bb 48>; [34.00%]
+  else
+    goto <bb 53>; [66.00%]
+
+  <bb 48> [local count: 15314504]:
+  _55 = MEM[(const struct ip6_addr_t *)netif_86].ip6_addr[_50].u_addr.ip6.zone;
+  if (_55 == 0)
+    goto <bb 49>; [50.00%]
+  else
+    goto <bb 53>; [50.00%]
+
+  <bb 49> [local count: 7657252]:
+  _56 = netif_86->ip6_addr_valid_life[_50];
+  if (_56 == 0)
+    goto <bb 52>; [3.66%]
+  else
+    goto <bb 50>; [96.34%]
+
+  <bb 50> [local count: 7376997]:
+  _57 = dest_94(D)->addr[2];
+  _58 = MEM[(const struct ip6_addr_t *)netif_86].ip6_addr[_50].u_addr.ip6.addr[2];
+  if (_57 == _58)
+    goto <bb 51>; [34.00%]
+  else
+    goto <bb 53>; [66.00%]
+
+  <bb 51> [local count: 2508179]:
+  _59 = dest_94(D)->addr[3];
+  _60 = MEM[(const struct ip6_addr_t *)netif_86].ip6_addr[_50].u_addr.ip6.addr[3];
+  if (_59 == _60)
+    goto <bb 52>; [3.66%]
+  else
+    goto <bb 53>; [96.34%]
+
+  <bb 52> [local count: 372055]:
+  # netif_95 = PHI <netif_86(51), netif_86(49)>
+  # DEBUG BEGIN_STMT
+  goto <bb 79>; [100.00%]
+
+  <bb 53> [local count: 264584766]:
+  # DEBUG BEGIN_STMT
+  i.7_61 = (unsigned char) i_89;
+  _62 = i.7_61 + 1;
+  i_107 = (s8_t) _62;
+  # DEBUG i => i_107
+
+  <bb 54> [local count: 353275760]:
+  # i_89 = PHI <i_107(53), 0(85)>
+  # DEBUG i => i_89
+  # DEBUG BEGIN_STMT
+  if (i_89 != 3)
+    goto <bb 45>; [75.00%]
+  else
+    goto <bb 55>; [25.00%]
+
+  <bb 55> [local count: 317630793]:
+  # DEBUG BEGIN_STMT
+  netif_108 = netif_86->next;
+  # DEBUG netif => netif_108
+
+  <bb 56> [local count: 330083919]:
+  # netif_86 = PHI <netif_2(22), netif_108(55)>
+  # DEBUG netif => netif_86
+  # DEBUG BEGIN_STMT
+  if (netif_86 != 0B)
+    goto <bb 43>; [96.34%]
+  else
+    goto <bb 57>; [3.66%]
+
+  <bb 57> [local count: 12081071]:
+  # DEBUG BEGIN_STMT
+  netif_99 = nd6_find_route (dest_94(D));
+  # DEBUG netif => netif_99
+  # DEBUG BEGIN_STMT
+  if (netif_99 != 0B)
+    goto <bb 79>; [54.59%]
+  else
+    goto <bb 58>; [45.41%]
+
+  <bb 58> [local count: 5486015]:
+  # DEBUG BEGIN_STMT
+  _63 = src_97(D)->addr[0];
+  if (_63 != 0)
+    goto <bb 62>; [50.00%]
+  else
+    goto <bb 59>; [50.00%]
+
+  <bb 59> [local count: 2743007]:
+  _64 = src_97(D)->addr[1];
+  if (_64 != 0)
+    goto <bb 62>; [50.00%]
+  else
+    goto <bb 60>; [50.00%]
+
+  <bb 60> [local count: 1371504]:
+  _65 = src_97(D)->addr[2];
+  if (_65 != 0)
+    goto <bb 62>; [50.00%]
+  else
+    goto <bb 61>; [50.00%]
+
+  <bb 61> [local count: 685752]:
+  _66 = src_97(D)->addr[3];
+  if (_66 != 0)
+    goto <bb 62>; [50.00%]
+  else
+    goto <bb 76>; [50.00%]
+
+  <bb 62> [local count: 5143139]:
+  # DEBUG BEGIN_STMT
+  netif_100 = netif_list;
+  # DEBUG netif => netif_100
+  goto <bb 75>; [100.00%]
+
+  <bb 63> [local count: 87904576]:
+  # DEBUG BEGIN_STMT
+  _67 = netif_87->flags;
+  _101 = _67 & 5;
+  if (_101 != 5)
+    goto <bb 64>; [72.11%]
+  else
+    goto <bb 84>; [27.89%]
+
+  <bb 84> [local count: 24516586]:
+  goto <bb 73>; [100.00%]
+
+  <bb 64> [local count: 63387990]:
+  # DEBUG BEGIN_STMT
+  // predicted unlikely by continue predictor.
+  goto <bb 74>; [100.00%]
+
+  <bb 65> [local count: 73468761]:
+  # DEBUG BEGIN_STMT
+  _68 = (int) i_90;
+  _69 = netif_87->ip6_addr_state[_68];
+  _104 = _69 & 16;
+  if (_104 != 0)
+    goto <bb 66>; [50.00%]
+  else
+    goto <bb 72>; [50.00%]
+
+  <bb 66> [local count: 36734381]:
+  _70 = MEM[(const struct ip6_addr_t *)netif_87].ip6_addr[_68].u_addr.ip6.addr[0];
+  if (_63 == _70)
+    goto <bb 67>; [34.00%]
+  else
+    goto <bb 72>; [66.00%]
+
+  <bb 67> [local count: 12489689]:
+  _71 = src_97(D)->addr[1];
+  _72 = MEM[(const struct ip6_addr_t *)netif_87].ip6_addr[_68].u_addr.ip6.addr[1];
+  if (_71 == _72)
+    goto <bb 68>; [34.00%]
+  else
+    goto <bb 72>; [66.00%]
+
+  <bb 68> [local count: 4246494]:
+  _73 = src_97(D)->addr[2];
+  _74 = MEM[(const struct ip6_addr_t *)netif_87].ip6_addr[_68].u_addr.ip6.addr[2];
+  if (_73 == _74)
+    goto <bb 69>; [34.00%]
+  else
+    goto <bb 72>; [66.00%]
+
+  <bb 69> [local count: 1443808]:
+  _75 = src_97(D)->addr[3];
+  _76 = MEM[(const struct ip6_addr_t *)netif_87].ip6_addr[_68].u_addr.ip6.addr[3];
+  if (_75 == _76)
+    goto <bb 70>; [34.00%]
+  else
+    goto <bb 72>; [66.00%]
+
+  <bb 70> [local count: 490895]:
+  _77 = src_97(D)->zone;
+  _78 = MEM[(const struct ip6_addr_t *)netif_87].ip6_addr[_68].u_addr.ip6.zone;
+  if (_77 == _78)
+    goto <bb 71>; [5.50%]
+  else
+    goto <bb 72>; [94.50%]
+
+  <bb 71> [local count: 26999]:
+  # netif_21 = PHI <netif_87(70)>
+  # DEBUG BEGIN_STMT
+  goto <bb 79>; [100.00%]
+
+  <bb 72> [local count: 73441762]:
+  # DEBUG BEGIN_STMT
+  i.9_79 = (unsigned char) i_90;
+  _80 = i.9_79 + 1;
+  i_102 = (s8_t) _80;
+  # DEBUG i => i_102
+
+  <bb 73> [local count: 97958348]:
+  # i_90 = PHI <i_102(72), 0(84)>
+  # DEBUG i => i_90
+  # DEBUG BEGIN_STMT
+  if (i_90 != 3)
+    goto <bb 65>; [75.00%]
+  else
+    goto <bb 74>; [25.00%]
+
+  <bb 74> [local count: 87877577]:
+  # DEBUG BEGIN_STMT
+  netif_103 = netif_87->next;
+  # DEBUG netif => netif_103
+
+  <bb 75> [local count: 93020715]:
+  # netif_87 = PHI <netif_100(62), netif_103(74)>
+  # DEBUG netif => netif_87
+  # DEBUG BEGIN_STMT
+  if (netif_87 != 0B)
+    goto <bb 63>; [94.50%]
+  else
+    goto <bb 76>; [5.50%]
+
+  <bb 76> [local count: 5459015]:
+  # DEBUG BEGIN_STMT
+  netif_default.10_81 = netif_default;
+  if (netif_default.10_81 == 0B)
+    goto <bb 78>; [8.27%]
+  else
+    goto <bb 77>; [91.73%]
+
+  <bb 77> [local count: 5007555]:
+  _82 = netif_default.10_81->flags;
+  _96 = _82 & 5;
+  if (_96 != 5)
+    goto <bb 78>; [29.00%]
+  else
+    goto <bb 79>; [71.00%]
+
+  <bb 78> [local count: 1903651]:
+  # DEBUG BEGIN_STMT
+
+  <bb 79> [local count: 173526874]:
+  # _91 = PHI <0B(6), netif_list.0_1(7), netif_4(12), 0B(14), netif_7(28), netif_8(38), 0B(42), netif_95(52), netif_99(57), netif_21(71), 0B(78), netif_default.10_81(77), 0B(4), 0B(30)>
+  return _91;
+
+}
+
+
+
+;; Function ip6_select_source_address (ip6_select_source_address, funcdef_no=2, decl_uid=6906, cgraph_uid=3, symbol_order=2)
+
+Modification phase of node ip6_select_source_address/2
+ip6_select_source_address (struct netif * netif, const struct ip6_addr_t * dest)
+{
+  u8_t best_bits;
+  u8_t best_pref;
+  u8_t cand_bits;
+  u8_t cand_pref;
+  u8_t i;
+  s8_t best_scope;
+  s8_t cand_scope;
+  s8_t dest_scope;
+  const struct ip_addr_t * best_addr;
+  long unsigned int _1;
+  long unsigned int _2;
+  int _3;
+  long unsigned int _4;
+  long unsigned int _5;
+  long unsigned int _6;
+  long unsigned int _7;
+  long unsigned int _8;
+  long unsigned int _9;
+  long unsigned int _10;
+  long unsigned int _11;
+  signed char _12;
+  int _13;
+  unsigned char _14;
+  long unsigned int _15;
+  long unsigned int _16;
+  long unsigned int _17;
+  long unsigned int _18;
+  _Bool _19;
+  long unsigned int _20;
+  long unsigned int _21;
+  long unsigned int _22;
+  long unsigned int _23;
+  long unsigned int _24;
+  long unsigned int _25;
+  long unsigned int _26;
+  int iftmp.12_38;
+  const struct ip_addr_t * _39;
+  unsigned char _41;
+  const struct ip_addr_t * _49;
+
+  <bb 2> [local count: 273480299]:
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG best_scope => 0
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG best_pref => 0
+  # DEBUG BEGIN_STMT
+  # DEBUG best_bits => 0
+  # DEBUG BEGIN_STMT
+  _1 = dest_43(D)->addr[0];
+  _2 = _1 & 224;
+  if (_2 == 32)
+    goto <bb 13>; [34.00%]
+  else
+    goto <bb 3>; [66.00%]
+
+  <bb 3> [local count: 180496997]:
+  # DEBUG BEGIN_STMT
+  _4 = _1 & 49407;
+  if (_4 == 33022)
+    goto <bb 13>; [34.00%]
+  else
+    goto <bb 4>; [66.00%]
+
+  <bb 4> [local count: 119128018]:
+  if (_1 == 0)
+    goto <bb 5>; [50.00%]
+  else
+    goto <bb 8>; [50.00%]
+
+  <bb 5> [local count: 59564009]:
+  _5 = dest_43(D)->addr[1];
+  if (_5 == 0)
+    goto <bb 6>; [50.00%]
+  else
+    goto <bb 8>; [50.00%]
+
+  <bb 6> [local count: 29782005]:
+  _6 = dest_43(D)->addr[2];
+  if (_6 == 0)
+    goto <bb 7>; [50.00%]
+  else
+    goto <bb 8>; [50.00%]
+
+  <bb 7> [local count: 14891002]:
+  _7 = dest_43(D)->addr[3];
+  if (_7 == 16777216)
+    goto <bb 13>; [34.00%]
+  else
+    goto <bb 8>; [66.00%]
+
+  <bb 8> [local count: 114065077]:
+  # DEBUG BEGIN_STMT
+  _8 = _1 & 254;
+  if (_8 == 252)
+    goto <bb 13>; [34.00%]
+  else
+    goto <bb 9>; [66.00%]
+
+  <bb 9> [local count: 75282951]:
+  # DEBUG BEGIN_STMT
+  _9 = _1 & 255;
+  if (_9 == 255)
+    goto <bb 10>; [20.24%]
+  else
+    goto <bb 11>; [79.76%]
+
+  <bb 10> [local count: 15237269]:
+  # DEBUG BEGIN_STMT
+  _10 = lwip_htonl (_1);
+  _11 = _10 >> 16;
+  _12 = (signed char) _11;
+  dest_scope_45 = _12 & 15;
+  # DEBUG dest_scope => dest_scope_45
+  goto <bb 13>; [100.00%]
+
+  <bb 11> [local count: 60045682]:
+  # DEBUG BEGIN_STMT
+  if (_4 == 49406)
+    goto <bb 13>; [34.00%]
+  else
+    goto <bb 12>; [66.00%]
+
+  <bb 12> [local count: 39630150]:
+  # DEBUG BEGIN_STMT
+  # DEBUG dest_scope => 14
+
+  <bb 13> [local count: 273480298]:
+  # dest_scope_29 = PHI <14(2), 2(7), 8(8), dest_scope_45(10), 5(11), 14(12), 2(3)>
+  # DEBUG dest_scope => dest_scope_29
+  # DEBUG BEGIN_STMT
+  # DEBUG best_addr => 0B
+  # DEBUG BEGIN_STMT
+  # DEBUG i => 0
+  goto <bb 39>; [100.00%]
+
+  <bb 14> [local count: 805306369]:
+  # DEBUG BEGIN_STMT
+  _13 = (int) i_33;
+  _14 = netif_46(D)->ip6_addr_state[_13];
+  _41 = _14 & 16;
+  if (_41 == 0)
+    goto <bb 15>; [33.00%]
+  else
+    goto <bb 16>; [67.00%]
+
+  <bb 15> [local count: 265751101]:
+  # DEBUG BEGIN_STMT
+  // predicted unlikely by continue predictor.
+  goto <bb 38>; [100.00%]
+
+  <bb 16> [local count: 539555268]:
+  # DEBUG BEGIN_STMT
+  # DEBUG D#1 => &netif_46(D)->ip6_addr[_13].u_addr.ip6
+  # DEBUG cand_addr => D#1
+  # DEBUG BEGIN_STMT
+  _15 = MEM[(const struct ip6_addr_t *)netif_46(D)].ip6_addr[_13].u_addr.ip6.addr[0];
+  _16 = _15 & 224;
+  if (_16 == 32)
+    goto <bb 21>; [34.00%]
+  else
+    goto <bb 17>; [66.00%]
+
+  <bb 17> [local count: 356106476]:
+  # DEBUG BEGIN_STMT
+  _17 = _15 & 49407;
+  if (_17 == 33022)
+    goto <bb 21>; [34.00%]
+  else
+    goto <bb 18>; [66.00%]
+
+  <bb 18> [local count: 235030274]:
+  # DEBUG BEGIN_STMT
+  _18 = _15 & 254;
+  if (_18 == 252)
+    goto <bb 21>; [34.00%]
+  else
+    goto <bb 19>; [66.00%]
+
+  <bb 19> [local count: 155119981]:
+  # DEBUG BEGIN_STMT
+  if (_17 == 49406)
+    goto <bb 21>; [34.00%]
+  else
+    goto <bb 20>; [66.00%]
+
+  <bb 20> [local count: 102379188]:
+  # DEBUG BEGIN_STMT
+  # DEBUG cand_scope => 15
+
+  <bb 21> [local count: 539555269]:
+  # cand_scope_30 = PHI <14(16), 2(17), 8(18), 5(19), 15(20)>
+  # DEBUG cand_scope => cand_scope_30
+  # DEBUG BEGIN_STMT
+  _19 = _14 == 48;
+  cand_pref_47 = (u8_t) _19;
+  # DEBUG cand_pref => cand_pref_47
+  # DEBUG BEGIN_STMT
+  _20 = dest_43(D)->addr[0];
+  if (_15 == _20)
+    goto <bb 22>; [34.00%]
+  else
+    goto <bb 23>; [66.00%]
+
+  <bb 22> [local count: 183448791]:
+  _21 = MEM[(const struct ip6_addr_t *)netif_46(D)].ip6_addr[_13].u_addr.ip6.addr[1];
+  _22 = dest_43(D)->addr[1];
+  if (_21 == _22)
+    goto <bb 24>; [34.00%]
+  else
+    goto <bb 23>; [66.00%]
+
+  <bb 23> [local count: 477182679]:
+
+  <bb 24> [local count: 539555269]:
+  # iftmp.12_38 = PHI <1(22), 0(23)>
+  cand_bits_48 = (u8_t) iftmp.12_38;
+  # DEBUG cand_bits => cand_bits_48
+  # DEBUG BEGIN_STMT
+  if (cand_bits_48 != 0)
+    goto <bb 25>; [50.00%]
+  else
+    goto <bb 28>; [50.00%]
+
+  <bb 25> [local count: 269777634]:
+  _23 = MEM[(const struct ip6_addr_t *)netif_46(D)].ip6_addr[_13].u_addr.ip6.addr[2];
+  _24 = dest_43(D)->addr[2];
+  if (_23 == _24)
+    goto <bb 26>; [34.00%]
+  else
+    goto <bb 28>; [66.00%]
+
+  <bb 26> [local count: 91724395]:
+  _25 = MEM[(const struct ip6_addr_t *)netif_46(D)].ip6_addr[_13].u_addr.ip6.addr[3];
+  _26 = dest_43(D)->addr[3];
+  if (_25 == _26)
+    goto <bb 27>; [5.50%]
+  else
+    goto <bb 28>; [94.50%]
+
+  <bb 27> [local count: 5044842]:
+  # _3 = PHI <_13(26)>
+  # DEBUG BEGIN_STMT
+  _49 = &netif_46(D)->ip6_addr[_3];
+  goto <bb 40>; [100.00%]
+
+  <bb 28> [local count: 534510426]:
+  # DEBUG BEGIN_STMT
+  if (best_addr_28 == 0B)
+    goto <bb 37>; [30.00%]
+  else
+    goto <bb 29>; [70.00%]
+
+  <bb 29> [local count: 374157298]:
+  if (cand_scope_30 < best_scope_32)
+    goto <bb 30>; [50.00%]
+  else
+    goto <bb 31>; [50.00%]
+
+  <bb 30> [local count: 187078649]:
+  if (dest_scope_29 <= cand_scope_30)
+    goto <bb 37>; [50.00%]
+  else
+    goto <bb 31>; [50.00%]
+
+  <bb 31> [local count: 280617974]:
+  if (cand_scope_30 > best_scope_32)
+    goto <bb 32>; [50.00%]
+  else
+    goto <bb 33>; [50.00%]
+
+  <bb 32> [local count: 140308987]:
+  if (dest_scope_29 > best_scope_32)
+    goto <bb 37>; [50.00%]
+  else
+    goto <bb 33>; [50.00%]
+
+  <bb 33> [local count: 210463481]:
+  if (cand_scope_30 == best_scope_32)
+    goto <bb 34>; [34.00%]
+  else
+    goto <bb 38>; [66.00%]
+
+  <bb 34> [local count: 71557583]:
+  if (best_pref_35 < cand_pref_47)
+    goto <bb 37>; [50.00%]
+  else
+    goto <bb 35>; [50.00%]
+
+  <bb 35> [local count: 35778792]:
+  if (best_pref_35 == cand_pref_47)
+    goto <bb 36>; [34.00%]
+  else
+    goto <bb 38>; [66.00%]
+
+  <bb 36> [local count: 12164789]:
+  if (best_bits_37 < cand_bits_48)
+    goto <bb 37>; [50.00%]
+  else
+    goto <bb 38>; [50.00%]
+
+  <bb 37> [local count: 365908132]:
+  # DEBUG BEGIN_STMT
+  best_addr_50 = &netif_46(D)->ip6_addr[_13];
+  # DEBUG best_addr => best_addr_50
+  # DEBUG BEGIN_STMT
+  # DEBUG best_scope => cand_scope_30
+  # DEBUG BEGIN_STMT
+  # DEBUG best_pref => cand_pref_47
+  # DEBUG BEGIN_STMT
+  # DEBUG best_bits => cand_bits_48
+
+  <bb 38> [local count: 800261528]:
+  # best_addr_27 = PHI <best_addr_28(15), best_addr_28(33), best_addr_28(35), best_addr_28(36), best_addr_50(37)>
+  # best_scope_31 = PHI <best_scope_32(15), best_scope_32(33), best_scope_32(35), best_scope_32(36), cand_scope_30(37)>
+  # best_pref_34 = PHI <best_pref_35(15), best_pref_35(33), best_pref_35(35), best_pref_35(36), cand_pref_47(37)>
+  # best_bits_36 = PHI <best_bits_37(15), best_bits_37(33), best_bits_37(35), best_bits_37(36), cand_bits_48(37)>
+  # DEBUG best_bits => best_bits_36
+  # DEBUG best_pref => best_pref_34
+  # DEBUG best_scope => best_scope_31
+  # DEBUG best_addr => best_addr_27
+  # DEBUG BEGIN_STMT
+  i_51 = i_33 + 1;
+  # DEBUG i => i_51
+
+  <bb 39> [local count: 1073741824]:
+  # best_addr_28 = PHI <0B(13), best_addr_27(38)>
+  # best_scope_32 = PHI <0(13), best_scope_31(38)>
+  # i_33 = PHI <0(13), i_51(38)>
+  # best_pref_35 = PHI <0(13), best_pref_34(38)>
+  # best_bits_37 = PHI <0(13), best_bits_36(38)>
+  # DEBUG best_bits => best_bits_37
+  # DEBUG best_pref => best_pref_35
+  # DEBUG i => i_33
+  # DEBUG best_scope => best_scope_32
+  # DEBUG best_addr => best_addr_28
+  # DEBUG BEGIN_STMT
+  if (i_33 != 3)
+    goto <bb 14>; [75.00%]
+  else
+    goto <bb 40>; [25.00%]
+
+  <bb 40> [local count: 273480298]:
+  # _39 = PHI <_49(27), best_addr_28(39)>
+  return _39;
+
+}
+
+
+
+;; Function ip6_input (ip6_input, funcdef_no=4, decl_uid=6909, cgraph_uid=5, symbol_order=5)
+
+Modification phase of node ip6_input/5
+ip6_input (struct pbuf * p, struct netif * inp)
+{
+  struct ip6_frag_hdr * frag_hdr;
+  struct ip6_rout_hdr * rout_hdr;
+  s32_t opt_dlen;
+  struct ip6_opt_hdr * opt_hdr;
+  struct ip6_dest_hdr * dest_hdr;
+  s32_t opt_offset;
+  s32_t opt_dlen;
+  struct ip6_opt_hdr * opt_hdr;
+  struct ip6_hbh_hdr * hbh_hdr;
+  s32_t opt_offset;
+  raw_input_state_t raw_status;
+  u16_t hlen_tot;
+  u16_t hlen;
+  const u8_t * nexth;
+  struct netif * netif;
+  struct ip6_hdr * ip6hdr;
+  short unsigned int _1;
+  short unsigned int _2;
+  long unsigned int _3;
+  long unsigned int _4;
+  long unsigned int _5;
+  short unsigned int _7;
+  short unsigned int _8;
+  short unsigned int _9;
+  short unsigned int _10;
+  short unsigned int _11;
+  short unsigned int _12;
+  int _13;
+  int _14;
+  short unsigned int _15;
+  short unsigned int _16;
+  int _17;
+  short unsigned int _18;
+  short unsigned int _19;
+  short unsigned int _20;
+  short unsigned int _21;
+  short unsigned int _22;
+  short unsigned int _23;
+  short unsigned int _24;
+  short unsigned int _25;
+  long unsigned int _26;
+  long unsigned int _27;
+  long unsigned int _28;
+  long unsigned int _29;
+  long unsigned int _30;
+  long unsigned int _31;
+  long unsigned int _32;
+  long unsigned int _33;
+  long unsigned int _41;
+  short unsigned int _42;
+  short unsigned int _43;
+  short unsigned int _44;
+  short unsigned int _45;
+  long unsigned int _47;
+  long unsigned int _49;
+  unsigned char _52;
+  long unsigned int _54;
+  unsigned char _55;
+  long unsigned int _57;
+  struct mld_group * _62;
+  int _63;
+  int _76;
+  long unsigned int _77;
+  long unsigned int _78;
+  long unsigned int _79;
+  long unsigned int _80;
+  long unsigned int _81;
+  long unsigned int _82;
+  long unsigned int _83;
+  long unsigned int _84;
+  short unsigned int _85;
+  short unsigned int _86;
+  unsigned char _87;
+  int _88;
+  int _89;
+  short unsigned int _90;
+  short unsigned int _91;
+  short unsigned int _92;
+  short unsigned int _93;
+  short unsigned int _94;
+  short unsigned int _95;
+  sizetype opt_offset.16_96;
+  unsigned char _97;
+  unsigned char _98;
+  unsigned char _99;
+  unsigned char _100;
+  unsigned char _101;
+  int _102;
+  short unsigned int _103;
+  short unsigned int _104;
+  short unsigned int _105;
+  short unsigned int _106;
+  long unsigned int _107;
+  long unsigned int _108;
+  short unsigned int _109;
+  short unsigned int _110;
+  unsigned char _111;
+  long int _112;
+  long int _113;
+  unsigned int _114;
+  unsigned char _115;
+  int _116;
+  int _117;
+  short unsigned int _118;
+  short unsigned int _119;
+  short unsigned int _120;
+  short unsigned int _121;
+  short unsigned int _122;
+  short unsigned int _123;
+  sizetype opt_offset.17_124;
+  unsigned char _125;
+  unsigned char _126;
+  unsigned char _127;
+  unsigned char _128;
+  unsigned char _129;
+  unsigned char _130;
+  int _131;
+  short unsigned int _132;
+  short unsigned int _133;
+  short unsigned int _134;
+  short unsigned int _135;
+  long unsigned int _136;
+  long unsigned int _137;
+  short unsigned int _138;
+  short unsigned int _139;
+  unsigned char _140;
+  long int _141;
+  long int _142;
+  unsigned int _143;
+  unsigned char _144;
+  int _145;
+  int _146;
+  short unsigned int _147;
+  short unsigned int _148;
+  short unsigned int _149;
+  short unsigned int _150;
+  short unsigned int _151;
+  short unsigned int _152;
+  unsigned char _153;
+  u8_t * _154;
+  short unsigned int _155;
+  short unsigned int _156;
+  unsigned char _157;
+  u8_t * _158;
+  short unsigned int _159;
+  short unsigned int _160;
+  unsigned int _161;
+  short unsigned int _162;
+  short unsigned int _163;
+  short unsigned int _164;
+  short unsigned int _165;
+  short unsigned int _166;
+  short unsigned int _167;
+  short unsigned int _168;
+  short unsigned int _169;
+  short unsigned int _170;
+  u16_t * _171;
+  short unsigned int _172;
+  short unsigned int _173;
+  short unsigned int _174;
+  unsigned char _175;
+  short unsigned int _176;
+  short unsigned int _177;
+  unsigned char _178;
+  unsigned int _179;
+  unsigned char _180;
+  long unsigned int _181;
+  long unsigned int _182;
+  unsigned char _183;
+  short unsigned int _184;
+  short unsigned int _185;
+  short unsigned int _186;
+  short unsigned int _187;
+  u8_t iftmp.14_202;
+  u8_t iftmp.15_203;
+  short unsigned int _236;
+  u8_t iftmp.14_238;
+  short unsigned int _240;
+  u8_t iftmp.15_241;
+  short unsigned int _246;
+  unsigned char _249;
+  unsigned int _375;
+  unsigned int _376;
+
+  <bb 2> [local count: 1073686850]:
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _1 = lwip_stats.ip6.recv;
+  _2 = _1 + 1;
+  lwip_stats.ip6.recv = _2;
+  # DEBUG BEGIN_STMT
+  ip6hdr_219 = p_218(D)->payload;
+  # DEBUG ip6hdr => ip6hdr_219
+  # DEBUG BEGIN_STMT
+  _3 = ip6hdr_219->_v_tc_fl;
+  _4 = lwip_htonl (_3);
+  _5 = _4 >> 28;
+  if (_5 != 6)
+    goto <bb 3>; [33.00%]
+  else
+    goto <bb 4>; [67.00%]
+
+  <bb 3> [local count: 354316660]:
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  pbuf_free (p_218(D));
+  # DEBUG BEGIN_STMT
+  _7 = lwip_stats.ip6.err;
+  _8 = _7 + 1;
+  lwip_stats.ip6.err = _8;
+  # DEBUG BEGIN_STMT
+  _9 = lwip_stats.ip6.drop;
+  _10 = _9 + 1;
+  lwip_stats.ip6.drop = _10;
+  # DEBUG BEGIN_STMT
+  goto <bb 133>; [100.00%]
+
+  <bb 4> [local count: 719370190]:
+  # DEBUG BEGIN_STMT
+  _11 = p_218(D)->len;
+  if (_11 <= 39)
+    goto <bb 6>; [34.00%]
+  else
+    goto <bb 5>; [66.00%]
+
+  <bb 5> [local count: 474784325]:
+  _12 = p_218(D)->tot_len;
+  _13 = (int) _12;
+  _14 = _13 + -39;
+  _15 = ip6hdr_219->_plen;
+  _16 = lwip_htons (_15);
+  _17 = (int) _16;
+  if (_14 <= _17)
+    goto <bb 6>; [51.12%]
+  else
+    goto <bb 7>; [48.88%]
+
+  <bb 6> [local count: 487295611]:
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _18 = ip6hdr_219->_plen;
+  lwip_htons (_18);
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  pbuf_free (p_218(D));
+  # DEBUG BEGIN_STMT
+  _19 = lwip_stats.ip6.lenerr;
+  _20 = _19 + 1;
+  lwip_stats.ip6.lenerr = _20;
+  # DEBUG BEGIN_STMT
+  _21 = lwip_stats.ip6.drop;
+  _22 = _21 + 1;
+  lwip_stats.ip6.drop = _22;
+  # DEBUG BEGIN_STMT
+  goto <bb 133>; [100.00%]
+
+  <bb 7> [local count: 232074578]:
+  # DEBUG BEGIN_STMT
+  _23 = ip6hdr_219->_plen;
+  _24 = lwip_htons (_23);
+  _25 = _24 + 40;
+  pbuf_realloc (p_218(D), _25);
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _26 = ip6hdr_219->dest.addr[0];
+  ip_data.current_iphdr_dest.u_addr.ip6.addr[0] = _26;
+  # DEBUG BEGIN_STMT
+  _27 = ip6hdr_219->dest.addr[1];
+  ip_data.current_iphdr_dest.u_addr.ip6.addr[1] = _27;
+  # DEBUG BEGIN_STMT
+  _28 = ip6hdr_219->dest.addr[2];
+  ip_data.current_iphdr_dest.u_addr.ip6.addr[2] = _28;
+  # DEBUG BEGIN_STMT
+  _29 = ip6hdr_219->dest.addr[3];
+  ip_data.current_iphdr_dest.u_addr.ip6.addr[3] = _29;
+  # DEBUG BEGIN_STMT
+  ip_data.current_iphdr_dest.u_addr.ip6.zone = 0;
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  ip_data.current_iphdr_dest.type = 6;
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _30 = ip6hdr_219->src.addr[0];
+  ip_data.current_iphdr_src.u_addr.ip6.addr[0] = _30;
+  # DEBUG BEGIN_STMT
+  _31 = ip6hdr_219->src.addr[1];
+  ip_data.current_iphdr_src.u_addr.ip6.addr[1] = _31;
+  # DEBUG BEGIN_STMT
+  _32 = ip6hdr_219->src.addr[2];
+  ip_data.current_iphdr_src.u_addr.ip6.addr[2] = _32;
+  # DEBUG BEGIN_STMT
+  _33 = ip6hdr_219->src.addr[3];
+  ip_data.current_iphdr_src.u_addr.ip6.addr[3] = _33;
+  # DEBUG BEGIN_STMT
+  ip_data.current_iphdr_src.u_addr.ip6.zone = 0;
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  ip_data.current_iphdr_src.type = 6;
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  if (_26 == 0)
+    goto <bb 8>; [50.00%]
+  else
+    goto <bb 10>; [50.00%]
+
+  <bb 8> [local count: 116037289]:
+  if (_27 == 0)
+    goto <bb 9>; [50.00%]
+  else
+    goto <bb 10>; [50.00%]
+
+  <bb 9> [local count: 58018644]:
+  if (_28 == 4294901760)
+    goto <bb 14>; [20.97%]
+  else
+    goto <bb 10>; [79.03%]
+
+  <bb 10> [local count: 219908068]:
+  if (_30 == 0)
+    goto <bb 11>; [50.00%]
+  else
+    goto <bb 13>; [50.00%]
+
+  <bb 11> [local count: 109954034]:
+  if (_31 == 0)
+    goto <bb 12>; [50.00%]
+  else
+    goto <bb 13>; [50.00%]
+
+  <bb 12> [local count: 54977017]:
+  if (_32 == 4294901760)
+    goto <bb 14>; [20.97%]
+  else
+    goto <bb 13>; [79.03%]
+
+  <bb 13> [local count: 208379388]:
+  _41 = _30 & 255;
+  if (_41 == 255)
+    goto <bb 14>; [20.97%]
+  else
+    goto <bb 15>; [79.03%]
+
+  <bb 14> [local count: 67392348]:
+  # DEBUG BEGIN_STMT
+  pbuf_free (p_218(D));
+  # DEBUG BEGIN_STMT
+  _42 = lwip_stats.ip6.err;
+  _43 = _42 + 1;
+  lwip_stats.ip6.err = _43;
+  # DEBUG BEGIN_STMT
+  _44 = lwip_stats.ip6.drop;
+  _45 = _44 + 1;
+  lwip_stats.ip6.drop = _45;
+  # DEBUG BEGIN_STMT
+  goto <bb 133>; [100.00%]
+
+  <bb 15> [local count: 164682230]:
+  # DEBUG BEGIN_STMT
+  _47 = _26 & 49407;
+  if (_47 == 33022)
+    goto <bb 18>; [34.00%]
+  else
+    goto <bb 16>; [66.00%]
+
+  <bb 16> [local count: 108690272]:
+  _49 = _26 & 36863;
+  if (_49 == 511)
+    goto <bb 18>; [34.00%]
+  else
+    goto <bb 17>; [66.00%]
+
+  <bb 17> [local count: 71735579]:
+  if (_49 == 767)
+    goto <bb 18>; [34.00%]
+  else
+    goto <bb 19>; [66.00%]
+
+  <bb 18> [local count: 117336748]:
+  _52 = inp_237(D)->num;
+  iftmp.14_238 = _52 + 1;
+
+  <bb 19> [local count: 164682230]:
+  # iftmp.14_202 = PHI <iftmp.14_238(18), 0(17)>
+  ip_data.current_iphdr_dest.u_addr.ip6.zone = iftmp.14_202;
+  # DEBUG BEGIN_STMT
+  _54 = _30 & 49407;
+  if (_54 == 33022)
+    goto <bb 20>; [34.00%]
+  else
+    goto <bb 21>; [66.00%]
+
+  <bb 20> [local count: 55991958]:
+  _55 = inp_237(D)->num;
+  iftmp.15_241 = _55 + 1;
+
+  <bb 21> [local count: 164682230]:
+  # iftmp.15_203 = PHI <iftmp.15_241(20), 0(19)>
+  ip_data.current_iphdr_src.u_addr.ip6.zone = iftmp.15_203;
+  # DEBUG BEGIN_STMT
+  ip_data.current_ip6_header = ip6hdr_219;
+  # DEBUG BEGIN_STMT
+  ip_data.current_netif = inp_237(D);
+  # DEBUG BEGIN_STMT
+  ip_data.current_input_netif = inp_237(D);
+  # DEBUG BEGIN_STMT
+  _57 = _26 & 255;
+  if (_57 == 255)
+    goto <bb 22>; [34.00%]
+  else
+    goto <bb 29>; [66.00%]
+
+  <bb 22> [local count: 55991958]:
+  # DEBUG BEGIN_STMT
+  if (_26 == 511)
+    goto <bb 24>; [34.00%]
+  else
+    goto <bb 23>; [66.00%]
+
+  <bb 23> [local count: 36954692]:
+  if (_26 == 767)
+    goto <bb 24>; [34.00%]
+  else
+    goto <bb 27>; [66.00%]
+
+  <bb 24> [local count: 31601861]:
+  if (_27 == 0)
+    goto <bb 25>; [50.00%]
+  else
+    goto <bb 27>; [50.00%]
+
+  <bb 25> [local count: 15800931]:
+  if (_28 == 0)
+    goto <bb 26>; [50.00%]
+  else
+    goto <bb 27>; [50.00%]
+
+  <bb 26> [local count: 7900465]:
+  if (_29 == 16777216)
+    goto <bb 48>; [34.00%]
+  else
+    goto <bb 27>; [66.00%]
+
+  <bb 27> [local count: 53305800]:
+  # DEBUG BEGIN_STMT
+  _62 = mld6_lookfor_group (inp_237(D), &ip_data.current_iphdr_dest.u_addr.ip6);
+  if (_62 != 0B)
+    goto <bb 48>; [70.00%]
+  else
+    goto <bb 28>; [30.00%]
+
+  <bb 28> [local count: 15991740]:
+  # DEBUG BEGIN_STMT
+  # DEBUG netif => 0B
+  goto <bb 48>; [100.00%]
+
+  <bb 29> [local count: 108690272]:
+  # DEBUG BEGIN_STMT
+  _63 = ip6_input_accept (inp_237(D));
+  if (_63 != 0)
+    goto <bb 48>; [50.00%]
+  else
+    goto <bb 30>; [50.00%]
+
+  <bb 30> [local count: 54345136]:
+  # DEBUG BEGIN_STMT
+  # DEBUG netif => 0B
+  # DEBUG BEGIN_STMT
+  if (_47 == 33022)
+    goto <bb 32>; [20.97%]
+  else
+    goto <bb 31>; [79.03%]
+
+  <bb 31> [local count: 42948961]:
+  if (_54 == 33022)
+    goto <bb 32>; [20.97%]
+  else
+    goto <bb 33>; [79.03%]
+
+  <bb 32> [local count: 20402572]:
+  # DEBUG BEGIN_STMT
+  // predicted unlikely by goto predictor.
+  goto <bb 48>; [100.00%]
+
+  <bb 33> [local count: 33942564]:
+  # DEBUG BEGIN_STMT
+  if (_26 == 0)
+    goto <bb 34>; [50.00%]
+  else
+    goto <bb 37>; [50.00%]
+
+  <bb 34> [local count: 16971282]:
+  if (_27 == 0)
+    goto <bb 35>; [50.00%]
+  else
+    goto <bb 37>; [50.00%]
+
+  <bb 35> [local count: 8485641]:
+  if (_28 == 0)
+    goto <bb 36>; [50.00%]
+  else
+    goto <bb 37>; [50.00%]
+
+  <bb 36> [local count: 4242820]:
+  if (_29 == 16777216)
+    goto <bb 41>; [20.97%]
+  else
+    goto <bb 37>; [79.03%]
+
+  <bb 37> [local count: 33052844]:
+  if (_30 == 0)
+    goto <bb 38>; [50.00%]
+  else
+    goto <bb 42>; [50.00%]
+
+  <bb 38> [local count: 16526422]:
+  if (_31 == 0)
+    goto <bb 39>; [50.00%]
+  else
+    goto <bb 42>; [50.00%]
+
+  <bb 39> [local count: 8263211]:
+  if (_32 == 0)
+    goto <bb 40>; [50.00%]
+  else
+    goto <bb 42>; [50.00%]
+
+  <bb 40> [local count: 4131606]:
+  if (_33 == 16777216)
+    goto <bb 41>; [20.97%]
+  else
+    goto <bb 42>; [79.03%]
+
+  <bb 41> [local count: 1756117]:
+  # DEBUG BEGIN_STMT
+  // predicted unlikely by goto predictor.
+  goto <bb 48>; [100.00%]
+
+  <bb 42> [local count: 32186447]:
+  # DEBUG BEGIN_STMT
+  netif_247 = netif_list;
+  # DEBUG netif => netif_247
+  goto <bb 47>; [100.00%]
+
+  <bb 43> [local count: 310636336]:
+  # DEBUG BEGIN_STMT
+  if (netif_192 == inp_237(D))
+    goto <bb 44>; [17.43%]
+  else
+    goto <bb 45>; [82.57%]
+
+  <bb 44> [local count: 54143913]:
+  # DEBUG BEGIN_STMT
+  // predicted unlikely by continue predictor.
+  goto <bb 46>; [100.00%]
+
+  <bb 45> [local count: 256492422]:
+  # DEBUG BEGIN_STMT
+  _76 = ip6_input_accept (netif_192);
+  if (_76 != 0)
+    goto <bb 48>; [5.50%]
+  else
+    goto <bb 46>; [94.50%]
+
+  <bb 46> [local count: 296529252]:
+  # DEBUG BEGIN_STMT
+  netif_248 = netif_192->next;
+  # DEBUG netif => netif_248
+
+  <bb 47> [local count: 328715699]:
+  # netif_192 = PHI <netif_247(42), netif_248(46)>
+  # DEBUG netif => netif_192
+  # DEBUG BEGIN_STMT
+  if (netif_192 != 0B)
+    goto <bb 43>; [94.50%]
+  else
+    goto <bb 48>; [5.50%]
+
+  <bb 48> [local count: 164682230]:
+  # netif_193 = PHI <inp_237(D)(27), inp_237(D)(29), 0B(32), 0B(41), netif_192(45), netif_192(47), inp_237(D)(26), 0B(28)>
+netif_found:
+  # DEBUG netif => netif_193
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _77 = ip_data.current_iphdr_src.u_addr.ip6.addr[0];
+  if (_77 == 0)
+    goto <bb 49>; [50.00%]
+  else
+    goto <bb 56>; [50.00%]
+
+  <bb 49> [local count: 82341115]:
+  _78 = ip_data.current_iphdr_src.u_addr.ip6.addr[1];
+  if (_78 == 0)
+    goto <bb 50>; [50.00%]
+  else
+    goto <bb 56>; [50.00%]
+
+  <bb 50> [local count: 41170558]:
+  _79 = ip_data.current_iphdr_src.u_addr.ip6.addr[2];
+  if (_79 == 0)
+    goto <bb 51>; [50.00%]
+  else
+    goto <bb 56>; [50.00%]
+
+  <bb 51> [local count: 20585279]:
+  _80 = ip_data.current_iphdr_src.u_addr.ip6.addr[3];
+  if (_80 == 0)
+    goto <bb 52>; [50.00%]
+  else
+    goto <bb 56>; [50.00%]
+
+  <bb 52> [local count: 10292639]:
+  _81 = ip_data.current_iphdr_dest.u_addr.ip6.addr[0];
+  if (_81 != 767)
+    goto <bb 55>; [33.00%]
+  else
+    goto <bb 53>; [67.00%]
+
+  <bb 53> [local count: 6896068]:
+  _82 = ip_data.current_iphdr_dest.u_addr.ip6.addr[2];
+  if (_82 != 16777216)
+    goto <bb 55>; [50.00%]
+  else
+    goto <bb 54>; [50.00%]
+
+  <bb 54> [local count: 3448034]:
+  _83 = ip_data.current_iphdr_dest.u_addr.ip6.addr[3];
+  _84 = _83 & 255;
+  if (_84 != 255)
+    goto <bb 55>; [50.00%]
+  else
+    goto <bb 56>; [50.00%]
+
+  <bb 55> [local count: 8568622]:
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  pbuf_free (p_218(D));
+  # DEBUG BEGIN_STMT
+  _85 = lwip_stats.ip6.drop;
+  _86 = _85 + 1;
+  lwip_stats.ip6.drop = _86;
+  # DEBUG BEGIN_STMT
+  // predicted unlikely by goto predictor.
+  goto <bb 132>; [100.00%]
+
+  <bb 56> [local count: 156113608]:
+  # DEBUG BEGIN_STMT
+  if (netif_193 == 0B)
+    goto <bb 57>; [18.09%]
+  else
+    goto <bb 58>; [81.91%]
+
+  <bb 57> [local count: 28240952]:
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  pbuf_free (p_218(D));
+  # DEBUG BEGIN_STMT
+  // predicted unlikely by goto predictor.
+  goto <bb 132>; [100.00%]
+
+  <bb 58> [local count: 127872656]:
+  # DEBUG BEGIN_STMT
+  ip_data.current_netif = netif_193;
+  # DEBUG BEGIN_STMT
+  nexth_254 = &ip6hdr_219->_nexth;
+  # DEBUG nexth => nexth_254
+  # DEBUG BEGIN_STMT
+  # DEBUG hlen_tot => 40
+  # DEBUG hlen => 40
+  # DEBUG BEGIN_STMT
+  pbuf_remove_header (p_218(D), 40);
+  # DEBUG BEGIN_STMT
+  goto <bb 119>; [100.00%]
+
+  <bb 59> [local count: 219096861]:
+  # DEBUG BEGIN_STMT
+  switch (_178) <default: <L141> [20.00%], case 0: <L76> [20.00%], case 43: <L117> [20.00%], case 44: <L129> [20.00%], case 60: <L96> [20.00%]>
+
+  <bb 60> [local count: 43819372]:
+<L76>:
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  hbh_hdr_311 = p_189->payload;
+  # DEBUG hbh_hdr => hbh_hdr_311
+  # DEBUG BEGIN_STMT
+  nexth_312 = &hbh_hdr_311->_nexth;
+  # DEBUG nexth => nexth_312
+  # DEBUG BEGIN_STMT
+  _87 = hbh_hdr_311->_hlen;
+  _88 = (int) _87;
+  _89 = _88 + 1;
+  _90 = (short unsigned int) _89;
+  hlen_313 = _90 * 8;
+  # DEBUG hlen => hlen_313
+  # DEBUG BEGIN_STMT
+  _91 = p_189->len;
+  if (_91 <= 7)
+    goto <bb 62>; [2.00%]
+  else
+    goto <bb 61>; [98.00%]
+
+  <bb 61> [local count: 42942985]:
+  if (_91 < hlen_313)
+    goto <bb 62>; [2.00%]
+  else
+    goto <bb 63>; [98.00%]
+
+  <bb 62> [local count: 1735247]:
+  # p_34 = PHI <p_189(60), p_189(61)>
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  pbuf_free (p_34);
+  # DEBUG BEGIN_STMT
+  _92 = lwip_stats.ip6.lenerr;
+  _93 = _92 + 1;
+  lwip_stats.ip6.lenerr = _93;
+  # DEBUG BEGIN_STMT
+  _94 = lwip_stats.ip6.drop;
+  _95 = _94 + 1;
+  lwip_stats.ip6.drop = _95;
+  # DEBUG BEGIN_STMT
+  // predicted unlikely by goto predictor.
+  goto <bb 132>; [100.00%]
+
+  <bb 63> [local count: 42084125]:
+  # DEBUG BEGIN_STMT
+  hlen_tot_314 = hlen_tot_197 + hlen_313;
+  # DEBUG hlen_tot => hlen_tot_314
+  # DEBUG BEGIN_STMT
+  # DEBUG opt_offset => 2
+  # DEBUG BEGIN_STMT
+  goto <bb 76>; [100.00%]
+
+  <bb 64> [local count: 236059477]:
+  # DEBUG BEGIN_STMT
+  # DEBUG opt_dlen => 0
+  # DEBUG BEGIN_STMT
+  opt_offset.16_96 = (sizetype) opt_offset_198;
+  opt_hdr_316 = hbh_hdr_311 + opt_offset.16_96;
+  # DEBUG opt_hdr => opt_hdr_316
+  # DEBUG BEGIN_STMT
+  _97 = opt_hdr_316->_opt_type;
+  switch (_97) <default: <L85> [20.00%], case 0: <L167> [20.00%], case 1: <L82> [20.00%], case 5: <L83> [20.00%], case 194: <L84> [20.00%]>
+
+  <bb 65> [local count: 47211895]:
+<L82>:
+  # DEBUG BEGIN_STMT
+  _98 = opt_hdr_316->_opt_dlen;
+  opt_dlen_319 = (s32_t) _98;
+  # DEBUG opt_dlen => opt_dlen_319
+  # DEBUG BEGIN_STMT
+  goto <bb 75>; [100.00%]
+
+  <bb 66> [local count: 47211895]:
+<L83>:
+  # DEBUG BEGIN_STMT
+  _99 = opt_hdr_316->_opt_dlen;
+  opt_dlen_318 = (s32_t) _99;
+  # DEBUG opt_dlen => opt_dlen_318
+  # DEBUG BEGIN_STMT
+  goto <bb 75>; [100.00%]
+
+  <bb 67> [local count: 47211895]:
+<L84>:
+  # DEBUG BEGIN_STMT
+  _100 = opt_hdr_316->_opt_dlen;
+  opt_dlen_317 = (s32_t) _100;
+  # DEBUG opt_dlen => opt_dlen_317
+  # DEBUG BEGIN_STMT
+  goto <bb 75>; [100.00%]
+
+  <bb 68> [local count: 47211895]:
+<L85>:
+  # DEBUG BEGIN_STMT
+  _101 = _97 >> 6;
+  _102 = (int) _101;
+  switch (_102) <default: <L91> [25.00%], case 1: <L86> [25.00%], case 2: <L87> [25.00%], case 3: <L88> [25.00%]>
+
+  <bb 69> [local count: 11802974]:
+  # p_35 = PHI <p_189(68)>
+<L86>:
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  pbuf_free (p_35);
+  # DEBUG BEGIN_STMT
+  _103 = lwip_stats.ip6.drop;
+  _104 = _103 + 1;
+  lwip_stats.ip6.drop = _104;
+  # DEBUG BEGIN_STMT
+  // predicted unlikely by goto predictor.
+  goto <bb 132>; [100.00%]
+
+  <bb 70> [local count: 11802974]:
+  # p_36 = PHI <p_189(68)>
+  # opt_hdr_60 = PHI <opt_hdr_316(68)>
+<L87>:
+  # DEBUG BEGIN_STMT
+  icmp6_param_problem (p_36, 2, opt_hdr_60);
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  pbuf_free (p_36);
+  # DEBUG BEGIN_STMT
+  _105 = lwip_stats.ip6.drop;
+  _106 = _105 + 1;
+  lwip_stats.ip6.drop = _106;
+  # DEBUG BEGIN_STMT
+  // predicted unlikely by goto predictor.
+  goto <bb 132>; [100.00%]
+
+  <bb 71> [local count: 11802974]:
+  # p_37 = PHI <p_189(68)>
+  # opt_hdr_61 = PHI <opt_hdr_316(68)>
+<L88>:
+  # DEBUG BEGIN_STMT
+  _107 = ip_data.current_iphdr_dest.u_addr.ip6.addr[0];
+  _108 = _107 & 255;
+  if (_108 != 255)
+    goto <bb 72>; [48.88%]
+  else
+    goto <bb 73>; [51.12%]
+
+  <bb 72> [local count: 5769294]:
+  # DEBUG BEGIN_STMT
+  icmp6_param_problem (p_37, 2, opt_hdr_61);
+
+  <bb 73> [local count: 11802974]:
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  pbuf_free (p_37);
+  # DEBUG BEGIN_STMT
+  _109 = lwip_stats.ip6.drop;
+  _110 = _109 + 1;
+  lwip_stats.ip6.drop = _110;
+  # DEBUG BEGIN_STMT
+  // predicted unlikely by goto predictor.
+  goto <bb 132>; [100.00%]
+
+  <bb 74> [local count: 11802974]:
+<L91>:
+  # DEBUG BEGIN_STMT
+  _111 = opt_hdr_316->_opt_dlen;
+  opt_dlen_328 = (s32_t) _111;
+  # DEBUG opt_dlen => opt_dlen_328
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+
+  <bb 75> [local count: 200650555]:
+  # opt_dlen_199 = PHI <-1(64), opt_dlen_319(65), opt_dlen_318(66), opt_dlen_317(67), opt_dlen_328(74)>
+<L167>:
+  # DEBUG opt_dlen => opt_dlen_199
+  # DEBUG BEGIN_STMT
+  _112 = opt_offset_198 + 2;
+  opt_offset_329 = _112 + opt_dlen_199;
+  # DEBUG opt_offset => opt_offset_329
+
+  <bb 76> [local count: 242734680]:
+  # opt_offset_198 = PHI <2(63), opt_offset_329(75)>
+  # DEBUG opt_offset => opt_offset_198
+  # DEBUG BEGIN_STMT
+  _113 = (long int) hlen_313;
+  if (_113 > opt_offset_198)
+    goto <bb 64>; [97.25%]
+  else
+    goto <bb 77>; [2.75%]
+
+  <bb 77> [local count: 6675204]:
+  # DEBUG BEGIN_STMT
+  _114 = (unsigned int) hlen_313;
+  pbuf_remove_header (p_189, _114);
+  # DEBUG BEGIN_STMT
+  goto <bb 117>; [100.00%]
+
+  <bb 78> [local count: 43819372]:
+<L96>:
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  dest_hdr_256 = p_189->payload;
+  # DEBUG dest_hdr => dest_hdr_256
+  # DEBUG BEGIN_STMT
+  nexth_257 = &dest_hdr_256->_nexth;
+  # DEBUG nexth => nexth_257
+  # DEBUG BEGIN_STMT
+  _115 = dest_hdr_256->_hlen;
+  _116 = (int) _115;
+  _117 = _116 + 1;
+  _118 = (short unsigned int) _117;
+  hlen_258 = _118 * 8;
+  # DEBUG hlen => hlen_258
+  # DEBUG BEGIN_STMT
+  _119 = p_189->len;
+  if (_119 <= 7)
+    goto <bb 80>; [2.00%]
+  else
+    goto <bb 79>; [98.00%]
+
+  <bb 79> [local count: 42942985]:
+  if (_119 < hlen_258)
+    goto <bb 80>; [2.00%]
+  else
+    goto <bb 81>; [98.00%]
+
+  <bb 80> [local count: 1735247]:
+  # p_38 = PHI <p_189(78), p_189(79)>
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  pbuf_free (p_38);
+  # DEBUG BEGIN_STMT
+  _120 = lwip_stats.ip6.lenerr;
+  _121 = _120 + 1;
+  lwip_stats.ip6.lenerr = _121;
+  # DEBUG BEGIN_STMT
+  _122 = lwip_stats.ip6.drop;
+  _123 = _122 + 1;
+  lwip_stats.ip6.drop = _123;
+  # DEBUG BEGIN_STMT
+  // predicted unlikely by goto predictor.
+  goto <bb 132>; [100.00%]
+
+  <bb 81> [local count: 42084125]:
+  # DEBUG BEGIN_STMT
+  hlen_tot_259 = hlen_tot_197 + hlen_258;
+  # DEBUG hlen_tot => hlen_tot_259
+  # DEBUG BEGIN_STMT
+  # DEBUG opt_offset => 2
+  # DEBUG BEGIN_STMT
+  goto <bb 95>; [100.00%]
+
+  <bb 82> [local count: 274875249]:
+  # DEBUG BEGIN_STMT
+  # DEBUG opt_dlen => 0
+  # DEBUG BEGIN_STMT
+  opt_offset.17_124 = (sizetype) opt_offset_200;
+  opt_hdr_261 = dest_hdr_256 + opt_offset.17_124;
+  # DEBUG opt_hdr => opt_hdr_261
+  # DEBUG BEGIN_STMT
+  _125 = opt_hdr_261->_opt_type;
+  switch (_125) <default: <L106> [16.67%], case 0: <L168> [16.67%], case 1: <L102> [16.67%], case 5: <L103> [16.67%], case 194: <L104> [16.67%], case 201: <L105> [16.67%]>
+
+  <bb 83> [local count: 45821704]:
+<L102>:
+  # DEBUG BEGIN_STMT
+  _126 = opt_hdr_261->_opt_dlen;
+  opt_dlen_265 = (s32_t) _126;
+  # DEBUG opt_dlen => opt_dlen_265
+  # DEBUG BEGIN_STMT
+  goto <bb 94>; [100.00%]
+
+  <bb 84> [local count: 45821704]:
+<L103>:
+  # DEBUG BEGIN_STMT
+  _127 = opt_hdr_261->_opt_dlen;
+  opt_dlen_264 = (s32_t) _127;
+  # DEBUG opt_dlen => opt_dlen_264
+  # DEBUG BEGIN_STMT
+  goto <bb 94>; [100.00%]
+
+  <bb 85> [local count: 45821704]:
+<L104>:
+  # DEBUG BEGIN_STMT
+  _128 = opt_hdr_261->_opt_dlen;
+  opt_dlen_263 = (s32_t) _128;
+  # DEBUG opt_dlen => opt_dlen_263
+  # DEBUG BEGIN_STMT
+  goto <bb 94>; [100.00%]
+
+  <bb 86> [local count: 45821704]:
+<L105>:
+  # DEBUG BEGIN_STMT
+  _129 = opt_hdr_261->_opt_dlen;
+  opt_dlen_262 = (s32_t) _129;
+  # DEBUG opt_dlen => opt_dlen_262
+  # DEBUG BEGIN_STMT
+  goto <bb 94>; [100.00%]
+
+  <bb 87> [local count: 45821704]:
+<L106>:
+  # DEBUG BEGIN_STMT
+  _130 = _125 >> 6;
+  _131 = (int) _130;
+  switch (_131) <default: <L112> [25.00%], case 1: <L107> [25.00%], case 2: <L108> [25.00%], case 3: <L109> [25.00%]>
+
+  <bb 88> [local count: 11455426]:
+  # p_39 = PHI <p_189(87)>
+<L107>:
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  pbuf_free (p_39);
+  # DEBUG BEGIN_STMT
+  _132 = lwip_stats.ip6.drop;
+  _133 = _132 + 1;
+  lwip_stats.ip6.drop = _133;
+  # DEBUG BEGIN_STMT
+  // predicted unlikely by goto predictor.
+  goto <bb 132>; [100.00%]
+
+  <bb 89> [local count: 11455426]:
+  # p_40 = PHI <p_189(87)>
+  # opt_hdr_74 = PHI <opt_hdr_261(87)>
+<L108>:
+  # DEBUG BEGIN_STMT
+  icmp6_param_problem (p_40, 2, opt_hdr_74);
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  pbuf_free (p_40);
+  # DEBUG BEGIN_STMT
+  _134 = lwip_stats.ip6.drop;
+  _135 = _134 + 1;
+  lwip_stats.ip6.drop = _135;
+  # DEBUG BEGIN_STMT
+  // predicted unlikely by goto predictor.
+  goto <bb 132>; [100.00%]
+
+  <bb 90> [local count: 11455426]:
+  # p_46 = PHI <p_189(87)>
+  # opt_hdr_75 = PHI <opt_hdr_261(87)>
+<L109>:
+  # DEBUG BEGIN_STMT
+  _136 = ip_data.current_iphdr_dest.u_addr.ip6.addr[0];
+  _137 = _136 & 255;
+  if (_137 != 255)
+    goto <bb 91>; [48.88%]
+  else
+    goto <bb 92>; [51.12%]
+
+  <bb 91> [local count: 5599412]:
+  # DEBUG BEGIN_STMT
+  icmp6_param_problem (p_46, 2, opt_hdr_75);
+
+  <bb 92> [local count: 11455426]:
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  pbuf_free (p_46);
+  # DEBUG BEGIN_STMT
+  _138 = lwip_stats.ip6.drop;
+  _139 = _138 + 1;
+  lwip_stats.ip6.drop = _139;
+  # DEBUG BEGIN_STMT
+  // predicted unlikely by goto predictor.
+  goto <bb 132>; [100.00%]
+
+  <bb 93> [local count: 11455426]:
+<L112>:
+  # DEBUG BEGIN_STMT
+  _140 = opt_hdr_261->_opt_dlen;
+  opt_dlen_274 = (s32_t) _140;
+  # DEBUG opt_dlen => opt_dlen_274
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+
+  <bb 94> [local count: 240563946]:
+  # opt_dlen_201 = PHI <-1(82), opt_dlen_265(83), opt_dlen_264(84), opt_dlen_263(85), opt_dlen_262(86), opt_dlen_274(93)>
+<L168>:
+  # DEBUG opt_dlen => opt_dlen_201
+  # DEBUG BEGIN_STMT
+  _141 = opt_offset_200 + 2;
+  opt_offset_275 = _141 + opt_dlen_201;
+  # DEBUG opt_offset => opt_offset_275
+
+  <bb 95> [local count: 282648071]:
+  # opt_offset_200 = PHI <2(81), opt_offset_275(94)>
+  # DEBUG opt_offset => opt_offset_200
+  # DEBUG BEGIN_STMT
+  _142 = (long int) hlen_258;
+  if (_142 > opt_offset_200)
+    goto <bb 82>; [97.25%]
+  else
+    goto <bb 96>; [2.75%]
+
+  <bb 96> [local count: 7772822]:
+  # DEBUG BEGIN_STMT
+  _143 = (unsigned int) hlen_258;
+  pbuf_remove_header (p_189, _143);
+  # DEBUG BEGIN_STMT
+  goto <bb 117>; [100.00%]
+
+  <bb 97> [local count: 43819372]:
+<L117>:
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  rout_hdr_297 = p_189->payload;
+  # DEBUG rout_hdr => rout_hdr_297
+  # DEBUG BEGIN_STMT
+  nexth_298 = &rout_hdr_297->_nexth;
+  # DEBUG nexth => nexth_298
+  # DEBUG BEGIN_STMT
+  _144 = rout_hdr_297->_hlen;
+  _145 = (int) _144;
+  _146 = _145 + 1;
+  _147 = (short unsigned int) _146;
+  hlen_299 = _147 * 8;
+  # DEBUG hlen => hlen_299
+  # DEBUG BEGIN_STMT
+  _148 = p_189->len;
+  if (_148 <= 7)
+    goto <bb 99>; [2.00%]
+  else
+    goto <bb 98>; [98.00%]
+
+  <bb 98> [local count: 42942985]:
+  if (_148 < hlen_299)
+    goto <bb 99>; [2.00%]
+  else
+    goto <bb 100>; [98.00%]
+
+  <bb 99> [local count: 1735247]:
+  # p_48 = PHI <p_189(97), p_189(98)>
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  pbuf_free (p_48);
+  # DEBUG BEGIN_STMT
+  _149 = lwip_stats.ip6.lenerr;
+  _150 = _149 + 1;
+  lwip_stats.ip6.lenerr = _150;
+  # DEBUG BEGIN_STMT
+  _151 = lwip_stats.ip6.drop;
+  _152 = _151 + 1;
+  lwip_stats.ip6.drop = _152;
+  # DEBUG BEGIN_STMT
+  // predicted unlikely by goto predictor.
+  goto <bb 132>; [100.00%]
+
+  <bb 100> [local count: 42084125]:
+  # DEBUG BEGIN_STMT
+  hlen_tot_300 = hlen_tot_197 + hlen_299;
+  # DEBUG hlen_tot => hlen_tot_300
+  # DEBUG BEGIN_STMT
+  _153 = rout_hdr_297->_segments_left;
+  if (_153 != 0)
+    goto <bb 101>; [67.00%]
+  else
+    goto <bb 105>; [33.00%]
+
+  <bb 101> [local count: 28196364]:
+  # DEBUG BEGIN_STMT
+  _249 = _144 & 1;
+  if (_249 != 0)
+    goto <bb 102>; [2.00%]
+  else
+    goto <bb 103>; [98.00%]
+
+  <bb 102> [local count: 563927]:
+  # p_50 = PHI <p_189(101)>
+  # rout_hdr_58 = PHI <rout_hdr_297(101)>
+  # DEBUG BEGIN_STMT
+  _154 = &rout_hdr_58->_hlen;
+  icmp6_param_problem (p_50, 0, _154);
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  pbuf_free (p_50);
+  # DEBUG BEGIN_STMT
+  _155 = lwip_stats.ip6.drop;
+  _156 = _155 + 1;
+  lwip_stats.ip6.drop = _156;
+  # DEBUG BEGIN_STMT
+  // predicted unlikely by goto predictor.
+  goto <bb 132>; [100.00%]
+
+  <bb 103> [local count: 27632437]:
+  # DEBUG BEGIN_STMT
+  _157 = rout_hdr_297->_routing_type;
+  _375 = (unsigned int) _157;
+  _376 = _375 + 4294967294;
+  if (_376 <= 1)
+    goto <bb 105>; [98.00%]
+  else
+    goto <bb 104>; [2.00%]
+
+  <bb 104> [local count: 552649]:
+  # p_51 = PHI <p_189(103)>
+  # rout_hdr_59 = PHI <rout_hdr_297(103)>
+<L126>:
+  # DEBUG BEGIN_STMT
+  _158 = &rout_hdr_59->_routing_type;
+  icmp6_param_problem (p_51, 0, _158);
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  pbuf_free (p_51);
+  # DEBUG BEGIN_STMT
+  _159 = lwip_stats.ip6.drop;
+  _160 = _159 + 1;
+  lwip_stats.ip6.drop = _160;
+  # DEBUG BEGIN_STMT
+  // predicted unlikely by goto predictor.
+  goto <bb 132>; [100.00%]
+
+  <bb 105> [local count: 40967549]:
+<L166>:
+  # DEBUG BEGIN_STMT
+  _161 = (unsigned int) hlen_299;
+  pbuf_remove_header (p_189, _161);
+  # DEBUG BEGIN_STMT
+  goto <bb 117>; [100.00%]
+
+  <bb 106> [local count: 43819372]:
+<L129>:
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  frag_hdr_279 = p_189->payload;
+  # DEBUG frag_hdr => frag_hdr_279
+  # DEBUG BEGIN_STMT
+  nexth_280 = &frag_hdr_279->_nexth;
+  # DEBUG nexth => nexth_280
+  # DEBUG BEGIN_STMT
+  # DEBUG hlen => 8
+  # DEBUG BEGIN_STMT
+  _162 = p_189->len;
+  if (_162 <= 7)
+    goto <bb 107>; [2.00%]
+  else
+    goto <bb 108>; [98.00%]
+
+  <bb 107> [local count: 876387]:
+  # p_53 = PHI <p_189(106)>
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  pbuf_free (p_53);
+  # DEBUG BEGIN_STMT
+  _163 = lwip_stats.ip6_frag.lenerr;
+  _164 = _163 + 1;
+  lwip_stats.ip6_frag.lenerr = _164;
+  # DEBUG BEGIN_STMT
+  _165 = lwip_stats.ip6_frag.drop;
+  _166 = _165 + 1;
+  lwip_stats.ip6_frag.drop = _166;
+  # DEBUG BEGIN_STMT
+  // predicted unlikely by goto predictor.
+  goto <bb 132>; [100.00%]
+
+  <bb 108> [local count: 42942985]:
+  # DEBUG BEGIN_STMT
+  hlen_tot_281 = hlen_tot_197 + 8;
+  # DEBUG hlen_tot => hlen_tot_281
+  # DEBUG BEGIN_STMT
+  _167 = frag_hdr_279->_fragment_offset;
+  _168 = lwip_htons (_167);
+  _236 = _168 & 1;
+  if (_236 != 0)
+    goto <bb 109>; [33.00%]
+  else
+    goto <bb 111>; [67.00%]
+
+  <bb 109> [local count: 14171185]:
+  _169 = ip6hdr_191->_plen;
+  _170 = lwip_htons (_169);
+  _240 = _170 & 7;
+  if (_240 != 0)
+    goto <bb 110>; [2.00%]
+  else
+    goto <bb 111>; [98.00%]
+
+  <bb 110> [local count: 283424]:
+  # p_56 = PHI <p_189(109)>
+  # ip6hdr_66 = PHI <ip6hdr_191(109)>
+  # DEBUG BEGIN_STMT
+  _171 = &ip6hdr_66->_plen;
+  icmp6_param_problem (p_56, 0, _171);
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  pbuf_free (p_56);
+  # DEBUG BEGIN_STMT
+  _172 = lwip_stats.ip6.drop;
+  _173 = _172 + 1;
+  lwip_stats.ip6.drop = _173;
+  # DEBUG BEGIN_STMT
+  // predicted unlikely by goto predictor.
+  goto <bb 132>; [100.00%]
+
+  <bb 111> [local count: 42659561]:
+  # DEBUG BEGIN_STMT
+  _174 = frag_hdr_279->_fragment_offset;
+  _246 = _174 & 63999;
+  if (_246 == 0)
+    goto <bb 112>; [50.00%]
+  else
+    goto <bb 113>; [50.00%]
+
+  <bb 112> [local count: 21329781]:
+  # DEBUG BEGIN_STMT
+  pbuf_remove_header (p_189, 8);
+  goto <bb 117>; [100.00%]
+
+  <bb 113> [local count: 21329781]:
+  # DEBUG BEGIN_STMT
+  ip_data.current_ip_header_tot_len = hlen_tot_281;
+  # DEBUG BEGIN_STMT
+  p_289 = ip6_reass (p_189);
+  # DEBUG p => p_289
+  # DEBUG BEGIN_STMT
+  if (p_289 == 0B)
+    goto <bb 114>; [2.00%]
+  else
+    goto <bb 115>; [98.00%]
+
+  <bb 114> [local count: 426596]:
+  # DEBUG BEGIN_STMT
+  // predicted unlikely by goto predictor.
+  goto <bb 132>; [100.00%]
+
+  <bb 115> [local count: 20903185]:
+  # DEBUG BEGIN_STMT
+  ip6hdr_290 = p_289->payload;
+  # DEBUG ip6hdr => ip6hdr_290
+  # DEBUG BEGIN_STMT
+  nexth_291 = &ip6hdr_290->_nexth;
+  # DEBUG nexth => nexth_291
+  # DEBUG BEGIN_STMT
+  # DEBUG hlen_tot => 40
+  # DEBUG hlen => 40
+  # DEBUG BEGIN_STMT
+  pbuf_remove_header (p_289, 40);
+  goto <bb 117>; [100.00%]
+
+  <bb 116> [local count: 43819372]:
+  # p_64 = PHI <p_189(59)>
+  # ip6hdr_67 = PHI <ip6hdr_191(59)>
+  # nexth_70 = PHI <nexth_195(59)>
+  # hlen_tot_72 = PHI <hlen_tot_197(59)>
+<L141>:
+  # DEBUG BEGIN_STMT
+  // predicted unlikely by goto predictor.
+  goto <bb 120>; [100.00%]
+
+  <bb 117> [local count: 97648540]:
+  # p_188 = PHI <p_189(77), p_189(96), p_189(105), p_289(115), p_189(112)>
+  # ip6hdr_190 = PHI <ip6hdr_191(77), ip6hdr_191(96), ip6hdr_191(105), ip6hdr_290(115), ip6hdr_191(112)>
+  # nexth_194 = PHI <nexth_312(77), nexth_257(96), nexth_298(105), nexth_291(115), nexth_280(112)>
+  # hlen_tot_196 = PHI <hlen_tot_314(77), hlen_tot_259(96), hlen_tot_300(105), 40(115), hlen_tot_281(112)>
+  # DEBUG hlen_tot => hlen_tot_196
+  # DEBUG nexth => nexth_194
+  # DEBUG ip6hdr => ip6hdr_190
+  # DEBUG p => p_188
+  # DEBUG BEGIN_STMT
+  _175 = *nexth_194;
+  if (_175 == 0)
+    goto <bb 118>; [2.00%]
+  else
+    goto <bb 134>; [98.00%]
+
+  <bb 118> [local count: 1952971]:
+  # p_6 = PHI <p_188(117)>
+  # nexth_69 = PHI <nexth_194(117)>
+  # DEBUG BEGIN_STMT
+  icmp6_param_problem (p_6, 1, nexth_69);
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  pbuf_free (p_6);
+  # DEBUG BEGIN_STMT
+  _176 = lwip_stats.ip6.drop;
+  _177 = _176 + 1;
+  lwip_stats.ip6.drop = _177;
+  # DEBUG BEGIN_STMT
+  // predicted unlikely by goto predictor.
+  goto <bb 132>; [100.00%]
+
+  <bb 134> [local count: 95695569]:
+
+  <bb 119> [local count: 223568225]:
+  # p_189 = PHI <p_218(D)(58), p_188(134)>
+  # ip6hdr_191 = PHI <ip6hdr_219(58), ip6hdr_190(134)>
+  # nexth_195 = PHI <nexth_254(58), nexth_194(134)>
+  # hlen_tot_197 = PHI <40(58), hlen_tot_196(134)>
+  # DEBUG hlen_tot => hlen_tot_197
+  # DEBUG nexth => nexth_195
+  # DEBUG ip6hdr => ip6hdr_191
+  # DEBUG p => p_189
+  # DEBUG BEGIN_STMT
+  _178 = *nexth_195;
+  if (_178 != 59)
+    goto <bb 59>; [98.00%]
+  else
+    goto <bb 120>; [2.00%]
+
+  <bb 120> [local count: 48290737]:
+  # p_65 = PHI <p_64(116), p_189(119)>
+  # ip6hdr_68 = PHI <ip6hdr_67(116), ip6hdr_191(119)>
+  # nexth_71 = PHI <nexth_70(116), nexth_195(119)>
+  # hlen_tot_73 = PHI <hlen_tot_72(116), hlen_tot_197(119)>
+options_done:
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  ip_data.current_ip_header_tot_len = hlen_tot_73;
+  # DEBUG BEGIN_STMT
+  _179 = (unsigned int) hlen_tot_73;
+  pbuf_add_header_force (p_65, _179);
+  # DEBUG BEGIN_STMT
+  raw_status_339 = raw_input (p_65, inp_237(D));
+  # DEBUG raw_status => raw_status_339
+  # DEBUG BEGIN_STMT
+  if (raw_status_339 != 1)
+    goto <bb 121>; [48.88%]
+  else
+    goto <bb 132>; [51.12%]
+
+  <bb 121> [local count: 23604512]:
+  # DEBUG BEGIN_STMT
+  pbuf_remove_header (p_65, _179);
+  # DEBUG BEGIN_STMT
+  _180 = *nexth_71;
+  switch (_180) <default: <L154> [20.00%], case 6: <L152> [20.00%], case 17: <L150> [20.00%], case 58: <L153> [20.00%], case 59: <L149> [20.00%], case 136: <L150> [20.00%]>
+
+  <bb 122> [local count: 4720902]:
+<L149>:
+  # DEBUG BEGIN_STMT
+  pbuf_free (p_65);
+  # DEBUG BEGIN_STMT
+  goto <bb 132>; [100.00%]
+
+  <bb 123> [local count: 4720902]:
+<L150>:
+  # DEBUG BEGIN_STMT
+  udp_input (p_65, inp_237(D));
+  # DEBUG BEGIN_STMT
+  goto <bb 132>; [100.00%]
+
+  <bb 124> [local count: 4720902]:
+<L152>:
+  # DEBUG BEGIN_STMT
+  tcp_input (p_65, inp_237(D));
+  # DEBUG BEGIN_STMT
+  goto <bb 132>; [100.00%]
+
+  <bb 125> [local count: 4720902]:
+<L153>:
+  # DEBUG BEGIN_STMT
+  icmp6_input (p_65, inp_237(D));
+  # DEBUG BEGIN_STMT
+  goto <bb 132>; [100.00%]
+
+  <bb 126> [local count: 4720902]:
+<L154>:
+  # DEBUG BEGIN_STMT
+  if (raw_status_339 == 2)
+    goto <bb 131>; [51.12%]
+  else
+    goto <bb 127>; [48.88%]
+
+  <bb 127> [local count: 2307577]:
+  # DEBUG BEGIN_STMT
+  pbuf_add_header_force (p_65, _179);
+  # DEBUG BEGIN_STMT
+  _181 = ip_data.current_iphdr_dest.u_addr.ip6.addr[0];
+  _182 = _181 & 255;
+  if (_182 != 255)
+    goto <bb 128>; [66.00%]
+  else
+    goto <bb 130>; [34.00%]
+
+  <bb 128> [local count: 1523001]:
+  _183 = ip6hdr_68->_nexth;
+  if (_183 != 58)
+    goto <bb 129>; [48.88%]
+  else
+    goto <bb 130>; [51.12%]
+
+  <bb 129> [local count: 744443]:
+  # DEBUG BEGIN_STMT
+  icmp6_param_problem (p_65, 1, nexth_71);
+
+  <bb 130> [local count: 2307577]:
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _184 = lwip_stats.ip6.proterr;
+  _185 = _184 + 1;
+  lwip_stats.ip6.proterr = _185;
+  # DEBUG BEGIN_STMT
+  _186 = lwip_stats.ip6.drop;
+  _187 = _186 + 1;
+  lwip_stats.ip6.drop = _187;
+
+  <bb 131> [local count: 4720902]:
+  # DEBUG BEGIN_STMT
+  pbuf_free (p_65);
+  # DEBUG BEGIN_STMT
+
+  <bb 132> [local count: 164737206]:
+ip6_input_cleanup:
+  # DEBUG BEGIN_STMT
+  ip_data.current_netif = 0B;
+  # DEBUG BEGIN_STMT
+  ip_data.current_input_netif = 0B;
+  # DEBUG BEGIN_STMT
+  ip_data.current_ip6_header = 0B;
+  # DEBUG BEGIN_STMT
+  ip_data.current_ip_header_tot_len = 0;
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  ip_data.current_iphdr_src.u_addr.ip6.addr[0] = 0;
+  # DEBUG BEGIN_STMT
+  ip_data.current_iphdr_src.u_addr.ip6.addr[1] = 0;
+  # DEBUG BEGIN_STMT
+  ip_data.current_iphdr_src.u_addr.ip6.addr[2] = 0;
+  # DEBUG BEGIN_STMT
+  ip_data.current_iphdr_src.u_addr.ip6.addr[3] = 0;
+  # DEBUG BEGIN_STMT
+  ip_data.current_iphdr_src.u_addr.ip6.zone = 0;
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  ip_data.current_iphdr_dest.u_addr.ip6.addr[0] = 0;
+  # DEBUG BEGIN_STMT
+  ip_data.current_iphdr_dest.u_addr.ip6.addr[1] = 0;
+  # DEBUG BEGIN_STMT
+  ip_data.current_iphdr_dest.u_addr.ip6.addr[2] = 0;
+  # DEBUG BEGIN_STMT
+  ip_data.current_iphdr_dest.u_addr.ip6.addr[3] = 0;
+  # DEBUG BEGIN_STMT
+  ip_data.current_iphdr_dest.u_addr.ip6.zone = 0;
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+
+  <bb 133> [local count: 1073741824]:
+  return 0;
+
+}
+
+
+
+;; Function ip6_output_if_src (ip6_output_if_src, funcdef_no=6, decl_uid=6932, cgraph_uid=7, symbol_order=7)
+
+Modification phase of node ip6_output_if_src/7
+ip6_output_if_src (struct pbuf * p, const struct ip6_addr_t * src, const struct ip6_addr_t * dest, u8_t hl, u8_t tc, u8_t nexth, struct netif * netif)
+{
+  unsigned char _1;
+  signed char _6;
+
+  <bb 2> [local count: 162688]:
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _1 = p_4(D)->ref;
+  if (_1 != 1)
+    goto <bb 5>; [66.00%]
+  else
+    goto <bb 4>; [34.00%]
+
+  <bb 5> [local count: 107374]:
+
+  <bb 3> [local count: 1073741824]:
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  __asm__ __volatile__("BKPT #0
+	");
+  # DEBUG BEGIN_STMT
+
+  <bb 6> [local count: 1073741824]:
+  goto <bb 3>; [100.00%]
+
+  <bb 4> [local count: 55314]:
+  _6 = ip6_output_if_src.part.0 (p_4(D), src_12(D), dest_5(D), hl_9(D), tc_11(D), nexth_10(D), netif_7(D));
+  return _6;
+
+}
+
+
+
+;; Function ip6_output_if (ip6_output_if, funcdef_no=5, decl_uid=6924, cgraph_uid=6, symbol_order=6)
+
+Modification phase of node ip6_output_if/6
+ip6_output_if (struct pbuf * p, const struct ip6_addr_t * src, const struct ip6_addr_t * dest, u8_t hl, u8_t tc, u8_t nexth, struct netif * netif)
+{
+  const struct ip6_addr_t * src_used;
+  long unsigned int _1;
+  long unsigned int _2;
+  long unsigned int _3;
+  long unsigned int _4;
+  const struct ip_addr_t * _5;
+  long unsigned int _6;
+  long unsigned int _7;
+  long unsigned int _8;
+  long unsigned int _9;
+  short unsigned int _10;
+  short unsigned int _11;
+  err_t _13;
+  err_t _28;
+
+  <bb 2> [local count: 1073741823]:
+  # DEBUG BEGIN_STMT
+  # DEBUG src_used => src_16(D)
+  # DEBUG BEGIN_STMT
+  if (dest_17(D) != 0B)
+    goto <bb 3>; [82.57%]
+  else
+    goto <bb 14>; [17.43%]
+
+  <bb 3> [local count: 886588623]:
+  # DEBUG BEGIN_STMT
+  if (src_16(D) != 0B)
+    goto <bb 4>; [70.00%]
+  else
+    goto <bb 14>; [30.00%]
+
+  <bb 4> [local count: 620612037]:
+  _1 = src_16(D)->addr[0];
+  if (_1 == 0)
+    goto <bb 5>; [50.00%]
+  else
+    goto <bb 14>; [50.00%]
+
+  <bb 5> [local count: 310306018]:
+  _2 = src_16(D)->addr[1];
+  if (_2 == 0)
+    goto <bb 6>; [50.00%]
+  else
+    goto <bb 14>; [50.00%]
+
+  <bb 6> [local count: 155153009]:
+  _3 = src_16(D)->addr[2];
+  if (_3 == 0)
+    goto <bb 7>; [50.00%]
+  else
+    goto <bb 14>; [50.00%]
+
+  <bb 7> [local count: 77576505]:
+  _4 = src_16(D)->addr[3];
+  if (_4 == 0)
+    goto <bb 8>; [33.00%]
+  else
+    goto <bb 14>; [67.00%]
+
+  <bb 8> [local count: 25600246]:
+  # DEBUG BEGIN_STMT
+  _5 = ip6_select_source_address (netif_19(D), dest_17(D));
+  src_used_21 = &_5->u_addr.ip6;
+  # DEBUG src_used => src_used_21
+  # DEBUG BEGIN_STMT
+  if (src_used_21 == 0B)
+    goto <bb 13>; [0.45%]
+  else
+    goto <bb 9>; [99.55%]
+
+  <bb 9> [local count: 25485045]:
+  _6 = MEM[(const struct ip6_addr_t *)_5].addr[0];
+  if (_6 == 0)
+    goto <bb 10>; [50.00%]
+  else
+    goto <bb 14>; [50.00%]
+
+  <bb 10> [local count: 12742523]:
+  _7 = MEM[(const struct ip6_addr_t *)_5].addr[1];
+  if (_7 == 0)
+    goto <bb 11>; [50.00%]
+  else
+    goto <bb 14>; [50.00%]
+
+  <bb 11> [local count: 6371261]:
+  _8 = MEM[(const struct ip6_addr_t *)_5].addr[2];
+  if (_8 == 0)
+    goto <bb 12>; [50.00%]
+  else
+    goto <bb 14>; [50.00%]
+
+  <bb 12> [local count: 3185631]:
+  _9 = MEM[(const struct ip6_addr_t *)_5].addr[3];
+  if (_9 == 0)
+    goto <bb 13>; [1.04%]
+  else
+    goto <bb 14>; [98.96%]
+
+  <bb 13> [local count: 148332]:
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _10 = lwip_stats.ip6.rterr;
+  _11 = _10 + 1;
+  lwip_stats.ip6.rterr = _11;
+  # DEBUG BEGIN_STMT
+  goto <bb 15>; [100.00%]
+
+  <bb 14> [local count: 1073593492]:
+  # src_used_12 = PHI <src_16(D)(2), src_16(D)(3), src_16(D)(4), src_16(D)(5), src_16(D)(6), src_16(D)(7), src_used_21(9), src_used_21(10), src_used_21(11), src_used_21(12)>
+  # DEBUG src_used => src_used_12
+  # DEBUG BEGIN_STMT
+  _28 = ip6_output_if_src (p_23(D), src_used_12, dest_17(D), hl_24(D), tc_25(D), nexth_26(D), netif_19(D));
+
+  <bb 15> [local count: 1073741824]:
+  # _13 = PHI <-4(13), _28(14)>
+  return _13;
+
+}
+
+
+
+;; Function ip6_output (ip6_output, funcdef_no=7, decl_uid=6916, cgraph_uid=8, symbol_order=8)
+
+Modification phase of node ip6_output/8
+ip6_output (struct pbuf * p, const struct ip6_addr_t * src, const struct ip6_addr_t * dest, u8_t hl, u8_t tc, u8_t nexth)
+{
+  struct ip6_addr_t dest_addr;
+  struct ip6_addr_t src_addr;
+  struct ip6_hdr * ip6hdr;
+  struct netif * netif;
+  unsigned char _1;
+  long unsigned int _2;
+  long unsigned int _3;
+  long unsigned int _4;
+  long unsigned int _5;
+  long unsigned int _6;
+  long unsigned int _7;
+  long unsigned int _8;
+  long unsigned int _9;
+  short unsigned int _10;
+  short unsigned int _11;
+  err_t _14;
+  err_t _41;
+
+  <bb 2> [local count: 162688]:
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _1 = p_19(D)->ref;
+  if (_1 != 1)
+    goto <bb 11>; [66.00%]
+  else
+    goto <bb 4>; [34.00%]
+
+  <bb 11> [local count: 107374]:
+
+  <bb 3> [local count: 1073741824]:
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  __asm__ __volatile__("BKPT #0
+	");
+  # DEBUG BEGIN_STMT
+
+  <bb 12> [local count: 1073741824]:
+  goto <bb 3>; [100.00%]
+
+  <bb 4> [local count: 55314]:
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  if (dest_20(D) != 0B)
+    goto <bb 5>; [70.00%]
+  else
+    goto <bb 6>; [30.00%]
+
+  <bb 5> [local count: 38720]:
+  # DEBUG BEGIN_STMT
+  netif_36 = ip6_route (src_34(D), dest_20(D));
+  # DEBUG netif => netif_36
+  goto <bb 7>; [100.00%]
+
+  <bb 6> [local count: 16594]:
+  # DEBUG BEGIN_STMT
+  ip6hdr_21 = p_19(D)->payload;
+  # DEBUG ip6hdr => ip6hdr_21
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _2 = ip6hdr_21->src.addr[0];
+  src_addr.addr[0] = _2;
+  # DEBUG BEGIN_STMT
+  _3 = ip6hdr_21->src.addr[1];
+  src_addr.addr[1] = _3;
+  # DEBUG BEGIN_STMT
+  _4 = ip6hdr_21->src.addr[2];
+  src_addr.addr[2] = _4;
+  # DEBUG BEGIN_STMT
+  _5 = ip6hdr_21->src.addr[3];
+  src_addr.addr[3] = _5;
+  # DEBUG BEGIN_STMT
+  src_addr.zone = 0;
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _6 = ip6hdr_21->dest.addr[0];
+  dest_addr.addr[0] = _6;
+  # DEBUG BEGIN_STMT
+  _7 = ip6hdr_21->dest.addr[1];
+  dest_addr.addr[1] = _7;
+  # DEBUG BEGIN_STMT
+  _8 = ip6hdr_21->dest.addr[2];
+  dest_addr.addr[2] = _8;
+  # DEBUG BEGIN_STMT
+  _9 = ip6hdr_21->dest.addr[3];
+  dest_addr.addr[3] = _9;
+  # DEBUG BEGIN_STMT
+  dest_addr.zone = 0;
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  netif_33 = ip6_route (&src_addr, &dest_addr);
+  # DEBUG netif => netif_33
+  # DEBUG BEGIN_STMT
+  # DEBUG dest => &dest_addr
+
+  <bb 7> [local count: 55314]:
+  # dest_12 = PHI <dest_20(D)(5), &dest_addr(6)>
+  # netif_13 = PHI <netif_36(5), netif_33(6)>
+  # DEBUG netif => netif_13
+  # DEBUG dest => dest_12
+  # DEBUG BEGIN_STMT
+  if (netif_13 == 0B)
+    goto <bb 8>; [0.91%]
+  else
+    goto <bb 9>; [99.09%]
+
+  <bb 8> [local count: 503]:
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _10 = lwip_stats.ip6.rterr;
+  _11 = _10 + 1;
+  lwip_stats.ip6.rterr = _11;
+  # DEBUG BEGIN_STMT
+  goto <bb 10>; [100.00%]
+
+  <bb 9> [local count: 54811]:
+  # DEBUG BEGIN_STMT
+  _41 = ip6_output_if (p_19(D), src_34(D), dest_12, hl_37(D), tc_38(D), nexth_39(D), netif_13);
+
+  <bb 10> [local count: 55314]:
+  # _14 = PHI <-4(8), _41(9)>
+  src_addr ={v} {CLOBBER};
+  dest_addr ={v} {CLOBBER};
+  return _14;
+
+}
+
+
+
+;; Function ip6_options_add_hbh_ra (ip6_options_add_hbh_ra, funcdef_no=8, decl_uid=6936, cgraph_uid=9, symbol_order=9)
+
+Modification phase of node ip6_options_add_hbh_ra/9
+ip6_options_add_hbh_ra (struct pbuf * p, u8_t nexth, u8_t value)
+{
+  struct ip6_opt_hdr * opt_hdr;
+  struct ip6_hbh_hdr * hbh_hdr;
+  unsigned char _1;
+  short unsigned int _2;
+  short unsigned int _3;
+  err_t _4;
+
+  <bb 2> [local count: 1073741824]:
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG offset => 0
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG hlen => 6
+  # DEBUG BEGIN_STMT
+  _1 = pbuf_add_header (p_7(D), 8);
+  if (_1 != 0)
+    goto <bb 3>; [1.04%]
+  else
+    goto <bb 4>; [98.96%]
+
+  <bb 3> [local count: 11166915]:
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _2 = lwip_stats.ip6.err;
+  _3 = _2 + 1;
+  lwip_stats.ip6.err = _3;
+  # DEBUG BEGIN_STMT
+  goto <bb 5>; [100.00%]
+
+  <bb 4> [local count: 1062574910]:
+  # DEBUG BEGIN_STMT
+  hbh_hdr_9 = p_7(D)->payload;
+  # DEBUG hbh_hdr => hbh_hdr_9
+  # DEBUG BEGIN_STMT
+  hbh_hdr_9->_nexth = nexth_10(D);
+  # DEBUG BEGIN_STMT
+  hbh_hdr_9->_hlen = 0;
+  # DEBUG BEGIN_STMT
+  # DEBUG offset => 2
+  # DEBUG BEGIN_STMT
+  # DEBUG opt_hdr => hbh_hdr_9 + 2
+  # DEBUG BEGIN_STMT
+  MEM[(struct ip6_opt_hdr *)hbh_hdr_9 + 2B]._opt_type = 5;
+  # DEBUG BEGIN_STMT
+  MEM[(struct ip6_opt_hdr *)hbh_hdr_9 + 2B]._opt_dlen = 2;
+  # DEBUG BEGIN_STMT
+  # DEBUG offset => 4
+  # DEBUG BEGIN_STMT
+  # DEBUG opt_data => hbh_hdr_9 + 4
+  # DEBUG BEGIN_STMT
+  MEM[(u8_t *)hbh_hdr_9 + 4B] = value_15(D);
+  # DEBUG BEGIN_STMT
+  MEM[(u8_t *)hbh_hdr_9 + 5B] = 0;
+  # DEBUG BEGIN_STMT
+  # DEBUG offset => 6
+  # DEBUG BEGIN_STMT
+  opt_hdr_18 = hbh_hdr_9 + 6;
+  # DEBUG opt_hdr => opt_hdr_18
+  # DEBUG BEGIN_STMT
+  opt_hdr_18->_opt_type = 1;
+  # DEBUG BEGIN_STMT
+  opt_hdr_18->_opt_dlen = 0;
+  # DEBUG BEGIN_STMT
+
+  <bb 5> [local count: 1073741824]:
+  # _4 = PHI <-2(3), 0(4)>
+  return _4;
+
+}
+
+

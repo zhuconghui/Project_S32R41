@@ -1,0 +1,1125 @@
+PIT_0_ISR ()
+{
+  uint8 instance;
+  uint8 channel;
+
+  <bb 2> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  instance_3 = 0;
+  # DEBUG instance => instance_3
+  # DEBUG BEGIN_STMT
+  channel_4 = 0;
+  # DEBUG channel => channel_4
+  goto <bb 4>; [INV]
+
+  <bb 3> :
+  # DEBUG BEGIN_STMT
+  Pit_Ip_ProcessCommonInterrupt (instance_3, channel_1);
+  # DEBUG BEGIN_STMT
+  channel_7 = channel_1 + 1;
+  # DEBUG channel => channel_7
+
+  <bb 4> :
+  # channel_1 = PHI <channel_4(2), channel_7(3)>
+  # DEBUG channel => channel_1
+  # DEBUG BEGIN_STMT
+  if (channel_1 <= 6)
+    goto <bb 3>; [INV]
+  else
+    goto <bb 5>; [INV]
+
+  <bb 5> :
+  return;
+
+}
+
+
+Pit_Ip_GetLifetimeTimer (uint8 instance)
+{
+  uint32 valueL;
+  uint32 valueH;
+  uint64 lifeTimeValue;
+  long long unsigned int _1;
+  long long unsigned int _2;
+  long long unsigned int _3;
+  uint64 _16;
+
+  <bb 2> :
+  # DEBUG BEGIN_STMT
+  lifeTimeValue_4 = 0;
+  # DEBUG lifeTimeValue => lifeTimeValue_4
+  # DEBUG BEGIN_STMT
+  valueH_5 = 0;
+  # DEBUG valueH => valueH_5
+  # DEBUG BEGIN_STMT
+  valueL_6 = 0;
+  # DEBUG valueL => valueL_6
+  # DEBUG BEGIN_STMT
+  SchM_Enter_Gpt_GPT_EXCLUSIVE_AREA_09 ();
+  # DEBUG BEGIN_STMT
+  valueH_11 = Pit_Ip_GetUpperLifetimerValue (instance_9(D));
+  # DEBUG valueH => valueH_11
+  # DEBUG BEGIN_STMT
+  valueL_13 = Pit_Ip_GetLowerLifetimerValue (instance_9(D));
+  # DEBUG valueL => valueL_13
+  # DEBUG BEGIN_STMT
+  SchM_Exit_Gpt_GPT_EXCLUSIVE_AREA_09 ();
+  # DEBUG BEGIN_STMT
+  _1 = (long long unsigned int) valueH_11;
+  _2 = _1 << 32;
+  _3 = (long long unsigned int) valueL_13;
+  lifeTimeValue_15 = _2 + _3;
+  # DEBUG lifeTimeValue => lifeTimeValue_15
+  # DEBUG BEGIN_STMT
+  _16 = lifeTimeValue_15;
+  return _16;
+
+}
+
+
+Pit_Ip_SetLifetimeTimer (uint8 instance)
+{
+  <bb 2> :
+  # DEBUG BEGIN_STMT
+  Pit_Ip_SetCounterValue (instance_2(D), 1, 4294967295);
+  # DEBUG BEGIN_STMT
+  Pit_Ip_SetEnableInterruptFlag (instance_2(D), 1, 0);
+  # DEBUG BEGIN_STMT
+  Pit_Ip_SetChainMode (instance_2(D), 1, 1);
+  # DEBUG BEGIN_STMT
+  Pit_Ip_EnableTimer (instance_2(D), 1, 1);
+  # DEBUG BEGIN_STMT
+  Pit_Ip_SetCounterValue (instance_2(D), 0, 4294967295);
+  # DEBUG BEGIN_STMT
+  Pit_Ip_EnableTimer (instance_2(D), 0, 1);
+  return;
+
+}
+
+
+Pit_Ip_DisableChannelInterrupt (uint8 instance, uint8 channel)
+{
+  <bb 2> :
+  # DEBUG BEGIN_STMT
+  Pit_Ip_SetEnableInterruptFlag (instance_2(D), channel_3(D), 0);
+  # DEBUG BEGIN_STMT
+  Pit_Ip_ClearInterruptStatusFlag (instance_2(D), channel_3(D));
+  return;
+
+}
+
+
+Pit_Ip_EnableChannelInterrupt (uint8 instance, uint8 channel)
+{
+  <bb 2> :
+  # DEBUG BEGIN_STMT
+  Pit_Ip_ClearInterruptStatusFlag (instance_2(D), channel_3(D));
+  # DEBUG BEGIN_STMT
+  Pit_Ip_SetEnableInterruptFlag (instance_2(D), channel_3(D), 1);
+  return;
+
+}
+
+
+Pit_Ip_GetCurrentTimer (uint8 instance, uint8 channel)
+{
+  uint64 counterValue;
+  long unsigned int _1;
+  uint64 _8;
+
+  <bb 2> :
+  # DEBUG BEGIN_STMT
+  counterValue_2 = 0;
+  # DEBUG counterValue => counterValue_2
+  # DEBUG BEGIN_STMT
+  _1 = Pit_Ip_GetCounterValue (instance_4(D), channel_5(D));
+  counterValue_7 = (uint64) _1;
+  # DEBUG counterValue => counterValue_7
+  # DEBUG BEGIN_STMT
+  _8 = counterValue_7;
+  return _8;
+
+}
+
+
+Pit_Ip_StopChannel (uint8 instance, uint8 channel)
+{
+  <bb 2> :
+  # DEBUG BEGIN_STMT
+  Pit_Ip_EnableTimer (instance_2(D), channel_3(D), 0);
+  # DEBUG BEGIN_STMT
+  Pit_Ip_ClearInterruptStatusFlag (instance_2(D), channel_3(D));
+  return;
+
+}
+
+
+Pit_Ip_StartChannel (uint8 instance, uint8 channel, uint32 countValue)
+{
+  Pit_Ip_StatusType status;
+  boolean isRunning;
+  _Bool _1;
+  long unsigned int _2;
+  Pit_Ip_StatusType _16;
+
+  <bb 2> :
+  # DEBUG BEGIN_STMT
+  isRunning_5 = 0;
+  # DEBUG isRunning => isRunning_5
+  # DEBUG BEGIN_STMT
+  status_6 = 1;
+  # DEBUG status => status_6
+  # DEBUG BEGIN_STMT
+  isRunning_11 = Pit_Ip_IsChannelRunning (instance_8(D), channel_9(D));
+  # DEBUG isRunning => isRunning_11
+  # DEBUG BEGIN_STMT
+  _1 = ~isRunning_11;
+  if (_1 != 0)
+    goto <bb 3>; [INV]
+  else
+    goto <bb 4>; [INV]
+
+  <bb 3> :
+  # DEBUG BEGIN_STMT
+  _2 = countValue_12(D) + 4294967295;
+  Pit_Ip_SetCounterValue (instance_8(D), channel_9(D), _2);
+  # DEBUG BEGIN_STMT
+  Pit_Ip_EnableTimer (instance_8(D), channel_9(D), 1);
+  # DEBUG BEGIN_STMT
+  status_15 = 0;
+  # DEBUG status => status_15
+
+  <bb 4> :
+  # status_3 = PHI <status_6(2), status_15(3)>
+  # DEBUG status => status_3
+  # DEBUG BEGIN_STMT
+  _16 = status_3;
+  return _16;
+
+}
+
+
+Pit_Ip_Deinit (uint8 instance)
+{
+  boolean mdisBitExists;
+  boolean rtiChannelExists;
+  uint8 channelNum;
+  int _1;
+
+  <bb 2> :
+  # DEBUG BEGIN_STMT
+  channelNum_4 = 0;
+  # DEBUG channelNum => channelNum_4
+  # DEBUG BEGIN_STMT
+  rtiChannelExists_5 = 0;
+  # DEBUG rtiChannelExists => rtiChannelExists_5
+  # DEBUG BEGIN_STMT
+  mdisBitExists_6 = 0;
+  # DEBUG mdisBitExists => mdisBitExists_6
+  # DEBUG BEGIN_STMT
+  _1 = (int) instance_7(D);
+  switch (_1) <default: <L2> [INV], case 0: <L0> [INV], case 2: <L1> [INV]>
+
+  <bb 3> :
+<L0>:
+  # DEBUG BEGIN_STMT
+  channelNum_10 = 7;
+  # DEBUG channelNum => channelNum_10
+  # DEBUG BEGIN_STMT
+  mdisBitExists_11 = 1;
+  # DEBUG mdisBitExists => mdisBitExists_11
+  # DEBUG BEGIN_STMT
+  goto <bb 6>; [INV]
+
+  <bb 4> :
+<L1>:
+  # DEBUG BEGIN_STMT
+  channelNum_8 = 7;
+  # DEBUG channelNum => channelNum_8
+  # DEBUG BEGIN_STMT
+  mdisBitExists_9 = 1;
+  # DEBUG mdisBitExists => mdisBitExists_9
+  # DEBUG BEGIN_STMT
+  goto <bb 6>; [INV]
+
+  <bb 5> :
+<L2>:
+  # DEBUG BEGIN_STMT
+  channelNum_12 = 0;
+  # DEBUG channelNum => channelNum_12
+  # DEBUG BEGIN_STMT
+
+  <bb 6> :
+  # channelNum_2 = PHI <channelNum_10(3), channelNum_8(4), channelNum_12(5)>
+  # mdisBitExists_3 = PHI <mdisBitExists_11(3), mdisBitExists_9(4), mdisBitExists_6(5)>
+  # DEBUG mdisBitExists => mdisBitExists_3
+  # DEBUG channelNum => channelNum_2
+  # DEBUG BEGIN_STMT
+  Pit_Ip_Reset (instance_7(D), channelNum_2, rtiChannelExists_5, mdisBitExists_3);
+  return;
+
+}
+
+
+Pit_Ip_InitChannel (uint8 instance, const struct Pit_Ip_ChannelConfigType * chnlConfig)
+{
+  Pit_Ip_StatusType status;
+  unsigned char _1;
+  unsigned char _2;
+  unsigned char _3;
+  int _4;
+  unsigned char _5;
+  int _6;
+  int _7;
+  unsigned char _8;
+  int _9;
+  void (*<T4b6>) (uint8) _10;
+  int _11;
+  unsigned char _12;
+  int _13;
+  unsigned char _14;
+  int _15;
+  unsigned char _16;
+  int _17;
+  <unnamed type> _18;
+
+  <bb 2> :
+  # DEBUG BEGIN_STMT
+  status_23 = Pit_Ip_ValidateInstCall (instance_21(D));
+  # DEBUG status => status_23
+  # DEBUG BEGIN_STMT
+  if (status_23 == 0)
+    goto <bb 3>; [INV]
+  else
+    goto <bb 4>; [INV]
+
+  <bb 3> :
+  # DEBUG BEGIN_STMT
+  _1 = chnlConfig_24(D)->hwChannel;
+  Pit_Ip_EnableTimer (instance_21(D), _1, 0);
+  # DEBUG BEGIN_STMT
+  _2 = chnlConfig_24(D)->hwChannel;
+  Pit_Ip_SetEnableInterruptFlag (instance_21(D), _2, 0);
+  # DEBUG BEGIN_STMT
+  _3 = chnlConfig_24(D)->hwChannel;
+  Pit_Ip_ClearInterruptStatusFlag (instance_21(D), _3);
+  # DEBUG BEGIN_STMT
+  _4 = (int) instance_21(D);
+  _5 = chnlConfig_24(D)->hwChannel;
+  _6 = (int) _5;
+  Pit_Ip_u32ChState[_4][_6].chInit = 1;
+  # DEBUG BEGIN_STMT
+  _7 = (int) instance_21(D);
+  _8 = chnlConfig_24(D)->hwChannel;
+  _9 = (int) _8;
+  _10 = chnlConfig_24(D)->callback;
+  Pit_Ip_u32ChState[_7][_9].callback = _10;
+  # DEBUG BEGIN_STMT
+  _11 = (int) instance_21(D);
+  _12 = chnlConfig_24(D)->hwChannel;
+  _13 = (int) _12;
+  _14 = chnlConfig_24(D)->callbackParam;
+  Pit_Ip_u32ChState[_11][_13].callbackParam = _14;
+  # DEBUG BEGIN_STMT
+  _15 = (int) instance_21(D);
+  _16 = chnlConfig_24(D)->hwChannel;
+  _17 = (int) _16;
+  _18 = chnlConfig_24(D)->channelMode;
+  Pit_Ip_u32ChState[_15][_17].channelMode = _18;
+
+  <bb 4> :
+  return;
+
+}
+
+
+Pit_Ip_Init (uint8 instance, const struct Pit_Ip_InstanceConfigType * config)
+{
+  Pit_Ip_StatusType status;
+  _Bool _1;
+  _Bool _2;
+
+  <bb 2> :
+  # DEBUG BEGIN_STMT
+  status_8 = Pit_Ip_ValidateInstCall (instance_6(D));
+  # DEBUG status => status_8
+  # DEBUG BEGIN_STMT
+  if (status_8 == 0)
+    goto <bb 3>; [INV]
+  else
+    goto <bb 6>; [INV]
+
+  <bb 3> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _1 = config_9(D)->enableStandardTimers;
+  if (_1 != 0)
+    goto <bb 4>; [INV]
+  else
+    goto <bb 5>; [INV]
+
+  <bb 4> :
+  # DEBUG BEGIN_STMT
+  Pit_Ip_EnableModule (instance_6(D), 0);
+
+  <bb 5> :
+  # DEBUG BEGIN_STMT
+  _2 = config_9(D)->stopRunInDebug;
+  Pit_Ip_SetDebugMode (instance_6(D), _2);
+
+  <bb 6> :
+  return;
+
+}
+
+
+Pit_Ip_ProcessCommonInterrupt (uint8 instance, uint8 channel)
+{
+  Pit_Ip_ChannelModeType channelMode;
+  uint8 callbackParam;
+  void (*Pit_Ip_CallbackType) (uint8) callback;
+  boolean chInit;
+  boolean HasChEvOccurred;
+  boolean IsChEvEnabled;
+  int _1;
+  int _2;
+  int _3;
+  int _4;
+  int _5;
+  int _6;
+  int _7;
+  int _8;
+
+  <bb 2> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  if (instance_12(D) <= 2)
+    goto <bb 3>; [INV]
+  else
+    goto <bb 14>; [INV]
+
+  <bb 3> :
+  if (channel_14(D) <= 6)
+    goto <bb 4>; [INV]
+  else
+    goto <bb 14>; [INV]
+
+  <bb 4> :
+  # DEBUG BEGIN_STMT
+  SchM_Enter_Gpt_GPT_EXCLUSIVE_AREA_03 ();
+  # DEBUG BEGIN_STMT
+  IsChEvEnabled_17 = Pit_Ip_GetInterruptEnableFlag (instance_12(D), channel_14(D));
+  # DEBUG IsChEvEnabled => IsChEvEnabled_17
+  # DEBUG BEGIN_STMT
+  HasChEvOccurred_19 = Pit_Ip_GetInterruptStatusFlag (instance_12(D), channel_14(D));
+  # DEBUG HasChEvOccurred => HasChEvOccurred_19
+  # DEBUG BEGIN_STMT
+  if (IsChEvEnabled_17 != 0)
+    goto <bb 5>; [INV]
+  else
+    goto <bb 7>; [INV]
+
+  <bb 5> :
+  if (HasChEvOccurred_19 != 0)
+    goto <bb 6>; [INV]
+  else
+    goto <bb 7>; [INV]
+
+  <bb 6> :
+  # DEBUG BEGIN_STMT
+  Pit_Ip_ClearInterruptStatusFlag (instance_12(D), channel_14(D));
+
+  <bb 7> :
+  # DEBUG BEGIN_STMT
+  SchM_Exit_Gpt_GPT_EXCLUSIVE_AREA_03 ();
+  # DEBUG BEGIN_STMT
+  if (IsChEvEnabled_17 != 0)
+    goto <bb 8>; [INV]
+  else
+    goto <bb 14>; [INV]
+
+  <bb 8> :
+  if (HasChEvOccurred_19 != 0)
+    goto <bb 9>; [INV]
+  else
+    goto <bb 14>; [INV]
+
+  <bb 9> :
+  # DEBUG BEGIN_STMT
+  _1 = (int) instance_12(D);
+  _2 = (int) channel_14(D);
+  chInit_22 = Pit_Ip_u32ChState[_1][_2].chInit;
+  # DEBUG chInit => chInit_22
+  # DEBUG BEGIN_STMT
+  _3 = (int) instance_12(D);
+  _4 = (int) channel_14(D);
+  callback_23 = Pit_Ip_u32ChState[_3][_4].callback;
+  # DEBUG callback => callback_23
+  # DEBUG BEGIN_STMT
+  _5 = (int) instance_12(D);
+  _6 = (int) channel_14(D);
+  channelMode_24 = Pit_Ip_u32ChState[_5][_6].channelMode;
+  # DEBUG channelMode => channelMode_24
+  # DEBUG BEGIN_STMT
+  _7 = (int) instance_12(D);
+  _8 = (int) channel_14(D);
+  callbackParam_25 = Pit_Ip_u32ChState[_7][_8].callbackParam;
+  # DEBUG callbackParam => callbackParam_25
+  # DEBUG BEGIN_STMT
+  if (channelMode_24 == 1)
+    goto <bb 10>; [INV]
+  else
+    goto <bb 11>; [INV]
+
+  <bb 10> :
+  # DEBUG BEGIN_STMT
+  Pit_Ip_StopChannel (instance_12(D), channel_14(D));
+
+  <bb 11> :
+  # DEBUG BEGIN_STMT
+  if (chInit_22 != 0)
+    goto <bb 12>; [INV]
+  else
+    goto <bb 14>; [INV]
+
+  <bb 12> :
+  if (callback_23 != 0B)
+    goto <bb 13>; [INV]
+  else
+    goto <bb 14>; [INV]
+
+  <bb 13> :
+  # DEBUG BEGIN_STMT
+  callback_23 (callbackParam_25);
+
+  <bb 14> :
+  return;
+
+}
+
+
+Pit_Ip_GetInterruptEnableFlag (uint8 instance, uint8 channel)
+{
+  boolean returnFlag;
+  int _1;
+  struct PIT_Type * _2;
+  int _3;
+  long unsigned int _4;
+  long unsigned int _5;
+  boolean _10;
+
+  <bb 2> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _1 = (int) instance_6(D);
+  _2 = pitBase[_1];
+  _3 = (int) channel_8(D);
+  _4 ={v} _2->TIMER[_3].TCTRL;
+  _5 = _4 & 2;
+  returnFlag_9 = _5 != 0;
+  # DEBUG returnFlag => returnFlag_9
+  # DEBUG BEGIN_STMT
+  _10 = returnFlag_9;
+  return _10;
+
+}
+
+
+Pit_Ip_ValidateInstCall (uint8 instance)
+{
+  int _1;
+  struct PIT_Type * _2;
+  _Bool _3;
+  Pit_Ip_StatusType _6;
+
+  <bb 2> :
+  # DEBUG BEGIN_STMT
+  _1 = (int) instance_4(D);
+  _2 = pitBase[_1];
+  _3 = _2 == 0B;
+  _6 = (Pit_Ip_StatusType) _3;
+  return _6;
+
+}
+
+
+Pit_Ip_GetLowerLifetimerValue (uint8 instance)
+{
+  uint32 lowerValue;
+  int _1;
+  struct PIT_Type * _2;
+  uint32 _7;
+
+  <bb 2> :
+  # DEBUG BEGIN_STMT
+  lowerValue_3 = 0;
+  # DEBUG lowerValue => lowerValue_3
+  # DEBUG BEGIN_STMT
+  _1 = (int) instance_4(D);
+  _2 = pitBase[_1];
+  lowerValue_6 ={v} _2->LTMR64L;
+  # DEBUG lowerValue => lowerValue_6
+  # DEBUG BEGIN_STMT
+  _7 = lowerValue_6;
+  return _7;
+
+}
+
+
+Pit_Ip_GetUpperLifetimerValue (uint8 instance)
+{
+  uint32 upperValue;
+  int _1;
+  struct PIT_Type * _2;
+  uint32 _7;
+
+  <bb 2> :
+  # DEBUG BEGIN_STMT
+  upperValue_3 = 0;
+  # DEBUG upperValue => upperValue_3
+  # DEBUG BEGIN_STMT
+  _1 = (int) instance_4(D);
+  _2 = pitBase[_1];
+  upperValue_6 ={v} _2->LTMR64H;
+  # DEBUG upperValue => upperValue_6
+  # DEBUG BEGIN_STMT
+  _7 = upperValue_6;
+  return _7;
+
+}
+
+
+Pit_Ip_ClearInterruptStatusFlag (uint8 instance, uint8 channel)
+{
+  int _1;
+  struct PIT_Type * _2;
+  int _3;
+  long unsigned int _4;
+  int _5;
+  struct PIT_Type * _6;
+  int _7;
+  long unsigned int _8;
+
+  <bb 2> :
+  # DEBUG BEGIN_STMT
+  _1 = (int) instance_9(D);
+  _2 = pitBase[_1];
+  _3 = (int) channel_11(D);
+  _4 ={v} _2->TIMER[_3].TFLG;
+  _5 = (int) instance_9(D);
+  _6 = pitBase[_5];
+  _7 = (int) channel_11(D);
+  _8 = _4 | 1;
+  _6->TIMER[_7].TFLG ={v} _8;
+  return;
+
+}
+
+
+Pit_Ip_SetEnableInterruptFlag (uint8 instance, uint8 channel, boolean enable)
+{
+  int _1;
+  struct PIT_Type * _2;
+  int _3;
+  long unsigned int _4;
+  int _5;
+  struct PIT_Type * _6;
+  int _7;
+  long unsigned int _8;
+  int _9;
+  struct PIT_Type * _10;
+  int _11;
+  long unsigned int _12;
+  int _13;
+  struct PIT_Type * _14;
+  int _15;
+  long unsigned int _16;
+
+  <bb 2> :
+  # DEBUG BEGIN_STMT
+  SchM_Enter_Gpt_GPT_EXCLUSIVE_AREA_02 ();
+  # DEBUG BEGIN_STMT
+  if (enable_20(D) != 0)
+    goto <bb 3>; [INV]
+  else
+    goto <bb 4>; [INV]
+
+  <bb 3> :
+  # DEBUG BEGIN_STMT
+  _1 = (int) instance_21(D);
+  _2 = pitBase[_1];
+  _3 = (int) channel_22(D);
+  _4 ={v} _2->TIMER[_3].TCTRL;
+  _5 = (int) instance_21(D);
+  _6 = pitBase[_5];
+  _7 = (int) channel_22(D);
+  _8 = _4 | 2;
+  _6->TIMER[_7].TCTRL ={v} _8;
+  goto <bb 5>; [INV]
+
+  <bb 4> :
+  # DEBUG BEGIN_STMT
+  _9 = (int) instance_21(D);
+  _10 = pitBase[_9];
+  _11 = (int) channel_22(D);
+  _12 ={v} _10->TIMER[_11].TCTRL;
+  _13 = (int) instance_21(D);
+  _14 = pitBase[_13];
+  _15 = (int) channel_22(D);
+  _16 = _12 & 4294967293;
+  _14->TIMER[_15].TCTRL ={v} _16;
+
+  <bb 5> :
+  # DEBUG BEGIN_STMT
+  SchM_Exit_Gpt_GPT_EXCLUSIVE_AREA_02 ();
+  return;
+
+}
+
+
+Pit_Ip_GetCounterValue (uint8 instance, uint8 channel)
+{
+  uint32 counterValue;
+  int _1;
+  struct PIT_Type * _2;
+  int _3;
+  uint32 _9;
+
+  <bb 2> :
+  # DEBUG BEGIN_STMT
+  counterValue_4 = 0;
+  # DEBUG counterValue => counterValue_4
+  # DEBUG BEGIN_STMT
+  _1 = (int) instance_5(D);
+  _2 = pitBase[_1];
+  _3 = (int) channel_7(D);
+  counterValue_8 ={v} _2->TIMER[_3].CVAL;
+  # DEBUG counterValue => counterValue_8
+  # DEBUG BEGIN_STMT
+  _9 = counterValue_8;
+  return _9;
+
+}
+
+
+Pit_Ip_SetCounterValue (uint8 instance, uint8 channel, uint32 value)
+{
+  int _1;
+  struct PIT_Type * _2;
+  int _3;
+
+  <bb 2> :
+  # DEBUG BEGIN_STMT
+  _1 = (int) instance_4(D);
+  _2 = pitBase[_1];
+  _3 = (int) channel_6(D);
+  _2->TIMER[_3].LDVAL ={v} value_7(D);
+  return;
+
+}
+
+
+Pit_Ip_IsChannelRunning (uint8 instance, uint8 channel)
+{
+  boolean isRunning;
+  int _1;
+  struct PIT_Type * _2;
+  int _3;
+  long unsigned int _4;
+  long unsigned int _5;
+  boolean _11;
+
+  <bb 2> :
+  # DEBUG BEGIN_STMT
+  isRunning_6 = 0;
+  # DEBUG isRunning => isRunning_6
+  # DEBUG BEGIN_STMT
+  _1 = (int) instance_7(D);
+  _2 = pitBase[_1];
+  _3 = (int) channel_9(D);
+  _4 ={v} _2->TIMER[_3].TCTRL;
+  _5 = _4 & 1;
+  isRunning_10 = _5 == 1;
+  # DEBUG isRunning => isRunning_10
+  # DEBUG BEGIN_STMT
+  _11 = isRunning_10;
+  return _11;
+
+}
+
+
+Pit_Ip_Reset (uint8 instance, uint8 channelNum, boolean available, boolean bitExists)
+{
+  uint8 i;
+  uint8 channelIndex;
+  uint32 mask;
+  _Bool _1;
+  int _2;
+  struct PIT_Type * _3;
+  int _4;
+  int _5;
+  struct PIT_Type * _6;
+  int _7;
+  int _8;
+  struct PIT_Type * _9;
+  int _10;
+  unsigned char i.0_11;
+  int _12;
+  struct PIT_Type * _13;
+
+  <bb 2> :
+  # DEBUG BEGIN_STMT
+  mask_18 = 0;
+  # DEBUG mask => mask_18
+  # DEBUG BEGIN_STMT
+  channelIndex_20 = channelNum_19(D);
+  # DEBUG channelIndex => channelIndex_20
+  # DEBUG BEGIN_STMT
+  if (available_21(D) != 0)
+    goto <bb 3>; [INV]
+  else
+    goto <bb 4>; [INV]
+
+  <bb 3> :
+  # DEBUG BEGIN_STMT
+  channelIndex_25 = channelIndex_20 + 255;
+  # DEBUG channelIndex => channelIndex_25
+  goto <bb 7>; [INV]
+
+  <bb 4> :
+  # DEBUG BEGIN_STMT
+  _1 = ~bitExists_22(D);
+  if (_1 != 0)
+    goto <bb 5>; [INV]
+  else
+    goto <bb 6>; [INV]
+
+  <bb 5> :
+  # DEBUG BEGIN_STMT
+  mask_24 = 0;
+  # DEBUG mask => mask_24
+  goto <bb 7>; [INV]
+
+  <bb 6> :
+  # DEBUG BEGIN_STMT
+  mask_23 = 2;
+  # DEBUG mask => mask_23
+
+  <bb 7> :
+  # mask_14 = PHI <mask_18(3), mask_24(5), mask_23(6)>
+  # channelIndex_15 = PHI <channelIndex_25(3), channelIndex_20(5), channelIndex_20(6)>
+  # DEBUG channelIndex => channelIndex_15
+  # DEBUG mask => mask_14
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  i_26 = 0;
+  # DEBUG i => i_26
+  goto <bb 9>; [INV]
+
+  <bb 8> :
+  # DEBUG BEGIN_STMT
+  _2 = (int) instance_28(D);
+  _3 = pitBase[_2];
+  _4 = (int) i_16;
+  _3->TIMER[_4].TCTRL ={v} 0;
+  # DEBUG BEGIN_STMT
+  _5 = (int) instance_28(D);
+  _6 = pitBase[_5];
+  _7 = (int) i_16;
+  _6->TIMER[_7].LDVAL ={v} 0;
+  # DEBUG BEGIN_STMT
+  _8 = (int) instance_28(D);
+  _9 = pitBase[_8];
+  _10 = (int) i_16;
+  _9->TIMER[_10].TFLG ={v} 1;
+  # DEBUG BEGIN_STMT
+  i.0_11 = i_16;
+  i_33 = i.0_11 + 1;
+  # DEBUG i => i_33
+
+  <bb 9> :
+  # i_16 = PHI <i_26(7), i_33(8)>
+  # DEBUG i => i_16
+  # DEBUG BEGIN_STMT
+  if (i_16 < channelIndex_15)
+    goto <bb 8>; [INV]
+  else
+    goto <bb 10>; [INV]
+
+  <bb 10> :
+  # DEBUG BEGIN_STMT
+  _12 = (int) instance_28(D);
+  _13 = pitBase[_12];
+  _13->MCR ={v} mask_14;
+  return;
+
+}
+
+
+Pit_Ip_SetChainMode (uint8 instance, uint8 channel, boolean enable)
+{
+  int _1;
+  struct PIT_Type * _2;
+  int _3;
+  long unsigned int _4;
+  int _5;
+  struct PIT_Type * _6;
+  int _7;
+  long unsigned int _8;
+  int _9;
+  struct PIT_Type * _10;
+  int _11;
+  long unsigned int _12;
+  int _13;
+  struct PIT_Type * _14;
+  int _15;
+  long unsigned int _16;
+
+  <bb 2> :
+  # DEBUG BEGIN_STMT
+  SchM_Enter_Gpt_GPT_EXCLUSIVE_AREA_01 ();
+  # DEBUG BEGIN_STMT
+  if (enable_20(D) != 0)
+    goto <bb 3>; [INV]
+  else
+    goto <bb 5>; [INV]
+
+  <bb 3> :
+  if (channel_21(D) != 0)
+    goto <bb 4>; [INV]
+  else
+    goto <bb 5>; [INV]
+
+  <bb 4> :
+  # DEBUG BEGIN_STMT
+  _1 = (int) instance_22(D);
+  _2 = pitBase[_1];
+  _3 = (int) channel_21(D);
+  _4 ={v} _2->TIMER[_3].TCTRL;
+  _5 = (int) instance_22(D);
+  _6 = pitBase[_5];
+  _7 = (int) channel_21(D);
+  _8 = _4 | 4;
+  _6->TIMER[_7].TCTRL ={v} _8;
+  goto <bb 6>; [INV]
+
+  <bb 5> :
+  # DEBUG BEGIN_STMT
+  _9 = (int) instance_22(D);
+  _10 = pitBase[_9];
+  _11 = (int) channel_21(D);
+  _12 ={v} _10->TIMER[_11].TCTRL;
+  _13 = (int) instance_22(D);
+  _14 = pitBase[_13];
+  _15 = (int) channel_21(D);
+  _16 = _12 & 4294967291;
+  _14->TIMER[_15].TCTRL ={v} _16;
+
+  <bb 6> :
+  # DEBUG BEGIN_STMT
+  SchM_Exit_Gpt_GPT_EXCLUSIVE_AREA_01 ();
+  return;
+
+}
+
+
+Pit_Ip_SetDebugMode (uint8 instance, boolean stopRun)
+{
+  int _1;
+  struct PIT_Type * _2;
+  long unsigned int _3;
+  int _4;
+  struct PIT_Type * _5;
+  long unsigned int _6;
+  int _7;
+  struct PIT_Type * _8;
+  long unsigned int _9;
+  int _10;
+  struct PIT_Type * _11;
+  long unsigned int _12;
+
+  <bb 2> :
+  # DEBUG BEGIN_STMT
+  if (stopRun_14(D) != 0)
+    goto <bb 3>; [INV]
+  else
+    goto <bb 4>; [INV]
+
+  <bb 3> :
+  # DEBUG BEGIN_STMT
+  _1 = (int) instance_15(D);
+  _2 = pitBase[_1];
+  _3 ={v} _2->MCR;
+  _4 = (int) instance_15(D);
+  _5 = pitBase[_4];
+  _6 = _3 | 1;
+  _5->MCR ={v} _6;
+  goto <bb 5>; [INV]
+
+  <bb 4> :
+  # DEBUG BEGIN_STMT
+  _7 = (int) instance_15(D);
+  _8 = pitBase[_7];
+  _9 ={v} _8->MCR;
+  _10 = (int) instance_15(D);
+  _11 = pitBase[_10];
+  _12 = _9 & 4294967294;
+  _11->MCR ={v} _12;
+
+  <bb 5> :
+  return;
+
+}
+
+
+Pit_Ip_EnableTimer (uint8 instance, uint8 channel, boolean enable)
+{
+  int _1;
+  struct PIT_Type * _2;
+  int _3;
+  long unsigned int _4;
+  int _5;
+  struct PIT_Type * _6;
+  int _7;
+  long unsigned int _8;
+  int _9;
+  struct PIT_Type * _10;
+  int _11;
+  long unsigned int _12;
+  int _13;
+  struct PIT_Type * _14;
+  int _15;
+  long unsigned int _16;
+
+  <bb 2> :
+  # DEBUG BEGIN_STMT
+  SchM_Enter_Gpt_GPT_EXCLUSIVE_AREA_00 ();
+  # DEBUG BEGIN_STMT
+  if (enable_20(D) != 0)
+    goto <bb 3>; [INV]
+  else
+    goto <bb 4>; [INV]
+
+  <bb 3> :
+  # DEBUG BEGIN_STMT
+  _1 = (int) instance_21(D);
+  _2 = pitBase[_1];
+  _3 = (int) channel_22(D);
+  _4 ={v} _2->TIMER[_3].TCTRL;
+  _5 = (int) instance_21(D);
+  _6 = pitBase[_5];
+  _7 = (int) channel_22(D);
+  _8 = _4 | 1;
+  _6->TIMER[_7].TCTRL ={v} _8;
+  goto <bb 5>; [INV]
+
+  <bb 4> :
+  # DEBUG BEGIN_STMT
+  _9 = (int) instance_21(D);
+  _10 = pitBase[_9];
+  _11 = (int) channel_22(D);
+  _12 ={v} _10->TIMER[_11].TCTRL;
+  _13 = (int) instance_21(D);
+  _14 = pitBase[_13];
+  _15 = (int) channel_22(D);
+  _16 = _12 & 4294967294;
+  _14->TIMER[_15].TCTRL ={v} _16;
+
+  <bb 5> :
+  # DEBUG BEGIN_STMT
+  SchM_Exit_Gpt_GPT_EXCLUSIVE_AREA_00 ();
+  return;
+
+}
+
+
+Pit_Ip_EnableModule (uint8 instance, uint8 timerType)
+{
+  int _1;
+  struct PIT_Type * _2;
+  long unsigned int _3;
+  int _4;
+  struct PIT_Type * _5;
+  long unsigned int _6;
+
+  <bb 2> :
+  # DEBUG BEGIN_STMT
+  if (timerType_8(D) == 0)
+    goto <bb 3>; [INV]
+  else
+    goto <bb 4>; [INV]
+
+  <bb 3> :
+  # DEBUG BEGIN_STMT
+  _1 = (int) instance_10(D);
+  _2 = pitBase[_1];
+  _3 ={v} _2->MCR;
+  _4 = (int) instance_10(D);
+  _5 = pitBase[_4];
+  _6 = _3 & 4294967293;
+  _5->MCR ={v} _6;
+
+  <bb 4> :
+  return;
+
+}
+
+
+Pit_Ip_GetLoadValue (uint8 instance, uint8 channel)
+{
+  uint32 periodValue;
+  int _1;
+  struct PIT_Type * _2;
+  int _3;
+  uint32 _9;
+
+  <bb 2> :
+  # DEBUG BEGIN_STMT
+  periodValue_4 = 0;
+  # DEBUG periodValue => periodValue_4
+  # DEBUG BEGIN_STMT
+  _1 = (int) instance_5(D);
+  _2 = pitBase[_1];
+  _3 = (int) channel_7(D);
+  periodValue_8 ={v} _2->TIMER[_3].LDVAL;
+  # DEBUG periodValue => periodValue_8
+  # DEBUG BEGIN_STMT
+  _9 = periodValue_8;
+  return _9;
+
+}
+
+
+Pit_Ip_GetInterruptStatusFlag (uint8 instance, uint8 channel)
+{
+  boolean returnFlag;
+  int _1;
+  struct PIT_Type * _2;
+  int _3;
+  long unsigned int _4;
+  long unsigned int _5;
+  boolean _10;
+
+  <bb 2> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _1 = (int) instance_6(D);
+  _2 = pitBase[_1];
+  _3 = (int) channel_8(D);
+  _4 ={v} _2->TIMER[_3].TFLG;
+  _5 = _4 & 1;
+  returnFlag_9 = _5 != 0;
+  # DEBUG returnFlag => returnFlag_9
+  # DEBUG BEGIN_STMT
+  _10 = returnFlag_9;
+  return _10;
+
+}
+
+

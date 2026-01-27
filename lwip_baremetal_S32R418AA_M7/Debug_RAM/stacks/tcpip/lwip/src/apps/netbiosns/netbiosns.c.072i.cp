@@ -1,0 +1,613 @@
+
+IPA constant propagation start:
+Determining dynamic type for call: netbiosns_name_decode.isra.0 (_5, &netbios_name);
+  Starting walk at: netbiosns_name_decode.isra.0 (_5, &netbios_name);
+  instance pointer: _5  Outer instance pointer: netbios_hdr_19 offset: 104 (bits) vtbl reference: 
+Determining dynamic type for call: netbiosns_name_decode.isra.0 (_5, &netbios_name);
+  Starting walk at: netbiosns_name_decode.isra.0 (_5, &netbios_name);
+  instance pointer: &netbios_name  Outer instance pointer: netbios_name offset: 0 (bits) vtbl reference: 
+
+IPA structures before propagation:
+
+Jump functions:
+  Jump functions of caller  netbiosns_name_decode.isra.0/21:
+  Jump functions of caller  udp_remove/20:
+  Jump functions of caller  strlen/19:
+  Jump functions of caller  udp_sendto/17:
+  Jump functions of caller  memcpy/16:
+  Jump functions of caller  pbuf_alloc/15:
+  Jump functions of caller  lwip_strnicmp/14:
+  Jump functions of caller  pbuf_free/12:
+  Jump functions of caller  udp_recv/11:
+  Jump functions of caller  udp_bind/9:
+  Jump functions of caller  udp_new_ip_type/8:
+  Jump functions of caller  netbiosns_stop/7:
+  Jump functions of caller  netbiosns_set_name/6:
+  Jump functions of caller  netbiosns_init/5:
+  Jump functions of caller  netbiosns_recv/4:
+    callsite  netbiosns_recv/4 -> netbiosns_name_decode.isra.0/21 : 
+       param 0: UNKNOWN
+         value: 0x0, mask: 0xffffffff
+         VR  ~[0, 0]
+       param 1: UNKNOWN
+         value: 0x0, mask: 0xfffffffc
+         VR  ~[0, 0]
+
+ Propagating constants:
+
+Not considering netbiosns_stop for cloning; -fipa-cp-clone disabled.
+Not considering netbiosns_set_name for cloning; -fipa-cp-clone disabled.
+Not considering netbiosns_init for cloning; -fipa-cp-clone disabled.
+Not considering netbiosns_recv for cloning; -fipa-cp-clone disabled.
+
+overall_size: 160, max_new_size: 11001
+ - context independent values, size: 74, time_benefit: 1.000000
+
+IPA lattices after all propagation:
+
+Lattices:
+  Node: netbiosns_name_decode.isra.0/21:
+    param [0]: VARIABLE
+         ctxs: VARIABLE
+         Bits unusable (BOTTOM)
+         const char * ~[0B, 0B]
+        AGGS VARIABLE
+    param [1]: VARIABLE
+         ctxs: VARIABLE
+         Bits: value = 0x0, mask = 0xfffffffc
+         char * ~[0B, 0B]
+        AGGS VARIABLE
+  Node: netbiosns_stop/7:
+  Node: netbiosns_set_name/6:
+    param [0]: BOTTOM
+         ctxs: BOTTOM
+         Bits unusable (BOTTOM)
+         VARYING
+        AGGS BOTTOM
+  Node: netbiosns_init/5:
+  Node: netbiosns_recv/4:
+    param [0]: BOTTOM
+         ctxs: BOTTOM
+         Bits unusable (BOTTOM)
+         VARYING
+        AGGS BOTTOM
+    param [1]: BOTTOM
+         ctxs: BOTTOM
+         Bits unusable (BOTTOM)
+         VARYING
+        AGGS BOTTOM
+    param [2]: BOTTOM
+         ctxs: BOTTOM
+         Bits unusable (BOTTOM)
+         VARYING
+        AGGS BOTTOM
+    param [3]: BOTTOM
+         ctxs: BOTTOM
+         Bits unusable (BOTTOM)
+         VARYING
+        AGGS BOTTOM
+    param [4]: BOTTOM
+         ctxs: BOTTOM
+         Bits unusable (BOTTOM)
+         VARYING
+        AGGS BOTTOM
+
+IPA decision stage:
+
+Propagated bits info for function netbiosns_name_decode.isra.0/21:
+ param 1: value = 0x0, mask = 0xfffffffc
+
+IPA constant propagation end
+
+Reclaiming functions:
+Reclaiming variables:
+Clearing address taken flags:
+Symbol table:
+
+netbiosns_name_decode.isra.0/21 (netbiosns_name_decode.isra.0) @05f6e8c0
+  Type: function definition analyzed
+  Visibility: prevailing_def_ironly artificial
+  References: _ctype_/18 (addr)_ctype_/18 (addr)
+  Referring: 
+  Availability: local
+  Function flags: count:113328204 (estimated locally) body local optimize_size
+  Called by: netbiosns_recv/4 (42467980 (estimated locally),0.04 per call) 
+  Calls: 
+udp_remove/20 (udp_remove) @061347e0
+  Type: function
+  Visibility: external public
+  References: 
+  Referring: 
+  Availability: not_available
+  Function flags: optimize_size
+  Called by: netbiosns_stop/7 (574129754 (estimated locally),0.53 per call) 
+  Calls: 
+strlen/19 (strlen) @06134620
+  Type: function
+  Visibility: external public
+  References: 
+  Referring: 
+  Availability: not_available
+  Function flags: optimize_size
+  Called by: netbiosns_set_name/6 (214748 (estimated locally),1.00 per call) 
+  Calls: 
+_ctype_/18 (_ctype_) @06133b88
+  Type: variable
+  Body removed by symtab_remove_unreachable_nodes
+  Visibility: external public
+  References: 
+  Referring: netbiosns_name_decode.isra.0/21 (addr)netbiosns_name_decode.isra.0/21 (addr)netbiosns_set_name/6 (addr)
+  Availability: not_available
+  Varpool flags: read-only
+udp_sendto/17 (udp_sendto) @06134380
+  Type: function
+  Visibility: external public
+  References: 
+  Referring: 
+  Availability: not_available
+  Function flags: optimize_size
+  Called by: netbiosns_recv/4 (1516688 (estimated locally),0.00 per call) 
+  Calls: 
+memcpy/16 (memcpy) @061342a0
+  Type: function
+  Visibility: external public
+  References: 
+  Referring: 
+  Availability: not_available
+  Function flags: optimize_size
+  Called by: netbiosns_recv/4 (1516688 (estimated locally),0.00 per call) 
+  Calls: 
+pbuf_alloc/15 (pbuf_alloc) @061341c0
+  Type: function
+  Visibility: external public
+  References: 
+  Referring: 
+  Availability: not_available
+  Function flags: optimize_size
+  Called by: netbiosns_recv/4 (2836521 (estimated locally),0.00 per call) 
+  Calls: 
+lwip_strnicmp/14 (lwip_strnicmp) @061340e0
+  Type: function
+  Visibility: external public
+  References: 
+  Referring: 
+  Availability: not_available
+  Function flags: optimize_size
+  Called by: netbiosns_recv/4 (8595519 (estimated locally),0.01 per call) 
+  Calls: 
+netif_default/13 (netif_default) @061333a8
+  Type: variable
+  Body removed by symtab_remove_unreachable_nodes
+  Visibility: external public
+  References: 
+  Referring: netbiosns_recv/4 (read)netbiosns_recv/4 (read)
+  Availability: not_available
+  Varpool flags:
+pbuf_free/12 (pbuf_free) @06134000
+  Type: function
+  Visibility: external public
+  References: 
+  Referring: 
+  Availability: not_available
+  Function flags: optimize_size
+  Called by: netbiosns_recv/4 (599491536 (estimated locally),0.56 per call) netbiosns_recv/4 (1516688 (estimated locally),0.00 per call) netbiosns_recv/4 (152127742 (estimated locally),0.14 per call) 
+  Calls: 
+udp_recv/11 (udp_recv) @0612c380
+  Type: function
+  Visibility: external public
+  References: 
+  Referring: 
+  Availability: not_available
+  Function flags: optimize_size
+  Called by: netbiosns_init/5 (574129754 (estimated locally),0.53 per call) 
+  Calls: 
+ip_addr_any_type/10 (ip_addr_any_type) @06118e10
+  Type: variable
+  Body removed by symtab_remove_unreachable_nodes
+  Visibility: external public
+  References: 
+  Referring: netbiosns_init/5 (addr)
+  Availability: not_available
+  Varpool flags: read-only
+udp_bind/9 (udp_bind) @0612cee0
+  Type: function
+  Visibility: external public
+  References: 
+  Referring: 
+  Availability: not_available
+  Function flags: optimize_size
+  Called by: netbiosns_init/5 (574129754 (estimated locally),0.53 per call) 
+  Calls: 
+udp_new_ip_type/8 (udp_new_ip_type) @0612ce00
+  Type: function
+  Visibility: external public
+  References: 
+  Referring: 
+  Availability: not_available
+  Function flags: optimize_size
+  Called by: netbiosns_init/5 (1073741824 (estimated locally),1.00 per call) 
+  Calls: 
+netbiosns_stop/7 (netbiosns_stop) @0612c9a0
+  Type: function definition analyzed
+  Visibility: externally_visible public
+  References: netbiosns_pcb/2 (read)netbiosns_pcb/2 (write)
+  Referring: 
+  Availability: available
+  Function flags: count:1073741824 (estimated locally) body optimize_size
+  Called by: 
+  Calls: udp_remove/20 (574129754 (estimated locally),0.53 per call) 
+netbiosns_set_name/6 (netbiosns_set_name) @0612c700
+  Type: function definition analyzed
+  Visibility: externally_visible public
+  References: _ctype_/18 (addr)netbiosns_local_name/1 (write)netbiosns_local_name/1 (write)
+  Referring: 
+  Availability: available
+  Function flags: count:214748 (estimated locally) body optimize_size
+  Called by: 
+  Calls: strlen/19 (214748 (estimated locally),1.00 per call) 
+netbiosns_init/5 (netbiosns_init) @0612c2a0
+  Type: function definition analyzed
+  Visibility: externally_visible public
+  References: netbiosns_pcb/2 (write)ip_addr_any_type/10 (addr)netbiosns_pcb/2 (read)netbiosns_recv/4 (addr)
+  Referring: 
+  Availability: available
+  Function flags: count:1073741824 (estimated locally) body optimize_size
+  Called by: 
+  Calls: udp_recv/11 (574129754 (estimated locally),0.53 per call) udp_bind/9 (574129754 (estimated locally),0.53 per call) udp_new_ip_type/8 (1073741824 (estimated locally),1.00 per call) 
+netbiosns_recv/4 (netbiosns_recv) @0612c000
+  Type: function definition analyzed
+  Visibility: prevailing_def_ironly
+  Address is taken.
+  References: netif_default/13 (read)netbiosns_local_name/1 (addr)netif_default/13 (read)
+  Referring: netbiosns_init/5 (addr)
+  Availability: available
+  Function flags: count:1073741824 (estimated locally) body optimize_size
+  Called by: 
+  Calls: pbuf_free/12 (599491536 (estimated locally),0.56 per call) pbuf_free/12 (1516688 (estimated locally),0.00 per call) udp_sendto/17 (1516688 (estimated locally),0.00 per call) memcpy/16 (1516688 (estimated locally),0.00 per call) pbuf_alloc/15 (2836521 (estimated locally),0.00 per call) lwip_strnicmp/14 (8595519 (estimated locally),0.01 per call) netbiosns_name_decode.isra.0/21 (42467980 (estimated locally),0.04 per call) pbuf_free/12 (152127742 (estimated locally),0.14 per call) 
+netbiosns_pcb/2 (netbiosns_pcb) @061181f8
+  Type: variable definition analyzed
+  Visibility: prevailing_def_ironly
+  References: 
+  Referring: netbiosns_init/5 (read)netbiosns_init/5 (write)netbiosns_stop/7 (read)netbiosns_stop/7 (write)
+  Availability: available
+  Varpool flags:
+netbiosns_local_name/1 (netbiosns_local_name) @06118168
+  Type: variable definition analyzed
+  Visibility: prevailing_def_ironly
+  References: 
+  Referring: netbiosns_recv/4 (addr)netbiosns_set_name/6 (write)netbiosns_set_name/6 (write)
+  Availability: available
+  Varpool flags:
+
+;; Function netbiosns_recv (netbiosns_recv, funcdef_no=2, decl_uid=7221, cgraph_uid=3, symbol_order=4)
+
+Modification phase of node netbiosns_recv/4
+netbiosns_recv (void * arg, struct udp_pcb * upcb, struct pbuf * p, const struct ip_addr_t * addr, u16_t port)
+{
+  struct netbios_resp * resp;
+  struct pbuf * q;
+  struct netbios_hdr * netbios_hdr;
+  char netbios_name[17];
+  short unsigned int _1;
+  struct netif * netif_default.6_2;
+  short unsigned int _3;
+  short unsigned int _4;
+  u8_t[33] * _5;
+  short unsigned int _6;
+  int _7;
+  short unsigned int _8;
+  u8_t[33] * _9;
+  unsigned char _10;
+  short unsigned int _11;
+  short unsigned int _12;
+  struct netif * netif_default.7_13;
+  long unsigned int _14;
+  short unsigned int _48;
+
+  <bb 2> [local count: 1073741824]:
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  if (p_17(D) != 0B)
+    goto <bb 3>; [70.00%]
+  else
+    goto <bb 13>; [30.00%]
+
+  <bb 3> [local count: 751619278]:
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  netbios_hdr_19 = p_17(D)->payload;
+  # DEBUG netbios_hdr => netbios_hdr_19
+  # DEBUG BEGIN_STMT
+  # DEBUG netbios_question_hdr => netbios_hdr_19 + 12
+  # DEBUG BEGIN_STMT
+  _1 = p_17(D)->len;
+  if (_1 <= 49)
+    goto <bb 4>; [20.24%]
+  else
+    goto <bb 5>; [79.76%]
+
+  <bb 4> [local count: 152127742]:
+  # DEBUG BEGIN_STMT
+  pbuf_free (p_17(D));
+  # DEBUG BEGIN_STMT
+  netbios_name ={v} {CLOBBER};
+  goto <bb 13>; [100.00%]
+
+  <bb 5> [local count: 599491537]:
+  # DEBUG BEGIN_STMT
+  netif_default.6_2 = netif_default;
+  if (netif_default.6_2 != 0B)
+    goto <bb 6>; [70.00%]
+  else
+    goto <bb 12>; [30.00%]
+
+  <bb 6> [local count: 419644075]:
+  # DEBUG BEGIN_STMT
+  _3 = netbios_hdr_19->flags;
+  _48 = _3 & 248;
+  if (_48 == 0)
+    goto <bb 7>; [50.00%]
+  else
+    goto <bb 12>; [50.00%]
+
+  <bb 7> [local count: 209822037]:
+  _4 = netbios_hdr_19->questions;
+  if (_4 == 256)
+    goto <bb 8>; [20.24%]
+  else
+    goto <bb 12>; [79.76%]
+
+  <bb 8> [local count: 42467980]:
+  # DEBUG BEGIN_STMT
+  _5 = &MEM[(struct netbios_question_hdr *)netbios_hdr_19 + 12B].encname;
+  # DEBUG D#1 => 17
+  netbiosns_name_decode.isra.0 (_5, &netbios_name);
+  # DEBUG BEGIN_STMT
+  _6 = MEM[(struct netbios_question_hdr *)netbios_hdr_19 + 12B].type;
+  if (_6 == 8192)
+    goto <bb 9>; [20.24%]
+  else
+    goto <bb 12>; [79.76%]
+
+  <bb 9> [local count: 8595519]:
+  # DEBUG BEGIN_STMT
+  _7 = lwip_strnicmp (&netbios_name, &netbiosns_local_name, 16);
+  if (_7 == 0)
+    goto <bb 10>; [33.00%]
+  else
+    goto <bb 12>; [67.00%]
+
+  <bb 10> [local count: 2836521]:
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  q_23 = pbuf_alloc (74, 62, 640);
+  # DEBUG q => q_23
+  # DEBUG BEGIN_STMT
+  if (q_23 != 0B)
+    goto <bb 11>; [53.47%]
+  else
+    goto <bb 12>; [46.53%]
+
+  <bb 11> [local count: 1516688]:
+  # DEBUG BEGIN_STMT
+  resp_24 = q_23->payload;
+  # DEBUG resp => resp_24
+  # DEBUG BEGIN_STMT
+  _8 = netbios_hdr_19->trans_id;
+  resp_24->resp_hdr.trans_id = _8;
+  # DEBUG BEGIN_STMT
+  resp_24->resp_hdr.flags = 133;
+  # DEBUG BEGIN_STMT
+  resp_24->resp_hdr.questions = 0;
+  # DEBUG BEGIN_STMT
+  resp_24->resp_hdr.answerRRs = 256;
+  # DEBUG BEGIN_STMT
+  resp_24->resp_hdr.authorityRRs = 0;
+  # DEBUG BEGIN_STMT
+  resp_24->resp_hdr.additionalRRs = 0;
+  # DEBUG BEGIN_STMT
+  _9 = &resp_24->resp_name.encname;
+  memcpy (_9, _5, 33);
+  # DEBUG BEGIN_STMT
+  _10 = MEM[(struct netbios_question_hdr *)netbios_hdr_19 + 12B].nametype;
+  resp_24->resp_name.nametype = _10;
+  # DEBUG BEGIN_STMT
+  _11 = MEM[(struct netbios_question_hdr *)netbios_hdr_19 + 12B].type;
+  resp_24->resp_name.type = _11;
+  # DEBUG BEGIN_STMT
+  _12 = MEM[(struct netbios_question_hdr *)netbios_hdr_19 + 12B].cls;
+  resp_24->resp_name.cls = _12;
+  # DEBUG BEGIN_STMT
+  resp_24->resp_name.ttl = 3767731200;
+  # DEBUG BEGIN_STMT
+  resp_24->resp_name.datalen = 1536;
+  # DEBUG BEGIN_STMT
+  resp_24->resp_name.flags = 0;
+  # DEBUG BEGIN_STMT
+  netif_default.7_13 = netif_default;
+  _14 = MEM[(const struct ip4_addr_t *)netif_default.7_13 + 4B].addr;
+  resp_24->resp_name.addr.addr = _14;
+  # DEBUG BEGIN_STMT
+  udp_sendto (upcb_39(D), q_23, addr_40(D), port_41(D));
+  # DEBUG BEGIN_STMT
+  pbuf_free (q_23);
+
+  <bb 12> [local count: 599491536]:
+  # DEBUG BEGIN_STMT
+  pbuf_free (p_17(D));
+  netbios_name ={v} {CLOBBER};
+
+  <bb 13> [local count: 1073741824]:
+  return;
+
+}
+
+
+
+;; Function netbiosns_init (netbiosns_init, funcdef_no=3, decl_uid=6215, cgraph_uid=4, symbol_order=5)
+
+Modification phase of node netbiosns_init/5
+netbiosns_init ()
+{
+  struct udp_pcb * _1;
+  unsigned char _2;
+  unsigned char _3;
+  struct udp_pcb * netbiosns_pcb.4_4;
+
+  <bb 2> [local count: 1073741824]:
+  # DEBUG BEGIN_STMT
+  _1 = udp_new_ip_type (46);
+  netbiosns_pcb = _1;
+  # DEBUG BEGIN_STMT
+  if (_1 != 0B)
+    goto <bb 3>; [53.47%]
+  else
+    goto <bb 4>; [46.53%]
+
+  <bb 3> [local count: 574129754]:
+  # DEBUG BEGIN_STMT
+  _2 = _1->so_options;
+  _3 = _2 | 32;
+  _1->so_options = _3;
+  # DEBUG BEGIN_STMT
+  udp_bind (_1, &ip_addr_any_type, 137);
+  # DEBUG BEGIN_STMT
+  netbiosns_pcb.4_4 = netbiosns_pcb;
+  udp_recv (netbiosns_pcb.4_4, netbiosns_recv, netbiosns_pcb.4_4);
+
+  <bb 4> [local count: 1073741824]:
+  return;
+
+}
+
+
+
+;; Function netbiosns_set_name (netbiosns_set_name, funcdef_no=4, decl_uid=6217, cgraph_uid=5, symbol_order=6)
+
+Modification phase of node netbiosns_set_name/6
+netbiosns_set_name (const char * hostname)
+{
+  unsigned char __x;
+  size_t copy_len;
+  size_t i;
+  const char * _1;
+  sizetype _2;
+  sizetype _3;
+  const char * _4;
+  char _5;
+  int _6;
+  char _7;
+  int iftmp.11_9;
+  char _15;
+  int iftmp.11_18;
+  int iftmp.11_19;
+
+  <bb 2> [local count: 214748]:
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  copy_len_14 = strlen (hostname_13(D));
+  # DEBUG copy_len => copy_len_14
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  if (copy_len_14 > 15)
+    goto <bb 10>; [50.00%]
+  else
+    goto <bb 11>; [50.00%]
+
+  <bb 11> [local count: 107374]:
+  goto <bb 8>; [100.00%]
+
+  <bb 10> [local count: 107374]:
+
+  <bb 3> [local count: 1073741824]:
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  __asm__ __volatile__("BKPT #0
+	");
+  # DEBUG BEGIN_STMT
+
+  <bb 12> [local count: 1073741824]:
+  goto <bb 3>; [100.00%]
+
+  <bb 4> [local count: 868753]:
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _1 = hostname_13(D) + i_8;
+  __x_17 = *_1;
+  # DEBUG __x => __x_17
+  # DEBUG BEGIN_STMT
+  _2 = (sizetype) __x_17;
+  _3 = _2 + 1;
+  _4 = &_ctype_ + _3;
+  _5 = *_4;
+  _15 = _5 & 3;
+  if (_15 == 2)
+    goto <bb 5>; [34.00%]
+  else
+    goto <bb 6>; [66.00%]
+
+  <bb 5> [local count: 295376]:
+  _6 = (int) __x_17;
+  iftmp.11_19 = _6 + -32;
+  goto <bb 7>; [100.00%]
+
+  <bb 6> [local count: 573377]:
+  iftmp.11_18 = (int) __x_17;
+
+  <bb 7> [local count: 868753]:
+  # iftmp.11_9 = PHI <iftmp.11_19(5), iftmp.11_18(6)>
+  _7 = (char) iftmp.11_9;
+  netbiosns_local_name[i_8] = _7;
+  # DEBUG BEGIN_STMT
+  i_21 = i_8 + 1;
+  # DEBUG i => i_21
+
+  <bb 8> [local count: 976127]:
+  # i_8 = PHI <i_21(7), 0(11)>
+  # DEBUG copy_len => NULL
+  # DEBUG i => i_8
+  # DEBUG BEGIN_STMT
+  if (i_8 < copy_len_14)
+    goto <bb 4>; [89.00%]
+  else
+    goto <bb 9>; [11.00%]
+
+  <bb 9> [local count: 107374]:
+  # DEBUG BEGIN_STMT
+  netbiosns_local_name[copy_len_14] = 0;
+  return;
+
+}
+
+
+
+;; Function netbiosns_stop (netbiosns_stop, funcdef_no=5, decl_uid=6219, cgraph_uid=6, symbol_order=7)
+
+Modification phase of node netbiosns_stop/7
+netbiosns_stop ()
+{
+  struct udp_pcb * netbiosns_pcb.12_1;
+
+  <bb 2> [local count: 1073741824]:
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  netbiosns_pcb.12_1 = netbiosns_pcb;
+  if (netbiosns_pcb.12_1 != 0B)
+    goto <bb 3>; [53.47%]
+  else
+    goto <bb 4>; [46.53%]
+
+  <bb 3> [local count: 574129754]:
+  # DEBUG BEGIN_STMT
+  udp_remove (netbiosns_pcb.12_1);
+  # DEBUG BEGIN_STMT
+  netbiosns_pcb = 0B;
+
+  <bb 4> [local count: 1073741824]:
+  return;
+
+}
+
+

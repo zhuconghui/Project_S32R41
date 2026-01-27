@@ -1,0 +1,604 @@
+Clock_Ip_EnablePlldigRdivMfi (const struct Clock_Ip_PllConfigType * Config)
+{
+  uint32 Instance;
+
+  <bb 2> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  if (Config != 0B)
+    goto <bb 3>; [INV]
+  else
+    goto <bb 5>; [INV]
+
+  <bb 3> :
+  # DEBUG BEGIN_STMT
+  _1 = Config->Name;
+  _2 = (int) _1;
+  _3 = Clock_Ip_au8ClockFeatures[_2][0];
+  Instance = (uint32) _3;
+  # DEBUG BEGIN_STMT
+  _4 = Config->Enable;
+  if (_4 == 1)
+    goto <bb 4>; [INV]
+  else
+    goto <bb 5>; [INV]
+
+  <bb 4> :
+  # DEBUG BEGIN_STMT
+  _5 = Clock_Ip_apxPll[Instance].PllInstance;
+  _6 = _5->PLLCR;
+  _7 = Clock_Ip_apxPll[Instance].PllInstance;
+  _8 = _6 & 2147483647;
+  _7->PLLCR = _8;
+
+  <bb 5> :
+  # DEBUG BEGIN_STMT
+  return;
+
+}
+
+
+Clock_Ip_CompletePlldigRdivMfi (Clock_Ip_NameType PllName)
+{
+  uint32 Instance;
+  uint32 PllLockStatus;
+  uint32 TimeoutTicks;
+  uint32 ElapsedTime;
+  uint32 StartTime;
+  boolean TimeoutOccurred;
+  Clock_Ip_PllStatusReturnType PllStatus;
+  Clock_Ip_PllStatusReturnType D.6480;
+
+  <bb 2> :
+  # DEBUG BEGIN_STMT
+  PllStatus = 2;
+  # DEBUG BEGIN_STMT
+  TimeoutOccurred = 0;
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _1 = (int) PllName;
+  _2 = Clock_Ip_au8ClockFeatures[_1][0];
+  Instance = (uint32) _2;
+  # DEBUG BEGIN_STMT
+  _3 = Clock_Ip_apxPll[Instance].PllInstance;
+  _4 = _3->PLLCR;
+  _5 = (signed int) _4;
+  if (_5 >= 0)
+    goto <bb 3>; [INV]
+  else
+    goto <bb 8>; [INV]
+
+  <bb 3> :
+  # DEBUG BEGIN_STMT
+  Clock_Ip_StartTimeout (&StartTime, &ElapsedTime, &TimeoutTicks, 50000);
+
+  <bb 4> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _6 = Clock_Ip_apxPll[Instance].PllInstance;
+  _7 = _6->PLLSR;
+  _8 = _7 >> 2;
+  PllLockStatus = _8 & 1;
+  # DEBUG BEGIN_STMT
+  TimeoutTicks.0_9 = TimeoutTicks;
+  TimeoutOccurred = Clock_Ip_TimeoutExpired (&StartTime, &ElapsedTime, TimeoutTicks.0_9);
+  # DEBUG BEGIN_STMT
+  if (PllLockStatus == 0)
+    goto <bb 5>; [INV]
+  else
+    goto <bb 6>; [INV]
+
+  <bb 5> :
+  _10 = ~TimeoutOccurred;
+  if (_10 != 0)
+    goto <bb 4>; [INV]
+  else
+    goto <bb 6>; [INV]
+
+  <bb 6> :
+  # DEBUG BEGIN_STMT
+  if (TimeoutOccurred != 0)
+    goto <bb 7>; [INV]
+  else
+    goto <bb 9>; [INV]
+
+  <bb 7> :
+  # DEBUG BEGIN_STMT
+  PllStatus = 1;
+  # DEBUG BEGIN_STMT
+  Clock_Ip_ReportClockErrors (1, PllName);
+  goto <bb 9>; [INV]
+
+  <bb 8> :
+  # DEBUG BEGIN_STMT
+  PllStatus = 0;
+
+  <bb 9> :
+  # DEBUG BEGIN_STMT
+  D.6480 = PllStatus;
+  StartTime = {CLOBBER};
+  ElapsedTime = {CLOBBER};
+  TimeoutTicks = {CLOBBER};
+  return D.6480;
+
+}
+
+
+Clock_Ip_SetPlldigRdivMfi (const struct Clock_Ip_PllConfigType * Config)
+{
+  uint32 Value;
+  uint32 Instance;
+
+  <bb 2> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  if (Config != 0B)
+    goto <bb 3>; [INV]
+  else
+    goto <bb 8>; [INV]
+
+  <bb 3> :
+  # DEBUG BEGIN_STMT
+  _1 = Config->Name;
+  _2 = (int) _1;
+  _3 = Clock_Ip_au8ClockFeatures[_2][0];
+  Instance = (uint32) _3;
+  # DEBUG BEGIN_STMT
+  _4 = Config->Enable;
+  if (_4 != 0)
+    goto <bb 4>; [INV]
+  else
+    goto <bb 8>; [INV]
+
+  <bb 4> :
+  # DEBUG BEGIN_STMT
+  _5 = Config->InputReference;
+  _6 = (int) _5;
+  switch (_6) <default: <L9> [INV], case 1: <L2> [INV], case 2: <L3> [INV]>
+
+  <bb 5> :
+<L2>:
+  # DEBUG BEGIN_STMT
+  _7 = Clock_Ip_apxPll[Instance].PllInstance;
+  _7->PLLCLKMUX = 0;
+  # DEBUG BEGIN_STMT
+  goto <bb 7>; [INV]
+
+  <bb 6> :
+<L3>:
+  # DEBUG BEGIN_STMT
+  _8 = Clock_Ip_apxPll[Instance].PllInstance;
+  _8->PLLCLKMUX = 1;
+  # DEBUG BEGIN_STMT
+
+  <bb 7> :
+<L9>:
+  # DEBUG BEGIN_STMT
+  _9 = Clock_Ip_apxPll[Instance].PllInstance;
+  Value = _9->PLLDV;
+  # DEBUG BEGIN_STMT
+  Value = Value & 4294938368;
+  # DEBUG BEGIN_STMT
+  _10 = Config->Predivider;
+  _11 = (long unsigned int) _10;
+  _12 = _11 << 12;
+  _13 = _12 & 28672;
+  _14 = Config->MulFactorDiv;
+  _15 = (long unsigned int) _14;
+  _16 = _13 | _15;
+  Value = Value | _16;
+  # DEBUG BEGIN_STMT
+  _17 = Clock_Ip_apxPll[Instance].PllInstance;
+  _17->PLLDV = Value;
+
+  <bb 8> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  return;
+
+}
+
+
+Clock_Ip_ResetPlldigRdivMfi (const struct Clock_Ip_PllConfigType * Config)
+{
+  uint8 DividerIndex;
+  uint32 Instance;
+
+  <bb 2> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  if (Config != 0B)
+    goto <bb 3>; [INV]
+  else
+    goto <bb 7>; [INV]
+
+  <bb 3> :
+  # DEBUG BEGIN_STMT
+  _1 = Config->Name;
+  _2 = (int) _1;
+  _3 = Clock_Ip_au8ClockFeatures[_2][0];
+  Instance = (uint32) _3;
+  # DEBUG BEGIN_STMT
+  DividerIndex = 0;
+  goto <bb 5>; [INV]
+
+  <bb 4> :
+  # DEBUG BEGIN_STMT
+  _4 = Clock_Ip_apxPll[Instance].PllInstance;
+  _5 = (int) DividerIndex;
+  _6 = _4->PLLODIV[_5];
+  _7 = Clock_Ip_apxPll[Instance].PllInstance;
+  _8 = (int) DividerIndex;
+  _9 = _6 & 2147483647;
+  _7->PLLODIV[_8] = _9;
+  # DEBUG BEGIN_STMT
+  DividerIndex.1_10 = DividerIndex;
+  DividerIndex = DividerIndex.1_10 + 1;
+
+  <bb 5> :
+  # DEBUG BEGIN_STMT
+  _11 = Clock_Ip_apxPll[Instance].DivsNo;
+  if (DividerIndex < _11)
+    goto <bb 4>; [INV]
+  else
+    goto <bb 6>; [INV]
+
+  <bb 6> :
+  # DEBUG BEGIN_STMT
+  _12 = Clock_Ip_apxPll[Instance].PllInstance;
+  _13 = _12->PLLCR;
+  _14 = Clock_Ip_apxPll[Instance].PllInstance;
+  _15 = _13 | 2147483648;
+  _14->PLLCR = _15;
+
+  <bb 7> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  return;
+
+}
+
+
+Clock_Ip_EnablePlldigRdivMfiMfnSdmenSsscgbypSpreadctlStepnoStepsize (const struct Clock_Ip_PllConfigType * Config)
+{
+  uint32 Instance;
+
+  <bb 2> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  if (Config != 0B)
+    goto <bb 3>; [INV]
+  else
+    goto <bb 5>; [INV]
+
+  <bb 3> :
+  # DEBUG BEGIN_STMT
+  _1 = Config->Name;
+  _2 = (int) _1;
+  _3 = Clock_Ip_au8ClockFeatures[_2][0];
+  Instance = (uint32) _3;
+  # DEBUG BEGIN_STMT
+  _4 = Config->Enable;
+  if (_4 == 1)
+    goto <bb 4>; [INV]
+  else
+    goto <bb 5>; [INV]
+
+  <bb 4> :
+  # DEBUG BEGIN_STMT
+  _5 = Clock_Ip_apxPll[Instance].PllInstance;
+  _6 = _5->PLLCR;
+  _7 = Clock_Ip_apxPll[Instance].PllInstance;
+  _8 = _6 & 2147483647;
+  _7->PLLCR = _8;
+
+  <bb 5> :
+  # DEBUG BEGIN_STMT
+  return;
+
+}
+
+
+Clock_Ip_CompletePlldigRdivMfiMfnSdmenSsscgbypSpreadctlStepnoStepsize (Clock_Ip_NameType PllName)
+{
+  uint32 Instance;
+  uint32 PllLockStatus;
+  uint32 TimeoutTicks;
+  uint32 ElapsedTime;
+  uint32 StartTime;
+  boolean TimeoutOccurred;
+  Clock_Ip_PllStatusReturnType PllStatus;
+  Clock_Ip_PllStatusReturnType D.6503;
+
+  <bb 2> :
+  # DEBUG BEGIN_STMT
+  PllStatus = 2;
+  # DEBUG BEGIN_STMT
+  TimeoutOccurred = 0;
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _1 = (int) PllName;
+  _2 = Clock_Ip_au8ClockFeatures[_1][0];
+  Instance = (uint32) _2;
+  # DEBUG BEGIN_STMT
+  _3 = Clock_Ip_apxPll[Instance].PllInstance;
+  _4 = _3->PLLCR;
+  _5 = (signed int) _4;
+  if (_5 >= 0)
+    goto <bb 3>; [INV]
+  else
+    goto <bb 8>; [INV]
+
+  <bb 3> :
+  # DEBUG BEGIN_STMT
+  Clock_Ip_StartTimeout (&StartTime, &ElapsedTime, &TimeoutTicks, 50000);
+
+  <bb 4> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _6 = Clock_Ip_apxPll[Instance].PllInstance;
+  _7 = _6->PLLSR;
+  _8 = _7 >> 2;
+  PllLockStatus = _8 & 1;
+  # DEBUG BEGIN_STMT
+  TimeoutTicks.2_9 = TimeoutTicks;
+  TimeoutOccurred = Clock_Ip_TimeoutExpired (&StartTime, &ElapsedTime, TimeoutTicks.2_9);
+  # DEBUG BEGIN_STMT
+  if (PllLockStatus == 0)
+    goto <bb 5>; [INV]
+  else
+    goto <bb 6>; [INV]
+
+  <bb 5> :
+  _10 = ~TimeoutOccurred;
+  if (_10 != 0)
+    goto <bb 4>; [INV]
+  else
+    goto <bb 6>; [INV]
+
+  <bb 6> :
+  # DEBUG BEGIN_STMT
+  if (TimeoutOccurred != 0)
+    goto <bb 7>; [INV]
+  else
+    goto <bb 9>; [INV]
+
+  <bb 7> :
+  # DEBUG BEGIN_STMT
+  PllStatus = 1;
+  # DEBUG BEGIN_STMT
+  Clock_Ip_ReportClockErrors (1, PllName);
+  goto <bb 9>; [INV]
+
+  <bb 8> :
+  # DEBUG BEGIN_STMT
+  PllStatus = 0;
+
+  <bb 9> :
+  # DEBUG BEGIN_STMT
+  D.6503 = PllStatus;
+  StartTime = {CLOBBER};
+  ElapsedTime = {CLOBBER};
+  TimeoutTicks = {CLOBBER};
+  return D.6503;
+
+}
+
+
+Clock_Ip_SetPlldigRdivMfiMfnSdmenSsscgbypSpreadctlStepnoStepsize (const struct Clock_Ip_PllConfigType * Config)
+{
+  uint32 Value;
+  uint32 Instance;
+
+  <bb 2> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  if (Config != 0B)
+    goto <bb 3>; [INV]
+  else
+    goto <bb 8>; [INV]
+
+  <bb 3> :
+  # DEBUG BEGIN_STMT
+  _1 = Config->Name;
+  _2 = (int) _1;
+  _3 = Clock_Ip_au8ClockFeatures[_2][0];
+  Instance = (uint32) _3;
+  # DEBUG BEGIN_STMT
+  _4 = Config->Enable;
+  if (_4 != 0)
+    goto <bb 4>; [INV]
+  else
+    goto <bb 8>; [INV]
+
+  <bb 4> :
+  # DEBUG BEGIN_STMT
+  _5 = Config->InputReference;
+  _6 = (int) _5;
+  switch (_6) <default: <L9> [INV], case 1: <L2> [INV], case 2: <L3> [INV]>
+
+  <bb 5> :
+<L2>:
+  # DEBUG BEGIN_STMT
+  _7 = Clock_Ip_apxPll[Instance].PllInstance;
+  _7->PLLCLKMUX = 0;
+  # DEBUG BEGIN_STMT
+  goto <bb 7>; [INV]
+
+  <bb 6> :
+<L3>:
+  # DEBUG BEGIN_STMT
+  _8 = Clock_Ip_apxPll[Instance].PllInstance;
+  _8->PLLCLKMUX = 1;
+  # DEBUG BEGIN_STMT
+
+  <bb 7> :
+<L9>:
+  # DEBUG BEGIN_STMT
+  _9 = Clock_Ip_apxPll[Instance].PllInstance;
+  Value = _9->PLLDV;
+  # DEBUG BEGIN_STMT
+  Value = Value & 4294938368;
+  # DEBUG BEGIN_STMT
+  _10 = Config->Predivider;
+  _11 = (long unsigned int) _10;
+  _12 = _11 << 12;
+  _13 = _12 & 28672;
+  _14 = Config->MulFactorDiv;
+  _15 = (long unsigned int) _14;
+  _16 = _13 | _15;
+  Value = Value | _16;
+  # DEBUG BEGIN_STMT
+  _17 = Clock_Ip_apxPll[Instance].PllInstance;
+  _17->PLLDV = Value;
+  # DEBUG BEGIN_STMT
+  _18 = Clock_Ip_apxPll[Instance].PllInstance;
+  Value = _18->PLLFD;
+  # DEBUG BEGIN_STMT
+  Value = Value & 3221192704;
+  # DEBUG BEGIN_STMT
+  _19 = Config->NumeratorFracLoopDiv;
+  _20 = (long unsigned int) _19;
+  _21 = _20 & 32767;
+  Value = Value | _21;
+  # DEBUG BEGIN_STMT
+  _22 = Config->SigmaDelta;
+  _23 = (long unsigned int) _22;
+  _24 = _23 << 30;
+  _25 = _24 & 1073741824;
+  Value = Value | _25;
+  # DEBUG BEGIN_STMT
+  _26 = Clock_Ip_apxPll[Instance].PllInstance;
+  _26->PLLFD = Value;
+  # DEBUG BEGIN_STMT
+  _27 = Config->FrequencyModulationBypass;
+  _28 = (long unsigned int) _27;
+  _29 = _28 << 30;
+  _30 = _29 & 1073741824;
+  _31 = Config->ModulationType;
+  _32 = (long unsigned int) _31;
+  _33 = _32 << 29;
+  _34 = _33 & 536870912;
+  _35 = _30 | _34;
+  _36 = Config->IncrementStep;
+  _37 = (long unsigned int) _36;
+  _38 = _37 & 2047;
+  _39 = _35 | _38;
+  _40 = Config->ModulationPeriod;
+  _41 = (long unsigned int) _40;
+  _42 = _41 << 16;
+  _43 = _42 & 67043328;
+  Value = _39 | _43;
+  # DEBUG BEGIN_STMT
+  _44 = Clock_Ip_apxPll[Instance].PllInstance;
+  _44->PLLFM = Value;
+
+  <bb 8> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  return;
+
+}
+
+
+Clock_Ip_ResetPlldigRdivMfiMfnSdmenSsscgbypSpreadctlStepnoStepsize (const struct Clock_Ip_PllConfigType * Config)
+{
+  uint8 DividerIndex;
+  uint32 Instance;
+
+  <bb 2> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  if (Config != 0B)
+    goto <bb 3>; [INV]
+  else
+    goto <bb 7>; [INV]
+
+  <bb 3> :
+  # DEBUG BEGIN_STMT
+  _1 = Config->Name;
+  _2 = (int) _1;
+  _3 = Clock_Ip_au8ClockFeatures[_2][0];
+  Instance = (uint32) _3;
+  # DEBUG BEGIN_STMT
+  DividerIndex = 0;
+  goto <bb 5>; [INV]
+
+  <bb 4> :
+  # DEBUG BEGIN_STMT
+  _4 = Clock_Ip_apxPll[Instance].PllInstance;
+  _5 = (int) DividerIndex;
+  _6 = _4->PLLODIV[_5];
+  _7 = Clock_Ip_apxPll[Instance].PllInstance;
+  _8 = (int) DividerIndex;
+  _9 = _6 & 2147483647;
+  _7->PLLODIV[_8] = _9;
+  # DEBUG BEGIN_STMT
+  DividerIndex.3_10 = DividerIndex;
+  DividerIndex = DividerIndex.3_10 + 1;
+
+  <bb 5> :
+  # DEBUG BEGIN_STMT
+  _11 = Clock_Ip_apxPll[Instance].DivsNo;
+  if (DividerIndex < _11)
+    goto <bb 4>; [INV]
+  else
+    goto <bb 6>; [INV]
+
+  <bb 6> :
+  # DEBUG BEGIN_STMT
+  _12 = Clock_Ip_apxPll[Instance].PllInstance;
+  _13 = _12->PLLCR;
+  _14 = Clock_Ip_apxPll[Instance].PllInstance;
+  _15 = _13 | 2147483648;
+  _14->PLLCR = _15;
+
+  <bb 7> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  return;
+
+}
+
+
+Clock_Ip_CallbackPllEmptyDisable (Clock_Ip_NameType PllName)
+{
+  <bb 2> :
+  # DEBUG BEGIN_STMT
+  return;
+
+}
+
+
+Clock_Ip_CallbackPllEmptyComplete (Clock_Ip_NameType PllName)
+{
+  Clock_Ip_PllStatusReturnType D.6515;
+
+  <bb 2> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  D.6515 = 2;
+  return D.6515;
+
+}
+
+
+Clock_Ip_CallbackPllEmpty (const struct Clock_Ip_PllConfigType * Config)
+{
+  <bb 2> :
+  # DEBUG BEGIN_STMT
+  return;
+
+}
+
+

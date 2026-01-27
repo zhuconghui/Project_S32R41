@@ -1,0 +1,4390 @@
+lowpan6_decompress (struct pbuf * p, u16_t datagram_size, struct ip6_addr_t * lowpan6_contexts, struct lowpan6_link_addr * src, struct lowpan6_link_addr * dest)
+{
+  err_t err;
+  u16_t ip6_offset;
+  u16_t lowpan6_offset;
+  struct pbuf * q;
+  short unsigned int _1;
+  short unsigned int _2;
+  short unsigned int _3;
+  void * _4;
+  short unsigned int _5;
+  unsigned int _6;
+  void * _7;
+  short unsigned int _8;
+  unsigned int _9;
+  short unsigned int _10;
+  short unsigned int lowpan6_offset.41_11;
+  unsigned int _12;
+  short unsigned int ip6_offset.42_13;
+  unsigned int _14;
+  short unsigned int ip6_offset.43_15;
+  unsigned int _16;
+  short unsigned int _17;
+  short unsigned int ip6_offset.44_18;
+  short unsigned int _19;
+  struct pbuf * _20;
+  struct pbuf * _21;
+  struct pbuf * _22;
+  struct pbuf * _43;
+  struct pbuf * _46;
+  struct pbuf * _49;
+  struct pbuf * _51;
+
+  <bb 2> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _1 = p_26(D)->len;
+  _2 = _1 + 48;
+  q_28 = pbuf_alloc (54, _2, 386);
+  # DEBUG q => q_28
+  # DEBUG BEGIN_STMT
+  if (q_28 == 0B)
+    goto <bb 3>; [INV]
+  else
+    goto <bb 4>; [INV]
+
+  <bb 3> :
+  # DEBUG BEGIN_STMT
+  pbuf_free (p_26(D));
+  # DEBUG BEGIN_STMT
+  _51 = 0B;
+  // predicted unlikely by early return (on trees) predictor.
+  goto <bb 11>; [INV]
+
+  <bb 4> :
+  # DEBUG BEGIN_STMT
+  _3 = q_28->len;
+  if (_3 <= 47)
+    goto <bb 5>; [INV]
+  else
+    goto <bb 6>; [INV]
+
+  <bb 5> :
+  # DEBUG BEGIN_STMT
+  pbuf_free (p_26(D));
+  # DEBUG BEGIN_STMT
+  pbuf_free (q_28);
+  # DEBUG BEGIN_STMT
+  _49 = 0B;
+  // predicted unlikely by early return (on trees) predictor.
+  goto <bb 11>; [INV]
+
+  <bb 6> :
+  # DEBUG BEGIN_STMT
+  _4 = p_26(D)->payload;
+  _5 = p_26(D)->len;
+  _6 = (unsigned int) _5;
+  _7 = q_28->payload;
+  _8 = q_28->len;
+  _9 = (unsigned int) _8;
+  _10 = p_26(D)->tot_len;
+  err_34 = lowpan6_decompress_hdr (_4, _6, _7, _9, &lowpan6_offset, &ip6_offset, datagram_size_29(D), _10, lowpan6_contexts_30(D), src_31(D), dest_32(D));
+  # DEBUG err => err_34
+  # DEBUG BEGIN_STMT
+  if (err_34 != 0)
+    goto <bb 7>; [INV]
+  else
+    goto <bb 8>; [INV]
+
+  <bb 7> :
+  # DEBUG BEGIN_STMT
+  pbuf_free (p_26(D));
+  # DEBUG BEGIN_STMT
+  pbuf_free (q_28);
+  # DEBUG BEGIN_STMT
+  _46 = 0B;
+  // predicted unlikely by early return (on trees) predictor.
+  goto <bb 11>; [INV]
+
+  <bb 8> :
+  # DEBUG BEGIN_STMT
+  lowpan6_offset.41_11 = lowpan6_offset;
+  _12 = (unsigned int) lowpan6_offset.41_11;
+  pbuf_remove_header (p_26(D), _12);
+  # DEBUG BEGIN_STMT
+  ip6_offset.42_13 = ip6_offset;
+  _14 = (unsigned int) ip6_offset.42_13;
+  pbuf_remove_header (q_28, _14);
+  # DEBUG BEGIN_STMT
+  pbuf_copy (q_28, p_26(D));
+  # DEBUG BEGIN_STMT
+  ip6_offset.43_15 = ip6_offset;
+  _16 = (unsigned int) ip6_offset.43_15;
+  pbuf_add_header_force (q_28, _16);
+  # DEBUG BEGIN_STMT
+  _17 = p_26(D)->len;
+  ip6_offset.44_18 = ip6_offset;
+  _19 = _17 + ip6_offset.44_18;
+  pbuf_realloc (q_28, _19);
+  # DEBUG BEGIN_STMT
+  _20 = p_26(D)->next;
+  if (_20 != 0B)
+    goto <bb 9>; [INV]
+  else
+    goto <bb 10>; [INV]
+
+  <bb 9> :
+  # DEBUG BEGIN_STMT
+  _21 = p_26(D)->next;
+  pbuf_cat (q_28, _21);
+
+  <bb 10> :
+  # DEBUG BEGIN_STMT
+  p_26(D)->next = 0B;
+  # DEBUG BEGIN_STMT
+  pbuf_free (p_26(D));
+  # DEBUG BEGIN_STMT
+  _43 = q_28;
+
+  <bb 11> :
+  # _22 = PHI <_51(3), _49(5), _46(7), _43(10)>
+  lowpan6_offset ={v} {CLOBBER};
+  ip6_offset ={v} {CLOBBER};
+  return _22;
+
+}
+
+
+lowpan6_decompress_hdr (u8_t * lowpan6_buffer, size_t lowpan6_bufsize, u8_t * decomp_buffer, size_t decomp_bufsize, u16_t * hdr_size_comp, u16_t * hdr_size_decomp, u16_t datagram_size, u16_t compressed_size, struct ip6_addr_t * lowpan6_contexts, struct lowpan6_link_addr * src, struct lowpan6_link_addr * dest)
+{
+  struct udp_hdr * udphdr;
+  u16_t ip6_offset;
+  u32_t header_temp;
+  s8_t i;
+  struct ip6_hdr * ip6hdr;
+  u16_t lowpan6_offset;
+  u8_t * _1;
+  unsigned char _2;
+  signed char _3;
+  short unsigned int lowpan6_offset.45_4;
+  unsigned char _5;
+  int _6;
+  int _7;
+  sizetype _8;
+  sizetype _9;
+  u8_t * _10;
+  unsigned char _11;
+  int _12;
+  int _13;
+  int _14;
+  sizetype _15;
+  sizetype _16;
+  u8_t * _17;
+  unsigned char _18;
+  int _19;
+  int _20;
+  int _21;
+  sizetype _22;
+  sizetype _23;
+  u8_t * _24;
+  unsigned char _25;
+  int _26;
+  int _27;
+  sizetype _28;
+  u8_t * _29;
+  unsigned char _30;
+  long unsigned int _31;
+  long unsigned int _32;
+  long unsigned int _33;
+  long unsigned int _34;
+  long unsigned int _35;
+  unsigned char _36;
+  int _37;
+  int _38;
+  sizetype _39;
+  u8_t * _40;
+  unsigned char _41;
+  int _42;
+  int _43;
+  int _44;
+  sizetype _45;
+  sizetype _46;
+  u8_t * _47;
+  unsigned char _48;
+  int _49;
+  int _50;
+  int _51;
+  sizetype _52;
+  sizetype _53;
+  u8_t * _54;
+  unsigned char _55;
+  int _56;
+  int _57;
+  sizetype _58;
+  u8_t * _59;
+  unsigned char _60;
+  long unsigned int _61;
+  long unsigned int _62;
+  long unsigned int _63;
+  long unsigned int _64;
+  long unsigned int _65;
+  long unsigned int _66;
+  unsigned char _67;
+  int _68;
+  int _69;
+  sizetype _70;
+  u8_t * _71;
+  unsigned char _72;
+  long unsigned int _73;
+  long unsigned int _74;
+  long unsigned int _75;
+  long unsigned int _76;
+  unsigned char _77;
+  int _78;
+  int _79;
+  long unsigned int _80;
+  unsigned char _81;
+  int _82;
+  int _83;
+  short unsigned int lowpan6_offset.46_84;
+  sizetype _85;
+  u8_t * _86;
+  unsigned char _87;
+  unsigned char _88;
+  int _89;
+  int _90;
+  short unsigned int lowpan6_offset.47_91;
+  sizetype _92;
+  u8_t * _93;
+  unsigned char _94;
+  unsigned char _95;
+  int _96;
+  int _97;
+  unsigned char _98;
+  int _99;
+  int _100;
+  unsigned char _101;
+  int _102;
+  int _103;
+  u8_t * _104;
+  unsigned char _105;
+  int _106;
+  int _107;
+  u8_t * _108;
+  unsigned char _109;
+  int _110;
+  int _111;
+  u32_t * _112;
+  sizetype _113;
+  u8_t * _114;
+  u8_t * _115;
+  unsigned char _116;
+  int _117;
+  int _118;
+  u32_t * _119;
+  sizetype _120;
+  u8_t * _121;
+  u8_t * _122;
+  unsigned char _123;
+  int _124;
+  int _125;
+  sizetype _126;
+  u8_t * _127;
+  unsigned char _128;
+  int _129;
+  int _130;
+  long unsigned int _131;
+  sizetype _132;
+  sizetype _133;
+  u8_t * _134;
+  unsigned char _135;
+  long unsigned int _136;
+  long unsigned int _137;
+  long unsigned int _138;
+  long unsigned int _139;
+  u8_t * _140;
+  unsigned char _141;
+  int _142;
+  int _143;
+  unsigned char _144;
+  unsigned char _145;
+  int _146;
+  int _147;
+  long unsigned int _148;
+  unsigned char _149;
+  long unsigned int _150;
+  long unsigned int _151;
+  long unsigned int _152;
+  long unsigned int _153;
+  unsigned char _154;
+  unsigned char _155;
+  unsigned char _156;
+  int _157;
+  int _158;
+  unsigned char _159;
+  int _160;
+  int _161;
+  int _162;
+  unsigned char _163;
+  int _164;
+  int _165;
+  int _166;
+  unsigned char _167;
+  int _168;
+  int _169;
+  long unsigned int _170;
+  long unsigned int _171;
+  unsigned char _172;
+  int _173;
+  int _174;
+  unsigned char _175;
+  int _176;
+  int _177;
+  int _178;
+  unsigned char _179;
+  int _180;
+  int _181;
+  int _182;
+  unsigned char _183;
+  int _184;
+  int _185;
+  long unsigned int _186;
+  long unsigned int _187;
+  u8_t * _188;
+  unsigned char _189;
+  int _190;
+  int _191;
+  u8_t * _192;
+  unsigned char _193;
+  signed char _194;
+  u8_t * _195;
+  unsigned char _196;
+  unsigned char _197;
+  unsigned int _198;
+  unsigned int _199;
+  struct ip6_addr_t * _200;
+  long unsigned int _201;
+  unsigned int _202;
+  unsigned int _203;
+  struct ip6_addr_t * _204;
+  long unsigned int _205;
+  u8_t * _206;
+  unsigned char _207;
+  int _208;
+  int _209;
+  u32_t * _210;
+  sizetype _211;
+  u8_t * _212;
+  u8_t * _213;
+  unsigned char _214;
+  int _215;
+  int _216;
+  sizetype _217;
+  u8_t * _218;
+  unsigned char _219;
+  int _220;
+  int _221;
+  long unsigned int _222;
+  sizetype _223;
+  sizetype _224;
+  u8_t * _225;
+  unsigned char _226;
+  long unsigned int _227;
+  long unsigned int _228;
+  long unsigned int _229;
+  long unsigned int _230;
+  u8_t * _231;
+  unsigned char _232;
+  int _233;
+  int _234;
+  unsigned char _235;
+  unsigned char _236;
+  int _237;
+  int _238;
+  long unsigned int _239;
+  unsigned char _240;
+  long unsigned int _241;
+  long unsigned int _242;
+  long unsigned int _243;
+  long unsigned int _244;
+  unsigned char _245;
+  unsigned char _246;
+  unsigned char _247;
+  int _248;
+  int _249;
+  unsigned char _250;
+  int _251;
+  int _252;
+  int _253;
+  unsigned char _254;
+  int _255;
+  int _256;
+  int _257;
+  unsigned char _258;
+  int _259;
+  int _260;
+  long unsigned int _261;
+  long unsigned int _262;
+  unsigned char _263;
+  int _264;
+  int _265;
+  unsigned char _266;
+  int _267;
+  int _268;
+  int _269;
+  unsigned char _270;
+  int _271;
+  int _272;
+  int _273;
+  unsigned char _274;
+  int _275;
+  int _276;
+  long unsigned int _277;
+  long unsigned int _278;
+  u8_t * _279;
+  unsigned char _280;
+  int _281;
+  int _282;
+  u8_t * _283;
+  unsigned char _284;
+  int _285;
+  int _286;
+  u8_t * _287;
+  unsigned char _288;
+  int _289;
+  int _290;
+  u32_t * _291;
+  sizetype _292;
+  u8_t * _293;
+  u8_t * _294;
+  unsigned char _295;
+  int _296;
+  int _297;
+  short unsigned int lowpan6_offset.48_298;
+  sizetype _299;
+  u8_t * _300;
+  unsigned char _301;
+  int _302;
+  int _303;
+  long unsigned int _304;
+  long unsigned int _305;
+  long unsigned int _306;
+  short unsigned int lowpan6_offset.49_307;
+  sizetype _308;
+  u8_t * _309;
+  unsigned char _310;
+  long unsigned int _311;
+  long unsigned int _312;
+  sizetype _313;
+  u8_t * _314;
+  unsigned char _315;
+  int _316;
+  int _317;
+  sizetype _318;
+  sizetype _319;
+  u8_t * _320;
+  unsigned char _321;
+  int _322;
+  int _323;
+  int _324;
+  sizetype _325;
+  sizetype _326;
+  u8_t * _327;
+  unsigned char _328;
+  int _329;
+  int _330;
+  int _331;
+  sizetype _332;
+  sizetype _333;
+  u8_t * _334;
+  unsigned char _335;
+  int _336;
+  int _337;
+  long unsigned int _338;
+  long unsigned int _339;
+  u8_t * _340;
+  unsigned char _341;
+  int _342;
+  int _343;
+  short unsigned int lowpan6_offset.50_344;
+  sizetype _345;
+  u8_t * _346;
+  unsigned char _347;
+  int _348;
+  int _349;
+  long unsigned int _350;
+  long unsigned int _351;
+  long unsigned int _352;
+  sizetype _353;
+  u8_t * _354;
+  unsigned char _355;
+  int _356;
+  int _357;
+  sizetype _358;
+  sizetype _359;
+  u8_t * _360;
+  unsigned char _361;
+  int _362;
+  int _363;
+  int _364;
+  sizetype _365;
+  sizetype _366;
+  u8_t * _367;
+  unsigned char _368;
+  int _369;
+  int _370;
+  long unsigned int _371;
+  long unsigned int _372;
+  u8_t * _373;
+  unsigned char _374;
+  int _375;
+  int _376;
+  short unsigned int lowpan6_offset.51_377;
+  sizetype _378;
+  u8_t * _379;
+  unsigned char _380;
+  long unsigned int _381;
+  long unsigned int _382;
+  u8_t * _383;
+  unsigned char _384;
+  int _385;
+  int _386;
+  u8_t * _387;
+  unsigned char _388;
+  signed char _389;
+  u8_t * _390;
+  unsigned char _391;
+  signed char _392;
+  unsigned int _393;
+  unsigned int _394;
+  struct ip6_addr_t * _395;
+  long unsigned int _396;
+  unsigned int _397;
+  unsigned int _398;
+  struct ip6_addr_t * _399;
+  long unsigned int _400;
+  u8_t * _401;
+  unsigned char _402;
+  int _403;
+  int _404;
+  u32_t * _405;
+  sizetype _406;
+  u8_t * _407;
+  u8_t * _408;
+  unsigned char _409;
+  int _410;
+  int _411;
+  u32_t * _412;
+  sizetype _413;
+  u8_t * _414;
+  u8_t * _415;
+  unsigned char _416;
+  int _417;
+  int _418;
+  sizetype _419;
+  u8_t * _420;
+  unsigned char _421;
+  int _422;
+  int _423;
+  long unsigned int _424;
+  sizetype _425;
+  sizetype _426;
+  u8_t * _427;
+  unsigned char _428;
+  long unsigned int _429;
+  long unsigned int _430;
+  long unsigned int _431;
+  long unsigned int _432;
+  u8_t * _433;
+  unsigned char _434;
+  int _435;
+  int _436;
+  unsigned char _437;
+  unsigned char _438;
+  int _439;
+  int _440;
+  long unsigned int _441;
+  unsigned char _442;
+  long unsigned int _443;
+  long unsigned int _444;
+  long unsigned int _445;
+  long unsigned int _446;
+  unsigned char _447;
+  unsigned char _448;
+  unsigned char _449;
+  int _450;
+  int _451;
+  unsigned char _452;
+  int _453;
+  int _454;
+  int _455;
+  unsigned char _456;
+  int _457;
+  int _458;
+  int _459;
+  unsigned char _460;
+  int _461;
+  int _462;
+  long unsigned int _463;
+  long unsigned int _464;
+  unsigned char _465;
+  int _466;
+  int _467;
+  unsigned char _468;
+  int _469;
+  int _470;
+  int _471;
+  unsigned char _472;
+  int _473;
+  int _474;
+  int _475;
+  unsigned char _476;
+  int _477;
+  int _478;
+  long unsigned int _479;
+  long unsigned int _480;
+  unsigned char _481;
+  int _482;
+  int _483;
+  sizetype _484;
+  u8_t * _485;
+  unsigned char _486;
+  int _487;
+  int _488;
+  sizetype _489;
+  sizetype _490;
+  u8_t * _491;
+  unsigned char _492;
+  int _493;
+  int _494;
+  short unsigned int lowpan6_offset.52_495;
+  sizetype _496;
+  u8_t * _497;
+  unsigned char _498;
+  signed char _499;
+  sizetype _500;
+  u8_t * _501;
+  unsigned char _502;
+  int _503;
+  int _504;
+  signed short _505;
+  sizetype _506;
+  sizetype _507;
+  u8_t * _508;
+  unsigned char _509;
+  signed short _510;
+  signed short _511;
+  short unsigned int _512;
+  short unsigned int _513;
+  sizetype _514;
+  sizetype _515;
+  u8_t * _516;
+  unsigned char _517;
+  int _518;
+  int _519;
+  signed short _520;
+  sizetype _521;
+  sizetype _522;
+  u8_t * _523;
+  unsigned char _524;
+  signed short _525;
+  signed short _526;
+  short unsigned int _527;
+  short unsigned int _528;
+  sizetype _529;
+  u8_t * _530;
+  unsigned char _531;
+  int _532;
+  int _533;
+  signed short _534;
+  sizetype _535;
+  sizetype _536;
+  u8_t * _537;
+  unsigned char _538;
+  signed short _539;
+  signed short _540;
+  short unsigned int _541;
+  short unsigned int _542;
+  sizetype _543;
+  sizetype _544;
+  u8_t * _545;
+  unsigned char _546;
+  signed short _547;
+  signed short _548;
+  short unsigned int _549;
+  short unsigned int _550;
+  sizetype _551;
+  u8_t * _552;
+  unsigned char _553;
+  signed short _554;
+  signed short _555;
+  short unsigned int _556;
+  short unsigned int _557;
+  sizetype _558;
+  sizetype _559;
+  u8_t * _560;
+  unsigned char _561;
+  int _562;
+  int _563;
+  signed short _564;
+  sizetype _565;
+  sizetype _566;
+  u8_t * _567;
+  unsigned char _568;
+  signed short _569;
+  signed short _570;
+  short unsigned int _571;
+  short unsigned int _572;
+  sizetype _573;
+  u8_t * _574;
+  unsigned char _575;
+  unsigned char _576;
+  signed short _577;
+  signed short _578;
+  signed short _579;
+  short unsigned int _580;
+  short unsigned int _581;
+  sizetype _582;
+  u8_t * _583;
+  unsigned char _584;
+  signed short _585;
+  signed short _586;
+  signed short _587;
+  short unsigned int _588;
+  short unsigned int _589;
+  sizetype _590;
+  u8_t * _591;
+  unsigned char _592;
+  int _593;
+  int _594;
+  signed short _595;
+  sizetype _596;
+  sizetype _597;
+  u8_t * _598;
+  unsigned char _599;
+  signed short _600;
+  signed short _601;
+  short unsigned int _602;
+  short unsigned int _603;
+  short unsigned int _604;
+  short unsigned int _605;
+  short unsigned int _606;
+  short unsigned int _607;
+  short unsigned int _608;
+  short unsigned int _609;
+  unsigned int _610;
+  err_t _625;
+  err_t _680;
+  err_t _685;
+  err_t _701;
+  err_t _727;
+  err_t _728;
+  err_t _770;
+  err_t _772;
+  err_t _805;
+  err_t _806;
+  err_t _813;
+  err_t _814;
+  err_t _815;
+
+  <bb 2> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  ip6_offset_642 = 40;
+  # DEBUG ip6_offset => ip6_offset_642
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  if (lowpan6_buffer_643(D) == 0B)
+    goto <bb 3>; [INV]
+  else
+    goto <bb 4>; [INV]
+
+  <bb 3> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  __asm__ __volatile__("BKPT #0
+	");
+  # DEBUG BEGIN_STMT
+  goto <bb 3>; [INV]
+
+  <bb 4> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  if (decomp_buffer_645(D) == 0B)
+    goto <bb 5>; [INV]
+  else
+    goto <bb 6>; [INV]
+
+  <bb 5> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  __asm__ __volatile__("BKPT #0
+	");
+  # DEBUG BEGIN_STMT
+  goto <bb 5>; [INV]
+
+  <bb 6> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  if (src_646(D) == 0B)
+    goto <bb 7>; [INV]
+  else
+    goto <bb 8>; [INV]
+
+  <bb 7> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  __asm__ __volatile__("BKPT #0
+	");
+  # DEBUG BEGIN_STMT
+  goto <bb 7>; [INV]
+
+  <bb 8> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  if (dest_647(D) == 0B)
+    goto <bb 9>; [INV]
+  else
+    goto <bb 10>; [INV]
+
+  <bb 9> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  __asm__ __volatile__("BKPT #0
+	");
+  # DEBUG BEGIN_STMT
+  goto <bb 9>; [INV]
+
+  <bb 10> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  if (hdr_size_comp_648(D) == 0B)
+    goto <bb 11>; [INV]
+  else
+    goto <bb 12>; [INV]
+
+  <bb 11> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  __asm__ __volatile__("BKPT #0
+	");
+  # DEBUG BEGIN_STMT
+  goto <bb 11>; [INV]
+
+  <bb 12> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  if (hdr_size_decomp_649(D) == 0B)
+    goto <bb 13>; [INV]
+  else
+    goto <bb 14>; [INV]
+
+  <bb 13> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  __asm__ __volatile__("BKPT #0
+	");
+  # DEBUG BEGIN_STMT
+  goto <bb 13>; [INV]
+
+  <bb 14> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  ip6hdr_650 = decomp_buffer_645(D);
+  # DEBUG ip6hdr => ip6hdr_650
+  # DEBUG BEGIN_STMT
+  if (decomp_bufsize_651(D) <= 39)
+    goto <bb 15>; [INV]
+  else
+    goto <bb 16>; [INV]
+
+  <bb 15> :
+  # DEBUG BEGIN_STMT
+  _815 = -1;
+  // predicted unlikely by early return (on trees) predictor.
+  goto <bb 122>; [INV]
+
+  <bb 16> :
+  # DEBUG BEGIN_STMT
+  lowpan6_offset_652 = 2;
+  # DEBUG lowpan6_offset => lowpan6_offset_652
+  # DEBUG BEGIN_STMT
+  _1 = lowpan6_buffer_643(D) + 1;
+  _2 = *_1;
+  _3 = (signed char) _2;
+  if (_3 < 0)
+    goto <bb 17>; [INV]
+  else
+    goto <bb 18>; [INV]
+
+  <bb 17> :
+  # DEBUG BEGIN_STMT
+  lowpan6_offset.45_4 = lowpan6_offset_652;
+  lowpan6_offset_653 = lowpan6_offset.45_4 + 1;
+  # DEBUG lowpan6_offset => lowpan6_offset_653
+
+  <bb 18> :
+  # lowpan6_offset_614 = PHI <lowpan6_offset_652(16), lowpan6_offset_653(17)>
+  # DEBUG lowpan6_offset => lowpan6_offset_614
+  # DEBUG BEGIN_STMT
+  _5 = *lowpan6_buffer_643(D);
+  _6 = (int) _5;
+  _7 = _6 & 24;
+  if (_7 == 0)
+    goto <bb 19>; [INV]
+  else
+    goto <bb 20>; [INV]
+
+  <bb 19> :
+  # DEBUG BEGIN_STMT
+  _8 = (sizetype) lowpan6_offset_614;
+  _9 = _8 + 1;
+  _10 = lowpan6_buffer_643(D) + _9;
+  _11 = *_10;
+  _12 = (int) _11;
+  _13 = _12 << 16;
+  _14 = _13 & 983040;
+  _15 = (sizetype) lowpan6_offset_614;
+  _16 = _15 + 2;
+  _17 = lowpan6_buffer_643(D) + _16;
+  _18 = *_17;
+  _19 = (int) _18;
+  _20 = _19 << 8;
+  _21 = _14 | _20;
+  _22 = (sizetype) lowpan6_offset_614;
+  _23 = _22 + 3;
+  _24 = lowpan6_buffer_643(D) + _23;
+  _25 = *_24;
+  _26 = (int) _25;
+  _27 = _21 | _26;
+  header_temp_663 = (u32_t) _27;
+  # DEBUG header_temp => header_temp_663
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _28 = (sizetype) lowpan6_offset_614;
+  _29 = lowpan6_buffer_643(D) + _28;
+  _30 = *_29;
+  _31 = (long unsigned int) _30;
+  _32 = _31 << 20;
+  _33 = header_temp_663 | _32;
+  _34 = _33 | 1610612736;
+  _35 = lwip_htonl (_34);
+  ip6hdr_650->_v_tc_fl = _35;
+  # DEBUG BEGIN_STMT
+  lowpan6_offset_666 = lowpan6_offset_614 + 4;
+  # DEBUG lowpan6_offset => lowpan6_offset_666
+  goto <bb 26>; [INV]
+
+  <bb 20> :
+  # DEBUG BEGIN_STMT
+  _36 = *lowpan6_buffer_643(D);
+  _37 = (int) _36;
+  _38 = _37 & 24;
+  if (_38 == 8)
+    goto <bb 21>; [INV]
+  else
+    goto <bb 22>; [INV]
+
+  <bb 21> :
+  # DEBUG BEGIN_STMT
+  _39 = (sizetype) lowpan6_offset_614;
+  _40 = lowpan6_buffer_643(D) + _39;
+  _41 = *_40;
+  _42 = (int) _41;
+  _43 = _42 << 16;
+  _44 = _43 & 983040;
+  _45 = (sizetype) lowpan6_offset_614;
+  _46 = _45 + 1;
+  _47 = lowpan6_buffer_643(D) + _46;
+  _48 = *_47;
+  _49 = (int) _48;
+  _50 = _49 << 8;
+  _51 = _44 | _50;
+  _52 = (sizetype) lowpan6_offset_614;
+  _53 = _52 + 2;
+  _54 = lowpan6_buffer_643(D) + _53;
+  _55 = *_54;
+  _56 = (int) _55;
+  _57 = _51 | _56;
+  header_temp_659 = (u32_t) _57;
+  # DEBUG header_temp => header_temp_659
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _58 = (sizetype) lowpan6_offset_614;
+  _59 = lowpan6_buffer_643(D) + _58;
+  _60 = *_59;
+  _61 = (long unsigned int) _60;
+  _62 = _61 << 20;
+  _63 = _62 & 201326592;
+  _64 = header_temp_659 | _63;
+  _65 = _64 | 1610612736;
+  _66 = lwip_htonl (_65);
+  ip6hdr_650->_v_tc_fl = _66;
+  # DEBUG BEGIN_STMT
+  lowpan6_offset_662 = lowpan6_offset_614 + 3;
+  # DEBUG lowpan6_offset => lowpan6_offset_662
+  goto <bb 26>; [INV]
+
+  <bb 22> :
+  # DEBUG BEGIN_STMT
+  _67 = *lowpan6_buffer_643(D);
+  _68 = (int) _67;
+  _69 = _68 & 24;
+  if (_69 == 16)
+    goto <bb 23>; [INV]
+  else
+    goto <bb 24>; [INV]
+
+  <bb 23> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _70 = (sizetype) lowpan6_offset_614;
+  _71 = lowpan6_buffer_643(D) + _70;
+  _72 = *_71;
+  _73 = (long unsigned int) _72;
+  _74 = _73 << 20;
+  _75 = _74 | 1610612736;
+  _76 = lwip_htonl (_75);
+  ip6hdr_650->_v_tc_fl = _76;
+  # DEBUG BEGIN_STMT
+  lowpan6_offset_658 = lowpan6_offset_614 + 1;
+  # DEBUG lowpan6_offset => lowpan6_offset_658
+  goto <bb 26>; [INV]
+
+  <bb 24> :
+  # DEBUG BEGIN_STMT
+  _77 = *lowpan6_buffer_643(D);
+  _78 = (int) _77;
+  _79 = _78 & 24;
+  if (_79 == 24)
+    goto <bb 25>; [INV]
+  else
+    goto <bb 26>; [INV]
+
+  <bb 25> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _80 = lwip_htonl (1610612736);
+  ip6hdr_650->_v_tc_fl = _80;
+
+  <bb 26> :
+  # lowpan6_offset_615 = PHI <lowpan6_offset_666(19), lowpan6_offset_662(21), lowpan6_offset_658(23), lowpan6_offset_614(24), lowpan6_offset_614(25)>
+  # DEBUG lowpan6_offset => lowpan6_offset_615
+  # DEBUG BEGIN_STMT
+  _81 = *lowpan6_buffer_643(D);
+  _82 = (int) _81;
+  _83 = _82 & 4;
+  if (_83 == 0)
+    goto <bb 27>; [INV]
+  else
+    goto <bb 28>; [INV]
+
+  <bb 27> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  lowpan6_offset.46_84 = lowpan6_offset_615;
+  lowpan6_offset_668 = lowpan6_offset.46_84 + 1;
+  # DEBUG lowpan6_offset => lowpan6_offset_668
+  _85 = (sizetype) lowpan6_offset.46_84;
+  _86 = lowpan6_buffer_643(D) + _85;
+  _87 = *_86;
+  ip6hdr_650->_nexth = _87;
+  goto <bb 29>; [INV]
+
+  <bb 28> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  ip6hdr_650->_nexth = 0;
+
+  <bb 29> :
+  # lowpan6_offset_616 = PHI <lowpan6_offset_668(27), lowpan6_offset_615(28)>
+  # DEBUG lowpan6_offset => lowpan6_offset_616
+  # DEBUG BEGIN_STMT
+  _88 = *lowpan6_buffer_643(D);
+  _89 = (int) _88;
+  _90 = _89 & 3;
+  if (_90 == 0)
+    goto <bb 30>; [INV]
+  else
+    goto <bb 31>; [INV]
+
+  <bb 30> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  lowpan6_offset.47_91 = lowpan6_offset_616;
+  lowpan6_offset_673 = lowpan6_offset.47_91 + 1;
+  # DEBUG lowpan6_offset => lowpan6_offset_673
+  _92 = (sizetype) lowpan6_offset.47_91;
+  _93 = lowpan6_buffer_643(D) + _92;
+  _94 = *_93;
+  ip6hdr_650->_hoplim = _94;
+  goto <bb 37>; [INV]
+
+  <bb 31> :
+  # DEBUG BEGIN_STMT
+  _95 = *lowpan6_buffer_643(D);
+  _96 = (int) _95;
+  _97 = _96 & 3;
+  if (_97 == 1)
+    goto <bb 32>; [INV]
+  else
+    goto <bb 33>; [INV]
+
+  <bb 32> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  ip6hdr_650->_hoplim = 1;
+  goto <bb 37>; [INV]
+
+  <bb 33> :
+  # DEBUG BEGIN_STMT
+  _98 = *lowpan6_buffer_643(D);
+  _99 = (int) _98;
+  _100 = _99 & 3;
+  if (_100 == 2)
+    goto <bb 34>; [INV]
+  else
+    goto <bb 35>; [INV]
+
+  <bb 34> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  ip6hdr_650->_hoplim = 64;
+  goto <bb 37>; [INV]
+
+  <bb 35> :
+  # DEBUG BEGIN_STMT
+  _101 = *lowpan6_buffer_643(D);
+  _102 = (int) _101;
+  _103 = _102 & 3;
+  if (_103 == 3)
+    goto <bb 36>; [INV]
+  else
+    goto <bb 37>; [INV]
+
+  <bb 36> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  ip6hdr_650->_hoplim = 255;
+
+  <bb 37> :
+  # lowpan6_offset_617 = PHI <lowpan6_offset_673(30), lowpan6_offset_616(32), lowpan6_offset_616(34), lowpan6_offset_616(35), lowpan6_offset_616(36)>
+  # DEBUG lowpan6_offset => lowpan6_offset_617
+  # DEBUG BEGIN_STMT
+  _104 = lowpan6_buffer_643(D) + 1;
+  _105 = *_104;
+  _106 = (int) _105;
+  _107 = _106 & 64;
+  if (_107 == 0)
+    goto <bb 38>; [INV]
+  else
+    goto <bb 50>; [INV]
+
+  <bb 38> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _108 = lowpan6_buffer_643(D) + 1;
+  _109 = *_108;
+  _110 = (int) _109;
+  _111 = _110 & 48;
+  if (_111 == 0)
+    goto <bb 39>; [INV]
+  else
+    goto <bb 40>; [INV]
+
+  <bb 39> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _112 = &ip6hdr_650->src.addr[0];
+  _113 = (sizetype) lowpan6_offset_617;
+  _114 = lowpan6_buffer_643(D) + _113;
+  memcpy (_112, _114, 16);
+  # DEBUG BEGIN_STMT
+  lowpan6_offset_720 = lowpan6_offset_617 + 16;
+  # DEBUG lowpan6_offset => lowpan6_offset_720
+  goto <bb 68>; [INV]
+
+  <bb 40> :
+  # DEBUG BEGIN_STMT
+  _115 = lowpan6_buffer_643(D) + 1;
+  _116 = *_115;
+  _117 = (int) _116;
+  _118 = _117 & 48;
+  if (_118 == 16)
+    goto <bb 41>; [INV]
+  else
+    goto <bb 42>; [INV]
+
+  <bb 41> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  ip6hdr_650->src.addr[0] = 33022;
+  # DEBUG BEGIN_STMT
+  ip6hdr_650->src.addr[1] = 0;
+  # DEBUG BEGIN_STMT
+  _119 = &ip6hdr_650->src.addr[2];
+  _120 = (sizetype) lowpan6_offset_617;
+  _121 = lowpan6_buffer_643(D) + _120;
+  memcpy (_119, _121, 8);
+  # DEBUG BEGIN_STMT
+  lowpan6_offset_718 = lowpan6_offset_617 + 8;
+  # DEBUG lowpan6_offset => lowpan6_offset_718
+  goto <bb 68>; [INV]
+
+  <bb 42> :
+  # DEBUG BEGIN_STMT
+  _122 = lowpan6_buffer_643(D) + 1;
+  _123 = *_122;
+  _124 = (int) _123;
+  _125 = _124 & 48;
+  if (_125 == 32)
+    goto <bb 43>; [INV]
+  else
+    goto <bb 44>; [INV]
+
+  <bb 43> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  ip6hdr_650->src.addr[0] = 33022;
+  # DEBUG BEGIN_STMT
+  ip6hdr_650->src.addr[1] = 0;
+  # DEBUG BEGIN_STMT
+  ip6hdr_650->src.addr[2] = 4278190080;
+  # DEBUG BEGIN_STMT
+  _126 = (sizetype) lowpan6_offset_617;
+  _127 = lowpan6_buffer_643(D) + _126;
+  _128 = *_127;
+  _129 = (int) _128;
+  _130 = _129 << 8;
+  _131 = (long unsigned int) _130;
+  _132 = (sizetype) lowpan6_offset_617;
+  _133 = _132 + 1;
+  _134 = lowpan6_buffer_643(D) + _133;
+  _135 = *_134;
+  _136 = (long unsigned int) _135;
+  _137 = _131 | _136;
+  _138 = _137 | 4261412864;
+  _139 = lwip_htonl (_138);
+  ip6hdr_650->src.addr[3] = _139;
+  # DEBUG BEGIN_STMT
+  lowpan6_offset_714 = lowpan6_offset_617 + 2;
+  # DEBUG lowpan6_offset => lowpan6_offset_714
+  goto <bb 68>; [INV]
+
+  <bb 44> :
+  # DEBUG BEGIN_STMT
+  _140 = lowpan6_buffer_643(D) + 1;
+  _141 = *_140;
+  _142 = (int) _141;
+  _143 = _142 & 48;
+  if (_143 == 48)
+    goto <bb 45>; [INV]
+  else
+    goto <bb 68>; [INV]
+
+  <bb 45> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  ip6hdr_650->src.addr[0] = 33022;
+  # DEBUG BEGIN_STMT
+  ip6hdr_650->src.addr[1] = 0;
+  # DEBUG BEGIN_STMT
+  _144 = src_646(D)->addr_len;
+  if (_144 == 2)
+    goto <bb 46>; [INV]
+  else
+    goto <bb 47>; [INV]
+
+  <bb 46> :
+  # DEBUG BEGIN_STMT
+  ip6hdr_650->src.addr[2] = 4278190080;
+  # DEBUG BEGIN_STMT
+  _145 = src_646(D)->addr[0];
+  _146 = (int) _145;
+  _147 = _146 << 8;
+  _148 = (long unsigned int) _147;
+  _149 = src_646(D)->addr[1];
+  _150 = (long unsigned int) _149;
+  _151 = _148 | _150;
+  _152 = _151 | 4261412864;
+  _153 = lwip_htonl (_152);
+  ip6hdr_650->src.addr[3] = _153;
+  goto <bb 68>; [INV]
+
+  <bb 47> :
+  # DEBUG BEGIN_STMT
+  _154 = src_646(D)->addr_len;
+  if (_154 == 8)
+    goto <bb 48>; [INV]
+  else
+    goto <bb 49>; [INV]
+
+  <bb 48> :
+  # DEBUG BEGIN_STMT
+  _155 = src_646(D)->addr[0];
+  _156 = _155 ^ 2;
+  _157 = (int) _156;
+  _158 = _157 << 24;
+  _159 = src_646(D)->addr[1];
+  _160 = (int) _159;
+  _161 = _160 << 16;
+  _162 = _158 | _161;
+  _163 = src_646(D)->addr[2];
+  _164 = (int) _163;
+  _165 = _164 << 8;
+  _166 = _162 | _165;
+  _167 = src_646(D)->addr[3];
+  _168 = (int) _167;
+  _169 = _166 | _168;
+  _170 = (long unsigned int) _169;
+  _171 = lwip_htonl (_170);
+  ip6hdr_650->src.addr[2] = _171;
+  # DEBUG BEGIN_STMT
+  _172 = src_646(D)->addr[4];
+  _173 = (int) _172;
+  _174 = _173 << 24;
+  _175 = src_646(D)->addr[5];
+  _176 = (int) _175;
+  _177 = _176 << 16;
+  _178 = _174 | _177;
+  _179 = src_646(D)->addr[6];
+  _180 = (int) _179;
+  _181 = _180 << 8;
+  _182 = _178 | _181;
+  _183 = src_646(D)->addr[7];
+  _184 = (int) _183;
+  _185 = _182 | _184;
+  _186 = (long unsigned int) _185;
+  _187 = lwip_htonl (_186);
+  ip6hdr_650->src.addr[3] = _187;
+  goto <bb 68>; [INV]
+
+  <bb 49> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _701 = -6;
+  // predicted unlikely by early return (on trees) predictor.
+  goto <bb 122>; [INV]
+
+  <bb 50> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _188 = lowpan6_buffer_643(D) + 1;
+  _189 = *_188;
+  _190 = (int) _189;
+  _191 = _190 & 48;
+  if (_191 == 0)
+    goto <bb 51>; [INV]
+  else
+    goto <bb 52>; [INV]
+
+  <bb 51> :
+  # DEBUG BEGIN_STMT
+  ip6hdr_650->src.addr[0] = 0;
+  # DEBUG BEGIN_STMT
+  ip6hdr_650->src.addr[1] = 0;
+  # DEBUG BEGIN_STMT
+  ip6hdr_650->src.addr[2] = 0;
+  # DEBUG BEGIN_STMT
+  ip6hdr_650->src.addr[3] = 0;
+  # DEBUG BEGIN_STMT
+  goto <bb 58>; [INV]
+
+  <bb 52> :
+  # DEBUG BEGIN_STMT
+  _192 = lowpan6_buffer_643(D) + 1;
+  _193 = *_192;
+  _194 = (signed char) _193;
+  if (_194 < 0)
+    goto <bb 53>; [INV]
+  else
+    goto <bb 54>; [INV]
+
+  <bb 53> :
+  # DEBUG BEGIN_STMT
+  _195 = lowpan6_buffer_643(D) + 2;
+  _196 = *_195;
+  _197 = _196 >> 4;
+  i_676 = (s8_t) _197;
+  # DEBUG i => i_676
+  goto <bb 55>; [INV]
+
+  <bb 54> :
+  # DEBUG BEGIN_STMT
+  i_675 = 0;
+  # DEBUG i => i_675
+
+  <bb 55> :
+  # i_622 = PHI <i_676(53), i_675(54)>
+  # DEBUG i => i_622
+  # DEBUG BEGIN_STMT
+  if (i_622 > 9)
+    goto <bb 56>; [INV]
+  else
+    goto <bb 57>; [INV]
+
+  <bb 56> :
+  # DEBUG BEGIN_STMT
+  _680 = -6;
+  // predicted unlikely by early return (on trees) predictor.
+  goto <bb 122>; [INV]
+
+  <bb 57> :
+  # DEBUG BEGIN_STMT
+  _198 = (unsigned int) i_622;
+  _199 = _198 * 20;
+  _200 = lowpan6_contexts_677(D) + _199;
+  _201 = _200->addr[0];
+  ip6hdr_650->src.addr[0] = _201;
+  # DEBUG BEGIN_STMT
+  _202 = (unsigned int) i_622;
+  _203 = _202 * 20;
+  _204 = lowpan6_contexts_677(D) + _203;
+  _205 = _204->addr[1];
+  ip6hdr_650->src.addr[1] = _205;
+
+  <bb 58> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _206 = lowpan6_buffer_643(D) + 1;
+  _207 = *_206;
+  _208 = (int) _207;
+  _209 = _208 & 48;
+  if (_209 == 16)
+    goto <bb 59>; [INV]
+  else
+    goto <bb 60>; [INV]
+
+  <bb 59> :
+  # DEBUG BEGIN_STMT
+  _210 = &ip6hdr_650->src.addr[2];
+  _211 = (sizetype) lowpan6_offset_617;
+  _212 = lowpan6_buffer_643(D) + _211;
+  memcpy (_210, _212, 8);
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  lowpan6_offset_698 = lowpan6_offset_617 + 8;
+  # DEBUG lowpan6_offset => lowpan6_offset_698
+  goto <bb 68>; [INV]
+
+  <bb 60> :
+  # DEBUG BEGIN_STMT
+  _213 = lowpan6_buffer_643(D) + 1;
+  _214 = *_213;
+  _215 = (int) _214;
+  _216 = _215 & 48;
+  if (_216 == 32)
+    goto <bb 61>; [INV]
+  else
+    goto <bb 62>; [INV]
+
+  <bb 61> :
+  # DEBUG BEGIN_STMT
+  ip6hdr_650->src.addr[2] = 4278190080;
+  # DEBUG BEGIN_STMT
+  _217 = (sizetype) lowpan6_offset_617;
+  _218 = lowpan6_buffer_643(D) + _217;
+  _219 = *_218;
+  _220 = (int) _219;
+  _221 = _220 << 8;
+  _222 = (long unsigned int) _221;
+  _223 = (sizetype) lowpan6_offset_617;
+  _224 = _223 + 1;
+  _225 = lowpan6_buffer_643(D) + _224;
+  _226 = *_225;
+  _227 = (long unsigned int) _226;
+  _228 = _222 | _227;
+  _229 = _228 | 4261412864;
+  _230 = lwip_htonl (_229);
+  ip6hdr_650->src.addr[3] = _230;
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  lowpan6_offset_696 = lowpan6_offset_617 + 2;
+  # DEBUG lowpan6_offset => lowpan6_offset_696
+  goto <bb 68>; [INV]
+
+  <bb 62> :
+  # DEBUG BEGIN_STMT
+  _231 = lowpan6_buffer_643(D) + 1;
+  _232 = *_231;
+  _233 = (int) _232;
+  _234 = _233 & 48;
+  if (_234 == 48)
+    goto <bb 63>; [INV]
+  else
+    goto <bb 68>; [INV]
+
+  <bb 63> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _235 = src_646(D)->addr_len;
+  if (_235 == 2)
+    goto <bb 64>; [INV]
+  else
+    goto <bb 65>; [INV]
+
+  <bb 64> :
+  # DEBUG BEGIN_STMT
+  ip6hdr_650->src.addr[2] = 4278190080;
+  # DEBUG BEGIN_STMT
+  _236 = src_646(D)->addr[0];
+  _237 = (int) _236;
+  _238 = _237 << 8;
+  _239 = (long unsigned int) _238;
+  _240 = src_646(D)->addr[1];
+  _241 = (long unsigned int) _240;
+  _242 = _239 | _241;
+  _243 = _242 | 4261412864;
+  _244 = lwip_htonl (_243);
+  ip6hdr_650->src.addr[3] = _244;
+  goto <bb 68>; [INV]
+
+  <bb 65> :
+  # DEBUG BEGIN_STMT
+  _245 = src_646(D)->addr_len;
+  if (_245 == 8)
+    goto <bb 66>; [INV]
+  else
+    goto <bb 67>; [INV]
+
+  <bb 66> :
+  # DEBUG BEGIN_STMT
+  _246 = src_646(D)->addr[0];
+  _247 = _246 ^ 2;
+  _248 = (int) _247;
+  _249 = _248 << 24;
+  _250 = src_646(D)->addr[1];
+  _251 = (int) _250;
+  _252 = _251 << 16;
+  _253 = _249 | _252;
+  _254 = src_646(D)->addr[2];
+  _255 = (int) _254;
+  _256 = _255 << 8;
+  _257 = _253 | _256;
+  _258 = src_646(D)->addr[3];
+  _259 = (int) _258;
+  _260 = _257 | _259;
+  _261 = (long unsigned int) _260;
+  _262 = lwip_htonl (_261);
+  ip6hdr_650->src.addr[2] = _262;
+  # DEBUG BEGIN_STMT
+  _263 = src_646(D)->addr[4];
+  _264 = (int) _263;
+  _265 = _264 << 24;
+  _266 = src_646(D)->addr[5];
+  _267 = (int) _266;
+  _268 = _267 << 16;
+  _269 = _265 | _268;
+  _270 = src_646(D)->addr[6];
+  _271 = (int) _270;
+  _272 = _271 << 8;
+  _273 = _269 | _272;
+  _274 = src_646(D)->addr[7];
+  _275 = (int) _274;
+  _276 = _273 | _275;
+  _277 = (long unsigned int) _276;
+  _278 = lwip_htonl (_277);
+  ip6hdr_650->src.addr[3] = _278;
+  goto <bb 68>; [INV]
+
+  <bb 67> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _685 = -6;
+  // predicted unlikely by early return (on trees) predictor.
+  goto <bb 122>; [INV]
+
+  <bb 68> :
+  # lowpan6_offset_618 = PHI <lowpan6_offset_718(41), lowpan6_offset_698(59), lowpan6_offset_696(61), lowpan6_offset_617(62), lowpan6_offset_617(64), lowpan6_offset_617(66), lowpan6_offset_720(39), lowpan6_offset_617(48), lowpan6_offset_617(46), lowpan6_offset_617(44), lowpan6_offset_714(43)>
+  # DEBUG lowpan6_offset => lowpan6_offset_618
+  # DEBUG BEGIN_STMT
+  _279 = lowpan6_buffer_643(D) + 1;
+  _280 = *_279;
+  _281 = (int) _280;
+  _282 = _281 & 8;
+  if (_282 != 0)
+    goto <bb 69>; [INV]
+  else
+    goto <bb 79>; [INV]
+
+  <bb 69> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _283 = lowpan6_buffer_643(D) + 1;
+  _284 = *_283;
+  _285 = (int) _284;
+  _286 = _285 & 4;
+  if (_286 != 0)
+    goto <bb 70>; [INV]
+  else
+    goto <bb 71>; [INV]
+
+  <bb 70> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _770 = -6;
+  // predicted unlikely by early return (on trees) predictor.
+  goto <bb 122>; [INV]
+
+  <bb 71> :
+  # DEBUG BEGIN_STMT
+  _287 = lowpan6_buffer_643(D) + 1;
+  _288 = *_287;
+  _289 = (int) _288;
+  _290 = _289 & 3;
+  if (_290 == 0)
+    goto <bb 72>; [INV]
+  else
+    goto <bb 73>; [INV]
+
+  <bb 72> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _291 = &ip6hdr_650->dest.addr[0];
+  _292 = (sizetype) lowpan6_offset_618;
+  _293 = lowpan6_buffer_643(D) + _292;
+  memcpy (_291, _293, 16);
+  # DEBUG BEGIN_STMT
+  lowpan6_offset_769 = lowpan6_offset_618 + 16;
+  # DEBUG lowpan6_offset => lowpan6_offset_769
+  goto <bb 99>; [INV]
+
+  <bb 73> :
+  # DEBUG BEGIN_STMT
+  _294 = lowpan6_buffer_643(D) + 1;
+  _295 = *_294;
+  _296 = (int) _295;
+  _297 = _296 & 3;
+  if (_297 == 1)
+    goto <bb 74>; [INV]
+  else
+    goto <bb 75>; [INV]
+
+  <bb 74> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  lowpan6_offset.48_298 = lowpan6_offset_618;
+  lowpan6_offset_758 = lowpan6_offset.48_298 + 1;
+  # DEBUG lowpan6_offset => lowpan6_offset_758
+  _299 = (sizetype) lowpan6_offset.48_298;
+  _300 = lowpan6_buffer_643(D) + _299;
+  _301 = *_300;
+  _302 = (int) _301;
+  _303 = _302 << 16;
+  _304 = (long unsigned int) _303;
+  _305 = _304 | 4278190080;
+  _306 = lwip_htonl (_305);
+  ip6hdr_650->dest.addr[0] = _306;
+  # DEBUG BEGIN_STMT
+  ip6hdr_650->dest.addr[1] = 0;
+  # DEBUG BEGIN_STMT
+  lowpan6_offset.49_307 = lowpan6_offset_758;
+  lowpan6_offset_762 = lowpan6_offset.49_307 + 1;
+  # DEBUG lowpan6_offset => lowpan6_offset_762
+  _308 = (sizetype) lowpan6_offset.49_307;
+  _309 = lowpan6_buffer_643(D) + _308;
+  _310 = *_309;
+  _311 = (long unsigned int) _310;
+  _312 = lwip_htonl (_311);
+  ip6hdr_650->dest.addr[2] = _312;
+  # DEBUG BEGIN_STMT
+  _313 = (sizetype) lowpan6_offset_762;
+  _314 = lowpan6_buffer_643(D) + _313;
+  _315 = *_314;
+  _316 = (int) _315;
+  _317 = _316 << 24;
+  _318 = (sizetype) lowpan6_offset_762;
+  _319 = _318 + 1;
+  _320 = lowpan6_buffer_643(D) + _319;
+  _321 = *_320;
+  _322 = (int) _321;
+  _323 = _322 << 16;
+  _324 = _317 | _323;
+  _325 = (sizetype) lowpan6_offset_762;
+  _326 = _325 + 2;
+  _327 = lowpan6_buffer_643(D) + _326;
+  _328 = *_327;
+  _329 = (int) _328;
+  _330 = _329 << 8;
+  _331 = _324 | _330;
+  _332 = (sizetype) lowpan6_offset_762;
+  _333 = _332 + 3;
+  _334 = lowpan6_buffer_643(D) + _333;
+  _335 = *_334;
+  _336 = (int) _335;
+  _337 = _331 | _336;
+  _338 = (long unsigned int) _337;
+  _339 = lwip_htonl (_338);
+  ip6hdr_650->dest.addr[3] = _339;
+  # DEBUG BEGIN_STMT
+  lowpan6_offset_767 = lowpan6_offset_762 + 4;
+  # DEBUG lowpan6_offset => lowpan6_offset_767
+  goto <bb 99>; [INV]
+
+  <bb 75> :
+  # DEBUG BEGIN_STMT
+  _340 = lowpan6_buffer_643(D) + 1;
+  _341 = *_340;
+  _342 = (int) _341;
+  _343 = _342 & 3;
+  if (_343 == 2)
+    goto <bb 76>; [INV]
+  else
+    goto <bb 77>; [INV]
+
+  <bb 76> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  lowpan6_offset.50_344 = lowpan6_offset_618;
+  lowpan6_offset_750 = lowpan6_offset.50_344 + 1;
+  # DEBUG lowpan6_offset => lowpan6_offset_750
+  _345 = (sizetype) lowpan6_offset.50_344;
+  _346 = lowpan6_buffer_643(D) + _345;
+  _347 = *_346;
+  _348 = (int) _347;
+  _349 = _348 << 16;
+  _350 = (long unsigned int) _349;
+  _351 = _350 | 4278190080;
+  _352 = lwip_htonl (_351);
+  ip6hdr_650->dest.addr[0] = _352;
+  # DEBUG BEGIN_STMT
+  ip6hdr_650->dest.addr[1] = 0;
+  # DEBUG BEGIN_STMT
+  ip6hdr_650->dest.addr[2] = 0;
+  # DEBUG BEGIN_STMT
+  _353 = (sizetype) lowpan6_offset_750;
+  _354 = lowpan6_buffer_643(D) + _353;
+  _355 = *_354;
+  _356 = (int) _355;
+  _357 = _356 << 16;
+  _358 = (sizetype) lowpan6_offset_750;
+  _359 = _358 + 1;
+  _360 = lowpan6_buffer_643(D) + _359;
+  _361 = *_360;
+  _362 = (int) _361;
+  _363 = _362 << 8;
+  _364 = _357 | _363;
+  _365 = (sizetype) lowpan6_offset_750;
+  _366 = _365 + 2;
+  _367 = lowpan6_buffer_643(D) + _366;
+  _368 = *_367;
+  _369 = (int) _368;
+  _370 = _364 | _369;
+  _371 = (long unsigned int) _370;
+  _372 = lwip_htonl (_371);
+  ip6hdr_650->dest.addr[3] = _372;
+  # DEBUG BEGIN_STMT
+  lowpan6_offset_757 = lowpan6_offset_750 + 3;
+  # DEBUG lowpan6_offset => lowpan6_offset_757
+  goto <bb 99>; [INV]
+
+  <bb 77> :
+  # DEBUG BEGIN_STMT
+  _373 = lowpan6_buffer_643(D) + 1;
+  _374 = *_373;
+  _375 = (int) _374;
+  _376 = _375 & 3;
+  if (_376 == 3)
+    goto <bb 78>; [INV]
+  else
+    goto <bb 99>; [INV]
+
+  <bb 78> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  ip6hdr_650->dest.addr[0] = 767;
+  # DEBUG BEGIN_STMT
+  ip6hdr_650->dest.addr[1] = 0;
+  # DEBUG BEGIN_STMT
+  ip6hdr_650->dest.addr[2] = 0;
+  # DEBUG BEGIN_STMT
+  lowpan6_offset.51_377 = lowpan6_offset_618;
+  lowpan6_offset_747 = lowpan6_offset.51_377 + 1;
+  # DEBUG lowpan6_offset => lowpan6_offset_747
+  _378 = (sizetype) lowpan6_offset.51_377;
+  _379 = lowpan6_buffer_643(D) + _378;
+  _380 = *_379;
+  _381 = (long unsigned int) _380;
+  _382 = lwip_htonl (_381);
+  ip6hdr_650->dest.addr[3] = _382;
+  goto <bb 99>; [INV]
+
+  <bb 79> :
+  # DEBUG BEGIN_STMT
+  _383 = lowpan6_buffer_643(D) + 1;
+  _384 = *_383;
+  _385 = (int) _384;
+  _386 = _385 & 4;
+  if (_386 != 0)
+    goto <bb 80>; [INV]
+  else
+    goto <bb 86>; [INV]
+
+  <bb 80> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _387 = lowpan6_buffer_643(D) + 1;
+  _388 = *_387;
+  _389 = (signed char) _388;
+  if (_389 < 0)
+    goto <bb 81>; [INV]
+  else
+    goto <bb 82>; [INV]
+
+  <bb 81> :
+  # DEBUG BEGIN_STMT
+  _390 = lowpan6_buffer_643(D) + 2;
+  _391 = *_390;
+  _392 = (signed char) _391;
+  i_724 = _392 & 15;
+  # DEBUG i => i_724
+  goto <bb 83>; [INV]
+
+  <bb 82> :
+  # DEBUG BEGIN_STMT
+  i_723 = 0;
+  # DEBUG i => i_723
+
+  <bb 83> :
+  # i_623 = PHI <i_724(81), i_723(82)>
+  # DEBUG i => i_623
+  # DEBUG BEGIN_STMT
+  if (i_623 > 9)
+    goto <bb 84>; [INV]
+  else
+    goto <bb 85>; [INV]
+
+  <bb 84> :
+  # DEBUG BEGIN_STMT
+  _727 = -6;
+  // predicted unlikely by early return (on trees) predictor.
+  goto <bb 122>; [INV]
+
+  <bb 85> :
+  # DEBUG BEGIN_STMT
+  _393 = (unsigned int) i_623;
+  _394 = _393 * 20;
+  _395 = lowpan6_contexts_677(D) + _394;
+  _396 = _395->addr[0];
+  ip6hdr_650->dest.addr[0] = _396;
+  # DEBUG BEGIN_STMT
+  _397 = (unsigned int) i_623;
+  _398 = _397 * 20;
+  _399 = lowpan6_contexts_677(D) + _398;
+  _400 = _399->addr[1];
+  ip6hdr_650->dest.addr[1] = _400;
+  goto <bb 87>; [INV]
+
+  <bb 86> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  ip6hdr_650->dest.addr[0] = 33022;
+  # DEBUG BEGIN_STMT
+  ip6hdr_650->dest.addr[1] = 0;
+
+  <bb 87> :
+  # DEBUG BEGIN_STMT
+  _401 = lowpan6_buffer_643(D) + 1;
+  _402 = *_401;
+  _403 = (int) _402;
+  _404 = _403 & 3;
+  if (_404 == 0)
+    goto <bb 88>; [INV]
+  else
+    goto <bb 89>; [INV]
+
+  <bb 88> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _405 = &ip6hdr_650->dest.addr[0];
+  _406 = (sizetype) lowpan6_offset_618;
+  _407 = lowpan6_buffer_643(D) + _406;
+  memcpy (_405, _407, 16);
+  # DEBUG BEGIN_STMT
+  lowpan6_offset_743 = lowpan6_offset_618 + 16;
+  # DEBUG lowpan6_offset => lowpan6_offset_743
+  goto <bb 99>; [INV]
+
+  <bb 89> :
+  # DEBUG BEGIN_STMT
+  _408 = lowpan6_buffer_643(D) + 1;
+  _409 = *_408;
+  _410 = (int) _409;
+  _411 = _410 & 3;
+  if (_411 == 1)
+    goto <bb 90>; [INV]
+  else
+    goto <bb 91>; [INV]
+
+  <bb 90> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _412 = &ip6hdr_650->dest.addr[2];
+  _413 = (sizetype) lowpan6_offset_618;
+  _414 = lowpan6_buffer_643(D) + _413;
+  memcpy (_412, _414, 8);
+  # DEBUG BEGIN_STMT
+  lowpan6_offset_741 = lowpan6_offset_618 + 8;
+  # DEBUG lowpan6_offset => lowpan6_offset_741
+  goto <bb 99>; [INV]
+
+  <bb 91> :
+  # DEBUG BEGIN_STMT
+  _415 = lowpan6_buffer_643(D) + 1;
+  _416 = *_415;
+  _417 = (int) _416;
+  _418 = _417 & 3;
+  if (_418 == 2)
+    goto <bb 92>; [INV]
+  else
+    goto <bb 93>; [INV]
+
+  <bb 92> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  ip6hdr_650->dest.addr[2] = 4278190080;
+  # DEBUG BEGIN_STMT
+  _419 = (sizetype) lowpan6_offset_618;
+  _420 = lowpan6_buffer_643(D) + _419;
+  _421 = *_420;
+  _422 = (int) _421;
+  _423 = _422 << 8;
+  _424 = (long unsigned int) _423;
+  _425 = (sizetype) lowpan6_offset_618;
+  _426 = _425 + 1;
+  _427 = lowpan6_buffer_643(D) + _426;
+  _428 = *_427;
+  _429 = (long unsigned int) _428;
+  _430 = _424 | _429;
+  _431 = _430 | 4261412864;
+  _432 = lwip_htonl (_431);
+  ip6hdr_650->dest.addr[3] = _432;
+  # DEBUG BEGIN_STMT
+  lowpan6_offset_739 = lowpan6_offset_618 + 2;
+  # DEBUG lowpan6_offset => lowpan6_offset_739
+  goto <bb 99>; [INV]
+
+  <bb 93> :
+  # DEBUG BEGIN_STMT
+  _433 = lowpan6_buffer_643(D) + 1;
+  _434 = *_433;
+  _435 = (int) _434;
+  _436 = _435 & 3;
+  if (_436 == 3)
+    goto <bb 94>; [INV]
+  else
+    goto <bb 99>; [INV]
+
+  <bb 94> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _437 = dest_647(D)->addr_len;
+  if (_437 == 2)
+    goto <bb 95>; [INV]
+  else
+    goto <bb 96>; [INV]
+
+  <bb 95> :
+  # DEBUG BEGIN_STMT
+  ip6hdr_650->dest.addr[2] = 4278190080;
+  # DEBUG BEGIN_STMT
+  _438 = dest_647(D)->addr[0];
+  _439 = (int) _438;
+  _440 = _439 << 8;
+  _441 = (long unsigned int) _440;
+  _442 = dest_647(D)->addr[1];
+  _443 = (long unsigned int) _442;
+  _444 = _441 | _443;
+  _445 = _444 | 4261412864;
+  _446 = lwip_htonl (_445);
+  ip6hdr_650->dest.addr[3] = _446;
+  goto <bb 99>; [INV]
+
+  <bb 96> :
+  # DEBUG BEGIN_STMT
+  _447 = dest_647(D)->addr_len;
+  if (_447 == 8)
+    goto <bb 97>; [INV]
+  else
+    goto <bb 98>; [INV]
+
+  <bb 97> :
+  # DEBUG BEGIN_STMT
+  _448 = dest_647(D)->addr[0];
+  _449 = _448 ^ 2;
+  _450 = (int) _449;
+  _451 = _450 << 24;
+  _452 = dest_647(D)->addr[1];
+  _453 = (int) _452;
+  _454 = _453 << 16;
+  _455 = _451 | _454;
+  _456 = dest_647(D)->addr[2];
+  _457 = (int) _456;
+  _458 = _457 << 8;
+  _459 = _455 | _458;
+  _460 = dest_647(D)->addr[3];
+  _461 = (int) _460;
+  _462 = _459 | _461;
+  _463 = (long unsigned int) _462;
+  _464 = lwip_htonl (_463);
+  ip6hdr_650->dest.addr[2] = _464;
+  # DEBUG BEGIN_STMT
+  _465 = dest_647(D)->addr[4];
+  _466 = (int) _465;
+  _467 = _466 << 24;
+  _468 = dest_647(D)->addr[5];
+  _469 = (int) _468;
+  _470 = _469 << 16;
+  _471 = _467 | _470;
+  _472 = dest_647(D)->addr[6];
+  _473 = (int) _472;
+  _474 = _473 << 8;
+  _475 = _471 | _474;
+  _476 = dest_647(D)->addr[7];
+  _477 = (int) _476;
+  _478 = _475 | _477;
+  _479 = (long unsigned int) _478;
+  _480 = lwip_htonl (_479);
+  ip6hdr_650->dest.addr[3] = _480;
+  goto <bb 99>; [INV]
+
+  <bb 98> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _728 = -6;
+  // predicted unlikely by early return (on trees) predictor.
+  goto <bb 122>; [INV]
+
+  <bb 99> :
+  # lowpan6_offset_619 = PHI <lowpan6_offset_767(74), lowpan6_offset_743(88), lowpan6_offset_741(90), lowpan6_offset_739(92), lowpan6_offset_618(93), lowpan6_offset_618(95), lowpan6_offset_618(97), lowpan6_offset_769(72), lowpan6_offset_747(78), lowpan6_offset_618(77), lowpan6_offset_757(76)>
+  # DEBUG lowpan6_offset => lowpan6_offset_619
+  # DEBUG BEGIN_STMT
+  _481 = *lowpan6_buffer_643(D);
+  _482 = (int) _481;
+  _483 = _482 & 4;
+  if (_483 != 0)
+    goto <bb 100>; [INV]
+  else
+    goto <bb 117>; [INV]
+
+  <bb 100> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _484 = (sizetype) lowpan6_offset_619;
+  _485 = lowpan6_buffer_643(D) + _484;
+  _486 = *_485;
+  _487 = (int) _486;
+  _488 = _487 & 248;
+  if (_488 == 240)
+    goto <bb 101>; [INV]
+  else
+    goto <bb 116>; [INV]
+
+  <bb 101> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  ip6hdr_650->_nexth = 17;
+  # DEBUG BEGIN_STMT
+  _489 = (sizetype) ip6_offset_642;
+  udphdr_774 = decomp_buffer_645(D) + _489;
+  # DEBUG udphdr => udphdr_774
+  # DEBUG BEGIN_STMT
+  if (decomp_bufsize_651(D) <= 47)
+    goto <bb 102>; [INV]
+  else
+    goto <bb 103>; [INV]
+
+  <bb 102> :
+  # DEBUG BEGIN_STMT
+  _806 = -1;
+  // predicted unlikely by early return (on trees) predictor.
+  goto <bb 122>; [INV]
+
+  <bb 103> :
+  # DEBUG BEGIN_STMT
+  _490 = (sizetype) lowpan6_offset_619;
+  _491 = lowpan6_buffer_643(D) + _490;
+  _492 = *_491;
+  _493 = (int) _492;
+  _494 = _493 & 4;
+  if (_494 != 0)
+    goto <bb 104>; [INV]
+  else
+    goto <bb 105>; [INV]
+
+  <bb 104> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _805 = -6;
+  // predicted unlikely by early return (on trees) predictor.
+  goto <bb 122>; [INV]
+
+  <bb 105> :
+  # DEBUG BEGIN_STMT
+  lowpan6_offset.52_495 = lowpan6_offset_619;
+  lowpan6_offset_775 = lowpan6_offset.52_495 + 1;
+  # DEBUG lowpan6_offset => lowpan6_offset_775
+  _496 = (sizetype) lowpan6_offset.52_495;
+  _497 = lowpan6_buffer_643(D) + _496;
+  _498 = *_497;
+  _499 = (signed char) _498;
+  i_776 = _499 & 3;
+  # DEBUG i => i_776
+  # DEBUG BEGIN_STMT
+  if (i_776 == 0)
+    goto <bb 106>; [INV]
+  else
+    goto <bb 107>; [INV]
+
+  <bb 106> :
+  # DEBUG BEGIN_STMT
+  _500 = (sizetype) lowpan6_offset_775;
+  _501 = lowpan6_buffer_643(D) + _500;
+  _502 = *_501;
+  _503 = (int) _502;
+  _504 = _503 << 8;
+  _505 = (signed short) _504;
+  _506 = (sizetype) lowpan6_offset_775;
+  _507 = _506 + 1;
+  _508 = lowpan6_buffer_643(D) + _507;
+  _509 = *_508;
+  _510 = (signed short) _509;
+  _511 = _505 | _510;
+  _512 = (short unsigned int) _511;
+  _513 = lwip_htons (_512);
+  udphdr_774->src = _513;
+  # DEBUG BEGIN_STMT
+  _514 = (sizetype) lowpan6_offset_775;
+  _515 = _514 + 2;
+  _516 = lowpan6_buffer_643(D) + _515;
+  _517 = *_516;
+  _518 = (int) _517;
+  _519 = _518 << 8;
+  _520 = (signed short) _519;
+  _521 = (sizetype) lowpan6_offset_775;
+  _522 = _521 + 3;
+  _523 = lowpan6_buffer_643(D) + _522;
+  _524 = *_523;
+  _525 = (signed short) _524;
+  _526 = _520 | _525;
+  _527 = (short unsigned int) _526;
+  _528 = lwip_htons (_527);
+  udphdr_774->dest = _528;
+  # DEBUG BEGIN_STMT
+  lowpan6_offset_796 = lowpan6_offset_775 + 4;
+  # DEBUG lowpan6_offset => lowpan6_offset_796
+  goto <bb 113>; [INV]
+
+  <bb 107> :
+  # DEBUG BEGIN_STMT
+  if (i_776 == 1)
+    goto <bb 108>; [INV]
+  else
+    goto <bb 109>; [INV]
+
+  <bb 108> :
+  # DEBUG BEGIN_STMT
+  _529 = (sizetype) lowpan6_offset_775;
+  _530 = lowpan6_buffer_643(D) + _529;
+  _531 = *_530;
+  _532 = (int) _531;
+  _533 = _532 << 8;
+  _534 = (signed short) _533;
+  _535 = (sizetype) lowpan6_offset_775;
+  _536 = _535 + 1;
+  _537 = lowpan6_buffer_643(D) + _536;
+  _538 = *_537;
+  _539 = (signed short) _538;
+  _540 = _534 | _539;
+  _541 = (short unsigned int) _540;
+  _542 = lwip_htons (_541);
+  udphdr_774->src = _542;
+  # DEBUG BEGIN_STMT
+  _543 = (sizetype) lowpan6_offset_775;
+  _544 = _543 + 2;
+  _545 = lowpan6_buffer_643(D) + _544;
+  _546 = *_545;
+  _547 = (signed short) _546;
+  _548 = _547 | -4096;
+  _549 = (short unsigned int) _548;
+  _550 = lwip_htons (_549);
+  udphdr_774->dest = _550;
+  # DEBUG BEGIN_STMT
+  lowpan6_offset_791 = lowpan6_offset_775 + 3;
+  # DEBUG lowpan6_offset => lowpan6_offset_791
+  goto <bb 113>; [INV]
+
+  <bb 109> :
+  # DEBUG BEGIN_STMT
+  if (i_776 == 2)
+    goto <bb 110>; [INV]
+  else
+    goto <bb 111>; [INV]
+
+  <bb 110> :
+  # DEBUG BEGIN_STMT
+  _551 = (sizetype) lowpan6_offset_775;
+  _552 = lowpan6_buffer_643(D) + _551;
+  _553 = *_552;
+  _554 = (signed short) _553;
+  _555 = _554 | -4096;
+  _556 = (short unsigned int) _555;
+  _557 = lwip_htons (_556);
+  udphdr_774->src = _557;
+  # DEBUG BEGIN_STMT
+  _558 = (sizetype) lowpan6_offset_775;
+  _559 = _558 + 1;
+  _560 = lowpan6_buffer_643(D) + _559;
+  _561 = *_560;
+  _562 = (int) _561;
+  _563 = _562 << 8;
+  _564 = (signed short) _563;
+  _565 = (sizetype) lowpan6_offset_775;
+  _566 = _565 + 2;
+  _567 = lowpan6_buffer_643(D) + _566;
+  _568 = *_567;
+  _569 = (signed short) _568;
+  _570 = _564 | _569;
+  _571 = (short unsigned int) _570;
+  _572 = lwip_htons (_571);
+  udphdr_774->dest = _572;
+  # DEBUG BEGIN_STMT
+  lowpan6_offset_786 = lowpan6_offset_775 + 3;
+  # DEBUG lowpan6_offset => lowpan6_offset_786
+  goto <bb 113>; [INV]
+
+  <bb 111> :
+  # DEBUG BEGIN_STMT
+  if (i_776 == 3)
+    goto <bb 112>; [INV]
+  else
+    goto <bb 113>; [INV]
+
+  <bb 112> :
+  # DEBUG BEGIN_STMT
+  _573 = (sizetype) lowpan6_offset_775;
+  _574 = lowpan6_buffer_643(D) + _573;
+  _575 = *_574;
+  _576 = _575 >> 4;
+  _577 = (signed short) _576;
+  _578 = _577 & 15;
+  _579 = _578 | -3920;
+  _580 = (short unsigned int) _579;
+  _581 = lwip_htons (_580);
+  udphdr_774->src = _581;
+  # DEBUG BEGIN_STMT
+  _582 = (sizetype) lowpan6_offset_775;
+  _583 = lowpan6_buffer_643(D) + _582;
+  _584 = *_583;
+  _585 = (signed short) _584;
+  _586 = _585 & 15;
+  _587 = _586 | -3920;
+  _588 = (short unsigned int) _587;
+  _589 = lwip_htons (_588);
+  udphdr_774->dest = _589;
+  # DEBUG BEGIN_STMT
+  lowpan6_offset_781 = lowpan6_offset_775 + 1;
+  # DEBUG lowpan6_offset => lowpan6_offset_781
+
+  <bb 113> :
+  # lowpan6_offset_620 = PHI <lowpan6_offset_796(106), lowpan6_offset_791(108), lowpan6_offset_786(110), lowpan6_offset_775(111), lowpan6_offset_781(112)>
+  # DEBUG lowpan6_offset => lowpan6_offset_620
+  # DEBUG BEGIN_STMT
+  _590 = (sizetype) lowpan6_offset_620;
+  _591 = lowpan6_buffer_643(D) + _590;
+  _592 = *_591;
+  _593 = (int) _592;
+  _594 = _593 << 8;
+  _595 = (signed short) _594;
+  _596 = (sizetype) lowpan6_offset_620;
+  _597 = _596 + 1;
+  _598 = lowpan6_buffer_643(D) + _597;
+  _599 = *_598;
+  _600 = (signed short) _599;
+  _601 = _595 | _600;
+  _602 = (short unsigned int) _601;
+  _603 = lwip_htons (_602);
+  udphdr_774->chksum = _603;
+  # DEBUG BEGIN_STMT
+  lowpan6_offset_799 = lowpan6_offset_620 + 2;
+  # DEBUG lowpan6_offset => lowpan6_offset_799
+  # DEBUG BEGIN_STMT
+  ip6_offset_800 = ip6_offset_642 + 8;
+  # DEBUG ip6_offset => ip6_offset_800
+  # DEBUG BEGIN_STMT
+  if (datagram_size_771(D) == 0)
+    goto <bb 114>; [INV]
+  else
+    goto <bb 115>; [INV]
+
+  <bb 114> :
+  # DEBUG BEGIN_STMT
+  _604 = compressed_size_801(D) - lowpan6_offset_799;
+  datagram_size_802 = ip6_offset_800 + _604;
+  # DEBUG datagram_size => datagram_size_802
+
+  <bb 115> :
+  # datagram_size_611 = PHI <datagram_size_771(D)(113), datagram_size_802(114)>
+  # DEBUG datagram_size => datagram_size_611
+  # DEBUG BEGIN_STMT
+  _605 = datagram_size_611 + 65496;
+  _606 = lwip_htons (_605);
+  udphdr_774->len = _606;
+  goto <bb 117>; [INV]
+
+  <bb 116> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _772 = -6;
+  // predicted unlikely by early return (on trees) predictor.
+  goto <bb 122>; [INV]
+
+  <bb 117> :
+  # datagram_size_612 = PHI <datagram_size_771(D)(99), datagram_size_611(115)>
+  # lowpan6_offset_621 = PHI <lowpan6_offset_619(99), lowpan6_offset_799(115)>
+  # ip6_offset_624 = PHI <ip6_offset_642(99), ip6_offset_800(115)>
+  # DEBUG ip6_offset => ip6_offset_624
+  # DEBUG lowpan6_offset => lowpan6_offset_621
+  # DEBUG datagram_size => datagram_size_612
+  # DEBUG BEGIN_STMT
+  if (datagram_size_612 == 0)
+    goto <bb 118>; [INV]
+  else
+    goto <bb 119>; [INV]
+
+  <bb 118> :
+  # DEBUG BEGIN_STMT
+  _607 = compressed_size_801(D) - lowpan6_offset_621;
+  datagram_size_807 = ip6_offset_624 + _607;
+  # DEBUG datagram_size => datagram_size_807
+
+  <bb 119> :
+  # datagram_size_613 = PHI <datagram_size_612(117), datagram_size_807(118)>
+  # DEBUG datagram_size => datagram_size_613
+  # DEBUG BEGIN_STMT
+  _608 = datagram_size_613 + 65496;
+  _609 = lwip_htons (_608);
+  ip6hdr_650->_plen = _609;
+  # DEBUG BEGIN_STMT
+  _610 = (unsigned int) lowpan6_offset_621;
+  if (lowpan6_bufsize_810(D) < _610)
+    goto <bb 120>; [INV]
+  else
+    goto <bb 121>; [INV]
+
+  <bb 120> :
+  # DEBUG BEGIN_STMT
+  _814 = -6;
+  // predicted unlikely by early return (on trees) predictor.
+  goto <bb 122>; [INV]
+
+  <bb 121> :
+  # DEBUG BEGIN_STMT
+  *hdr_size_comp_648(D) = lowpan6_offset_621;
+  # DEBUG BEGIN_STMT
+  *hdr_size_decomp_649(D) = ip6_offset_624;
+  # DEBUG BEGIN_STMT
+  _813 = 0;
+
+  <bb 122> :
+  # _625 = PHI <_815(15), _701(49), _680(56), _685(67), _770(70), _727(84), _728(98), _806(102), _805(104), _772(116), _814(120), _813(121)>
+  return _625;
+
+}
+
+
+lowpan6_compress_headers (struct netif * netif, u8_t * inbuf, size_t inbuf_size, u8_t * outbuf, size_t outbuf_size, u8_t * lowpan6_header_len_out, u8_t * hidden_header_len_out, struct ip6_addr_t * lowpan6_contexts, const struct lowpan6_link_addr * src, const struct lowpan6_link_addr * dst)
+{
+  struct ip_addr_t ip6dst;
+  struct ip_addr_t ip6src;
+  struct ip6_hdr * ip6hdr;
+  s8_t i;
+  u8_t hidden_header_len;
+  u8_t lowpan6_header_len;
+  u8_t * inptr;
+  u8_t * buffer;
+  long unsigned int _1;
+  long unsigned int _2;
+  long unsigned int _3;
+  long unsigned int _4;
+  long unsigned int _5;
+  long unsigned int _6;
+  long unsigned int _7;
+  long unsigned int _8;
+  long unsigned int _9;
+  long unsigned int _10;
+  unsigned char _11;
+  long unsigned int _12;
+  long unsigned int _13;
+  long unsigned int _14;
+  long unsigned int _15;
+  long unsigned int _16;
+  long unsigned int _17;
+  long unsigned int _18;
+  long unsigned int _19;
+  long unsigned int _20;
+  long unsigned int _21;
+  unsigned char _22;
+  u8_t * _23;
+  u8_t * _24;
+  u8_t * _25;
+  unsigned char _26;
+  u8_t * _27;
+  unsigned char _28;
+  u8_t * _29;
+  unsigned char _30;
+  signed char _31;
+  unsigned char i.2_32;
+  int _33;
+  int _34;
+  signed char _35;
+  signed char _36;
+  u8_t * _37;
+  unsigned char _38;
+  u8_t * _39;
+  unsigned char _40;
+  u8_t * _41;
+  unsigned char _42;
+  u8_t * _43;
+  unsigned char _44;
+  signed char _45;
+  signed char _46;
+  signed char _47;
+  u8_t * _48;
+  unsigned char _49;
+  u8_t * _50;
+  unsigned char _51;
+  u8_t * _52;
+  unsigned char _53;
+  u8_t * _54;
+  unsigned char _55;
+  unsigned char lowpan6_header_len.3_56;
+  long unsigned int _57;
+  long unsigned int _58;
+  long unsigned int _59;
+  unsigned char _60;
+  unsigned char _61;
+  long unsigned int _62;
+  long unsigned int _63;
+  long unsigned int _64;
+  long unsigned int _65;
+  unsigned char _66;
+  unsigned char _67;
+  long unsigned int _68;
+  long unsigned int _69;
+  long unsigned int _70;
+  unsigned char lowpan6_header_len.4_71;
+  sizetype _72;
+  u8_t * _73;
+  unsigned char _74;
+  long unsigned int _75;
+  long unsigned int _76;
+  long unsigned int _77;
+  long unsigned int _78;
+  unsigned char _79;
+  unsigned char _80;
+  long unsigned int _81;
+  long unsigned int _82;
+  long unsigned int _83;
+  unsigned char _84;
+  sizetype _85;
+  u8_t * _86;
+  unsigned char _87;
+  long unsigned int _88;
+  long unsigned int _89;
+  long unsigned int _90;
+  unsigned char lowpan6_header_len.5_91;
+  sizetype _92;
+  u8_t * _93;
+  unsigned char _94;
+  unsigned char _95;
+  sizetype _96;
+  u8_t * _97;
+  unsigned char _98;
+  long unsigned int _99;
+  long unsigned int _100;
+  long unsigned int _101;
+  unsigned char lowpan6_header_len.7_102;
+  sizetype _103;
+  u8_t * _104;
+  unsigned char _105;
+  long unsigned int _106;
+  long unsigned int _107;
+  unsigned char lowpan6_header_len.8_108;
+  sizetype _109;
+  u8_t * _110;
+  unsigned char _111;
+  long unsigned int _112;
+  long unsigned int _113;
+  long unsigned int _114;
+  unsigned char lowpan6_header_len.9_115;
+  sizetype _116;
+  u8_t * _117;
+  unsigned char _118;
+  long unsigned int _119;
+  long unsigned int _120;
+  long unsigned int _121;
+  unsigned char _122;
+  unsigned char lowpan6_header_len.10_123;
+  sizetype _124;
+  u8_t * _125;
+  unsigned char _126;
+  long unsigned int _127;
+  long unsigned int _128;
+  long unsigned int _129;
+  unsigned char lowpan6_header_len.11_130;
+  sizetype _131;
+  u8_t * _132;
+  unsigned char _133;
+  long unsigned int _134;
+  long unsigned int _135;
+  unsigned char lowpan6_header_len.12_136;
+  sizetype _137;
+  u8_t * _138;
+  unsigned char _139;
+  unsigned char _140;
+  unsigned char _141;
+  unsigned char _142;
+  unsigned char lowpan6_header_len.13_143;
+  sizetype _144;
+  u8_t * _145;
+  unsigned char _146;
+  unsigned char _147;
+  unsigned char _148;
+  unsigned char _149;
+  unsigned char _150;
+  unsigned char _151;
+  unsigned char _152;
+  unsigned char _153;
+  unsigned char _154;
+  unsigned char _155;
+  unsigned char lowpan6_header_len.14_156;
+  sizetype _157;
+  u8_t * _158;
+  unsigned char _159;
+  u8_t * _160;
+  unsigned char _161;
+  int _162;
+  int _163;
+  long unsigned int _164;
+  long unsigned int _165;
+  u8_t * _166;
+  unsigned char _167;
+  signed char _168;
+  unsigned char i.15_169;
+  int _170;
+  int _171;
+  signed char _172;
+  signed char _173;
+  signed char _174;
+  u8_t * _175;
+  unsigned char _176;
+  sizetype _177;
+  u8_t * _178;
+  u8_t * _179;
+  sizetype _180;
+  u8_t * _181;
+  u8_t * _182;
+  long unsigned int _183;
+  long unsigned int _184;
+  long unsigned int _185;
+  long unsigned int _186;
+  u8_t * _187;
+  unsigned char _188;
+  u8_t * _189;
+  unsigned char _190;
+  sizetype _191;
+  u8_t * _192;
+  u8_t * _193;
+  long unsigned int _194;
+  long unsigned int _195;
+  u8_t * _196;
+  unsigned char _197;
+  u8_t * _198;
+  unsigned char _199;
+  u8_t * _200;
+  unsigned char _201;
+  signed char _202;
+  signed char _203;
+  signed char _204;
+  u8_t * _205;
+  unsigned char _206;
+  sizetype _207;
+  u8_t * _208;
+  u8_t * _209;
+  unsigned char lowpan6_header_len.16_210;
+  sizetype _211;
+  u8_t * _212;
+  unsigned char _213;
+  sizetype _214;
+  u8_t * _215;
+  u8_t * _216;
+  unsigned char lowpan6_header_len.17_217;
+  sizetype _218;
+  u8_t * _219;
+  unsigned char _220;
+  sizetype _221;
+  u8_t * _222;
+  u8_t * _223;
+  unsigned char lowpan6_header_len.18_224;
+  sizetype _225;
+  u8_t * _226;
+  unsigned char _227;
+  u8_t * _228;
+  unsigned char _229;
+  int _230;
+  int _231;
+  long unsigned int _232;
+  long unsigned int _233;
+  u8_t * _234;
+  unsigned char _235;
+  signed char _236;
+  signed char _237;
+  signed char _238;
+  u8_t * _239;
+  unsigned char _240;
+  sizetype _241;
+  u8_t * _242;
+  u8_t * _243;
+  sizetype _244;
+  u8_t * _245;
+  u8_t * _246;
+  sizetype _247;
+  u8_t * _248;
+  u8_t * _249;
+  unsigned char _250;
+  int _251;
+  int _252;
+  unsigned int _253;
+  sizetype _254;
+  u8_t * _255;
+  unsigned char _256;
+  u8_t * _257;
+  unsigned char _258;
+  int _259;
+  int _260;
+  u8_t * _261;
+  unsigned char _262;
+  u8_t * _263;
+  unsigned char _264;
+  int _265;
+  int _266;
+  unsigned char lowpan6_header_len.19_267;
+  sizetype _268;
+  u8_t * _269;
+  unsigned char _270;
+  sizetype _271;
+  u8_t * _272;
+  unsigned char _273;
+  u8_t * _274;
+  unsigned char _275;
+  int _276;
+  int _277;
+  signed char _278;
+  u8_t * _279;
+  unsigned char _280;
+  signed char _281;
+  signed char _282;
+  signed char _283;
+  unsigned char lowpan6_header_len.21_284;
+  sizetype _285;
+  u8_t * _286;
+  unsigned char _287;
+  unsigned char _288;
+  unsigned char lowpan6_header_len.22_289;
+  sizetype _290;
+  u8_t * _291;
+  unsigned char _292;
+  sizetype _293;
+  u8_t * _294;
+  unsigned char _295;
+  unsigned char lowpan6_header_len.24_296;
+  sizetype _297;
+  u8_t * _298;
+  unsigned char _299;
+  unsigned char lowpan6_header_len.25_300;
+  sizetype _301;
+  u8_t * _302;
+  unsigned char _303;
+  unsigned char lowpan6_header_len.26_304;
+  sizetype _305;
+  u8_t * _306;
+  unsigned char _307;
+  u8_t * _308;
+  unsigned char _309;
+  unsigned char lowpan6_header_len.27_310;
+  sizetype _311;
+  u8_t * _312;
+  unsigned char _313;
+  sizetype _314;
+  u8_t * _315;
+  unsigned char _316;
+  unsigned char lowpan6_header_len.29_317;
+  sizetype _318;
+  u8_t * _319;
+  unsigned char _320;
+  unsigned char lowpan6_header_len.30_321;
+  sizetype _322;
+  u8_t * _323;
+  unsigned char _324;
+  unsigned char lowpan6_header_len.31_325;
+  sizetype _326;
+  u8_t * _327;
+  unsigned char _328;
+  unsigned char lowpan6_header_len.32_329;
+  unsigned char lowpan6_header_len.33_330;
+  sizetype _331;
+  u8_t * _332;
+  unsigned char _333;
+  unsigned char lowpan6_header_len.34_334;
+  sizetype _335;
+  u8_t * _336;
+  unsigned char _337;
+  unsigned char lowpan6_header_len.35_338;
+  sizetype _339;
+  u8_t * _340;
+  unsigned char _341;
+  unsigned char lowpan6_header_len.36_342;
+  sizetype _343;
+  u8_t * _344;
+  unsigned char _345;
+  unsigned char lowpan6_header_len.37_346;
+  sizetype _347;
+  u8_t * _348;
+  unsigned char _349;
+  unsigned char lowpan6_header_len.38_350;
+  sizetype _351;
+  u8_t * _352;
+  unsigned char _353;
+  err_t _363;
+  u8_t iftmp.0_364;
+  u8_t iftmp.1_365;
+  u8_t iftmp.0_400;
+  u8_t iftmp.0_401;
+  u8_t iftmp.1_409;
+  u8_t iftmp.1_410;
+  long unsigned int _445;
+  unsigned char lowpan6_header_len.6_447;
+  short unsigned int _476;
+  short unsigned int _487;
+  unsigned char lowpan6_header_len.20_512;
+  unsigned char lowpan6_header_len.28_526;
+  unsigned char lowpan6_header_len.23_535;
+  err_t _548;
+  err_t _549;
+  err_t _552;
+  err_t _553;
+  err_t _554;
+
+  <bb 2> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  hidden_header_len_382 = 0;
+  # DEBUG hidden_header_len => hidden_header_len_382
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  if (netif_383(D) == 0B)
+    goto <bb 3>; [INV]
+  else
+    goto <bb 4>; [INV]
+
+  <bb 3> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  __asm__ __volatile__("BKPT #0
+	");
+  # DEBUG BEGIN_STMT
+  goto <bb 3>; [INV]
+
+  <bb 4> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  if (inbuf_385(D) == 0B)
+    goto <bb 5>; [INV]
+  else
+    goto <bb 6>; [INV]
+
+  <bb 5> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  __asm__ __volatile__("BKPT #0
+	");
+  # DEBUG BEGIN_STMT
+  goto <bb 5>; [INV]
+
+  <bb 6> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  if (outbuf_386(D) == 0B)
+    goto <bb 7>; [INV]
+  else
+    goto <bb 8>; [INV]
+
+  <bb 7> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  __asm__ __volatile__("BKPT #0
+	");
+  # DEBUG BEGIN_STMT
+  goto <bb 7>; [INV]
+
+  <bb 8> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  if (lowpan6_header_len_out_387(D) == 0B)
+    goto <bb 9>; [INV]
+  else
+    goto <bb 10>; [INV]
+
+  <bb 9> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  __asm__ __volatile__("BKPT #0
+	");
+  # DEBUG BEGIN_STMT
+  goto <bb 9>; [INV]
+
+  <bb 10> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  if (hidden_header_len_out_388(D) == 0B)
+    goto <bb 11>; [INV]
+  else
+    goto <bb 12>; [INV]
+
+  <bb 11> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  __asm__ __volatile__("BKPT #0
+	");
+  # DEBUG BEGIN_STMT
+  goto <bb 11>; [INV]
+
+  <bb 12> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  buffer_389 = outbuf_386(D);
+  # DEBUG buffer => buffer_389
+  # DEBUG BEGIN_STMT
+  inptr_390 = inbuf_385(D);
+  # DEBUG inptr => inptr_390
+  # DEBUG BEGIN_STMT
+  if (inbuf_size_391(D) <= 39)
+    goto <bb 13>; [INV]
+  else
+    goto <bb 14>; [INV]
+
+  <bb 13> :
+  # DEBUG BEGIN_STMT
+  _554 = -6;
+  // predicted unlikely by early return (on trees) predictor.
+  goto <bb 94>; [INV]
+
+  <bb 14> :
+  # DEBUG BEGIN_STMT
+  if (outbuf_size_392(D) <= 39)
+    goto <bb 15>; [INV]
+  else
+    goto <bb 16>; [INV]
+
+  <bb 15> :
+  # DEBUG BEGIN_STMT
+  _553 = -1;
+  // predicted unlikely by early return (on trees) predictor.
+  goto <bb 94>; [INV]
+
+  <bb 16> :
+  # DEBUG BEGIN_STMT
+  ip6hdr_393 = inptr_390;
+  # DEBUG ip6hdr => ip6hdr_393
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _1 = ip6hdr_393->dest.addr[0];
+  ip6dst.u_addr.ip6.addr[0] = _1;
+  # DEBUG BEGIN_STMT
+  _2 = ip6hdr_393->dest.addr[1];
+  ip6dst.u_addr.ip6.addr[1] = _2;
+  # DEBUG BEGIN_STMT
+  _3 = ip6hdr_393->dest.addr[2];
+  ip6dst.u_addr.ip6.addr[2] = _3;
+  # DEBUG BEGIN_STMT
+  _4 = ip6hdr_393->dest.addr[3];
+  ip6dst.u_addr.ip6.addr[3] = _4;
+  # DEBUG BEGIN_STMT
+  ip6dst.u_addr.ip6.zone = 0;
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  ip6dst.type = 6;
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _5 = ip6dst.u_addr.ip6.addr[0];
+  _6 = _5 & 49407;
+  if (_6 == 33022)
+    goto <bb 19>; [INV]
+  else
+    goto <bb 17>; [INV]
+
+  <bb 17> :
+  _7 = ip6dst.u_addr.ip6.addr[0];
+  _8 = _7 & 36863;
+  if (_8 == 511)
+    goto <bb 19>; [INV]
+  else
+    goto <bb 18>; [INV]
+
+  <bb 18> :
+  _9 = ip6dst.u_addr.ip6.addr[0];
+  _10 = _9 & 36863;
+  if (_10 == 767)
+    goto <bb 19>; [INV]
+  else
+    goto <bb 20>; [INV]
+
+  <bb 19> :
+  _11 = netif_383(D)->num;
+  iftmp.0_401 = _11 + 1;
+  goto <bb 21>; [INV]
+
+  <bb 20> :
+  iftmp.0_400 = 0;
+
+  <bb 21> :
+  # iftmp.0_364 = PHI <iftmp.0_401(19), iftmp.0_400(20)>
+  ip6dst.u_addr.ip6.zone = iftmp.0_364;
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _12 = ip6hdr_393->src.addr[0];
+  ip6src.u_addr.ip6.addr[0] = _12;
+  # DEBUG BEGIN_STMT
+  _13 = ip6hdr_393->src.addr[1];
+  ip6src.u_addr.ip6.addr[1] = _13;
+  # DEBUG BEGIN_STMT
+  _14 = ip6hdr_393->src.addr[2];
+  ip6src.u_addr.ip6.addr[2] = _14;
+  # DEBUG BEGIN_STMT
+  _15 = ip6hdr_393->src.addr[3];
+  ip6src.u_addr.ip6.addr[3] = _15;
+  # DEBUG BEGIN_STMT
+  ip6src.u_addr.ip6.zone = 0;
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  ip6src.type = 6;
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _16 = ip6src.u_addr.ip6.addr[0];
+  _17 = _16 & 49407;
+  if (_17 == 33022)
+    goto <bb 24>; [INV]
+  else
+    goto <bb 22>; [INV]
+
+  <bb 22> :
+  _18 = ip6src.u_addr.ip6.addr[0];
+  _19 = _18 & 36863;
+  if (_19 == 511)
+    goto <bb 24>; [INV]
+  else
+    goto <bb 23>; [INV]
+
+  <bb 23> :
+  _20 = ip6src.u_addr.ip6.addr[0];
+  _21 = _20 & 36863;
+  if (_21 == 767)
+    goto <bb 24>; [INV]
+  else
+    goto <bb 25>; [INV]
+
+  <bb 24> :
+  _22 = netif_383(D)->num;
+  iftmp.1_410 = _22 + 1;
+  goto <bb 26>; [INV]
+
+  <bb 25> :
+  iftmp.1_409 = 0;
+
+  <bb 26> :
+  # iftmp.1_365 = PHI <iftmp.1_410(24), iftmp.1_409(25)>
+  ip6src.u_addr.ip6.zone = iftmp.1_365;
+  # DEBUG BEGIN_STMT
+  lowpan6_header_len_412 = 2;
+  # DEBUG lowpan6_header_len => lowpan6_header_len_412
+  # DEBUG BEGIN_STMT
+  *buffer_389 = 96;
+  # DEBUG BEGIN_STMT
+  _23 = buffer_389 + 1;
+  *_23 = 0;
+  # DEBUG BEGIN_STMT
+  _24 = buffer_389 + 2;
+  *_24 = 0;
+  # DEBUG BEGIN_STMT
+  i_418 = lowpan6_context_lookup (lowpan6_contexts_416(D), &ip6src.u_addr.ip6);
+  # DEBUG i => i_418
+  # DEBUG BEGIN_STMT
+  if (i_418 >= 0)
+    goto <bb 27>; [INV]
+  else
+    goto <bb 28>; [INV]
+
+  <bb 27> :
+  # DEBUG BEGIN_STMT
+  _25 = buffer_389 + 1;
+  _26 = *_25;
+  _27 = buffer_389 + 1;
+  _28 = _26 | 64;
+  *_27 = _28;
+  # DEBUG BEGIN_STMT
+  _29 = buffer_389 + 2;
+  _30 = *_29;
+  _31 = (signed char) _30;
+  i.2_32 = (unsigned char) i_418;
+  _33 = (int) i.2_32;
+  _34 = _33 << 4;
+  _35 = (signed char) _34;
+  _36 = _31 | _35;
+  _37 = buffer_389 + 2;
+  _38 = (unsigned char) _36;
+  *_37 = _38;
+
+  <bb 28> :
+  # DEBUG BEGIN_STMT
+  i_422 = lowpan6_context_lookup (lowpan6_contexts_416(D), &ip6dst.u_addr.ip6);
+  # DEBUG i => i_422
+  # DEBUG BEGIN_STMT
+  if (i_422 >= 0)
+    goto <bb 29>; [INV]
+  else
+    goto <bb 30>; [INV]
+
+  <bb 29> :
+  # DEBUG BEGIN_STMT
+  _39 = buffer_389 + 1;
+  _40 = *_39;
+  _41 = buffer_389 + 1;
+  _42 = _40 | 4;
+  *_41 = _42;
+  # DEBUG BEGIN_STMT
+  _43 = buffer_389 + 2;
+  _44 = *_43;
+  _45 = (signed char) _44;
+  _46 = i_422 & 15;
+  _47 = _45 | _46;
+  _48 = buffer_389 + 2;
+  _49 = (unsigned char) _47;
+  *_48 = _49;
+
+  <bb 30> :
+  # DEBUG BEGIN_STMT
+  _50 = buffer_389 + 2;
+  _51 = *_50;
+  if (_51 != 0)
+    goto <bb 31>; [INV]
+  else
+    goto <bb 32>; [INV]
+
+  <bb 31> :
+  # DEBUG BEGIN_STMT
+  _52 = buffer_389 + 1;
+  _53 = *_52;
+  _54 = buffer_389 + 1;
+  _55 = _53 | 128;
+  *_54 = _55;
+  # DEBUG BEGIN_STMT
+  lowpan6_header_len.3_56 = lowpan6_header_len_412;
+  lowpan6_header_len_426 = lowpan6_header_len.3_56 + 1;
+  # DEBUG lowpan6_header_len => lowpan6_header_len_426
+
+  <bb 32> :
+  # lowpan6_header_len_354 = PHI <lowpan6_header_len_412(30), lowpan6_header_len_426(31)>
+  # DEBUG lowpan6_header_len => lowpan6_header_len_354
+  # DEBUG BEGIN_STMT
+  _57 = ip6hdr_393->_v_tc_fl;
+  _58 = lwip_htonl (_57);
+  _59 = _58 & 1048575;
+  if (_59 == 0)
+    goto <bb 33>; [INV]
+  else
+    goto <bb 36>; [INV]
+
+  <bb 33> :
+  # DEBUG BEGIN_STMT
+  _60 = *buffer_389;
+  _61 = _60 | 16;
+  *buffer_389 = _61;
+  # DEBUG BEGIN_STMT
+  _62 = ip6hdr_393->_v_tc_fl;
+  _63 = lwip_htonl (_62);
+  _64 = _63 >> 20;
+  _65 = _64 & 255;
+  if (_65 == 0)
+    goto <bb 34>; [INV]
+  else
+    goto <bb 35>; [INV]
+
+  <bb 34> :
+  # DEBUG BEGIN_STMT
+  _66 = *buffer_389;
+  _67 = _66 | 8;
+  *buffer_389 = _67;
+  goto <bb 39>; [INV]
+
+  <bb 35> :
+  # DEBUG BEGIN_STMT
+  _68 = ip6hdr_393->_v_tc_fl;
+  _69 = lwip_htonl (_68);
+  _70 = _69 >> 20;
+  lowpan6_header_len.4_71 = lowpan6_header_len_354;
+  lowpan6_header_len_458 = lowpan6_header_len.4_71 + 1;
+  # DEBUG lowpan6_header_len => lowpan6_header_len_458
+  _72 = (sizetype) lowpan6_header_len.4_71;
+  _73 = buffer_389 + _72;
+  _74 = (unsigned char) _70;
+  *_73 = _74;
+  goto <bb 39>; [INV]
+
+  <bb 36> :
+  # DEBUG BEGIN_STMT
+  _75 = ip6hdr_393->_v_tc_fl;
+  _76 = lwip_htonl (_75);
+  _77 = _76 >> 20;
+  _78 = _77 & 63;
+  if (_78 == 0)
+    goto <bb 37>; [INV]
+  else
+    goto <bb 38>; [INV]
+
+  <bb 37> :
+  # DEBUG BEGIN_STMT
+  _79 = *buffer_389;
+  _80 = _79 | 8;
+  *buffer_389 = _80;
+  # DEBUG BEGIN_STMT
+  _81 = ip6hdr_393->_v_tc_fl;
+  _82 = lwip_htonl (_81);
+  _83 = _82 >> 20;
+  _84 = (unsigned char) _83;
+  _85 = (sizetype) lowpan6_header_len_354;
+  _86 = buffer_389 + _85;
+  _87 = _84 & 192;
+  *_86 = _87;
+  # DEBUG BEGIN_STMT
+  _88 = ip6hdr_393->_v_tc_fl;
+  _89 = lwip_htonl (_88);
+  _90 = _89 >> 16;
+  _445 = _90 & 15;
+  lowpan6_header_len.5_91 = lowpan6_header_len_354;
+  lowpan6_header_len_446 = lowpan6_header_len.5_91 + 1;
+  # DEBUG lowpan6_header_len => lowpan6_header_len_446
+  lowpan6_header_len.6_447 = lowpan6_header_len.5_91;
+  _92 = (sizetype) lowpan6_header_len.6_447;
+  _93 = buffer_389 + _92;
+  _94 = *_93;
+  _95 = (unsigned char) _445;
+  _96 = (sizetype) lowpan6_header_len.6_447;
+  _97 = buffer_389 + _96;
+  _98 = _94 | _95;
+  *_97 = _98;
+  # DEBUG BEGIN_STMT
+  _99 = ip6hdr_393->_v_tc_fl;
+  _100 = lwip_htonl (_99);
+  _101 = _100 >> 8;
+  lowpan6_header_len.7_102 = lowpan6_header_len_446;
+  lowpan6_header_len_450 = lowpan6_header_len.7_102 + 1;
+  # DEBUG lowpan6_header_len => lowpan6_header_len_450
+  _103 = (sizetype) lowpan6_header_len.7_102;
+  _104 = buffer_389 + _103;
+  _105 = (unsigned char) _101;
+  *_104 = _105;
+  # DEBUG BEGIN_STMT
+  _106 = ip6hdr_393->_v_tc_fl;
+  _107 = lwip_htonl (_106);
+  lowpan6_header_len.8_108 = lowpan6_header_len_450;
+  lowpan6_header_len_453 = lowpan6_header_len.8_108 + 1;
+  # DEBUG lowpan6_header_len => lowpan6_header_len_453
+  _109 = (sizetype) lowpan6_header_len.8_108;
+  _110 = buffer_389 + _109;
+  _111 = (unsigned char) _107;
+  *_110 = _111;
+  goto <bb 39>; [INV]
+
+  <bb 38> :
+  # DEBUG BEGIN_STMT
+  _112 = ip6hdr_393->_v_tc_fl;
+  _113 = lwip_htonl (_112);
+  _114 = _113 >> 20;
+  lowpan6_header_len.9_115 = lowpan6_header_len_354;
+  lowpan6_header_len_430 = lowpan6_header_len.9_115 + 1;
+  # DEBUG lowpan6_header_len => lowpan6_header_len_430
+  _116 = (sizetype) lowpan6_header_len.9_115;
+  _117 = buffer_389 + _116;
+  _118 = (unsigned char) _114;
+  *_117 = _118;
+  # DEBUG BEGIN_STMT
+  _119 = ip6hdr_393->_v_tc_fl;
+  _120 = lwip_htonl (_119);
+  _121 = _120 >> 16;
+  _122 = (unsigned char) _121;
+  lowpan6_header_len.10_123 = lowpan6_header_len_430;
+  lowpan6_header_len_433 = lowpan6_header_len.10_123 + 1;
+  # DEBUG lowpan6_header_len => lowpan6_header_len_433
+  _124 = (sizetype) lowpan6_header_len.10_123;
+  _125 = buffer_389 + _124;
+  _126 = _122 & 15;
+  *_125 = _126;
+  # DEBUG BEGIN_STMT
+  _127 = ip6hdr_393->_v_tc_fl;
+  _128 = lwip_htonl (_127);
+  _129 = _128 >> 8;
+  lowpan6_header_len.11_130 = lowpan6_header_len_433;
+  lowpan6_header_len_436 = lowpan6_header_len.11_130 + 1;
+  # DEBUG lowpan6_header_len => lowpan6_header_len_436
+  _131 = (sizetype) lowpan6_header_len.11_130;
+  _132 = buffer_389 + _131;
+  _133 = (unsigned char) _129;
+  *_132 = _133;
+  # DEBUG BEGIN_STMT
+  _134 = ip6hdr_393->_v_tc_fl;
+  _135 = lwip_htonl (_134);
+  lowpan6_header_len.12_136 = lowpan6_header_len_436;
+  lowpan6_header_len_439 = lowpan6_header_len.12_136 + 1;
+  # DEBUG lowpan6_header_len => lowpan6_header_len_439
+  _137 = (sizetype) lowpan6_header_len.12_136;
+  _138 = buffer_389 + _137;
+  _139 = (unsigned char) _135;
+  *_138 = _139;
+
+  <bb 39> :
+  # lowpan6_header_len_355 = PHI <lowpan6_header_len_458(35), lowpan6_header_len_453(37), lowpan6_header_len_439(38), lowpan6_header_len_354(34)>
+  # DEBUG lowpan6_header_len => lowpan6_header_len_355
+  # DEBUG BEGIN_STMT
+  _140 = ip6hdr_393->_nexth;
+  if (_140 == 17)
+    goto <bb 40>; [INV]
+  else
+    goto <bb 41>; [INV]
+
+  <bb 40> :
+  # DEBUG BEGIN_STMT
+  _141 = *buffer_389;
+  _142 = _141 | 4;
+  *buffer_389 = _142;
+  goto <bb 42>; [INV]
+
+  <bb 41> :
+  # DEBUG BEGIN_STMT
+  lowpan6_header_len.13_143 = lowpan6_header_len_355;
+  lowpan6_header_len_461 = lowpan6_header_len.13_143 + 1;
+  # DEBUG lowpan6_header_len => lowpan6_header_len_461
+  _144 = (sizetype) lowpan6_header_len.13_143;
+  _145 = buffer_389 + _144;
+  _146 = ip6hdr_393->_nexth;
+  *_145 = _146;
+
+  <bb 42> :
+  # lowpan6_header_len_356 = PHI <lowpan6_header_len_355(40), lowpan6_header_len_461(41)>
+  # DEBUG lowpan6_header_len => lowpan6_header_len_356
+  # DEBUG BEGIN_STMT
+  _147 = ip6hdr_393->_hoplim;
+  if (_147 == 255)
+    goto <bb 43>; [INV]
+  else
+    goto <bb 44>; [INV]
+
+  <bb 43> :
+  # DEBUG BEGIN_STMT
+  _148 = *buffer_389;
+  _149 = _148 | 3;
+  *buffer_389 = _149;
+  goto <bb 49>; [INV]
+
+  <bb 44> :
+  # DEBUG BEGIN_STMT
+  _150 = ip6hdr_393->_hoplim;
+  if (_150 == 64)
+    goto <bb 45>; [INV]
+  else
+    goto <bb 46>; [INV]
+
+  <bb 45> :
+  # DEBUG BEGIN_STMT
+  _151 = *buffer_389;
+  _152 = _151 | 2;
+  *buffer_389 = _152;
+  goto <bb 49>; [INV]
+
+  <bb 46> :
+  # DEBUG BEGIN_STMT
+  _153 = ip6hdr_393->_hoplim;
+  if (_153 == 1)
+    goto <bb 47>; [INV]
+  else
+    goto <bb 48>; [INV]
+
+  <bb 47> :
+  # DEBUG BEGIN_STMT
+  _154 = *buffer_389;
+  _155 = _154 | 1;
+  *buffer_389 = _155;
+  goto <bb 49>; [INV]
+
+  <bb 48> :
+  # DEBUG BEGIN_STMT
+  lowpan6_header_len.14_156 = lowpan6_header_len_356;
+  lowpan6_header_len_464 = lowpan6_header_len.14_156 + 1;
+  # DEBUG lowpan6_header_len => lowpan6_header_len_464
+  _157 = (sizetype) lowpan6_header_len.14_156;
+  _158 = buffer_389 + _157;
+  _159 = ip6hdr_393->_hoplim;
+  *_158 = _159;
+
+  <bb 49> :
+  # lowpan6_header_len_357 = PHI <lowpan6_header_len_356(43), lowpan6_header_len_356(45), lowpan6_header_len_356(47), lowpan6_header_len_464(48)>
+  # DEBUG lowpan6_header_len => lowpan6_header_len_357
+  # DEBUG BEGIN_STMT
+  _160 = buffer_389 + 1;
+  _161 = *_160;
+  _162 = (int) _161;
+  _163 = _162 & 64;
+  if (_163 != 0)
+    goto <bb 51>; [INV]
+  else
+    goto <bb 50>; [INV]
+
+  <bb 50> :
+  _164 = ip6src.u_addr.ip6.addr[0];
+  _165 = _164 & 49407;
+  if (_165 == 33022)
+    goto <bb 51>; [INV]
+  else
+    goto <bb 55>; [INV]
+
+  <bb 51> :
+  # DEBUG BEGIN_STMT
+  i_474 = lowpan6_get_address_mode (&ip6src.u_addr.ip6, src_472(D));
+  # DEBUG i => i_474
+  # DEBUG BEGIN_STMT
+  _166 = buffer_389 + 1;
+  _167 = *_166;
+  _168 = (signed char) _167;
+  i.15_169 = (unsigned char) i_474;
+  _170 = (int) i.15_169;
+  _171 = _170 << 4;
+  _172 = (signed char) _171;
+  _173 = _172 & 48;
+  _174 = _168 | _173;
+  _175 = buffer_389 + 1;
+  _176 = (unsigned char) _174;
+  *_175 = _176;
+  # DEBUG BEGIN_STMT
+  if (i_474 == 1)
+    goto <bb 52>; [INV]
+  else
+    goto <bb 53>; [INV]
+
+  <bb 52> :
+  # DEBUG BEGIN_STMT
+  _177 = (sizetype) lowpan6_header_len_357;
+  _178 = buffer_389 + _177;
+  _179 = inptr_390 + 16;
+  memcpy (_178, _179, 8);
+  # DEBUG BEGIN_STMT
+  lowpan6_header_len_480 = lowpan6_header_len_357 + 8;
+  # DEBUG lowpan6_header_len => lowpan6_header_len_480
+  goto <bb 61>; [INV]
+
+  <bb 53> :
+  # DEBUG BEGIN_STMT
+  if (i_474 == 2)
+    goto <bb 54>; [INV]
+  else
+    goto <bb 61>; [INV]
+
+  <bb 54> :
+  # DEBUG BEGIN_STMT
+  _180 = (sizetype) lowpan6_header_len_357;
+  _181 = buffer_389 + _180;
+  _182 = inptr_390 + 22;
+  _476 = MEM[(char * {ref-all})_182];
+  MEM[(char * {ref-all})_181] = _476;
+  # DEBUG BEGIN_STMT
+  lowpan6_header_len_478 = lowpan6_header_len_357 + 2;
+  # DEBUG lowpan6_header_len => lowpan6_header_len_478
+  goto <bb 61>; [INV]
+
+  <bb 55> :
+  # DEBUG BEGIN_STMT
+  _183 = ip6src.u_addr.ip6.addr[0];
+  if (_183 == 0)
+    goto <bb 56>; [INV]
+  else
+    goto <bb 60>; [INV]
+
+  <bb 56> :
+  _184 = ip6src.u_addr.ip6.addr[1];
+  if (_184 == 0)
+    goto <bb 57>; [INV]
+  else
+    goto <bb 60>; [INV]
+
+  <bb 57> :
+  _185 = ip6src.u_addr.ip6.addr[2];
+  if (_185 == 0)
+    goto <bb 58>; [INV]
+  else
+    goto <bb 60>; [INV]
+
+  <bb 58> :
+  _186 = ip6src.u_addr.ip6.addr[3];
+  if (_186 == 0)
+    goto <bb 59>; [INV]
+  else
+    goto <bb 60>; [INV]
+
+  <bb 59> :
+  # DEBUG BEGIN_STMT
+  _187 = buffer_389 + 1;
+  _188 = *_187;
+  _189 = buffer_389 + 1;
+  _190 = _188 | 64;
+  *_189 = _190;
+  goto <bb 61>; [INV]
+
+  <bb 60> :
+  # DEBUG BEGIN_STMT
+  _191 = (sizetype) lowpan6_header_len_357;
+  _192 = buffer_389 + _191;
+  _193 = inptr_390 + 8;
+  memcpy (_192, _193, 16);
+  # DEBUG BEGIN_STMT
+  lowpan6_header_len_471 = lowpan6_header_len_357 + 16;
+  # DEBUG lowpan6_header_len => lowpan6_header_len_471
+
+  <bb 61> :
+  # lowpan6_header_len_358 = PHI <lowpan6_header_len_357(53), lowpan6_header_len_357(59), lowpan6_header_len_471(60), lowpan6_header_len_480(52), lowpan6_header_len_478(54)>
+  # DEBUG lowpan6_header_len => lowpan6_header_len_358
+  # DEBUG BEGIN_STMT
+  _194 = ip6dst.u_addr.ip6.addr[0];
+  _195 = _194 & 255;
+  if (_195 == 255)
+    goto <bb 62>; [INV]
+  else
+    goto <bb 70>; [INV]
+
+  <bb 62> :
+  # DEBUG BEGIN_STMT
+  _196 = buffer_389 + 1;
+  _197 = *_196;
+  _198 = buffer_389 + 1;
+  _199 = _197 | 8;
+  *_198 = _199;
+  # DEBUG BEGIN_STMT
+  i_494 = lowpan6_get_address_mode_mc (&ip6dst.u_addr.ip6);
+  # DEBUG i => i_494
+  # DEBUG BEGIN_STMT
+  _200 = buffer_389 + 1;
+  _201 = *_200;
+  _202 = (signed char) _201;
+  _203 = i_494 & 3;
+  _204 = _202 | _203;
+  _205 = buffer_389 + 1;
+  _206 = (unsigned char) _204;
+  *_205 = _206;
+  # DEBUG BEGIN_STMT
+  if (i_494 == 0)
+    goto <bb 63>; [INV]
+  else
+    goto <bb 64>; [INV]
+
+  <bb 63> :
+  # DEBUG BEGIN_STMT
+  _207 = (sizetype) lowpan6_header_len_358;
+  _208 = buffer_389 + _207;
+  _209 = inptr_390 + 24;
+  memcpy (_208, _209, 16);
+  # DEBUG BEGIN_STMT
+  lowpan6_header_len_507 = lowpan6_header_len_358 + 16;
+  # DEBUG lowpan6_header_len => lowpan6_header_len_507
+  goto <bb 77>; [INV]
+
+  <bb 64> :
+  # DEBUG BEGIN_STMT
+  if (i_494 == 1)
+    goto <bb 65>; [INV]
+  else
+    goto <bb 66>; [INV]
+
+  <bb 65> :
+  # DEBUG BEGIN_STMT
+  lowpan6_header_len.16_210 = lowpan6_header_len_358;
+  lowpan6_header_len_502 = lowpan6_header_len.16_210 + 1;
+  # DEBUG lowpan6_header_len => lowpan6_header_len_502
+  _211 = (sizetype) lowpan6_header_len.16_210;
+  _212 = buffer_389 + _211;
+  _213 = MEM[(u8_t *)inptr_390 + 25B];
+  *_212 = _213;
+  # DEBUG BEGIN_STMT
+  _214 = (sizetype) lowpan6_header_len_502;
+  _215 = buffer_389 + _214;
+  _216 = inptr_390 + 35;
+  memcpy (_215, _216, 5);
+  # DEBUG BEGIN_STMT
+  lowpan6_header_len_505 = lowpan6_header_len_502 + 5;
+  # DEBUG lowpan6_header_len => lowpan6_header_len_505
+  goto <bb 77>; [INV]
+
+  <bb 66> :
+  # DEBUG BEGIN_STMT
+  if (i_494 == 2)
+    goto <bb 67>; [INV]
+  else
+    goto <bb 68>; [INV]
+
+  <bb 67> :
+  # DEBUG BEGIN_STMT
+  lowpan6_header_len.17_217 = lowpan6_header_len_358;
+  lowpan6_header_len_498 = lowpan6_header_len.17_217 + 1;
+  # DEBUG lowpan6_header_len => lowpan6_header_len_498
+  _218 = (sizetype) lowpan6_header_len.17_217;
+  _219 = buffer_389 + _218;
+  _220 = MEM[(u8_t *)inptr_390 + 25B];
+  *_219 = _220;
+  # DEBUG BEGIN_STMT
+  _221 = (sizetype) lowpan6_header_len_498;
+  _222 = buffer_389 + _221;
+  _223 = inptr_390 + 37;
+  memcpy (_222, _223, 3);
+  # DEBUG BEGIN_STMT
+  lowpan6_header_len_501 = lowpan6_header_len_498 + 3;
+  # DEBUG lowpan6_header_len => lowpan6_header_len_501
+  goto <bb 77>; [INV]
+
+  <bb 68> :
+  # DEBUG BEGIN_STMT
+  if (i_494 == 3)
+    goto <bb 69>; [INV]
+  else
+    goto <bb 77>; [INV]
+
+  <bb 69> :
+  # DEBUG BEGIN_STMT
+  lowpan6_header_len.18_224 = lowpan6_header_len_358;
+  lowpan6_header_len_496 = lowpan6_header_len.18_224 + 1;
+  # DEBUG lowpan6_header_len => lowpan6_header_len_496
+  _225 = (sizetype) lowpan6_header_len.18_224;
+  _226 = buffer_389 + _225;
+  _227 = MEM[(u8_t *)inptr_390 + 39B];
+  *_226 = _227;
+  goto <bb 77>; [INV]
+
+  <bb 70> :
+  # DEBUG BEGIN_STMT
+  _228 = buffer_389 + 1;
+  _229 = *_228;
+  _230 = (int) _229;
+  _231 = _230 & 4;
+  if (_231 != 0)
+    goto <bb 72>; [INV]
+  else
+    goto <bb 71>; [INV]
+
+  <bb 71> :
+  _232 = ip6dst.u_addr.ip6.addr[0];
+  _233 = _232 & 49407;
+  if (_233 == 33022)
+    goto <bb 72>; [INV]
+  else
+    goto <bb 76>; [INV]
+
+  <bb 72> :
+  # DEBUG BEGIN_STMT
+  i_485 = lowpan6_get_address_mode (&ip6dst.u_addr.ip6, dst_483(D));
+  # DEBUG i => i_485
+  # DEBUG BEGIN_STMT
+  _234 = buffer_389 + 1;
+  _235 = *_234;
+  _236 = (signed char) _235;
+  _237 = i_485 & 3;
+  _238 = _236 | _237;
+  _239 = buffer_389 + 1;
+  _240 = (unsigned char) _238;
+  *_239 = _240;
+  # DEBUG BEGIN_STMT
+  if (i_485 == 1)
+    goto <bb 73>; [INV]
+  else
+    goto <bb 74>; [INV]
+
+  <bb 73> :
+  # DEBUG BEGIN_STMT
+  _241 = (sizetype) lowpan6_header_len_358;
+  _242 = buffer_389 + _241;
+  _243 = inptr_390 + 32;
+  memcpy (_242, _243, 8);
+  # DEBUG BEGIN_STMT
+  lowpan6_header_len_491 = lowpan6_header_len_358 + 8;
+  # DEBUG lowpan6_header_len => lowpan6_header_len_491
+  goto <bb 77>; [INV]
+
+  <bb 74> :
+  # DEBUG BEGIN_STMT
+  if (i_485 == 2)
+    goto <bb 75>; [INV]
+  else
+    goto <bb 77>; [INV]
+
+  <bb 75> :
+  # DEBUG BEGIN_STMT
+  _244 = (sizetype) lowpan6_header_len_358;
+  _245 = buffer_389 + _244;
+  _246 = inptr_390 + 38;
+  _487 = MEM[(char * {ref-all})_246];
+  MEM[(char * {ref-all})_245] = _487;
+  # DEBUG BEGIN_STMT
+  lowpan6_header_len_489 = lowpan6_header_len_358 + 2;
+  # DEBUG lowpan6_header_len => lowpan6_header_len_489
+  goto <bb 77>; [INV]
+
+  <bb 76> :
+  # DEBUG BEGIN_STMT
+  _247 = (sizetype) lowpan6_header_len_358;
+  _248 = buffer_389 + _247;
+  _249 = inptr_390 + 24;
+  memcpy (_248, _249, 16);
+  # DEBUG BEGIN_STMT
+  lowpan6_header_len_482 = lowpan6_header_len_358 + 16;
+  # DEBUG lowpan6_header_len => lowpan6_header_len_482
+
+  <bb 77> :
+  # lowpan6_header_len_359 = PHI <lowpan6_header_len_505(65), lowpan6_header_len_358(74), lowpan6_header_len_482(76), lowpan6_header_len_507(63), lowpan6_header_len_496(69), lowpan6_header_len_358(68), lowpan6_header_len_501(67), lowpan6_header_len_491(73), lowpan6_header_len_489(75)>
+  # DEBUG lowpan6_header_len => lowpan6_header_len_359
+  # DEBUG BEGIN_STMT
+  inptr_508 = inptr_390 + 40;
+  # DEBUG inptr => inptr_508
+  # DEBUG BEGIN_STMT
+  hidden_header_len_509 = hidden_header_len_382 + 40;
+  # DEBUG hidden_header_len => hidden_header_len_509
+  # DEBUG BEGIN_STMT
+  _250 = ip6hdr_393->_nexth;
+  if (_250 == 17)
+    goto <bb 78>; [INV]
+  else
+    goto <bb 93>; [INV]
+
+  <bb 78> :
+  # DEBUG BEGIN_STMT
+  if (inbuf_size_391(D) <= 47)
+    goto <bb 79>; [INV]
+  else
+    goto <bb 80>; [INV]
+
+  <bb 79> :
+  # DEBUG BEGIN_STMT
+  _549 = -6;
+  // predicted unlikely by early return (on trees) predictor.
+  goto <bb 94>; [INV]
+
+  <bb 80> :
+  # DEBUG BEGIN_STMT
+  _251 = (int) hidden_header_len_509;
+  _252 = _251 + 7;
+  _253 = (unsigned int) _252;
+  if (outbuf_size_392(D) < _253)
+    goto <bb 81>; [INV]
+  else
+    goto <bb 82>; [INV]
+
+  <bb 81> :
+  # DEBUG BEGIN_STMT
+  _548 = -1;
+  // predicted unlikely by early return (on trees) predictor.
+  goto <bb 94>; [INV]
+
+  <bb 82> :
+  # DEBUG BEGIN_STMT
+  _254 = (sizetype) lowpan6_header_len_359;
+  _255 = buffer_389 + _254;
+  *_255 = 240;
+  # DEBUG BEGIN_STMT
+  _256 = *inptr_508;
+  if (_256 == 240)
+    goto <bb 83>; [INV]
+  else
+    goto <bb 87>; [INV]
+
+  <bb 83> :
+  _257 = inptr_508 + 1;
+  _258 = *_257;
+  _259 = (int) _258;
+  _260 = _259 & 240;
+  if (_260 == 176)
+    goto <bb 84>; [INV]
+  else
+    goto <bb 87>; [INV]
+
+  <bb 84> :
+  _261 = inptr_508 + 2;
+  _262 = *_261;
+  if (_262 == 240)
+    goto <bb 85>; [INV]
+  else
+    goto <bb 87>; [INV]
+
+  <bb 85> :
+  _263 = inptr_508 + 3;
+  _264 = *_263;
+  _265 = (int) _264;
+  _266 = _265 & 240;
+  if (_266 == 176)
+    goto <bb 86>; [INV]
+  else
+    goto <bb 87>; [INV]
+
+  <bb 86> :
+  # DEBUG BEGIN_STMT
+  lowpan6_header_len.19_267 = lowpan6_header_len_359;
+  lowpan6_header_len_511 = lowpan6_header_len.19_267 + 1;
+  # DEBUG lowpan6_header_len => lowpan6_header_len_511
+  lowpan6_header_len.20_512 = lowpan6_header_len.19_267;
+  _268 = (sizetype) lowpan6_header_len.20_512;
+  _269 = buffer_389 + _268;
+  _270 = *_269;
+  _271 = (sizetype) lowpan6_header_len.20_512;
+  _272 = buffer_389 + _271;
+  _273 = _270 | 3;
+  *_272 = _273;
+  # DEBUG BEGIN_STMT
+  _274 = inptr_508 + 1;
+  _275 = *_274;
+  _276 = (int) _275;
+  _277 = _276 << 4;
+  _278 = (signed char) _277;
+  _279 = inptr_508 + 3;
+  _280 = *_279;
+  _281 = (signed char) _280;
+  _282 = _281 & 15;
+  _283 = _278 | _282;
+  lowpan6_header_len.21_284 = lowpan6_header_len_511;
+  lowpan6_header_len_514 = lowpan6_header_len.21_284 + 1;
+  # DEBUG lowpan6_header_len => lowpan6_header_len_514
+  _285 = (sizetype) lowpan6_header_len.21_284;
+  _286 = buffer_389 + _285;
+  _287 = (unsigned char) _283;
+  *_286 = _287;
+  goto <bb 92>; [INV]
+
+  <bb 87> :
+  # DEBUG BEGIN_STMT
+  _288 = *inptr_508;
+  if (_288 == 240)
+    goto <bb 88>; [INV]
+  else
+    goto <bb 89>; [INV]
+
+  <bb 88> :
+  # DEBUG BEGIN_STMT
+  lowpan6_header_len.22_289 = lowpan6_header_len_359;
+  lowpan6_header_len_534 = lowpan6_header_len.22_289 + 1;
+  # DEBUG lowpan6_header_len => lowpan6_header_len_534
+  lowpan6_header_len.23_535 = lowpan6_header_len.22_289;
+  _290 = (sizetype) lowpan6_header_len.23_535;
+  _291 = buffer_389 + _290;
+  _292 = *_291;
+  _293 = (sizetype) lowpan6_header_len.23_535;
+  _294 = buffer_389 + _293;
+  _295 = _292 | 2;
+  *_294 = _295;
+  # DEBUG BEGIN_STMT
+  lowpan6_header_len.24_296 = lowpan6_header_len_534;
+  lowpan6_header_len_537 = lowpan6_header_len.24_296 + 1;
+  # DEBUG lowpan6_header_len => lowpan6_header_len_537
+  _297 = (sizetype) lowpan6_header_len.24_296;
+  _298 = buffer_389 + _297;
+  _299 = MEM[(u8_t *)inptr_508 + 1B];
+  *_298 = _299;
+  # DEBUG BEGIN_STMT
+  lowpan6_header_len.25_300 = lowpan6_header_len_537;
+  lowpan6_header_len_539 = lowpan6_header_len.25_300 + 1;
+  # DEBUG lowpan6_header_len => lowpan6_header_len_539
+  _301 = (sizetype) lowpan6_header_len.25_300;
+  _302 = buffer_389 + _301;
+  _303 = MEM[(u8_t *)inptr_508 + 2B];
+  *_302 = _303;
+  # DEBUG BEGIN_STMT
+  lowpan6_header_len.26_304 = lowpan6_header_len_539;
+  lowpan6_header_len_541 = lowpan6_header_len.26_304 + 1;
+  # DEBUG lowpan6_header_len => lowpan6_header_len_541
+  _305 = (sizetype) lowpan6_header_len.26_304;
+  _306 = buffer_389 + _305;
+  _307 = MEM[(u8_t *)inptr_508 + 3B];
+  *_306 = _307;
+  goto <bb 92>; [INV]
+
+  <bb 89> :
+  # DEBUG BEGIN_STMT
+  _308 = inptr_508 + 2;
+  _309 = *_308;
+  if (_309 == 240)
+    goto <bb 90>; [INV]
+  else
+    goto <bb 91>; [INV]
+
+  <bb 90> :
+  # DEBUG BEGIN_STMT
+  lowpan6_header_len.27_310 = lowpan6_header_len_359;
+  lowpan6_header_len_525 = lowpan6_header_len.27_310 + 1;
+  # DEBUG lowpan6_header_len => lowpan6_header_len_525
+  lowpan6_header_len.28_526 = lowpan6_header_len.27_310;
+  _311 = (sizetype) lowpan6_header_len.28_526;
+  _312 = buffer_389 + _311;
+  _313 = *_312;
+  _314 = (sizetype) lowpan6_header_len.28_526;
+  _315 = buffer_389 + _314;
+  _316 = _313 | 1;
+  *_315 = _316;
+  # DEBUG BEGIN_STMT
+  lowpan6_header_len.29_317 = lowpan6_header_len_525;
+  lowpan6_header_len_528 = lowpan6_header_len.29_317 + 1;
+  # DEBUG lowpan6_header_len => lowpan6_header_len_528
+  _318 = (sizetype) lowpan6_header_len.29_317;
+  _319 = buffer_389 + _318;
+  _320 = *inptr_508;
+  *_319 = _320;
+  # DEBUG BEGIN_STMT
+  lowpan6_header_len.30_321 = lowpan6_header_len_528;
+  lowpan6_header_len_530 = lowpan6_header_len.30_321 + 1;
+  # DEBUG lowpan6_header_len => lowpan6_header_len_530
+  _322 = (sizetype) lowpan6_header_len.30_321;
+  _323 = buffer_389 + _322;
+  _324 = MEM[(u8_t *)inptr_508 + 1B];
+  *_323 = _324;
+  # DEBUG BEGIN_STMT
+  lowpan6_header_len.31_325 = lowpan6_header_len_530;
+  lowpan6_header_len_532 = lowpan6_header_len.31_325 + 1;
+  # DEBUG lowpan6_header_len => lowpan6_header_len_532
+  _326 = (sizetype) lowpan6_header_len.31_325;
+  _327 = buffer_389 + _326;
+  _328 = MEM[(u8_t *)inptr_508 + 3B];
+  *_327 = _328;
+  goto <bb 92>; [INV]
+
+  <bb 91> :
+  # DEBUG BEGIN_STMT
+  lowpan6_header_len.32_329 = lowpan6_header_len_359;
+  lowpan6_header_len_516 = lowpan6_header_len.32_329 + 1;
+  # DEBUG lowpan6_header_len => lowpan6_header_len_516
+  # DEBUG BEGIN_STMT
+  lowpan6_header_len.33_330 = lowpan6_header_len_516;
+  lowpan6_header_len_517 = lowpan6_header_len.33_330 + 1;
+  # DEBUG lowpan6_header_len => lowpan6_header_len_517
+  _331 = (sizetype) lowpan6_header_len.33_330;
+  _332 = buffer_389 + _331;
+  _333 = *inptr_508;
+  *_332 = _333;
+  # DEBUG BEGIN_STMT
+  lowpan6_header_len.34_334 = lowpan6_header_len_517;
+  lowpan6_header_len_519 = lowpan6_header_len.34_334 + 1;
+  # DEBUG lowpan6_header_len => lowpan6_header_len_519
+  _335 = (sizetype) lowpan6_header_len.34_334;
+  _336 = buffer_389 + _335;
+  _337 = MEM[(u8_t *)inptr_508 + 1B];
+  *_336 = _337;
+  # DEBUG BEGIN_STMT
+  lowpan6_header_len.35_338 = lowpan6_header_len_519;
+  lowpan6_header_len_521 = lowpan6_header_len.35_338 + 1;
+  # DEBUG lowpan6_header_len => lowpan6_header_len_521
+  _339 = (sizetype) lowpan6_header_len.35_338;
+  _340 = buffer_389 + _339;
+  _341 = MEM[(u8_t *)inptr_508 + 2B];
+  *_340 = _341;
+  # DEBUG BEGIN_STMT
+  lowpan6_header_len.36_342 = lowpan6_header_len_521;
+  lowpan6_header_len_523 = lowpan6_header_len.36_342 + 1;
+  # DEBUG lowpan6_header_len => lowpan6_header_len_523
+  _343 = (sizetype) lowpan6_header_len.36_342;
+  _344 = buffer_389 + _343;
+  _345 = MEM[(u8_t *)inptr_508 + 3B];
+  *_344 = _345;
+
+  <bb 92> :
+  # lowpan6_header_len_360 = PHI <lowpan6_header_len_514(86), lowpan6_header_len_541(88), lowpan6_header_len_532(90), lowpan6_header_len_523(91)>
+  # DEBUG lowpan6_header_len => lowpan6_header_len_360
+  # DEBUG BEGIN_STMT
+  lowpan6_header_len.37_346 = lowpan6_header_len_360;
+  lowpan6_header_len_543 = lowpan6_header_len.37_346 + 1;
+  # DEBUG lowpan6_header_len => lowpan6_header_len_543
+  _347 = (sizetype) lowpan6_header_len.37_346;
+  _348 = buffer_389 + _347;
+  _349 = MEM[(u8_t *)inptr_508 + 6B];
+  *_348 = _349;
+  # DEBUG BEGIN_STMT
+  lowpan6_header_len.38_350 = lowpan6_header_len_543;
+  lowpan6_header_len_545 = lowpan6_header_len.38_350 + 1;
+  # DEBUG lowpan6_header_len => lowpan6_header_len_545
+  _351 = (sizetype) lowpan6_header_len.38_350;
+  _352 = buffer_389 + _351;
+  _353 = MEM[(u8_t *)inptr_508 + 7B];
+  *_352 = _353;
+  # DEBUG BEGIN_STMT
+  hidden_header_len_547 = hidden_header_len_509 + 8;
+  # DEBUG hidden_header_len => hidden_header_len_547
+
+  <bb 93> :
+  # lowpan6_header_len_361 = PHI <lowpan6_header_len_359(77), lowpan6_header_len_545(92)>
+  # hidden_header_len_362 = PHI <hidden_header_len_509(77), hidden_header_len_547(92)>
+  # DEBUG hidden_header_len => hidden_header_len_362
+  # DEBUG lowpan6_header_len => lowpan6_header_len_361
+  # DEBUG BEGIN_STMT
+  *lowpan6_header_len_out_387(D) = lowpan6_header_len_361;
+  # DEBUG BEGIN_STMT
+  *hidden_header_len_out_388(D) = hidden_header_len_362;
+  # DEBUG BEGIN_STMT
+  _552 = 0;
+
+  <bb 94> :
+  # _363 = PHI <_554(13), _553(15), _549(79), _548(81), _552(93)>
+  ip6src ={v} {CLOBBER};
+  ip6dst ={v} {CLOBBER};
+  return _363;
+
+}
+
+
+lowpan6_context_lookup (const struct ip6_addr_t * lowpan6_contexts, const struct ip6_addr_t * ip6addr)
+{
+  s8_t i;
+  unsigned int _1;
+  unsigned int _2;
+  const struct ip6_addr_t * _3;
+  long unsigned int _4;
+  long unsigned int _5;
+  unsigned int _6;
+  unsigned int _7;
+  const struct ip6_addr_t * _8;
+  long unsigned int _9;
+  long unsigned int _10;
+  unsigned int _11;
+  unsigned int _12;
+  const struct ip6_addr_t * _13;
+  unsigned char _14;
+  unsigned char _15;
+  signed char i.39_16;
+  unsigned char i.40_17;
+  unsigned char _18;
+  s8_t _20;
+  s8_t _22;
+  s8_t _26;
+
+  <bb 2> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  i_21 = 0;
+  # DEBUG i => i_21
+  goto <bb 8>; [INV]
+
+  <bb 3> :
+  # DEBUG BEGIN_STMT
+  _1 = (unsigned int) i_19;
+  _2 = _1 * 20;
+  _3 = lowpan6_contexts_23(D) + _2;
+  _4 = _3->addr[0];
+  _5 = ip6addr_25(D)->addr[0];
+  if (_4 == _5)
+    goto <bb 4>; [INV]
+  else
+    goto <bb 7>; [INV]
+
+  <bb 4> :
+  _6 = (unsigned int) i_19;
+  _7 = _6 * 20;
+  _8 = lowpan6_contexts_23(D) + _7;
+  _9 = _8->addr[1];
+  _10 = ip6addr_25(D)->addr[1];
+  if (_9 == _10)
+    goto <bb 5>; [INV]
+  else
+    goto <bb 7>; [INV]
+
+  <bb 5> :
+  _11 = (unsigned int) i_19;
+  _12 = _11 * 20;
+  _13 = lowpan6_contexts_23(D) + _12;
+  _14 = _13->zone;
+  _15 = ip6addr_25(D)->zone;
+  if (_14 == _15)
+    goto <bb 6>; [INV]
+  else
+    goto <bb 7>; [INV]
+
+  <bb 6> :
+  # DEBUG BEGIN_STMT
+  _26 = i_19;
+  // predicted unlikely by early return (on trees) predictor.
+  goto <bb 10>; [INV]
+
+  <bb 7> :
+  # DEBUG BEGIN_STMT
+  i.39_16 = i_19;
+  i.40_17 = (unsigned char) i.39_16;
+  _18 = i.40_17 + 1;
+  i_27 = (s8_t) _18;
+  # DEBUG i => i_27
+
+  <bb 8> :
+  # i_19 = PHI <i_21(2), i_27(7)>
+  # DEBUG i => i_19
+  # DEBUG BEGIN_STMT
+  if (i_19 <= 9)
+    goto <bb 3>; [INV]
+  else
+    goto <bb 9>; [INV]
+
+  <bb 9> :
+  # DEBUG BEGIN_STMT
+  _22 = -1;
+
+  <bb 10> :
+  # _20 = PHI <_26(6), _22(9)>
+  return _20;
+
+}
+
+
+lowpan6_get_address_mode_mc (const struct ip6_addr_t * ip6addr)
+{
+  long unsigned int _1;
+  long unsigned int _2;
+  long unsigned int _3;
+  long unsigned int _4;
+  long unsigned int _5;
+  long unsigned int _6;
+  long unsigned int _7;
+  long unsigned int _8;
+  long unsigned int _9;
+  long unsigned int _10;
+  long unsigned int _11;
+  long unsigned int _12;
+  long unsigned int _13;
+  s8_t _14;
+  s8_t _17;
+  s8_t _18;
+  s8_t _19;
+  s8_t _20;
+
+  <bb 2> :
+  # DEBUG BEGIN_STMT
+  _1 = ip6addr_16(D)->addr[0];
+  if (_1 == 767)
+    goto <bb 3>; [INV]
+  else
+    goto <bb 7>; [INV]
+
+  <bb 3> :
+  _2 = ip6addr_16(D)->addr[1];
+  if (_2 == 0)
+    goto <bb 4>; [INV]
+  else
+    goto <bb 7>; [INV]
+
+  <bb 4> :
+  _3 = ip6addr_16(D)->addr[2];
+  if (_3 == 0)
+    goto <bb 5>; [INV]
+  else
+    goto <bb 7>; [INV]
+
+  <bb 5> :
+  _4 = ip6addr_16(D)->addr[3];
+  _5 = _4 & 16777215;
+  if (_5 == 0)
+    goto <bb 6>; [INV]
+  else
+    goto <bb 7>; [INV]
+
+  <bb 6> :
+  # DEBUG BEGIN_STMT
+  _17 = 3;
+  // predicted unlikely by early return (on trees) predictor.
+  goto <bb 15>; [INV]
+
+  <bb 7> :
+  # DEBUG BEGIN_STMT
+  _6 = ip6addr_16(D)->addr[0];
+  _7 = _6 & 4294902015;
+  if (_7 == 255)
+    goto <bb 8>; [INV]
+  else
+    goto <bb 14>; [INV]
+
+  <bb 8> :
+  _8 = ip6addr_16(D)->addr[1];
+  if (_8 == 0)
+    goto <bb 9>; [INV]
+  else
+    goto <bb 14>; [INV]
+
+  <bb 9> :
+  # DEBUG BEGIN_STMT
+  _9 = ip6addr_16(D)->addr[2];
+  if (_9 == 0)
+    goto <bb 10>; [INV]
+  else
+    goto <bb 12>; [INV]
+
+  <bb 10> :
+  _10 = ip6addr_16(D)->addr[3];
+  _11 = _10 & 255;
+  if (_11 == 0)
+    goto <bb 11>; [INV]
+  else
+    goto <bb 12>; [INV]
+
+  <bb 11> :
+  # DEBUG BEGIN_STMT
+  _18 = 2;
+  // predicted unlikely by early return (on trees) predictor.
+  goto <bb 15>; [INV]
+
+  <bb 12> :
+  # DEBUG BEGIN_STMT
+  _12 = ip6addr_16(D)->addr[2];
+  _13 = _12 & 16777215;
+  if (_13 == 0)
+    goto <bb 13>; [INV]
+  else
+    goto <bb 14>; [INV]
+
+  <bb 13> :
+  # DEBUG BEGIN_STMT
+  _19 = 1;
+  // predicted unlikely by early return (on trees) predictor.
+  goto <bb 15>; [INV]
+
+  <bb 14> :
+  # DEBUG BEGIN_STMT
+  _20 = 0;
+
+  <bb 15> :
+  # _14 = PHI <_17(6), _18(11), _19(13), _20(14)>
+  return _14;
+
+}
+
+
+lowpan6_get_address_mode (const struct ip6_addr_t * ip6addr, const struct lowpan6_link_addr * mac_addr)
+{
+  unsigned char _1;
+  long unsigned int _2;
+  long unsigned int _3;
+  long unsigned int _4;
+  long unsigned int _5;
+  long unsigned int _6;
+  unsigned char _7;
+  int _8;
+  int _9;
+  unsigned char _10;
+  int _11;
+  int _12;
+  long unsigned int _13;
+  long unsigned int _14;
+  unsigned char _15;
+  long unsigned int _16;
+  unsigned char _17;
+  unsigned char _18;
+  int _19;
+  int _20;
+  unsigned char _21;
+  int _22;
+  int _23;
+  int _24;
+  unsigned char _25;
+  int _26;
+  int _27;
+  int _28;
+  unsigned char _29;
+  int _30;
+  int _31;
+  long unsigned int _32;
+  long unsigned int _33;
+  long unsigned int _34;
+  unsigned char _35;
+  int _36;
+  int _37;
+  unsigned char _38;
+  int _39;
+  int _40;
+  int _41;
+  unsigned char _42;
+  int _43;
+  int _44;
+  int _45;
+  unsigned char _46;
+  int _47;
+  int _48;
+  long unsigned int _49;
+  long unsigned int _50;
+  long unsigned int _51;
+  long unsigned int _52;
+  long unsigned int _53;
+  s8_t _54;
+  s8_t _62;
+  s8_t _64;
+  s8_t _65;
+  s8_t _66;
+
+  <bb 2> :
+  # DEBUG BEGIN_STMT
+  _1 = mac_addr_58(D)->addr_len;
+  if (_1 == 2)
+    goto <bb 3>; [INV]
+  else
+    goto <bb 7>; [INV]
+
+  <bb 3> :
+  # DEBUG BEGIN_STMT
+  _2 = ip6addr_59(D)->addr[2];
+  if (_2 == 4278190080)
+    goto <bb 4>; [INV]
+  else
+    goto <bb 11>; [INV]
+
+  <bb 4> :
+  _3 = ip6addr_59(D)->addr[3];
+  _4 = _3 & 65535;
+  if (_4 == 254)
+    goto <bb 5>; [INV]
+  else
+    goto <bb 11>; [INV]
+
+  <bb 5> :
+  # DEBUG BEGIN_STMT
+  _5 = ip6addr_59(D)->addr[3];
+  _6 = _5 & 4294901760;
+  _7 = mac_addr_58(D)->addr[0];
+  _8 = (int) _7;
+  _9 = _8 << 8;
+  _10 = mac_addr_58(D)->addr[1];
+  _11 = (int) _10;
+  _12 = _9 | _11;
+  _13 = (long unsigned int) _12;
+  _14 = lwip_htonl (_13);
+  if (_6 == _14)
+    goto <bb 6>; [INV]
+  else
+    goto <bb 11>; [INV]
+
+  <bb 6> :
+  # DEBUG BEGIN_STMT
+  _64 = 3;
+  // predicted unlikely by early return (on trees) predictor.
+  goto <bb 15>; [INV]
+
+  <bb 7> :
+  # DEBUG BEGIN_STMT
+  _15 = mac_addr_58(D)->addr_len;
+  if (_15 == 8)
+    goto <bb 8>; [INV]
+  else
+    goto <bb 11>; [INV]
+
+  <bb 8> :
+  # DEBUG BEGIN_STMT
+  _16 = ip6addr_59(D)->addr[2];
+  _17 = mac_addr_58(D)->addr[0];
+  _18 = _17 ^ 2;
+  _19 = (int) _18;
+  _20 = _19 << 24;
+  _21 = mac_addr_58(D)->addr[1];
+  _22 = (int) _21;
+  _23 = _22 << 16;
+  _24 = _20 | _23;
+  _25 = mac_addr_58(D)->addr[2];
+  _26 = (int) _25;
+  _27 = _26 << 8;
+  _28 = _24 | _27;
+  _29 = mac_addr_58(D)->addr[3];
+  _30 = (int) _29;
+  _31 = _28 | _30;
+  _32 = (long unsigned int) _31;
+  _33 = lwip_htonl (_32);
+  if (_16 == _33)
+    goto <bb 9>; [INV]
+  else
+    goto <bb 11>; [INV]
+
+  <bb 9> :
+  _34 = ip6addr_59(D)->addr[3];
+  _35 = mac_addr_58(D)->addr[4];
+  _36 = (int) _35;
+  _37 = _36 << 24;
+  _38 = mac_addr_58(D)->addr[5];
+  _39 = (int) _38;
+  _40 = _39 << 16;
+  _41 = _37 | _40;
+  _42 = mac_addr_58(D)->addr[6];
+  _43 = (int) _42;
+  _44 = _43 << 8;
+  _45 = _41 | _44;
+  _46 = mac_addr_58(D)->addr[7];
+  _47 = (int) _46;
+  _48 = _45 | _47;
+  _49 = (long unsigned int) _48;
+  _50 = lwip_htonl (_49);
+  if (_34 == _50)
+    goto <bb 10>; [INV]
+  else
+    goto <bb 11>; [INV]
+
+  <bb 10> :
+  # DEBUG BEGIN_STMT
+  _62 = 3;
+  // predicted unlikely by early return (on trees) predictor.
+  goto <bb 15>; [INV]
+
+  <bb 11> :
+  # DEBUG BEGIN_STMT
+  _51 = ip6addr_59(D)->addr[2];
+  if (_51 == 4278190080)
+    goto <bb 12>; [INV]
+  else
+    goto <bb 14>; [INV]
+
+  <bb 12> :
+  _52 = ip6addr_59(D)->addr[3];
+  _53 = _52 & 65535;
+  if (_53 == 254)
+    goto <bb 13>; [INV]
+  else
+    goto <bb 14>; [INV]
+
+  <bb 13> :
+  # DEBUG BEGIN_STMT
+  _65 = 2;
+  // predicted unlikely by early return (on trees) predictor.
+  goto <bb 15>; [INV]
+
+  <bb 14> :
+  # DEBUG BEGIN_STMT
+  _66 = 1;
+
+  <bb 15> :
+  # _54 = PHI <_64(6), _62(10), _65(13), _66(14)>
+  return _54;
+
+}
+
+

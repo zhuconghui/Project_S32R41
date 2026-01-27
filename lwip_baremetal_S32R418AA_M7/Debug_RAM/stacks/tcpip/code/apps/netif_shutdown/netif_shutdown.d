@@ -1,0 +1,186 @@
+stacks/tcpip/code/apps/netif_shutdown/netif_shutdown.o: \
+ ../stacks/tcpip/code/apps/netif_shutdown/netif_shutdown.c \
+ ../stacks/tcpip/code/apps/netif_shutdown/netif_shutdown.h \
+ ../stacks/tcpip/lwip/src/include/lwip/netif.h \
+ ../stacks/tcpip/lwip/src/include/lwip/opt.h \
+ D:/workspaceS32DS.3.5/lwip_baremetal_S32R418AA_M7/generate/include/lwipopts.h \
+ ../stacks/tcpip/lwip/src/include/lwip/debug.h \
+ ../stacks/tcpip/lwip/src/include/lwip/arch.h \
+ ../stacks/tcpip/code/ports/platform/generic/gcc/setting/arch/cc.h \
+ D:/NXP/S32DS.3.5/S32DS/software/PlatformSDK_S32R/RTD/BaseNXP_TS_T40D47M20I0R0/include/Devassert.h \
+ D:/workspaceS32DS.3.5/lwip_baremetal_S32R418AA_M7/generate/include/PlatformTypes.h \
+ D:/NXP/S32DS.3.5/S32DS/software/PlatformSDK_S32R/RTD/BaseNXP_TS_T40D47M20I0R0/include/Mcal.h \
+ D:/NXP/S32DS.3.5/S32DS/software/PlatformSDK_S32R/RTD/BaseNXP_TS_T40D47M20I0R0/include/Compiler.h \
+ D:/NXP/S32DS.3.5/S32DS/software/PlatformSDK_S32R/RTD/BaseNXP_TS_T40D47M20I0R0/include/Compiler_Cfg.h \
+ D:/NXP/S32DS.3.5/S32DS/software/PlatformSDK_S32R/RTD/BaseNXP_TS_T40D47M20I0R0/include/CompilerDefinition.h \
+ D:/NXP/S32DS.3.5/S32DS/software/PlatformSDK_S32R/RTD/BaseNXP_TS_T40D47M20I0R0/include/StandardTypes.h \
+ D:/NXP/S32DS.3.5/S32DS/software/PlatformSDK_S32R/RTD/BaseNXP_TS_T40D47M20I0R0/include/Platform_Types.h \
+ D:/workspaceS32DS.3.5/lwip_baremetal_S32R418AA_M7/generate/include/DeviceDefinition.h \
+ D:/workspaceS32DS.3.5/lwip_baremetal_S32R418AA_M7/generate/include/Soc_Ips.h \
+ D:/NXP/S32DS.3.5/S32DS/software/PlatformSDK_S32R/RTD/BaseNXP_TS_T40D47M20I0R0/include/Platform_Types.h \
+ D:/NXP/S32DS.3.5/S32DS/software/PlatformSDK_S32R/RTD/BaseNXP_TS_T40D47M20I0R0/include/IpVersionMacros.h \
+ D:/NXP/S32DS.3.5/S32DS/software/PlatformSDK_S32R/RTD/BaseNXP_TS_T40D47M20I0R0/include/Reg_eSys.h \
+ D:/NXP/S32DS.3.5/S32DS/software/PlatformSDK_S32R/RTD/BaseNXP_TS_T40D47M20I0R0/include/OsIf_Internal.h \
+ D:/workspaceS32DS.3.5/lwip_baremetal_S32R418AA_M7/generate/include/OsIf_Cfg.h \
+ D:/workspaceS32DS.3.5/lwip_baremetal_S32R418AA_M7/generate/include/OsIf_ArchCfg.h \
+ D:/NXP/S32DS.3.5/S32DS/software/PlatformSDK_S32R/RTD/BaseNXP_TS_T40D47M20I0R0/include/StandardTypes.h \
+ D:/NXP/S32DS.3.5/S32DS/software/PlatformSDK_S32R/RTD/BaseNXP_TS_T40D47M20I0R0/header/S32R41_SYSTICK.h \
+ D:/NXP/S32DS.3.5/S32DS/software/PlatformSDK_S32R/RTD/BaseNXP_TS_T40D47M20I0R0/header/S32R41_COMMON.h \
+ D:/workspaceS32DS.3.5/lwip_baremetal_S32R418AA_M7/generate/include/OsIf_ArchCfg.h \
+ D:/NXP/S32DS.3.5/S32DS/software/PlatformSDK_S32R/RTD/BaseNXP_TS_T40D47M20I0R0/header/S32R41_M7_COMMON.h \
+ D:/NXP/S32DS.3.5/S32DS/software/PlatformSDK_S32R/RTD/BaseNXP_TS_T40D47M20I0R0/include/BasicTypes.h \
+ D:/workspaceS32DS.3.5/lwip_baremetal_S32R418AA_M7/generate/include/lwipcfg.h \
+ ../stacks/tcpip/lwip/src/include/lwip/err.h \
+ ../stacks/tcpip/lwip/src/include/lwip/ip_addr.h \
+ ../stacks/tcpip/lwip/src/include/lwip/def.h \
+ ../stacks/tcpip/lwip/src/include/lwip/ip4_addr.h \
+ ../stacks/tcpip/lwip/src/include/lwip/ip6_addr.h \
+ ../stacks/tcpip/lwip/src/include/lwip/def.h \
+ ../stacks/tcpip/lwip/src/include/lwip/ip6_zone.h \
+ ../stacks/tcpip/lwip/src/include/lwip/pbuf.h \
+ ../stacks/tcpip/lwip/src/include/lwip/stats.h \
+ ../stacks/tcpip/lwip/src/include/lwip/mem.h \
+ ../stacks/tcpip/lwip/src/include/lwip/memp.h \
+ ../stacks/tcpip/lwip/src/include/lwip/priv/memp_std.h \
+ ../stacks/tcpip/lwip/src/include/lwip/priv/memp_priv.h \
+ ../stacks/tcpip/lwip/src/include/lwip/priv/mem_priv.h \
+ D:/workspaceS32DS.3.5/lwip_baremetal_S32R418AA_M7/generate/include/netifcfg.h \
+ ../RTD/include/Gmac_Ip.h ../RTD/include/Gmac_Ip_Types.h \
+ D:/workspaceS32DS.3.5/lwip_baremetal_S32R418AA_M7/generate/include/Gmac_Ip_Device_Registers.h \
+ D:/NXP/S32DS.3.5/S32DS/software/PlatformSDK_S32R/RTD/BaseNXP_TS_T40D47M20I0R0/include/Mcal.h \
+ D:/NXP/S32DS.3.5/S32DS/software/PlatformSDK_S32R/RTD/BaseNXP_TS_T40D47M20I0R0/header/S32R41_GMAC.h \
+ D:/NXP/S32DS.3.5/S32DS/software/PlatformSDK_S32R/RTD/BaseNXP_TS_T40D47M20I0R0/header/S32R41_SRC.h \
+ D:/workspaceS32DS.3.5/lwip_baremetal_S32R418AA_M7/generate/include/Gmac_Ip_Features.h \
+ D:/workspaceS32DS.3.5/lwip_baremetal_S32R418AA_M7/generate/include/Gmac_Ip_Cfg.h \
+ D:/workspaceS32DS.3.5/lwip_baremetal_S32R418AA_M7/generate/include/Gmac_Ip_Sa_BOARD_InitPeripherals_PBcfg.h \
+ D:/NXP/S32DS.3.5/S32DS/software/PlatformSDK_S32R/RTD/BaseNXP_TS_T40D47M20I0R0/include/Reg_eSys.h \
+ D:/NXP/S32DS.3.5/S32DS/software/PlatformSDK_S32R/RTD/BaseNXP_TS_T40D47M20I0R0/include/Eth_43_GMAC_MemMap.h \
+ ../stacks/tcpip/code/ports/netif/gmacif/rtd/gmacif.h \
+ ../stacks/tcpip/lwip/src/include/lwip/tcpip.h ../RTD/include/OsIf.h \
+ ../RTD/include/OsIf_Internal.h \
+ D:/NXP/S32DS.3.5/S32DS/software/PlatformSDK_S32R/RTD/BaseNXP_TS_T40D47M20I0R0/include/BaseNXP_MemMap.h \
+ ../stacks/tcpip/code/ports/osif/rtd/OsIf_rtd_port.h
+
+../stacks/tcpip/code/apps/netif_shutdown/netif_shutdown.h:
+
+../stacks/tcpip/lwip/src/include/lwip/netif.h:
+
+../stacks/tcpip/lwip/src/include/lwip/opt.h:
+
+D:/workspaceS32DS.3.5/lwip_baremetal_S32R418AA_M7/generate/include/lwipopts.h:
+
+../stacks/tcpip/lwip/src/include/lwip/debug.h:
+
+../stacks/tcpip/lwip/src/include/lwip/arch.h:
+
+../stacks/tcpip/code/ports/platform/generic/gcc/setting/arch/cc.h:
+
+D:/NXP/S32DS.3.5/S32DS/software/PlatformSDK_S32R/RTD/BaseNXP_TS_T40D47M20I0R0/include/Devassert.h:
+
+D:/workspaceS32DS.3.5/lwip_baremetal_S32R418AA_M7/generate/include/PlatformTypes.h:
+
+D:/NXP/S32DS.3.5/S32DS/software/PlatformSDK_S32R/RTD/BaseNXP_TS_T40D47M20I0R0/include/Mcal.h:
+
+D:/NXP/S32DS.3.5/S32DS/software/PlatformSDK_S32R/RTD/BaseNXP_TS_T40D47M20I0R0/include/Compiler.h:
+
+D:/NXP/S32DS.3.5/S32DS/software/PlatformSDK_S32R/RTD/BaseNXP_TS_T40D47M20I0R0/include/Compiler_Cfg.h:
+
+D:/NXP/S32DS.3.5/S32DS/software/PlatformSDK_S32R/RTD/BaseNXP_TS_T40D47M20I0R0/include/CompilerDefinition.h:
+
+D:/NXP/S32DS.3.5/S32DS/software/PlatformSDK_S32R/RTD/BaseNXP_TS_T40D47M20I0R0/include/StandardTypes.h:
+
+D:/NXP/S32DS.3.5/S32DS/software/PlatformSDK_S32R/RTD/BaseNXP_TS_T40D47M20I0R0/include/Platform_Types.h:
+
+D:/workspaceS32DS.3.5/lwip_baremetal_S32R418AA_M7/generate/include/DeviceDefinition.h:
+
+D:/workspaceS32DS.3.5/lwip_baremetal_S32R418AA_M7/generate/include/Soc_Ips.h:
+
+D:/NXP/S32DS.3.5/S32DS/software/PlatformSDK_S32R/RTD/BaseNXP_TS_T40D47M20I0R0/include/Platform_Types.h:
+
+D:/NXP/S32DS.3.5/S32DS/software/PlatformSDK_S32R/RTD/BaseNXP_TS_T40D47M20I0R0/include/IpVersionMacros.h:
+
+D:/NXP/S32DS.3.5/S32DS/software/PlatformSDK_S32R/RTD/BaseNXP_TS_T40D47M20I0R0/include/Reg_eSys.h:
+
+D:/NXP/S32DS.3.5/S32DS/software/PlatformSDK_S32R/RTD/BaseNXP_TS_T40D47M20I0R0/include/OsIf_Internal.h:
+
+D:/workspaceS32DS.3.5/lwip_baremetal_S32R418AA_M7/generate/include/OsIf_Cfg.h:
+
+D:/workspaceS32DS.3.5/lwip_baremetal_S32R418AA_M7/generate/include/OsIf_ArchCfg.h:
+
+D:/NXP/S32DS.3.5/S32DS/software/PlatformSDK_S32R/RTD/BaseNXP_TS_T40D47M20I0R0/include/StandardTypes.h:
+
+D:/NXP/S32DS.3.5/S32DS/software/PlatformSDK_S32R/RTD/BaseNXP_TS_T40D47M20I0R0/header/S32R41_SYSTICK.h:
+
+D:/NXP/S32DS.3.5/S32DS/software/PlatformSDK_S32R/RTD/BaseNXP_TS_T40D47M20I0R0/header/S32R41_COMMON.h:
+
+D:/workspaceS32DS.3.5/lwip_baremetal_S32R418AA_M7/generate/include/OsIf_ArchCfg.h:
+
+D:/NXP/S32DS.3.5/S32DS/software/PlatformSDK_S32R/RTD/BaseNXP_TS_T40D47M20I0R0/header/S32R41_M7_COMMON.h:
+
+D:/NXP/S32DS.3.5/S32DS/software/PlatformSDK_S32R/RTD/BaseNXP_TS_T40D47M20I0R0/include/BasicTypes.h:
+
+D:/workspaceS32DS.3.5/lwip_baremetal_S32R418AA_M7/generate/include/lwipcfg.h:
+
+../stacks/tcpip/lwip/src/include/lwip/err.h:
+
+../stacks/tcpip/lwip/src/include/lwip/ip_addr.h:
+
+../stacks/tcpip/lwip/src/include/lwip/def.h:
+
+../stacks/tcpip/lwip/src/include/lwip/ip4_addr.h:
+
+../stacks/tcpip/lwip/src/include/lwip/ip6_addr.h:
+
+../stacks/tcpip/lwip/src/include/lwip/def.h:
+
+../stacks/tcpip/lwip/src/include/lwip/ip6_zone.h:
+
+../stacks/tcpip/lwip/src/include/lwip/pbuf.h:
+
+../stacks/tcpip/lwip/src/include/lwip/stats.h:
+
+../stacks/tcpip/lwip/src/include/lwip/mem.h:
+
+../stacks/tcpip/lwip/src/include/lwip/memp.h:
+
+../stacks/tcpip/lwip/src/include/lwip/priv/memp_std.h:
+
+../stacks/tcpip/lwip/src/include/lwip/priv/memp_priv.h:
+
+../stacks/tcpip/lwip/src/include/lwip/priv/mem_priv.h:
+
+D:/workspaceS32DS.3.5/lwip_baremetal_S32R418AA_M7/generate/include/netifcfg.h:
+
+../RTD/include/Gmac_Ip.h:
+
+../RTD/include/Gmac_Ip_Types.h:
+
+D:/workspaceS32DS.3.5/lwip_baremetal_S32R418AA_M7/generate/include/Gmac_Ip_Device_Registers.h:
+
+D:/NXP/S32DS.3.5/S32DS/software/PlatformSDK_S32R/RTD/BaseNXP_TS_T40D47M20I0R0/include/Mcal.h:
+
+D:/NXP/S32DS.3.5/S32DS/software/PlatformSDK_S32R/RTD/BaseNXP_TS_T40D47M20I0R0/header/S32R41_GMAC.h:
+
+D:/NXP/S32DS.3.5/S32DS/software/PlatformSDK_S32R/RTD/BaseNXP_TS_T40D47M20I0R0/header/S32R41_SRC.h:
+
+D:/workspaceS32DS.3.5/lwip_baremetal_S32R418AA_M7/generate/include/Gmac_Ip_Features.h:
+
+D:/workspaceS32DS.3.5/lwip_baremetal_S32R418AA_M7/generate/include/Gmac_Ip_Cfg.h:
+
+D:/workspaceS32DS.3.5/lwip_baremetal_S32R418AA_M7/generate/include/Gmac_Ip_Sa_BOARD_InitPeripherals_PBcfg.h:
+
+D:/NXP/S32DS.3.5/S32DS/software/PlatformSDK_S32R/RTD/BaseNXP_TS_T40D47M20I0R0/include/Reg_eSys.h:
+
+D:/NXP/S32DS.3.5/S32DS/software/PlatformSDK_S32R/RTD/BaseNXP_TS_T40D47M20I0R0/include/Eth_43_GMAC_MemMap.h:
+
+../stacks/tcpip/code/ports/netif/gmacif/rtd/gmacif.h:
+
+../stacks/tcpip/lwip/src/include/lwip/tcpip.h:
+
+../RTD/include/OsIf.h:
+
+../RTD/include/OsIf_Internal.h:
+
+D:/NXP/S32DS.3.5/S32DS/software/PlatformSDK_S32R/RTD/BaseNXP_TS_T40D47M20I0R0/include/BaseNXP_MemMap.h:
+
+../stacks/tcpip/code/ports/osif/rtd/OsIf_rtd_port.h:

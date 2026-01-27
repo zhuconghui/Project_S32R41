@@ -1,0 +1,1372 @@
+tcp_ListenerTable_get_next_cell_instance_and_value (const u32_t * column, struct snmp_obj_id * row_oid, union snmp_variant_value * value, u32_t * value_len)
+{
+  u32_t test_oid[19];
+  u8_t idx;
+  u32_t result_temp[19];
+  struct snmp_next_oid_state state;
+  struct tcp_pcb_listen * pcb;
+  snmp_err_t D.8117;
+  unsigned char D.8114;
+
+  <bb 2> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _1 = &row_oid->id;
+  _2 = row_oid->len;
+  snmp_next_oid_init (&state, _1, _2, &result_temp, 19);
+  # DEBUG BEGIN_STMT
+  pcb = tcp_listen_pcbs.listen_pcbs;
+  # DEBUG BEGIN_STMT
+  goto <bb 4>; [INV]
+
+  <bb 3> :
+  # DEBUG BEGIN_STMT
+  idx = 0;
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _3 = &pcb->local_ip;
+  _4 = pcb->local_port;
+  _5 = (int) idx;
+  _6 = &test_oid[_5];
+  D.8114 = snmp_ip_port_to_oid (_3, _4, _6);
+  idx = D.8114 + idx;
+  # DEBUG BEGIN_STMT
+  snmp_next_oid_check (&state, &test_oid, idx, 0B);
+  # DEBUG BEGIN_STMT
+  pcb = pcb->next;
+  test_oid = {CLOBBER};
+
+  <bb 4> :
+  # DEBUG BEGIN_STMT
+  if (pcb != 0B)
+    goto <bb 3>; [INV]
+  else
+    goto <bb 5>; [INV]
+
+  <bb 5> :
+  # DEBUG BEGIN_STMT
+  _7 = state.status;
+  if (_7 == 0)
+    goto <bb 6>; [INV]
+  else
+    goto <bb 7>; [INV]
+
+  <bb 6> :
+  # DEBUG BEGIN_STMT
+  _8 = state.next_oid;
+  _9 = state.next_oid_len;
+  snmp_oid_assign (row_oid, _8, _9);
+  # DEBUG BEGIN_STMT
+  D.8117 = tcp_ListenerTable_get_cell_value_core (column, value);
+  // predicted unlikely by early return (on trees) predictor.
+  goto <bb 8>; [INV]
+
+  <bb 7> :
+  # DEBUG BEGIN_STMT
+  D.8117 = 241;
+  // predicted unlikely by early return (on trees) predictor.
+
+  <bb 8> :
+  state = {CLOBBER};
+  result_temp = {CLOBBER};
+  return D.8117;
+
+}
+
+
+tcp_ListenerTable_get_cell_value (const u32_t * column, const u32_t * row_oid, u8_t row_oid_len, union snmp_variant_value * value, u32_t * value_len)
+{
+  u8_t idx;
+  struct tcp_pcb_listen * pcb;
+  u16_t local_port;
+  struct ip_addr_t local_ip;
+  int iftmp.2;
+  _Bool iftmp.1;
+  _Bool iftmp.0;
+  snmp_err_t D.8125;
+  unsigned char D.8122;
+
+  <bb 2> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  idx = 0;
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _1 = (unsigned int) idx;
+  _2 = _1 * 4;
+  _3 = row_oid + _2;
+  _4 = row_oid_len - idx;
+  D.8122 = snmp_oid_to_ip_port (_3, _4, &local_ip, &local_port);
+  idx = D.8122 + idx;
+  # DEBUG BEGIN_STMT
+  if (idx == 0)
+    goto <bb 3>; [INV]
+  else
+    goto <bb 4>; [INV]
+
+  <bb 3> :
+  # DEBUG BEGIN_STMT
+  D.8125 = 241;
+  // predicted unlikely by early return (on trees) predictor.
+  goto <bb 24>; [INV]
+
+  <bb 4> :
+  # DEBUG BEGIN_STMT
+  pcb = tcp_listen_pcbs.listen_pcbs;
+  # DEBUG BEGIN_STMT
+  goto <bb 22>; [INV]
+
+  <bb 5> :
+  # DEBUG BEGIN_STMT
+  _5 = local_ip.type;
+  _6 = pcb->local_ip.type;
+  if (_5 == _6)
+    goto <bb 6>; [INV]
+  else
+    goto <bb 17>; [INV]
+
+  <bb 6> :
+  _7 = local_ip.type;
+  if (_7 == 6)
+    goto <bb 7>; [INV]
+  else
+    goto <bb 15>; [INV]
+
+  <bb 7> :
+  _8 = local_ip.u_addr.ip6.addr[0];
+  _9 = pcb->local_ip.u_addr.ip6.addr[0];
+  if (_8 == _9)
+    goto <bb 8>; [INV]
+  else
+    goto <bb 13>; [INV]
+
+  <bb 8> :
+  _10 = local_ip.u_addr.ip6.addr[1];
+  _11 = pcb->local_ip.u_addr.ip6.addr[1];
+  if (_10 == _11)
+    goto <bb 9>; [INV]
+  else
+    goto <bb 13>; [INV]
+
+  <bb 9> :
+  _12 = local_ip.u_addr.ip6.addr[2];
+  _13 = pcb->local_ip.u_addr.ip6.addr[2];
+  if (_12 == _13)
+    goto <bb 10>; [INV]
+  else
+    goto <bb 13>; [INV]
+
+  <bb 10> :
+  _14 = local_ip.u_addr.ip6.addr[3];
+  _15 = pcb->local_ip.u_addr.ip6.addr[3];
+  if (_14 == _15)
+    goto <bb 11>; [INV]
+  else
+    goto <bb 13>; [INV]
+
+  <bb 11> :
+  _16 = local_ip.u_addr.ip6.zone;
+  _17 = pcb->local_ip.u_addr.ip6.zone;
+  if (_16 == _17)
+    goto <bb 12>; [INV]
+  else
+    goto <bb 13>; [INV]
+
+  <bb 12> :
+  iftmp.2 = 1;
+  goto <bb 14>; [INV]
+
+  <bb 13> :
+  iftmp.2 = 0;
+
+  <bb 14> :
+  iftmp.1 = (_Bool) iftmp.2;
+  goto <bb 16>; [INV]
+
+  <bb 15> :
+  _18 = local_ip.u_addr.ip4.addr;
+  _19 = pcb->local_ip.u_addr.ip4.addr;
+  iftmp.1 = _18 == _19;
+
+  <bb 16> :
+  iftmp.0 = iftmp.1;
+  goto <bb 18>; [INV]
+
+  <bb 17> :
+  iftmp.0 = 0;
+
+  <bb 18> :
+  if (iftmp.0 != 0)
+    goto <bb 19>; [INV]
+  else
+    goto <bb 21>; [INV]
+
+  <bb 19> :
+  _20 = pcb->local_port;
+  local_port.3_21 = local_port;
+  if (_20 == local_port.3_21)
+    goto <bb 20>; [INV]
+  else
+    goto <bb 21>; [INV]
+
+  <bb 20> :
+  # DEBUG BEGIN_STMT
+  D.8125 = tcp_ListenerTable_get_cell_value_core (column, value);
+  // predicted unlikely by early return (on trees) predictor.
+  goto <bb 24>; [INV]
+
+  <bb 21> :
+  # DEBUG BEGIN_STMT
+  pcb = pcb->next;
+
+  <bb 22> :
+  # DEBUG BEGIN_STMT
+  if (pcb != 0B)
+    goto <bb 5>; [INV]
+  else
+    goto <bb 23>; [INV]
+
+  <bb 23> :
+  # DEBUG BEGIN_STMT
+  D.8125 = 241;
+
+  <bb 24> :
+  local_ip = {CLOBBER};
+  local_port = {CLOBBER};
+  return D.8125;
+
+}
+
+
+tcp_ListenerTable_get_cell_value_core (const u32_t * column, union snmp_variant_value * value)
+{
+  snmp_err_t D.8120;
+
+  <bb 2> :
+  # DEBUG BEGIN_STMT
+  _1 = *column;
+  if (_1 == 4)
+    goto <bb 3>; [INV]
+  else
+    goto <bb 4>; [INV]
+
+  <bb 3> :
+<L0>:
+  # DEBUG BEGIN_STMT
+  value->u32 = 0;
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  D.8120 = 0;
+  goto <bb 5>; [INV]
+
+  <bb 4> :
+<L1>:
+  # DEBUG BEGIN_STMT
+  D.8120 = 241;
+
+  <bb 5> :
+  return D.8120;
+
+}
+
+
+tcp_ConnectionTable_get_next_cell_instance_and_value (const u32_t * column, struct snmp_obj_id * row_oid, union snmp_variant_value * value, u32_t * value_len)
+{
+  u32_t test_oid[38];
+  u8_t idx;
+  struct tcp_pcb * * const tcp_pcb_nonlisten_lists[3];
+  u8_t i;
+  u32_t result_temp[38];
+  struct snmp_next_oid_state state;
+  struct tcp_pcb * pcb;
+  snmp_err_t D.8153;
+  unsigned char D.8150;
+  unsigned char D.8149;
+
+  <bb 2> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  tcp_pcb_nonlisten_lists = *.LC0;
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _1 = &row_oid->id;
+  _2 = row_oid->len;
+  snmp_next_oid_init (&state, _1, _2, &result_temp, 38);
+  # DEBUG BEGIN_STMT
+  i = 0;
+  goto <bb 7>; [INV]
+
+  <bb 3> :
+  # DEBUG BEGIN_STMT
+  _3 = (int) i;
+  _4 = tcp_pcb_nonlisten_lists[_3];
+  pcb = *_4;
+  # DEBUG BEGIN_STMT
+  goto <bb 5>; [INV]
+
+  <bb 4> :
+  # DEBUG BEGIN_STMT
+  idx = 0;
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _5 = &pcb->local_ip;
+  _6 = pcb->local_port;
+  _7 = (int) idx;
+  _8 = &test_oid[_7];
+  D.8149 = snmp_ip_port_to_oid (_5, _6, _8);
+  idx = D.8149 + idx;
+  # DEBUG BEGIN_STMT
+  _9 = &pcb->remote_ip;
+  _10 = pcb->remote_port;
+  _11 = (int) idx;
+  _12 = &test_oid[_11];
+  D.8150 = snmp_ip_port_to_oid (_9, _10, _12);
+  idx = D.8150 + idx;
+  # DEBUG BEGIN_STMT
+  snmp_next_oid_check (&state, &test_oid, idx, pcb);
+  # DEBUG BEGIN_STMT
+  pcb = pcb->next;
+  test_oid = {CLOBBER};
+
+  <bb 5> :
+  # DEBUG BEGIN_STMT
+  if (pcb != 0B)
+    goto <bb 4>; [INV]
+  else
+    goto <bb 6>; [INV]
+
+  <bb 6> :
+  # DEBUG BEGIN_STMT
+  i.4_13 = i;
+  i = i.4_13 + 1;
+
+  <bb 7> :
+  # DEBUG BEGIN_STMT
+  if (i <= 2)
+    goto <bb 3>; [INV]
+  else
+    goto <bb 8>; [INV]
+
+  <bb 8> :
+  # DEBUG BEGIN_STMT
+  _14 = state.status;
+  if (_14 == 0)
+    goto <bb 9>; [INV]
+  else
+    goto <bb 10>; [INV]
+
+  <bb 9> :
+  # DEBUG BEGIN_STMT
+  _15 = state.next_oid;
+  _16 = state.next_oid_len;
+  snmp_oid_assign (row_oid, _15, _16);
+  # DEBUG BEGIN_STMT
+  _17 = state.reference;
+  D.8153 = tcp_ConnectionTable_get_cell_value_core (column, _17, value);
+  // predicted unlikely by early return (on trees) predictor.
+  goto <bb 11>; [INV]
+
+  <bb 10> :
+  # DEBUG BEGIN_STMT
+  D.8153 = 241;
+  // predicted unlikely by early return (on trees) predictor.
+
+  <bb 11> :
+  state = {CLOBBER};
+  result_temp = {CLOBBER};
+  tcp_pcb_nonlisten_lists = {CLOBBER};
+  return D.8153;
+
+}
+
+
+tcp_ConnectionTable_get_cell_value (const u32_t * column, const u32_t * row_oid, u8_t row_oid_len, union snmp_variant_value * value, u32_t * value_len)
+{
+  struct tcp_pcb * * const tcp_pcb_nonlisten_lists[3];
+  u8_t i;
+  u8_t idx;
+  struct tcp_pcb * pcb;
+  u16_t remote_port;
+  u16_t local_port;
+  struct ip_addr_t remote_ip;
+  struct ip_addr_t local_ip;
+  int iftmp.11;
+  _Bool iftmp.10;
+  _Bool iftmp.9;
+  int iftmp.7;
+  _Bool iftmp.6;
+  _Bool iftmp.5;
+  unsigned char D.8162;
+  snmp_err_t D.8161;
+  unsigned char D.8158;
+
+  <bb 2> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  idx = 0;
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  tcp_pcb_nonlisten_lists = *.LC0;
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _1 = (unsigned int) idx;
+  _2 = _1 * 4;
+  _3 = row_oid + _2;
+  _4 = row_oid_len - idx;
+  D.8158 = snmp_oid_to_ip_port (_3, _4, &local_ip, &local_port);
+  idx = D.8158 + idx;
+  # DEBUG BEGIN_STMT
+  if (idx == 0)
+    goto <bb 3>; [INV]
+  else
+    goto <bb 4>; [INV]
+
+  <bb 3> :
+  # DEBUG BEGIN_STMT
+  D.8161 = 241;
+  // predicted unlikely by early return (on trees) predictor.
+  goto <bb 44>; [INV]
+
+  <bb 4> :
+  # DEBUG BEGIN_STMT
+  _5 = (unsigned int) idx;
+  _6 = _5 * 4;
+  _7 = row_oid + _6;
+  _8 = row_oid_len - idx;
+  D.8162 = snmp_oid_to_ip_port (_7, _8, &remote_ip, &remote_port);
+  idx = D.8162 + idx;
+  # DEBUG BEGIN_STMT
+  if (idx == 0)
+    goto <bb 5>; [INV]
+  else
+    goto <bb 6>; [INV]
+
+  <bb 5> :
+  # DEBUG BEGIN_STMT
+  D.8161 = 241;
+  // predicted unlikely by early return (on trees) predictor.
+  goto <bb 44>; [INV]
+
+  <bb 6> :
+  # DEBUG BEGIN_STMT
+  i = 0;
+  goto <bb 42>; [INV]
+
+  <bb 7> :
+  # DEBUG BEGIN_STMT
+  _9 = (int) i;
+  _10 = tcp_pcb_nonlisten_lists[_9];
+  pcb = *_10;
+  # DEBUG BEGIN_STMT
+  goto <bb 40>; [INV]
+
+  <bb 8> :
+  # DEBUG BEGIN_STMT
+  _11 = local_ip.type;
+  _12 = pcb->local_ip.type;
+  if (_11 == _12)
+    goto <bb 9>; [INV]
+  else
+    goto <bb 20>; [INV]
+
+  <bb 9> :
+  _13 = local_ip.type;
+  if (_13 == 6)
+    goto <bb 10>; [INV]
+  else
+    goto <bb 18>; [INV]
+
+  <bb 10> :
+  _14 = local_ip.u_addr.ip6.addr[0];
+  _15 = pcb->local_ip.u_addr.ip6.addr[0];
+  if (_14 == _15)
+    goto <bb 11>; [INV]
+  else
+    goto <bb 16>; [INV]
+
+  <bb 11> :
+  _16 = local_ip.u_addr.ip6.addr[1];
+  _17 = pcb->local_ip.u_addr.ip6.addr[1];
+  if (_16 == _17)
+    goto <bb 12>; [INV]
+  else
+    goto <bb 16>; [INV]
+
+  <bb 12> :
+  _18 = local_ip.u_addr.ip6.addr[2];
+  _19 = pcb->local_ip.u_addr.ip6.addr[2];
+  if (_18 == _19)
+    goto <bb 13>; [INV]
+  else
+    goto <bb 16>; [INV]
+
+  <bb 13> :
+  _20 = local_ip.u_addr.ip6.addr[3];
+  _21 = pcb->local_ip.u_addr.ip6.addr[3];
+  if (_20 == _21)
+    goto <bb 14>; [INV]
+  else
+    goto <bb 16>; [INV]
+
+  <bb 14> :
+  _22 = local_ip.u_addr.ip6.zone;
+  _23 = pcb->local_ip.u_addr.ip6.zone;
+  if (_22 == _23)
+    goto <bb 15>; [INV]
+  else
+    goto <bb 16>; [INV]
+
+  <bb 15> :
+  iftmp.7 = 1;
+  goto <bb 17>; [INV]
+
+  <bb 16> :
+  iftmp.7 = 0;
+
+  <bb 17> :
+  iftmp.6 = (_Bool) iftmp.7;
+  goto <bb 19>; [INV]
+
+  <bb 18> :
+  _24 = local_ip.u_addr.ip4.addr;
+  _25 = pcb->local_ip.u_addr.ip4.addr;
+  iftmp.6 = _24 == _25;
+
+  <bb 19> :
+  iftmp.5 = iftmp.6;
+  goto <bb 21>; [INV]
+
+  <bb 20> :
+  iftmp.5 = 0;
+
+  <bb 21> :
+  if (iftmp.5 != 0)
+    goto <bb 22>; [INV]
+  else
+    goto <bb 39>; [INV]
+
+  <bb 22> :
+  _26 = pcb->local_port;
+  local_port.8_27 = local_port;
+  if (_26 == local_port.8_27)
+    goto <bb 23>; [INV]
+  else
+    goto <bb 39>; [INV]
+
+  <bb 23> :
+  _28 = remote_ip.type;
+  _29 = pcb->remote_ip.type;
+  if (_28 == _29)
+    goto <bb 24>; [INV]
+  else
+    goto <bb 35>; [INV]
+
+  <bb 24> :
+  _30 = remote_ip.type;
+  if (_30 == 6)
+    goto <bb 25>; [INV]
+  else
+    goto <bb 33>; [INV]
+
+  <bb 25> :
+  _31 = remote_ip.u_addr.ip6.addr[0];
+  _32 = pcb->remote_ip.u_addr.ip6.addr[0];
+  if (_31 == _32)
+    goto <bb 26>; [INV]
+  else
+    goto <bb 31>; [INV]
+
+  <bb 26> :
+  _33 = remote_ip.u_addr.ip6.addr[1];
+  _34 = pcb->remote_ip.u_addr.ip6.addr[1];
+  if (_33 == _34)
+    goto <bb 27>; [INV]
+  else
+    goto <bb 31>; [INV]
+
+  <bb 27> :
+  _35 = remote_ip.u_addr.ip6.addr[2];
+  _36 = pcb->remote_ip.u_addr.ip6.addr[2];
+  if (_35 == _36)
+    goto <bb 28>; [INV]
+  else
+    goto <bb 31>; [INV]
+
+  <bb 28> :
+  _37 = remote_ip.u_addr.ip6.addr[3];
+  _38 = pcb->remote_ip.u_addr.ip6.addr[3];
+  if (_37 == _38)
+    goto <bb 29>; [INV]
+  else
+    goto <bb 31>; [INV]
+
+  <bb 29> :
+  _39 = remote_ip.u_addr.ip6.zone;
+  _40 = pcb->remote_ip.u_addr.ip6.zone;
+  if (_39 == _40)
+    goto <bb 30>; [INV]
+  else
+    goto <bb 31>; [INV]
+
+  <bb 30> :
+  iftmp.11 = 1;
+  goto <bb 32>; [INV]
+
+  <bb 31> :
+  iftmp.11 = 0;
+
+  <bb 32> :
+  iftmp.10 = (_Bool) iftmp.11;
+  goto <bb 34>; [INV]
+
+  <bb 33> :
+  _41 = remote_ip.u_addr.ip4.addr;
+  _42 = pcb->remote_ip.u_addr.ip4.addr;
+  iftmp.10 = _41 == _42;
+
+  <bb 34> :
+  iftmp.9 = iftmp.10;
+  goto <bb 36>; [INV]
+
+  <bb 35> :
+  iftmp.9 = 0;
+
+  <bb 36> :
+  if (iftmp.9 != 0)
+    goto <bb 37>; [INV]
+  else
+    goto <bb 39>; [INV]
+
+  <bb 37> :
+  _43 = pcb->remote_port;
+  remote_port.12_44 = remote_port;
+  if (_43 == remote_port.12_44)
+    goto <bb 38>; [INV]
+  else
+    goto <bb 39>; [INV]
+
+  <bb 38> :
+  # DEBUG BEGIN_STMT
+  D.8161 = tcp_ConnectionTable_get_cell_value_core (column, pcb, value);
+  // predicted unlikely by early return (on trees) predictor.
+  goto <bb 44>; [INV]
+
+  <bb 39> :
+  # DEBUG BEGIN_STMT
+  pcb = pcb->next;
+
+  <bb 40> :
+  # DEBUG BEGIN_STMT
+  if (pcb != 0B)
+    goto <bb 8>; [INV]
+  else
+    goto <bb 41>; [INV]
+
+  <bb 41> :
+  # DEBUG BEGIN_STMT
+  i.13_45 = i;
+  i = i.13_45 + 1;
+
+  <bb 42> :
+  # DEBUG BEGIN_STMT
+  if (i <= 2)
+    goto <bb 7>; [INV]
+  else
+    goto <bb 43>; [INV]
+
+  <bb 43> :
+  # DEBUG BEGIN_STMT
+  D.8161 = 241;
+
+  <bb 44> :
+  local_ip = {CLOBBER};
+  remote_ip = {CLOBBER};
+  local_port = {CLOBBER};
+  remote_port = {CLOBBER};
+  tcp_pcb_nonlisten_lists = {CLOBBER};
+  return D.8161;
+
+}
+
+
+tcp_ConnectionTable_get_cell_value_core (const u32_t * column, struct tcp_pcb * pcb, union snmp_variant_value * value)
+{
+  snmp_err_t D.8156;
+
+  <bb 2> :
+  # DEBUG BEGIN_STMT
+  _1 = *column;
+  switch (_1) <default: <L2> [INV], case 7: <L0> [INV], case 8: <L1> [INV]>
+
+  <bb 3> :
+<L0>:
+  # DEBUG BEGIN_STMT
+  _2 = pcb->state;
+  _3 = (int) _2;
+  _4 = _3 + 1;
+  _5 = (long unsigned int) _4;
+  value->u32 = _5;
+  # DEBUG BEGIN_STMT
+  goto <bb 6>; [INV]
+
+  <bb 4> :
+<L1>:
+  # DEBUG BEGIN_STMT
+  value->u32 = 0;
+  # DEBUG BEGIN_STMT
+  goto <bb 6>; [INV]
+
+  <bb 5> :
+<L2>:
+  # DEBUG BEGIN_STMT
+  D.8156 = 241;
+  goto <bb 7>; [INV]
+
+  <bb 6> :
+  # DEBUG BEGIN_STMT
+  D.8156 = 0;
+
+  <bb 7> :
+  return D.8156;
+
+}
+
+
+tcp_ConnTable_get_next_cell_instance_and_value (const u32_t * column, struct snmp_obj_id * row_oid, union snmp_variant_value * value, u32_t * value_len)
+{
+  u32_t test_oid[10];
+  u32_t result_temp[10];
+  struct snmp_next_oid_state state;
+  struct tcp_pcb * pcb;
+  u8_t i;
+  snmp_err_t D.8222;
+
+  <bb 2> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _1 = &row_oid->id;
+  _2 = row_oid->len;
+  snmp_next_oid_init (&state, _1, _2, &result_temp, 10);
+  # DEBUG BEGIN_STMT
+  i = 0;
+  goto <bb 14>; [INV]
+
+  <bb 3> :
+  # DEBUG BEGIN_STMT
+  _3 = (int) i;
+  _4 = tcp_pcb_lists[_3];
+  pcb = *_4;
+  # DEBUG BEGIN_STMT
+  goto <bb 12>; [INV]
+
+  <bb 4> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _5 = pcb->local_ip.type;
+  if (_5 == 0)
+    goto <bb 5>; [INV]
+  else
+    goto <bb 11>; [INV]
+
+  <bb 5> :
+  # DEBUG BEGIN_STMT
+  _6 = &pcb->local_ip.u_addr.ip4;
+  snmp_ip4_to_oid (_6, &test_oid[0]);
+  # DEBUG BEGIN_STMT
+  _7 = pcb->local_port;
+  _8 = (long unsigned int) _7;
+  test_oid[4] = _8;
+  # DEBUG BEGIN_STMT
+  _9 = pcb->state;
+  if (_9 == 1)
+    goto <bb 6>; [INV]
+  else
+    goto <bb 7>; [INV]
+
+  <bb 6> :
+  # DEBUG BEGIN_STMT
+  snmp_ip4_to_oid (&ip_addr_any.u_addr.ip4, &test_oid[5]);
+  # DEBUG BEGIN_STMT
+  test_oid[9] = 0;
+  goto <bb 10>; [INV]
+
+  <bb 7> :
+  # DEBUG BEGIN_STMT
+  _10 = pcb->remote_ip.type;
+  if (_10 == 6)
+    goto <bb 8>; [INV]
+  else
+    goto <bb 9>; [INV]
+
+  <bb 8> :
+  # DEBUG BEGIN_STMT
+  // predicted unlikely by continue predictor.
+  test_oid = {CLOBBER};
+  goto <bb 12>; [INV]
+
+  <bb 9> :
+  # DEBUG BEGIN_STMT
+  _11 = &pcb->remote_ip.u_addr.ip4;
+  snmp_ip4_to_oid (_11, &test_oid[5]);
+  # DEBUG BEGIN_STMT
+  _12 = pcb->remote_port;
+  _13 = (long unsigned int) _12;
+  test_oid[9] = _13;
+
+  <bb 10> :
+  # DEBUG BEGIN_STMT
+  snmp_next_oid_check (&state, &test_oid, 10, pcb);
+
+  <bb 11> :
+  # DEBUG BEGIN_STMT
+  pcb = pcb->next;
+  test_oid = {CLOBBER};
+
+  <bb 12> :
+  # DEBUG BEGIN_STMT
+  if (pcb != 0B)
+    goto <bb 4>; [INV]
+  else
+    goto <bb 13>; [INV]
+
+  <bb 13> :
+  # DEBUG BEGIN_STMT
+  i.15_14 = i;
+  i = i.15_14 + 1;
+
+  <bb 14> :
+  # DEBUG BEGIN_STMT
+  if (i <= 3)
+    goto <bb 3>; [INV]
+  else
+    goto <bb 15>; [INV]
+
+  <bb 15> :
+  # DEBUG BEGIN_STMT
+  _15 = state.status;
+  if (_15 == 0)
+    goto <bb 16>; [INV]
+  else
+    goto <bb 17>; [INV]
+
+  <bb 16> :
+  # DEBUG BEGIN_STMT
+  _16 = state.next_oid;
+  _17 = state.next_oid_len;
+  snmp_oid_assign (row_oid, _16, _17);
+  # DEBUG BEGIN_STMT
+  _18 = state.reference;
+  D.8222 = tcp_ConnTable_get_cell_value_core (_18, column, value, value_len);
+  // predicted unlikely by early return (on trees) predictor.
+  goto <bb 18>; [INV]
+
+  <bb 17> :
+  # DEBUG BEGIN_STMT
+  D.8222 = 241;
+
+  <bb 18> :
+  state = {CLOBBER};
+  result_temp = {CLOBBER};
+  return D.8222;
+
+}
+
+
+tcp_ConnTable_get_cell_value (const u32_t * column, const u32_t * row_oid, u8_t row_oid_len, union snmp_variant_value * value, u32_t * value_len)
+{
+  struct tcp_pcb * pcb;
+  u16_t remote_port;
+  u16_t local_port;
+  struct ip4_addr_t remote_ip;
+  struct ip4_addr_t local_ip;
+  u8_t i;
+  snmp_err_t D.8240;
+
+  <bb 2> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _1 = snmp_oid_in_range (row_oid, row_oid_len, &tcp_ConnTable_oid_ranges, 10);
+  if (_1 == 0)
+    goto <bb 3>; [INV]
+  else
+    goto <bb 4>; [INV]
+
+  <bb 3> :
+  # DEBUG BEGIN_STMT
+  D.8240 = 241;
+  // predicted unlikely by early return (on trees) predictor.
+  goto <bb 22>; [INV]
+
+  <bb 4> :
+  # DEBUG BEGIN_STMT
+  snmp_oid_to_ip4 (row_oid, &local_ip);
+  # DEBUG BEGIN_STMT
+  _2 = row_oid + 16;
+  _3 = *_2;
+  local_port = (u16_t) _3;
+  # DEBUG BEGIN_STMT
+  _4 = row_oid + 20;
+  snmp_oid_to_ip4 (_4, &remote_ip);
+  # DEBUG BEGIN_STMT
+  _5 = row_oid + 36;
+  _6 = *_5;
+  remote_port = (u16_t) _6;
+  # DEBUG BEGIN_STMT
+  i = 0;
+  goto <bb 20>; [INV]
+
+  <bb 5> :
+  # DEBUG BEGIN_STMT
+  _7 = (int) i;
+  _8 = tcp_pcb_lists[_7];
+  pcb = *_8;
+  # DEBUG BEGIN_STMT
+  goto <bb 18>; [INV]
+
+  <bb 6> :
+  # DEBUG BEGIN_STMT
+  _9 = pcb->local_ip.type;
+  if (_9 == 0)
+    goto <bb 7>; [INV]
+  else
+    goto <bb 17>; [INV]
+
+  <bb 7> :
+  _10 = local_ip.addr;
+  _11 = pcb->local_ip.u_addr.ip4.addr;
+  if (_10 == _11)
+    goto <bb 8>; [INV]
+  else
+    goto <bb 17>; [INV]
+
+  <bb 8> :
+  _12 = pcb->local_port;
+  if (local_port == _12)
+    goto <bb 9>; [INV]
+  else
+    goto <bb 17>; [INV]
+
+  <bb 9> :
+  # DEBUG BEGIN_STMT
+  _13 = pcb->state;
+  if (_13 == 1)
+    goto <bb 10>; [INV]
+  else
+    goto <bb 13>; [INV]
+
+  <bb 10> :
+  # DEBUG BEGIN_STMT
+  _14 = remote_ip.addr;
+  _15 = ip_addr_any.u_addr.ip4.addr;
+  if (_14 == _15)
+    goto <bb 11>; [INV]
+  else
+    goto <bb 17>; [INV]
+
+  <bb 11> :
+  if (remote_port == 0)
+    goto <bb 12>; [INV]
+  else
+    goto <bb 17>; [INV]
+
+  <bb 12> :
+  # DEBUG BEGIN_STMT
+  D.8240 = tcp_ConnTable_get_cell_value_core (pcb, column, value, value_len);
+  // predicted unlikely by early return (on trees) predictor.
+  goto <bb 22>; [INV]
+
+  <bb 13> :
+  # DEBUG BEGIN_STMT
+  _16 = pcb->remote_ip.type;
+  if (_16 == 0)
+    goto <bb 14>; [INV]
+  else
+    goto <bb 17>; [INV]
+
+  <bb 14> :
+  _17 = remote_ip.addr;
+  _18 = pcb->remote_ip.u_addr.ip4.addr;
+  if (_17 == _18)
+    goto <bb 15>; [INV]
+  else
+    goto <bb 17>; [INV]
+
+  <bb 15> :
+  _19 = pcb->remote_port;
+  if (remote_port == _19)
+    goto <bb 16>; [INV]
+  else
+    goto <bb 17>; [INV]
+
+  <bb 16> :
+  # DEBUG BEGIN_STMT
+  D.8240 = tcp_ConnTable_get_cell_value_core (pcb, column, value, value_len);
+  // predicted unlikely by early return (on trees) predictor.
+  goto <bb 22>; [INV]
+
+  <bb 17> :
+  # DEBUG BEGIN_STMT
+  pcb = pcb->next;
+
+  <bb 18> :
+  # DEBUG BEGIN_STMT
+  if (pcb != 0B)
+    goto <bb 6>; [INV]
+  else
+    goto <bb 19>; [INV]
+
+  <bb 19> :
+  # DEBUG BEGIN_STMT
+  i.16_20 = i;
+  i = i.16_20 + 1;
+
+  <bb 20> :
+  # DEBUG BEGIN_STMT
+  if (i <= 3)
+    goto <bb 5>; [INV]
+  else
+    goto <bb 21>; [INV]
+
+  <bb 21> :
+  # DEBUG BEGIN_STMT
+  D.8240 = 241;
+
+  <bb 22> :
+  local_ip = {CLOBBER};
+  remote_ip = {CLOBBER};
+  return D.8240;
+
+}
+
+
+tcp_ConnTable_get_cell_value_core (struct tcp_pcb * pcb, const u32_t * column, union snmp_variant_value * value, u32_t * value_len)
+{
+  snmp_err_t D.8235;
+
+  <bb 2> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _1 = *column;
+  switch (_1) <default: <L17> [INV], case 1: <L0> [INV], case 2: <L1> [INV], case 3: <L2> [INV], case 4: <L3> [INV], case 5: <L7> [INV]>
+
+  <bb 3> :
+<L0>:
+  # DEBUG BEGIN_STMT
+  _2 = pcb->state;
+  _3 = (int) _2;
+  _4 = _3 + 1;
+  _5 = (long unsigned int) _4;
+  value->u32 = _5;
+  # DEBUG BEGIN_STMT
+  goto <bb 13>; [INV]
+
+  <bb 4> :
+<L1>:
+  # DEBUG BEGIN_STMT
+  _6 = pcb->local_ip.u_addr.ip4.addr;
+  value->u32 = _6;
+  # DEBUG BEGIN_STMT
+  goto <bb 13>; [INV]
+
+  <bb 5> :
+<L2>:
+  # DEBUG BEGIN_STMT
+  _7 = pcb->local_port;
+  _8 = (long unsigned int) _7;
+  value->u32 = _8;
+  # DEBUG BEGIN_STMT
+  goto <bb 13>; [INV]
+
+  <bb 6> :
+<L3>:
+  # DEBUG BEGIN_STMT
+  _9 = pcb->state;
+  if (_9 == 1)
+    goto <bb 7>; [INV]
+  else
+    goto <bb 8>; [INV]
+
+  <bb 7> :
+  # DEBUG BEGIN_STMT
+  _10 = ip_addr_any.u_addr.ip4.addr;
+  value->u32 = _10;
+  goto <bb 13>; [INV]
+
+  <bb 8> :
+  # DEBUG BEGIN_STMT
+  _11 = pcb->remote_ip.u_addr.ip4.addr;
+  value->u32 = _11;
+  goto <bb 13>; [INV]
+
+  <bb 9> :
+<L7>:
+  # DEBUG BEGIN_STMT
+  _12 = pcb->state;
+  if (_12 == 1)
+    goto <bb 10>; [INV]
+  else
+    goto <bb 11>; [INV]
+
+  <bb 10> :
+  # DEBUG BEGIN_STMT
+  value->u32 = 0;
+  goto <bb 13>; [INV]
+
+  <bb 11> :
+  # DEBUG BEGIN_STMT
+  _13 = pcb->remote_port;
+  _14 = (long unsigned int) _13;
+  value->u32 = _14;
+  goto <bb 13>; [INV]
+
+  <bb 12> :
+<L17>:
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  __asm__ __volatile__("BKPT #0
+	");
+  # DEBUG BEGIN_STMT
+  goto <bb 12>; [INV]
+
+  <bb 13> :
+  # DEBUG BEGIN_STMT
+  D.8235 = 0;
+  return D.8235;
+
+}
+
+
+tcp_get_value (struct snmp_node_instance * instance, void * value)
+{
+  u64_t val64;
+  u64_t val64;
+  struct tcp_pcb * pcb;
+  u16_t tcpcurrestab;
+  s32_t * sint_ptr;
+  u32_t * uint_ptr;
+  s16_t D.8207;
+
+  <bb 2> :
+  # DEBUG BEGIN_STMT
+  uint_ptr = value;
+  # DEBUG BEGIN_STMT
+  sint_ptr = value;
+  # DEBUG BEGIN_STMT
+  _1 = instance->node;
+  _2 = _1->oid;
+  switch (_2) <default: <L25> [INV], case 1: <L0> [INV], case 2: <L1> [INV], case 3: <L2> [INV], case 4: <L3> [INV], case 5: <L4> [INV], case 6: <L5> [INV], case 7: <L6> [INV], case 8: <L7> [INV], case 9: <L8> [INV], case 10: <L15> [INV], case 11: <L16> [INV], case 12: <L17> [INV], case 14: <L18> [INV], case 15: <L19> [INV], case 17: <L20> [INV], case 18: <L21> [INV]>
+
+  <bb 3> :
+<L0>:
+  # DEBUG BEGIN_STMT
+  *sint_ptr = 4;
+  # DEBUG BEGIN_STMT
+  D.8207 = 4;
+  goto <bb 26>; [INV]
+
+  <bb 4> :
+<L1>:
+  # DEBUG BEGIN_STMT
+  *sint_ptr = 1000;
+  # DEBUG BEGIN_STMT
+  D.8207 = 4;
+  goto <bb 26>; [INV]
+
+  <bb 5> :
+<L2>:
+  # DEBUG BEGIN_STMT
+  *sint_ptr = 60000;
+  # DEBUG BEGIN_STMT
+  D.8207 = 4;
+  goto <bb 26>; [INV]
+
+  <bb 6> :
+<L3>:
+  # DEBUG BEGIN_STMT
+  *sint_ptr = 8;
+  # DEBUG BEGIN_STMT
+  D.8207 = 4;
+  goto <bb 26>; [INV]
+
+  <bb 7> :
+<L4>:
+  # DEBUG BEGIN_STMT
+  _3 = lwip_stats.mib2.tcpactiveopens;
+  *uint_ptr = _3;
+  # DEBUG BEGIN_STMT
+  D.8207 = 4;
+  goto <bb 26>; [INV]
+
+  <bb 8> :
+<L5>:
+  # DEBUG BEGIN_STMT
+  _4 = lwip_stats.mib2.tcppassiveopens;
+  *uint_ptr = _4;
+  # DEBUG BEGIN_STMT
+  D.8207 = 4;
+  goto <bb 26>; [INV]
+
+  <bb 9> :
+<L6>:
+  # DEBUG BEGIN_STMT
+  _5 = lwip_stats.mib2.tcpattemptfails;
+  *uint_ptr = _5;
+  # DEBUG BEGIN_STMT
+  D.8207 = 4;
+  goto <bb 26>; [INV]
+
+  <bb 10> :
+<L7>:
+  # DEBUG BEGIN_STMT
+  _6 = lwip_stats.mib2.tcpestabresets;
+  *uint_ptr = _6;
+  # DEBUG BEGIN_STMT
+  D.8207 = 4;
+  goto <bb 26>; [INV]
+
+  <bb 11> :
+<L8>:
+  # DEBUG BEGIN_STMT
+  tcpcurrestab = 0;
+  # DEBUG BEGIN_STMT
+  pcb = tcp_active_pcbs;
+  # DEBUG BEGIN_STMT
+  goto <bb 16>; [INV]
+
+  <bb 12> :
+  # DEBUG BEGIN_STMT
+  _7 = pcb->state;
+  if (_7 == 4)
+    goto <bb 14>; [INV]
+  else
+    goto <bb 13>; [INV]
+
+  <bb 13> :
+  _8 = pcb->state;
+  if (_8 == 7)
+    goto <bb 14>; [INV]
+  else
+    goto <bb 15>; [INV]
+
+  <bb 14> :
+  # DEBUG BEGIN_STMT
+  tcpcurrestab.14_9 = tcpcurrestab;
+  tcpcurrestab = tcpcurrestab.14_9 + 1;
+
+  <bb 15> :
+  # DEBUG BEGIN_STMT
+  pcb = pcb->next;
+
+  <bb 16> :
+  # DEBUG BEGIN_STMT
+  if (pcb != 0B)
+    goto <bb 12>; [INV]
+  else
+    goto <bb 17>; [INV]
+
+  <bb 17> :
+  # DEBUG BEGIN_STMT
+  _10 = (long unsigned int) tcpcurrestab;
+  *uint_ptr = _10;
+  # DEBUG BEGIN_STMT
+  D.8207 = 4;
+  goto <bb 26>; [INV]
+
+  <bb 18> :
+<L15>:
+  # DEBUG BEGIN_STMT
+  _11 = lwip_stats.mib2.tcpinsegs;
+  *uint_ptr = _11;
+  # DEBUG BEGIN_STMT
+  D.8207 = 4;
+  goto <bb 26>; [INV]
+
+  <bb 19> :
+<L16>:
+  # DEBUG BEGIN_STMT
+  _12 = lwip_stats.mib2.tcpoutsegs;
+  *uint_ptr = _12;
+  # DEBUG BEGIN_STMT
+  D.8207 = 4;
+  goto <bb 26>; [INV]
+
+  <bb 20> :
+<L17>:
+  # DEBUG BEGIN_STMT
+  _13 = lwip_stats.mib2.tcpretranssegs;
+  *uint_ptr = _13;
+  # DEBUG BEGIN_STMT
+  D.8207 = 4;
+  goto <bb 26>; [INV]
+
+  <bb 21> :
+<L18>:
+  # DEBUG BEGIN_STMT
+  _14 = lwip_stats.mib2.tcpinerrs;
+  *uint_ptr = _14;
+  # DEBUG BEGIN_STMT
+  D.8207 = 4;
+  goto <bb 26>; [INV]
+
+  <bb 22> :
+<L19>:
+  # DEBUG BEGIN_STMT
+  _15 = lwip_stats.mib2.tcpoutrsts;
+  *uint_ptr = _15;
+  # DEBUG BEGIN_STMT
+  D.8207 = 4;
+  goto <bb 26>; [INV]
+
+  <bb 23> :
+<L20>:
+  # DEBUG BEGIN_STMT
+  _16 = lwip_stats.mib2.tcpinsegs;
+  val64 = (u64_t) _16;
+  # DEBUG BEGIN_STMT
+  MEM[(u64_t *)value] = val64;
+  # DEBUG BEGIN_STMT
+  D.8207 = 8;
+  goto <bb 26>; [INV]
+
+  <bb 24> :
+<L21>:
+  # DEBUG BEGIN_STMT
+  _17 = lwip_stats.mib2.tcpoutsegs;
+  val64 = (u64_t) _17;
+  # DEBUG BEGIN_STMT
+  MEM[(u64_t *)value] = val64;
+  # DEBUG BEGIN_STMT
+  D.8207 = 8;
+  goto <bb 26>; [INV]
+
+  <bb 25> :
+<L25>:
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  D.8207 = 0;
+
+  <bb 26> :
+  return D.8207;
+
+}
+
+

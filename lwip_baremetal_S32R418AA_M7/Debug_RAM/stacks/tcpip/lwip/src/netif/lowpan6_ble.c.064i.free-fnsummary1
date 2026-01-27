@@ -1,0 +1,638 @@
+rfc7668_set_addr.part.0 (struct lowpan6_link_addr * addr, const u8_t * in_addr)
+{
+  size_t in_addr_len;
+  int is_mac_48;
+  int is_public_addr;
+  u8_t[8] * _2;
+  signed char _4;
+
+  <bb 4> [local count: 1073741824]:
+  # DEBUG D#6 s=> in_addr_len
+  # DEBUG in_addr_len => D#6
+  # DEBUG D#5 s=> is_mac_48
+  # DEBUG is_mac_48 => D#5
+  # DEBUG D#4 s=> is_public_addr
+  # DEBUG is_public_addr => D#4
+
+  <bb 2> [local count: 1073741824]:
+  # DEBUG BEGIN_STMT
+  addr_1(D)->addr_len = 8;
+  # DEBUG BEGIN_STMT
+  _2 = &addr_1(D)->addr;
+  memcpy (_2, in_addr_3(D), 8);
+
+  <bb 3> [local count: 1073741824]:
+  # _4 = PHI <0(2)>
+  return _4;
+
+}
+
+
+rfc7668_if_init (struct netif * netif)
+{
+  <bb 2> [local count: 1073741824]:
+  # DEBUG BEGIN_STMT
+  netif_2(D)->name[0] = 98;
+  # DEBUG BEGIN_STMT
+  netif_2(D)->name[1] = 116;
+  # DEBUG BEGIN_STMT
+  netif_2(D)->output_ip6 = rfc7668_output;
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  netif_2(D)->link_type = 1;
+  # DEBUG BEGIN_STMT
+  netif_2(D)->link_speed = 0;
+  # DEBUG BEGIN_STMT
+  netif_2(D)->ts = 0;
+  # DEBUG BEGIN_STMT
+  netif_2(D)->mib2_counters.ifinoctets = 0;
+  # DEBUG BEGIN_STMT
+  netif_2(D)->mib2_counters.ifinucastpkts = 0;
+  # DEBUG BEGIN_STMT
+  netif_2(D)->mib2_counters.ifinnucastpkts = 0;
+  # DEBUG BEGIN_STMT
+  netif_2(D)->mib2_counters.ifindiscards = 0;
+  # DEBUG BEGIN_STMT
+  netif_2(D)->mib2_counters.ifinerrors = 0;
+  # DEBUG BEGIN_STMT
+  netif_2(D)->mib2_counters.ifinunknownprotos = 0;
+  # DEBUG BEGIN_STMT
+  netif_2(D)->mib2_counters.ifoutoctets = 0;
+  # DEBUG BEGIN_STMT
+  netif_2(D)->mib2_counters.ifoutucastpkts = 0;
+  # DEBUG BEGIN_STMT
+  netif_2(D)->mib2_counters.ifoutnucastpkts = 0;
+  # DEBUG BEGIN_STMT
+  netif_2(D)->mib2_counters.ifoutdiscards = 0;
+  # DEBUG BEGIN_STMT
+  netif_2(D)->mib2_counters.ifouterrors = 0;
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  netif_2(D)->mtu = 1280;
+  # DEBUG BEGIN_STMT
+  netif_2(D)->flags = 0;
+  # DEBUG BEGIN_STMT
+  return 0;
+
+}
+
+
+rfc7668_input (struct pbuf * p, struct netif * netif)
+{
+  u8_t * puc;
+  long unsigned int _1;
+  short unsigned int _2;
+  long unsigned int _3;
+  long unsigned int _4;
+  unsigned char _5;
+  long unsigned int _6;
+  long unsigned int _7;
+  long unsigned int _8;
+  long unsigned int _9;
+  long unsigned int _10;
+  long unsigned int _11;
+  err_t _13;
+  unsigned char _23;
+  err_t _30;
+
+  <bb 2> [local count: 1073741824]:
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _1 = netif_17(D)->mib2_counters.ifinoctets;
+  _2 = p_18(D)->tot_len;
+  _3 = (long unsigned int) _2;
+  _4 = _1 + _3;
+  netif_17(D)->mib2_counters.ifinoctets = _4;
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  puc_20 = p_18(D)->payload;
+  # DEBUG puc => puc_20
+  # DEBUG BEGIN_STMT
+  _5 = *puc_20;
+  if (_5 == 65)
+    goto <bb 3>; [20.24%]
+  else
+    goto <bb 4>; [79.76%]
+
+  <bb 3> [local count: 217325345]:
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  pbuf_remove_header (p_18(D), 1);
+  goto <bb 8>; [100.00%]
+
+  <bb 4> [local count: 856416480]:
+  # DEBUG BEGIN_STMT
+  _23 = _5 & 224;
+  if (_23 == 96)
+    goto <bb 5>; [50.00%]
+  else
+    goto <bb 7>; [50.00%]
+
+  <bb 5> [local count: 428208240]:
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  p_25 = lowpan6_decompress (p_18(D), 0, &rfc7668_context, &rfc7668_peer_addr, &rfc7668_local_addr);
+  # DEBUG p => p_25
+  # DEBUG BEGIN_STMT
+  if (p_25 == 0B)
+    goto <bb 6>; [18.09%]
+  else
+    goto <bb 8>; [81.91%]
+
+  <bb 6> [local count: 77462871]:
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _6 = netif_17(D)->mib2_counters.ifindiscards;
+  _7 = _6 + 1;
+  netif_17(D)->mib2_counters.ifindiscards = _7;
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  goto <bb 9>; [100.00%]
+
+  <bb 7> [local count: 428208240]:
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _8 = netif_17(D)->mib2_counters.ifindiscards;
+  _9 = _8 + 1;
+  netif_17(D)->mib2_counters.ifindiscards = _9;
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  pbuf_free (p_18(D));
+  # DEBUG BEGIN_STMT
+  goto <bb 9>; [100.00%]
+
+  <bb 8> [local count: 568070715]:
+  # p_12 = PHI <p_18(D)(3), p_25(5)>
+  # DEBUG p => p_12
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _10 = netif_17(D)->mib2_counters.ifinucastpkts;
+  _11 = _10 + 1;
+  netif_17(D)->mib2_counters.ifinucastpkts = _11;
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _30 = ip6_input (p_12, netif_17(D));
+
+  <bb 9> [local count: 1073741824]:
+  # _13 = PHI <0(6), 0(7), _30(8)>
+  return _13;
+
+}
+
+
+rfc7668_output (struct netif * netif, struct pbuf * q, const struct ip6_addr_t * ip6addr)
+{
+  err_t _5;
+
+  <bb 2> [local count: 1073741824]:
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _5 = rfc7668_compress (netif_2(D), q_3(D));
+  return _5;
+
+}
+
+
+rfc7668_set_context (u8_t idx, const struct ip6_addr_t * context)
+{
+  int _1;
+  err_t _2;
+  const long unsigned int iftmp.0_3;
+  const long unsigned int iftmp.1_4;
+  const long unsigned int iftmp.2_5;
+  const long unsigned int iftmp.3_6;
+  u8_t iftmp.4_7;
+  const long unsigned int iftmp.0_12;
+  const long unsigned int iftmp.1_14;
+  const long unsigned int iftmp.2_16;
+  const long unsigned int iftmp.3_18;
+  u8_t iftmp.4_20;
+
+  <bb 2> [local count: 1073741824]:
+  # DEBUG BEGIN_STMT
+  if (idx_9(D) > 9)
+    goto <bb 14>; [1.04%]
+  else
+    goto <bb 3>; [98.96%]
+
+  <bb 3> [local count: 1062574910]:
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  if (context_10(D) != 0B)
+    goto <bb 4>; [70.00%]
+  else
+    goto <bb 5>; [30.00%]
+
+  <bb 4> [local count: 743802437]:
+  iftmp.0_12 = context_10(D)->addr[0];
+
+  <bb 5> [local count: 1062574910]:
+  # iftmp.0_3 = PHI <iftmp.0_12(4), 0(3)>
+  _1 = (int) idx_9(D);
+  rfc7668_context[_1].addr[0] = iftmp.0_3;
+  # DEBUG BEGIN_STMT
+  if (context_10(D) != 0B)
+    goto <bb 6>; [70.00%]
+  else
+    goto <bb 7>; [30.00%]
+
+  <bb 6> [local count: 743802437]:
+  iftmp.1_14 = context_10(D)->addr[1];
+
+  <bb 7> [local count: 1062574910]:
+  # iftmp.1_4 = PHI <iftmp.1_14(6), 0(5)>
+  rfc7668_context[_1].addr[1] = iftmp.1_4;
+  # DEBUG BEGIN_STMT
+  if (context_10(D) != 0B)
+    goto <bb 8>; [70.00%]
+  else
+    goto <bb 9>; [30.00%]
+
+  <bb 8> [local count: 743802437]:
+  iftmp.2_16 = context_10(D)->addr[2];
+
+  <bb 9> [local count: 1062574910]:
+  # iftmp.2_5 = PHI <iftmp.2_16(8), 0(7)>
+  rfc7668_context[_1].addr[2] = iftmp.2_5;
+  # DEBUG BEGIN_STMT
+  if (context_10(D) != 0B)
+    goto <bb 10>; [70.00%]
+  else
+    goto <bb 11>; [30.00%]
+
+  <bb 10> [local count: 743802437]:
+  iftmp.3_18 = context_10(D)->addr[3];
+
+  <bb 11> [local count: 1062574910]:
+  # iftmp.3_6 = PHI <iftmp.3_18(10), 0(9)>
+  rfc7668_context[_1].addr[3] = iftmp.3_6;
+  # DEBUG BEGIN_STMT
+  if (context_10(D) != 0B)
+    goto <bb 12>; [70.00%]
+  else
+    goto <bb 13>; [30.00%]
+
+  <bb 12> [local count: 743802437]:
+  iftmp.4_20 = context_10(D)->zone;
+
+  <bb 13> [local count: 1062574910]:
+  # iftmp.4_7 = PHI <iftmp.4_20(12), 0(11)>
+  rfc7668_context[_1].zone = iftmp.4_7;
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+
+  <bb 14> [local count: 1073741824]:
+  # _2 = PHI <-16(2), 0(13)>
+  return _2;
+
+}
+
+
+rfc7668_compress (struct netif * netif, struct pbuf * p)
+{
+  err_t err;
+  u8_t hidden_header_len;
+  u8_t lowpan6_header_len;
+  u8_t * buffer;
+  u16_t remaining_len;
+  struct pbuf * p_frag;
+  err_t (*<T6b9>) (struct netif *, struct pbuf *) _1;
+  short unsigned int _2;
+  long unsigned int _3;
+  long unsigned int _4;
+  short unsigned int _5;
+  short unsigned int _6;
+  void * _7;
+  short unsigned int _8;
+  unsigned int _9;
+  unsigned int _10;
+  long unsigned int _11;
+  long unsigned int _12;
+  unsigned char hidden_header_len.5_13;
+  unsigned int _14;
+  unsigned char lowpan6_header_len.6_15;
+  sizetype _16;
+  u8_t * _17;
+  unsigned char lowpan6_header_len.7_18;
+  short unsigned int _19;
+  short unsigned int _20;
+  long unsigned int _21;
+  long unsigned int _22;
+  long unsigned int _23;
+  err_t (*<T6b9>) (struct netif *, struct pbuf *) _24;
+  err_t _25;
+
+  <bb 2> [local count: 230763]:
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _1 = netif_30(D)->linkoutput;
+  if (_1 == 0B)
+    goto <bb 3>; [46.53%]
+  else
+    goto <bb 4>; [53.47%]
+
+  <bb 3> [local count: 1073741824]:
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  __asm__ __volatile__("BKPT #0
+	");
+  # DEBUG BEGIN_STMT
+  goto <bb 3>; [100.00%]
+
+  <bb 4> [local count: 123389]:
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _2 = p_31(D)->tot_len;
+  p_frag_33 = pbuf_alloc (0, _2, 640);
+  # DEBUG p_frag => p_frag_33
+  # DEBUG BEGIN_STMT
+  if (p_frag_33 == 0B)
+    goto <bb 5>; [0.45%]
+  else
+    goto <bb 6>; [99.55%]
+
+  <bb 5> [local count: 555]:
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _3 = netif_30(D)->mib2_counters.ifoutdiscards;
+  _4 = _3 + 1;
+  netif_30(D)->mib2_counters.ifoutdiscards = _4;
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  goto <bb 11>; [100.00%]
+
+  <bb 6> [local count: 122834]:
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _5 = p_frag_33->len;
+  _6 = p_frag_33->tot_len;
+  if (_5 != _6)
+    goto <bb 7>; [79.76%]
+  else
+    goto <bb 8>; [20.24%]
+
+  <bb 7> [local count: 979723243]:
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  __asm__ __volatile__("BKPT #0
+	");
+  # DEBUG BEGIN_STMT
+  goto <bb 7>; [100.00%]
+
+  <bb 8> [local count: 24862]:
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  buffer_34 = p_frag_33->payload;
+  # DEBUG buffer => buffer_34
+  # DEBUG BEGIN_STMT
+  _7 = p_31(D)->payload;
+  _8 = p_31(D)->len;
+  _9 = (unsigned int) _8;
+  _10 = (unsigned int) _5;
+  err_36 = lowpan6_compress_headers (netif_30(D), _7, _9, buffer_34, _10, &lowpan6_header_len, &hidden_header_len, &rfc7668_context, &rfc7668_local_addr, &rfc7668_peer_addr);
+  # DEBUG err => err_36
+  # DEBUG BEGIN_STMT
+  if (err_36 != 0)
+    goto <bb 9>; [34.00%]
+  else
+    goto <bb 10>; [66.00%]
+
+  <bb 9> [local count: 8453]:
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _11 = netif_30(D)->mib2_counters.ifoutdiscards;
+  _12 = _11 + 1;
+  netif_30(D)->mib2_counters.ifoutdiscards = _12;
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  pbuf_free (p_frag_33);
+  # DEBUG BEGIN_STMT
+  goto <bb 11>; [100.00%]
+
+  <bb 10> [local count: 16409]:
+  # DEBUG BEGIN_STMT
+  hidden_header_len.5_13 = hidden_header_len;
+  _14 = (unsigned int) hidden_header_len.5_13;
+  pbuf_remove_header (p_31(D), _14);
+  # DEBUG BEGIN_STMT
+  remaining_len_38 = p_31(D)->tot_len;
+  # DEBUG remaining_len => remaining_len_38
+  # DEBUG BEGIN_STMT
+  lowpan6_header_len.6_15 = lowpan6_header_len;
+  _16 = (sizetype) lowpan6_header_len.6_15;
+  _17 = buffer_34 + _16;
+  pbuf_copy_partial (p_31(D), _17, remaining_len_38, 0);
+  # DEBUG BEGIN_STMT
+  lowpan6_header_len.7_18 = lowpan6_header_len;
+  _19 = (short unsigned int) lowpan6_header_len.7_18;
+  _20 = _19 + remaining_len_38;
+  p_frag_33->tot_len = _20;
+  p_frag_33->len = _20;
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _21 = netif_30(D)->mib2_counters.ifoutoctets;
+  _22 = (long unsigned int) _20;
+  _23 = _21 + _22;
+  netif_30(D)->mib2_counters.ifoutoctets = _23;
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _24 = netif_30(D)->linkoutput;
+  err_44 = _24 (netif_30(D), p_frag_33);
+  # DEBUG err => err_44
+  # DEBUG BEGIN_STMT
+  pbuf_free (p_frag_33);
+  # DEBUG BEGIN_STMT
+
+  <bb 11> [local count: 25417]:
+  # _25 = PHI <-1(5), err_36(9), err_44(10)>
+  lowpan6_header_len ={v} {CLOBBER};
+  hidden_header_len ={v} {CLOBBER};
+  return _25;
+
+}
+
+
+rfc7668_set_peer_addr_mac48 (struct netif * netif, const u8_t * peer_addr, size_t peer_addr_len, int is_public_addr)
+{
+  err_t _6;
+
+  <bb 2> [local count: 1073741824]:
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _6 = rfc7668_set_addr (&rfc7668_peer_addr, peer_addr_2(D), peer_addr_len_3(D), 1, is_public_addr_4(D));
+  return _6;
+
+}
+
+
+rfc7668_set_peer_addr_eui64 (struct netif * netif, const u8_t * peer_addr, size_t peer_addr_len)
+{
+  err_t _5;
+
+  <bb 2> [local count: 1073741824]:
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _5 = rfc7668_set_addr (&rfc7668_peer_addr, peer_addr_2(D), peer_addr_len_3(D), 0, 0);
+  return _5;
+
+}
+
+
+rfc7668_set_local_addr_mac48 (struct netif * netif, const u8_t * local_addr, size_t local_addr_len, int is_public_addr)
+{
+  err_t _6;
+
+  <bb 2> [local count: 1073741824]:
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _6 = rfc7668_set_addr (&rfc7668_local_addr, local_addr_2(D), local_addr_len_3(D), 1, is_public_addr_4(D));
+  return _6;
+
+}
+
+
+rfc7668_set_local_addr_eui64 (struct netif * netif, const u8_t * local_addr, size_t local_addr_len)
+{
+  err_t _5;
+
+  <bb 2> [local count: 1073741824]:
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _5 = rfc7668_set_addr (&rfc7668_local_addr, local_addr_2(D), local_addr_len_3(D), 0, 0);
+  return _5;
+
+}
+
+
+rfc7668_set_addr (struct lowpan6_link_addr * addr, const u8_t * in_addr, size_t in_addr_len, int is_mac_48, int is_public_addr)
+{
+  u8_t[8] * _1;
+  err_t _2;
+  signed char _3;
+
+  <bb 2> [local count: 1073741823]:
+  # DEBUG BEGIN_STMT
+  if (in_addr_4(D) == 0B)
+    goto <bb 9>; [0.45%]
+  else
+    goto <bb 3>; [99.55%]
+
+  <bb 3> [local count: 1068909985]:
+  if (addr_5(D) == 0B)
+    goto <bb 9>; [0.45%]
+  else
+    goto <bb 4>; [99.55%]
+
+  <bb 4> [local count: 1064099890]:
+  # DEBUG BEGIN_STMT
+  if (is_mac_48_6(D) != 0)
+    goto <bb 5>; [50.00%]
+  else
+    goto <bb 7>; [50.00%]
+
+  <bb 5> [local count: 532049945]:
+  # DEBUG BEGIN_STMT
+  if (in_addr_len_7(D) != 6)
+    goto <bb 9>; [3.98%]
+  else
+    goto <bb 6>; [96.02%]
+
+  <bb 6> [local count: 510874357]:
+  # DEBUG BEGIN_STMT
+  addr_5(D)->addr_len = 8;
+  # DEBUG BEGIN_STMT
+  _1 = &addr_5(D)->addr;
+  ble_addr_to_eui64 (_1, in_addr_4(D), is_public_addr_11(D));
+  goto <bb 9>; [100.00%]
+
+  <bb 7> [local count: 532049945]:
+  # DEBUG BEGIN_STMT
+  if (in_addr_len_7(D) != 8)
+    goto <bb 9>; [3.98%]
+  else
+    goto <bb 8>; [96.02%]
+
+  <bb 8> [local count: 510874356]:
+  # DEBUG D#1 => in_addr_len_7(D)
+  # DEBUG D#2 => is_mac_48_6(D)
+  # DEBUG D#3 => is_public_addr_11(D)
+  _3 = rfc7668_set_addr.part.0 (addr_5(D), in_addr_4(D));
+
+  <bb 9> [local count: 1073741824]:
+  # _2 = PHI <-6(3), -6(5), -6(7), _3(8), 0(6), -6(2)>
+  return _2;
+
+}
+
+
+eui64_to_ble_addr (uint8_t * dst, const uint8_t * src)
+{
+  uint8_t * _1;
+  const uint8_t * _2;
+
+  <bb 2> [local count: 1073741824]:
+  # DEBUG BEGIN_STMT
+  memcpy (dst_4(D), src_5(D), 3);
+  # DEBUG BEGIN_STMT
+  _1 = dst_4(D) + 3;
+  _2 = src_5(D) + 5;
+  memcpy (_1, _2, 3);
+  return;
+
+}
+
+
+ble_addr_to_eui64 (uint8_t * dst, const uint8_t * src, int public_addr)
+{
+  uint8_t * _1;
+  const uint8_t * _2;
+  unsigned char _3;
+  unsigned char _4;
+  unsigned char _5;
+  unsigned char _6;
+
+  <bb 2> [local count: 1073741824]:
+  # DEBUG BEGIN_STMT
+  memcpy (dst_9(D), src_10(D), 3);
+  # DEBUG BEGIN_STMT
+  MEM[(uint8_t *)dst_9(D) + 3B] = 255;
+  # DEBUG BEGIN_STMT
+  MEM[(uint8_t *)dst_9(D) + 4B] = 254;
+  # DEBUG BEGIN_STMT
+  _1 = dst_9(D) + 5;
+  _2 = src_10(D) + 3;
+  memcpy (_1, _2, 3);
+  # DEBUG BEGIN_STMT
+  if (public_addr_15(D) != 0)
+    goto <bb 3>; [50.00%]
+  else
+    goto <bb 4>; [50.00%]
+
+  <bb 3> [local count: 536870913]:
+  # DEBUG BEGIN_STMT
+  _3 = *dst_9(D);
+  _4 = _3 & 253;
+  *dst_9(D) = _4;
+  goto <bb 5>; [100.00%]
+
+  <bb 4> [local count: 536870913]:
+  # DEBUG BEGIN_STMT
+  _5 = *dst_9(D);
+  _6 = _5 | 2;
+  *dst_9(D) = _6;
+
+  <bb 5> [local count: 1073741824]:
+  return;
+
+}
+
+

@@ -1,0 +1,119 @@
+ethip6_output (struct netif * netif, struct pbuf * q, const struct ip6_addr_t * ip6addr)
+{
+  err_t result;
+  const u8_t * hwaddr;
+  struct eth_addr dest;
+  long unsigned int _1;
+  long unsigned int _2;
+  const u32_t * _3;
+  unsigned char _4;
+  const u32_t * _5;
+  const u8_t * _6;
+  unsigned char _7;
+  const u32_t * _8;
+  const u8_t * _9;
+  unsigned char _10;
+  const u32_t * _11;
+  const u8_t * _12;
+  unsigned char _13;
+  u8_t[6] * _14;
+  const u8_t * hwaddr.0_15;
+  const u8_t * hwaddr.1_16;
+  u8_t[6] * _17;
+  err_t _18;
+  err_t _28;
+  err_t _29;
+  err_t _30;
+  err_t _38;
+
+  <bb 2> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _1 = ip6addr_21(D)->addr[0];
+  _2 = _1 & 255;
+  if (_2 == 255)
+    goto <bb 3>; [INV]
+  else
+    goto <bb 4>; [INV]
+
+  <bb 3> :
+  # DEBUG BEGIN_STMT
+  dest.addr[0] = 51;
+  # DEBUG BEGIN_STMT
+  dest.addr[1] = 51;
+  # DEBUG BEGIN_STMT
+  _3 = &ip6addr_21(D)->addr[3];
+  _4 = MEM[(const u8_t *)_3];
+  dest.addr[2] = _4;
+  # DEBUG BEGIN_STMT
+  _5 = &ip6addr_21(D)->addr[3];
+  _6 = _5 + 1;
+  _7 = *_6;
+  dest.addr[3] = _7;
+  # DEBUG BEGIN_STMT
+  _8 = &ip6addr_21(D)->addr[3];
+  _9 = _8 + 2;
+  _10 = *_9;
+  dest.addr[4] = _10;
+  # DEBUG BEGIN_STMT
+  _11 = &ip6addr_21(D)->addr[3];
+  _12 = _11 + 3;
+  _13 = *_12;
+  dest.addr[5] = _13;
+  # DEBUG BEGIN_STMT
+  _14 = &netif_22(D)->hwaddr;
+  _38 = ethernet_output (netif_22(D), q_23(D), _14, &dest, 34525);
+  // predicted unlikely by early return (on trees) predictor.
+  goto <bb 9>; [INV]
+
+  <bb 4> :
+  # DEBUG BEGIN_STMT
+  result_25 = nd6_get_next_hop_addr_or_queue (netif_22(D), q_23(D), ip6addr_21(D), &hwaddr);
+  # DEBUG result => result_25
+  # DEBUG BEGIN_STMT
+  if (result_25 != 0)
+    goto <bb 5>; [INV]
+  else
+    goto <bb 6>; [INV]
+
+  <bb 5> :
+  # DEBUG BEGIN_STMT
+  _30 = result_25;
+  // predicted unlikely by early return (on trees) predictor.
+  goto <bb 9>; [INV]
+
+  <bb 6> :
+  # DEBUG BEGIN_STMT
+  hwaddr.0_15 = hwaddr;
+  if (hwaddr.0_15 == 0B)
+    goto <bb 7>; [INV]
+  else
+    goto <bb 8>; [INV]
+
+  <bb 7> :
+  # DEBUG BEGIN_STMT
+  _29 = 0;
+  // predicted unlikely by early return (on trees) predictor.
+  goto <bb 9>; [INV]
+
+  <bb 8> :
+  # DEBUG BEGIN_STMT
+  hwaddr.1_16 = hwaddr;
+  MEM[(char * {ref-all})&dest] = MEM[(char * {ref-all})hwaddr.1_16];
+  # DEBUG BEGIN_STMT
+  _17 = &netif_22(D)->hwaddr;
+  _28 = ethernet_output (netif_22(D), q_23(D), _17, &dest, 34525);
+
+  <bb 9> :
+  # _18 = PHI <_38(3), _30(5), _29(7), _28(8)>
+  dest ={v} {CLOBBER};
+  hwaddr ={v} {CLOBBER};
+  return _18;
+
+}
+
+

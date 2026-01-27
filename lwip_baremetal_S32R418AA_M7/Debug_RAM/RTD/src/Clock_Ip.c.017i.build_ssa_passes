@@ -1,0 +1,1306 @@
+Clock_Ip_TimeoutExpired (uint32 * StartTimeInOut, uint32 * ElapsedTimeInOut, uint32 TimeoutTicks)
+{
+  boolean RetVal;
+  boolean D.6596;
+  long unsigned int D.6593;
+
+  <bb 2> :
+  # DEBUG BEGIN_STMT
+  RetVal = 0;
+  # DEBUG BEGIN_STMT
+  D.6593 = OsIf_GetElapsed (StartTimeInOut, 0);
+  _1 = *ElapsedTimeInOut;
+  _2 = D.6593 + _1;
+  *ElapsedTimeInOut = _2;
+  # DEBUG BEGIN_STMT
+  _3 = *ElapsedTimeInOut;
+  if (TimeoutTicks <= _3)
+    goto <bb 3>; [INV]
+  else
+    goto <bb 4>; [INV]
+
+  <bb 3> :
+  # DEBUG BEGIN_STMT
+  RetVal = 1;
+
+  <bb 4> :
+  # DEBUG BEGIN_STMT
+  D.6596 = RetVal;
+  return D.6596;
+
+}
+
+
+Clock_Ip_StartTimeout (uint32 * StartTimeOut, uint32 * ElapsedTimeOut, uint32 * TimeoutTicksOut, uint32 TimeoutUs)
+{
+  <bb 2> :
+  # DEBUG BEGIN_STMT
+  _1 = OsIf_GetCounter (0);
+  *StartTimeOut = _1;
+  # DEBUG BEGIN_STMT
+  *ElapsedTimeOut = 0;
+  # DEBUG BEGIN_STMT
+  _2 = OsIf_MicrosToTicks (TimeoutUs, 0);
+  *TimeoutTicksOut = _2;
+  return;
+
+}
+
+
+Clock_Ip_ReportClockErrors (Clock_Ip_NotificationType Error, Clock_Ip_NameType ClockName)
+{
+  <bb 2> :
+  # DEBUG BEGIN_STMT
+  Clock_Ip_pfkNotificationsCallback.19_1 = Clock_Ip_pfkNotificationsCallback;
+  Clock_Ip_pfkNotificationsCallback.19_1 (Error, ClockName);
+  return;
+
+}
+
+
+Clock_Ip_SetWaitStates ()
+{
+  <bb 2> :
+  # DEBUG BEGIN_STMT
+  Clock_Ip_pfkNotificationsCallback.5_1 = Clock_Ip_pfkNotificationsCallback;
+  Clock_Ip_pfkNotificationsCallback.5_1 (4, 154);
+  # DEBUG BEGIN_STMT
+  Clock_Ip_SetRamWaitStates ();
+  # DEBUG BEGIN_STMT
+  Clock_Ip_pfkNotificationsCallback.6_2 = Clock_Ip_pfkNotificationsCallback;
+  Clock_Ip_pfkNotificationsCallback.6_2 (5, 154);
+  return;
+
+}
+
+
+Clock_Ip_EnableModuleClock (Clock_Ip_NameType ClockName)
+{
+  uint32 CallbackIndex;
+
+  <bb 2> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _1 = (int) ClockName;
+  _2 = Clock_Ip_au8ClockFeatures[_1][1];
+  _3 = (int) _2;
+  _4 = Clock_Ip_au8GateCallbackIndex[_3];
+  CallbackIndex = (uint32) _4;
+  # DEBUG BEGIN_STMT
+  _5 = Clock_Ip_axGateCallbacks[CallbackIndex].Update;
+  _5 (ClockName, 0);
+  return;
+
+}
+
+
+Clock_Ip_DisableModuleClock (Clock_Ip_NameType ClockName)
+{
+  uint32 CallbackIndex;
+
+  <bb 2> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _1 = (int) ClockName;
+  _2 = Clock_Ip_au8ClockFeatures[_1][1];
+  _3 = (int) _2;
+  _4 = Clock_Ip_au8GateCallbackIndex[_3];
+  CallbackIndex = (uint32) _4;
+  # DEBUG BEGIN_STMT
+  _5 = Clock_Ip_axGateCallbacks[CallbackIndex].Update;
+  _5 (ClockName, 1);
+  return;
+
+}
+
+
+Clock_Ip_InstallNotificationsCallback (void (*Clock_Ip_NotificationsCallbackType) (Clock_Ip_NotificationType, Clock_Ip_NameType) Callback)
+{
+  <bb 2> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  Clock_Ip_pfkNotificationsCallback = Callback;
+  return;
+
+}
+
+
+Clock_Ip_DisableClockMonitor (Clock_Ip_NameType ClockName)
+{
+  uint32 CallbackIndex;
+
+  <bb 2> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _1 = (int) ClockName;
+  _2 = Clock_Ip_au8ClockFeatures[_1][1];
+  _3 = (int) _2;
+  _4 = Clock_Ip_au8CmuCallbackIndex[_3];
+  CallbackIndex = (uint32) _4;
+  # DEBUG BEGIN_STMT
+  _5 = Clock_Ip_axCmuCallbacks[CallbackIndex].Disable;
+  _5 (ClockName);
+  return;
+
+}
+
+
+Clock_Ip_DistributePll ()
+{
+  uint32 CallbackIndex;
+  uint32 Index;
+
+  <bb 2> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  Clock_Ip_pxConfig.7_1 = Clock_Ip_pxConfig;
+  if (Clock_Ip_pxConfig.7_1 != 0B)
+    goto <bb 3>; [INV]
+  else
+    goto <bb 16>; [INV]
+
+  <bb 3> :
+  # DEBUG BEGIN_STMT
+  Index = 0;
+  goto <bb 7>; [INV]
+
+  <bb 4> :
+  # DEBUG BEGIN_STMT
+  Clock_Ip_pxConfig.8_2 = Clock_Ip_pxConfig;
+  _3 = Clock_Ip_pxConfig.8_2->Selectors;
+  _4 = *_3[Index].Value;
+  _5 = (int) _4;
+  _6 = Clock_Ip_aeSourceTypeClockName[_5];
+  if (_6 == 3)
+    goto <bb 5>; [INV]
+  else
+    goto <bb 6>; [INV]
+
+  <bb 5> :
+  # DEBUG BEGIN_STMT
+  Clock_Ip_pxConfig.9_7 = Clock_Ip_pxConfig;
+  _8 = Clock_Ip_pxConfig.9_7->Selectors;
+  _9 = *_8[Index].Name;
+  _10 = (int) _9;
+  _11 = Clock_Ip_au8ClockFeatures[_10][1];
+  _12 = (int) _11;
+  _13 = Clock_Ip_au8SelectorCallbackIndex[_12];
+  CallbackIndex = (uint32) _13;
+  # DEBUG BEGIN_STMT
+  _14 = Clock_Ip_axSelectorCallbacks[CallbackIndex].Set;
+  Clock_Ip_pxConfig.10_15 = Clock_Ip_pxConfig;
+  _16 = Clock_Ip_pxConfig.10_15->Selectors;
+  _17 = &*_16[Index];
+  _14 (_17);
+
+  <bb 6> :
+  # DEBUG BEGIN_STMT
+  Index = Index + 1;
+
+  <bb 7> :
+  # DEBUG BEGIN_STMT
+  Clock_Ip_pxConfig.11_18 = Clock_Ip_pxConfig;
+  _19 = Clock_Ip_pxConfig.11_18->SelectorsCount;
+  _20 = (long unsigned int) _19;
+  if (Index < _20)
+    goto <bb 4>; [INV]
+  else
+    goto <bb 8>; [INV]
+
+  <bb 8> :
+  # DEBUG BEGIN_STMT
+  _21 = DriverContext.ClockTreeIsConsumingPll;
+  if (_21 != 0)
+    goto <bb 9>; [INV]
+  else
+    goto <bb 16>; [INV]
+
+  <bb 9> :
+  # DEBUG BEGIN_STMT
+  Index = 0;
+  goto <bb 11>; [INV]
+
+  <bb 10> :
+  # DEBUG BEGIN_STMT
+  Clock_Ip_pxConfig.12_22 = Clock_Ip_pxConfig;
+  _23 = Clock_Ip_pxConfig.12_22->Gates;
+  _24 = *_23[Index].Name;
+  _25 = (int) _24;
+  _26 = Clock_Ip_au8ClockFeatures[_25][1];
+  _27 = (int) _26;
+  _28 = Clock_Ip_au8GateCallbackIndex[_27];
+  CallbackIndex = (uint32) _28;
+  # DEBUG BEGIN_STMT
+  _29 = Clock_Ip_axGateCallbacks[CallbackIndex].Set;
+  Clock_Ip_pxConfig.13_30 = Clock_Ip_pxConfig;
+  _31 = Clock_Ip_pxConfig.13_30->Gates;
+  _32 = &*_31[Index];
+  _29 (_32);
+  # DEBUG BEGIN_STMT
+  Index = Index + 1;
+
+  <bb 11> :
+  # DEBUG BEGIN_STMT
+  Clock_Ip_pxConfig.14_33 = Clock_Ip_pxConfig;
+  _34 = Clock_Ip_pxConfig.14_33->GatesCount;
+  _35 = (long unsigned int) _34;
+  if (Index < _35)
+    goto <bb 10>; [INV]
+  else
+    goto <bb 12>; [INV]
+
+  <bb 12> :
+  # DEBUG BEGIN_STMT
+  Index = 0;
+  goto <bb 14>; [INV]
+
+  <bb 13> :
+  # DEBUG BEGIN_STMT
+  Clock_Ip_pxConfig.15_36 = Clock_Ip_pxConfig;
+  _37 = Clock_Ip_pxConfig.15_36->Cmus;
+  _38 = *_37[Index].Name;
+  _39 = (int) _38;
+  _40 = Clock_Ip_au8ClockFeatures[_39][1];
+  _41 = (int) _40;
+  _42 = Clock_Ip_au8CmuCallbackIndex[_41];
+  CallbackIndex = (uint32) _42;
+  # DEBUG BEGIN_STMT
+  _43 = Clock_Ip_axCmuCallbacks[CallbackIndex].Enable;
+  Clock_Ip_pxConfig.16_44 = Clock_Ip_pxConfig;
+  _45 = Clock_Ip_pxConfig.16_44->Cmus;
+  _46 = &*_45[Index];
+  _43 (_46);
+  # DEBUG BEGIN_STMT
+  Index = Index + 1;
+
+  <bb 14> :
+  # DEBUG BEGIN_STMT
+  Clock_Ip_pxConfig.17_47 = Clock_Ip_pxConfig;
+  _48 = Clock_Ip_pxConfig.17_47->CmusCount;
+  _49 = (long unsigned int) _48;
+  if (Index < _49)
+    goto <bb 13>; [INV]
+  else
+    goto <bb 15>; [INV]
+
+  <bb 15> :
+  # DEBUG BEGIN_STMT
+  Clock_Ip_pxConfig.18_50 = Clock_Ip_pxConfig;
+  Clock_Ip_Command (Clock_Ip_pxConfig.18_50, 4);
+
+  <bb 16> :
+  return;
+
+}
+
+
+Clock_Ip_GetPllStatus ()
+{
+  uint32 CallbackIndex;
+  uint32 Index;
+  Clock_Ip_DfsStatusType DfsStatus;
+  Clock_Ip_PllStatusReturnType PllStatus;
+  Clock_Ip_PllStatusType RetValue;
+  Clock_Ip_PllStatusType D.6585;
+
+  <bb 2> :
+  # DEBUG BEGIN_STMT
+  RetValue = 2;
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  Index = 0;
+  goto <bb 8>; [INV]
+
+  <bb 3> :
+  # DEBUG BEGIN_STMT
+  _1 = Clock_Ip_aeHwPllName[Index];
+  _2 = (int) _1;
+  _3 = Clock_Ip_au8ClockFeatures[_2][1];
+  _4 = (int) _3;
+  _5 = Clock_Ip_au8PllCallbackIndex[_4];
+  CallbackIndex = (uint32) _5;
+  # DEBUG BEGIN_STMT
+  _6 = Clock_Ip_axPllCallbacks[CallbackIndex].Complete;
+  _7 = Clock_Ip_aeHwPllName[Index];
+  PllStatus = _6 (_7);
+  # DEBUG BEGIN_STMT
+  if (PllStatus == 1)
+    goto <bb 4>; [INV]
+  else
+    goto <bb 5>; [INV]
+
+  <bb 4> :
+  # DEBUG BEGIN_STMT
+  RetValue = 1;
+  # DEBUG BEGIN_STMT
+  goto <bb 9>; [INV]
+
+  <bb 5> :
+  # DEBUG BEGIN_STMT
+  if (PllStatus == 2)
+    goto <bb 6>; [INV]
+  else
+    goto <bb 7>; [INV]
+
+  <bb 6> :
+  # DEBUG BEGIN_STMT
+  RetValue = 0;
+
+  <bb 7> :
+  # DEBUG BEGIN_STMT
+  Index = Index + 1;
+
+  <bb 8> :
+  # DEBUG BEGIN_STMT
+  _8 = DriverContext.HwPllsNo;
+  _9 = (long unsigned int) _8;
+  if (Index < _9)
+    goto <bb 3>; [INV]
+  else
+    goto <bb 9>; [INV]
+
+  <bb 9> :
+  # DEBUG BEGIN_STMT
+  if (RetValue == 0)
+    goto <bb 10>; [INV]
+  else
+    goto <bb 15>; [INV]
+
+  <bb 10> :
+  # DEBUG BEGIN_STMT
+  Index = 0;
+  goto <bb 14>; [INV]
+
+  <bb 11> :
+  # DEBUG BEGIN_STMT
+  _10 = Clock_Ip_aeHwDfsName[Index];
+  _11 = (int) _10;
+  _12 = Clock_Ip_au8ClockFeatures[_11][1];
+  _13 = (int) _12;
+  _14 = Clock_Ip_au8FractionalDividerCallbackIndex[_13];
+  CallbackIndex = (uint32) _14;
+  # DEBUG BEGIN_STMT
+  _15 = Clock_Ip_axFracDivCallbacks[CallbackIndex].Complete;
+  _16 = Clock_Ip_aeHwDfsName[Index];
+  DfsStatus = _15 (_16);
+  # DEBUG BEGIN_STMT
+  if (DfsStatus == 1)
+    goto <bb 12>; [INV]
+  else
+    goto <bb 13>; [INV]
+
+  <bb 12> :
+  # DEBUG BEGIN_STMT
+  RetValue = 1;
+  # DEBUG BEGIN_STMT
+  goto <bb 15>; [INV]
+
+  <bb 13> :
+  # DEBUG BEGIN_STMT
+  Index = Index + 1;
+
+  <bb 14> :
+  # DEBUG BEGIN_STMT
+  _17 = DriverContext.HwDfsNo;
+  _18 = (long unsigned int) _17;
+  if (Index < _18)
+    goto <bb 11>; [INV]
+  else
+    goto <bb 15>; [INV]
+
+  <bb 15> :
+  # DEBUG BEGIN_STMT
+  D.6585 = RetValue;
+  return D.6585;
+
+}
+
+
+Clock_Ip_InitClock (const struct Clock_Ip_ClockConfigType * Config)
+{
+  uint32 Index;
+  uint32 CallbackIndex;
+
+  <bb 2> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  Clock_Ip_pxConfig = Config;
+  # DEBUG BEGIN_STMT
+  Clock_Ip_Command (Config, 1);
+  # DEBUG BEGIN_STMT
+  Clock_Ip_pxConfig.0_1 = Clock_Ip_pxConfig;
+  if (Clock_Ip_pxConfig.0_1 != 0B)
+    goto <bb 3>; [INV]
+  else
+    goto <bb 6>; [INV]
+
+  <bb 3> :
+  # DEBUG BEGIN_STMT
+  Index = 0;
+  goto <bb 5>; [INV]
+
+  <bb 4> :
+  # DEBUG BEGIN_STMT
+  _2 = Config->Cmus;
+  _3 = *_2[Index].Name;
+  _4 = (int) _3;
+  _5 = Clock_Ip_au8ClockFeatures[_4][1];
+  _6 = (int) _5;
+  _7 = Clock_Ip_au8CmuCallbackIndex[_6];
+  CallbackIndex = (uint32) _7;
+  # DEBUG BEGIN_STMT
+  _8 = Clock_Ip_axCmuCallbacks[CallbackIndex].Reset;
+  _9 = Config->Cmus;
+  _10 = &*_9[Index];
+  _8 (_10);
+  # DEBUG BEGIN_STMT
+  Index = Index + 1;
+
+  <bb 5> :
+  # DEBUG BEGIN_STMT
+  _11 = Config->CmusCount;
+  _12 = (long unsigned int) _11;
+  if (Index < _12)
+    goto <bb 4>; [INV]
+  else
+    goto <bb 6>; [INV]
+
+  <bb 6> :
+  # DEBUG BEGIN_STMT
+  Clock_Ip_ResetClockConfiguration (Config);
+  # DEBUG BEGIN_STMT
+  Index = 0;
+  goto <bb 8>; [INV]
+
+  <bb 7> :
+  # DEBUG BEGIN_STMT
+  _13 = Config->Ircoscs;
+  _14 = *_13[Index].Name;
+  _15 = (int) _14;
+  _16 = Clock_Ip_au8ClockFeatures[_15][1];
+  _17 = (int) _16;
+  _18 = Clock_Ip_au8IrcoscCallbackIndex[_17];
+  CallbackIndex = (uint32) _18;
+  # DEBUG BEGIN_STMT
+  _19 = Clock_Ip_axIntOscCallbacks[CallbackIndex].Set;
+  _20 = Config->Ircoscs;
+  _21 = &*_20[Index];
+  _19 (_21);
+  # DEBUG BEGIN_STMT
+  Index = Index + 1;
+
+  <bb 8> :
+  # DEBUG BEGIN_STMT
+  _22 = Config->IrcoscsCount;
+  _23 = (long unsigned int) _22;
+  if (Index < _23)
+    goto <bb 7>; [INV]
+  else
+    goto <bb 9>; [INV]
+
+  <bb 9> :
+  # DEBUG BEGIN_STMT
+  Index = 0;
+  goto <bb 11>; [INV]
+
+  <bb 10> :
+  # DEBUG BEGIN_STMT
+  _24 = Config->Xoscs;
+  _25 = *_24[Index].Name;
+  _26 = (int) _25;
+  _27 = Clock_Ip_au8ClockFeatures[_26][1];
+  _28 = (int) _27;
+  _29 = Clock_Ip_au8XoscCallbackIndex[_28];
+  CallbackIndex = (uint32) _29;
+  # DEBUG BEGIN_STMT
+  _30 = Clock_Ip_axExtOscCallbacks[CallbackIndex].Set;
+  _31 = Config->Xoscs;
+  _32 = &*_31[Index];
+  _30 (_32);
+  # DEBUG BEGIN_STMT
+  Index = Index + 1;
+
+  <bb 11> :
+  # DEBUG BEGIN_STMT
+  _33 = Config->XoscsCount;
+  _34 = (long unsigned int) _33;
+  if (Index < _34)
+    goto <bb 10>; [INV]
+  else
+    goto <bb 12>; [INV]
+
+  <bb 12> :
+  # DEBUG BEGIN_STMT
+  Clock_Ip_UpdateDriverContext (Config);
+  # DEBUG BEGIN_STMT
+  Index = 0;
+  goto <bb 14>; [INV]
+
+  <bb 13> :
+  # DEBUG BEGIN_STMT
+  _35 = Config->Pcfs;
+  _36 = *_35[Index].Name;
+  _37 = (int) _36;
+  _38 = Clock_Ip_au8ClockFeatures[_37][1];
+  _39 = (int) _38;
+  _40 = Clock_Ip_au8PcfsCallbackIndex[_39];
+  CallbackIndex = (uint32) _40;
+  # DEBUG BEGIN_STMT
+  _41 = Clock_Ip_axPcfsCallbacks[CallbackIndex].Set;
+  _42 = Config->Pcfs;
+  _43 = &*_42[Index];
+  _41 (_43, Index);
+  # DEBUG BEGIN_STMT
+  Index = Index + 1;
+
+  <bb 14> :
+  # DEBUG BEGIN_STMT
+  _44 = Config->PcfsCount;
+  _45 = (long unsigned int) _44;
+  if (Index < _45)
+    goto <bb 13>; [INV]
+  else
+    goto <bb 15>; [INV]
+
+  <bb 15> :
+  # DEBUG BEGIN_STMT
+  Index = 0;
+  goto <bb 17>; [INV]
+
+  <bb 16> :
+  # DEBUG BEGIN_STMT
+  _46 = Config->DividerTriggers;
+  _47 = *_46[Index].Name;
+  _48 = (int) _47;
+  _49 = Clock_Ip_au8ClockFeatures[_48][1];
+  _50 = (int) _49;
+  _51 = Clock_Ip_au8DividerTriggerCallbackIndex[_50];
+  CallbackIndex = (uint32) _51;
+  # DEBUG BEGIN_STMT
+  _52 = Clock_Ip_axDividerTriggerCallbacks[CallbackIndex].Configure;
+  _53 = Config->DividerTriggers;
+  _54 = &*_53[Index];
+  _52 (_54);
+  # DEBUG BEGIN_STMT
+  Index = Index + 1;
+
+  <bb 17> :
+  # DEBUG BEGIN_STMT
+  _55 = Config->DividerTriggersCount;
+  _56 = (long unsigned int) _55;
+  if (Index < _56)
+    goto <bb 16>; [INV]
+  else
+    goto <bb 18>; [INV]
+
+  <bb 18> :
+  # DEBUG BEGIN_STMT
+  Index = 0;
+  goto <bb 20>; [INV]
+
+  <bb 19> :
+  # DEBUG BEGIN_STMT
+  _57 = Config->Dividers;
+  _58 = *_57[Index].Name;
+  _59 = (int) _58;
+  _60 = Clock_Ip_au8ClockFeatures[_59][1];
+  _61 = (int) _60;
+  _62 = Clock_Ip_au8DividerCallbackIndex[_61];
+  CallbackIndex = (uint32) _62;
+  # DEBUG BEGIN_STMT
+  _63 = Clock_Ip_axDividerCallbacks[CallbackIndex].Set;
+  _64 = Config->Dividers;
+  _65 = &*_64[Index];
+  _63 (_65);
+  # DEBUG BEGIN_STMT
+  Index = Index + 1;
+
+  <bb 20> :
+  # DEBUG BEGIN_STMT
+  _66 = Config->DividersCount;
+  _67 = (long unsigned int) _66;
+  if (Index < _67)
+    goto <bb 19>; [INV]
+  else
+    goto <bb 21>; [INV]
+
+  <bb 21> :
+  # DEBUG BEGIN_STMT
+  Index = 0;
+  goto <bb 23>; [INV]
+
+  <bb 22> :
+  # DEBUG BEGIN_STMT
+  _68 = Config->DividerTriggers;
+  _69 = *_68[Index].Name;
+  _70 = (int) _69;
+  _71 = Clock_Ip_au8ClockFeatures[_70][1];
+  _72 = (int) _71;
+  _73 = Clock_Ip_au8DividerTriggerCallbackIndex[_72];
+  CallbackIndex = (uint32) _73;
+  # DEBUG BEGIN_STMT
+  _74 = Clock_Ip_axDividerTriggerCallbacks[CallbackIndex].TriggerUpdate;
+  _75 = Config->DividerTriggers;
+  _76 = &*_75[Index];
+  _74 (_76);
+  # DEBUG BEGIN_STMT
+  Index = Index + 1;
+
+  <bb 23> :
+  # DEBUG BEGIN_STMT
+  _77 = Config->DividerTriggersCount;
+  _78 = (long unsigned int) _77;
+  if (Index < _78)
+    goto <bb 22>; [INV]
+  else
+    goto <bb 24>; [INV]
+
+  <bb 24> :
+  # DEBUG BEGIN_STMT
+  Index = 0;
+  goto <bb 26>; [INV]
+
+  <bb 25> :
+  # DEBUG BEGIN_STMT
+  _79 = Config->Plls;
+  _80 = *_79[Index].Name;
+  _81 = (int) _80;
+  _82 = Clock_Ip_au8ClockFeatures[_81][1];
+  _83 = (int) _82;
+  _84 = Clock_Ip_au8PllCallbackIndex[_83];
+  CallbackIndex = (uint32) _84;
+  # DEBUG BEGIN_STMT
+  _85 = Clock_Ip_axPllCallbacks[CallbackIndex].Set;
+  _86 = Config->Plls;
+  _87 = &*_86[Index];
+  _85 (_87);
+  # DEBUG BEGIN_STMT
+  Index = Index + 1;
+
+  <bb 26> :
+  # DEBUG BEGIN_STMT
+  _88 = Config->PllsCount;
+  _89 = (long unsigned int) _88;
+  if (Index < _89)
+    goto <bb 25>; [INV]
+  else
+    goto <bb 27>; [INV]
+
+  <bb 27> :
+  # DEBUG BEGIN_STMT
+  Index = 0;
+  goto <bb 29>; [INV]
+
+  <bb 28> :
+  # DEBUG BEGIN_STMT
+  _90 = Config->Cmus;
+  _91 = *_90[Index].Name;
+  _92 = (int) _91;
+  _93 = Clock_Ip_au8ClockFeatures[_92][1];
+  _94 = (int) _93;
+  _95 = Clock_Ip_au8CmuCallbackIndex[_94];
+  CallbackIndex = (uint32) _95;
+  # DEBUG BEGIN_STMT
+  _96 = Clock_Ip_axCmuCallbacks[CallbackIndex].Set;
+  _97 = Config->Cmus;
+  _98 = &*_97[Index];
+  _96 (_98, Index);
+  # DEBUG BEGIN_STMT
+  Index = Index + 1;
+
+  <bb 29> :
+  # DEBUG BEGIN_STMT
+  _99 = Config->CmusCount;
+  _100 = (long unsigned int) _99;
+  if (Index < _100)
+    goto <bb 28>; [INV]
+  else
+    goto <bb 30>; [INV]
+
+  <bb 30> :
+  # DEBUG BEGIN_STMT
+  Index = 0;
+  goto <bb 32>; [INV]
+
+  <bb 31> :
+  # DEBUG BEGIN_STMT
+  _101 = Config->Xoscs;
+  _102 = *_101[Index].Name;
+  _103 = (int) _102;
+  _104 = Clock_Ip_au8ClockFeatures[_103][1];
+  _105 = (int) _104;
+  _106 = Clock_Ip_au8XoscCallbackIndex[_105];
+  CallbackIndex = (uint32) _106;
+  # DEBUG BEGIN_STMT
+  _107 = Clock_Ip_axExtOscCallbacks[CallbackIndex].Complete;
+  _108 = Config->Xoscs;
+  _109 = &*_108[Index];
+  _107 (_109);
+  # DEBUG BEGIN_STMT
+  Index = Index + 1;
+
+  <bb 32> :
+  # DEBUG BEGIN_STMT
+  _110 = Config->XoscsCount;
+  _111 = (long unsigned int) _110;
+  if (Index < _111)
+    goto <bb 31>; [INV]
+  else
+    goto <bb 33>; [INV]
+
+  <bb 33> :
+  # DEBUG BEGIN_STMT
+  Index = 0;
+  goto <bb 35>; [INV]
+
+  <bb 34> :
+  # DEBUG BEGIN_STMT
+  _112 = Config->Plls;
+  _113 = *_112[Index].Name;
+  _114 = (int) _113;
+  _115 = Clock_Ip_au8ClockFeatures[_114][1];
+  _116 = (int) _115;
+  _117 = Clock_Ip_au8PllCallbackIndex[_116];
+  CallbackIndex = (uint32) _117;
+  # DEBUG BEGIN_STMT
+  _118 = Clock_Ip_axPllCallbacks[CallbackIndex].Enable;
+  _119 = Config->Plls;
+  _120 = &*_119[Index];
+  _118 (_120);
+  # DEBUG BEGIN_STMT
+  Index = Index + 1;
+
+  <bb 35> :
+  # DEBUG BEGIN_STMT
+  _121 = Config->PllsCount;
+  _122 = (long unsigned int) _121;
+  if (Index < _122)
+    goto <bb 34>; [INV]
+  else
+    goto <bb 36>; [INV]
+
+  <bb 36> :
+  # DEBUG BEGIN_STMT
+  Index = 0;
+  goto <bb 38>; [INV]
+
+  <bb 37> :
+  # DEBUG BEGIN_STMT
+  _123 = Config->FracDivs;
+  _124 = *_123[Index].Name;
+  _125 = (int) _124;
+  _126 = Clock_Ip_au8ClockFeatures[_125][1];
+  _127 = (int) _126;
+  _128 = Clock_Ip_au8FractionalDividerCallbackIndex[_127];
+  CallbackIndex = (uint32) _128;
+  # DEBUG BEGIN_STMT
+  _129 = Clock_Ip_axFracDivCallbacks[CallbackIndex].Set;
+  _130 = Config->FracDivs;
+  _131 = &*_130[Index];
+  _129 (_131);
+  # DEBUG BEGIN_STMT
+  Index = Index + 1;
+
+  <bb 38> :
+  # DEBUG BEGIN_STMT
+  _132 = Config->FracDivsCount;
+  _133 = (long unsigned int) _132;
+  if (Index < _133)
+    goto <bb 37>; [INV]
+  else
+    goto <bb 39>; [INV]
+
+  <bb 39> :
+  # DEBUG BEGIN_STMT
+  DriverContext.ClockTreeIsConsumingPll = 0;
+  # DEBUG BEGIN_STMT
+  DriverContext.WaitStatesAreSupported = 0;
+  # DEBUG BEGIN_STMT
+  DriverContext.HwPllsNo = 2;
+  # DEBUG BEGIN_STMT
+  DriverContext.HwDfsNo = 2;
+  # DEBUG BEGIN_STMT
+  Clock_Ip_SetWaitStates ();
+  # DEBUG BEGIN_STMT
+  Index = 0;
+  goto <bb 44>; [INV]
+
+  <bb 40> :
+  # DEBUG BEGIN_STMT
+  _134 = Config->Selectors;
+  _135 = *_134[Index].Value;
+  _136 = (int) _135;
+  _137 = Clock_Ip_aeSourceTypeClockName[_136];
+  if (_137 != 3)
+    goto <bb 41>; [INV]
+  else
+    goto <bb 42>; [INV]
+
+  <bb 41> :
+  # DEBUG BEGIN_STMT
+  _138 = Config->Selectors;
+  _139 = *_138[Index].Name;
+  _140 = (int) _139;
+  _141 = Clock_Ip_au8ClockFeatures[_140][1];
+  _142 = (int) _141;
+  _143 = Clock_Ip_au8SelectorCallbackIndex[_142];
+  CallbackIndex = (uint32) _143;
+  # DEBUG BEGIN_STMT
+  _144 = Clock_Ip_axSelectorCallbacks[CallbackIndex].Set;
+  _145 = Config->Selectors;
+  _146 = &*_145[Index];
+  _144 (_146);
+  goto <bb 43>; [INV]
+
+  <bb 42> :
+  # DEBUG BEGIN_STMT
+  DriverContext.ClockTreeIsConsumingPll = 1;
+
+  <bb 43> :
+  # DEBUG BEGIN_STMT
+  Index = Index + 1;
+
+  <bb 44> :
+  # DEBUG BEGIN_STMT
+  _147 = Config->SelectorsCount;
+  _148 = (long unsigned int) _147;
+  if (Index < _148)
+    goto <bb 40>; [INV]
+  else
+    goto <bb 45>; [INV]
+
+  <bb 45> :
+  # DEBUG BEGIN_STMT
+  _149 = DriverContext.ClockTreeIsConsumingPll;
+  _150 = ~_149;
+  if (_150 != 0)
+    goto <bb 46>; [INV]
+  else
+    goto <bb 53>; [INV]
+
+  <bb 46> :
+  # DEBUG BEGIN_STMT
+  Index = 0;
+  goto <bb 48>; [INV]
+
+  <bb 47> :
+  # DEBUG BEGIN_STMT
+  _151 = Config->Gates;
+  _152 = *_151[Index].Name;
+  _153 = (int) _152;
+  _154 = Clock_Ip_au8ClockFeatures[_153][1];
+  _155 = (int) _154;
+  _156 = Clock_Ip_au8GateCallbackIndex[_155];
+  CallbackIndex = (uint32) _156;
+  # DEBUG BEGIN_STMT
+  _157 = Clock_Ip_axGateCallbacks[CallbackIndex].Set;
+  _158 = Config->Gates;
+  _159 = &*_158[Index];
+  _157 (_159);
+  # DEBUG BEGIN_STMT
+  Index = Index + 1;
+
+  <bb 48> :
+  # DEBUG BEGIN_STMT
+  _160 = Config->GatesCount;
+  _161 = (long unsigned int) _160;
+  if (Index < _161)
+    goto <bb 47>; [INV]
+  else
+    goto <bb 49>; [INV]
+
+  <bb 49> :
+  # DEBUG BEGIN_STMT
+  Index = 0;
+  goto <bb 51>; [INV]
+
+  <bb 50> :
+  # DEBUG BEGIN_STMT
+  _162 = Config->Cmus;
+  _163 = *_162[Index].Name;
+  _164 = (int) _163;
+  _165 = Clock_Ip_au8ClockFeatures[_164][1];
+  _166 = (int) _165;
+  _167 = Clock_Ip_au8CmuCallbackIndex[_166];
+  CallbackIndex = (uint32) _167;
+  # DEBUG BEGIN_STMT
+  _168 = Clock_Ip_axCmuCallbacks[CallbackIndex].Enable;
+  _169 = Config->Cmus;
+  _170 = &*_169[Index];
+  _168 (_170);
+  # DEBUG BEGIN_STMT
+  Index = Index + 1;
+
+  <bb 51> :
+  # DEBUG BEGIN_STMT
+  _171 = Config->CmusCount;
+  _172 = (long unsigned int) _171;
+  if (Index < _172)
+    goto <bb 50>; [INV]
+  else
+    goto <bb 52>; [INV]
+
+  <bb 52> :
+  # DEBUG BEGIN_STMT
+  Clock_Ip_Command (Config, 4);
+
+  <bb 53> :
+  # DEBUG BEGIN_STMT
+  return;
+
+}
+
+
+Clock_Ip_Init (const struct Clock_Ip_ClockConfigType * Config)
+{
+  Clock_Ip_PllStatusType PllStatus;
+  Clock_Ip_StatusType ClockStatus;
+  Clock_Ip_StatusType D.6565;
+
+  <bb 2> :
+  # DEBUG BEGIN_STMT
+  ClockStatus = 1;
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  Clock_Ip_InitClock (Config);
+  # DEBUG BEGIN_STMT
+  _1 = DriverContext.ClockTreeIsConsumingPll;
+  if (_1 != 0)
+    goto <bb 3>; [INV]
+  else
+    goto <bb 5>; [INV]
+
+  <bb 3> :
+  # DEBUG BEGIN_STMT
+  PllStatus = Clock_Ip_GetPllStatus ();
+  # DEBUG BEGIN_STMT
+  if (PllStatus == 0)
+    goto <bb 4>; [INV]
+  else
+    goto <bb 6>; [INV]
+
+  <bb 4> :
+  # DEBUG BEGIN_STMT
+  Clock_Ip_DistributePll ();
+  # DEBUG BEGIN_STMT
+  ClockStatus = 0;
+  goto <bb 6>; [INV]
+
+  <bb 5> :
+  # DEBUG BEGIN_STMT
+  ClockStatus = 0;
+
+  <bb 6> :
+  # DEBUG BEGIN_STMT
+  D.6565 = ClockStatus;
+  return D.6565;
+
+}
+
+
+Clock_Ip_ResetClockConfiguration (const struct Clock_Ip_ClockConfigType * Config)
+{
+  uint32 Index;
+  uint32 CallbackIndex;
+
+  <bb 2> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _1 = Config->SelectorsCount;
+  Index = (uint32) _1;
+  goto <bb 4>; [INV]
+
+  <bb 3> :
+  # DEBUG BEGIN_STMT
+  _2 = Config->Selectors;
+  _3 = Index + 4294967295;
+  _4 = *_2[_3].Name;
+  _5 = (int) _4;
+  _6 = Clock_Ip_au8ClockFeatures[_5][1];
+  _7 = (int) _6;
+  _8 = Clock_Ip_au8SelectorCallbackIndex[_7];
+  CallbackIndex = (uint32) _8;
+  # DEBUG BEGIN_STMT
+  _9 = Clock_Ip_axSelectorCallbacks[CallbackIndex].Reset;
+  _10 = Config->Selectors;
+  _11 = Index + 4294967295;
+  _12 = &*_10[_11];
+  _9 (_12);
+  # DEBUG BEGIN_STMT
+  Index = Index + 4294967295;
+
+  <bb 4> :
+  # DEBUG BEGIN_STMT
+  if (Index != 0)
+    goto <bb 3>; [INV]
+  else
+    goto <bb 5>; [INV]
+
+  <bb 5> :
+  # DEBUG BEGIN_STMT
+  _13 = Config->FracDivsCount;
+  Index = (uint32) _13;
+  goto <bb 7>; [INV]
+
+  <bb 6> :
+  # DEBUG BEGIN_STMT
+  _14 = Config->FracDivs;
+  _15 = Index + 4294967295;
+  _16 = *_14[_15].Name;
+  _17 = (int) _16;
+  _18 = Clock_Ip_au8ClockFeatures[_17][1];
+  _19 = (int) _18;
+  _20 = Clock_Ip_au8FractionalDividerCallbackIndex[_19];
+  CallbackIndex = (uint32) _20;
+  # DEBUG BEGIN_STMT
+  _21 = Clock_Ip_axFracDivCallbacks[CallbackIndex].Reset;
+  _22 = Config->FracDivs;
+  _23 = Index + 4294967295;
+  _24 = &*_22[_23];
+  _21 (_24);
+  # DEBUG BEGIN_STMT
+  Index = Index + 4294967295;
+
+  <bb 7> :
+  # DEBUG BEGIN_STMT
+  if (Index != 0)
+    goto <bb 6>; [INV]
+  else
+    goto <bb 8>; [INV]
+
+  <bb 8> :
+  # DEBUG BEGIN_STMT
+  _25 = Config->PllsCount;
+  Index = (uint32) _25;
+  goto <bb 10>; [INV]
+
+  <bb 9> :
+  # DEBUG BEGIN_STMT
+  _26 = Config->Plls;
+  _27 = Index + 4294967295;
+  _28 = *_26[_27].Name;
+  _29 = (int) _28;
+  _30 = Clock_Ip_au8ClockFeatures[_29][1];
+  _31 = (int) _30;
+  _32 = Clock_Ip_au8PllCallbackIndex[_31];
+  CallbackIndex = (uint32) _32;
+  # DEBUG BEGIN_STMT
+  _33 = Clock_Ip_axPllCallbacks[CallbackIndex].Reset;
+  _34 = Config->Plls;
+  _35 = Index + 4294967295;
+  _36 = &*_34[_35];
+  _33 (_36);
+  # DEBUG BEGIN_STMT
+  Index = Index + 4294967295;
+
+  <bb 10> :
+  # DEBUG BEGIN_STMT
+  if (Index != 0)
+    goto <bb 9>; [INV]
+  else
+    goto <bb 11>; [INV]
+
+  <bb 11> :
+  # DEBUG BEGIN_STMT
+  _37 = Config->XoscsCount;
+  Index = (uint32) _37;
+  goto <bb 13>; [INV]
+
+  <bb 12> :
+  # DEBUG BEGIN_STMT
+  _38 = Config->Xoscs;
+  _39 = Index + 4294967295;
+  _40 = *_38[_39].Name;
+  _41 = (int) _40;
+  _42 = Clock_Ip_au8ClockFeatures[_41][1];
+  _43 = (int) _42;
+  _44 = Clock_Ip_au8XoscCallbackIndex[_43];
+  CallbackIndex = (uint32) _44;
+  # DEBUG BEGIN_STMT
+  _45 = Clock_Ip_axExtOscCallbacks[CallbackIndex].Reset;
+  _46 = Config->Xoscs;
+  _47 = Index + 4294967295;
+  _48 = &*_46[_47];
+  _45 (_48);
+  # DEBUG BEGIN_STMT
+  Index = Index + 4294967295;
+
+  <bb 13> :
+  # DEBUG BEGIN_STMT
+  if (Index != 0)
+    goto <bb 12>; [INV]
+  else
+    goto <bb 14>; [INV]
+
+  <bb 14> :
+  return;
+
+}
+
+
+Clock_Ip_CallEmptyCallbacks ()
+{
+  <bb 2> :
+  # DEBUG BEGIN_STMT
+  FunctionWasCalled.4_1 = FunctionWasCalled;
+  _2 = ~FunctionWasCalled.4_1;
+  if (_2 != 0)
+    goto <bb 3>; [INV]
+  else
+    goto <bb 4>; [INV]
+
+  <bb 3> :
+  # DEBUG BEGIN_STMT
+  FunctionWasCalled = 1;
+  # DEBUG BEGIN_STMT
+  _3 = Clock_Ip_axCmuCallbacks[0].Set;
+  _3 (0B, 0);
+  # DEBUG BEGIN_STMT
+  _4 = Clock_Ip_axCmuCallbacks[0].Disable;
+  _4 (154);
+  # DEBUG BEGIN_STMT
+  _5 = Clock_Ip_axDividerCallbacks[0].Set;
+  _5 (0B);
+  # DEBUG BEGIN_STMT
+  _6 = Clock_Ip_axDividerTriggerCallbacks[0].Configure;
+  _6 (0B);
+  # DEBUG BEGIN_STMT
+  _7 = Clock_Ip_axExtOscCallbacks[0].Reset;
+  _7 (0B);
+  # DEBUG BEGIN_STMT
+  _8 = Clock_Ip_axFracDivCallbacks[0].Set;
+  _8 (0B);
+  # DEBUG BEGIN_STMT
+  _9 = Clock_Ip_axFracDivCallbacks[0].Complete;
+  _9 (0);
+  # DEBUG BEGIN_STMT
+  _10 = Clock_Ip_axGateCallbacks[0].Set;
+  _10 (0B);
+  # DEBUG BEGIN_STMT
+  _11 = Clock_Ip_axGateCallbacks[0].Update;
+  _11 (0, 0);
+  # DEBUG BEGIN_STMT
+  _12 = Clock_Ip_axIntOscCallbacks[0].Set;
+  _12 (0B);
+  # DEBUG BEGIN_STMT
+  _13 = Clock_Ip_axPllCallbacks[0].Set;
+  _13 (0B);
+  # DEBUG BEGIN_STMT
+  _14 = Clock_Ip_axPllCallbacks[0].Complete;
+  _14 (0);
+  # DEBUG BEGIN_STMT
+  _15 = Clock_Ip_axSelectorCallbacks[0].Set;
+  _15 (0B);
+  # DEBUG BEGIN_STMT
+  _16 = Clock_Ip_axPcfsCallbacks[0].Set;
+  _16 (0B, 0);
+
+  <bb 4> :
+  return;
+
+}
+
+
+Clock_Ip_UpdateDriverContext (const struct Clock_Ip_ClockConfigType * Config)
+{
+  uint8 Index;
+
+  <bb 2> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  Clock_Ip_pxConfig.1_1 = Clock_Ip_pxConfig;
+  Clock_Ip_Command (Clock_Ip_pxConfig.1_1, 2);
+  # DEBUG BEGIN_STMT
+  Index = 0;
+  goto <bb 4>; [INV]
+
+  <bb 3> :
+  # DEBUG BEGIN_STMT
+  _2 = Config->ExtClks;
+  _3 = (int) Index;
+  _4 = *_2[_3].Name;
+  _5 = Config->ExtClks;
+  _6 = (int) Index;
+  _7 = *_5[_6].Value;
+  Clock_Ip_SetExternalSignalFrequency (_4, _7);
+  # DEBUG BEGIN_STMT
+  Index.2_8 = Index;
+  Index = Index.2_8 + 1;
+
+  <bb 4> :
+  # DEBUG BEGIN_STMT
+  _9 = Config->ExtClksCount;
+  if (Index < _9)
+    goto <bb 3>; [INV]
+  else
+    goto <bb 5>; [INV]
+
+  <bb 5> :
+  # DEBUG BEGIN_STMT
+  Clock_Ip_CallEmptyCallbacks ();
+  # DEBUG BEGIN_STMT
+  Index = 1;
+  goto <bb 7>; [INV]
+
+  <bb 6> :
+  # DEBUG BEGIN_STMT
+  _10 = Config->ConfiguredFrequencies;
+  _11 = (int) Index;
+  _12 = *_10[_11].Name;
+  _13 = (int) _12;
+  Clock_Ip_FreqIds[_13] = Index;
+  # DEBUG BEGIN_STMT
+  Index.3_14 = Index;
+  Index = Index.3_14 + 1;
+
+  <bb 7> :
+  # DEBUG BEGIN_STMT
+  _15 = Config->ConfigureFrequenciesCount;
+  if (Index < _15)
+    goto <bb 6>; [INV]
+  else
+    goto <bb 8>; [INV]
+
+  <bb 8> :
+  return;
+
+}
+
+
+Clock_Ip_NotificatonsEmptyCallback (Clock_Ip_NotificationType Notification, Clock_Ip_NameType ClockName)
+{
+  <bb 2> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  return;
+
+}
+
+

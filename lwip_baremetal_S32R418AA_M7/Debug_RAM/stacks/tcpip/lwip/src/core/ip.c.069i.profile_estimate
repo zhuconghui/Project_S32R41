@@ -1,0 +1,220 @@
+Histogram:
+ip_input (struct pbuf * p, struct netif * inp)
+{
+  void * _1;
+  unsigned char _2;
+  unsigned char _3;
+  err_t _4;
+  err_t _10;
+  err_t _12;
+
+  <bb 2> [local count: 1073741824]:
+  # DEBUG BEGIN_STMT
+  if (p_6(D) != 0B)
+    goto <bb 3>; [99.13%]
+  else
+    goto <bb 6>; [0.87%]
+
+  <bb 3> [local count: 1064400271]:
+  # DEBUG BEGIN_STMT
+  _1 = p_6(D)->payload;
+  _2 = MEM[(u8_t *)_1];
+  _3 = _2 >> 4;
+  if (_3 == 6)
+    goto <bb 4>; [34.00%]
+  else
+    goto <bb 5>; [66.00%]
+
+  <bb 4> [local count: 361896092]:
+  # DEBUG BEGIN_STMT
+  _12 = ip6_input (p_6(D), inp_8(D));
+  goto <bb 6>; [100.00%]
+
+  <bb 5> [local count: 702504179]:
+  # DEBUG BEGIN_STMT
+  _10 = ip4_input (p_6(D), inp_8(D));
+
+  <bb 6> [local count: 1073741824]:
+  # _4 = PHI <_12(4), _10(5), -6(2)>
+  return _4;
+
+}
+
+
+ipaddr_aton (const char * cp, struct ip_addr_t * addr)
+{
+  const char * c;
+  struct ip6_addr_t * _1;
+  char _2;
+  struct ip4_addr_t * _3;
+  int _5;
+  int _15;
+  int _18;
+
+  <bb 2> [local count: 162334957]:
+  # DEBUG BEGIN_STMT
+  if (cp_9(D) != 0B)
+    goto <bb 14>; [70.00%]
+  else
+    goto <bb 13>; [30.00%]
+
+  <bb 14> [local count: 113634470]:
+  goto <bb 9>; [100.00%]
+
+  <bb 3> [local count: 1034442875]:
+  # DEBUG BEGIN_STMT
+  if (_2 == 58)
+    goto <bb 4>; [3.66%]
+  else
+    goto <bb 7>; [96.34%]
+
+  <bb 4> [local count: 37860609]:
+  # DEBUG BEGIN_STMT
+  if (addr_12(D) != 0B)
+    goto <bb 5>; [70.00%]
+  else
+    goto <bb 6>; [30.00%]
+
+  <bb 5> [local count: 26502426]:
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  addr_12(D)->type = 6;
+
+  <bb 6> [local count: 37860609]:
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _1 = &addr_12(D)->u_addr.ip6;
+  _15 = ip6addr_aton (cp_9(D), _1);
+  goto <bb 13>; [100.00%]
+
+  <bb 7> [local count: 996582265]:
+  # DEBUG BEGIN_STMT
+  if (_2 == 46)
+    goto <bb 10>; [3.66%]
+  else
+    goto <bb 8>; [96.34%]
+
+  <bb 8> [local count: 960107355]:
+  # DEBUG BEGIN_STMT
+  c_11 = c_4 + 1;
+  # DEBUG c => c_11
+
+  <bb 9> [local count: 1073741824]:
+  # c_4 = PHI <c_11(8), cp_9(D)(14)>
+  # DEBUG c => c_4
+  # DEBUG BEGIN_STMT
+  _2 = *c_4;
+  if (_2 != 0)
+    goto <bb 3>; [96.34%]
+  else
+    goto <bb 10>; [3.66%]
+
+  <bb 10> [local count: 75773862]:
+  # DEBUG BEGIN_STMT
+  if (addr_12(D) != 0B)
+    goto <bb 11>; [70.00%]
+  else
+    goto <bb 12>; [30.00%]
+
+  <bb 11> [local count: 53041703]:
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  addr_12(D)->type = 0;
+
+  <bb 12> [local count: 75773862]:
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _3 = &addr_12(D)->u_addr.ip4;
+  _18 = ip4addr_aton (cp_9(D), _3);
+
+  <bb 13> [local count: 162334958]:
+  # _5 = PHI <_15(6), _18(12), 0(2)>
+  return _5;
+
+}
+
+
+ipaddr_ntoa_r (const struct ip_addr_t * addr, char * buf, int buflen)
+{
+  unsigned char _1;
+  const struct ip6_addr_t * _2;
+  const struct ip4_addr_t * _3;
+  char * _4;
+  char * _11;
+  char * _13;
+
+  <bb 2> [local count: 1073741824]:
+  # DEBUG BEGIN_STMT
+  if (addr_6(D) == 0B)
+    goto <bb 6>; [8.27%]
+  else
+    goto <bb 3>; [91.73%]
+
+  <bb 3> [local count: 984943376]:
+  # DEBUG BEGIN_STMT
+  _1 = addr_6(D)->type;
+  if (_1 == 6)
+    goto <bb 4>; [34.00%]
+  else
+    goto <bb 5>; [66.00%]
+
+  <bb 4> [local count: 334880748]:
+  # DEBUG BEGIN_STMT
+  _2 = &addr_6(D)->u_addr.ip6;
+  _11 = ip6addr_ntoa_r (_2, buf_8(D), buflen_9(D));
+  goto <bb 6>; [100.00%]
+
+  <bb 5> [local count: 650062628]:
+  # DEBUG BEGIN_STMT
+  _3 = &addr_6(D)->u_addr.ip4;
+  _13 = ip4addr_ntoa_r (_3, buf_8(D), buflen_9(D));
+
+  <bb 6> [local count: 1073741824]:
+  # _4 = PHI <0B(2), _11(4), _13(5)>
+  return _4;
+
+}
+
+
+ipaddr_ntoa (const struct ip_addr_t * addr)
+{
+  unsigned char _1;
+  const struct ip6_addr_t * _2;
+  const struct ip4_addr_t * _3;
+  char * _4;
+  char * _9;
+  char * _11;
+
+  <bb 2> [local count: 1073741824]:
+  # DEBUG BEGIN_STMT
+  if (addr_6(D) == 0B)
+    goto <bb 6>; [8.27%]
+  else
+    goto <bb 3>; [91.73%]
+
+  <bb 3> [local count: 984943376]:
+  # DEBUG BEGIN_STMT
+  _1 = addr_6(D)->type;
+  if (_1 == 6)
+    goto <bb 4>; [34.00%]
+  else
+    goto <bb 5>; [66.00%]
+
+  <bb 4> [local count: 334880748]:
+  # DEBUG BEGIN_STMT
+  _2 = &addr_6(D)->u_addr.ip6;
+  _9 = ip6addr_ntoa (_2);
+  goto <bb 6>; [100.00%]
+
+  <bb 5> [local count: 650062628]:
+  # DEBUG BEGIN_STMT
+  _3 = &addr_6(D)->u_addr.ip4;
+  _11 = ip4addr_ntoa (_3);
+
+  <bb 6> [local count: 1073741824]:
+  # _4 = PHI <0B(2), _9(4), _11(5)>
+  return _4;
+
+}
+
+

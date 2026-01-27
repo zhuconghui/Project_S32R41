@@ -1,0 +1,860 @@
+__attribute__((always_inline))
+Det_InitLinkedList ()
+{
+  uint32 u32CoreId;
+
+  <bb 2> :
+  # DEBUG BEGIN_STMT
+  _1 = Sys_GetCoreID ();
+  u32CoreId = (uint32) _1;
+  # DEBUG BEGIN_STMT
+  Det_numEventErrors[u32CoreId] = 0;
+  # DEBUG BEGIN_STMT
+  Det_numRuntimeEventErrors[u32CoreId] = 0;
+  # DEBUG BEGIN_STMT
+  Det_numTransientEventErrors[u32CoreId] = 0;
+  # DEBUG BEGIN_STMT
+  Det_OverflowErrorFlag[u32CoreId] = 0;
+  # DEBUG BEGIN_STMT
+  Det_OverflowRuntimeErrorFlag[u32CoreId] = 0;
+  # DEBUG BEGIN_STMT
+  Det_OverflowTransientErrorFlag[u32CoreId] = 0;
+  # DEBUG BEGIN_STMT
+  _2 = &Det_ModuleId[u32CoreId];
+  Det_aErrorState[u32CoreId].pModuleId = _2;
+  # DEBUG BEGIN_STMT
+  _3 = &Det_InstanceId[u32CoreId];
+  Det_aErrorState[u32CoreId].pInstanceId = _3;
+  # DEBUG BEGIN_STMT
+  _4 = &Det_ApiId[u32CoreId];
+  Det_aErrorState[u32CoreId].pApiId = _4;
+  # DEBUG BEGIN_STMT
+  _5 = &Det_ErrorId[u32CoreId];
+  Det_aErrorState[u32CoreId].pErrorId = _5;
+  # DEBUG BEGIN_STMT
+  _6 = &Det_numEventErrors[u32CoreId];
+  Det_aErrorState[u32CoreId].pNumErrors = _6;
+  # DEBUG BEGIN_STMT
+  _7 = &Det_NextIdxList[u32CoreId];
+  Det_aErrorState[u32CoreId].pNextIdxList = _7;
+  # DEBUG BEGIN_STMT
+  _8 = &Det_Head[u32CoreId];
+  Det_aErrorState[u32CoreId].pHead = _8;
+  # DEBUG BEGIN_STMT
+  _9 = &Det_Tail[u32CoreId];
+  Det_aErrorState[u32CoreId].pTail = _9;
+  # DEBUG BEGIN_STMT
+  _10 = &Det_OverflowErrorFlag[u32CoreId];
+  Det_aErrorState[u32CoreId].pOverflow = _10;
+  # DEBUG BEGIN_STMT
+  _11 = &Det_RuntimeModuleId[u32CoreId];
+  Det_aRuntimeErrorState[u32CoreId].pModuleId = _11;
+  # DEBUG BEGIN_STMT
+  _12 = &Det_RuntimeInstanceId[u32CoreId];
+  Det_aRuntimeErrorState[u32CoreId].pInstanceId = _12;
+  # DEBUG BEGIN_STMT
+  _13 = &Det_RuntimeApiId[u32CoreId];
+  Det_aRuntimeErrorState[u32CoreId].pApiId = _13;
+  # DEBUG BEGIN_STMT
+  _14 = &Det_RuntimeErrorId[u32CoreId];
+  Det_aRuntimeErrorState[u32CoreId].pErrorId = _14;
+  # DEBUG BEGIN_STMT
+  _15 = &Det_numRuntimeEventErrors[u32CoreId];
+  Det_aRuntimeErrorState[u32CoreId].pNumErrors = _15;
+  # DEBUG BEGIN_STMT
+  _16 = &Det_Runtime_NextIdxList[u32CoreId];
+  Det_aRuntimeErrorState[u32CoreId].pNextIdxList = _16;
+  # DEBUG BEGIN_STMT
+  _17 = &Det_Runtime_Head[u32CoreId];
+  Det_aRuntimeErrorState[u32CoreId].pHead = _17;
+  # DEBUG BEGIN_STMT
+  _18 = &Det_Runtime_Tail[u32CoreId];
+  Det_aRuntimeErrorState[u32CoreId].pTail = _18;
+  # DEBUG BEGIN_STMT
+  _19 = &Det_OverflowRuntimeErrorFlag[u32CoreId];
+  Det_aRuntimeErrorState[u32CoreId].pOverflow = _19;
+  # DEBUG BEGIN_STMT
+  _20 = &Det_TransientModuleId[u32CoreId];
+  Det_aTransientErrorState[u32CoreId].pModuleId = _20;
+  # DEBUG BEGIN_STMT
+  _21 = &Det_TransientInstanceId[u32CoreId];
+  Det_aTransientErrorState[u32CoreId].pInstanceId = _21;
+  # DEBUG BEGIN_STMT
+  _22 = &Det_TransientApiId[u32CoreId];
+  Det_aTransientErrorState[u32CoreId].pApiId = _22;
+  # DEBUG BEGIN_STMT
+  _23 = &Det_TransientFaultId[u32CoreId];
+  Det_aTransientErrorState[u32CoreId].pErrorId = _23;
+  # DEBUG BEGIN_STMT
+  _24 = &Det_numTransientEventErrors[u32CoreId];
+  Det_aTransientErrorState[u32CoreId].pNumErrors = _24;
+  # DEBUG BEGIN_STMT
+  _25 = &Det_Transient_NextIdxList[u32CoreId];
+  Det_aTransientErrorState[u32CoreId].pNextIdxList = _25;
+  # DEBUG BEGIN_STMT
+  _26 = &Det_Transient_Head[u32CoreId];
+  Det_aTransientErrorState[u32CoreId].pHead = _26;
+  # DEBUG BEGIN_STMT
+  _27 = &Det_Transient_Tail[u32CoreId];
+  Det_aTransientErrorState[u32CoreId].pTail = _27;
+  # DEBUG BEGIN_STMT
+  _28 = &Det_OverflowTransientErrorFlag[u32CoreId];
+  Det_aTransientErrorState[u32CoreId].pOverflow = _28;
+  # DEBUG BEGIN_STMT
+  Det_ModuleState[u32CoreId] = 1;
+  return;
+
+}
+
+
+Det_FreeNodesInLinkedList (struct Det_LinkedListStateType * pDetErrorState)
+{
+  uint16 * pTail;
+  uint16 * pHead;
+  uint16 * pNextIdx;
+  uint8 * pErrorId;
+  uint8 * pApiId;
+  uint8 * pInstanceId;
+  uint16 * pModuleId;
+  uint16 u16Count;
+
+  <bb 2> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  pModuleId = pDetErrorState->pModuleId;
+  # DEBUG BEGIN_STMT
+  pInstanceId = pDetErrorState->pInstanceId;
+  # DEBUG BEGIN_STMT
+  pApiId = pDetErrorState->pApiId;
+  # DEBUG BEGIN_STMT
+  pErrorId = pDetErrorState->pErrorId;
+  # DEBUG BEGIN_STMT
+  pNextIdx = pDetErrorState->pNextIdxList;
+  # DEBUG BEGIN_STMT
+  pHead = pDetErrorState->pHead;
+  # DEBUG BEGIN_STMT
+  pTail = pDetErrorState->pTail;
+  # DEBUG BEGIN_STMT
+  u16Count = 0;
+  goto <bb 4>; [INV]
+
+  <bb 3> :
+  # DEBUG BEGIN_STMT
+  _1 = (unsigned int) u16Count;
+  _2 = _1 * 2;
+  _3 = pNextIdx + _2;
+  *_3 = 65535;
+  # DEBUG BEGIN_STMT
+  _4 = (unsigned int) u16Count;
+  _5 = _4 * 2;
+  _6 = pModuleId + _5;
+  *_6 = 65535;
+  # DEBUG BEGIN_STMT
+  _7 = (sizetype) u16Count;
+  _8 = pInstanceId + _7;
+  *_8 = 255;
+  # DEBUG BEGIN_STMT
+  _9 = (sizetype) u16Count;
+  _10 = pApiId + _9;
+  *_10 = 255;
+  # DEBUG BEGIN_STMT
+  _11 = (sizetype) u16Count;
+  _12 = pErrorId + _11;
+  *_12 = 255;
+  # DEBUG BEGIN_STMT
+  u16Count.1_13 = u16Count;
+  u16Count = u16Count.1_13 + 1;
+
+  <bb 4> :
+  # DEBUG BEGIN_STMT
+  if (u16Count <= 9)
+    goto <bb 3>; [INV]
+  else
+    goto <bb 5>; [INV]
+
+  <bb 5> :
+  # DEBUG BEGIN_STMT
+  *pHead = 65535;
+  # DEBUG BEGIN_STMT
+  *pTail = 65535;
+  # DEBUG BEGIN_STMT
+  _14 = pDetErrorState->pOverflow;
+  *_14 = 0;
+  return;
+
+}
+
+
+__attribute__((always_inline))
+Det_UnlinkNode (uint16 u16NodeToDel, struct Det_LinkedListStateType * pDetErrorState)
+{
+  uint16 * pNextIdx;
+  uint16 u16Count;
+  uint16 * pTail;
+  uint16 * pHead;
+  uint8 * pErrorId;
+  uint8 * pApiId;
+  uint8 * pInstanceId;
+  uint16 * pModuleId;
+  uint32 * pNumError;
+
+  <bb 2> :
+  # DEBUG BEGIN_STMT
+  pNumError = pDetErrorState->pNumErrors;
+  # DEBUG BEGIN_STMT
+  pModuleId = pDetErrorState->pModuleId;
+  # DEBUG BEGIN_STMT
+  pInstanceId = pDetErrorState->pInstanceId;
+  # DEBUG BEGIN_STMT
+  pApiId = pDetErrorState->pApiId;
+  # DEBUG BEGIN_STMT
+  pErrorId = pDetErrorState->pErrorId;
+  # DEBUG BEGIN_STMT
+  pHead = pDetErrorState->pHead;
+  # DEBUG BEGIN_STMT
+  pTail = pDetErrorState->pTail;
+  # DEBUG BEGIN_STMT
+  u16Count = *pHead;
+  # DEBUG BEGIN_STMT
+  pNextIdx = pDetErrorState->pNextIdxList;
+  # DEBUG BEGIN_STMT
+  _1 = *pHead;
+  if (u16NodeToDel == _1)
+    goto <bb 3>; [INV]
+  else
+    goto <bb 4>; [INV]
+
+  <bb 3> :
+  # DEBUG BEGIN_STMT
+  _2 = (unsigned int) u16NodeToDel;
+  _3 = _2 * 2;
+  _4 = pNextIdx + _3;
+  _5 = *_4;
+  *pHead = _5;
+  # DEBUG BEGIN_STMT
+  _6 = (unsigned int) u16NodeToDel;
+  _7 = _6 * 2;
+  _8 = pNextIdx + _7;
+  *_8 = 65535;
+  goto <bb 11>; [INV]
+
+  <bb 4> :
+  # DEBUG BEGIN_STMT
+  _9 = *pTail;
+  if (u16NodeToDel == _9)
+    goto <bb 6>; [INV]
+  else
+    goto <bb 9>; [INV]
+
+  <bb 5> :
+  # DEBUG BEGIN_STMT
+  _10 = (unsigned int) u16Count;
+  _11 = _10 * 2;
+  _12 = pNextIdx + _11;
+  u16Count = *_12;
+
+  <bb 6> :
+  # DEBUG BEGIN_STMT
+  _13 = (unsigned int) u16Count;
+  _14 = _13 * 2;
+  _15 = pNextIdx + _14;
+  _16 = *_15;
+  _17 = *pTail;
+  if (_16 != _17)
+    goto <bb 5>; [INV]
+  else
+    goto <bb 7>; [INV]
+
+  <bb 7> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _18 = (unsigned int) u16Count;
+  _19 = _18 * 2;
+  _20 = pNextIdx + _19;
+  *_20 = 65535;
+  # DEBUG BEGIN_STMT
+  *pTail = u16Count;
+  goto <bb 11>; [INV]
+
+  <bb 8> :
+  # DEBUG BEGIN_STMT
+  _21 = (unsigned int) u16Count;
+  _22 = _21 * 2;
+  _23 = pNextIdx + _22;
+  u16Count = *_23;
+
+  <bb 9> :
+  # DEBUG BEGIN_STMT
+  _24 = (unsigned int) u16Count;
+  _25 = _24 * 2;
+  _26 = pNextIdx + _25;
+  _27 = *_26;
+  if (u16NodeToDel != _27)
+    goto <bb 8>; [INV]
+  else
+    goto <bb 10>; [INV]
+
+  <bb 10> :
+  # DEBUG BEGIN_STMT
+  _28 = (unsigned int) u16NodeToDel;
+  _29 = _28 * 2;
+  _30 = pNextIdx + _29;
+  _31 = (unsigned int) u16Count;
+  _32 = _31 * 2;
+  _33 = pNextIdx + _32;
+  _34 = *_30;
+  *_33 = _34;
+  # DEBUG BEGIN_STMT
+  _35 = (unsigned int) u16NodeToDel;
+  _36 = _35 * 2;
+  _37 = pNextIdx + _36;
+  *_37 = 65535;
+
+  <bb 11> :
+  # DEBUG BEGIN_STMT
+  _38 = *pNumError;
+  _39 = _38 + 4294967295;
+  *pNumError = _39;
+  # DEBUG BEGIN_STMT
+  _40 = *pNumError;
+  if (_40 == 0)
+    goto <bb 12>; [INV]
+  else
+    goto <bb 13>; [INV]
+
+  <bb 12> :
+  # DEBUG BEGIN_STMT
+  *pHead = 65535;
+  # DEBUG BEGIN_STMT
+  *pTail = 65535;
+
+  <bb 13> :
+  # DEBUG BEGIN_STMT
+  _41 = (unsigned int) u16NodeToDel;
+  _42 = _41 * 2;
+  _43 = pModuleId + _42;
+  *_43 = 65535;
+  # DEBUG BEGIN_STMT
+  _44 = (sizetype) u16NodeToDel;
+  _45 = pInstanceId + _44;
+  *_45 = 255;
+  # DEBUG BEGIN_STMT
+  _46 = (sizetype) u16NodeToDel;
+  _47 = pApiId + _46;
+  *_47 = 255;
+  # DEBUG BEGIN_STMT
+  _48 = (sizetype) u16NodeToDel;
+  _49 = pErrorId + _48;
+  *_49 = 255;
+  return;
+
+}
+
+
+Det_DelAllNodesSameId (uint16 ModuleId, uint8 InstanceId, uint8 ApiId, uint8 ErrorId, struct Det_LinkedListStateType * pDetErrorState)
+{
+  uint8 * pErrorId;
+  uint8 * pApiId;
+  uint8 * pInstanceId;
+  uint16 * pModuleId;
+  uint32 * pNumError;
+  boolean RetVal;
+  uint16 u16TempNodeIdx;
+  uint16 u16Count;
+  boolean D.5850;
+
+  <bb 2> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  RetVal = 0;
+  # DEBUG BEGIN_STMT
+  pNumError = pDetErrorState->pNumErrors;
+  # DEBUG BEGIN_STMT
+  pModuleId = pDetErrorState->pModuleId;
+  # DEBUG BEGIN_STMT
+  pInstanceId = pDetErrorState->pInstanceId;
+  # DEBUG BEGIN_STMT
+  pApiId = pDetErrorState->pApiId;
+  # DEBUG BEGIN_STMT
+  pErrorId = pDetErrorState->pErrorId;
+  # DEBUG BEGIN_STMT
+  _1 = *pNumError;
+  if (_1 != 0)
+    goto <bb 3>; [INV]
+  else
+    goto <bb 11>; [INV]
+
+  <bb 3> :
+  # DEBUG BEGIN_STMT
+  _2 = pDetErrorState->pHead;
+  u16Count = *_2;
+
+  <bb 4> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _3 = (unsigned int) u16Count;
+  _4 = _3 * 2;
+  _5 = pModuleId + _4;
+  _6 = *_5;
+  if (ModuleId == _6)
+    goto <bb 5>; [INV]
+  else
+    goto <bb 9>; [INV]
+
+  <bb 5> :
+  _7 = (sizetype) u16Count;
+  _8 = pInstanceId + _7;
+  _9 = *_8;
+  if (InstanceId == _9)
+    goto <bb 6>; [INV]
+  else
+    goto <bb 9>; [INV]
+
+  <bb 6> :
+  _10 = (sizetype) u16Count;
+  _11 = pApiId + _10;
+  _12 = *_11;
+  if (ApiId == _12)
+    goto <bb 7>; [INV]
+  else
+    goto <bb 9>; [INV]
+
+  <bb 7> :
+  _13 = (sizetype) u16Count;
+  _14 = pErrorId + _13;
+  _15 = *_14;
+  if (ErrorId == _15)
+    goto <bb 8>; [INV]
+  else
+    goto <bb 9>; [INV]
+
+  <bb 8> :
+  # DEBUG BEGIN_STMT
+  _16 = pDetErrorState->pNextIdxList;
+  _17 = (unsigned int) u16Count;
+  _18 = _17 * 2;
+  _19 = _16 + _18;
+  u16TempNodeIdx = *_19;
+  # DEBUG BEGIN_STMT
+  Det_UnlinkNode (u16Count, pDetErrorState);
+  # DEBUG BEGIN_STMT
+  u16Count = u16TempNodeIdx;
+  # DEBUG BEGIN_STMT
+  RetVal = 1;
+  goto <bb 10>; [INV]
+
+  <bb 9> :
+  # DEBUG BEGIN_STMT
+  _20 = pDetErrorState->pNextIdxList;
+  _21 = (unsigned int) u16Count;
+  _22 = _21 * 2;
+  _23 = _20 + _22;
+  u16Count = *_23;
+
+  <bb 10> :
+  # DEBUG BEGIN_STMT
+  if (u16Count != 65535)
+    goto <bb 4>; [INV]
+  else
+    goto <bb 11>; [INV]
+
+  <bb 11> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  D.5850 = RetVal;
+  return D.5850;
+
+}
+
+
+Det_LinkNodeToHead (uint16 u16NodeToAdd, struct Det_LinkedListStateType * pDetErrorState)
+{
+  uint32 * pNumError;
+  uint16 * pTail;
+  uint16 * pHead;
+  uint16 * pNextIdxAtNodeToAdd;
+  Std_ReturnType RetVal;
+  Std_ReturnType D.5839;
+
+  <bb 2> :
+  # DEBUG BEGIN_STMT
+  RetVal = 0;
+  # DEBUG BEGIN_STMT
+  _1 = pDetErrorState->pNextIdxList;
+  _2 = (unsigned int) u16NodeToAdd;
+  _3 = _2 * 2;
+  pNextIdxAtNodeToAdd = _1 + _3;
+  # DEBUG BEGIN_STMT
+  pHead = pDetErrorState->pHead;
+  # DEBUG BEGIN_STMT
+  pTail = pDetErrorState->pTail;
+  # DEBUG BEGIN_STMT
+  pNumError = pDetErrorState->pNumErrors;
+  # DEBUG BEGIN_STMT
+  _4 = *pNextIdxAtNodeToAdd;
+  if (_4 == 65535)
+    goto <bb 3>; [INV]
+  else
+    goto <bb 6>; [INV]
+
+  <bb 3> :
+  # DEBUG BEGIN_STMT
+  _5 = *pHead;
+  *pNextIdxAtNodeToAdd = _5;
+  # DEBUG BEGIN_STMT
+  *pHead = u16NodeToAdd;
+  # DEBUG BEGIN_STMT
+  _6 = *pNumError;
+  if (_6 == 0)
+    goto <bb 4>; [INV]
+  else
+    goto <bb 5>; [INV]
+
+  <bb 4> :
+  # DEBUG BEGIN_STMT
+  *pTail = u16NodeToAdd;
+
+  <bb 5> :
+  # DEBUG BEGIN_STMT
+  _7 = *pNumError;
+  _8 = _7 + 1;
+  *pNumError = _8;
+  goto <bb 7>; [INV]
+
+  <bb 6> :
+  # DEBUG BEGIN_STMT
+  RetVal = 1;
+
+  <bb 7> :
+  # DEBUG BEGIN_STMT
+  D.5839 = RetVal;
+  return D.5839;
+
+}
+
+
+Det_InitDataNode (uint16 ModuleId, uint8 InstanceId, uint8 ApiId, uint8 ErrorId, struct Det_LinkedListStateType * pDetErrorState)
+{
+  uint8 * pErrorId;
+  uint8 * pApiId;
+  uint8 * pInstanceId;
+  uint16 * pModuleId;
+  uint32 * pNumError;
+  uint16 u16RetNode;
+  uint16 u16Count;
+  uint16 D.5832;
+
+  <bb 2> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  u16RetNode = 65535;
+  # DEBUG BEGIN_STMT
+  pNumError = pDetErrorState->pNumErrors;
+  # DEBUG BEGIN_STMT
+  pModuleId = pDetErrorState->pModuleId;
+  # DEBUG BEGIN_STMT
+  pInstanceId = pDetErrorState->pInstanceId;
+  # DEBUG BEGIN_STMT
+  pApiId = pDetErrorState->pApiId;
+  # DEBUG BEGIN_STMT
+  pErrorId = pDetErrorState->pErrorId;
+  # DEBUG BEGIN_STMT
+  _1 = *pNumError;
+  if (_1 <= 9)
+    goto <bb 3>; [INV]
+  else
+    goto <bb 11>; [INV]
+
+  <bb 3> :
+  # DEBUG BEGIN_STMT
+  u16Count = 0;
+  goto <bb 10>; [INV]
+
+  <bb 4> :
+  # DEBUG BEGIN_STMT
+  _2 = (unsigned int) u16Count;
+  _3 = _2 * 2;
+  _4 = pModuleId + _3;
+  _5 = *_4;
+  if (_5 == 65535)
+    goto <bb 5>; [INV]
+  else
+    goto <bb 9>; [INV]
+
+  <bb 5> :
+  _6 = (sizetype) u16Count;
+  _7 = pInstanceId + _6;
+  _8 = *_7;
+  if (_8 == 255)
+    goto <bb 6>; [INV]
+  else
+    goto <bb 9>; [INV]
+
+  <bb 6> :
+  _9 = (sizetype) u16Count;
+  _10 = pApiId + _9;
+  _11 = *_10;
+  if (_11 == 255)
+    goto <bb 7>; [INV]
+  else
+    goto <bb 9>; [INV]
+
+  <bb 7> :
+  _12 = (sizetype) u16Count;
+  _13 = pErrorId + _12;
+  _14 = *_13;
+  if (_14 == 255)
+    goto <bb 8>; [INV]
+  else
+    goto <bb 9>; [INV]
+
+  <bb 8> :
+  # DEBUG BEGIN_STMT
+  _15 = (unsigned int) u16Count;
+  _16 = _15 * 2;
+  _17 = pModuleId + _16;
+  *_17 = ModuleId;
+  # DEBUG BEGIN_STMT
+  _18 = (sizetype) u16Count;
+  _19 = pInstanceId + _18;
+  *_19 = InstanceId;
+  # DEBUG BEGIN_STMT
+  _20 = (sizetype) u16Count;
+  _21 = pApiId + _20;
+  *_21 = ApiId;
+  # DEBUG BEGIN_STMT
+  _22 = (sizetype) u16Count;
+  _23 = pErrorId + _22;
+  *_23 = ErrorId;
+  # DEBUG BEGIN_STMT
+  u16RetNode = u16Count;
+  # DEBUG BEGIN_STMT
+  goto <bb 12>; [INV]
+
+  <bb 9> :
+  # DEBUG BEGIN_STMT
+  u16Count.0_24 = u16Count;
+  u16Count = u16Count.0_24 + 1;
+
+  <bb 10> :
+  # DEBUG BEGIN_STMT
+  if (u16Count <= 9)
+    goto <bb 4>; [INV]
+  else
+    goto <bb 12>; [INV]
+
+  <bb 11> :
+  # DEBUG BEGIN_STMT
+  _25 = pDetErrorState->pOverflow;
+  *_25 = 1;
+
+  <bb 12> :
+  # DEBUG BEGIN_STMT
+  D.5832 = u16RetNode;
+  return D.5832;
+
+}
+
+
+Det_Start ()
+{
+  <bb 2> :
+  # DEBUG BEGIN_STMT
+  return;
+
+}
+
+
+Det_ReportTransientFault (uint16 ModuleId, uint8 InstanceId, uint8 ApiId, uint8 FaultId)
+{
+  uint32 u32CoreId;
+  Std_ReturnType RetVal;
+  uint16 u16NodeToAdd;
+  Std_ReturnType D.5819;
+
+  <bb 2> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _1 = Sys_GetCoreID ();
+  u32CoreId = (uint32) _1;
+  # DEBUG BEGIN_STMT
+  __asm__ __volatile__(" cpsid i");
+  # DEBUG BEGIN_STMT
+  _2 = Det_ModuleState[u32CoreId];
+  if (_2 == 0)
+    goto <bb 3>; [INV]
+  else
+    goto <bb 4>; [INV]
+
+  <bb 3> :
+  # DEBUG BEGIN_STMT
+  Det_Init ();
+
+  <bb 4> :
+  # DEBUG BEGIN_STMT
+  _3 = &Det_aTransientErrorState[u32CoreId];
+  u16NodeToAdd = Det_InitDataNode (ModuleId, InstanceId, ApiId, FaultId, _3);
+  # DEBUG BEGIN_STMT
+  if (u16NodeToAdd != 65535)
+    goto <bb 5>; [INV]
+  else
+    goto <bb 6>; [INV]
+
+  <bb 5> :
+  # DEBUG BEGIN_STMT
+  _4 = &Det_aTransientErrorState[u32CoreId];
+  RetVal = Det_LinkNodeToHead (u16NodeToAdd, _4);
+  goto <bb 7>; [INV]
+
+  <bb 6> :
+  # DEBUG BEGIN_STMT
+  RetVal = 1;
+
+  <bb 7> :
+  # DEBUG BEGIN_STMT
+  __asm__ __volatile__(" cpsie i");
+  # DEBUG BEGIN_STMT
+  D.5819 = RetVal;
+  return D.5819;
+
+}
+
+
+Det_ReportRuntimeError (uint16 ModuleId, uint8 InstanceId, uint8 ApiId, uint8 ErrorId)
+{
+  uint32 u32CoreId;
+  Std_ReturnType RetVal;
+  uint16 u16NodeToAdd;
+  Std_ReturnType D.5812;
+
+  <bb 2> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _1 = Sys_GetCoreID ();
+  u32CoreId = (uint32) _1;
+  # DEBUG BEGIN_STMT
+  __asm__ __volatile__(" cpsid i");
+  # DEBUG BEGIN_STMT
+  _2 = Det_ModuleState[u32CoreId];
+  if (_2 == 0)
+    goto <bb 3>; [INV]
+  else
+    goto <bb 4>; [INV]
+
+  <bb 3> :
+  # DEBUG BEGIN_STMT
+  Det_Init ();
+
+  <bb 4> :
+  # DEBUG BEGIN_STMT
+  _3 = &Det_aRuntimeErrorState[u32CoreId];
+  u16NodeToAdd = Det_InitDataNode (ModuleId, InstanceId, ApiId, ErrorId, _3);
+  # DEBUG BEGIN_STMT
+  if (u16NodeToAdd != 65535)
+    goto <bb 5>; [INV]
+  else
+    goto <bb 6>; [INV]
+
+  <bb 5> :
+  # DEBUG BEGIN_STMT
+  _4 = &Det_aRuntimeErrorState[u32CoreId];
+  RetVal = Det_LinkNodeToHead (u16NodeToAdd, _4);
+  goto <bb 7>; [INV]
+
+  <bb 6> :
+  # DEBUG BEGIN_STMT
+  RetVal = 1;
+
+  <bb 7> :
+  # DEBUG BEGIN_STMT
+  __asm__ __volatile__(" cpsie i");
+  # DEBUG BEGIN_STMT
+  D.5812 = RetVal;
+  return D.5812;
+
+}
+
+
+Det_ReportError (uint16 ModuleId, uint8 InstanceId, uint8 ApiId, uint8 ErrorId)
+{
+  uint32 u32CoreId;
+  Std_ReturnType RetVal;
+  uint16 u16NodeToAdd;
+  Std_ReturnType D.5805;
+
+  <bb 2> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _1 = Sys_GetCoreID ();
+  u32CoreId = (uint32) _1;
+  # DEBUG BEGIN_STMT
+  __asm__ __volatile__(" cpsid i");
+  # DEBUG BEGIN_STMT
+  _2 = Det_ModuleState[u32CoreId];
+  if (_2 == 0)
+    goto <bb 3>; [INV]
+  else
+    goto <bb 4>; [INV]
+
+  <bb 3> :
+  # DEBUG BEGIN_STMT
+  Det_Init ();
+
+  <bb 4> :
+  # DEBUG BEGIN_STMT
+  _3 = &Det_aErrorState[u32CoreId];
+  u16NodeToAdd = Det_InitDataNode (ModuleId, InstanceId, ApiId, ErrorId, _3);
+  # DEBUG BEGIN_STMT
+  if (u16NodeToAdd != 65535)
+    goto <bb 5>; [INV]
+  else
+    goto <bb 6>; [INV]
+
+  <bb 5> :
+  # DEBUG BEGIN_STMT
+  _4 = &Det_aErrorState[u32CoreId];
+  RetVal = Det_LinkNodeToHead (u16NodeToAdd, _4);
+  goto <bb 7>; [INV]
+
+  <bb 6> :
+  # DEBUG BEGIN_STMT
+  RetVal = 1;
+
+  <bb 7> :
+  # DEBUG BEGIN_STMT
+  __asm__ __volatile__(" cpsie i");
+  # DEBUG BEGIN_STMT
+  D.5805 = RetVal;
+  return D.5805;
+
+}
+
+
+Det_Init ()
+{
+  uint32 u32CoreId;
+
+  <bb 2> :
+  # DEBUG BEGIN_STMT
+  _1 = Sys_GetCoreID ();
+  u32CoreId = (uint32) _1;
+  # DEBUG BEGIN_STMT
+  Det_InitLinkedList ();
+  # DEBUG BEGIN_STMT
+  _2 = &Det_aErrorState[u32CoreId];
+  Det_FreeNodesInLinkedList (_2);
+  # DEBUG BEGIN_STMT
+  _3 = &Det_aRuntimeErrorState[u32CoreId];
+  Det_FreeNodesInLinkedList (_3);
+  # DEBUG BEGIN_STMT
+  _4 = &Det_aTransientErrorState[u32CoreId];
+  Det_FreeNodesInLinkedList (_4);
+  return;
+
+}
+
+

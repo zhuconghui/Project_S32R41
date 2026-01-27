@@ -1,0 +1,814 @@
+sntp_getserver (u8_t idx)
+{
+  int _1;
+  const struct ip_addr_t * _2;
+  const struct ip_addr_t * _4;
+  const struct ip_addr_t * _5;
+
+  <bb 2> :
+  # DEBUG BEGIN_STMT
+  if (idx_3(D) == 0)
+    goto <bb 3>; [INV]
+  else
+    goto <bb 4>; [INV]
+
+  <bb 3> :
+  # DEBUG BEGIN_STMT
+  _1 = (int) idx_3(D);
+  _5 = &sntp_servers[_1].addr;
+  // predicted unlikely by early return (on trees) predictor.
+  goto <bb 5>; [INV]
+
+  <bb 4> :
+  # DEBUG BEGIN_STMT
+  _4 = &ip_addr_any;
+
+  <bb 5> :
+  # _2 = PHI <_5(3), _4(4)>
+  return _2;
+
+}
+
+
+sntp_setserver (u8_t idx, const struct ip_addr_t * server)
+{
+  int _1;
+  int _2;
+  int _3;
+  int _4;
+  int _5;
+  int _6;
+  int _7;
+
+  <bb 2> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  if (idx_9(D) == 0)
+    goto <bb 3>; [INV]
+  else
+    goto <bb 6>; [INV]
+
+  <bb 3> :
+  # DEBUG BEGIN_STMT
+  if (server_11(D) != 0B)
+    goto <bb 4>; [INV]
+  else
+    goto <bb 5>; [INV]
+
+  <bb 4> :
+  # DEBUG BEGIN_STMT
+  _1 = (int) idx_9(D);
+  sntp_servers[_1].addr = *server_11(D);
+  goto <bb 6>; [INV]
+
+  <bb 5> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _2 = (int) idx_9(D);
+  sntp_servers[_2].addr.u_addr.ip6.addr[0] = 0;
+  # DEBUG BEGIN_STMT
+  _3 = (int) idx_9(D);
+  sntp_servers[_3].addr.u_addr.ip6.addr[1] = 0;
+  # DEBUG BEGIN_STMT
+  _4 = (int) idx_9(D);
+  sntp_servers[_4].addr.u_addr.ip6.addr[2] = 0;
+  # DEBUG BEGIN_STMT
+  _5 = (int) idx_9(D);
+  sntp_servers[_5].addr.u_addr.ip6.addr[3] = 0;
+  # DEBUG BEGIN_STMT
+  _6 = (int) idx_9(D);
+  sntp_servers[_6].addr.u_addr.ip6.zone = 0;
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _7 = (int) idx_9(D);
+  sntp_servers[_7].addr.type = 0;
+
+  <bb 6> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  return;
+
+}
+
+
+sntp_getreachability (u8_t idx)
+{
+  int _1;
+  u8_t _2;
+  u8_t _4;
+  u8_t _6;
+
+  <bb 2> :
+  # DEBUG BEGIN_STMT
+  if (idx_3(D) == 0)
+    goto <bb 3>; [INV]
+  else
+    goto <bb 4>; [INV]
+
+  <bb 3> :
+  # DEBUG BEGIN_STMT
+  _1 = (int) idx_3(D);
+  _6 = sntp_servers[_1].reachability;
+  // predicted unlikely by early return (on trees) predictor.
+  goto <bb 5>; [INV]
+
+  <bb 4> :
+  # DEBUG BEGIN_STMT
+  _4 = 0;
+
+  <bb 5> :
+  # _2 = PHI <_6(3), _4(4)>
+  return _2;
+
+}
+
+
+sntp_getoperatingmode ()
+{
+  u8_t _2;
+
+  <bb 2> :
+  # DEBUG BEGIN_STMT
+  _2 = sntp_opmode;
+  return _2;
+
+}
+
+
+sntp_setoperatingmode (u8_t operating_mode)
+{
+  struct udp_pcb * sntp_pcb.25_1;
+
+  <bb 2> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  if (operating_mode_4(D) > 1)
+    goto <bb 3>; [INV]
+  else
+    goto <bb 4>; [INV]
+
+  <bb 3> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  __asm__ __volatile__("BKPT #0
+	");
+  # DEBUG BEGIN_STMT
+  goto <bb 3>; [INV]
+
+  <bb 4> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  sntp_pcb.25_1 = sntp_pcb;
+  if (sntp_pcb.25_1 != 0B)
+    goto <bb 5>; [INV]
+  else
+    goto <bb 6>; [INV]
+
+  <bb 5> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  __asm__ __volatile__("BKPT #0
+	");
+  # DEBUG BEGIN_STMT
+  goto <bb 5>; [INV]
+
+  <bb 6> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  sntp_opmode = operating_mode_4(D);
+  return;
+
+}
+
+
+sntp_enabled ()
+{
+  struct udp_pcb * sntp_pcb.24_1;
+  _Bool _2;
+  u8_t _4;
+
+  <bb 2> :
+  # DEBUG BEGIN_STMT
+  sntp_pcb.24_1 = sntp_pcb;
+  _2 = sntp_pcb.24_1 != 0B;
+  _4 = (u8_t) _2;
+  return _4;
+
+}
+
+
+sntp_stop ()
+{
+  u8_t i;
+  struct udp_pcb * sntp_pcb.21_1;
+  int _2;
+  unsigned char i.22_3;
+  struct udp_pcb * sntp_pcb.23_4;
+
+  <bb 2> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  sntp_pcb.21_1 = sntp_pcb;
+  if (sntp_pcb.21_1 != 0B)
+    goto <bb 3>; [INV]
+  else
+    goto <bb 7>; [INV]
+
+  <bb 3> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  i_9 = 0;
+  # DEBUG i => i_9
+  goto <bb 5>; [INV]
+
+  <bb 4> :
+  # DEBUG BEGIN_STMT
+  _2 = (int) i_5;
+  sntp_servers[_2].reachability = 0;
+  # DEBUG BEGIN_STMT
+  i.22_3 = i_5;
+  i_15 = i.22_3 + 1;
+  # DEBUG i => i_15
+
+  <bb 5> :
+  # i_5 = PHI <i_9(3), i_15(4)>
+  # DEBUG i => i_5
+  # DEBUG BEGIN_STMT
+  if (i_5 == 0)
+    goto <bb 4>; [INV]
+  else
+    goto <bb 6>; [INV]
+
+  <bb 6> :
+  # DEBUG BEGIN_STMT
+  sys_untimeout (sntp_request, 0B);
+  # DEBUG BEGIN_STMT
+  sys_untimeout (sntp_retry, 0B);
+  # DEBUG BEGIN_STMT
+  sntp_pcb.23_4 = sntp_pcb;
+  udp_remove (sntp_pcb.23_4);
+  # DEBUG BEGIN_STMT
+  sntp_pcb = 0B;
+
+  <bb 7> :
+  return;
+
+}
+
+
+sntp_init ()
+{
+  struct udp_pcb * sntp_pcb.0_1;
+  struct udp_pcb * _2;
+  struct udp_pcb * sntp_pcb.1_3;
+  struct udp_pcb * sntp_pcb.2_4;
+  struct udp_pcb * sntp_pcb.3_5;
+  unsigned char sntp_opmode.4_6;
+  int _7;
+  long unsigned int _8;
+  long unsigned int _9;
+  unsigned char sntp_opmode.5_10;
+  struct udp_pcb * sntp_pcb.6_11;
+  unsigned char _12;
+  struct udp_pcb * sntp_pcb.7_13;
+  unsigned char _14;
+  struct udp_pcb * sntp_pcb.8_15;
+
+  <bb 2> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  sntp_pcb.0_1 = sntp_pcb;
+  if (sntp_pcb.0_1 == 0B)
+    goto <bb 3>; [INV]
+  else
+    goto <bb 10>; [INV]
+
+  <bb 3> :
+  # DEBUG BEGIN_STMT
+  _2 = udp_new_ip_type (46);
+  sntp_pcb = _2;
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  sntp_pcb.1_3 = sntp_pcb;
+  if (sntp_pcb.1_3 == 0B)
+    goto <bb 4>; [INV]
+  else
+    goto <bb 5>; [INV]
+
+  <bb 4> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  __asm__ __volatile__("BKPT #0
+	");
+  # DEBUG BEGIN_STMT
+  goto <bb 4>; [INV]
+
+  <bb 5> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  sntp_pcb.2_4 = sntp_pcb;
+  if (sntp_pcb.2_4 != 0B)
+    goto <bb 6>; [INV]
+  else
+    goto <bb 10>; [INV]
+
+  <bb 6> :
+  # DEBUG BEGIN_STMT
+  sntp_pcb.3_5 = sntp_pcb;
+  udp_recv (sntp_pcb.3_5, sntp_recv, 0B);
+  # DEBUG BEGIN_STMT
+  sntp_opmode.4_6 = sntp_opmode;
+  if (sntp_opmode.4_6 == 0)
+    goto <bb 7>; [INV]
+  else
+    goto <bb 8>; [INV]
+
+  <bb 7> :
+  # DEBUG BEGIN_STMT
+  sntp_retry_timeout = 15000;
+  # DEBUG BEGIN_STMT
+  _7 = rand ();
+  _8 = (long unsigned int) _7;
+  _9 = _8 % 5000;
+  sys_timeout (_9, sntp_request, 0B);
+  goto <bb 10>; [INV]
+
+  <bb 8> :
+  # DEBUG BEGIN_STMT
+  sntp_opmode.5_10 = sntp_opmode;
+  if (sntp_opmode.5_10 == 1)
+    goto <bb 9>; [INV]
+  else
+    goto <bb 10>; [INV]
+
+  <bb 9> :
+  # DEBUG BEGIN_STMT
+  sntp_pcb.6_11 = sntp_pcb;
+  _12 = sntp_pcb.6_11->so_options;
+  sntp_pcb.7_13 = sntp_pcb;
+  _14 = _12 | 32;
+  sntp_pcb.7_13->so_options = _14;
+  # DEBUG BEGIN_STMT
+  sntp_pcb.8_15 = sntp_pcb;
+  udp_bind (sntp_pcb.8_15, &ip_addr_any_type, 123);
+
+  <bb 10> :
+  return;
+
+}
+
+
+sntp_request (void * arg)
+{
+  err_t err;
+  struct ip_addr_t sntp_server_address;
+  unsigned char _1;
+  long unsigned int _2;
+  long unsigned int _3;
+  long unsigned int _4;
+  long unsigned int _5;
+  long unsigned int _6;
+  err_t iftmp.9_7;
+  _Bool iftmp.10_8;
+  int iftmp.11_9;
+  _Bool iftmp.10_13;
+  int iftmp.11_14;
+  int iftmp.11_15;
+  _Bool iftmp.10_16;
+  err_t iftmp.9_17;
+  err_t iftmp.9_18;
+
+  <bb 2> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  sntp_server_address = sntp_servers[0].addr;
+  # DEBUG BEGIN_STMT
+  _1 = sntp_server_address.type;
+  if (_1 == 6)
+    goto <bb 3>; [INV]
+  else
+    goto <bb 10>; [INV]
+
+  <bb 3> :
+  _2 = sntp_server_address.u_addr.ip6.addr[0];
+  if (_2 == 0)
+    goto <bb 4>; [INV]
+  else
+    goto <bb 8>; [INV]
+
+  <bb 4> :
+  _3 = sntp_server_address.u_addr.ip6.addr[1];
+  if (_3 == 0)
+    goto <bb 5>; [INV]
+  else
+    goto <bb 8>; [INV]
+
+  <bb 5> :
+  _4 = sntp_server_address.u_addr.ip6.addr[2];
+  if (_4 == 0)
+    goto <bb 6>; [INV]
+  else
+    goto <bb 8>; [INV]
+
+  <bb 6> :
+  _5 = sntp_server_address.u_addr.ip6.addr[3];
+  if (_5 == 0)
+    goto <bb 7>; [INV]
+  else
+    goto <bb 8>; [INV]
+
+  <bb 7> :
+  iftmp.11_14 = 1;
+  goto <bb 9>; [INV]
+
+  <bb 8> :
+  iftmp.11_15 = 0;
+
+  <bb 9> :
+  # iftmp.11_9 = PHI <iftmp.11_14(7), iftmp.11_15(8)>
+  iftmp.10_16 = (_Bool) iftmp.11_9;
+  goto <bb 11>; [INV]
+
+  <bb 10> :
+  _6 = sntp_server_address.u_addr.ip4.addr;
+  iftmp.10_13 = _6 == 0;
+
+  <bb 11> :
+  # iftmp.10_8 = PHI <iftmp.10_16(9), iftmp.10_13(10)>
+  if (iftmp.10_8 != 0)
+    goto <bb 12>; [INV]
+  else
+    goto <bb 13>; [INV]
+
+  <bb 12> :
+  iftmp.9_18 = -16;
+  goto <bb 14>; [INV]
+
+  <bb 13> :
+  iftmp.9_17 = 0;
+
+  <bb 14> :
+  # iftmp.9_7 = PHI <iftmp.9_18(12), iftmp.9_17(13)>
+  err_19 = iftmp.9_7;
+  # DEBUG err => err_19
+  # DEBUG BEGIN_STMT
+  if (err_19 == 0)
+    goto <bb 15>; [INV]
+  else
+    goto <bb 16>; [INV]
+
+  <bb 15> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  sntp_send_request (&sntp_server_address);
+  goto <bb 17>; [INV]
+
+  <bb 16> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  sys_untimeout (sntp_retry, 0B);
+  # DEBUG BEGIN_STMT
+  sys_timeout (15000, sntp_retry, 0B);
+
+  <bb 17> :
+  sntp_server_address ={v} {CLOBBER};
+  return;
+
+}
+
+
+sntp_send_request (const struct ip_addr_t * server_addr)
+{
+  struct sntp_msg * sntpmsg;
+  struct pbuf * p;
+  struct udp_pcb * sntp_pcb.15_1;
+  unsigned char _2;
+  unsigned char _3;
+
+  <bb 2> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  if (server_addr_6(D) == 0B)
+    goto <bb 3>; [INV]
+  else
+    goto <bb 4>; [INV]
+
+  <bb 3> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  __asm__ __volatile__("BKPT #0
+	");
+  # DEBUG BEGIN_STMT
+  goto <bb 3>; [INV]
+
+  <bb 4> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  p_9 = pbuf_alloc (74, 48, 640);
+  # DEBUG p => p_9
+  # DEBUG BEGIN_STMT
+  if (p_9 != 0B)
+    goto <bb 5>; [INV]
+  else
+    goto <bb 6>; [INV]
+
+  <bb 5> :
+  # DEBUG BEGIN_STMT
+  sntpmsg_12 = p_9->payload;
+  # DEBUG sntpmsg => sntpmsg_12
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  sntp_initialize_request (sntpmsg_12);
+  # DEBUG BEGIN_STMT
+  sntp_pcb.15_1 = sntp_pcb;
+  udp_sendto (sntp_pcb.15_1, p_9, server_addr_6(D), 123);
+  # DEBUG BEGIN_STMT
+  pbuf_free (p_9);
+  # DEBUG BEGIN_STMT
+  _2 = sntp_servers[0].reachability;
+  _3 = _2 << 1;
+  sntp_servers[0].reachability = _3;
+  # DEBUG BEGIN_STMT
+  sys_untimeout (sntp_retry, 0B);
+  # DEBUG BEGIN_STMT
+  sys_timeout (15000, sntp_retry, 0B);
+  goto <bb 7>; [INV]
+
+  <bb 6> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  sys_untimeout (sntp_request, 0B);
+  # DEBUG BEGIN_STMT
+  sys_timeout (15000, sntp_request, 0B);
+
+  <bb 7> :
+  return;
+
+}
+
+
+sntp_recv (void * arg, struct udp_pcb * pcb, struct pbuf * p, const struct ip_addr_t * addr, u16_t port)
+{
+  u32_t sntp_update_delay;
+  err_t err;
+  u8_t stratum;
+  u8_t mode;
+  struct sntp_timestamps timestamps;
+  short unsigned int _1;
+  unsigned char _2;
+  unsigned char sntp_opmode.16_3;
+  unsigned char sntp_opmode.17_4;
+  unsigned char _5;
+  unsigned char _6;
+  unsigned char sntp_opmode.18_7;
+  unsigned char sntp_opmode.19_8;
+
+  <bb 2> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  err_12 = -16;
+  # DEBUG err => err_12
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _1 = p_14(D)->tot_len;
+  if (_1 == 48)
+    goto <bb 3>; [INV]
+  else
+    goto <bb 11>; [INV]
+
+  <bb 3> :
+  # DEBUG BEGIN_STMT
+  _2 = pbuf_get_at (p_14(D), 0);
+  mode_16 = _2 & 7;
+  # DEBUG mode => mode_16
+  # DEBUG BEGIN_STMT
+  sntp_opmode.16_3 = sntp_opmode;
+  if (sntp_opmode.16_3 == 0)
+    goto <bb 4>; [INV]
+  else
+    goto <bb 5>; [INV]
+
+  <bb 4> :
+  if (mode_16 == 4)
+    goto <bb 7>; [INV]
+  else
+    goto <bb 5>; [INV]
+
+  <bb 5> :
+  sntp_opmode.17_4 = sntp_opmode;
+  if (sntp_opmode.17_4 == 1)
+    goto <bb 6>; [INV]
+  else
+    goto <bb 10>; [INV]
+
+  <bb 6> :
+  if (mode_16 == 5)
+    goto <bb 7>; [INV]
+  else
+    goto <bb 10>; [INV]
+
+  <bb 7> :
+  # DEBUG BEGIN_STMT
+  stratum_19 = pbuf_get_at (p_14(D), 1);
+  # DEBUG stratum => stratum_19
+  # DEBUG BEGIN_STMT
+  if (stratum_19 == 0)
+    goto <bb 8>; [INV]
+  else
+    goto <bb 9>; [INV]
+
+  <bb 8> :
+  # DEBUG BEGIN_STMT
+  err_22 = 1;
+  # DEBUG err => err_22
+  # DEBUG BEGIN_STMT
+  goto <bb 11>; [INV]
+
+  <bb 9> :
+  # DEBUG BEGIN_STMT
+  pbuf_copy_partial (p_14(D), &timestamps, 8, 40);
+  # DEBUG BEGIN_STMT
+  err_21 = 0;
+  # DEBUG err => err_21
+  goto <bb 11>; [INV]
+
+  <bb 10> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  err_17 = -3;
+  # DEBUG err => err_17
+
+  <bb 11> :
+  # err_9 = PHI <err_12(2), err_17(10), err_21(9), err_22(8)>
+  # DEBUG err => err_9
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  pbuf_free (p_14(D));
+  # DEBUG BEGIN_STMT
+  if (err_9 == 0)
+    goto <bb 12>; [INV]
+  else
+    goto <bb 14>; [INV]
+
+  <bb 12> :
+  # DEBUG BEGIN_STMT
+  sntp_process (&timestamps);
+  # DEBUG BEGIN_STMT
+  _5 = sntp_servers[0].reachability;
+  _6 = _5 | 1;
+  sntp_servers[0].reachability = _6;
+  # DEBUG BEGIN_STMT
+  sntp_opmode.18_7 = sntp_opmode;
+  if (sntp_opmode.18_7 == 0)
+    goto <bb 13>; [INV]
+  else
+    goto <bb 17>; [INV]
+
+  <bb 13> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  sys_untimeout (sntp_retry, 0B);
+  # DEBUG BEGIN_STMT
+  sys_untimeout (sntp_request, 0B);
+  # DEBUG BEGIN_STMT
+  sntp_retry_timeout = 15000;
+  # DEBUG BEGIN_STMT
+  sntp_update_delay_30 = 3600000;
+  # DEBUG sntp_update_delay => sntp_update_delay_30
+  # DEBUG BEGIN_STMT
+  sys_timeout (sntp_update_delay_30, sntp_request, 0B);
+  goto <bb 17>; [INV]
+
+  <bb 14> :
+  # DEBUG BEGIN_STMT
+  if (err_9 == 1)
+    goto <bb 15>; [INV]
+  else
+    goto <bb 17>; [INV]
+
+  <bb 15> :
+  # DEBUG BEGIN_STMT
+  sntp_opmode.19_8 = sntp_opmode;
+  if (sntp_opmode.19_8 == 0)
+    goto <bb 16>; [INV]
+  else
+    goto <bb 17>; [INV]
+
+  <bb 16> :
+  # DEBUG BEGIN_STMT
+  sntp_retry (0B);
+
+  <bb 17> :
+  # DEBUG BEGIN_STMT
+  timestamps ={v} {CLOBBER};
+  return;
+
+}
+
+
+sntp_retry (void * arg)
+{
+  u32_t new_retry_timeout;
+  long unsigned int sntp_retry_timeout.12_1;
+  long unsigned int sntp_retry_timeout.13_2;
+  long unsigned int sntp_retry_timeout.14_3;
+
+  <bb 2> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  sys_untimeout (sntp_request, 0B);
+  # DEBUG BEGIN_STMT
+  sntp_retry_timeout.12_1 = sntp_retry_timeout;
+  sys_timeout (sntp_retry_timeout.12_1, sntp_request, 0B);
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  sntp_retry_timeout.13_2 = sntp_retry_timeout;
+  new_retry_timeout_8 = sntp_retry_timeout.13_2 << 1;
+  # DEBUG new_retry_timeout => new_retry_timeout_8
+  # DEBUG BEGIN_STMT
+  if (new_retry_timeout_8 <= 150000)
+    goto <bb 3>; [INV]
+  else
+    goto <bb 5>; [INV]
+
+  <bb 3> :
+  sntp_retry_timeout.14_3 = sntp_retry_timeout;
+  if (new_retry_timeout_8 > sntp_retry_timeout.14_3)
+    goto <bb 4>; [INV]
+  else
+    goto <bb 5>; [INV]
+
+  <bb 4> :
+  # DEBUG BEGIN_STMT
+  sntp_retry_timeout = new_retry_timeout_8;
+  goto <bb 6>; [INV]
+
+  <bb 5> :
+  # DEBUG BEGIN_STMT
+  sntp_retry_timeout = 150000;
+
+  <bb 6> :
+  return;
+
+}
+
+
+sntp_initialize_request (struct sntp_msg * req)
+{
+  <bb 2> :
+  # DEBUG BEGIN_STMT
+  memset (req_2(D), 0, 48);
+  # DEBUG BEGIN_STMT
+  req_2(D)->li_vn_mode = 35;
+  return;
+
+}
+
+
+sntp_process (const struct sntp_timestamps * timestamps)
+{
+  u32_t frac;
+  s32_t sec;
+  long unsigned int _1;
+  long unsigned int _2;
+  long unsigned int _3;
+  long unsigned int sec.20_4;
+
+  <bb 2> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _1 = timestamps_6(D)->xmit.sec;
+  _2 = lwip_htonl (_1);
+  sec_8 = (s32_t) _2;
+  # DEBUG sec => sec_8
+  # DEBUG BEGIN_STMT
+  _3 = timestamps_6(D)->xmit.frac;
+  frac_10 = lwip_htonl (_3);
+  # DEBUG frac => frac_10
+  # DEBUG BEGIN_STMT
+  sec.20_4 = (long unsigned int) sec_8;
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  return;
+
+}
+
+

@@ -1,0 +1,500 @@
+bridgeif_fdb_init (u16_t max_fdb_entries)
+{
+  mem_size_t alloc_len;
+  size_t alloc_len_sizet;
+  struct bridgeif_dfdb_t * fdb;
+  unsigned int _1;
+  unsigned int _2;
+  struct bridgeif_dfdb_t * _3;
+  void * _4;
+  void * _16;
+  void * _17;
+
+  <bb 2> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _1 = (unsigned int) max_fdb_entries_7(D);
+  _2 = _1 * 16;
+  alloc_len_sizet_8 = _2 + 8;
+  # DEBUG alloc_len_sizet => alloc_len_sizet_8
+  # DEBUG BEGIN_STMT
+  alloc_len_9 = alloc_len_sizet_8;
+  # DEBUG alloc_len => alloc_len_9
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  if (alloc_len_9 != alloc_len_sizet_8)
+    goto <bb 3>; [INV]
+  else
+    goto <bb 4>; [INV]
+
+  <bb 3> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  __asm__ __volatile__("BKPT #0
+	");
+  # DEBUG BEGIN_STMT
+  goto <bb 3>; [INV]
+
+  <bb 4> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  fdb_12 = mem_calloc (1, alloc_len_9);
+  # DEBUG fdb => fdb_12
+  # DEBUG BEGIN_STMT
+  if (fdb_12 == 0B)
+    goto <bb 5>; [INV]
+  else
+    goto <bb 6>; [INV]
+
+  <bb 5> :
+  # DEBUG BEGIN_STMT
+  _17 = 0B;
+  // predicted unlikely by early return (on trees) predictor.
+  goto <bb 7>; [INV]
+
+  <bb 6> :
+  # DEBUG BEGIN_STMT
+  fdb_12->max_fdb_entries = max_fdb_entries_7(D);
+  # DEBUG BEGIN_STMT
+  _3 = fdb_12 + 8;
+  fdb_12->fdb = _3;
+  # DEBUG BEGIN_STMT
+  sys_timeout (1000, bridgeif_age_tmr, fdb_12);
+  # DEBUG BEGIN_STMT
+  _16 = fdb_12;
+
+  <bb 7> :
+  # _4 = PHI <_17(5), _16(6)>
+  return _4;
+
+}
+
+
+bridgeif_age_tmr (void * arg)
+{
+  struct bridgeif_dfdb_t * fdb;
+
+  <bb 2> :
+  # DEBUG BEGIN_STMT
+  fdb_3 = arg_2(D);
+  # DEBUG fdb => fdb_3
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  if (arg_2(D) == 0B)
+    goto <bb 3>; [INV]
+  else
+    goto <bb 4>; [INV]
+
+  <bb 3> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  __asm__ __volatile__("BKPT #0
+	");
+  # DEBUG BEGIN_STMT
+  goto <bb 3>; [INV]
+
+  <bb 4> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  bridgeif_fdb_age_one_second (fdb_3);
+  # DEBUG BEGIN_STMT
+  sys_timeout (1000, bridgeif_age_tmr, arg_2(D));
+  return;
+
+}
+
+
+bridgeif_fdb_age_one_second (void * fdb_ptr)
+{
+  struct bridgeif_dfdb_entry_t * e;
+  struct bridgeif_dfdb_t * fdb;
+  int i;
+  struct bridgeif_dfdb_entry_t * _1;
+  unsigned int i.3_2;
+  unsigned int _3;
+  unsigned char _4;
+  long unsigned int _5;
+  unsigned char _6;
+  long unsigned int _7;
+  long unsigned int _8;
+  long unsigned int _9;
+  long unsigned int _10;
+  short unsigned int _11;
+  int _12;
+
+  <bb 2> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  fdb_17 = fdb_ptr_16(D);
+  # DEBUG fdb => fdb_17
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  i_18 = 0;
+  # DEBUG i => i_18
+  goto <bb 10>; [INV]
+
+  <bb 3> :
+  # DEBUG BEGIN_STMT
+  _1 = fdb_17->fdb;
+  i.3_2 = (unsigned int) i_13;
+  _3 = i.3_2 * 16;
+  e_20 = _1 + _3;
+  # DEBUG e => e_20
+  # DEBUG BEGIN_STMT
+  _4 = e_20->used;
+  if (_4 != 0)
+    goto <bb 4>; [INV]
+  else
+    goto <bb 9>; [INV]
+
+  <bb 4> :
+  _5 = e_20->ts;
+  if (_5 != 0)
+    goto <bb 5>; [INV]
+  else
+    goto <bb 9>; [INV]
+
+  <bb 5> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _6 = e_20->used;
+  if (_6 != 0)
+    goto <bb 6>; [INV]
+  else
+    goto <bb 9>; [INV]
+
+  <bb 6> :
+  _7 = e_20->ts;
+  if (_7 != 0)
+    goto <bb 7>; [INV]
+  else
+    goto <bb 9>; [INV]
+
+  <bb 7> :
+  # DEBUG BEGIN_STMT
+  _8 = e_20->ts;
+  _9 = _8 + 4294967295;
+  e_20->ts = _9;
+  _10 = e_20->ts;
+  if (_10 == 0)
+    goto <bb 8>; [INV]
+  else
+    goto <bb 9>; [INV]
+
+  <bb 8> :
+  # DEBUG BEGIN_STMT
+  e_20->used = 0;
+
+  <bb 9> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  i_23 = i_13 + 1;
+  # DEBUG i => i_23
+
+  <bb 10> :
+  # i_13 = PHI <i_18(2), i_23(9)>
+  # DEBUG i => i_13
+  # DEBUG BEGIN_STMT
+  _11 = fdb_17->max_fdb_entries;
+  _12 = (int) _11;
+  if (i_13 < _12)
+    goto <bb 3>; [INV]
+  else
+    goto <bb 11>; [INV]
+
+  <bb 11> :
+  # DEBUG BEGIN_STMT
+  return;
+
+}
+
+
+bridgeif_fdb_get_dst_ports (void * fdb_ptr, struct eth_addr * dst_addr)
+{
+  bridgeif_portmask_t ret;
+  struct bridgeif_dfdb_entry_t * e;
+  struct bridgeif_dfdb_t * fdb;
+  int i;
+  struct bridgeif_dfdb_entry_t * _1;
+  unsigned int i.2_2;
+  unsigned int _3;
+  unsigned char _4;
+  long unsigned int _5;
+  struct eth_addr * _6;
+  int _7;
+  unsigned char _8;
+  int _9;
+  int _10;
+  short unsigned int _11;
+  int _12;
+  bridgeif_portmask_t _14;
+  bridgeif_portmask_t _19;
+  bridgeif_portmask_t _23;
+
+  <bb 2> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  fdb_16 = fdb_ptr_15(D);
+  # DEBUG fdb => fdb_16
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  i_17 = 0;
+  # DEBUG i => i_17
+  goto <bb 8>; [INV]
+
+  <bb 3> :
+  # DEBUG BEGIN_STMT
+  _1 = fdb_16->fdb;
+  i.2_2 = (unsigned int) i_13;
+  _3 = i.2_2 * 16;
+  e_20 = _1 + _3;
+  # DEBUG e => e_20
+  # DEBUG BEGIN_STMT
+  _4 = e_20->used;
+  if (_4 != 0)
+    goto <bb 4>; [INV]
+  else
+    goto <bb 7>; [INV]
+
+  <bb 4> :
+  _5 = e_20->ts;
+  if (_5 != 0)
+    goto <bb 5>; [INV]
+  else
+    goto <bb 7>; [INV]
+
+  <bb 5> :
+  # DEBUG BEGIN_STMT
+  _6 = &e_20->addr;
+  _7 = memcmp (_6, dst_addr_21(D), 6);
+  if (_7 == 0)
+    goto <bb 6>; [INV]
+  else
+    goto <bb 7>; [INV]
+
+  <bb 6> :
+  # DEBUG BEGIN_STMT
+  _8 = e_20->port;
+  _9 = (int) _8;
+  _10 = 1 << _9;
+  ret_22 = (bridgeif_portmask_t) _10;
+  # DEBUG ret => ret_22
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _23 = ret_22;
+  // predicted unlikely by early return (on trees) predictor.
+  goto <bb 10>; [INV]
+
+  <bb 7> :
+  # DEBUG BEGIN_STMT
+  i_24 = i_13 + 1;
+  # DEBUG i => i_24
+
+  <bb 8> :
+  # i_13 = PHI <i_17(2), i_24(7)>
+  # DEBUG i => i_13
+  # DEBUG BEGIN_STMT
+  _11 = fdb_16->max_fdb_entries;
+  _12 = (int) _11;
+  if (i_13 < _12)
+    goto <bb 3>; [INV]
+  else
+    goto <bb 9>; [INV]
+
+  <bb 9> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _19 = 255;
+
+  <bb 10> :
+  # _14 = PHI <_23(6), _19(9)>
+  return _14;
+
+}
+
+
+bridgeif_fdb_update_src (void * fdb_ptr, struct eth_addr * src_addr, u8_t port_idx)
+{
+  struct bridgeif_dfdb_entry_t * e;
+  struct bridgeif_dfdb_entry_t * e;
+  struct bridgeif_dfdb_t * fdb;
+  int i;
+  struct bridgeif_dfdb_entry_t * _1;
+  unsigned int i.0_2;
+  unsigned int _3;
+  unsigned char _4;
+  long unsigned int _5;
+  struct eth_addr * _6;
+  int _7;
+  short unsigned int _8;
+  int _9;
+  struct bridgeif_dfdb_entry_t * _10;
+  unsigned int i.1_11;
+  unsigned int _12;
+  unsigned char _13;
+  long unsigned int _14;
+  unsigned char _15;
+  long unsigned int _16;
+  struct eth_addr * _17;
+  short unsigned int _18;
+  int _19;
+
+  <bb 2> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  fdb_24 = fdb_ptr_23(D);
+  # DEBUG fdb => fdb_24
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  i_25 = 0;
+  # DEBUG i => i_25
+  goto <bb 8>; [INV]
+
+  <bb 3> :
+  # DEBUG BEGIN_STMT
+  _1 = fdb_24->fdb;
+  i.0_2 = (unsigned int) i_20;
+  _3 = i.0_2 * 16;
+  e_36 = _1 + _3;
+  # DEBUG e => e_36
+  # DEBUG BEGIN_STMT
+  _4 = e_36->used;
+  if (_4 != 0)
+    goto <bb 4>; [INV]
+  else
+    goto <bb 7>; [INV]
+
+  <bb 4> :
+  _5 = e_36->ts;
+  if (_5 != 0)
+    goto <bb 5>; [INV]
+  else
+    goto <bb 7>; [INV]
+
+  <bb 5> :
+  # DEBUG BEGIN_STMT
+  _6 = &e_36->addr;
+  _7 = memcmp (_6, src_addr_29(D), 6);
+  if (_7 == 0)
+    goto <bb 6>; [INV]
+  else
+    goto <bb 7>; [INV]
+
+  <bb 6> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  e_36->ts = 300;
+  # DEBUG BEGIN_STMT
+  e_36->port = port_idx_32(D);
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  // predicted unlikely by early return (on trees) predictor.
+  goto <bb 17>; [INV]
+
+  <bb 7> :
+  # DEBUG BEGIN_STMT
+  i_39 = i_20 + 1;
+  # DEBUG i => i_39
+
+  <bb 8> :
+  # i_20 = PHI <i_25(2), i_39(7)>
+  # DEBUG i => i_20
+  # DEBUG BEGIN_STMT
+  _8 = fdb_24->max_fdb_entries;
+  _9 = (int) _8;
+  if (i_20 < _9)
+    goto <bb 3>; [INV]
+  else
+    goto <bb 9>; [INV]
+
+  <bb 9> :
+  # DEBUG BEGIN_STMT
+  i_27 = 0;
+  # DEBUG i => i_27
+  goto <bb 16>; [INV]
+
+  <bb 10> :
+  # DEBUG BEGIN_STMT
+  _10 = fdb_24->fdb;
+  i.1_11 = (unsigned int) i_21;
+  _12 = i.1_11 * 16;
+  e_28 = _10 + _12;
+  # DEBUG e => e_28
+  # DEBUG BEGIN_STMT
+  _13 = e_28->used;
+  if (_13 == 0)
+    goto <bb 12>; [INV]
+  else
+    goto <bb 11>; [INV]
+
+  <bb 11> :
+  _14 = e_28->ts;
+  if (_14 == 0)
+    goto <bb 12>; [INV]
+  else
+    goto <bb 15>; [INV]
+
+  <bb 12> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _15 = e_28->used;
+  if (_15 == 0)
+    goto <bb 14>; [INV]
+  else
+    goto <bb 13>; [INV]
+
+  <bb 13> :
+  _16 = e_28->ts;
+  if (_16 == 0)
+    goto <bb 14>; [INV]
+  else
+    goto <bb 15>; [INV]
+
+  <bb 14> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _17 = &e_28->addr;
+  memcpy (_17, src_addr_29(D), 6);
+  # DEBUG BEGIN_STMT
+  e_28->ts = 300;
+  # DEBUG BEGIN_STMT
+  e_28->port = port_idx_32(D);
+  # DEBUG BEGIN_STMT
+  e_28->used = 1;
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  // predicted unlikely by early return (on trees) predictor.
+  goto <bb 17>; [INV]
+
+  <bb 15> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  i_35 = i_21 + 1;
+  # DEBUG i => i_35
+
+  <bb 16> :
+  # i_21 = PHI <i_27(9), i_35(15)>
+  # DEBUG i => i_21
+  # DEBUG BEGIN_STMT
+  _18 = fdb_24->max_fdb_entries;
+  _19 = (int) _18;
+  if (i_21 < _19)
+    goto <bb 10>; [INV]
+  else
+    goto <bb 17>; [INV]
+
+  <bb 17> :
+  # DEBUG BEGIN_STMT
+  return;
+
+}
+
+

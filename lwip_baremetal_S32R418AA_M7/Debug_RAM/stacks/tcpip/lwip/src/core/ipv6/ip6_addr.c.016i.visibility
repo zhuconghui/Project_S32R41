@@ -1,0 +1,1067 @@
+
+Marking local functions:
+
+
+Marking externally visible functions: ip6addr_ntoa_r ip6addr_ntoa ip6addr_aton
+
+
+Marking externally visible variables: ip6_addr_any
+
+
+Reclaiming functions:
+Reclaiming variables:
+Clearing address taken flags:
+Symbol table:
+
+ip4addr_ntoa_r/10 (ip4addr_ntoa_r) @0611c1c0
+  Type: function
+  Visibility: external public
+  References: 
+  Referring: 
+  Availability: not_available
+  Function flags: optimize_size
+  Called by: ip6addr_ntoa_r/4 
+  Calls: 
+memcpy/9 (memcpy) @0611c0e0
+  Type: function
+  Visibility: external public
+  References: 
+  Referring: 
+  Availability: not_available
+  Function flags: optimize_size
+  Called by: ip6addr_ntoa_r/4 
+  Calls: 
+str.6410/8 (str) @0610e558
+  Type: variable definition analyzed
+  Visibility: prevailing_def_ironly
+  References: 
+  Referring: ip6addr_ntoa/3 (addr)
+  Availability: available
+  Varpool flags:
+lwip_htonl/7 (lwip_htonl) @060af700
+  Type: function
+  Visibility: external public
+  References: 
+  Referring: 
+  Availability: not_available
+  Function flags: optimize_size
+  Called by: ip6addr_ntoa_r/4 ip6addr_ntoa_r/4 ip6addr_aton/2 ip6addr_aton/2 
+  Calls: 
+ip4addr_aton/6 (ip4addr_aton) @060af0e0
+  Type: function
+  Visibility: external public
+  References: 
+  Referring: 
+  Availability: not_available
+  Function flags: optimize_size
+  Called by: ip6addr_aton/2 
+  Calls: 
+_ctype_/5 (_ctype_) @0610e2d0
+  Type: variable
+  Body removed by symtab_remove_unreachable_nodes
+  Visibility: external public
+  References: 
+  Referring: ip6addr_aton/2 (addr)ip6addr_aton/2 (addr)ip6addr_aton/2 (addr)ip6addr_aton/2 (addr)
+  Availability: not_available
+  Varpool flags: read-only
+ip6addr_ntoa_r/4 (ip6addr_ntoa_r) @060afb60
+  Type: function definition analyzed
+  Visibility: externally_visible public
+  References: 
+  Referring: 
+  Availability: available
+  Function flags: body optimize_size
+  Called by: ip6addr_ntoa/3 
+  Calls: lwip_htonl/7 lwip_htonl/7 ip4addr_ntoa_r/10 memcpy/9 
+ip6addr_ntoa/3 (ip6addr_ntoa) @060af8c0
+  Type: function definition analyzed
+  Visibility: externally_visible public
+  References: str.6410/8 (addr)
+  Referring: 
+  Availability: available
+  Function flags: body optimize_size
+  Called by: 
+  Calls: ip6addr_ntoa_r/4 
+ip6addr_aton/2 (ip6addr_aton) @060af620
+  Type: function definition analyzed
+  Visibility: externally_visible public
+  References: _ctype_/5 (addr)_ctype_/5 (addr)_ctype_/5 (addr)_ctype_/5 (addr)
+  Referring: 
+  Availability: available
+  Function flags: body optimize_size
+  Called by: 
+  Calls: lwip_htonl/7 lwip_htonl/7 ip4addr_aton/6 
+ip6_addr_any/1 (ip6_addr_any) @060ac5e8
+  Type: variable definition analyzed
+  Visibility: externally_visible public
+  References: 
+  Referring: 
+  Availability: available
+  Varpool flags: initialized read-only const-value-known
+ip6addr_ntoa_r (const struct ip6_addr_t * addr, char * buf, int buflen)
+{
+  int buflen_ip4;
+  char * buf_ip4;
+  char * ret;
+  struct ip4_addr_t addr4;
+  u8_t empty_block_flag;
+  u8_t zero_flag;
+  s32_t i;
+  u32_t next_block_value;
+  u32_t current_block_value;
+  u32_t current_block_index;
+  char iftmp.22;
+  char iftmp.19;
+  char iftmp.16;
+  char iftmp.13;
+  char * D.6506;
+
+  <bb 2> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _1 = addr->addr[0];
+  if (_1 == 0)
+    goto <bb 3>; [INV]
+  else
+    goto <bb 11>; [INV]
+
+  <bb 3> :
+  _2 = addr->addr[1];
+  if (_2 == 0)
+    goto <bb 4>; [INV]
+  else
+    goto <bb 11>; [INV]
+
+  <bb 4> :
+  _3 = addr->addr[2];
+  if (_3 == 4294901760)
+    goto <bb 5>; [INV]
+  else
+    goto <bb 11>; [INV]
+
+  <bb 5> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  buf_ip4 = buf + 7;
+  # DEBUG BEGIN_STMT
+  buflen.6_4 = (unsigned int) buflen;
+  _5 = buflen.6_4 + 4294967289;
+  buflen_ip4 = (int) _5;
+  # DEBUG BEGIN_STMT
+  if (buflen <= 7)
+    goto <bb 6>; [INV]
+  else
+    goto <bb 7>; [INV]
+
+  <bb 6> :
+  # DEBUG BEGIN_STMT
+  D.6506 = 0B;
+  // predicted unlikely by early return (on trees) predictor.
+  goto <bb 10>; [INV]
+
+  <bb 7> :
+  # DEBUG BEGIN_STMT
+  memcpy (buf, "::FFFF:", 8);
+  # DEBUG BEGIN_STMT
+  _6 = addr->addr[3];
+  addr4.addr = _6;
+  # DEBUG BEGIN_STMT
+  ret = ip4addr_ntoa_r (&addr4, buf_ip4, buflen_ip4);
+  # DEBUG BEGIN_STMT
+  if (ret != buf_ip4)
+    goto <bb 8>; [INV]
+  else
+    goto <bb 9>; [INV]
+
+  <bb 8> :
+  # DEBUG BEGIN_STMT
+  D.6506 = 0B;
+  // predicted unlikely by early return (on trees) predictor.
+  goto <bb 10>; [INV]
+
+  <bb 9> :
+  # DEBUG BEGIN_STMT
+  D.6506 = buf;
+  // predicted unlikely by early return (on trees) predictor.
+
+  <bb 10> :
+  addr4 = {CLOBBER};
+  goto <bb 62>; [INV]
+
+  <bb 11> :
+  # DEBUG BEGIN_STMT
+  i = 0;
+  # DEBUG BEGIN_STMT
+  empty_block_flag = 0;
+  # DEBUG BEGIN_STMT
+  current_block_index = 0;
+  goto <bb 60>; [INV]
+
+  <bb 12> :
+  # DEBUG BEGIN_STMT
+  _7 = current_block_index >> 1;
+  _8 = addr->addr[_7];
+  current_block_value = lwip_htonl (_8);
+  # DEBUG BEGIN_STMT
+  _9 = current_block_index & 1;
+  if (_9 == 0)
+    goto <bb 13>; [INV]
+  else
+    goto <bb 14>; [INV]
+
+  <bb 13> :
+  # DEBUG BEGIN_STMT
+  current_block_value = current_block_value >> 16;
+
+  <bb 14> :
+  # DEBUG BEGIN_STMT
+  current_block_value = current_block_value & 65535;
+  # DEBUG BEGIN_STMT
+  if (current_block_value == 0)
+    goto <bb 15>; [INV]
+  else
+    goto <bb 28>; [INV]
+
+  <bb 15> :
+  # DEBUG BEGIN_STMT
+  if (current_block_index == 7)
+    goto <bb 16>; [INV]
+  else
+    goto <bb 19>; [INV]
+
+  <bb 16> :
+  if (empty_block_flag == 1)
+    goto <bb 17>; [INV]
+  else
+    goto <bb 19>; [INV]
+
+  <bb 17> :
+  # DEBUG BEGIN_STMT
+  i.7_10 = i;
+  i = i.7_10 + 1;
+  i.8_11 = (sizetype) i.7_10;
+  _12 = buf + i.8_11;
+  *_12 = 58;
+  # DEBUG BEGIN_STMT
+  if (i >= buflen)
+    goto <bb 18>; [INV]
+  else
+    goto <bb 61>; [INV]
+
+  <bb 18> :
+  # DEBUG BEGIN_STMT
+  D.6506 = 0B;
+  // predicted unlikely by early return (on trees) predictor.
+  goto <bb 62>; [INV]
+
+  <bb 19> :
+  # DEBUG BEGIN_STMT
+  if (empty_block_flag == 0)
+    goto <bb 20>; [INV]
+  else
+    goto <bb 26>; [INV]
+
+  <bb 20> :
+  # DEBUG BEGIN_STMT
+  _13 = current_block_index + 1;
+  _14 = _13 >> 1;
+  _15 = addr->addr[_14];
+  next_block_value = lwip_htonl (_15);
+  # DEBUG BEGIN_STMT
+  _16 = current_block_index & 1;
+  if (_16 != 0)
+    goto <bb 21>; [INV]
+  else
+    goto <bb 22>; [INV]
+
+  <bb 21> :
+  # DEBUG BEGIN_STMT
+  next_block_value = next_block_value >> 16;
+
+  <bb 22> :
+  # DEBUG BEGIN_STMT
+  next_block_value = next_block_value & 65535;
+  # DEBUG BEGIN_STMT
+  if (next_block_value == 0)
+    goto <bb 23>; [INV]
+  else
+    goto <bb 30>; [INV]
+
+  <bb 23> :
+  # DEBUG BEGIN_STMT
+  empty_block_flag = 1;
+  # DEBUG BEGIN_STMT
+  i.9_17 = i;
+  i = i.9_17 + 1;
+  i.10_18 = (sizetype) i.9_17;
+  _19 = buf + i.10_18;
+  *_19 = 58;
+  # DEBUG BEGIN_STMT
+  if (i >= buflen)
+    goto <bb 24>; [INV]
+  else
+    goto <bb 25>; [INV]
+
+  <bb 24> :
+  # DEBUG BEGIN_STMT
+  D.6506 = 0B;
+  // predicted unlikely by early return (on trees) predictor.
+  goto <bb 62>; [INV]
+
+  <bb 25> :
+  # DEBUG BEGIN_STMT
+  // predicted unlikely by continue predictor.
+  goto <bb 59>; [INV]
+
+  <bb 26> :
+  # DEBUG BEGIN_STMT
+  if (empty_block_flag == 1)
+    goto <bb 27>; [INV]
+  else
+    goto <bb 30>; [INV]
+
+  <bb 27> :
+  # DEBUG BEGIN_STMT
+  // predicted unlikely by continue predictor.
+  goto <bb 59>; [INV]
+
+  <bb 28> :
+  # DEBUG BEGIN_STMT
+  if (empty_block_flag == 1)
+    goto <bb 29>; [INV]
+  else
+    goto <bb 30>; [INV]
+
+  <bb 29> :
+  # DEBUG BEGIN_STMT
+  empty_block_flag = 2;
+
+  <bb 30> :
+  # DEBUG BEGIN_STMT
+  if (current_block_index != 0)
+    goto <bb 31>; [INV]
+  else
+    goto <bb 33>; [INV]
+
+  <bb 31> :
+  # DEBUG BEGIN_STMT
+  i.11_20 = i;
+  i = i.11_20 + 1;
+  i.12_21 = (sizetype) i.11_20;
+  _22 = buf + i.12_21;
+  *_22 = 58;
+  # DEBUG BEGIN_STMT
+  if (i >= buflen)
+    goto <bb 32>; [INV]
+  else
+    goto <bb 33>; [INV]
+
+  <bb 32> :
+  # DEBUG BEGIN_STMT
+  D.6506 = 0B;
+  // predicted unlikely by early return (on trees) predictor.
+  goto <bb 62>; [INV]
+
+  <bb 33> :
+  # DEBUG BEGIN_STMT
+  _23 = current_block_value & 61440;
+  if (_23 == 0)
+    goto <bb 34>; [INV]
+  else
+    goto <bb 35>; [INV]
+
+  <bb 34> :
+  # DEBUG BEGIN_STMT
+  zero_flag = 1;
+  goto <bb 40>; [INV]
+
+  <bb 35> :
+  # DEBUG BEGIN_STMT
+  _24 = current_block_value >> 12;
+  _25 = _24 & 15;
+  if (_25 <= 9)
+    goto <bb 36>; [INV]
+  else
+    goto <bb 37>; [INV]
+
+  <bb 36> :
+  _26 = current_block_value >> 12;
+  _27 = (char) _26;
+  _28 = _27 & 15;
+  iftmp.13 = _28 + 48;
+  goto <bb 38>; [INV]
+
+  <bb 37> :
+  _29 = current_block_value >> 12;
+  _30 = (char) _29;
+  _31 = _30 & 15;
+  iftmp.13 = _31 + 55;
+
+  <bb 38> :
+  i.14_32 = i;
+  i = i.14_32 + 1;
+  i.15_33 = (sizetype) i.14_32;
+  _34 = buf + i.15_33;
+  *_34 = iftmp.13;
+  # DEBUG BEGIN_STMT
+  zero_flag = 0;
+  # DEBUG BEGIN_STMT
+  if (i >= buflen)
+    goto <bb 39>; [INV]
+  else
+    goto <bb 40>; [INV]
+
+  <bb 39> :
+  # DEBUG BEGIN_STMT
+  D.6506 = 0B;
+  // predicted unlikely by early return (on trees) predictor.
+  goto <bb 62>; [INV]
+
+  <bb 40> :
+  # DEBUG BEGIN_STMT
+  _35 = current_block_value & 3840;
+  if (_35 == 0)
+    goto <bb 41>; [INV]
+  else
+    goto <bb 42>; [INV]
+
+  <bb 41> :
+  if (zero_flag != 0)
+    goto <bb 47>; [INV]
+  else
+    goto <bb 42>; [INV]
+
+  <bb 42> :
+  # DEBUG BEGIN_STMT
+  _36 = current_block_value >> 8;
+  _37 = _36 & 15;
+  if (_37 <= 9)
+    goto <bb 43>; [INV]
+  else
+    goto <bb 44>; [INV]
+
+  <bb 43> :
+  _38 = current_block_value >> 8;
+  _39 = (char) _38;
+  _40 = _39 & 15;
+  iftmp.16 = _40 + 48;
+  goto <bb 45>; [INV]
+
+  <bb 44> :
+  _41 = current_block_value >> 8;
+  _42 = (char) _41;
+  _43 = _42 & 15;
+  iftmp.16 = _43 + 55;
+
+  <bb 45> :
+  i.17_44 = i;
+  i = i.17_44 + 1;
+  i.18_45 = (sizetype) i.17_44;
+  _46 = buf + i.18_45;
+  *_46 = iftmp.16;
+  # DEBUG BEGIN_STMT
+  zero_flag = 0;
+  # DEBUG BEGIN_STMT
+  if (i >= buflen)
+    goto <bb 46>; [INV]
+  else
+    goto <bb 47>; [INV]
+
+  <bb 46> :
+  # DEBUG BEGIN_STMT
+  D.6506 = 0B;
+  // predicted unlikely by early return (on trees) predictor.
+  goto <bb 62>; [INV]
+
+  <bb 47> :
+  # DEBUG BEGIN_STMT
+  _47 = current_block_value & 240;
+  if (_47 == 0)
+    goto <bb 48>; [INV]
+  else
+    goto <bb 49>; [INV]
+
+  <bb 48> :
+  if (zero_flag != 0)
+    goto <bb 54>; [INV]
+  else
+    goto <bb 49>; [INV]
+
+  <bb 49> :
+  # DEBUG BEGIN_STMT
+  _48 = current_block_value >> 4;
+  _49 = _48 & 15;
+  if (_49 <= 9)
+    goto <bb 50>; [INV]
+  else
+    goto <bb 51>; [INV]
+
+  <bb 50> :
+  _50 = current_block_value >> 4;
+  _51 = (char) _50;
+  _52 = _51 & 15;
+  iftmp.19 = _52 + 48;
+  goto <bb 52>; [INV]
+
+  <bb 51> :
+  _53 = current_block_value >> 4;
+  _54 = (char) _53;
+  _55 = _54 & 15;
+  iftmp.19 = _55 + 55;
+
+  <bb 52> :
+  i.20_56 = i;
+  i = i.20_56 + 1;
+  i.21_57 = (sizetype) i.20_56;
+  _58 = buf + i.21_57;
+  *_58 = iftmp.19;
+  # DEBUG BEGIN_STMT
+  zero_flag = 0;
+  # DEBUG BEGIN_STMT
+  if (i >= buflen)
+    goto <bb 53>; [INV]
+  else
+    goto <bb 54>; [INV]
+
+  <bb 53> :
+  # DEBUG BEGIN_STMT
+  D.6506 = 0B;
+  // predicted unlikely by early return (on trees) predictor.
+  goto <bb 62>; [INV]
+
+  <bb 54> :
+  # DEBUG BEGIN_STMT
+  _59 = current_block_value & 15;
+  if (_59 <= 9)
+    goto <bb 55>; [INV]
+  else
+    goto <bb 56>; [INV]
+
+  <bb 55> :
+  _60 = (char) current_block_value;
+  _61 = _60 & 15;
+  iftmp.22 = _61 + 48;
+  goto <bb 57>; [INV]
+
+  <bb 56> :
+  _62 = (char) current_block_value;
+  _63 = _62 & 15;
+  iftmp.22 = _63 + 55;
+
+  <bb 57> :
+  i.23_64 = i;
+  i = i.23_64 + 1;
+  i.24_65 = (sizetype) i.23_64;
+  _66 = buf + i.24_65;
+  *_66 = iftmp.22;
+  # DEBUG BEGIN_STMT
+  if (i >= buflen)
+    goto <bb 58>; [INV]
+  else
+    goto <bb 59>; [INV]
+
+  <bb 58> :
+  # DEBUG BEGIN_STMT
+  D.6506 = 0B;
+  // predicted unlikely by early return (on trees) predictor.
+  goto <bb 62>; [INV]
+
+  <bb 59> :
+  # DEBUG BEGIN_STMT
+  current_block_index = current_block_index + 1;
+
+  <bb 60> :
+  # DEBUG BEGIN_STMT
+  if (current_block_index <= 7)
+    goto <bb 12>; [INV]
+  else
+    goto <bb 61>; [INV]
+
+  <bb 61> :
+  # DEBUG BEGIN_STMT
+  i.25_67 = (sizetype) i;
+  _68 = buf + i.25_67;
+  *_68 = 0;
+  # DEBUG BEGIN_STMT
+  D.6506 = buf;
+
+  <bb 62> :
+  return D.6506;
+
+}
+
+
+ip6addr_ntoa (const struct ip6_addr_t * addr)
+{
+  static char str[40];
+  char * D.6496;
+
+  <bb 2> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  D.6496 = ip6addr_ntoa_r (addr, &str, 40);
+  return D.6496;
+
+}
+
+
+ip6addr_aton (const char * cp, struct ip6_addr_t * addr)
+{
+  int ret;
+  struct ip4_addr_t ip4;
+  int check_ipv4_mapped;
+  const char * s;
+  u32_t current_block_value;
+  u32_t current_block_index;
+  u32_t zero_blocks;
+  u32_t addr_index;
+  long unsigned int addr_index.5;
+  long unsigned int iftmp.3;
+  long unsigned int iftmp.2;
+  long unsigned int addr_index.1;
+  int D.6443;
+
+  <bb 2> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  check_ipv4_mapped = 0;
+  # DEBUG BEGIN_STMT
+  zero_blocks = 8;
+  # DEBUG BEGIN_STMT
+  s = cp;
+  goto <bb 12>; [INV]
+
+  <bb 3> :
+  # DEBUG BEGIN_STMT
+  _1 = *s;
+  if (_1 == 58)
+    goto <bb 4>; [INV]
+  else
+    goto <bb 5>; [INV]
+
+  <bb 4> :
+  # DEBUG BEGIN_STMT
+  zero_blocks = zero_blocks + 4294967295;
+  goto <bb 11>; [INV]
+
+  <bb 5> :
+  # DEBUG BEGIN_STMT
+  _2 = *s;
+  if (_2 == 46)
+    goto <bb 6>; [INV]
+  else
+    goto <bb 10>; [INV]
+
+  <bb 6> :
+  # DEBUG BEGIN_STMT
+  if (zero_blocks == 5)
+    goto <bb 8>; [INV]
+  else
+    goto <bb 7>; [INV]
+
+  <bb 7> :
+  if (zero_blocks == 2)
+    goto <bb 8>; [INV]
+  else
+    goto <bb 9>; [INV]
+
+  <bb 8> :
+  # DEBUG BEGIN_STMT
+  check_ipv4_mapped = 1;
+  # DEBUG BEGIN_STMT
+  zero_blocks = zero_blocks + 4294967295;
+  # DEBUG BEGIN_STMT
+  goto <bb 13>; [INV]
+
+  <bb 9> :
+  # DEBUG BEGIN_STMT
+  D.6443 = 0;
+  // predicted unlikely by early return (on trees) predictor.
+  goto <bb 60>; [INV]
+
+  <bb 10> :
+  # DEBUG BEGIN_STMT
+  _3 = *s;
+  _4 = (sizetype) _3;
+  _5 = _4 + 1;
+  _6 = &_ctype_ + _5;
+  _7 = *_6;
+  _8 = (int) _7;
+  _9 = _8 & 68;
+  if (_9 == 0)
+    goto <bb 13>; [INV]
+  else
+    goto <bb 11>; [INV]
+
+  <bb 11> :
+  # DEBUG BEGIN_STMT
+  s = s + 1;
+
+  <bb 12> :
+  # DEBUG BEGIN_STMT
+  _10 = *s;
+  if (_10 != 0)
+    goto <bb 3>; [INV]
+  else
+    goto <bb 13>; [INV]
+
+  <bb 13> :
+  # DEBUG BEGIN_STMT
+  addr_index = 0;
+  # DEBUG BEGIN_STMT
+  current_block_index = 0;
+  # DEBUG BEGIN_STMT
+  current_block_value = 0;
+  # DEBUG BEGIN_STMT
+  s = cp;
+  goto <bb 48>; [INV]
+
+  <bb 14> :
+  # DEBUG BEGIN_STMT
+  _11 = *s;
+  if (_11 == 58)
+    goto <bb 15>; [INV]
+  else
+    goto <bb 39>; [INV]
+
+  <bb 15> :
+  # DEBUG BEGIN_STMT
+  if (addr != 0B)
+    goto <bb 16>; [INV]
+  else
+    goto <bb 19>; [INV]
+
+  <bb 16> :
+  # DEBUG BEGIN_STMT
+  _12 = current_block_index & 1;
+  if (_12 != 0)
+    goto <bb 17>; [INV]
+  else
+    goto <bb 18>; [INV]
+
+  <bb 17> :
+  # DEBUG BEGIN_STMT
+  addr_index.0_13 = addr_index;
+  addr_index = addr_index.0_13 + 1;
+  addr_index.1 = addr_index.0_13;
+  _14 = addr->addr[addr_index.1];
+  _15 = current_block_value | _14;
+  addr->addr[addr_index.1] = _15;
+  goto <bb 19>; [INV]
+
+  <bb 18> :
+  # DEBUG BEGIN_STMT
+  _16 = current_block_value << 16;
+  addr->addr[addr_index] = _16;
+
+  <bb 19> :
+  # DEBUG BEGIN_STMT
+  current_block_index = current_block_index + 1;
+  # DEBUG BEGIN_STMT
+  if (check_ipv4_mapped != 0)
+    goto <bb 20>; [INV]
+  else
+    goto <bb 26>; [INV]
+
+  <bb 20> :
+  # DEBUG BEGIN_STMT
+  if (current_block_index == 6)
+    goto <bb 21>; [INV]
+  else
+    goto <bb 26>; [INV]
+
+  <bb 21> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _17 = s + 1;
+  ret = ip4addr_aton (_17, &ip4);
+  # DEBUG BEGIN_STMT
+  if (ret != 0)
+    goto <bb 22>; [INV]
+  else
+    goto <bb 25>; [INV]
+
+  <bb 22> :
+  # DEBUG BEGIN_STMT
+  if (addr != 0B)
+    goto <bb 23>; [INV]
+  else
+    goto <bb 24>; [INV]
+
+  <bb 23> :
+  # DEBUG BEGIN_STMT
+  _18 = ip4.addr;
+  _19 = lwip_htonl (_18);
+  addr->addr[3] = _19;
+  # DEBUG BEGIN_STMT
+  current_block_index = current_block_index + 1;
+  # DEBUG BEGIN_STMT
+  // predicted unlikely by goto predictor.
+  ip4 = {CLOBBER};
+  goto <bb 53>; [INV]
+
+  <bb 24> :
+  # DEBUG BEGIN_STMT
+  D.6443 = 1;
+  // predicted unlikely by early return (on trees) predictor.
+  ip4 = {CLOBBER};
+  goto <bb 60>; [INV]
+
+  <bb 25> :
+  ip4 = {CLOBBER};
+
+  <bb 26> :
+  # DEBUG BEGIN_STMT
+  current_block_value = 0;
+  # DEBUG BEGIN_STMT
+  if (current_block_index > 7)
+    goto <bb 27>; [INV]
+  else
+    goto <bb 28>; [INV]
+
+  <bb 27> :
+  # DEBUG BEGIN_STMT
+  D.6443 = 0;
+  // predicted unlikely by early return (on trees) predictor.
+  goto <bb 60>; [INV]
+
+  <bb 28> :
+  # DEBUG BEGIN_STMT
+  _20 = s + 1;
+  _21 = *_20;
+  if (_21 == 58)
+    goto <bb 29>; [INV]
+  else
+    goto <bb 47>; [INV]
+
+  <bb 29> :
+  # DEBUG BEGIN_STMT
+  _22 = s + 2;
+  _23 = *_22;
+  if (_23 == 58)
+    goto <bb 30>; [INV]
+  else
+    goto <bb 31>; [INV]
+
+  <bb 30> :
+  # DEBUG BEGIN_STMT
+  D.6443 = 0;
+  // predicted unlikely by early return (on trees) predictor.
+  goto <bb 60>; [INV]
+
+  <bb 31> :
+  # DEBUG BEGIN_STMT
+  s = s + 1;
+  # DEBUG BEGIN_STMT
+  goto <bb 38>; [INV]
+
+  <bb 32> :
+  # DEBUG BEGIN_STMT
+  zero_blocks = zero_blocks + 4294967295;
+  # DEBUG BEGIN_STMT
+  _24 = current_block_index & 1;
+  if (_24 != 0)
+    goto <bb 33>; [INV]
+  else
+    goto <bb 34>; [INV]
+
+  <bb 33> :
+  # DEBUG BEGIN_STMT
+  addr_index = addr_index + 1;
+  goto <bb 36>; [INV]
+
+  <bb 34> :
+  # DEBUG BEGIN_STMT
+  if (addr != 0B)
+    goto <bb 35>; [INV]
+  else
+    goto <bb 36>; [INV]
+
+  <bb 35> :
+  # DEBUG BEGIN_STMT
+  addr->addr[addr_index] = 0;
+
+  <bb 36> :
+  # DEBUG BEGIN_STMT
+  current_block_index = current_block_index + 1;
+  # DEBUG BEGIN_STMT
+  if (current_block_index > 7)
+    goto <bb 37>; [INV]
+  else
+    goto <bb 38>; [INV]
+
+  <bb 37> :
+  # DEBUG BEGIN_STMT
+  D.6443 = 0;
+  // predicted unlikely by early return (on trees) predictor.
+  goto <bb 60>; [INV]
+
+  <bb 38> :
+  # DEBUG BEGIN_STMT
+  if (zero_blocks != 0)
+    goto <bb 32>; [INV]
+  else
+    goto <bb 47>; [INV]
+
+  <bb 39> :
+  # DEBUG BEGIN_STMT
+  _25 = *s;
+  _26 = (sizetype) _25;
+  _27 = _26 + 1;
+  _28 = &_ctype_ + _27;
+  _29 = *_28;
+  _30 = (int) _29;
+  _31 = _30 & 68;
+  if (_31 != 0)
+    goto <bb 40>; [INV]
+  else
+    goto <bb 49>; [INV]
+
+  <bb 40> :
+  # DEBUG BEGIN_STMT
+  _32 = current_block_value << 4;
+  _33 = *s;
+  _34 = (sizetype) _33;
+  _35 = _34 + 1;
+  _36 = &_ctype_ + _35;
+  _37 = *_36;
+  _38 = (int) _37;
+  _39 = _38 & 4;
+  if (_39 != 0)
+    goto <bb 41>; [INV]
+  else
+    goto <bb 42>; [INV]
+
+  <bb 41> :
+  _40 = *s;
+  _41 = (int) _40;
+  _42 = _41 + -48;
+  iftmp.2 = (long unsigned int) _42;
+  goto <bb 46>; [INV]
+
+  <bb 42> :
+  _43 = *s;
+  _44 = (sizetype) _43;
+  _45 = _44 + 1;
+  _46 = &_ctype_ + _45;
+  _47 = *_46;
+  _48 = (int) _47;
+  _49 = _48 & 3;
+  if (_49 == 2)
+    goto <bb 43>; [INV]
+  else
+    goto <bb 44>; [INV]
+
+  <bb 43> :
+  _50 = *s;
+  _51 = (int) _50;
+  _52 = _51 + -87;
+  iftmp.3 = (long unsigned int) _52;
+  goto <bb 45>; [INV]
+
+  <bb 44> :
+  _53 = *s;
+  _54 = (int) _53;
+  _55 = _54 + -55;
+  iftmp.3 = (long unsigned int) _55;
+
+  <bb 45> :
+  iftmp.2 = iftmp.3;
+
+  <bb 46> :
+  current_block_value = iftmp.2 + _32;
+
+  <bb 47> :
+  # DEBUG BEGIN_STMT
+  s = s + 1;
+
+  <bb 48> :
+  # DEBUG BEGIN_STMT
+  _56 = *s;
+  if (_56 != 0)
+    goto <bb 14>; [INV]
+  else
+    goto <bb 49>; [INV]
+
+  <bb 49> :
+  # DEBUG BEGIN_STMT
+  if (addr != 0B)
+    goto <bb 50>; [INV]
+  else
+    goto <bb 57>; [INV]
+
+  <bb 50> :
+  # DEBUG BEGIN_STMT
+  _57 = current_block_index & 1;
+  if (_57 != 0)
+    goto <bb 51>; [INV]
+  else
+    goto <bb 52>; [INV]
+
+  <bb 51> :
+  # DEBUG BEGIN_STMT
+  addr_index.4_58 = addr_index;
+  addr_index = addr_index.4_58 + 1;
+  addr_index.5 = addr_index.4_58;
+  _59 = addr->addr[addr_index.5];
+  _60 = current_block_value | _59;
+  addr->addr[addr_index.5] = _60;
+  goto <bb 53>; [INV]
+
+  <bb 52> :
+  # DEBUG BEGIN_STMT
+  _61 = current_block_value << 16;
+  addr->addr[addr_index] = _61;
+
+  <bb 53> :
+fix_byte_order_and_return:
+  # DEBUG BEGIN_STMT
+  addr_index = 0;
+  goto <bb 55>; [INV]
+
+  <bb 54> :
+  # DEBUG BEGIN_STMT
+  _62 = addr->addr[addr_index];
+  _63 = lwip_htonl (_62);
+  addr->addr[addr_index] = _63;
+  # DEBUG BEGIN_STMT
+  addr_index = addr_index + 1;
+
+  <bb 55> :
+  # DEBUG BEGIN_STMT
+  if (addr_index <= 3)
+    goto <bb 54>; [INV]
+  else
+    goto <bb 56>; [INV]
+
+  <bb 56> :
+  # DEBUG BEGIN_STMT
+  addr->zone = 0;
+
+  <bb 57> :
+  # DEBUG BEGIN_STMT
+  if (current_block_index != 7)
+    goto <bb 58>; [INV]
+  else
+    goto <bb 59>; [INV]
+
+  <bb 58> :
+  # DEBUG BEGIN_STMT
+  D.6443 = 0;
+  // predicted unlikely by early return (on trees) predictor.
+  goto <bb 60>; [INV]
+
+  <bb 59> :
+  # DEBUG BEGIN_STMT
+  D.6443 = 1;
+
+  <bb 60> :
+  return D.6443;
+
+}
+
+

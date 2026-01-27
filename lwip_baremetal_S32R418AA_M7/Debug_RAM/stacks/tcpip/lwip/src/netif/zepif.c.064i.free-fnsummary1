@@ -1,0 +1,775 @@
+zepif_udp_recv.part.0 (void * arg, struct pbuf * p)
+{
+  err_t err;
+  struct netif * netif_lowpan6;
+  struct zep_hdr * zep;
+  struct udp_pcb * pcb;
+  const struct ip_addr_t * addr;
+  u16_t port;
+  short unsigned int _2;
+  unsigned char _4;
+  unsigned char _5;
+  unsigned char _6;
+  unsigned char _7;
+  unsigned char _8;
+  unsigned char _9;
+  unsigned int _10;
+  short unsigned int _11;
+  unsigned int _12;
+  unsigned int _13;
+  unsigned char _14;
+  short unsigned int _15;
+  short unsigned int _16;
+  err_t (*<T6aa>) (struct pbuf *, struct netif *) _18;
+
+  <bb 22> [local count: 1073741824]:
+  # DEBUG D#6 s=> pcb
+  # DEBUG pcb => D#6
+  # DEBUG D#5 s=> addr
+  # DEBUG addr => D#5
+  # DEBUG D#4 s=> port
+  # DEBUG port => D#4
+
+  <bb 2> [local count: 1073741824]:
+  # DEBUG BEGIN_STMT
+  _2 = p_1(D)->len;
+  if (_2 <= 31)
+    goto <bb 3>; [34.00%]
+  else
+    goto <bb 4>; [66.00%]
+
+  <bb 3> [local count: 365072220]:
+  # DEBUG BEGIN_STMT
+  // predicted unlikely by goto predictor.
+  goto <bb 20>; [100.00%]
+
+  <bb 4> [local count: 708669605]:
+  # DEBUG BEGIN_STMT
+  zep_3 = p_1(D)->payload;
+  # DEBUG zep => zep_3
+  # DEBUG BEGIN_STMT
+  _4 = zep_3->prot_id[0];
+  if (_4 != 69)
+    goto <bb 5>; [50.00%]
+  else
+    goto <bb 6>; [50.00%]
+
+  <bb 5> [local count: 354334802]:
+  # DEBUG BEGIN_STMT
+  // predicted unlikely by goto predictor.
+  goto <bb 20>; [100.00%]
+
+  <bb 6> [local count: 354334802]:
+  # DEBUG BEGIN_STMT
+  _5 = zep_3->prot_id[1];
+  if (_5 != 88)
+    goto <bb 7>; [50.00%]
+  else
+    goto <bb 8>; [50.00%]
+
+  <bb 7> [local count: 177167401]:
+  # DEBUG BEGIN_STMT
+  // predicted unlikely by goto predictor.
+  goto <bb 20>; [100.00%]
+
+  <bb 8> [local count: 177167401]:
+  # DEBUG BEGIN_STMT
+  _6 = zep_3->prot_version;
+  if (_6 != 2)
+    goto <bb 9>; [50.00%]
+  else
+    goto <bb 10>; [50.00%]
+
+  <bb 9> [local count: 88583701]:
+  # DEBUG BEGIN_STMT
+  // predicted unlikely by goto predictor.
+  goto <bb 20>; [100.00%]
+
+  <bb 10> [local count: 88583701]:
+  # DEBUG BEGIN_STMT
+  _7 = zep_3->type;
+  if (_7 != 1)
+    goto <bb 11>; [50.00%]
+  else
+    goto <bb 12>; [50.00%]
+
+  <bb 11> [local count: 44291850]:
+  # DEBUG BEGIN_STMT
+  // predicted unlikely by goto predictor.
+  goto <bb 20>; [100.00%]
+
+  <bb 12> [local count: 44291850]:
+  # DEBUG BEGIN_STMT
+  _8 = zep_3->crc_mode;
+  if (_8 != 1)
+    goto <bb 13>; [50.00%]
+  else
+    goto <bb 14>; [50.00%]
+
+  <bb 13> [local count: 22145925]:
+  # DEBUG BEGIN_STMT
+  // predicted unlikely by goto predictor.
+  goto <bb 20>; [100.00%]
+
+  <bb 14> [local count: 22145925]:
+  # DEBUG BEGIN_STMT
+  _9 = zep_3->len;
+  _10 = (unsigned int) _9;
+  _11 = p_1(D)->tot_len;
+  _12 = (unsigned int) _11;
+  _13 = _12 + 4294967264;
+  if (_10 != _13)
+    goto <bb 15>; [67.00%]
+  else
+    goto <bb 16>; [33.00%]
+
+  <bb 15> [local count: 14837770]:
+  # DEBUG BEGIN_STMT
+  // predicted unlikely by goto predictor.
+  goto <bb 20>; [100.00%]
+
+  <bb 16> [local count: 7308155]:
+  # DEBUG BEGIN_STMT
+  _14 = pbuf_remove_header (p_1(D), 32);
+  if (_14 != 0)
+    goto <bb 17>; [51.12%]
+  else
+    goto <bb 18>; [48.88%]
+
+  <bb 17> [local count: 3735929]:
+  # DEBUG BEGIN_STMT
+  // predicted unlikely by goto predictor.
+  goto <bb 20>; [100.00%]
+
+  <bb 18> [local count: 3572226]:
+  # DEBUG BEGIN_STMT
+  _15 = p_1(D)->tot_len;
+  _16 = _15 + 65534;
+  pbuf_realloc (p_1(D), _16);
+  # DEBUG BEGIN_STMT
+  _18 = MEM[(struct netif *)arg_17(D)].input;
+  err_19 = _18 (p_1(D), arg_17(D));
+  # DEBUG err => err_19
+  # DEBUG BEGIN_STMT
+  if (err_19 == 0)
+    goto <bb 19>; [34.00%]
+  else
+    goto <bb 20>; [66.00%]
+
+  <bb 19> [local count: 1214557]:
+  # DEBUG BEGIN_STMT
+  // predicted unlikely by early return (on trees) predictor.
+  goto <bb 21>; [100.00%]
+
+  <bb 20> [local count: 1072527268]:
+err_return:
+  # DEBUG BEGIN_STMT
+  pbuf_free (p_1(D));
+
+  <bb 21> [local count: 1073741824]:
+  return;
+
+}
+
+
+zepif_linkoutput.part.0 (struct netif * netif, struct pbuf * p)
+{
+  err_t err;
+  struct pbuf * q;
+  struct zep_hdr * zep;
+  struct zepif_state * state;
+  short unsigned int _2;
+  struct pbuf * _3;
+  struct udp_pcb * _6;
+  short unsigned int _7;
+  struct zep_hdr * _10;
+  short unsigned int _11;
+  long unsigned int _12;
+  long unsigned int _13;
+  long unsigned int _14;
+  long unsigned int _15;
+  short unsigned int _16;
+  unsigned char _17;
+  struct udp_pcb * _19;
+  const struct ip_addr_t * _20;
+  short unsigned int _21;
+  signed char _23;
+
+  <bb 18> [local count: 155003]:
+
+  <bb 2> [local count: 155003]:
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _2 = p_1(D)->tot_len;
+  if (_2 > 127)
+    goto <bb 3>; [1.04%]
+  else
+    goto <bb 4>; [98.96%]
+
+  <bb 3> [local count: 1612]:
+  # DEBUG BEGIN_STMT
+  // predicted unlikely by early return (on trees) predictor.
+  goto <bb 17>; [100.00%]
+
+  <bb 4> [local count: 153391]:
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _3 = p_1(D)->next;
+  if (_3 != 0B)
+    goto <bb 5>; [70.00%]
+  else
+    goto <bb 8>; [30.00%]
+
+  <bb 5> [local count: 107374]:
+
+  <bb 6> [local count: 1073741824]:
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  __asm__ __volatile__("BKPT #0
+	");
+  # DEBUG BEGIN_STMT
+
+  <bb 7> [local count: 1073741824]:
+  goto <bb 6>; [100.00%]
+
+  <bb 8> [local count: 46017]:
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  state_5 = netif_4(D)->state;
+  # DEBUG state => state_5
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _6 = state_5->pcb;
+  if (_6 == 0B)
+    goto <bb 9>; [46.53%]
+  else
+    goto <bb 12>; [53.47%]
+
+  <bb 9> [local count: 21412]:
+
+  <bb 10> [local count: 214119459]:
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  __asm__ __volatile__("BKPT #0
+	");
+  # DEBUG BEGIN_STMT
+
+  <bb 11> [local count: 214119459]:
+  goto <bb 10>; [100.00%]
+
+  <bb 12> [local count: 24606]:
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _7 = _2 + 32;
+  q_8 = pbuf_alloc (74, _7, 640);
+  # DEBUG q => q_8
+  # DEBUG BEGIN_STMT
+  if (q_8 == 0B)
+    goto <bb 13>; [0.91%]
+  else
+    goto <bb 14>; [99.09%]
+
+  <bb 13> [local count: 224]:
+  # DEBUG BEGIN_STMT
+  // predicted unlikely by early return (on trees) predictor.
+  goto <bb 17>; [100.00%]
+
+  <bb 14> [local count: 24382]:
+  # DEBUG BEGIN_STMT
+  zep_9 = q_8->payload;
+  # DEBUG zep => zep_9
+  # DEBUG BEGIN_STMT
+  _10 = zep_9 + 4;
+  memset (_10, 0, 28);
+  # DEBUG BEGIN_STMT
+  zep_9->prot_id[0] = 69;
+  # DEBUG BEGIN_STMT
+  zep_9->prot_id[1] = 88;
+  # DEBUG BEGIN_STMT
+  zep_9->prot_version = 2;
+  # DEBUG BEGIN_STMT
+  zep_9->type = 1;
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _11 = lwip_htons (1);
+  zep_9->device_id = _11;
+  # DEBUG BEGIN_STMT
+  zep_9->crc_mode = 1;
+  # DEBUG BEGIN_STMT
+  zep_9->unknown_1 = 255;
+  # DEBUG BEGIN_STMT
+  _12 = state_5->seqno;
+  _13 = lwip_htonl (_12);
+  zep_9->seq_num = _13;
+  # DEBUG BEGIN_STMT
+  _14 = state_5->seqno;
+  _15 = _14 + 1;
+  state_5->seqno = _15;
+  # DEBUG BEGIN_STMT
+  _16 = p_1(D)->tot_len;
+  _17 = (unsigned char) _16;
+  zep_9->len = _17;
+  # DEBUG BEGIN_STMT
+  err_18 = pbuf_copy_partial_pbuf (q_8, p_1(D), _16, 32);
+  # DEBUG err => err_18
+  # DEBUG BEGIN_STMT
+  if (err_18 == 0)
+    goto <bb 15>; [33.00%]
+  else
+    goto <bb 16>; [67.00%]
+
+  <bb 15> [local count: 8046]:
+  # DEBUG BEGIN_STMT
+  _19 = state_5->pcb;
+  _20 = state_5->init.zep_dst_ip_addr;
+  _21 = state_5->init.zep_dst_udp_port;
+  err_22 = udp_sendto (_19, q_8, _20, _21);
+  # DEBUG err => err_22
+
+  <bb 16> [local count: 24382]:
+  # err_24 = PHI <err_18(14), err_22(15)>
+  # DEBUG err => err_24
+  # DEBUG BEGIN_STMT
+  pbuf_free (q_8);
+  # DEBUG BEGIN_STMT
+
+  <bb 17> [local count: 26218]:
+  # _23 = PHI <-6(3), -1(13), err_24(16)>
+  return _23;
+
+}
+
+
+zep_lowpan_timer.part.0 (void * arg)
+{
+  <bb 4> [local count: 1073741824]:
+
+  <bb 2> [local count: 1073741824]:
+  # DEBUG BEGIN_STMT
+  sys_timeout (1000, zep_lowpan_timer, arg_1(D));
+
+  <bb 3> [local count: 1073741824]:
+  return;
+
+}
+
+
+zepif_init (struct netif * netif)
+{
+  u8_t i;
+  struct zepif_state * state;
+  struct zepif_init * init_state;
+  err_t err;
+  err_t (*<T6aa>) (struct pbuf *, struct netif *) _1;
+  struct zepif_init * _2;
+  short unsigned int _3;
+  short unsigned int _4;
+  const struct ip_addr_t * _5;
+  struct udp_pcb * _6;
+  const struct ip_addr_t * _7;
+  short unsigned int _8;
+  const struct netif * _9;
+  struct udp_pcb * _10;
+  struct udp_pcb * _11;
+  unsigned char _12;
+  unsigned char _13;
+  void * _14;
+  u8_t[6] * _15;
+  u8_t[6] * _16;
+  int _17;
+  unsigned char _18;
+  unsigned char _19;
+  unsigned char zep_lowpan_timer_running.1_20;
+  struct udp_pcb * _21;
+  err_t _24;
+
+  <bb 2> [local count: 357913]:
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  init_state_40 = netif_39(D)->state;
+  # DEBUG init_state => init_state_40
+  # DEBUG BEGIN_STMT
+  state_42 = mem_malloc (32);
+  # DEBUG state => state_42
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _1 = netif_39(D)->input;
+  if (_1 == 0B)
+    goto <bb 3>; [30.00%]
+  else
+    goto <bb 4>; [70.00%]
+
+  <bb 3> [local count: 1073741824]:
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  __asm__ __volatile__("BKPT #0
+	");
+  # DEBUG BEGIN_STMT
+  goto <bb 3>; [100.00%]
+
+  <bb 4> [local count: 250539]:
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  if (state_42 == 0B)
+    goto <bb 33>; [0.91%]
+  else
+    goto <bb 5>; [99.09%]
+
+  <bb 5> [local count: 248259]:
+  # DEBUG BEGIN_STMT
+  memset (state_42, 0, 32);
+  # DEBUG BEGIN_STMT
+  if (init_state_40 != 0B)
+    goto <bb 6>; [53.47%]
+  else
+    goto <bb 7>; [46.53%]
+
+  <bb 6> [local count: 132744]:
+  # DEBUG BEGIN_STMT
+  _2 = &state_42->init;
+  memcpy (_2, init_state_40, 24);
+
+  <bb 7> [local count: 248259]:
+  # DEBUG BEGIN_STMT
+  _3 = state_42->init.zep_src_udp_port;
+  if (_3 == 0)
+    goto <bb 8>; [50.00%]
+  else
+    goto <bb 9>; [50.00%]
+
+  <bb 8> [local count: 124130]:
+  # DEBUG BEGIN_STMT
+  state_42->init.zep_src_udp_port = 17754;
+
+  <bb 9> [local count: 248259]:
+  # DEBUG BEGIN_STMT
+  _4 = state_42->init.zep_dst_udp_port;
+  if (_4 == 0)
+    goto <bb 10>; [50.00%]
+  else
+    goto <bb 11>; [50.00%]
+
+  <bb 10> [local count: 124130]:
+  # DEBUG BEGIN_STMT
+  state_42->init.zep_dst_udp_port = 17754;
+
+  <bb 11> [local count: 248259]:
+  # DEBUG BEGIN_STMT
+  _5 = state_42->init.zep_dst_ip_addr;
+  if (_5 == 0B)
+    goto <bb 12>; [30.00%]
+  else
+    goto <bb 13>; [70.00%]
+
+  <bb 12> [local count: 74478]:
+  # DEBUG BEGIN_STMT
+  state_42->init.zep_dst_ip_addr = &ip_addr_broadcast;
+
+  <bb 13> [local count: 248259]:
+  # DEBUG BEGIN_STMT
+  netif_39(D)->state = 0B;
+  # DEBUG BEGIN_STMT
+  _6 = udp_new_ip_type (46);
+  state_42->pcb = _6;
+  # DEBUG BEGIN_STMT
+  if (_6 == 0B)
+    goto <bb 14>; [30.95%]
+  else
+    goto <bb 15>; [69.05%]
+
+  <bb 14> [local count: 76836]:
+  # DEBUG BEGIN_STMT
+  # DEBUG err => -1
+  # DEBUG BEGIN_STMT
+  // predicted unlikely by goto predictor.
+  goto <bb 30>; [100.00%]
+
+  <bb 15> [local count: 171423]:
+  # DEBUG BEGIN_STMT
+  _7 = state_42->init.zep_src_ip_addr;
+  _8 = state_42->init.zep_src_udp_port;
+  err_52 = udp_bind (_6, _7, _8);
+  # DEBUG err => err_52
+  # DEBUG BEGIN_STMT
+  if (err_52 != 0)
+    goto <bb 16>; [34.00%]
+  else
+    goto <bb 17>; [66.00%]
+
+  <bb 16> [local count: 58284]:
+  # DEBUG BEGIN_STMT
+  // predicted unlikely by goto predictor.
+  goto <bb 30>; [100.00%]
+
+  <bb 17> [local count: 113139]:
+  # DEBUG BEGIN_STMT
+  _9 = state_42->init.zep_netif;
+  if (_9 != 0B)
+    goto <bb 18>; [53.47%]
+  else
+    goto <bb 19>; [46.53%]
+
+  <bb 18> [local count: 60496]:
+  # DEBUG BEGIN_STMT
+  _10 = state_42->pcb;
+  udp_bind_netif (_10, _9);
+
+  <bb 19> [local count: 113139]:
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _11 = state_42->pcb;
+  _12 = _11->so_options;
+  _13 = _12 | 32;
+  _11->so_options = _13;
+  # DEBUG BEGIN_STMT
+  udp_recv (_11, zepif_udp_recv, netif_39(D));
+  # DEBUG BEGIN_STMT
+  err_57 = lowpan6_if_init (netif_39(D));
+  # DEBUG err => err_57
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _14 = netif_39(D)->state;
+  if (_14 != 0B)
+    goto <bb 20>; [70.00%]
+  else
+    goto <bb 21>; [30.00%]
+
+  <bb 20> [local count: 791976223]:
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  __asm__ __volatile__("BKPT #0
+	");
+  # DEBUG BEGIN_STMT
+  goto <bb 20>; [100.00%]
+
+  <bb 21> [local count: 33942]:
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  if (err_57 == 0)
+    goto <bb 22>; [34.00%]
+  else
+    goto <bb 30>; [66.00%]
+
+  <bb 22> [local count: 11540]:
+  # DEBUG BEGIN_STMT
+  netif_39(D)->state = state_42;
+  # DEBUG BEGIN_STMT
+  netif_39(D)->hwaddr_len = 6;
+  # DEBUG BEGIN_STMT
+  if (init_state_40 != 0B)
+    goto <bb 23>; [53.47%]
+  else
+    goto <bb 25>; [46.53%]
+
+  <bb 23> [local count: 6171]:
+  # DEBUG BEGIN_STMT
+  _15 = &netif_39(D)->hwaddr;
+  _16 = &init_state_40->addr;
+  memcpy (_15, _16, 6);
+  goto <bb 27>; [100.00%]
+
+  <bb 24> [local count: 32207]:
+  # DEBUG BEGIN_STMT
+  _17 = (int) i_23;
+  netif_39(D)->hwaddr[_17] = i_23;
+  # DEBUG BEGIN_STMT
+  i_62 = i_23 + 1;
+  # DEBUG i => i_62
+
+  <bb 25> [local count: 37576]:
+  # i_23 = PHI <i_62(24), 0(22)>
+  # DEBUG i => i_23
+  # DEBUG BEGIN_STMT
+  if (i_23 != 6)
+    goto <bb 24>; [85.71%]
+  else
+    goto <bb 26>; [14.29%]
+
+  <bb 26> [local count: 5370]:
+  # DEBUG BEGIN_STMT
+  _18 = netif_39(D)->hwaddr[0];
+  _19 = _18 & 252;
+  netif_39(D)->hwaddr[0] = _19;
+
+  <bb 27> [local count: 11540]:
+  # DEBUG BEGIN_STMT
+  netif_39(D)->linkoutput = zepif_linkoutput;
+  # DEBUG BEGIN_STMT
+  zep_lowpan_timer_running.1_20 = zep_lowpan_timer_running;
+  if (zep_lowpan_timer_running.1_20 == 0)
+    goto <bb 28>; [33.00%]
+  else
+    goto <bb 29>; [67.00%]
+
+  <bb 28> [local count: 3808]:
+  # DEBUG BEGIN_STMT
+  sys_timeout (1000, zep_lowpan_timer, 0B);
+  # DEBUG BEGIN_STMT
+  zep_lowpan_timer_running = 1;
+
+  <bb 29> [local count: 11540]:
+  # DEBUG BEGIN_STMT
+  goto <bb 33>; [100.00%]
+
+  <bb 30> [local count: 157522]:
+  # err_22 = PHI <-1(14), err_52(16), err_57(21)>
+err_ret:
+  # DEBUG err => err_22
+  # DEBUG BEGIN_STMT
+  _21 = state_42->pcb;
+  if (_21 != 0B)
+    goto <bb 31>; [53.47%]
+  else
+    goto <bb 32>; [46.53%]
+
+  <bb 31> [local count: 84227]:
+  # DEBUG BEGIN_STMT
+  udp_remove (_21);
+
+  <bb 32> [local count: 157522]:
+  # DEBUG BEGIN_STMT
+  mem_free (state_42);
+  # DEBUG BEGIN_STMT
+
+  <bb 33> [local count: 171342]:
+  # _24 = PHI <-1(4), 0(29), err_22(32)>
+  return _24;
+
+}
+
+
+zepif_linkoutput (struct netif * netif, struct pbuf * p)
+{
+  signed char _7;
+
+  <bb 2> [local count: 316334]:
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  if (netif_4(D) == 0B)
+    goto <bb 3>; [30.00%]
+  else
+    goto <bb 4>; [70.00%]
+
+  <bb 3> [local count: 949002417]:
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  __asm__ __volatile__("BKPT #0
+	");
+  # DEBUG BEGIN_STMT
+  goto <bb 3>; [100.00%]
+
+  <bb 4> [local count: 221434]:
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  if (p_6(D) == 0B)
+    goto <bb 5>; [30.00%]
+  else
+    goto <bb 6>; [70.00%]
+
+  <bb 5> [local count: 664301693]:
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  __asm__ __volatile__("BKPT #0
+	");
+  # DEBUG BEGIN_STMT
+  goto <bb 5>; [100.00%]
+
+  <bb 6> [local count: 155004]:
+  _7 = zepif_linkoutput.part.0 (netif_4(D), p_6(D));
+  return _7;
+
+}
+
+
+zepif_udp_recv (void * arg, struct udp_pcb * pcb, struct pbuf * p, const struct ip_addr_t * addr, u16_t port)
+{
+  <bb 2> [local count: 357913]:
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG netif_lowpan6 => arg_3(D)
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  if (arg_3(D) == 0B)
+    goto <bb 3>; [30.00%]
+  else
+    goto <bb 4>; [70.00%]
+
+  <bb 3> [local count: 1073741824]:
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  __asm__ __volatile__("BKPT #0
+	");
+  # DEBUG BEGIN_STMT
+  goto <bb 3>; [100.00%]
+
+  <bb 4> [local count: 250539]:
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  if (pcb_6(D) == 0B)
+    goto <bb 5>; [30.00%]
+  else
+    goto <bb 6>; [70.00%]
+
+  <bb 5> [local count: 751619279]:
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  __asm__ __volatile__("BKPT #0
+	");
+  # DEBUG BEGIN_STMT
+  goto <bb 5>; [100.00%]
+
+  <bb 6> [local count: 175378]:
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  if (p_7(D) == 0B)
+    goto <bb 8>; [18.09%]
+  else
+    goto <bb 7>; [81.91%]
+
+  <bb 7> [local count: 143652]:
+  # DEBUG D#1 => pcb_6(D)
+  # DEBUG D#2 => addr_4(D)
+  # DEBUG D#3 => port_10(D)
+  zepif_udp_recv.part.0 (arg_3(D), p_7(D));
+
+  <bb 8> [local count: 175378]:
+  return;
+
+}
+
+
+zep_lowpan_timer (void * arg)
+{
+  unsigned char zep_lowpan_timer_running.2_1;
+
+  <bb 2> [local count: 1073741824]:
+  # DEBUG BEGIN_STMT
+  lowpan6_tmr ();
+  # DEBUG BEGIN_STMT
+  zep_lowpan_timer_running.2_1 = zep_lowpan_timer_running;
+  if (zep_lowpan_timer_running.2_1 != 0)
+    goto <bb 3>; [33.00%]
+  else
+    goto <bb 4>; [67.00%]
+
+  <bb 3> [local count: 354334800]:
+  zep_lowpan_timer.part.0 (arg_4(D));
+
+  <bb 4> [local count: 1073741824]:
+  return;
+
+}
+
+

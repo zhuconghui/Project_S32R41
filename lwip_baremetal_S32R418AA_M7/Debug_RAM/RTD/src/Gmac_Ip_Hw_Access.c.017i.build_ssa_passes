@@ -1,0 +1,1185 @@
+GMAC_SetRxQueuesDmaChMap (struct GMAC_Type * Base, uint8 QueuesNum)
+{
+  <bb 2> :
+  # DEBUG BEGIN_STMT
+  if (QueuesNum != 0)
+    goto <bb 3>; [INV]
+  else
+    goto <bb 4>; [INV]
+
+  <bb 3> :
+  # DEBUG BEGIN_STMT
+  _1 = Base->MTL_RXQ_DMA_MAP0;
+  Base->MTL_RXQ_DMA_MAP0 = _1;
+
+  <bb 4> :
+  # DEBUG BEGIN_STMT
+  if (QueuesNum > 1)
+    goto <bb 5>; [INV]
+  else
+    goto <bb 6>; [INV]
+
+  <bb 5> :
+  # DEBUG BEGIN_STMT
+  _2 = Base->MTL_RXQ_DMA_MAP0;
+  _3 = _2 | 256;
+  Base->MTL_RXQ_DMA_MAP0 = _3;
+
+  <bb 6> :
+  return;
+
+}
+
+
+GMAC_SetRxQueueOperationMode (struct Gmac_Ip_QueueType * QueueBase, uint32 QueueSize)
+{
+  uint32 BlockNum;
+  long unsigned int iftmp.15;
+
+  <bb 2> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  BlockNum = QueueSize / 256;
+  # DEBUG BEGIN_STMT
+  if (BlockNum != 0)
+    goto <bb 3>; [INV]
+  else
+    goto <bb 4>; [INV]
+
+  <bb 3> :
+  iftmp.15 = BlockNum + 4294967295;
+  goto <bb 5>; [INV]
+
+  <bb 4> :
+  iftmp.15 = 0;
+
+  <bb 5> :
+  BlockNum = iftmp.15;
+  # DEBUG BEGIN_STMT
+  _1 = BlockNum << 20;
+  _2 = _1 & 32505856;
+  QueueBase->MTL_RXQ_OPERATION_MODE = _2;
+  return;
+
+}
+
+
+GMAC_EnableRxQueue (struct GMAC_Type * Base, uint8 PriorityMask, uint8 QueueNum)
+{
+  <bb 2> :
+  # DEBUG BEGIN_STMT
+  _1 = Base->MAC_RXQ_CTRL2;
+  _2 = (long unsigned int) PriorityMask;
+  _3 = (long unsigned int) QueueNum;
+  _4 = _3 * 8;
+  _5 = _2 << _4;
+  _6 = _1 | _5;
+  Base->MAC_RXQ_CTRL2 = _6;
+  # DEBUG BEGIN_STMT
+  _7 = Base->MAC_RXQ_CTRL0;
+  _8 = (long unsigned int) QueueNum;
+  _9 = _8 * 2;
+  _10 = 2 << _9;
+  _11 = _7 | _10;
+  Base->MAC_RXQ_CTRL0 = _11;
+  return;
+
+}
+
+
+GMAC_SetTxThreshold (struct Gmac_Ip_QueueType * QueueBase, Gmac_Ip_TxThresholdType ThresholdValue)
+{
+  <bb 2> :
+  # DEBUG BEGIN_STMT
+  _1 = QueueBase->MTL_TXQ_OPERATION_MODE;
+  _2 = _1 & 4294967181;
+  QueueBase->MTL_TXQ_OPERATION_MODE = _2;
+  # DEBUG BEGIN_STMT
+  _3 = QueueBase->MTL_TXQ_OPERATION_MODE;
+  _4 = (long unsigned int) ThresholdValue;
+  _5 = _4 << 4;
+  _6 = _5 & 112;
+  _7 = _3 | _6;
+  QueueBase->MTL_TXQ_OPERATION_MODE = _7;
+  return;
+
+}
+
+
+GMAC_SetTxStoreAndForward (struct Gmac_Ip_QueueType * QueueBase)
+{
+  <bb 2> :
+  # DEBUG BEGIN_STMT
+  _1 = QueueBase->MTL_TXQ_OPERATION_MODE;
+  _2 = _1 | 2;
+  QueueBase->MTL_TXQ_OPERATION_MODE = _2;
+  return;
+
+}
+
+
+GMAC_SetTxQueueOperationMode (struct Gmac_Ip_QueueType * QueueBase, Gmac_Ip_OperationModeType QueueMode, uint32 QueueSize)
+{
+  uint32 BlockNum;
+  long unsigned int iftmp.14;
+
+  <bb 2> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  BlockNum = QueueSize / 256;
+  # DEBUG BEGIN_STMT
+  if (BlockNum != 0)
+    goto <bb 3>; [INV]
+  else
+    goto <bb 4>; [INV]
+
+  <bb 3> :
+  iftmp.14 = BlockNum + 4294967295;
+  goto <bb 5>; [INV]
+
+  <bb 4> :
+  iftmp.14 = 0;
+
+  <bb 5> :
+  BlockNum = iftmp.14;
+  # DEBUG BEGIN_STMT
+  _1 = (long unsigned int) QueueMode;
+  _2 = _1 << 2;
+  _3 = _2 & 12;
+  _4 = BlockNum << 16;
+  _5 = _4 & 2031616;
+  _6 = _3 | _5;
+  _7 = _6 | 2;
+  QueueBase->MTL_TXQ_OPERATION_MODE = _7;
+  return;
+
+}
+
+
+GMAC_SetTxQueueCreditBasedShaper (struct Gmac_Ip_QueueType * QueueBase, uint32 SendSlopeCredit, uint32 HighCredit, sint32 LowCredit)
+{
+  <bb 2> :
+  # DEBUG BEGIN_STMT
+  QueueBase->MTL_TXQ_SENDSLOPECREDIT = SendSlopeCredit;
+  # DEBUG BEGIN_STMT
+  QueueBase->MTL_TXQ_HICREDIT = HighCredit;
+  # DEBUG BEGIN_STMT
+  LowCredit.13_1 = (long unsigned int) LowCredit;
+  QueueBase->MTL_TXQ_LOCREDIT = LowCredit.13_1;
+  return;
+
+}
+
+
+GMAC_SetTxQueueQuantumWeight (struct Gmac_Ip_QueueType * QueueBase, uint32 Weight)
+{
+  <bb 2> :
+  # DEBUG BEGIN_STMT
+  QueueBase->MTL_TXQ_QUANTUM_WEIGHT = Weight;
+  return;
+
+}
+
+
+GMAC_SetSchedAlg (struct GMAC_Type * Base, Gmac_Ip_TxSchedAlgoType SchedAlgo)
+{
+  <bb 2> :
+  # DEBUG BEGIN_STMT
+  if (SchedAlgo == 0)
+    goto <bb 3>; [INV]
+  else
+    goto <bb 4>; [INV]
+
+  <bb 3> :
+  # DEBUG BEGIN_STMT
+  _1 = Base->MTL_OPERATION_MODE;
+  _2 = _1 & 4294967199;
+  Base->MTL_OPERATION_MODE = _2;
+  goto <bb 6>; [INV]
+
+  <bb 4> :
+  # DEBUG BEGIN_STMT
+  if (SchedAlgo == 3)
+    goto <bb 5>; [INV]
+  else
+    goto <bb 6>; [INV]
+
+  <bb 5> :
+  # DEBUG BEGIN_STMT
+  _3 = Base->MTL_OPERATION_MODE;
+  _4 = _3 | 96;
+  Base->MTL_OPERATION_MODE = _4;
+
+  <bb 6> :
+  # DEBUG BEGIN_STMT
+  return;
+
+}
+
+
+GMAC_SetSpeed (struct GMAC_Type * Base, Gmac_Ip_SpeedType Speed)
+{
+  <bb 2> :
+  # DEBUG BEGIN_STMT
+  if (Speed == 0)
+    goto <bb 3>; [INV]
+  else
+    goto <bb 4>; [INV]
+
+  <bb 3> :
+  # DEBUG BEGIN_STMT
+  _1 = Base->MAC_CONFIGURATION;
+  _2 = _1 & 4294918143;
+  Base->MAC_CONFIGURATION = _2;
+  goto <bb 8>; [INV]
+
+  <bb 4> :
+  # DEBUG BEGIN_STMT
+  if (Speed == 3)
+    goto <bb 5>; [INV]
+  else
+    goto <bb 6>; [INV]
+
+  <bb 5> :
+  # DEBUG BEGIN_STMT
+  _3 = Base->MAC_CONFIGURATION;
+  _4 = _3 | 49152;
+  Base->MAC_CONFIGURATION = _4;
+  goto <bb 8>; [INV]
+
+  <bb 6> :
+  # DEBUG BEGIN_STMT
+  if (Speed == 2)
+    goto <bb 7>; [INV]
+  else
+    goto <bb 8>; [INV]
+
+  <bb 7> :
+  # DEBUG BEGIN_STMT
+  _5 = Base->MAC_CONFIGURATION;
+  _6 = _5 | 32768;
+  Base->MAC_CONFIGURATION = _6;
+  # DEBUG BEGIN_STMT
+  _7 = Base->MAC_CONFIGURATION;
+  _8 = _7 & 4294950911;
+  Base->MAC_CONFIGURATION = _8;
+
+  <bb 8> :
+  # DEBUG BEGIN_STMT
+  return;
+
+}
+
+
+GMAC_SetPowerState (struct GMAC_Type * Base, Gmac_Ip_PowerStateType PowerState)
+{
+  <bb 2> :
+  # DEBUG BEGIN_STMT
+  _1 = (int) PowerState;
+  switch (_1) <default: <L6> [INV], case 0: <L0> [INV], case 1: <L1> [INV], case 2: <L2> [INV], case 3: <L3> [INV]>
+
+  <bb 3> :
+<L0>:
+  # DEBUG BEGIN_STMT
+  _2 = Base->MAC_PMT_CONTROL_STATUS;
+  _3 = _2 & 4294967294;
+  Base->MAC_PMT_CONTROL_STATUS = _3;
+  # DEBUG BEGIN_STMT
+  _4 = Base->MAC_CONFIGURATION;
+  _5 = _4 & 4294967292;
+  Base->MAC_CONFIGURATION = _5;
+  # DEBUG BEGIN_STMT
+  goto <bb 7>; [INV]
+
+  <bb 4> :
+<L1>:
+  # DEBUG BEGIN_STMT
+  _6 = Base->MAC_PMT_CONTROL_STATUS;
+  _7 = _6 & 4294967294;
+  Base->MAC_PMT_CONTROL_STATUS = _7;
+  # DEBUG BEGIN_STMT
+  _8 = Base->MAC_CONFIGURATION;
+  _9 = _8 | 3;
+  Base->MAC_CONFIGURATION = _9;
+  # DEBUG BEGIN_STMT
+  goto <bb 7>; [INV]
+
+  <bb 5> :
+<L2>:
+  # DEBUG BEGIN_STMT
+  _10 = Base->MAC_PMT_CONTROL_STATUS;
+  _11 = _10 | 516;
+  Base->MAC_PMT_CONTROL_STATUS = _11;
+  # DEBUG BEGIN_STMT
+  _12 = Base->MAC_PMT_CONTROL_STATUS;
+  _13 = _12 | 1;
+  Base->MAC_PMT_CONTROL_STATUS = _13;
+  # DEBUG BEGIN_STMT
+  _14 = Base->MAC_PMT_CONTROL_STATUS;
+  _15 = _14 | 1024;
+  Base->MAC_PMT_CONTROL_STATUS = _15;
+  # DEBUG BEGIN_STMT
+  goto <bb 7>; [INV]
+
+  <bb 6> :
+<L3>:
+  # DEBUG BEGIN_STMT
+  _16 = Base->DMA_MODE;
+  _17 = _16 | 1;
+  Base->DMA_MODE = _17;
+  # DEBUG BEGIN_STMT
+
+  <bb 7> :
+<L6>:
+  return;
+
+}
+
+
+GMAC_GetPowerState (const struct GMAC_Type * Base)
+{
+  Gmac_Ip_PowerStateType PowerState;
+  Gmac_Ip_PowerStateType D.6922;
+
+  <bb 2> :
+  # DEBUG BEGIN_STMT
+  PowerState = 3;
+  # DEBUG BEGIN_STMT
+  _1 = Base->DMA_MODE;
+  _2 = _1 & 1;
+  if (_2 != 0)
+    goto <bb 3>; [INV]
+  else
+    goto <bb 4>; [INV]
+
+  <bb 3> :
+  # DEBUG BEGIN_STMT
+  PowerState = 3;
+  goto <bb 10>; [INV]
+
+  <bb 4> :
+  # DEBUG BEGIN_STMT
+  _3 = Base->MAC_PMT_CONTROL_STATUS;
+  _4 = _3 & 1;
+  if (_4 != 0)
+    goto <bb 5>; [INV]
+  else
+    goto <bb 6>; [INV]
+
+  <bb 5> :
+  # DEBUG BEGIN_STMT
+  PowerState = 2;
+  goto <bb 10>; [INV]
+
+  <bb 6> :
+  # DEBUG BEGIN_STMT
+  _5 = Base->MAC_CONFIGURATION;
+  _6 = _5 & 3;
+  if (_6 != 0)
+    goto <bb 7>; [INV]
+  else
+    goto <bb 8>; [INV]
+
+  <bb 7> :
+  # DEBUG BEGIN_STMT
+  PowerState = 1;
+  goto <bb 10>; [INV]
+
+  <bb 8> :
+  # DEBUG BEGIN_STMT
+  _7 = Base->MAC_CONFIGURATION;
+  _8 = _7 & 3;
+  if (_8 == 0)
+    goto <bb 9>; [INV]
+  else
+    goto <bb 10>; [INV]
+
+  <bb 9> :
+  # DEBUG BEGIN_STMT
+  PowerState = 0;
+
+  <bb 10> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  D.6922 = PowerState;
+  return D.6922;
+
+}
+
+
+GMAC_RemoveVlanFromHashTable (struct GMAC_Type * Base, uint32 Crc)
+{
+  uint32 Index;
+
+  <bb 2> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _1 = REV_BITS_32 (Crc);
+  _2 = _1 >> 28;
+  Index = _2 & 15;
+  # DEBUG BEGIN_STMT
+  _3 = Base->MAC_VLAN_TAG_DATA;
+  _4 = _3 & 131072;
+  if (_4 != 131072)
+    goto <bb 3>; [INV]
+  else
+    goto <bb 4>; [INV]
+
+  <bb 3> :
+  # DEBUG BEGIN_STMT
+  Index = Index + 4294967295;
+
+  <bb 4> :
+  # DEBUG BEGIN_STMT
+  _5 = Base->MAC_VLAN_HASH_TABLE;
+  _6 = 1 << Index;
+  _7 = ~_6;
+  _8 = _5 & _7;
+  Base->MAC_VLAN_HASH_TABLE = _8;
+  return;
+
+}
+
+
+GMAC_AddVlanToHashTable (struct GMAC_Type * Base, uint32 Crc)
+{
+  uint32 Index;
+
+  <bb 2> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _1 = REV_BITS_32 (Crc);
+  _2 = _1 >> 28;
+  Index = _2 & 15;
+  # DEBUG BEGIN_STMT
+  _3 = Base->MAC_VLAN_TAG_DATA;
+  _4 = _3 & 131072;
+  if (_4 != 131072)
+    goto <bb 3>; [INV]
+  else
+    goto <bb 4>; [INV]
+
+  <bb 3> :
+  # DEBUG BEGIN_STMT
+  Index = Index + 4294967295;
+
+  <bb 4> :
+  # DEBUG BEGIN_STMT
+  _5 = Base->MAC_VLAN_HASH_TABLE;
+  _6 = 1 << Index;
+  _7 = _5 | _6;
+  Base->MAC_VLAN_HASH_TABLE = _7;
+  return;
+
+}
+
+
+GMAC_RemoveFromHashTable (const struct GMAC_Type * Base, uint32 Crc)
+{
+  volatile uint32[2] * Hash_table;
+  volatile uint32 HashBaseAddr;
+  uint32 Hash_bit;
+  uint32 Index;
+
+  <bb 2> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _1 = &Base->MAC_HASH_TABLE_REG0;
+  _2 = (long unsigned int) _1;
+  HashBaseAddr = _2;
+  # DEBUG BEGIN_STMT
+  HashBaseAddr.12_3 = HashBaseAddr;
+  Hash_table = (volatile uint32[2] *) HashBaseAddr.12_3;
+  # DEBUG BEGIN_STMT
+  _4 = REV_BITS_32 (Crc);
+  _5 = _4 >> 31;
+  Index = _5 & 1;
+  # DEBUG BEGIN_STMT
+  _6 = REV_BITS_32 (Crc);
+  _7 = _6 >> 26;
+  _8 = _7 & 31;
+  Hash_bit = 1 << _8;
+  # DEBUG BEGIN_STMT
+  _9 = Index & 1;
+  _10 = *Hash_table[_9];
+  _11 = ~Hash_bit;
+  _12 = Index & 1;
+  _13 = _10 & _11;
+  *Hash_table[_12] = _13;
+  return;
+
+}
+
+
+GMAC_AddToHashTable (const struct GMAC_Type * Base, uint32 Crc)
+{
+  volatile uint32[2] * Hash_table;
+  volatile uint32 HashBaseAddr;
+  uint32 Hash_bit;
+  uint32 Index;
+
+  <bb 2> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _1 = &Base->MAC_HASH_TABLE_REG0;
+  _2 = (long unsigned int) _1;
+  HashBaseAddr = _2;
+  # DEBUG BEGIN_STMT
+  HashBaseAddr.11_3 = HashBaseAddr;
+  Hash_table = (volatile uint32[2] *) HashBaseAddr.11_3;
+  # DEBUG BEGIN_STMT
+  _4 = REV_BITS_32 (Crc);
+  _5 = _4 >> 31;
+  Index = _5 & 1;
+  # DEBUG BEGIN_STMT
+  _6 = REV_BITS_32 (Crc);
+  _7 = _6 >> 26;
+  _8 = _7 & 31;
+  Hash_bit = 1 << _8;
+  # DEBUG BEGIN_STMT
+  _9 = Index & 1;
+  _10 = *Hash_table[_9];
+  _11 = Index & 1;
+  _12 = Hash_bit | _10;
+  *Hash_table[_11] = _12;
+  return;
+
+}
+
+
+GMAC_TxIRQHandler (uint8 Instance, uint8 Channel)
+{
+  uint32 IrqEnFlags;
+  uint32 StatusFlags;
+  struct Gmac_Ip_ChannelType * ChBase;
+
+  <bb 2> :
+  # DEBUG BEGIN_STMT
+  _1 = (int) Instance;
+  _2 = (int) Channel;
+  ChBase = Gmac_apxChBases[_1][_2];
+  # DEBUG BEGIN_STMT
+  StatusFlags = ChBase->DMA_STATUS;
+  # DEBUG BEGIN_STMT
+  IrqEnFlags = ChBase->DMA_INTERRUPT_ENABLE;
+  # DEBUG BEGIN_STMT
+  _3 = (int) Instance;
+  _4 = Gmac_apxState[_3];
+  if (_4 != 0B)
+    goto <bb 3>; [INV]
+  else
+    goto <bb 7>; [INV]
+
+  <bb 3> :
+  # DEBUG BEGIN_STMT
+  _5 = IrqEnFlags & 1;
+  if (_5 != 0)
+    goto <bb 4>; [INV]
+  else
+    goto <bb 8>; [INV]
+
+  <bb 4> :
+  _6 = StatusFlags & 1;
+  if (_6 != 0)
+    goto <bb 5>; [INV]
+  else
+    goto <bb 8>; [INV]
+
+  <bb 5> :
+  # DEBUG BEGIN_STMT
+  ChBase->DMA_STATUS = 1;
+  # DEBUG BEGIN_STMT
+  _7 = (int) Instance;
+  _8 = Gmac_apxState[_7];
+  _9 = (int) Channel;
+  _10 = _8->TxChCallback[_9];
+  if (_10 != 0B)
+    goto <bb 6>; [INV]
+  else
+    goto <bb 8>; [INV]
+
+  <bb 6> :
+  # DEBUG BEGIN_STMT
+  _11 = (int) Instance;
+  _12 = Gmac_apxState[_11];
+  _13 = (int) Channel;
+  _14 = _12->TxChCallback[_13];
+  _14 (Instance, Channel);
+  goto <bb 8>; [INV]
+
+  <bb 7> :
+  # DEBUG BEGIN_STMT
+  ChBase->DMA_STATUS = 1;
+
+  <bb 8> :
+  return;
+
+}
+
+
+GMAC_RxIRQHandler (uint8 Instance, uint8 Channel)
+{
+  uint32 IrqEnFlags;
+  uint32 StatusFlags;
+  struct Gmac_Ip_ChannelType * ChBase;
+
+  <bb 2> :
+  # DEBUG BEGIN_STMT
+  _1 = (int) Instance;
+  _2 = (int) Channel;
+  ChBase = Gmac_apxChBases[_1][_2];
+  # DEBUG BEGIN_STMT
+  StatusFlags = ChBase->DMA_STATUS;
+  # DEBUG BEGIN_STMT
+  IrqEnFlags = ChBase->DMA_INTERRUPT_ENABLE;
+  # DEBUG BEGIN_STMT
+  _3 = (int) Instance;
+  _4 = Gmac_apxState[_3];
+  if (_4 != 0B)
+    goto <bb 3>; [INV]
+  else
+    goto <bb 7>; [INV]
+
+  <bb 3> :
+  # DEBUG BEGIN_STMT
+  _5 = IrqEnFlags & 64;
+  if (_5 != 0)
+    goto <bb 4>; [INV]
+  else
+    goto <bb 8>; [INV]
+
+  <bb 4> :
+  _6 = StatusFlags & 64;
+  if (_6 != 0)
+    goto <bb 5>; [INV]
+  else
+    goto <bb 8>; [INV]
+
+  <bb 5> :
+  # DEBUG BEGIN_STMT
+  ChBase->DMA_STATUS = 64;
+  # DEBUG BEGIN_STMT
+  _7 = (int) Instance;
+  _8 = Gmac_apxState[_7];
+  _9 = (int) Channel;
+  _10 = _8->RxChCallback[_9];
+  if (_10 != 0B)
+    goto <bb 6>; [INV]
+  else
+    goto <bb 8>; [INV]
+
+  <bb 6> :
+  # DEBUG BEGIN_STMT
+  _11 = (int) Instance;
+  _12 = Gmac_apxState[_11];
+  _13 = (int) Channel;
+  _14 = _12->RxChCallback[_13];
+  _14 (Instance, Channel);
+  goto <bb 8>; [INV]
+
+  <bb 7> :
+  # DEBUG BEGIN_STMT
+  ChBase->DMA_STATUS = 64;
+
+  <bb 8> :
+  return;
+
+}
+
+
+GMAC_CommonIRQHandler (uint8 Instance)
+{
+  struct Gmac_Ip_ChannelType * ChBase;
+  uint8 TxInterruptStatus[2];
+  uint8 RxInterruptStatus[2];
+  uint32 Flags;
+  uint16 i;
+  const struct GMAC_Type * Base;
+  long unsigned int vol.4;
+
+  <bb 2> :
+  # DEBUG BEGIN_STMT
+  _1 = (int) Instance;
+  Base = Gmac_apxBases[_1];
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  RxInterruptStatus = "\x00";
+  # DEBUG BEGIN_STMT
+  TxInterruptStatus = "\x00";
+  # DEBUG BEGIN_STMT
+  GMAC_MACIRQHandler (Instance);
+  # DEBUG BEGIN_STMT
+  i = 0;
+  goto <bb 9>; [INV]
+
+  <bb 3> :
+  # DEBUG BEGIN_STMT
+  _2 = Base->DMA_INTERRUPT_STATUS;
+  _3 = (long unsigned int) i;
+  _4 = _2 >> _3;
+  _5 = _4 & 1;
+  if (_5 != 0)
+    goto <bb 4>; [INV]
+  else
+    goto <bb 8>; [INV]
+
+  <bb 4> :
+  # DEBUG BEGIN_STMT
+  _6 = (int) Instance;
+  _7 = (int) i;
+  ChBase = Gmac_apxChBases[_6][_7];
+  # DEBUG BEGIN_STMT
+  Flags = ChBase->DMA_STATUS;
+  # DEBUG BEGIN_STMT
+  ChBase->DMA_STATUS = Flags;
+  # DEBUG BEGIN_STMT
+  vol.4 = ChBase->DMA_STATUS;
+  # DEBUG BEGIN_STMT
+  _8 = Flags & 3673024;
+  if (_8 != 0)
+    goto <bb 5>; [INV]
+  else
+    goto <bb 6>; [INV]
+
+  <bb 5> :
+  # DEBUG BEGIN_STMT
+  _9 = (int) i;
+  RxInterruptStatus[_9] = 1;
+
+  <bb 6> :
+  # DEBUG BEGIN_STMT
+  _10 = Flags & 459783;
+  if (_10 != 0)
+    goto <bb 7>; [INV]
+  else
+    goto <bb 8>; [INV]
+
+  <bb 7> :
+  # DEBUG BEGIN_STMT
+  _11 = (int) i;
+  TxInterruptStatus[_11] = 1;
+
+  <bb 8> :
+  # DEBUG BEGIN_STMT
+  i.5_12 = i;
+  i = i.5_12 + 1;
+
+  <bb 9> :
+  # DEBUG BEGIN_STMT
+  if (i <= 1)
+    goto <bb 3>; [INV]
+  else
+    goto <bb 10>; [INV]
+
+  <bb 10> :
+  # DEBUG BEGIN_STMT
+  i = 0;
+  goto <bb 15>; [INV]
+
+  <bb 11> :
+  # DEBUG BEGIN_STMT
+  _13 = (int) i;
+  _14 = RxInterruptStatus[_13];
+  if (_14 != 0)
+    goto <bb 12>; [INV]
+  else
+    goto <bb 14>; [INV]
+
+  <bb 12> :
+  # DEBUG BEGIN_STMT
+  _15 = (int) Instance;
+  _16 = Gmac_apxState[_15];
+  _17 = (int) i;
+  _18 = _16->RxChCallback[_17];
+  if (_18 != 0B)
+    goto <bb 13>; [INV]
+  else
+    goto <bb 14>; [INV]
+
+  <bb 13> :
+  # DEBUG BEGIN_STMT
+  _19 = (int) Instance;
+  _20 = Gmac_apxState[_19];
+  _21 = (int) i;
+  _22 = _20->RxChCallback[_21];
+  _23 = (unsigned char) i;
+  _22 (Instance, _23);
+
+  <bb 14> :
+  # DEBUG BEGIN_STMT
+  i.6_24 = i;
+  i = i.6_24 + 1;
+
+  <bb 15> :
+  # DEBUG BEGIN_STMT
+  _25 = (int) Instance;
+  _26 = Gmac_apxState[_25];
+  _27 = _26->RxRingCount;
+  if (i < _27)
+    goto <bb 11>; [INV]
+  else
+    goto <bb 16>; [INV]
+
+  <bb 16> :
+  # DEBUG BEGIN_STMT
+  i = 0;
+  goto <bb 21>; [INV]
+
+  <bb 17> :
+  # DEBUG BEGIN_STMT
+  _28 = (int) i;
+  _29 = TxInterruptStatus[_28];
+  if (_29 != 0)
+    goto <bb 18>; [INV]
+  else
+    goto <bb 20>; [INV]
+
+  <bb 18> :
+  # DEBUG BEGIN_STMT
+  _30 = (int) Instance;
+  _31 = Gmac_apxState[_30];
+  _32 = (int) i;
+  _33 = _31->TxChCallback[_32];
+  if (_33 != 0B)
+    goto <bb 19>; [INV]
+  else
+    goto <bb 20>; [INV]
+
+  <bb 19> :
+  # DEBUG BEGIN_STMT
+  _34 = (int) Instance;
+  _35 = Gmac_apxState[_34];
+  _36 = (int) i;
+  _37 = _35->TxChCallback[_36];
+  _38 = (unsigned char) i;
+  _37 (Instance, _38);
+
+  <bb 20> :
+  # DEBUG BEGIN_STMT
+  i.7_39 = i;
+  i = i.7_39 + 1;
+
+  <bb 21> :
+  # DEBUG BEGIN_STMT
+  _40 = (int) Instance;
+  _41 = Gmac_apxState[_40];
+  _42 = _41->TxRingCount;
+  if (i < _42)
+    goto <bb 17>; [INV]
+  else
+    goto <bb 22>; [INV]
+
+  <bb 22> :
+  RxInterruptStatus = {CLOBBER};
+  TxInterruptStatus = {CLOBBER};
+  return;
+
+}
+
+
+GMAC_WriteManagementFrame (struct GMAC_Type * Base, const struct Gmac_Ip_ManagementInfo * ManageInfo, uint32 TimeoutUs)
+{
+  uint32 TimeoutTicks;
+  uint32 ElapsedTime;
+  uint32 StartTime;
+  Gmac_Ip_StatusType Status;
+  Gmac_Ip_StatusType D.6855;
+  long unsigned int iftmp.2;
+  long unsigned int iftmp.1;
+  long unsigned int iftmp.0;
+
+  <bb 2> :
+  # DEBUG BEGIN_STMT
+  Status = 3;
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _1 = Base->MAC_MDIO_ADDRESS;
+  _2 = _1 & 4227923953;
+  Base->MAC_MDIO_ADDRESS = _2;
+  # DEBUG BEGIN_STMT
+  _3 = ManageInfo->SupportedClause45;
+  if (_3 != 0)
+    goto <bb 3>; [INV]
+  else
+    goto <bb 4>; [INV]
+
+  <bb 3> :
+  _4 = ManageInfo->PhysReg;
+  _5 = (long unsigned int) _4;
+  iftmp.0 = _5 << 16;
+  goto <bb 5>; [INV]
+
+  <bb 4> :
+  iftmp.0 = 0;
+
+  <bb 5> :
+  _6 = ManageInfo->FrameData;
+  _7 = (long unsigned int) _6;
+  _8 = iftmp.0 | _7;
+  Base->MAC_MDIO_DATA = _8;
+  # DEBUG BEGIN_STMT
+  _9 = Base->MAC_MDIO_ADDRESS;
+  _10 = ManageInfo->SupportedClause45;
+  if (_10 != 0)
+    goto <bb 6>; [INV]
+  else
+    goto <bb 7>; [INV]
+
+  <bb 6> :
+  iftmp.1 = 2;
+  goto <bb 8>; [INV]
+
+  <bb 7> :
+  iftmp.1 = 0;
+
+  <bb 8> :
+  _11 = ManageInfo->OpFrameType;
+  _12 = (long unsigned int) _11;
+  _13 = _12 << 3;
+  _14 = _13 & 8;
+  _15 = iftmp.1 | _14;
+  _16 = ManageInfo->PhysAddr;
+  _17 = (long unsigned int) _16;
+  _18 = _17 << 21;
+  _19 = _18 & 65011712;
+  _20 = _15 | _19;
+  _21 = ManageInfo->SupportedClause45;
+  if (_21 != 0)
+    goto <bb 9>; [INV]
+  else
+    goto <bb 10>; [INV]
+
+  <bb 9> :
+  _22 = ManageInfo->MmdAddr;
+  _23 = (long unsigned int) _22;
+  _24 = _23 << 16;
+  iftmp.2 = _24 & 2031616;
+  goto <bb 11>; [INV]
+
+  <bb 10> :
+  _25 = ManageInfo->PhysReg;
+  _26 = (long unsigned int) _25;
+  _27 = _26 << 16;
+  iftmp.2 = _27 & 2031616;
+
+  <bb 11> :
+  _28 = iftmp.2 | _20;
+  _29 = _9 | _28;
+  _30 = _29 | 5;
+  Base->MAC_MDIO_ADDRESS = _30;
+  # DEBUG BEGIN_STMT
+  GMAC_StartTimeOut (&StartTime, &ElapsedTime, &TimeoutTicks, TimeoutUs);
+
+  <bb 12> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _31 = Base->MAC_MDIO_ADDRESS;
+  _32 = _31 & 1;
+  if (_32 == 0)
+    goto <bb 13>; [INV]
+  else
+    goto <bb 14>; [INV]
+
+  <bb 13> :
+  # DEBUG BEGIN_STMT
+  Status = 0;
+  # DEBUG BEGIN_STMT
+  goto <bb 15>; [INV]
+
+  <bb 14> :
+  # DEBUG BEGIN_STMT
+  TimeoutTicks.3_33 = TimeoutTicks;
+  _34 = GMAC_TimeoutExpired (&StartTime, &ElapsedTime, TimeoutTicks.3_33);
+  _35 = ~_34;
+  if (_35 != 0)
+    goto <bb 12>; [INV]
+  else
+    goto <bb 15>; [INV]
+
+  <bb 15> :
+  # DEBUG BEGIN_STMT
+  D.6855 = Status;
+  StartTime = {CLOBBER};
+  ElapsedTime = {CLOBBER};
+  TimeoutTicks = {CLOBBER};
+  return D.6855;
+
+}
+
+
+GMAC_TimeoutExpired (uint32 * StartTimeInOut, uint32 * ElapsedTimeInOut, uint32 TimeoutTicks)
+{
+  boolean RetVal;
+  boolean D.6839;
+  long unsigned int D.6836;
+
+  <bb 2> :
+  # DEBUG BEGIN_STMT
+  RetVal = 0;
+  # DEBUG BEGIN_STMT
+  D.6836 = OsIf_GetElapsed (StartTimeInOut, 0);
+  _1 = *ElapsedTimeInOut;
+  _2 = D.6836 + _1;
+  *ElapsedTimeInOut = _2;
+  # DEBUG BEGIN_STMT
+  _3 = *ElapsedTimeInOut;
+  if (TimeoutTicks <= _3)
+    goto <bb 3>; [INV]
+  else
+    goto <bb 4>; [INV]
+
+  <bb 3> :
+  # DEBUG BEGIN_STMT
+  RetVal = 1;
+
+  <bb 4> :
+  # DEBUG BEGIN_STMT
+  D.6839 = RetVal;
+  return D.6839;
+
+}
+
+
+GMAC_StartTimeOut (uint32 * StartTimeOut, uint32 * ElapsedTimeOut, uint32 * TimeoutTicksOut, uint32 TimeoutUs)
+{
+  <bb 2> :
+  # DEBUG BEGIN_STMT
+  _1 = OsIf_GetCounter (0);
+  *StartTimeOut = _1;
+  # DEBUG BEGIN_STMT
+  *ElapsedTimeOut = 0;
+  # DEBUG BEGIN_STMT
+  _2 = OsIf_MicrosToTicks (TimeoutUs, 0);
+  *TimeoutTicksOut = _2;
+  return;
+
+}
+
+
+GMAC_MACIRQHandler (uint8 Instance)
+{
+  uint32 Flags;
+  const struct GMAC_Type * Base;
+  long unsigned int vol.10;
+  long unsigned int vol.9;
+  long unsigned int vol.8;
+
+  <bb 2> :
+  # DEBUG BEGIN_STMT
+  _1 = (int) Instance;
+  Base = Gmac_apxBases[_1];
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _2 = Base->DMA_INTERRUPT_STATUS;
+  _3 = _2 & 131072;
+  if (_3 != 0)
+    goto <bb 3>; [INV]
+  else
+    goto <bb 11>; [INV]
+
+  <bb 3> :
+  # DEBUG BEGIN_STMT
+  Flags = Base->MAC_INTERRUPT_STATUS;
+  # DEBUG BEGIN_STMT
+  _4 = (int) Instance;
+  _5 = Gmac_apxState[_4];
+  _6 = _5->Callback;
+  if (_6 != 0B)
+    goto <bb 4>; [INV]
+  else
+    goto <bb 5>; [INV]
+
+  <bb 4> :
+  # DEBUG BEGIN_STMT
+  _7 = (int) Instance;
+  _8 = Gmac_apxState[_7];
+  _9 = _8->Callback;
+  _9 (Instance);
+
+  <bb 5> :
+  # DEBUG BEGIN_STMT
+  _10 = Flags & 1;
+  if (_10 != 0)
+    goto <bb 6>; [INV]
+  else
+    goto <bb 7>; [INV]
+
+  <bb 6> :
+  # DEBUG BEGIN_STMT
+  vol.8 = Base->MAC_PHYIF_CONTROL_STATUS;
+
+  <bb 7> :
+  # DEBUG BEGIN_STMT
+  _11 = Flags & 131072;
+  if (_11 != 0)
+    goto <bb 8>; [INV]
+  else
+    goto <bb 9>; [INV]
+
+  <bb 8> :
+  # DEBUG BEGIN_STMT
+  vol.9 = Base->MAC_FPE_CTRL_STS;
+
+  <bb 9> :
+  # DEBUG BEGIN_STMT
+  _12 = Flags & 24576;
+  if (_12 != 0)
+    goto <bb 10>; [INV]
+  else
+    goto <bb 11>; [INV]
+
+  <bb 10> :
+  # DEBUG BEGIN_STMT
+  vol.10 = Base->MAC_RX_TX_STATUS;
+
+  <bb 11> :
+  return;
+
+}
+
+
+REV_BITS_32 (uint32 value)
+{
+  uint32 v;
+  uint32 D.6904;
+
+  <bb 2> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  v = value;
+  # DEBUG BEGIN_STMT
+  _1 = v >> 1;
+  _2 = _1 & 1431655765;
+  _3 = v << 1;
+  _4 = _3 & 2863311530;
+  v = _2 | _4;
+  # DEBUG BEGIN_STMT
+  _5 = v >> 2;
+  _6 = _5 & 858993459;
+  _7 = v << 2;
+  _8 = _7 & 3435973836;
+  v = _6 | _8;
+  # DEBUG BEGIN_STMT
+  _9 = v >> 4;
+  _10 = _9 & 252645135;
+  _11 = v << 4;
+  _12 = _11 & 4042322160;
+  v = _10 | _12;
+  # DEBUG BEGIN_STMT
+  _13 = v >> 8;
+  _14 = _13 & 16711935;
+  _15 = v << 8;
+  _16 = _15 & 4278255360;
+  v = _14 | _16;
+  # DEBUG BEGIN_STMT
+  D.6904 = v r>> 16;
+  return D.6904;
+
+}
+
+

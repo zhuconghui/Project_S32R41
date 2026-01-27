@@ -1,0 +1,6258 @@
+tcp_trigger_input_pcb_close ()
+{
+  unsigned char recv_flags.213_1;
+  unsigned char _2;
+
+  <bb 2> :
+  # DEBUG BEGIN_STMT
+  recv_flags.213_1 = recv_flags;
+  _2 = recv_flags.213_1 | 16;
+  recv_flags = _2;
+  return;
+
+}
+
+
+tcp_parseopt (struct tcp_pcb * pcb)
+{
+  u8_t opt;
+  u16_t mss;
+  u8_t data;
+  short unsigned int tcphdr_optlen.88_1;
+  int _2;
+  unsigned char _3;
+  short unsigned int tcp_optidx.89_4;
+  int _5;
+  int _6;
+  short unsigned int tcphdr_optlen.90_7;
+  int _8;
+  unsigned char _9;
+  short unsigned int _10;
+  short unsigned int _11;
+  short unsigned int _12;
+  short unsigned int _13;
+  short unsigned int tcp_optidx.92_14;
+  short unsigned int _15;
+  short unsigned int _16;
+  short unsigned int tcp_optidx.93_17;
+  short unsigned int tcphdr_optlen.94_18;
+  u16_t iftmp.91_19;
+  unsigned char _32;
+  u16_t iftmp.91_34;
+  u16_t iftmp.91_35;
+
+  <bb 2> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  if (pcb_23(D) == 0B)
+    goto <bb 3>; [INV]
+  else
+    goto <bb 4>; [INV]
+
+  <bb 3> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  __asm__ __volatile__("BKPT #0
+	");
+  # DEBUG BEGIN_STMT
+  goto <bb 3>; [INV]
+
+  <bb 4> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  tcphdr_optlen.88_1 = tcphdr_optlen;
+  if (tcphdr_optlen.88_1 != 0)
+    goto <bb 5>; [INV]
+  else
+    goto <bb 19>; [INV]
+
+  <bb 5> :
+  # DEBUG BEGIN_STMT
+  tcp_optidx = 0;
+  goto <bb 18>; [INV]
+
+  <bb 6> :
+  # DEBUG BEGIN_STMT
+  opt_27 = tcp_get_next_optbyte ();
+  # DEBUG opt => opt_27
+  # DEBUG BEGIN_STMT
+  _2 = (int) opt_27;
+  switch (_2) <default: <L14> [INV], case 0: <L5> [INV], case 1: <L22> [INV], case 2: <L7> [INV]>
+
+  <bb 7> :
+<L5>:
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  // predicted unlikely by early return (on trees) predictor.
+  goto <bb 19>; [INV]
+
+  <bb 8> :
+<L7>:
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _3 = tcp_get_next_optbyte ();
+  if (_3 != 4)
+    goto <bb 10>; [INV]
+  else
+    goto <bb 9>; [INV]
+
+  <bb 9> :
+  tcp_optidx.89_4 = tcp_optidx;
+  _5 = (int) tcp_optidx.89_4;
+  _6 = _5 + 1;
+  tcphdr_optlen.90_7 = tcphdr_optlen;
+  _8 = (int) tcphdr_optlen.90_7;
+  if (_6 >= _8)
+    goto <bb 10>; [INV]
+  else
+    goto <bb 11>; [INV]
+
+  <bb 10> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  // predicted unlikely by early return (on trees) predictor.
+  goto <bb 19>; [INV]
+
+  <bb 11> :
+  # DEBUG BEGIN_STMT
+  _9 = tcp_get_next_optbyte ();
+  _10 = (short unsigned int) _9;
+  mss_30 = _10 << 8;
+  # DEBUG mss => mss_30
+  # DEBUG BEGIN_STMT
+  _32 = tcp_get_next_optbyte ();
+  _11 = (short unsigned int) _32;
+  mss_33 = mss_30 | _11;
+  # DEBUG mss => mss_33
+  # DEBUG BEGIN_STMT
+  _12 = mss_33 + 65535;
+  if (_12 <= 1459)
+    goto <bb 12>; [INV]
+  else
+    goto <bb 13>; [INV]
+
+  <bb 12> :
+  iftmp.91_35 = mss_33;
+  goto <bb 14>; [INV]
+
+  <bb 13> :
+  iftmp.91_34 = 1460;
+
+  <bb 14> :
+  # iftmp.91_19 = PHI <iftmp.91_35(12), iftmp.91_34(13)>
+  pcb_23(D)->mss = iftmp.91_19;
+  # DEBUG BEGIN_STMT
+  goto <bb 18>; [INV]
+
+  <bb 15> :
+<L14>:
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  data_38 = tcp_get_next_optbyte ();
+  # DEBUG data => data_38
+  # DEBUG BEGIN_STMT
+  if (data_38 <= 1)
+    goto <bb 16>; [INV]
+  else
+    goto <bb 17>; [INV]
+
+  <bb 16> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  // predicted unlikely by early return (on trees) predictor.
+  goto <bb 19>; [INV]
+
+  <bb 17> :
+  # DEBUG BEGIN_STMT
+  _13 = (short unsigned int) data_38;
+  tcp_optidx.92_14 = tcp_optidx;
+  _15 = _13 + tcp_optidx.92_14;
+  _16 = _15 + 65534;
+  tcp_optidx = _16;
+
+  <bb 18> :
+<L22>:
+  # DEBUG BEGIN_STMT
+  tcp_optidx.93_17 = tcp_optidx;
+  tcphdr_optlen.94_18 = tcphdr_optlen;
+  if (tcp_optidx.93_17 < tcphdr_optlen.94_18)
+    goto <bb 6>; [INV]
+  else
+    goto <bb 19>; [INV]
+
+  <bb 19> :
+  return;
+
+}
+
+
+tcp_get_next_optbyte ()
+{
+  u8_t idx;
+  u8_t * opts;
+  u16_t optidx;
+  short unsigned int tcp_optidx.95_1;
+  short unsigned int tcp_optidx.96_2;
+  short unsigned int _3;
+  u8_t * tcphdr_opt2.97_4;
+  short unsigned int tcphdr_opt1len.98_5;
+  struct tcp_hdr * tcphdr.99_6;
+  sizetype _7;
+  u8_t * _8;
+  unsigned char _9;
+  short unsigned int tcphdr_opt1len.100_10;
+  unsigned char _11;
+  u8_t * tcphdr_opt2.101_12;
+  sizetype _13;
+  u8_t * _14;
+  u8_t _15;
+  u8_t _20;
+  u8_t _22;
+
+  <bb 2> :
+  # DEBUG BEGIN_STMT
+  tcp_optidx.95_1 = tcp_optidx;
+  tcp_optidx.96_2 = tcp_optidx.95_1;
+  _3 = tcp_optidx.96_2 + 1;
+  tcp_optidx = _3;
+  optidx_18 = tcp_optidx.96_2;
+  # DEBUG optidx => optidx_18
+  # DEBUG BEGIN_STMT
+  tcphdr_opt2.97_4 = tcphdr_opt2;
+  if (tcphdr_opt2.97_4 == 0B)
+    goto <bb 4>; [INV]
+  else
+    goto <bb 3>; [INV]
+
+  <bb 3> :
+  tcphdr_opt1len.98_5 = tcphdr_opt1len;
+  if (optidx_18 < tcphdr_opt1len.98_5)
+    goto <bb 4>; [INV]
+  else
+    goto <bb 5>; [INV]
+
+  <bb 4> :
+  # DEBUG BEGIN_STMT
+  tcphdr.99_6 = tcphdr;
+  opts_21 = tcphdr.99_6 + 20;
+  # DEBUG opts => opts_21
+  # DEBUG BEGIN_STMT
+  _7 = (sizetype) optidx_18;
+  _8 = opts_21 + _7;
+  _22 = *_8;
+  // predicted unlikely by early return (on trees) predictor.
+  goto <bb 6>; [INV]
+
+  <bb 5> :
+  # DEBUG BEGIN_STMT
+  _9 = (unsigned char) optidx_18;
+  tcphdr_opt1len.100_10 = tcphdr_opt1len;
+  _11 = (unsigned char) tcphdr_opt1len.100_10;
+  idx_19 = _9 - _11;
+  # DEBUG idx => idx_19
+  # DEBUG BEGIN_STMT
+  tcphdr_opt2.101_12 = tcphdr_opt2;
+  _13 = (sizetype) idx_19;
+  _14 = tcphdr_opt2.101_12 + _13;
+  _20 = *_14;
+  // predicted unlikely by early return (on trees) predictor.
+
+  <bb 6> :
+  # _15 = PHI <_22(4), _20(5)>
+  return _15;
+
+}
+
+
+tcp_receive (struct tcp_pcb * pcb)
+{
+  u16_t off;
+  u16_t new_tot_len;
+  u32_t off32;
+  struct pbuf * p;
+  u8_t num_seg;
+  tcpwnd_size_t increase;
+  tcpwnd_size_t acked;
+  int found_dupack;
+  u32_t right_wnd_edge;
+  s16_t m;
+  tcp_state _1;
+  unsigned char flags.162_2;
+  unsigned int _3;
+  unsigned int _4;
+  short unsigned int _5;
+  long unsigned int _6;
+  long unsigned int _7;
+  long unsigned int _8;
+  long unsigned int seqno.163_9;
+  long unsigned int _10;
+  long int _11;
+  long unsigned int _12;
+  long unsigned int seqno.164_13;
+  long unsigned int _14;
+  long unsigned int ackno.165_15;
+  long unsigned int _16;
+  long int _17;
+  long unsigned int _18;
+  long unsigned int ackno.166_19;
+  struct tcp_hdr * tcphdr.167_20;
+  short unsigned int _21;
+  short unsigned int _22;
+  struct tcp_hdr * tcphdr.168_23;
+  short unsigned int _24;
+  short unsigned int _25;
+  short unsigned int _26;
+  short unsigned int _27;
+  long unsigned int seqno.169_28;
+  long unsigned int ackno.170_29;
+  long unsigned int ackno.171_30;
+  long unsigned int _31;
+  long unsigned int _32;
+  long int _33;
+  short unsigned int tcplen.172_34;
+  long unsigned int _35;
+  short unsigned int _36;
+  long unsigned int _37;
+  long unsigned int _38;
+  short int _39;
+  long unsigned int _40;
+  long unsigned int ackno.173_41;
+  unsigned char _42;
+  unsigned char _43;
+  unsigned char _44;
+  unsigned char _45;
+  short unsigned int _46;
+  short unsigned int _47;
+  short unsigned int _48;
+  short unsigned int _49;
+  short unsigned int _50;
+  short unsigned int _51;
+  short unsigned int _52;
+  unsigned char _53;
+  long unsigned int ackno.174_54;
+  long unsigned int _55;
+  long unsigned int _56;
+  long unsigned int _57;
+  long int _58;
+  long unsigned int ackno.175_59;
+  long unsigned int _60;
+  long unsigned int _61;
+  long int _62;
+  short unsigned int _63;
+  unsigned int _64;
+  unsigned int _65;
+  short unsigned int _66;
+  short unsigned int _67;
+  short unsigned int _68;
+  short int _69;
+  short int _70;
+  unsigned short _71;
+  short int _72;
+  unsigned short _73;
+  unsigned short _74;
+  short int _75;
+  long unsigned int ackno.176_76;
+  short unsigned int _77;
+  long unsigned int _78;
+  short unsigned int _79;
+  long unsigned int ackno.177_80;
+  tcp_state _81;
+  short unsigned int _82;
+  short unsigned int _83;
+  short unsigned int _84;
+  unsigned int _85;
+  unsigned int _86;
+  short unsigned int _87;
+  short unsigned int _88;
+  short unsigned int _89;
+  short unsigned int _90;
+  short unsigned int _91;
+  short unsigned int _92;
+  short unsigned int _93;
+  short unsigned int _94;
+  short unsigned int _95;
+  short unsigned int _96;
+  short unsigned int _97;
+  short unsigned int _98;
+  short unsigned int _99;
+  short unsigned int _100;
+  short unsigned int _101;
+  short unsigned int _102;
+  short unsigned int _103;
+  short unsigned int _104;
+  short unsigned int _105;
+  short unsigned int _106;
+  short unsigned int _107;
+  short unsigned int _108;
+  short unsigned int _109;
+  short unsigned int _110;
+  short unsigned int _111;
+  struct tcp_seg * _112;
+  struct tcp_seg * _113;
+  struct tcp_seg * _114;
+  struct tcp_seg * _115;
+  struct tcp_seg * _116;
+  struct tcp_seg * _117;
+  struct tcp_seg * _118;
+  struct tcp_seg * _119;
+  struct ip6_hdr * _120;
+  short unsigned int _121;
+  short unsigned int recv_acked.179_122;
+  short unsigned int _123;
+  short unsigned int _124;
+  unsigned int _125;
+  unsigned int _126;
+  struct tcp_seg * _127;
+  struct tcp_seg * _128;
+  long unsigned int _129;
+  struct tcp_seg * _130;
+  struct tcp_hdr * _131;
+  long unsigned int _132;
+  long unsigned int _133;
+  long unsigned int _134;
+  long int _135;
+  short unsigned int _136;
+  short unsigned int _137;
+  long unsigned int _138;
+  struct tcp_seg * _139;
+  struct tcp_hdr * _140;
+  long unsigned int _141;
+  long unsigned int _142;
+  long unsigned int _143;
+  long int _144;
+  short unsigned int _145;
+  short unsigned int _146;
+  long unsigned int _147;
+  long unsigned int _148;
+  long unsigned int ackno.180_149;
+  long unsigned int _150;
+  long int _151;
+  long unsigned int tcp_ticks.181_152;
+  unsigned short _153;
+  long unsigned int _154;
+  unsigned short _155;
+  unsigned short _156;
+  unsigned short m.182_157;
+  short int _158;
+  short int _159;
+  unsigned short _160;
+  unsigned short _161;
+  short int _162;
+  unsigned short _163;
+  unsigned short m.183_164;
+  unsigned short _165;
+  short int _166;
+  unsigned short m.184_167;
+  unsigned short _168;
+  unsigned short m.185_169;
+  short int _170;
+  short int _171;
+  unsigned short _172;
+  unsigned short _173;
+  short int _174;
+  unsigned short _175;
+  unsigned short m.186_176;
+  unsigned short _177;
+  short int _178;
+  short int _179;
+  short int _180;
+  unsigned short _181;
+  short int _182;
+  unsigned short _183;
+  unsigned short _184;
+  short int _185;
+  short unsigned int tcplen.187_186;
+  tcp_state _187;
+  long unsigned int _188;
+  long unsigned int seqno.188_189;
+  long unsigned int _190;
+  long unsigned int _191;
+  long int _192;
+  long unsigned int _193;
+  short unsigned int tcplen.189_194;
+  long unsigned int _195;
+  long unsigned int seqno.190_196;
+  long unsigned int _197;
+  long unsigned int _198;
+  long unsigned int _199;
+  long int _200;
+  long unsigned int _201;
+  long unsigned int seqno.191_202;
+  struct pbuf * _203;
+  struct pbuf * _204;
+  short unsigned int _205;
+  short unsigned int _206;
+  short unsigned int _207;
+  struct pbuf * _208;
+  short unsigned int _209;
+  short unsigned int _210;
+  short unsigned int _211;
+  unsigned int _212;
+  long unsigned int _213;
+  struct tcp_hdr * _214;
+  long unsigned int seqno.192_215;
+  long unsigned int seqno.193_216;
+  long unsigned int _217;
+  long unsigned int _218;
+  long int _219;
+  short unsigned int _220;
+  short unsigned int _221;
+  long unsigned int seqno.194_222;
+  long unsigned int _223;
+  long unsigned int _224;
+  long int _225;
+  long unsigned int seqno.195_226;
+  long unsigned int _227;
+  short unsigned int _228;
+  long unsigned int _229;
+  long unsigned int _230;
+  long unsigned int _231;
+  long unsigned int _232;
+  long int _233;
+  long unsigned int _234;
+  long unsigned int seqno.196_235;
+  short unsigned int _236;
+  struct tcp_hdr * _237;
+  short unsigned int _238;
+  short unsigned int _239;
+  unsigned char _240;
+  unsigned int _241;
+  unsigned int _242;
+  short unsigned int _243;
+  short unsigned int _244;
+  short unsigned int tcplen.198_245;
+  struct tcp_hdr * _246;
+  short unsigned int _247;
+  short unsigned int _248;
+  unsigned char _249;
+  unsigned int _250;
+  unsigned int _251;
+  struct tcp_hdr * _252;
+  short unsigned int _253;
+  signed short _254;
+  signed short _255;
+  struct tcp_hdr * _256;
+  short unsigned int _257;
+  short unsigned int _258;
+  unsigned char _259;
+  short unsigned int _260;
+  short unsigned int _261;
+  short unsigned int _262;
+  signed short _263;
+  signed short _264;
+  struct tcp_hdr * _265;
+  short unsigned int _266;
+  short unsigned int _267;
+  struct tcp_hdr * _268;
+  short unsigned int _269;
+  short unsigned int _270;
+  unsigned char _271;
+  unsigned int _272;
+  unsigned int _273;
+  short unsigned int _274;
+  short unsigned int _275;
+  struct pbuf * _276;
+  short unsigned int _277;
+  short unsigned int _278;
+  struct tcp_hdr * _279;
+  short unsigned int _280;
+  short unsigned int _281;
+  unsigned char _282;
+  unsigned int _283;
+  unsigned int _284;
+  short unsigned int _285;
+  short unsigned int tcplen.200_286;
+  long unsigned int _287;
+  long unsigned int seqno.201_288;
+  long unsigned int _289;
+  long unsigned int _290;
+  short unsigned int _291;
+  long unsigned int _292;
+  long unsigned int _293;
+  short unsigned int tcplen.202_294;
+  long unsigned int _295;
+  long unsigned int seqno.203_296;
+  long unsigned int _297;
+  short unsigned int _298;
+  short unsigned int tcplen.204_299;
+  short unsigned int _300;
+  short unsigned int tcplen.205_301;
+  short unsigned int _302;
+  struct pbuf * _303;
+  short unsigned int _304;
+  struct pbuf * _305;
+  struct tcp_hdr * _306;
+  short unsigned int _307;
+  short unsigned int _308;
+  unsigned char _309;
+  unsigned int _310;
+  unsigned int _311;
+  unsigned char recv_flags.206_312;
+  unsigned char _313;
+  short unsigned int _314;
+  unsigned int _315;
+  unsigned int _316;
+  short unsigned int _317;
+  short unsigned int _318;
+  short unsigned int _319;
+  short unsigned int _320;
+  short unsigned int _321;
+  short unsigned int _322;
+  struct ip6_hdr * _323;
+  long unsigned int seqno.207_324;
+  long unsigned int _325;
+  long unsigned int _326;
+  long int _327;
+  long unsigned int seqno.208_328;
+  long unsigned int _329;
+  short unsigned int _330;
+  long unsigned int _331;
+  long unsigned int _332;
+  long unsigned int _333;
+  long unsigned int _334;
+  long int _335;
+  short unsigned int _336;
+  short unsigned int _337;
+  u8_t iftmp.178_342;
+  u16_t iftmp.197_343;
+  u16_t iftmp.199_344;
+  u8_t iftmp.178_396;
+  u8_t iftmp.178_397;
+  u16_t iftmp.197_449;
+  u16_t iftmp.197_450;
+  u16_t iftmp.199_461;
+  u16_t iftmp.199_462;
+
+  <bb 2> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  found_dupack_375 = 0;
+  # DEBUG found_dupack => found_dupack_375
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  if (pcb_376(D) == 0B)
+    goto <bb 3>; [INV]
+  else
+    goto <bb 4>; [INV]
+
+  <bb 3> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  __asm__ __volatile__("BKPT #0
+	");
+  # DEBUG BEGIN_STMT
+  goto <bb 3>; [INV]
+
+  <bb 4> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _1 = pcb_376(D)->state;
+  if (_1 <= 3)
+    goto <bb 5>; [INV]
+  else
+    goto <bb 6>; [INV]
+
+  <bb 5> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  __asm__ __volatile__("BKPT #0
+	");
+  # DEBUG BEGIN_STMT
+  goto <bb 5>; [INV]
+
+  <bb 6> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  flags.162_2 = flags;
+  _3 = (unsigned int) flags.162_2;
+  _4 = _3 & 16;
+  if (_4 != 0)
+    goto <bb 7>; [INV]
+  else
+    goto <bb 69>; [INV]
+
+  <bb 7> :
+  # DEBUG BEGIN_STMT
+  _5 = pcb_376(D)->snd_wnd;
+  _6 = (long unsigned int) _5;
+  _7 = pcb_376(D)->snd_wl2;
+  right_wnd_edge_378 = _6 + _7;
+  # DEBUG right_wnd_edge => right_wnd_edge_378
+  # DEBUG BEGIN_STMT
+  _8 = pcb_376(D)->snd_wl1;
+  seqno.163_9 = seqno;
+  _10 = _8 - seqno.163_9;
+  _11 = (long int) _10;
+  if (_11 < 0)
+    goto <bb 12>; [INV]
+  else
+    goto <bb 8>; [INV]
+
+  <bb 8> :
+  _12 = pcb_376(D)->snd_wl1;
+  seqno.164_13 = seqno;
+  if (_12 == seqno.164_13)
+    goto <bb 9>; [INV]
+  else
+    goto <bb 10>; [INV]
+
+  <bb 9> :
+  _14 = pcb_376(D)->snd_wl2;
+  ackno.165_15 = ackno;
+  _16 = _14 - ackno.165_15;
+  _17 = (long int) _16;
+  if (_17 < 0)
+    goto <bb 12>; [INV]
+  else
+    goto <bb 10>; [INV]
+
+  <bb 10> :
+  _18 = pcb_376(D)->snd_wl2;
+  ackno.166_19 = ackno;
+  if (_18 == ackno.166_19)
+    goto <bb 11>; [INV]
+  else
+    goto <bb 15>; [INV]
+
+  <bb 11> :
+  tcphdr.167_20 = tcphdr;
+  _21 = tcphdr.167_20->wnd;
+  _22 = pcb_376(D)->snd_wnd;
+  if (_21 > _22)
+    goto <bb 12>; [INV]
+  else
+    goto <bb 15>; [INV]
+
+  <bb 12> :
+  # DEBUG BEGIN_STMT
+  tcphdr.168_23 = tcphdr;
+  _24 = tcphdr.168_23->wnd;
+  pcb_376(D)->snd_wnd = _24;
+  # DEBUG BEGIN_STMT
+  _25 = pcb_376(D)->snd_wnd_max;
+  _26 = pcb_376(D)->snd_wnd;
+  if (_25 < _26)
+    goto <bb 13>; [INV]
+  else
+    goto <bb 14>; [INV]
+
+  <bb 13> :
+  # DEBUG BEGIN_STMT
+  _27 = pcb_376(D)->snd_wnd;
+  pcb_376(D)->snd_wnd_max = _27;
+
+  <bb 14> :
+  # DEBUG BEGIN_STMT
+  seqno.169_28 = seqno;
+  pcb_376(D)->snd_wl1 = seqno.169_28;
+  # DEBUG BEGIN_STMT
+  ackno.170_29 = ackno;
+  pcb_376(D)->snd_wl2 = ackno.170_29;
+
+  <bb 15> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  ackno.171_30 = ackno;
+  _31 = pcb_376(D)->lastack;
+  _32 = ackno.171_30 - _31;
+  _33 = (long int) _32;
+  if (_33 <= 0)
+    goto <bb 16>; [INV]
+  else
+    goto <bb 30>; [INV]
+
+  <bb 16> :
+  # DEBUG BEGIN_STMT
+  tcplen.172_34 = tcplen;
+  if (tcplen.172_34 == 0)
+    goto <bb 17>; [INV]
+  else
+    goto <bb 28>; [INV]
+
+  <bb 17> :
+  # DEBUG BEGIN_STMT
+  _35 = pcb_376(D)->snd_wl2;
+  _36 = pcb_376(D)->snd_wnd;
+  _37 = (long unsigned int) _36;
+  _38 = _35 + _37;
+  if (right_wnd_edge_378 == _38)
+    goto <bb 18>; [INV]
+  else
+    goto <bb 28>; [INV]
+
+  <bb 18> :
+  # DEBUG BEGIN_STMT
+  _39 = pcb_376(D)->rtime;
+  if (_39 >= 0)
+    goto <bb 19>; [INV]
+  else
+    goto <bb 28>; [INV]
+
+  <bb 19> :
+  # DEBUG BEGIN_STMT
+  _40 = pcb_376(D)->lastack;
+  ackno.173_41 = ackno;
+  if (_40 == ackno.173_41)
+    goto <bb 20>; [INV]
+  else
+    goto <bb 28>; [INV]
+
+  <bb 20> :
+  # DEBUG BEGIN_STMT
+  found_dupack_417 = 1;
+  # DEBUG found_dupack => found_dupack_417
+  # DEBUG BEGIN_STMT
+  _42 = pcb_376(D)->dupacks;
+  if (_42 != 255)
+    goto <bb 21>; [INV]
+  else
+    goto <bb 22>; [INV]
+
+  <bb 21> :
+  # DEBUG BEGIN_STMT
+  _43 = pcb_376(D)->dupacks;
+  _44 = _43 + 1;
+  pcb_376(D)->dupacks = _44;
+
+  <bb 22> :
+  # DEBUG BEGIN_STMT
+  _45 = pcb_376(D)->dupacks;
+  if (_45 > 3)
+    goto <bb 23>; [INV]
+  else
+    goto <bb 26>; [INV]
+
+  <bb 23> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _46 = pcb_376(D)->cwnd;
+  _47 = pcb_376(D)->mss;
+  _48 = _46 + _47;
+  _49 = pcb_376(D)->cwnd;
+  if (_48 >= _49)
+    goto <bb 24>; [INV]
+  else
+    goto <bb 25>; [INV]
+
+  <bb 24> :
+  # DEBUG BEGIN_STMT
+  _50 = pcb_376(D)->cwnd;
+  _51 = pcb_376(D)->mss;
+  _52 = _50 + _51;
+  pcb_376(D)->cwnd = _52;
+  goto <bb 26>; [INV]
+
+  <bb 25> :
+  # DEBUG BEGIN_STMT
+  pcb_376(D)->cwnd = 65535;
+
+  <bb 26> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _53 = pcb_376(D)->dupacks;
+  if (_53 > 2)
+    goto <bb 27>; [INV]
+  else
+    goto <bb 28>; [INV]
+
+  <bb 27> :
+  # DEBUG BEGIN_STMT
+  tcp_rexmit_fast (pcb_376(D));
+
+  <bb 28> :
+  # found_dupack_339 = PHI <found_dupack_375(16), found_dupack_375(17), found_dupack_375(18), found_dupack_375(19), found_dupack_417(26), found_dupack_417(27)>
+  # DEBUG found_dupack => found_dupack_339
+  # DEBUG BEGIN_STMT
+  if (found_dupack_339 == 0)
+    goto <bb 29>; [INV]
+  else
+    goto <bb 64>; [INV]
+
+  <bb 29> :
+  # DEBUG BEGIN_STMT
+  pcb_376(D)->dupacks = 0;
+  goto <bb 64>; [INV]
+
+  <bb 30> :
+  # DEBUG BEGIN_STMT
+  ackno.174_54 = ackno;
+  _55 = pcb_376(D)->lastack;
+  _56 = ackno.174_54 - _55;
+  _57 = _56 + 4294967295;
+  _58 = (long int) _57;
+  if (_58 >= 0)
+    goto <bb 31>; [INV]
+  else
+    goto <bb 63>; [INV]
+
+  <bb 31> :
+  ackno.175_59 = ackno;
+  _60 = pcb_376(D)->snd_nxt;
+  _61 = ackno.175_59 - _60;
+  _62 = (long int) _61;
+  if (_62 <= 0)
+    goto <bb 32>; [INV]
+  else
+    goto <bb 63>; [INV]
+
+  <bb 32> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _63 = pcb_376(D)->flags;
+  _64 = (unsigned int) _63;
+  _65 = _64 & 4;
+  if (_65 != 0)
+    goto <bb 33>; [INV]
+  else
+    goto <bb 34>; [INV]
+
+  <bb 33> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _66 = pcb_376(D)->flags;
+  _67 = _66 & 65531;
+  pcb_376(D)->flags = _67;
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _68 = pcb_376(D)->ssthresh;
+  pcb_376(D)->cwnd = _68;
+  # DEBUG BEGIN_STMT
+  pcb_376(D)->bytes_acked = 0;
+
+  <bb 34> :
+  # DEBUG BEGIN_STMT
+  pcb_376(D)->nrtx = 0;
+  # DEBUG BEGIN_STMT
+  _69 = pcb_376(D)->sa;
+  _70 = _69 >> 3;
+  _71 = (unsigned short) _70;
+  _72 = pcb_376(D)->sv;
+  _73 = (unsigned short) _72;
+  _74 = _71 + _73;
+  _75 = (short int) _74;
+  pcb_376(D)->rto = _75;
+  # DEBUG BEGIN_STMT
+  ackno.176_76 = ackno;
+  _77 = (short unsigned int) ackno.176_76;
+  _78 = pcb_376(D)->lastack;
+  _79 = (short unsigned int) _78;
+  acked_388 = _77 - _79;
+  # DEBUG acked => acked_388
+  # DEBUG BEGIN_STMT
+  pcb_376(D)->dupacks = 0;
+  # DEBUG BEGIN_STMT
+  ackno.177_80 = ackno;
+  pcb_376(D)->lastack = ackno.177_80;
+  # DEBUG BEGIN_STMT
+  _81 = pcb_376(D)->state;
+  if (_81 > 3)
+    goto <bb 35>; [INV]
+  else
+    goto <bb 49>; [INV]
+
+  <bb 35> :
+  # DEBUG BEGIN_STMT
+  _82 = pcb_376(D)->cwnd;
+  _83 = pcb_376(D)->ssthresh;
+  if (_82 < _83)
+    goto <bb 36>; [INV]
+  else
+    goto <bb 42>; [INV]
+
+  <bb 36> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _84 = pcb_376(D)->flags;
+  _85 = (unsigned int) _84;
+  _86 = _85 & 2048;
+  if (_86 != 0)
+    goto <bb 37>; [INV]
+  else
+    goto <bb 38>; [INV]
+
+  <bb 37> :
+  iftmp.178_397 = 1;
+  goto <bb 39>; [INV]
+
+  <bb 38> :
+  iftmp.178_396 = 2;
+
+  <bb 39> :
+  # iftmp.178_342 = PHI <iftmp.178_397(37), iftmp.178_396(38)>
+  num_seg_398 = iftmp.178_342;
+  # DEBUG num_seg => num_seg_398
+  # DEBUG BEGIN_STMT
+  _87 = (short unsigned int) num_seg_398;
+  _88 = pcb_376(D)->mss;
+  _89 = _87 * _88;
+  increase_399 = MIN_EXPR <acked_388, _89>;
+  # DEBUG increase => increase_399
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _90 = pcb_376(D)->cwnd;
+  _91 = increase_399 + _90;
+  _92 = pcb_376(D)->cwnd;
+  if (_91 >= _92)
+    goto <bb 40>; [INV]
+  else
+    goto <bb 41>; [INV]
+
+  <bb 40> :
+  # DEBUG BEGIN_STMT
+  _93 = pcb_376(D)->cwnd;
+  _94 = increase_399 + _93;
+  pcb_376(D)->cwnd = _94;
+  goto <bb 49>; [INV]
+
+  <bb 41> :
+  # DEBUG BEGIN_STMT
+  pcb_376(D)->cwnd = 65535;
+  goto <bb 49>; [INV]
+
+  <bb 42> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _95 = pcb_376(D)->bytes_acked;
+  _96 = acked_388 + _95;
+  _97 = pcb_376(D)->bytes_acked;
+  if (_96 >= _97)
+    goto <bb 43>; [INV]
+  else
+    goto <bb 44>; [INV]
+
+  <bb 43> :
+  # DEBUG BEGIN_STMT
+  _98 = pcb_376(D)->bytes_acked;
+  _99 = acked_388 + _98;
+  pcb_376(D)->bytes_acked = _99;
+  goto <bb 45>; [INV]
+
+  <bb 44> :
+  # DEBUG BEGIN_STMT
+  pcb_376(D)->bytes_acked = 65535;
+
+  <bb 45> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _100 = pcb_376(D)->bytes_acked;
+  _101 = pcb_376(D)->cwnd;
+  if (_100 >= _101)
+    goto <bb 46>; [INV]
+  else
+    goto <bb 49>; [INV]
+
+  <bb 46> :
+  # DEBUG BEGIN_STMT
+  _102 = pcb_376(D)->bytes_acked;
+  _103 = pcb_376(D)->cwnd;
+  _104 = _102 - _103;
+  pcb_376(D)->bytes_acked = _104;
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _105 = pcb_376(D)->cwnd;
+  _106 = pcb_376(D)->mss;
+  _107 = _105 + _106;
+  _108 = pcb_376(D)->cwnd;
+  if (_107 >= _108)
+    goto <bb 47>; [INV]
+  else
+    goto <bb 48>; [INV]
+
+  <bb 47> :
+  # DEBUG BEGIN_STMT
+  _109 = pcb_376(D)->cwnd;
+  _110 = pcb_376(D)->mss;
+  _111 = _109 + _110;
+  pcb_376(D)->cwnd = _111;
+  goto <bb 49>; [INV]
+
+  <bb 48> :
+  # DEBUG BEGIN_STMT
+  pcb_376(D)->cwnd = 65535;
+
+  <bb 49> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _112 = pcb_376(D)->unacked;
+  _113 = pcb_376(D)->unsent;
+  _114 = tcp_free_acked_segments (pcb_376(D), _112, "unacked", _113);
+  pcb_376(D)->unacked = _114;
+  # DEBUG BEGIN_STMT
+  _115 = pcb_376(D)->unsent;
+  _116 = pcb_376(D)->unacked;
+  _117 = tcp_free_acked_segments (pcb_376(D), _115, "unsent", _116);
+  pcb_376(D)->unsent = _117;
+  # DEBUG BEGIN_STMT
+  _118 = pcb_376(D)->unacked;
+  if (_118 == 0B)
+    goto <bb 50>; [INV]
+  else
+    goto <bb 51>; [INV]
+
+  <bb 50> :
+  # DEBUG BEGIN_STMT
+  pcb_376(D)->rtime = -1;
+  goto <bb 52>; [INV]
+
+  <bb 51> :
+  # DEBUG BEGIN_STMT
+  pcb_376(D)->rtime = 0;
+
+  <bb 52> :
+  # DEBUG BEGIN_STMT
+  pcb_376(D)->polltmr = 0;
+  # DEBUG BEGIN_STMT
+  _119 = pcb_376(D)->unsent;
+  if (_119 == 0B)
+    goto <bb 53>; [INV]
+  else
+    goto <bb 54>; [INV]
+
+  <bb 53> :
+  # DEBUG BEGIN_STMT
+  pcb_376(D)->unsent_oversize = 0;
+
+  <bb 54> :
+  # DEBUG BEGIN_STMT
+  _120 = ip_data.current_ip6_header;
+  if (_120 != 0B)
+    goto <bb 55>; [INV]
+  else
+    goto <bb 56>; [INV]
+
+  <bb 55> :
+  # DEBUG BEGIN_STMT
+  nd6_reachability_hint (&ip_data.current_iphdr_src.u_addr.ip6);
+
+  <bb 56> :
+  # DEBUG BEGIN_STMT
+  _121 = pcb_376(D)->snd_buf;
+  recv_acked.179_122 = recv_acked;
+  _123 = _121 + recv_acked.179_122;
+  pcb_376(D)->snd_buf = _123;
+  # DEBUG BEGIN_STMT
+  _124 = pcb_376(D)->flags;
+  _125 = (unsigned int) _124;
+  _126 = _125 & 2048;
+  if (_126 != 0)
+    goto <bb 57>; [INV]
+  else
+    goto <bb 64>; [INV]
+
+  <bb 57> :
+  # DEBUG BEGIN_STMT
+  _127 = pcb_376(D)->unacked;
+  if (_127 == 0B)
+    goto <bb 58>; [INV]
+  else
+    goto <bb 61>; [INV]
+
+  <bb 58> :
+  # DEBUG BEGIN_STMT
+  _128 = pcb_376(D)->unsent;
+  if (_128 == 0B)
+    goto <bb 60>; [INV]
+  else
+    goto <bb 59>; [INV]
+
+  <bb 59> :
+  _129 = pcb_376(D)->rto_end;
+  _130 = pcb_376(D)->unsent;
+  _131 = _130->tcphdr;
+  _132 = _131->seqno;
+  _133 = lwip_htonl (_132);
+  _134 = _129 - _133;
+  _135 = (long int) _134;
+  if (_135 <= 0)
+    goto <bb 60>; [INV]
+  else
+    goto <bb 64>; [INV]
+
+  <bb 60> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _136 = pcb_376(D)->flags;
+  _137 = _136 & 63487;
+  pcb_376(D)->flags = _137;
+  goto <bb 64>; [INV]
+
+  <bb 61> :
+  # DEBUG BEGIN_STMT
+  _138 = pcb_376(D)->rto_end;
+  _139 = pcb_376(D)->unacked;
+  _140 = _139->tcphdr;
+  _141 = _140->seqno;
+  _142 = lwip_htonl (_141);
+  _143 = _138 - _142;
+  _144 = (long int) _143;
+  if (_144 <= 0)
+    goto <bb 62>; [INV]
+  else
+    goto <bb 64>; [INV]
+
+  <bb 62> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _145 = pcb_376(D)->flags;
+  _146 = _145 & 63487;
+  pcb_376(D)->flags = _146;
+  goto <bb 64>; [INV]
+
+  <bb 63> :
+  # DEBUG BEGIN_STMT
+  tcp_send_empty_ack (pcb_376(D));
+
+  <bb 64> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _147 = pcb_376(D)->rttest;
+  if (_147 != 0)
+    goto <bb 65>; [INV]
+  else
+    goto <bb 69>; [INV]
+
+  <bb 65> :
+  _148 = pcb_376(D)->rtseq;
+  ackno.180_149 = ackno;
+  _150 = _148 - ackno.180_149;
+  _151 = (long int) _150;
+  if (_151 < 0)
+    goto <bb 66>; [INV]
+  else
+    goto <bb 69>; [INV]
+
+  <bb 66> :
+  # DEBUG BEGIN_STMT
+  tcp_ticks.181_152 = tcp_ticks;
+  _153 = (unsigned short) tcp_ticks.181_152;
+  _154 = pcb_376(D)->rttest;
+  _155 = (unsigned short) _154;
+  _156 = _153 - _155;
+  m_423 = (s16_t) _156;
+  # DEBUG m => m_423
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  m.182_157 = (unsigned short) m_423;
+  _158 = pcb_376(D)->sa;
+  _159 = _158 >> 3;
+  _160 = (unsigned short) _159;
+  _161 = m.182_157 - _160;
+  m_424 = (s16_t) _161;
+  # DEBUG m => m_424
+  # DEBUG BEGIN_STMT
+  _162 = pcb_376(D)->sa;
+  _163 = (unsigned short) _162;
+  m.183_164 = (unsigned short) m_424;
+  _165 = _163 + m.183_164;
+  _166 = (short int) _165;
+  pcb_376(D)->sa = _166;
+  # DEBUG BEGIN_STMT
+  if (m_424 < 0)
+    goto <bb 67>; [INV]
+  else
+    goto <bb 68>; [INV]
+
+  <bb 67> :
+  # DEBUG BEGIN_STMT
+  m.184_167 = (unsigned short) m_424;
+  _168 = -m.184_167;
+  m_426 = (s16_t) _168;
+  # DEBUG m => m_426
+
+  <bb 68> :
+  # m_338 = PHI <m_424(66), m_426(67)>
+  # DEBUG m => m_338
+  # DEBUG BEGIN_STMT
+  m.185_169 = (unsigned short) m_338;
+  _170 = pcb_376(D)->sv;
+  _171 = _170 >> 2;
+  _172 = (unsigned short) _171;
+  _173 = m.185_169 - _172;
+  m_427 = (s16_t) _173;
+  # DEBUG m => m_427
+  # DEBUG BEGIN_STMT
+  _174 = pcb_376(D)->sv;
+  _175 = (unsigned short) _174;
+  m.186_176 = (unsigned short) m_427;
+  _177 = _175 + m.186_176;
+  _178 = (short int) _177;
+  pcb_376(D)->sv = _178;
+  # DEBUG BEGIN_STMT
+  _179 = pcb_376(D)->sa;
+  _180 = _179 >> 3;
+  _181 = (unsigned short) _180;
+  _182 = pcb_376(D)->sv;
+  _183 = (unsigned short) _182;
+  _184 = _181 + _183;
+  _185 = (short int) _184;
+  pcb_376(D)->rto = _185;
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  pcb_376(D)->rttest = 0;
+
+  <bb 69> :
+  # DEBUG BEGIN_STMT
+  tcplen.187_186 = tcplen;
+  if (tcplen.187_186 != 0)
+    goto <bb 70>; [INV]
+  else
+    goto <bb 114>; [INV]
+
+  <bb 70> :
+  _187 = pcb_376(D)->state;
+  if (_187 <= 6)
+    goto <bb 71>; [INV]
+  else
+    goto <bb 114>; [INV]
+
+  <bb 71> :
+  # DEBUG BEGIN_STMT
+  _188 = pcb_376(D)->rcv_nxt;
+  seqno.188_189 = seqno;
+  _190 = _188 - seqno.188_189;
+  _191 = _190 + 4294967295;
+  _192 = (long int) _191;
+  if (_192 >= 0)
+    goto <bb 72>; [INV]
+  else
+    goto <bb 83>; [INV]
+
+  <bb 72> :
+  _193 = pcb_376(D)->rcv_nxt;
+  tcplen.189_194 = tcplen;
+  _195 = (long unsigned int) tcplen.189_194;
+  seqno.190_196 = seqno;
+  _197 = _195 + seqno.190_196;
+  _198 = _193 - _197;
+  _199 = _198 + 1;
+  _200 = (long int) _199;
+  if (_200 <= 0)
+    goto <bb 73>; [INV]
+  else
+    goto <bb 83>; [INV]
+
+  <bb 73> :
+  # DEBUG BEGIN_STMT
+  p_431 = inseg.p;
+  # DEBUG p => p_431
+  # DEBUG BEGIN_STMT
+  _201 = pcb_376(D)->rcv_nxt;
+  seqno.191_202 = seqno;
+  off32_432 = _201 - seqno.191_202;
+  # DEBUG off32 => off32_432
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _203 = inseg.p;
+  if (_203 == 0B)
+    goto <bb 74>; [INV]
+  else
+    goto <bb 75>; [INV]
+
+  <bb 74> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  __asm__ __volatile__("BKPT #0
+	");
+  # DEBUG BEGIN_STMT
+  goto <bb 74>; [INV]
+
+  <bb 75> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  if (off32_432 > 65534)
+    goto <bb 76>; [INV]
+  else
+    goto <bb 77>; [INV]
+
+  <bb 76> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  __asm__ __volatile__("BKPT #0
+	");
+  # DEBUG BEGIN_STMT
+  goto <bb 76>; [INV]
+
+  <bb 77> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  off_433 = (u16_t) off32_432;
+  # DEBUG off => off_433
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _204 = inseg.p;
+  _205 = _204->tot_len;
+  if (off_433 > _205)
+    goto <bb 78>; [INV]
+  else
+    goto <bb 79>; [INV]
+
+  <bb 78> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  __asm__ __volatile__("BKPT #0
+	");
+  # DEBUG BEGIN_STMT
+  goto <bb 78>; [INV]
+
+  <bb 79> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _206 = inseg.len;
+  _207 = _206 - off_433;
+  inseg.len = _207;
+  # DEBUG BEGIN_STMT
+  _208 = inseg.p;
+  _209 = _208->tot_len;
+  new_tot_len_435 = _209 - off_433;
+  # DEBUG new_tot_len => new_tot_len_435
+  # DEBUG BEGIN_STMT
+  goto <bb 81>; [INV]
+
+  <bb 80> :
+  # DEBUG BEGIN_STMT
+  _210 = p_340->len;
+  off_439 = off_341 - _210;
+  # DEBUG off => off_439
+  # DEBUG BEGIN_STMT
+  p_340->tot_len = new_tot_len_435;
+  # DEBUG BEGIN_STMT
+  p_340->len = 0;
+  # DEBUG BEGIN_STMT
+  p_442 = p_340->next;
+  # DEBUG p => p_442
+
+  <bb 81> :
+  # p_340 = PHI <p_431(79), p_442(80)>
+  # off_341 = PHI <off_433(79), off_439(80)>
+  # DEBUG off => off_341
+  # DEBUG p => p_340
+  # DEBUG BEGIN_STMT
+  _211 = p_340->len;
+  if (off_341 > _211)
+    goto <bb 80>; [INV]
+  else
+    goto <bb 82>; [INV]
+
+  <bb 82> :
+  # DEBUG BEGIN_STMT
+  _212 = (unsigned int) off_341;
+  pbuf_remove_header (p_340, _212);
+  # DEBUG BEGIN_STMT
+  _213 = pcb_376(D)->rcv_nxt;
+  seqno = _213;
+  _214 = inseg.tcphdr;
+  seqno.192_215 = seqno;
+  _214->seqno = seqno.192_215;
+  goto <bb 85>; [INV]
+
+  <bb 83> :
+  # DEBUG BEGIN_STMT
+  seqno.193_216 = seqno;
+  _217 = pcb_376(D)->rcv_nxt;
+  _218 = seqno.193_216 - _217;
+  _219 = (long int) _218;
+  if (_219 < 0)
+    goto <bb 84>; [INV]
+  else
+    goto <bb 85>; [INV]
+
+  <bb 84> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _220 = pcb_376(D)->flags;
+  _221 = _220 | 2;
+  pcb_376(D)->flags = _221;
+
+  <bb 85> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  seqno.194_222 = seqno;
+  _223 = pcb_376(D)->rcv_nxt;
+  _224 = seqno.194_222 - _223;
+  _225 = (long int) _224;
+  if (_225 >= 0)
+    goto <bb 86>; [INV]
+  else
+    goto <bb 113>; [INV]
+
+  <bb 86> :
+  seqno.195_226 = seqno;
+  _227 = pcb_376(D)->rcv_nxt;
+  _228 = pcb_376(D)->rcv_wnd;
+  _229 = (long unsigned int) _228;
+  _230 = _227 + _229;
+  _231 = seqno.195_226 - _230;
+  _232 = _231 + 1;
+  _233 = (long int) _232;
+  if (_233 <= 0)
+    goto <bb 87>; [INV]
+  else
+    goto <bb 113>; [INV]
+
+  <bb 87> :
+  # DEBUG BEGIN_STMT
+  _234 = pcb_376(D)->rcv_nxt;
+  seqno.196_235 = seqno;
+  if (_234 == seqno.196_235)
+    goto <bb 88>; [INV]
+  else
+    goto <bb 112>; [INV]
+
+  <bb 88> :
+  # DEBUG BEGIN_STMT
+  _236 = inseg.len;
+  _237 = inseg.tcphdr;
+  _238 = _237->_hdrlen_rsvd_flags;
+  _239 = lwip_htons (_238);
+  _240 = (unsigned char) _239;
+  _241 = (unsigned int) _240;
+  _242 = _241 & 3;
+  if (_242 != 0)
+    goto <bb 89>; [INV]
+  else
+    goto <bb 90>; [INV]
+
+  <bb 89> :
+  iftmp.197_450 = 1;
+  goto <bb 91>; [INV]
+
+  <bb 90> :
+  iftmp.197_449 = 0;
+
+  <bb 91> :
+  # iftmp.197_343 = PHI <iftmp.197_450(89), iftmp.197_449(90)>
+  _243 = iftmp.197_343 + _236;
+  tcplen = _243;
+  # DEBUG BEGIN_STMT
+  _244 = pcb_376(D)->rcv_wnd;
+  tcplen.198_245 = tcplen;
+  if (_244 < tcplen.198_245)
+    goto <bb 92>; [INV]
+  else
+    goto <bb 101>; [INV]
+
+  <bb 92> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _246 = inseg.tcphdr;
+  _247 = _246->_hdrlen_rsvd_flags;
+  _248 = lwip_htons (_247);
+  _249 = (unsigned char) _248;
+  _250 = (unsigned int) _249;
+  _251 = _250 & 1;
+  if (_251 != 0)
+    goto <bb 93>; [INV]
+  else
+    goto <bb 94>; [INV]
+
+  <bb 93> :
+  # DEBUG BEGIN_STMT
+  _252 = inseg.tcphdr;
+  _253 = _252->_hdrlen_rsvd_flags;
+  _254 = (signed short) _253;
+  _255 = _254 & -16129;
+  _256 = inseg.tcphdr;
+  _257 = _256->_hdrlen_rsvd_flags;
+  _258 = lwip_htons (_257);
+  _259 = (unsigned char) _258;
+  _260 = (short unsigned int) _259;
+  _261 = _260 & 62;
+  _262 = lwip_htons (_261);
+  _263 = (signed short) _262;
+  _264 = _255 | _263;
+  _265 = inseg.tcphdr;
+  _266 = (short unsigned int) _264;
+  _265->_hdrlen_rsvd_flags = _266;
+
+  <bb 94> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _267 = pcb_376(D)->rcv_wnd;
+  inseg.len = _267;
+  # DEBUG BEGIN_STMT
+  _268 = inseg.tcphdr;
+  _269 = _268->_hdrlen_rsvd_flags;
+  _270 = lwip_htons (_269);
+  _271 = (unsigned char) _270;
+  _272 = (unsigned int) _271;
+  _273 = _272 & 2;
+  if (_273 != 0)
+    goto <bb 95>; [INV]
+  else
+    goto <bb 96>; [INV]
+
+  <bb 95> :
+  # DEBUG BEGIN_STMT
+  _274 = inseg.len;
+  _275 = _274 + 65535;
+  inseg.len = _275;
+
+  <bb 96> :
+  # DEBUG BEGIN_STMT
+  _276 = inseg.p;
+  _277 = inseg.len;
+  pbuf_realloc (_276, _277);
+  # DEBUG BEGIN_STMT
+  _278 = inseg.len;
+  _279 = inseg.tcphdr;
+  _280 = _279->_hdrlen_rsvd_flags;
+  _281 = lwip_htons (_280);
+  _282 = (unsigned char) _281;
+  _283 = (unsigned int) _282;
+  _284 = _283 & 3;
+  if (_284 != 0)
+    goto <bb 97>; [INV]
+  else
+    goto <bb 98>; [INV]
+
+  <bb 97> :
+  iftmp.199_462 = 1;
+  goto <bb 99>; [INV]
+
+  <bb 98> :
+  iftmp.199_461 = 0;
+
+  <bb 99> :
+  # iftmp.199_344 = PHI <iftmp.199_462(97), iftmp.199_461(98)>
+  _285 = iftmp.199_344 + _278;
+  tcplen = _285;
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  tcplen.200_286 = tcplen;
+  _287 = (long unsigned int) tcplen.200_286;
+  seqno.201_288 = seqno;
+  _289 = _287 + seqno.201_288;
+  _290 = pcb_376(D)->rcv_nxt;
+  _291 = pcb_376(D)->rcv_wnd;
+  _292 = (long unsigned int) _291;
+  _293 = _290 + _292;
+  if (_289 != _293)
+    goto <bb 100>; [INV]
+  else
+    goto <bb 101>; [INV]
+
+  <bb 100> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  __asm__ __volatile__("BKPT #0
+	");
+  # DEBUG BEGIN_STMT
+  goto <bb 100>; [INV]
+
+  <bb 101> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  tcplen.202_294 = tcplen;
+  _295 = (long unsigned int) tcplen.202_294;
+  seqno.203_296 = seqno;
+  _297 = _295 + seqno.203_296;
+  pcb_376(D)->rcv_nxt = _297;
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _298 = pcb_376(D)->rcv_wnd;
+  tcplen.204_299 = tcplen;
+  if (_298 < tcplen.204_299)
+    goto <bb 102>; [INV]
+  else
+    goto <bb 103>; [INV]
+
+  <bb 102> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  __asm__ __volatile__("BKPT #0
+	");
+  # DEBUG BEGIN_STMT
+  goto <bb 102>; [INV]
+
+  <bb 103> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _300 = pcb_376(D)->rcv_wnd;
+  tcplen.205_301 = tcplen;
+  _302 = _300 - tcplen.205_301;
+  pcb_376(D)->rcv_wnd = _302;
+  # DEBUG BEGIN_STMT
+  tcp_update_rcv_ann_wnd (pcb_376(D));
+  # DEBUG BEGIN_STMT
+  _303 = inseg.p;
+  _304 = _303->tot_len;
+  if (_304 != 0)
+    goto <bb 104>; [INV]
+  else
+    goto <bb 105>; [INV]
+
+  <bb 104> :
+  # DEBUG BEGIN_STMT
+  _305 = inseg.p;
+  recv_data = _305;
+  # DEBUG BEGIN_STMT
+  inseg.p = 0B;
+
+  <bb 105> :
+  # DEBUG BEGIN_STMT
+  _306 = inseg.tcphdr;
+  _307 = _306->_hdrlen_rsvd_flags;
+  _308 = lwip_htons (_307);
+  _309 = (unsigned char) _308;
+  _310 = (unsigned int) _309;
+  _311 = _310 & 1;
+  if (_311 != 0)
+    goto <bb 106>; [INV]
+  else
+    goto <bb 107>; [INV]
+
+  <bb 106> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  recv_flags.206_312 = recv_flags;
+  _313 = recv_flags.206_312 | 32;
+  recv_flags = _313;
+
+  <bb 107> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _314 = pcb_376(D)->flags;
+  _315 = (unsigned int) _314;
+  _316 = _315 & 1;
+  if (_316 != 0)
+    goto <bb 108>; [INV]
+  else
+    goto <bb 109>; [INV]
+
+  <bb 108> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _317 = pcb_376(D)->flags;
+  _318 = _317 & 65534;
+  pcb_376(D)->flags = _318;
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _319 = pcb_376(D)->flags;
+  _320 = _319 | 2;
+  pcb_376(D)->flags = _320;
+  # DEBUG BEGIN_STMT
+  goto <bb 110>; [INV]
+
+  <bb 109> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _321 = pcb_376(D)->flags;
+  _322 = _321 | 1;
+  pcb_376(D)->flags = _322;
+
+  <bb 110> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _323 = ip_data.current_ip6_header;
+  if (_323 != 0B)
+    goto <bb 111>; [INV]
+  else
+    goto <bb 117>; [INV]
+
+  <bb 111> :
+  # DEBUG BEGIN_STMT
+  nd6_reachability_hint (&ip_data.current_iphdr_src.u_addr.ip6);
+  goto <bb 117>; [INV]
+
+  <bb 112> :
+  # DEBUG BEGIN_STMT
+  tcp_send_empty_ack (pcb_376(D));
+  goto <bb 117>; [INV]
+
+  <bb 113> :
+  # DEBUG BEGIN_STMT
+  tcp_send_empty_ack (pcb_376(D));
+  goto <bb 117>; [INV]
+
+  <bb 114> :
+  # DEBUG BEGIN_STMT
+  seqno.207_324 = seqno;
+  _325 = pcb_376(D)->rcv_nxt;
+  _326 = seqno.207_324 - _325;
+  _327 = (long int) _326;
+  if (_327 < 0)
+    goto <bb 116>; [INV]
+  else
+    goto <bb 115>; [INV]
+
+  <bb 115> :
+  seqno.208_328 = seqno;
+  _329 = pcb_376(D)->rcv_nxt;
+  _330 = pcb_376(D)->rcv_wnd;
+  _331 = (long unsigned int) _330;
+  _332 = _329 + _331;
+  _333 = seqno.208_328 - _332;
+  _334 = _333 + 1;
+  _335 = (long int) _334;
+  if (_335 > 0)
+    goto <bb 116>; [INV]
+  else
+    goto <bb 117>; [INV]
+
+  <bb 116> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _336 = pcb_376(D)->flags;
+  _337 = _336 | 2;
+  pcb_376(D)->flags = _337;
+
+  <bb 117> :
+  # DEBUG BEGIN_STMT
+  return;
+
+}
+
+
+tcp_free_acked_segments (struct tcp_pcb * pcb, struct tcp_seg * seg_list, const char * dbg_list_name, struct tcp_seg * dbg_other_seg_list)
+{
+  u16_t clen;
+  struct tcp_seg * next;
+  struct pbuf * _1;
+  short unsigned int _2;
+  short unsigned int _3;
+  short unsigned int _4;
+  short unsigned int _5;
+  short unsigned int recv_acked.209_6;
+  short unsigned int _7;
+  short unsigned int _8;
+  struct tcp_hdr * _9;
+  long unsigned int _10;
+  long unsigned int _11;
+  short unsigned int _12;
+  unsigned int _13;
+  struct tcp_hdr * _14;
+  short unsigned int _15;
+  short unsigned int _16;
+  unsigned char _17;
+  unsigned int _18;
+  unsigned int _19;
+  unsigned int _20;
+  long unsigned int _21;
+  long unsigned int ackno.211_22;
+  long unsigned int _23;
+  long int _24;
+  unsigned int iftmp.210_26;
+  unsigned int iftmp.210_35;
+  unsigned int iftmp.210_36;
+  struct tcp_seg * _48;
+
+  <bb 2> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  goto <bb 9>; [INV]
+
+  <bb 3> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  next_37 = seg_list_25;
+  # DEBUG next => next_37
+  # DEBUG BEGIN_STMT
+  seg_list_38 = seg_list_25->next;
+  # DEBUG seg_list => seg_list_38
+  # DEBUG BEGIN_STMT
+  _1 = next_37->p;
+  clen_40 = pbuf_clen (_1);
+  # DEBUG clen => clen_40
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _2 = pcb_41(D)->snd_queuelen;
+  if (clen_40 > _2)
+    goto <bb 4>; [INV]
+  else
+    goto <bb 5>; [INV]
+
+  <bb 4> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  __asm__ __volatile__("BKPT #0
+	");
+  # DEBUG BEGIN_STMT
+  goto <bb 4>; [INV]
+
+  <bb 5> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _3 = pcb_41(D)->snd_queuelen;
+  _4 = _3 - clen_40;
+  pcb_41(D)->snd_queuelen = _4;
+  # DEBUG BEGIN_STMT
+  _5 = next_37->len;
+  recv_acked.209_6 = recv_acked;
+  _7 = _5 + recv_acked.209_6;
+  recv_acked = _7;
+  # DEBUG BEGIN_STMT
+  tcp_seg_free (next_37);
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _8 = pcb_41(D)->snd_queuelen;
+  if (_8 != 0)
+    goto <bb 6>; [INV]
+  else
+    goto <bb 9>; [INV]
+
+  <bb 6> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  if (seg_list_38 == 0B)
+    goto <bb 7>; [INV]
+  else
+    goto <bb 9>; [INV]
+
+  <bb 7> :
+  if (dbg_other_seg_list_45(D) == 0B)
+    goto <bb 8>; [INV]
+  else
+    goto <bb 9>; [INV]
+
+  <bb 8> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  __asm__ __volatile__("BKPT #0
+	");
+  # DEBUG BEGIN_STMT
+  goto <bb 8>; [INV]
+
+  <bb 9> :
+  # seg_list_25 = PHI <seg_list_31(D)(2), seg_list_38(5), seg_list_38(6), seg_list_38(7)>
+  # DEBUG seg_list => seg_list_25
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  if (seg_list_25 != 0B)
+    goto <bb 10>; [INV]
+  else
+    goto <bb 14>; [INV]
+
+  <bb 10> :
+  _9 = seg_list_25->tcphdr;
+  _10 = _9->seqno;
+  _11 = lwip_htonl (_10);
+  _12 = seg_list_25->len;
+  _13 = (unsigned int) _12;
+  _14 = seg_list_25->tcphdr;
+  _15 = _14->_hdrlen_rsvd_flags;
+  _16 = lwip_htons (_15);
+  _17 = (unsigned char) _16;
+  _18 = (unsigned int) _17;
+  _19 = _18 & 3;
+  if (_19 != 0)
+    goto <bb 11>; [INV]
+  else
+    goto <bb 12>; [INV]
+
+  <bb 11> :
+  iftmp.210_36 = 1;
+  goto <bb 13>; [INV]
+
+  <bb 12> :
+  iftmp.210_35 = 0;
+
+  <bb 13> :
+  # iftmp.210_26 = PHI <iftmp.210_36(11), iftmp.210_35(12)>
+  _20 = iftmp.210_26 + _13;
+  _21 = _11 + _20;
+  ackno.211_22 = ackno;
+  _23 = _21 - ackno.211_22;
+  _24 = (long int) _23;
+  if (_24 <= 0)
+    goto <bb 3>; [INV]
+  else
+    goto <bb 14>; [INV]
+
+  <bb 14> :
+  # DEBUG BEGIN_STMT
+  _48 = seg_list_25;
+  return _48;
+
+}
+
+
+tcp_process (struct tcp_pcb * pcb)
+{
+  struct tcp_pcb * tcp_tmp_pcb;
+  struct tcp_pcb * tcp_tmp_pcb;
+  struct tcp_pcb * tcp_tmp_pcb;
+  err_t err;
+  u8_t acceptable;
+  struct tcp_seg * rseg;
+  unsigned char flags.102_1;
+  unsigned int _2;
+  unsigned int _3;
+  tcp_state _4;
+  long unsigned int _5;
+  long unsigned int ackno.103_6;
+  long unsigned int _7;
+  long unsigned int seqno.104_8;
+  long unsigned int seqno.105_9;
+  long unsigned int _10;
+  long unsigned int _11;
+  long int _12;
+  long unsigned int seqno.106_13;
+  long unsigned int _14;
+  short unsigned int _15;
+  long unsigned int _16;
+  long unsigned int _17;
+  long unsigned int _18;
+  long int _19;
+  short unsigned int _20;
+  short unsigned int _21;
+  tcp_state _22;
+  unsigned char recv_flags.107_23;
+  unsigned char _24;
+  short unsigned int _25;
+  short unsigned int _26;
+  unsigned char flags.108_27;
+  unsigned int _28;
+  unsigned int _29;
+  tcp_state _30;
+  unsigned char _31;
+  short unsigned int _32;
+  short unsigned int _33;
+  short unsigned int _34;
+  unsigned int _35;
+  unsigned int _36;
+  long unsigned int tcp_ticks.109_37;
+  tcp_state _38;
+  int _39;
+  unsigned char flags.110_40;
+  unsigned int _41;
+  unsigned int _42;
+  long unsigned int _43;
+  long unsigned int _44;
+  long unsigned int ackno.111_45;
+  long unsigned int seqno.112_46;
+  long unsigned int _47;
+  long unsigned int _48;
+  long unsigned int ackno.113_49;
+  struct tcp_hdr * tcphdr.114_50;
+  short unsigned int _51;
+  short unsigned int _52;
+  long unsigned int seqno.115_53;
+  long unsigned int _54;
+  short unsigned int _55;
+  struct ip_addr_t * _56;
+  unsigned char _57;
+  struct ip6_addr_t * _58;
+  struct ip6_addr_t * _59;
+  struct ip4_addr_t * _60;
+  struct ip_addr_t * _61;
+  short unsigned int _62;
+  short unsigned int _63;
+  unsigned int _64;
+  unsigned int _65;
+  short unsigned int _66;
+  unsigned int _67;
+  unsigned int _68;
+  unsigned int _69;
+  short unsigned int _70;
+  short unsigned int _71;
+  unsigned int _72;
+  unsigned int _73;
+  short unsigned int _74;
+  short unsigned int _75;
+  short unsigned int _76;
+  short unsigned int _77;
+  struct tcp_seg * _78;
+  struct tcp_seg * _79;
+  struct tcp_seg * _80;
+  err_t (*<T73f>) (void *, struct tcp_pcb *, err_t) _81;
+  err_t (*<T73f>) (void *, struct tcp_pcb *, err_t) _82;
+  void * _83;
+  short unsigned int _84;
+  short unsigned int _85;
+  unsigned char flags.119_86;
+  unsigned int _87;
+  unsigned int _88;
+  long unsigned int ackno.120_89;
+  short unsigned int tcplen.121_90;
+  long unsigned int _91;
+  long unsigned int seqno.122_92;
+  long unsigned int _93;
+  struct tcp_hdr * tcphdr.123_94;
+  short unsigned int _95;
+  struct tcp_hdr * tcphdr.124_96;
+  short unsigned int _97;
+  unsigned char _98;
+  unsigned char flags.125_99;
+  unsigned int _100;
+  unsigned int _101;
+  long unsigned int ackno.126_102;
+  long unsigned int _103;
+  long unsigned int _104;
+  long unsigned int _105;
+  long int _106;
+  long unsigned int ackno.127_107;
+  long unsigned int _108;
+  long unsigned int _109;
+  long int _110;
+  struct tcp_pcb_listen * _111;
+  struct tcp_pcb_listen * _112;
+  err_t (*<T73f>) (void *, struct tcp_pcb *, err_t) _113;
+  struct tcp_pcb_listen * _114;
+  err_t (*<T73f>) (void *, struct tcp_pcb *, err_t) _115;
+  struct tcp_pcb_listen * _116;
+  err_t (*<T73f>) (void *, struct tcp_pcb *, err_t) _117;
+  void * _118;
+  short unsigned int recv_acked.128_119;
+  short unsigned int recv_acked.129_120;
+  short unsigned int recv_acked.130_121;
+  short unsigned int _122;
+  short unsigned int _123;
+  unsigned int _124;
+  unsigned int _125;
+  short unsigned int _126;
+  unsigned int _127;
+  unsigned int _128;
+  unsigned int _129;
+  short unsigned int _130;
+  short unsigned int _131;
+  unsigned int _132;
+  unsigned int _133;
+  short unsigned int _134;
+  unsigned char recv_flags.133_135;
+  int _136;
+  int _137;
+  short unsigned int _138;
+  short unsigned int _139;
+  long unsigned int ackno.134_140;
+  short unsigned int tcplen.135_141;
+  long unsigned int _142;
+  long unsigned int seqno.136_143;
+  long unsigned int _144;
+  struct tcp_hdr * tcphdr.137_145;
+  short unsigned int _146;
+  struct tcp_hdr * tcphdr.138_147;
+  short unsigned int _148;
+  unsigned char flags.139_149;
+  unsigned int _150;
+  unsigned int _151;
+  long unsigned int _152;
+  long unsigned int _153;
+  long unsigned int seqno.140_154;
+  unsigned char recv_flags.141_155;
+  int _156;
+  int _157;
+  short unsigned int _158;
+  short unsigned int _159;
+  unsigned char recv_flags.142_160;
+  int _161;
+  int _162;
+  unsigned char flags.143_163;
+  unsigned int _164;
+  unsigned int _165;
+  long unsigned int _166;
+  long unsigned int ackno.144_167;
+  struct tcp_seg * _168;
+  short unsigned int _169;
+  short unsigned int _170;
+  struct tcp_pcb * tcp_active_pcbs.145_171;
+  struct tcp_pcb * tcp_active_pcbs.146_172;
+  struct tcp_pcb * _173;
+  struct tcp_pcb * _174;
+  struct tcp_pcb * _175;
+  struct tcp_pcb * tcp_tw_pcbs.147_176;
+  short unsigned int _177;
+  short unsigned int _178;
+  unsigned char flags.148_179;
+  unsigned int _180;
+  unsigned int _181;
+  long unsigned int _182;
+  long unsigned int ackno.149_183;
+  struct tcp_seg * _184;
+  unsigned char recv_flags.150_185;
+  int _186;
+  int _187;
+  short unsigned int _188;
+  short unsigned int _189;
+  struct tcp_pcb * tcp_active_pcbs.151_190;
+  struct tcp_pcb * tcp_active_pcbs.152_191;
+  struct tcp_pcb * _192;
+  struct tcp_pcb * _193;
+  struct tcp_pcb * _194;
+  struct tcp_pcb * tcp_tw_pcbs.153_195;
+  unsigned char flags.154_196;
+  unsigned int _197;
+  unsigned int _198;
+  long unsigned int _199;
+  long unsigned int ackno.155_200;
+  struct tcp_seg * _201;
+  struct tcp_pcb * tcp_active_pcbs.156_202;
+  struct tcp_pcb * tcp_active_pcbs.157_203;
+  struct tcp_pcb * _204;
+  struct tcp_pcb * _205;
+  struct tcp_pcb * _206;
+  struct tcp_pcb * tcp_tw_pcbs.158_207;
+  unsigned char flags.159_208;
+  unsigned int _209;
+  unsigned int _210;
+  long unsigned int _211;
+  long unsigned int ackno.160_212;
+  struct tcp_seg * _213;
+  unsigned char recv_flags.161_214;
+  unsigned char _215;
+  err_t _223;
+  struct netif * iftmp.116_224;
+  short unsigned int iftmp.117_225;
+  short unsigned int iftmp.118_226;
+  short unsigned int iftmp.131_227;
+  short unsigned int iftmp.132_228;
+  err_t _253;
+  short unsigned int iftmp.132_314;
+  short unsigned int iftmp.132_315;
+  short unsigned int iftmp.131_316;
+  short unsigned int iftmp.131_317;
+  err_t _322;
+  struct netif * iftmp.116_332;
+  struct netif * iftmp.116_334;
+  short unsigned int iftmp.118_337;
+  short unsigned int iftmp.118_338;
+  short unsigned int iftmp.117_339;
+  short unsigned int iftmp.117_340;
+  err_t _356;
+  err_t _361;
+  err_t _365;
+  err_t _368;
+
+  <bb 2> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  acceptable_248 = 0;
+  # DEBUG acceptable => acceptable_248
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  err_249 = 0;
+  # DEBUG err => err_249
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  if (pcb_250(D) == 0B)
+    goto <bb 3>; [INV]
+  else
+    goto <bb 4>; [INV]
+
+  <bb 3> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  __asm__ __volatile__("BKPT #0
+	");
+  # DEBUG BEGIN_STMT
+  goto <bb 3>; [INV]
+
+  <bb 4> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  flags.102_1 = flags;
+  _2 = (unsigned int) flags.102_1;
+  _3 = _2 & 4;
+  if (_3 != 0)
+    goto <bb 5>; [INV]
+  else
+    goto <bb 18>; [INV]
+
+  <bb 5> :
+  # DEBUG BEGIN_STMT
+  _4 = pcb_250(D)->state;
+  if (_4 == 2)
+    goto <bb 6>; [INV]
+  else
+    goto <bb 8>; [INV]
+
+  <bb 6> :
+  # DEBUG BEGIN_STMT
+  _5 = pcb_250(D)->snd_nxt;
+  ackno.103_6 = ackno;
+  if (_5 == ackno.103_6)
+    goto <bb 7>; [INV]
+  else
+    goto <bb 13>; [INV]
+
+  <bb 7> :
+  # DEBUG BEGIN_STMT
+  acceptable_364 = 1;
+  # DEBUG acceptable => acceptable_364
+  goto <bb 13>; [INV]
+
+  <bb 8> :
+  # DEBUG BEGIN_STMT
+  _7 = pcb_250(D)->rcv_nxt;
+  seqno.104_8 = seqno;
+  if (_7 == seqno.104_8)
+    goto <bb 9>; [INV]
+  else
+    goto <bb 10>; [INV]
+
+  <bb 9> :
+  # DEBUG BEGIN_STMT
+  acceptable_363 = 1;
+  # DEBUG acceptable => acceptable_363
+  goto <bb 13>; [INV]
+
+  <bb 10> :
+  # DEBUG BEGIN_STMT
+  seqno.105_9 = seqno;
+  _10 = pcb_250(D)->rcv_nxt;
+  _11 = seqno.105_9 - _10;
+  _12 = (long int) _11;
+  if (_12 >= 0)
+    goto <bb 11>; [INV]
+  else
+    goto <bb 13>; [INV]
+
+  <bb 11> :
+  seqno.106_13 = seqno;
+  _14 = pcb_250(D)->rcv_nxt;
+  _15 = pcb_250(D)->rcv_wnd;
+  _16 = (long unsigned int) _15;
+  _17 = _14 + _16;
+  _18 = seqno.106_13 - _17;
+  _19 = (long int) _18;
+  if (_19 <= 0)
+    goto <bb 12>; [INV]
+  else
+    goto <bb 13>; [INV]
+
+  <bb 12> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _20 = pcb_250(D)->flags;
+  _21 = _20 | 2;
+  pcb_250(D)->flags = _21;
+
+  <bb 13> :
+  # acceptable_217 = PHI <acceptable_364(7), acceptable_363(9), acceptable_248(10), acceptable_248(11), acceptable_248(12), acceptable_248(6)>
+  # DEBUG acceptable => acceptable_217
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  if (acceptable_217 != 0)
+    goto <bb 14>; [INV]
+  else
+    goto <bb 17>; [INV]
+
+  <bb 14> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _22 = pcb_250(D)->state;
+  if (_22 == 0)
+    goto <bb 15>; [INV]
+  else
+    goto <bb 16>; [INV]
+
+  <bb 15> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  __asm__ __volatile__("BKPT #0
+	");
+  # DEBUG BEGIN_STMT
+  goto <bb 15>; [INV]
+
+  <bb 16> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  recv_flags.107_23 = recv_flags;
+  _24 = recv_flags.107_23 | 8;
+  recv_flags = _24;
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _25 = pcb_250(D)->flags;
+  _26 = _25 & 65534;
+  pcb_250(D)->flags = _26;
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _368 = -14;
+  // predicted unlikely by early return (on trees) predictor.
+  goto <bb 127>; [INV]
+
+  <bb 17> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _365 = 0;
+  // predicted unlikely by early return (on trees) predictor.
+  goto <bb 127>; [INV]
+
+  <bb 18> :
+  # DEBUG BEGIN_STMT
+  flags.108_27 = flags;
+  _28 = (unsigned int) flags.108_27;
+  _29 = _28 & 2;
+  if (_29 != 0)
+    goto <bb 19>; [INV]
+  else
+    goto <bb 21>; [INV]
+
+  <bb 19> :
+  _30 = pcb_250(D)->state;
+  _31 = _30 + 254;
+  if (_31 > 1)
+    goto <bb 20>; [INV]
+  else
+    goto <bb 21>; [INV]
+
+  <bb 20> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _32 = pcb_250(D)->flags;
+  _33 = _32 | 2;
+  pcb_250(D)->flags = _33;
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _253 = 0;
+  // predicted unlikely by early return (on trees) predictor.
+  goto <bb 127>; [INV]
+
+  <bb 21> :
+  # DEBUG BEGIN_STMT
+  _34 = pcb_250(D)->flags;
+  _35 = (unsigned int) _34;
+  _36 = _35 & 16;
+  if (_36 == 0)
+    goto <bb 22>; [INV]
+  else
+    goto <bb 23>; [INV]
+
+  <bb 22> :
+  # DEBUG BEGIN_STMT
+  tcp_ticks.109_37 = tcp_ticks;
+  pcb_250(D)->tmr = tcp_ticks.109_37;
+
+  <bb 23> :
+  # DEBUG BEGIN_STMT
+  pcb_250(D)->keep_cnt_sent = 0;
+  # DEBUG BEGIN_STMT
+  pcb_250(D)->persist_probe = 0;
+  # DEBUG BEGIN_STMT
+  tcp_parseopt (pcb_250(D));
+  # DEBUG BEGIN_STMT
+  _38 = pcb_250(D)->state;
+  _39 = (int) _38;
+  switch (_39) <default: <L162> [INV], case 2: <L28> [INV], case 3: <L64> [INV], case 4: <L99> [INV], case 5: <L103> [INV], case 6: <L126> [INV], case 7: <L99> [INV], case 8: <L137> [INV], case 9: <L152> [INV]>
+
+  <bb 24> :
+<L28>:
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  flags.110_40 = flags;
+  _41 = (unsigned int) flags.110_40;
+  _42 = _41 & 18;
+  if (_42 == 18)
+    goto <bb 25>; [INV]
+  else
+    goto <bb 52>; [INV]
+
+  <bb 25> :
+  _43 = pcb_250(D)->lastack;
+  _44 = _43 + 1;
+  ackno.111_45 = ackno;
+  if (_44 == ackno.111_45)
+    goto <bb 26>; [INV]
+  else
+    goto <bb 52>; [INV]
+
+  <bb 26> :
+  # DEBUG BEGIN_STMT
+  seqno.112_46 = seqno;
+  _47 = seqno.112_46 + 1;
+  pcb_250(D)->rcv_nxt = _47;
+  # DEBUG BEGIN_STMT
+  _48 = pcb_250(D)->rcv_nxt;
+  pcb_250(D)->rcv_ann_right_edge = _48;
+  # DEBUG BEGIN_STMT
+  ackno.113_49 = ackno;
+  pcb_250(D)->lastack = ackno.113_49;
+  # DEBUG BEGIN_STMT
+  tcphdr.114_50 = tcphdr;
+  _51 = tcphdr.114_50->wnd;
+  pcb_250(D)->snd_wnd = _51;
+  # DEBUG BEGIN_STMT
+  _52 = pcb_250(D)->snd_wnd;
+  pcb_250(D)->snd_wnd_max = _52;
+  # DEBUG BEGIN_STMT
+  seqno.115_53 = seqno;
+  _54 = seqno.115_53 + 4294967295;
+  pcb_250(D)->snd_wl1 = _54;
+  # DEBUG BEGIN_STMT
+  pcb_250(D)->state = 4;
+  # DEBUG BEGIN_STMT
+  _55 = pcb_250(D)->mss;
+  _56 = &pcb_250(D)->remote_ip;
+  if (_56 != 0B)
+    goto <bb 27>; [INV]
+  else
+    goto <bb 29>; [INV]
+
+  <bb 27> :
+  _57 = pcb_250(D)->remote_ip.type;
+  if (_57 == 6)
+    goto <bb 28>; [INV]
+  else
+    goto <bb 29>; [INV]
+
+  <bb 28> :
+  _58 = &pcb_250(D)->local_ip.u_addr.ip6;
+  _59 = &pcb_250(D)->remote_ip.u_addr.ip6;
+  iftmp.116_332 = ip6_route (_58, _59);
+  goto <bb 30>; [INV]
+
+  <bb 29> :
+  _60 = &pcb_250(D)->remote_ip.u_addr.ip4;
+  iftmp.116_334 = ip4_route (_60);
+
+  <bb 30> :
+  # iftmp.116_224 = PHI <iftmp.116_332(28), iftmp.116_334(29)>
+  _61 = &pcb_250(D)->remote_ip;
+  _62 = tcp_eff_send_mss_netif (_55, iftmp.116_224, _61);
+  pcb_250(D)->mss = _62;
+  # DEBUG BEGIN_STMT
+  _63 = pcb_250(D)->mss;
+  _64 = (unsigned int) _63;
+  _65 = _64 * 4;
+  _66 = pcb_250(D)->mss;
+  _67 = (unsigned int) _66;
+  _68 = _67 * 2;
+  _69 = MAX_EXPR <_68, 4380>;
+  if (_65 < _69)
+    goto <bb 31>; [INV]
+  else
+    goto <bb 32>; [INV]
+
+  <bb 31> :
+  _70 = pcb_250(D)->mss;
+  iftmp.117_340 = _70 * 4;
+  goto <bb 36>; [INV]
+
+  <bb 32> :
+  _71 = pcb_250(D)->mss;
+  _72 = (unsigned int) _71;
+  _73 = _72 * 2;
+  if (_73 > 4380)
+    goto <bb 33>; [INV]
+  else
+    goto <bb 34>; [INV]
+
+  <bb 33> :
+  _74 = pcb_250(D)->mss;
+  iftmp.118_338 = _74 * 2;
+  goto <bb 35>; [INV]
+
+  <bb 34> :
+  iftmp.118_337 = 4380;
+
+  <bb 35> :
+  # iftmp.118_226 = PHI <iftmp.118_338(33), iftmp.118_337(34)>
+  iftmp.117_339 = iftmp.118_226;
+
+  <bb 36> :
+  # iftmp.117_225 = PHI <iftmp.117_340(31), iftmp.117_339(35)>
+  pcb_250(D)->cwnd = iftmp.117_225;
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _75 = pcb_250(D)->snd_queuelen;
+  if (_75 == 0)
+    goto <bb 37>; [INV]
+  else
+    goto <bb 38>; [INV]
+
+  <bb 37> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  __asm__ __volatile__("BKPT #0
+	");
+  # DEBUG BEGIN_STMT
+  goto <bb 37>; [INV]
+
+  <bb 38> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _76 = pcb_250(D)->snd_queuelen;
+  _77 = _76 + 65535;
+  pcb_250(D)->snd_queuelen = _77;
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  rseg_343 = pcb_250(D)->unacked;
+  # DEBUG rseg => rseg_343
+  # DEBUG BEGIN_STMT
+  if (rseg_343 == 0B)
+    goto <bb 39>; [INV]
+  else
+    goto <bb 42>; [INV]
+
+  <bb 39> :
+  # DEBUG BEGIN_STMT
+  rseg_345 = pcb_250(D)->unsent;
+  # DEBUG rseg => rseg_345
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  if (rseg_345 == 0B)
+    goto <bb 40>; [INV]
+  else
+    goto <bb 41>; [INV]
+
+  <bb 40> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  __asm__ __volatile__("BKPT #0
+	");
+  # DEBUG BEGIN_STMT
+  goto <bb 40>; [INV]
+
+  <bb 41> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _78 = rseg_345->next;
+  pcb_250(D)->unsent = _78;
+  goto <bb 43>; [INV]
+
+  <bb 42> :
+  # DEBUG BEGIN_STMT
+  _79 = rseg_343->next;
+  pcb_250(D)->unacked = _79;
+
+  <bb 43> :
+  # rseg_216 = PHI <rseg_345(41), rseg_343(42)>
+  # DEBUG rseg => rseg_216
+  # DEBUG BEGIN_STMT
+  tcp_seg_free (rseg_216);
+  # DEBUG BEGIN_STMT
+  _80 = pcb_250(D)->unacked;
+  if (_80 == 0B)
+    goto <bb 44>; [INV]
+  else
+    goto <bb 45>; [INV]
+
+  <bb 44> :
+  # DEBUG BEGIN_STMT
+  pcb_250(D)->rtime = -1;
+  goto <bb 46>; [INV]
+
+  <bb 45> :
+  # DEBUG BEGIN_STMT
+  pcb_250(D)->rtime = 0;
+  # DEBUG BEGIN_STMT
+  pcb_250(D)->nrtx = 0;
+
+  <bb 46> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _81 = pcb_250(D)->connected;
+  if (_81 != 0B)
+    goto <bb 47>; [INV]
+  else
+    goto <bb 48>; [INV]
+
+  <bb 47> :
+  # DEBUG BEGIN_STMT
+  _82 = pcb_250(D)->connected;
+  _83 = pcb_250(D)->callback_arg;
+  err_354 = _82 (_83, pcb_250(D), 0);
+  # DEBUG err => err_354
+  goto <bb 49>; [INV]
+
+  <bb 48> :
+  # DEBUG BEGIN_STMT
+  err_352 = 0;
+  # DEBUG err => err_352
+
+  <bb 49> :
+  # err_218 = PHI <err_354(47), err_352(48)>
+  # DEBUG err => err_218
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  if (err_218 == -13)
+    goto <bb 50>; [INV]
+  else
+    goto <bb 51>; [INV]
+
+  <bb 50> :
+  # DEBUG BEGIN_STMT
+  _356 = -13;
+  // predicted unlikely by early return (on trees) predictor.
+  goto <bb 127>; [INV]
+
+  <bb 51> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _84 = pcb_250(D)->flags;
+  _85 = _84 | 2;
+  pcb_250(D)->flags = _85;
+  # DEBUG BEGIN_STMT
+  goto <bb 126>; [INV]
+
+  <bb 52> :
+  # DEBUG BEGIN_STMT
+  flags.119_86 = flags;
+  _87 = (unsigned int) flags.119_86;
+  _88 = _87 & 16;
+  if (_88 != 0)
+    goto <bb 53>; [INV]
+  else
+    goto <bb 126>; [INV]
+
+  <bb 53> :
+  # DEBUG BEGIN_STMT
+  ackno.120_89 = ackno;
+  tcplen.121_90 = tcplen;
+  _91 = (long unsigned int) tcplen.121_90;
+  seqno.122_92 = seqno;
+  _93 = _91 + seqno.122_92;
+  tcphdr.123_94 = tcphdr;
+  _95 = tcphdr.123_94->dest;
+  tcphdr.124_96 = tcphdr;
+  _97 = tcphdr.124_96->src;
+  tcp_rst (pcb_250(D), ackno.120_89, _93, &ip_data.current_iphdr_dest, &ip_data.current_iphdr_src, _95, _97);
+  # DEBUG BEGIN_STMT
+  _98 = pcb_250(D)->nrtx;
+  if (_98 <= 1)
+    goto <bb 54>; [INV]
+  else
+    goto <bb 126>; [INV]
+
+  <bb 54> :
+  # DEBUG BEGIN_STMT
+  pcb_250(D)->rtime = 0;
+  # DEBUG BEGIN_STMT
+  tcp_rexmit_rto (pcb_250(D));
+  goto <bb 126>; [INV]
+
+  <bb 55> :
+<L64>:
+  # DEBUG BEGIN_STMT
+  flags.125_99 = flags;
+  _100 = (unsigned int) flags.125_99;
+  _101 = _100 & 16;
+  if (_101 != 0)
+    goto <bb 56>; [INV]
+  else
+    goto <bb 80>; [INV]
+
+  <bb 56> :
+  # DEBUG BEGIN_STMT
+  ackno.126_102 = ackno;
+  _103 = pcb_250(D)->lastack;
+  _104 = ackno.126_102 - _103;
+  _105 = _104 + 4294967295;
+  _106 = (long int) _105;
+  if (_106 >= 0)
+    goto <bb 57>; [INV]
+  else
+    goto <bb 79>; [INV]
+
+  <bb 57> :
+  ackno.127_107 = ackno;
+  _108 = pcb_250(D)->snd_nxt;
+  _109 = ackno.127_107 - _108;
+  _110 = (long int) _109;
+  if (_110 <= 0)
+    goto <bb 58>; [INV]
+  else
+    goto <bb 79>; [INV]
+
+  <bb 58> :
+  # DEBUG BEGIN_STMT
+  pcb_250(D)->state = 4;
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _111 = pcb_250(D)->listener;
+  if (_111 == 0B)
+    goto <bb 59>; [INV]
+  else
+    goto <bb 60>; [INV]
+
+  <bb 59> :
+  # DEBUG BEGIN_STMT
+  err_311 = -6;
+  # DEBUG err => err_311
+  goto <bb 65>; [INV]
+
+  <bb 60> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _112 = pcb_250(D)->listener;
+  _113 = _112->accept;
+  if (_113 == 0B)
+    goto <bb 61>; [INV]
+  else
+    goto <bb 62>; [INV]
+
+  <bb 61> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  __asm__ __volatile__("BKPT #0
+	");
+  # DEBUG BEGIN_STMT
+  goto <bb 61>; [INV]
+
+  <bb 62> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  tcp_backlog_accepted (pcb_250(D));
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _114 = pcb_250(D)->listener;
+  _115 = _114->accept;
+  if (_115 != 0B)
+    goto <bb 63>; [INV]
+  else
+    goto <bb 64>; [INV]
+
+  <bb 63> :
+  # DEBUG BEGIN_STMT
+  _116 = pcb_250(D)->listener;
+  _117 = _116->accept;
+  _118 = pcb_250(D)->callback_arg;
+  err_309 = _117 (_118, pcb_250(D), 0);
+  # DEBUG err => err_309
+  goto <bb 65>; [INV]
+
+  <bb 64> :
+  # DEBUG BEGIN_STMT
+  err_307 = -16;
+  # DEBUG err => err_307
+
+  <bb 65> :
+  # err_219 = PHI <err_311(59), err_309(63), err_307(64)>
+  # DEBUG err => err_219
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  if (err_219 != 0)
+    goto <bb 66>; [INV]
+  else
+    goto <bb 69>; [INV]
+
+  <bb 66> :
+  # DEBUG BEGIN_STMT
+  if (err_219 != -13)
+    goto <bb 67>; [INV]
+  else
+    goto <bb 68>; [INV]
+
+  <bb 67> :
+  # DEBUG BEGIN_STMT
+  tcp_abort (pcb_250(D));
+
+  <bb 68> :
+  # DEBUG BEGIN_STMT
+  _322 = -13;
+  // predicted unlikely by early return (on trees) predictor.
+  goto <bb 127>; [INV]
+
+  <bb 69> :
+  # DEBUG BEGIN_STMT
+  tcp_receive (pcb_250(D));
+  # DEBUG BEGIN_STMT
+  recv_acked.128_119 = recv_acked;
+  if (recv_acked.128_119 != 0)
+    goto <bb 70>; [INV]
+  else
+    goto <bb 71>; [INV]
+
+  <bb 70> :
+  # DEBUG BEGIN_STMT
+  recv_acked.129_120 = recv_acked;
+  recv_acked.130_121 = recv_acked.129_120;
+  _122 = recv_acked.130_121 + 65535;
+  recv_acked = _122;
+
+  <bb 71> :
+  # DEBUG BEGIN_STMT
+  _123 = pcb_250(D)->mss;
+  _124 = (unsigned int) _123;
+  _125 = _124 * 4;
+  _126 = pcb_250(D)->mss;
+  _127 = (unsigned int) _126;
+  _128 = _127 * 2;
+  _129 = MAX_EXPR <_128, 4380>;
+  if (_125 < _129)
+    goto <bb 72>; [INV]
+  else
+    goto <bb 73>; [INV]
+
+  <bb 72> :
+  _130 = pcb_250(D)->mss;
+  iftmp.131_317 = _130 * 4;
+  goto <bb 77>; [INV]
+
+  <bb 73> :
+  _131 = pcb_250(D)->mss;
+  _132 = (unsigned int) _131;
+  _133 = _132 * 2;
+  if (_133 > 4380)
+    goto <bb 74>; [INV]
+  else
+    goto <bb 75>; [INV]
+
+  <bb 74> :
+  _134 = pcb_250(D)->mss;
+  iftmp.132_315 = _134 * 2;
+  goto <bb 76>; [INV]
+
+  <bb 75> :
+  iftmp.132_314 = 4380;
+
+  <bb 76> :
+  # iftmp.132_228 = PHI <iftmp.132_315(74), iftmp.132_314(75)>
+  iftmp.131_316 = iftmp.132_228;
+
+  <bb 77> :
+  # iftmp.131_227 = PHI <iftmp.131_317(72), iftmp.131_316(76)>
+  pcb_250(D)->cwnd = iftmp.131_227;
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  recv_flags.133_135 = recv_flags;
+  _136 = (int) recv_flags.133_135;
+  _137 = _136 & 32;
+  if (_137 != 0)
+    goto <bb 78>; [INV]
+  else
+    goto <bb 126>; [INV]
+
+  <bb 78> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _138 = pcb_250(D)->flags;
+  _139 = _138 | 2;
+  pcb_250(D)->flags = _139;
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  pcb_250(D)->state = 7;
+  goto <bb 126>; [INV]
+
+  <bb 79> :
+  # DEBUG BEGIN_STMT
+  ackno.134_140 = ackno;
+  tcplen.135_141 = tcplen;
+  _142 = (long unsigned int) tcplen.135_141;
+  seqno.136_143 = seqno;
+  _144 = _142 + seqno.136_143;
+  tcphdr.137_145 = tcphdr;
+  _146 = tcphdr.137_145->dest;
+  tcphdr.138_147 = tcphdr;
+  _148 = tcphdr.138_147->src;
+  tcp_rst (pcb_250(D), ackno.134_140, _144, &ip_data.current_iphdr_dest, &ip_data.current_iphdr_src, _146, _148);
+  goto <bb 126>; [INV]
+
+  <bb 80> :
+  # DEBUG BEGIN_STMT
+  flags.139_149 = flags;
+  _150 = (unsigned int) flags.139_149;
+  _151 = _150 & 2;
+  if (_151 != 0)
+    goto <bb 81>; [INV]
+  else
+    goto <bb 126>; [INV]
+
+  <bb 81> :
+  _152 = pcb_250(D)->rcv_nxt;
+  _153 = _152 + 4294967295;
+  seqno.140_154 = seqno;
+  if (_153 == seqno.140_154)
+    goto <bb 82>; [INV]
+  else
+    goto <bb 126>; [INV]
+
+  <bb 82> :
+  # DEBUG BEGIN_STMT
+  tcp_rexmit (pcb_250(D));
+  goto <bb 126>; [INV]
+
+  <bb 83> :
+<L99>:
+  # DEBUG BEGIN_STMT
+  tcp_receive (pcb_250(D));
+  # DEBUG BEGIN_STMT
+  recv_flags.141_155 = recv_flags;
+  _156 = (int) recv_flags.141_155;
+  _157 = _156 & 32;
+  if (_157 != 0)
+    goto <bb 84>; [INV]
+  else
+    goto <bb 126>; [INV]
+
+  <bb 84> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _158 = pcb_250(D)->flags;
+  _159 = _158 | 2;
+  pcb_250(D)->flags = _159;
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  pcb_250(D)->state = 7;
+  goto <bb 126>; [INV]
+
+  <bb 85> :
+<L103>:
+  # DEBUG BEGIN_STMT
+  tcp_receive (pcb_250(D));
+  # DEBUG BEGIN_STMT
+  recv_flags.142_160 = recv_flags;
+  _161 = (int) recv_flags.142_160;
+  _162 = _161 & 32;
+  if (_162 != 0)
+    goto <bb 86>; [INV]
+  else
+    goto <bb 98>; [INV]
+
+  <bb 86> :
+  # DEBUG BEGIN_STMT
+  flags.143_163 = flags;
+  _164 = (unsigned int) flags.143_163;
+  _165 = _164 & 16;
+  if (_165 != 0)
+    goto <bb 87>; [INV]
+  else
+    goto <bb 97>; [INV]
+
+  <bb 87> :
+  _166 = pcb_250(D)->snd_nxt;
+  ackno.144_167 = ackno;
+  if (_166 == ackno.144_167)
+    goto <bb 88>; [INV]
+  else
+    goto <bb 97>; [INV]
+
+  <bb 88> :
+  _168 = pcb_250(D)->unsent;
+  if (_168 == 0B)
+    goto <bb 89>; [INV]
+  else
+    goto <bb 97>; [INV]
+
+  <bb 89> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _169 = pcb_250(D)->flags;
+  _170 = _169 | 2;
+  pcb_250(D)->flags = _170;
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  tcp_pcb_purge (pcb_250(D));
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  tcp_active_pcbs.145_171 = tcp_active_pcbs;
+  if (pcb_250(D) == tcp_active_pcbs.145_171)
+    goto <bb 90>; [INV]
+  else
+    goto <bb 91>; [INV]
+
+  <bb 90> :
+  # DEBUG BEGIN_STMT
+  tcp_active_pcbs.146_172 = tcp_active_pcbs;
+  _173 = tcp_active_pcbs.146_172->next;
+  tcp_active_pcbs = _173;
+  goto <bb 96>; [INV]
+
+  <bb 91> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  tcp_tmp_pcb_289 = tcp_active_pcbs;
+  # DEBUG tcp_tmp_pcb => tcp_tmp_pcb_289
+  goto <bb 95>; [INV]
+
+  <bb 92> :
+  # DEBUG BEGIN_STMT
+  _174 = tcp_tmp_pcb_220->next;
+  if (pcb_250(D) == _174)
+    goto <bb 93>; [INV]
+  else
+    goto <bb 94>; [INV]
+
+  <bb 93> :
+  # DEBUG BEGIN_STMT
+  _175 = pcb_250(D)->next;
+  tcp_tmp_pcb_220->next = _175;
+  # DEBUG BEGIN_STMT
+  goto <bb 96>; [INV]
+
+  <bb 94> :
+  # DEBUG BEGIN_STMT
+  tcp_tmp_pcb_290 = tcp_tmp_pcb_220->next;
+  # DEBUG tcp_tmp_pcb => tcp_tmp_pcb_290
+
+  <bb 95> :
+  # tcp_tmp_pcb_220 = PHI <tcp_tmp_pcb_289(91), tcp_tmp_pcb_290(94)>
+  # DEBUG tcp_tmp_pcb => tcp_tmp_pcb_220
+  # DEBUG BEGIN_STMT
+  if (tcp_tmp_pcb_220 != 0B)
+    goto <bb 92>; [INV]
+  else
+    goto <bb 96>; [INV]
+
+  <bb 96> :
+  # DEBUG BEGIN_STMT
+  pcb_250(D)->next = 0B;
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  tcp_active_pcbs_changed = 1;
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  pcb_250(D)->state = 10;
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  tcp_tw_pcbs.147_176 = tcp_tw_pcbs;
+  pcb_250(D)->next = tcp_tw_pcbs.147_176;
+  # DEBUG BEGIN_STMT
+  tcp_tw_pcbs = pcb_250(D);
+  # DEBUG BEGIN_STMT
+  tcp_timer_needed ();
+  # DEBUG BEGIN_STMT
+  goto <bb 126>; [INV]
+
+  <bb 97> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _177 = pcb_250(D)->flags;
+  _178 = _177 | 2;
+  pcb_250(D)->flags = _178;
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  pcb_250(D)->state = 8;
+  goto <bb 126>; [INV]
+
+  <bb 98> :
+  # DEBUG BEGIN_STMT
+  flags.148_179 = flags;
+  _180 = (unsigned int) flags.148_179;
+  _181 = _180 & 16;
+  if (_181 != 0)
+    goto <bb 99>; [INV]
+  else
+    goto <bb 126>; [INV]
+
+  <bb 99> :
+  _182 = pcb_250(D)->snd_nxt;
+  ackno.149_183 = ackno;
+  if (_182 == ackno.149_183)
+    goto <bb 100>; [INV]
+  else
+    goto <bb 126>; [INV]
+
+  <bb 100> :
+  _184 = pcb_250(D)->unsent;
+  if (_184 == 0B)
+    goto <bb 101>; [INV]
+  else
+    goto <bb 126>; [INV]
+
+  <bb 101> :
+  # DEBUG BEGIN_STMT
+  pcb_250(D)->state = 6;
+  goto <bb 126>; [INV]
+
+  <bb 102> :
+<L126>:
+  # DEBUG BEGIN_STMT
+  tcp_receive (pcb_250(D));
+  # DEBUG BEGIN_STMT
+  recv_flags.150_185 = recv_flags;
+  _186 = (int) recv_flags.150_185;
+  _187 = _186 & 32;
+  if (_187 != 0)
+    goto <bb 103>; [INV]
+  else
+    goto <bb 126>; [INV]
+
+  <bb 103> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _188 = pcb_250(D)->flags;
+  _189 = _188 | 2;
+  pcb_250(D)->flags = _189;
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  tcp_pcb_purge (pcb_250(D));
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  tcp_active_pcbs.151_190 = tcp_active_pcbs;
+  if (pcb_250(D) == tcp_active_pcbs.151_190)
+    goto <bb 104>; [INV]
+  else
+    goto <bb 105>; [INV]
+
+  <bb 104> :
+  # DEBUG BEGIN_STMT
+  tcp_active_pcbs.152_191 = tcp_active_pcbs;
+  _192 = tcp_active_pcbs.152_191->next;
+  tcp_active_pcbs = _192;
+  goto <bb 110>; [INV]
+
+  <bb 105> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  tcp_tmp_pcb_275 = tcp_active_pcbs;
+  # DEBUG tcp_tmp_pcb => tcp_tmp_pcb_275
+  goto <bb 109>; [INV]
+
+  <bb 106> :
+  # DEBUG BEGIN_STMT
+  _193 = tcp_tmp_pcb_221->next;
+  if (pcb_250(D) == _193)
+    goto <bb 107>; [INV]
+  else
+    goto <bb 108>; [INV]
+
+  <bb 107> :
+  # DEBUG BEGIN_STMT
+  _194 = pcb_250(D)->next;
+  tcp_tmp_pcb_221->next = _194;
+  # DEBUG BEGIN_STMT
+  goto <bb 110>; [INV]
+
+  <bb 108> :
+  # DEBUG BEGIN_STMT
+  tcp_tmp_pcb_276 = tcp_tmp_pcb_221->next;
+  # DEBUG tcp_tmp_pcb => tcp_tmp_pcb_276
+
+  <bb 109> :
+  # tcp_tmp_pcb_221 = PHI <tcp_tmp_pcb_275(105), tcp_tmp_pcb_276(108)>
+  # DEBUG tcp_tmp_pcb => tcp_tmp_pcb_221
+  # DEBUG BEGIN_STMT
+  if (tcp_tmp_pcb_221 != 0B)
+    goto <bb 106>; [INV]
+  else
+    goto <bb 110>; [INV]
+
+  <bb 110> :
+  # DEBUG BEGIN_STMT
+  pcb_250(D)->next = 0B;
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  tcp_active_pcbs_changed = 1;
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  pcb_250(D)->state = 10;
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  tcp_tw_pcbs.153_195 = tcp_tw_pcbs;
+  pcb_250(D)->next = tcp_tw_pcbs.153_195;
+  # DEBUG BEGIN_STMT
+  tcp_tw_pcbs = pcb_250(D);
+  # DEBUG BEGIN_STMT
+  tcp_timer_needed ();
+  goto <bb 126>; [INV]
+
+  <bb 111> :
+<L137>:
+  # DEBUG BEGIN_STMT
+  tcp_receive (pcb_250(D));
+  # DEBUG BEGIN_STMT
+  flags.154_196 = flags;
+  _197 = (unsigned int) flags.154_196;
+  _198 = _197 & 16;
+  if (_198 != 0)
+    goto <bb 112>; [INV]
+  else
+    goto <bb 126>; [INV]
+
+  <bb 112> :
+  _199 = pcb_250(D)->snd_nxt;
+  ackno.155_200 = ackno;
+  if (_199 == ackno.155_200)
+    goto <bb 113>; [INV]
+  else
+    goto <bb 126>; [INV]
+
+  <bb 113> :
+  _201 = pcb_250(D)->unsent;
+  if (_201 == 0B)
+    goto <bb 114>; [INV]
+  else
+    goto <bb 126>; [INV]
+
+  <bb 114> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  tcp_pcb_purge (pcb_250(D));
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  tcp_active_pcbs.156_202 = tcp_active_pcbs;
+  if (pcb_250(D) == tcp_active_pcbs.156_202)
+    goto <bb 115>; [INV]
+  else
+    goto <bb 116>; [INV]
+
+  <bb 115> :
+  # DEBUG BEGIN_STMT
+  tcp_active_pcbs.157_203 = tcp_active_pcbs;
+  _204 = tcp_active_pcbs.157_203->next;
+  tcp_active_pcbs = _204;
+  goto <bb 121>; [INV]
+
+  <bb 116> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  tcp_tmp_pcb_262 = tcp_active_pcbs;
+  # DEBUG tcp_tmp_pcb => tcp_tmp_pcb_262
+  goto <bb 120>; [INV]
+
+  <bb 117> :
+  # DEBUG BEGIN_STMT
+  _205 = tcp_tmp_pcb_222->next;
+  if (pcb_250(D) == _205)
+    goto <bb 118>; [INV]
+  else
+    goto <bb 119>; [INV]
+
+  <bb 118> :
+  # DEBUG BEGIN_STMT
+  _206 = pcb_250(D)->next;
+  tcp_tmp_pcb_222->next = _206;
+  # DEBUG BEGIN_STMT
+  goto <bb 121>; [INV]
+
+  <bb 119> :
+  # DEBUG BEGIN_STMT
+  tcp_tmp_pcb_263 = tcp_tmp_pcb_222->next;
+  # DEBUG tcp_tmp_pcb => tcp_tmp_pcb_263
+
+  <bb 120> :
+  # tcp_tmp_pcb_222 = PHI <tcp_tmp_pcb_262(116), tcp_tmp_pcb_263(119)>
+  # DEBUG tcp_tmp_pcb => tcp_tmp_pcb_222
+  # DEBUG BEGIN_STMT
+  if (tcp_tmp_pcb_222 != 0B)
+    goto <bb 117>; [INV]
+  else
+    goto <bb 121>; [INV]
+
+  <bb 121> :
+  # DEBUG BEGIN_STMT
+  pcb_250(D)->next = 0B;
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  tcp_active_pcbs_changed = 1;
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  pcb_250(D)->state = 10;
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  tcp_tw_pcbs.158_207 = tcp_tw_pcbs;
+  pcb_250(D)->next = tcp_tw_pcbs.158_207;
+  # DEBUG BEGIN_STMT
+  tcp_tw_pcbs = pcb_250(D);
+  # DEBUG BEGIN_STMT
+  tcp_timer_needed ();
+  goto <bb 126>; [INV]
+
+  <bb 122> :
+<L152>:
+  # DEBUG BEGIN_STMT
+  tcp_receive (pcb_250(D));
+  # DEBUG BEGIN_STMT
+  flags.159_208 = flags;
+  _209 = (unsigned int) flags.159_208;
+  _210 = _209 & 16;
+  if (_210 != 0)
+    goto <bb 123>; [INV]
+  else
+    goto <bb 126>; [INV]
+
+  <bb 123> :
+  _211 = pcb_250(D)->snd_nxt;
+  ackno.160_212 = ackno;
+  if (_211 == ackno.160_212)
+    goto <bb 124>; [INV]
+  else
+    goto <bb 126>; [INV]
+
+  <bb 124> :
+  _213 = pcb_250(D)->unsent;
+  if (_213 == 0B)
+    goto <bb 125>; [INV]
+  else
+    goto <bb 126>; [INV]
+
+  <bb 125> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  recv_flags.161_214 = recv_flags;
+  _215 = recv_flags.161_214 | 16;
+  recv_flags = _215;
+
+  <bb 126> :
+<L162>:
+  # DEBUG BEGIN_STMT
+  _361 = 0;
+
+  <bb 127> :
+  # _223 = PHI <_368(16), _365(17), _253(20), _356(50), _322(68), _361(126)>
+  return _223;
+
+}
+
+
+tcp_timewait_input (struct tcp_pcb * pcb)
+{
+  unsigned char flags.62_1;
+  unsigned int _2;
+  unsigned int _3;
+  unsigned char flags.63_4;
+  unsigned int _5;
+  unsigned int _6;
+  long unsigned int seqno.64_7;
+  long unsigned int _8;
+  long unsigned int _9;
+  long int _10;
+  long unsigned int seqno.65_11;
+  long unsigned int _12;
+  short unsigned int _13;
+  long unsigned int _14;
+  long unsigned int _15;
+  long unsigned int _16;
+  long int _17;
+  long unsigned int ackno.66_18;
+  short unsigned int tcplen.67_19;
+  long unsigned int _20;
+  long unsigned int seqno.68_21;
+  long unsigned int _22;
+  struct tcp_hdr * tcphdr.69_23;
+  short unsigned int _24;
+  struct tcp_hdr * tcphdr.70_25;
+  short unsigned int _26;
+  unsigned char flags.71_27;
+  unsigned int _28;
+  unsigned int _29;
+  long unsigned int tcp_ticks.72_30;
+  short unsigned int tcplen.73_31;
+  short unsigned int _32;
+  short unsigned int _33;
+
+  <bb 2> :
+  # DEBUG BEGIN_STMT
+  flags.62_1 = flags;
+  _2 = (unsigned int) flags.62_1;
+  _3 = _2 & 4;
+  if (_3 != 0)
+    goto <bb 3>; [INV]
+  else
+    goto <bb 4>; [INV]
+
+  <bb 3> :
+  # DEBUG BEGIN_STMT
+  // predicted unlikely by early return (on trees) predictor.
+  goto <bb 14>; [INV]
+
+  <bb 4> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  if (pcb_38(D) == 0B)
+    goto <bb 5>; [INV]
+  else
+    goto <bb 6>; [INV]
+
+  <bb 5> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  __asm__ __volatile__("BKPT #0
+	");
+  # DEBUG BEGIN_STMT
+  goto <bb 5>; [INV]
+
+  <bb 6> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  flags.63_4 = flags;
+  _5 = (unsigned int) flags.63_4;
+  _6 = _5 & 2;
+  if (_6 != 0)
+    goto <bb 7>; [INV]
+  else
+    goto <bb 10>; [INV]
+
+  <bb 7> :
+  # DEBUG BEGIN_STMT
+  seqno.64_7 = seqno;
+  _8 = pcb_38(D)->rcv_nxt;
+  _9 = seqno.64_7 - _8;
+  _10 = (long int) _9;
+  if (_10 >= 0)
+    goto <bb 8>; [INV]
+  else
+    goto <bb 12>; [INV]
+
+  <bb 8> :
+  seqno.65_11 = seqno;
+  _12 = pcb_38(D)->rcv_nxt;
+  _13 = pcb_38(D)->rcv_wnd;
+  _14 = (long unsigned int) _13;
+  _15 = _12 + _14;
+  _16 = seqno.65_11 - _15;
+  _17 = (long int) _16;
+  if (_17 <= 0)
+    goto <bb 9>; [INV]
+  else
+    goto <bb 12>; [INV]
+
+  <bb 9> :
+  # DEBUG BEGIN_STMT
+  ackno.66_18 = ackno;
+  tcplen.67_19 = tcplen;
+  _20 = (long unsigned int) tcplen.67_19;
+  seqno.68_21 = seqno;
+  _22 = _20 + seqno.68_21;
+  tcphdr.69_23 = tcphdr;
+  _24 = tcphdr.69_23->dest;
+  tcphdr.70_25 = tcphdr;
+  _26 = tcphdr.70_25->src;
+  tcp_rst (pcb_38(D), ackno.66_18, _22, &ip_data.current_iphdr_dest, &ip_data.current_iphdr_src, _24, _26);
+  # DEBUG BEGIN_STMT
+  // predicted unlikely by early return (on trees) predictor.
+  goto <bb 14>; [INV]
+
+  <bb 10> :
+  # DEBUG BEGIN_STMT
+  flags.71_27 = flags;
+  _28 = (unsigned int) flags.71_27;
+  _29 = _28 & 1;
+  if (_29 != 0)
+    goto <bb 11>; [INV]
+  else
+    goto <bb 12>; [INV]
+
+  <bb 11> :
+  # DEBUG BEGIN_STMT
+  tcp_ticks.72_30 = tcp_ticks;
+  pcb_38(D)->tmr = tcp_ticks.72_30;
+
+  <bb 12> :
+  # DEBUG BEGIN_STMT
+  tcplen.73_31 = tcplen;
+  if (tcplen.73_31 != 0)
+    goto <bb 13>; [INV]
+  else
+    goto <bb 14>; [INV]
+
+  <bb 13> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _32 = pcb_38(D)->flags;
+  _33 = _32 | 2;
+  pcb_38(D)->flags = _33;
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  tcp_output (pcb_38(D));
+
+  <bb 14> :
+  return;
+
+}
+
+
+tcp_listen_input (struct tcp_pcb_listen * pcb)
+{
+  err_t err;
+  err_t rc;
+  u32_t iss;
+  struct tcp_pcb * npcb;
+  unsigned char flags.74_1;
+  unsigned int _2;
+  unsigned int _3;
+  unsigned char flags.75_4;
+  unsigned int _5;
+  unsigned int _6;
+  long unsigned int ackno.76_7;
+  short unsigned int tcplen.77_8;
+  long unsigned int _9;
+  long unsigned int seqno.78_10;
+  long unsigned int _11;
+  struct tcp_hdr * tcphdr.79_12;
+  short unsigned int _13;
+  struct tcp_hdr * tcphdr.80_14;
+  short unsigned int _15;
+  unsigned char flags.81_16;
+  unsigned int _17;
+  unsigned int _18;
+  unsigned char _19;
+  unsigned char _20;
+  unsigned char _21;
+  short unsigned int _22;
+  short unsigned int _23;
+  err_t (*<T73f>) (void *, struct tcp_pcb *, err_t) _24;
+  err_t (*<T73f>) (void *, struct tcp_pcb *, err_t) _25;
+  void * _26;
+  unsigned char _27;
+  unsigned char _28;
+  unsigned char _29;
+  short unsigned int _30;
+  short unsigned int _31;
+  unsigned char _32;
+  unsigned char _33;
+  long unsigned int _34;
+  long unsigned int _35;
+  long unsigned int _36;
+  long unsigned int _37;
+  unsigned char _38;
+  long unsigned int _39;
+  long unsigned int _40;
+  long unsigned int _41;
+  unsigned char _42;
+  unsigned char _43;
+  long unsigned int _44;
+  long unsigned int _45;
+  long unsigned int _46;
+  long unsigned int _47;
+  unsigned char _48;
+  long unsigned int _49;
+  long unsigned int _50;
+  long unsigned int _51;
+  short unsigned int _52;
+  struct tcp_hdr * tcphdr.82_53;
+  short unsigned int _54;
+  long unsigned int seqno.83_55;
+  long unsigned int _56;
+  long unsigned int _57;
+  long unsigned int seqno.84_58;
+  long unsigned int _59;
+  void * _60;
+  unsigned char _61;
+  unsigned char _62;
+  unsigned char _63;
+  struct tcp_pcb * tcp_active_pcbs.85_64;
+  struct tcp_hdr * tcphdr.86_65;
+  short unsigned int _66;
+  short unsigned int _67;
+  short unsigned int _68;
+  struct ip_addr_t * _69;
+  unsigned char _70;
+  struct ip6_addr_t * _71;
+  struct ip6_addr_t * _72;
+  struct ip4_addr_t * _73;
+  struct ip_addr_t * _74;
+  short unsigned int _75;
+  long unsigned int _76;
+  long unsigned int _77;
+  struct netif * iftmp.87_78;
+  struct netif * iftmp.87_137;
+  struct netif * iftmp.87_139;
+
+  <bb 2> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  flags.74_1 = flags;
+  _2 = (unsigned int) flags.74_1;
+  _3 = _2 & 4;
+  if (_3 != 0)
+    goto <bb 3>; [INV]
+  else
+    goto <bb 4>; [INV]
+
+  <bb 3> :
+  # DEBUG BEGIN_STMT
+  // predicted unlikely by early return (on trees) predictor.
+  goto <bb 29>; [INV]
+
+  <bb 4> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  if (pcb_86(D) == 0B)
+    goto <bb 5>; [INV]
+  else
+    goto <bb 6>; [INV]
+
+  <bb 5> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  __asm__ __volatile__("BKPT #0
+	");
+  # DEBUG BEGIN_STMT
+  goto <bb 5>; [INV]
+
+  <bb 6> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  flags.75_4 = flags;
+  _5 = (unsigned int) flags.75_4;
+  _6 = _5 & 16;
+  if (_6 != 0)
+    goto <bb 7>; [INV]
+  else
+    goto <bb 8>; [INV]
+
+  <bb 7> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  ackno.76_7 = ackno;
+  tcplen.77_8 = tcplen;
+  _9 = (long unsigned int) tcplen.77_8;
+  seqno.78_10 = seqno;
+  _11 = _9 + seqno.78_10;
+  tcphdr.79_12 = tcphdr;
+  _13 = tcphdr.79_12->dest;
+  tcphdr.80_14 = tcphdr;
+  _15 = tcphdr.80_14->src;
+  tcp_rst (pcb_86(D), ackno.76_7, _11, &ip_data.current_iphdr_dest, &ip_data.current_iphdr_src, _13, _15);
+  goto <bb 29>; [INV]
+
+  <bb 8> :
+  # DEBUG BEGIN_STMT
+  flags.81_16 = flags;
+  _17 = (unsigned int) flags.81_16;
+  _18 = _17 & 2;
+  if (_18 != 0)
+    goto <bb 9>; [INV]
+  else
+    goto <bb 29>; [INV]
+
+  <bb 9> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _19 = pcb_86(D)->accepts_pending;
+  _20 = pcb_86(D)->backlog;
+  if (_19 >= _20)
+    goto <bb 10>; [INV]
+  else
+    goto <bb 11>; [INV]
+
+  <bb 10> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  // predicted unlikely by early return (on trees) predictor.
+  goto <bb 29>; [INV]
+
+  <bb 11> :
+  # DEBUG BEGIN_STMT
+  _21 = pcb_86(D)->prio;
+  npcb_88 = tcp_alloc (_21);
+  # DEBUG npcb => npcb_88
+  # DEBUG BEGIN_STMT
+  if (npcb_88 == 0B)
+    goto <bb 12>; [INV]
+  else
+    goto <bb 16>; [INV]
+
+  <bb 12> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _22 = lwip_stats.tcp.memerr;
+  _23 = _22 + 1;
+  lwip_stats.tcp.memerr = _23;
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _24 = pcb_86(D)->accept;
+  if (_24 != 0B)
+    goto <bb 13>; [INV]
+  else
+    goto <bb 14>; [INV]
+
+  <bb 13> :
+  # DEBUG BEGIN_STMT
+  _25 = pcb_86(D)->accept;
+  _26 = pcb_86(D)->callback_arg;
+  err_150 = _25 (_26, 0B, -1);
+  # DEBUG err => err_150
+  goto <bb 15>; [INV]
+
+  <bb 14> :
+  # DEBUG BEGIN_STMT
+  err_148 = -16;
+  # DEBUG err => err_148
+
+  <bb 15> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  // predicted unlikely by early return (on trees) predictor.
+  goto <bb 29>; [INV]
+
+  <bb 16> :
+  # DEBUG BEGIN_STMT
+  _27 = pcb_86(D)->accepts_pending;
+  _28 = _27;
+  _29 = _28 + 1;
+  pcb_86(D)->accepts_pending = _29;
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _30 = npcb_88->flags;
+  _31 = _30 | 512;
+  npcb_88->flags = _31;
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _32 = ip_data.current_iphdr_dest.type;
+  npcb_88->local_ip.type = _32;
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _33 = ip_data.current_iphdr_dest.type;
+  if (_33 == 6)
+    goto <bb 17>; [INV]
+  else
+    goto <bb 18>; [INV]
+
+  <bb 17> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _34 = ip_data.current_iphdr_dest.u_addr.ip6.addr[0];
+  npcb_88->local_ip.u_addr.ip6.addr[0] = _34;
+  # DEBUG BEGIN_STMT
+  _35 = ip_data.current_iphdr_dest.u_addr.ip6.addr[1];
+  npcb_88->local_ip.u_addr.ip6.addr[1] = _35;
+  # DEBUG BEGIN_STMT
+  _36 = ip_data.current_iphdr_dest.u_addr.ip6.addr[2];
+  npcb_88->local_ip.u_addr.ip6.addr[2] = _36;
+  # DEBUG BEGIN_STMT
+  _37 = ip_data.current_iphdr_dest.u_addr.ip6.addr[3];
+  npcb_88->local_ip.u_addr.ip6.addr[3] = _37;
+  # DEBUG BEGIN_STMT
+  _38 = ip_data.current_iphdr_dest.u_addr.ip6.zone;
+  npcb_88->local_ip.u_addr.ip6.zone = _38;
+  # DEBUG BEGIN_STMT
+  goto <bb 19>; [INV]
+
+  <bb 18> :
+  # DEBUG BEGIN_STMT
+  _39 = ip_data.current_iphdr_dest.u_addr.ip4.addr;
+  npcb_88->local_ip.u_addr.ip4.addr = _39;
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  npcb_88->local_ip.u_addr.ip6.addr[3] = 0;
+  _40 = npcb_88->local_ip.u_addr.ip6.addr[3];
+  npcb_88->local_ip.u_addr.ip6.addr[2] = _40;
+  _41 = npcb_88->local_ip.u_addr.ip6.addr[2];
+  npcb_88->local_ip.u_addr.ip6.addr[1] = _41;
+  # DEBUG BEGIN_STMT
+  npcb_88->local_ip.u_addr.ip6.zone = 0;
+
+  <bb 19> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _42 = ip_data.current_iphdr_src.type;
+  npcb_88->remote_ip.type = _42;
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _43 = ip_data.current_iphdr_src.type;
+  if (_43 == 6)
+    goto <bb 20>; [INV]
+  else
+    goto <bb 21>; [INV]
+
+  <bb 20> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _44 = ip_data.current_iphdr_src.u_addr.ip6.addr[0];
+  npcb_88->remote_ip.u_addr.ip6.addr[0] = _44;
+  # DEBUG BEGIN_STMT
+  _45 = ip_data.current_iphdr_src.u_addr.ip6.addr[1];
+  npcb_88->remote_ip.u_addr.ip6.addr[1] = _45;
+  # DEBUG BEGIN_STMT
+  _46 = ip_data.current_iphdr_src.u_addr.ip6.addr[2];
+  npcb_88->remote_ip.u_addr.ip6.addr[2] = _46;
+  # DEBUG BEGIN_STMT
+  _47 = ip_data.current_iphdr_src.u_addr.ip6.addr[3];
+  npcb_88->remote_ip.u_addr.ip6.addr[3] = _47;
+  # DEBUG BEGIN_STMT
+  _48 = ip_data.current_iphdr_src.u_addr.ip6.zone;
+  npcb_88->remote_ip.u_addr.ip6.zone = _48;
+  # DEBUG BEGIN_STMT
+  goto <bb 22>; [INV]
+
+  <bb 21> :
+  # DEBUG BEGIN_STMT
+  _49 = ip_data.current_iphdr_src.u_addr.ip4.addr;
+  npcb_88->remote_ip.u_addr.ip4.addr = _49;
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  npcb_88->remote_ip.u_addr.ip6.addr[3] = 0;
+  _50 = npcb_88->remote_ip.u_addr.ip6.addr[3];
+  npcb_88->remote_ip.u_addr.ip6.addr[2] = _50;
+  _51 = npcb_88->remote_ip.u_addr.ip6.addr[2];
+  npcb_88->remote_ip.u_addr.ip6.addr[1] = _51;
+  # DEBUG BEGIN_STMT
+  npcb_88->remote_ip.u_addr.ip6.zone = 0;
+
+  <bb 22> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _52 = pcb_86(D)->local_port;
+  npcb_88->local_port = _52;
+  # DEBUG BEGIN_STMT
+  tcphdr.82_53 = tcphdr;
+  _54 = tcphdr.82_53->src;
+  npcb_88->remote_port = _54;
+  # DEBUG BEGIN_STMT
+  npcb_88->state = 3;
+  # DEBUG BEGIN_STMT
+  seqno.83_55 = seqno;
+  _56 = seqno.83_55 + 1;
+  npcb_88->rcv_nxt = _56;
+  # DEBUG BEGIN_STMT
+  _57 = npcb_88->rcv_nxt;
+  npcb_88->rcv_ann_right_edge = _57;
+  # DEBUG BEGIN_STMT
+  iss_119 = tcp_next_iss (npcb_88);
+  # DEBUG iss => iss_119
+  # DEBUG BEGIN_STMT
+  npcb_88->snd_wl2 = iss_119;
+  # DEBUG BEGIN_STMT
+  npcb_88->snd_nxt = iss_119;
+  # DEBUG BEGIN_STMT
+  npcb_88->lastack = iss_119;
+  # DEBUG BEGIN_STMT
+  npcb_88->snd_lbb = iss_119;
+  # DEBUG BEGIN_STMT
+  seqno.84_58 = seqno;
+  _59 = seqno.84_58 + 4294967295;
+  npcb_88->snd_wl1 = _59;
+  # DEBUG BEGIN_STMT
+  _60 = pcb_86(D)->callback_arg;
+  npcb_88->callback_arg = _60;
+  # DEBUG BEGIN_STMT
+  npcb_88->listener = pcb_86(D);
+  # DEBUG BEGIN_STMT
+  _61 = pcb_86(D)->so_options;
+  _62 = _61 & 12;
+  npcb_88->so_options = _62;
+  # DEBUG BEGIN_STMT
+  _63 = pcb_86(D)->netif_idx;
+  npcb_88->netif_idx = _63;
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  tcp_active_pcbs.85_64 = tcp_active_pcbs;
+  npcb_88->next = tcp_active_pcbs.85_64;
+  # DEBUG BEGIN_STMT
+  tcp_active_pcbs = npcb_88;
+  # DEBUG BEGIN_STMT
+  tcp_timer_needed ();
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  tcp_active_pcbs_changed = 1;
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  tcp_parseopt (npcb_88);
+  # DEBUG BEGIN_STMT
+  tcphdr.86_65 = tcphdr;
+  _66 = tcphdr.86_65->wnd;
+  npcb_88->snd_wnd = _66;
+  # DEBUG BEGIN_STMT
+  _67 = npcb_88->snd_wnd;
+  npcb_88->snd_wnd_max = _67;
+  # DEBUG BEGIN_STMT
+  _68 = npcb_88->mss;
+  _69 = &npcb_88->remote_ip;
+  if (_69 != 0B)
+    goto <bb 23>; [INV]
+  else
+    goto <bb 25>; [INV]
+
+  <bb 23> :
+  _70 = npcb_88->remote_ip.type;
+  if (_70 == 6)
+    goto <bb 24>; [INV]
+  else
+    goto <bb 25>; [INV]
+
+  <bb 24> :
+  _71 = &npcb_88->local_ip.u_addr.ip6;
+  _72 = &npcb_88->remote_ip.u_addr.ip6;
+  iftmp.87_137 = ip6_route (_71, _72);
+  goto <bb 26>; [INV]
+
+  <bb 25> :
+  _73 = &npcb_88->remote_ip.u_addr.ip4;
+  iftmp.87_139 = ip4_route (_73);
+
+  <bb 26> :
+  # iftmp.87_78 = PHI <iftmp.87_137(24), iftmp.87_139(25)>
+  _74 = &npcb_88->remote_ip;
+  _75 = tcp_eff_send_mss_netif (_68, iftmp.87_78, _74);
+  npcb_88->mss = _75;
+  # DEBUG BEGIN_STMT
+  _76 = lwip_stats.mib2.tcppassiveopens;
+  _77 = _76 + 1;
+  lwip_stats.mib2.tcppassiveopens = _77;
+  # DEBUG BEGIN_STMT
+  rc_144 = tcp_enqueue_flags (npcb_88, 18);
+  # DEBUG rc => rc_144
+  # DEBUG BEGIN_STMT
+  if (rc_144 != 0)
+    goto <bb 27>; [INV]
+  else
+    goto <bb 28>; [INV]
+
+  <bb 27> :
+  # DEBUG BEGIN_STMT
+  tcp_abandon (npcb_88, 0);
+  # DEBUG BEGIN_STMT
+  // predicted unlikely by early return (on trees) predictor.
+  goto <bb 29>; [INV]
+
+  <bb 28> :
+  # DEBUG BEGIN_STMT
+  tcp_output (npcb_88);
+
+  <bb 29> :
+  return;
+
+}
+
+
+tcp_input_delayed_close (struct tcp_pcb * pcb)
+{
+  unsigned char recv_flags.212_1;
+  int _2;
+  int _3;
+  short unsigned int _4;
+  unsigned int _5;
+  unsigned int _6;
+  void (*<T753>) (void *, err_t) _7;
+  void (*<T753>) (void *, err_t) _8;
+  void * _9;
+  int _10;
+  int _16;
+  int _20;
+
+  <bb 2> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  if (pcb_14(D) == 0B)
+    goto <bb 3>; [INV]
+  else
+    goto <bb 4>; [INV]
+
+  <bb 3> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  __asm__ __volatile__("BKPT #0
+	");
+  # DEBUG BEGIN_STMT
+  goto <bb 3>; [INV]
+
+  <bb 4> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  recv_flags.212_1 = recv_flags;
+  _2 = (int) recv_flags.212_1;
+  _3 = _2 & 16;
+  if (_3 != 0)
+    goto <bb 5>; [INV]
+  else
+    goto <bb 9>; [INV]
+
+  <bb 5> :
+  # DEBUG BEGIN_STMT
+  _4 = pcb_14(D)->flags;
+  _5 = (unsigned int) _4;
+  _6 = _5 & 16;
+  if (_6 == 0)
+    goto <bb 6>; [INV]
+  else
+    goto <bb 8>; [INV]
+
+  <bb 6> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _7 = pcb_14(D)->errf;
+  if (_7 != 0B)
+    goto <bb 7>; [INV]
+  else
+    goto <bb 8>; [INV]
+
+  <bb 7> :
+  # DEBUG BEGIN_STMT
+  _8 = pcb_14(D)->errf;
+  _9 = pcb_14(D)->callback_arg;
+  _8 (_9, -15);
+
+  <bb 8> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  tcp_pcb_remove (&tcp_active_pcbs, pcb_14(D));
+  # DEBUG BEGIN_STMT
+  tcp_free (pcb_14(D));
+  # DEBUG BEGIN_STMT
+  _20 = 1;
+  // predicted unlikely by early return (on trees) predictor.
+  goto <bb 10>; [INV]
+
+  <bb 9> :
+  # DEBUG BEGIN_STMT
+  _16 = 0;
+
+  <bb 10> :
+  # _10 = PHI <_20(8), _16(9)>
+  return _10;
+
+}
+
+
+tcp_input (struct pbuf * p, struct netif * inp)
+{
+  u16_t acked16;
+  u16_t opt2len;
+  err_t err;
+  u8_t hdrlen_bytes;
+  struct tcp_pcb_listen * lpcb;
+  struct tcp_pcb * prev;
+  struct tcp_pcb * pcb;
+  short unsigned int _1;
+  short unsigned int _2;
+  long unsigned int _3;
+  long unsigned int _4;
+  void * _5;
+  short unsigned int _6;
+  short unsigned int _7;
+  short unsigned int _8;
+  unsigned char _9;
+  long unsigned int _10;
+  struct netif * _11;
+  unsigned char _12;
+  unsigned char _13;
+  long unsigned int _14;
+  long unsigned int _15;
+  long unsigned int _16;
+  long unsigned int _17;
+  short unsigned int _18;
+  short unsigned int _19;
+  struct tcp_hdr * tcphdr.0_20;
+  short unsigned int _21;
+  short unsigned int _22;
+  short unsigned int _23;
+  unsigned char _24;
+  short unsigned int _25;
+  short unsigned int _26;
+  short unsigned int _27;
+  short unsigned int _28;
+  short unsigned int _29;
+  short unsigned int _30;
+  short unsigned int _31;
+  short unsigned int _32;
+  short unsigned int tcphdr_optlen.1_33;
+  unsigned int _34;
+  struct pbuf * _35;
+  short unsigned int _36;
+  short unsigned int tcphdr_optlen.2_37;
+  short unsigned int tcphdr_opt1len.3_38;
+  short unsigned int tcphdr_opt1len.4_39;
+  unsigned int _40;
+  struct pbuf * _41;
+  short unsigned int _42;
+  short unsigned int _43;
+  short unsigned int _44;
+  struct pbuf * _45;
+  void * _46;
+  struct pbuf * _47;
+  unsigned int _48;
+  short unsigned int _49;
+  short unsigned int _50;
+  short unsigned int _51;
+  short unsigned int _52;
+  struct pbuf * _53;
+  short unsigned int _54;
+  struct tcp_hdr * tcphdr.5_55;
+  short unsigned int _56;
+  struct tcp_hdr * tcphdr.6_57;
+  short unsigned int _58;
+  struct tcp_hdr * tcphdr.7_59;
+  short unsigned int _60;
+  struct tcp_hdr * tcphdr.8_61;
+  short unsigned int _62;
+  struct tcp_hdr * tcphdr.9_63;
+  long unsigned int _64;
+  struct tcp_hdr * tcphdr.10_65;
+  long unsigned int _66;
+  long unsigned int _67;
+  struct tcp_hdr * tcphdr.11_68;
+  long unsigned int _69;
+  struct tcp_hdr * tcphdr.12_70;
+  long unsigned int _71;
+  long unsigned int _72;
+  struct tcp_hdr * tcphdr.13_73;
+  short unsigned int _74;
+  struct tcp_hdr * tcphdr.14_75;
+  short unsigned int _76;
+  struct tcp_hdr * tcphdr.15_77;
+  short unsigned int _78;
+  short unsigned int _79;
+  unsigned char _80;
+  unsigned char _81;
+  short unsigned int _82;
+  unsigned char flags.16_83;
+  unsigned int _84;
+  unsigned int _85;
+  short unsigned int tcplen.17_86;
+  short unsigned int tcplen.18_87;
+  short unsigned int _88;
+  short unsigned int _89;
+  short unsigned int tcplen.19_90;
+  short unsigned int _91;
+  short unsigned int _92;
+  tcp_state _93;
+  tcp_state _94;
+  tcp_state _95;
+  unsigned char _96;
+  unsigned char _97;
+  struct netif * _98;
+  unsigned char _99;
+  unsigned char _100;
+  short unsigned int _101;
+  struct tcp_hdr * tcphdr.20_102;
+  short unsigned int _103;
+  short unsigned int _104;
+  struct tcp_hdr * tcphdr.21_105;
+  short unsigned int _106;
+  unsigned char _107;
+  unsigned char _108;
+  unsigned char _109;
+  long unsigned int _110;
+  long unsigned int _111;
+  long unsigned int _112;
+  long unsigned int _113;
+  long unsigned int _114;
+  long unsigned int _115;
+  long unsigned int _116;
+  long unsigned int _117;
+  unsigned char _118;
+  unsigned char _119;
+  long unsigned int _120;
+  long unsigned int _121;
+  unsigned char _122;
+  unsigned char _123;
+  unsigned char _124;
+  long unsigned int _125;
+  long unsigned int _126;
+  long unsigned int _127;
+  long unsigned int _128;
+  long unsigned int _129;
+  long unsigned int _130;
+  long unsigned int _131;
+  long unsigned int _132;
+  unsigned char _133;
+  unsigned char _134;
+  long unsigned int _135;
+  long unsigned int _136;
+  struct tcp_pcb * _137;
+  struct tcp_pcb * _138;
+  struct tcp_pcb * tcp_active_pcbs.28_139;
+  short unsigned int _140;
+  short unsigned int _141;
+  struct tcp_pcb * _142;
+  tcp_state _143;
+  unsigned char _144;
+  unsigned char _145;
+  struct netif * _146;
+  unsigned char _147;
+  unsigned char _148;
+  short unsigned int _149;
+  struct tcp_hdr * tcphdr.29_150;
+  short unsigned int _151;
+  short unsigned int _152;
+  struct tcp_hdr * tcphdr.30_153;
+  short unsigned int _154;
+  unsigned char _155;
+  unsigned char _156;
+  unsigned char _157;
+  long unsigned int _158;
+  long unsigned int _159;
+  long unsigned int _160;
+  long unsigned int _161;
+  long unsigned int _162;
+  long unsigned int _163;
+  long unsigned int _164;
+  long unsigned int _165;
+  unsigned char _166;
+  unsigned char _167;
+  long unsigned int _168;
+  long unsigned int _169;
+  unsigned char _170;
+  unsigned char _171;
+  unsigned char _172;
+  long unsigned int _173;
+  long unsigned int _174;
+  long unsigned int _175;
+  long unsigned int _176;
+  long unsigned int _177;
+  long unsigned int _178;
+  long unsigned int _179;
+  long unsigned int _180;
+  unsigned char _181;
+  unsigned char _182;
+  long unsigned int _183;
+  long unsigned int _184;
+  unsigned char _185;
+  unsigned char _186;
+  struct netif * _187;
+  unsigned char _188;
+  unsigned char _189;
+  short unsigned int _190;
+  struct tcp_hdr * tcphdr.37_191;
+  short unsigned int _192;
+  unsigned char _193;
+  unsigned char _194;
+  unsigned char _195;
+  unsigned char _196;
+  unsigned char _197;
+  unsigned char _198;
+  long unsigned int _199;
+  long unsigned int _200;
+  long unsigned int _201;
+  long unsigned int _202;
+  long unsigned int _203;
+  long unsigned int _204;
+  long unsigned int _205;
+  long unsigned int _206;
+  unsigned char _207;
+  unsigned char _208;
+  long unsigned int _209;
+  long unsigned int _210;
+  struct ip_addr_t * _211;
+  struct ip_addr_t * _212;
+  unsigned char _213;
+  struct ip6_addr_t * _214;
+  long unsigned int _215;
+  long unsigned int _216;
+  long unsigned int _217;
+  long unsigned int _218;
+  struct ip4_addr_t * _219;
+  long unsigned int _220;
+  struct tcp_pcb_listen * _221;
+  struct tcp_pcb_listen * _222;
+  short unsigned int _223;
+  short unsigned int _224;
+  short unsigned int _225;
+  struct tcp_hdr * tcphdr.45_226;
+  unsigned char flags.46_227;
+  unsigned int _228;
+  unsigned int _229;
+  unsigned char _230;
+  unsigned char _231;
+  struct pbuf * _232;
+  signed char _233;
+  struct pbuf * _234;
+  short unsigned int tcplen.47_235;
+  short unsigned int _236;
+  short unsigned int _237;
+  short unsigned int _238;
+  long unsigned int _239;
+  long unsigned int _240;
+  unsigned char recv_flags.48_241;
+  int _242;
+  int _243;
+  void (*<T753>) (void *, err_t) _244;
+  void (*<T753>) (void *, err_t) _245;
+  void * _246;
+  short unsigned int recv_acked.49_247;
+  err_t (*<T749>) (void *, struct tcp_pcb *, u16_t) _248;
+  err_t (*<T749>) (void *, struct tcp_pcb *, u16_t) _249;
+  void * _250;
+  int _251;
+  struct pbuf * recv_data.50_252;
+  struct pbuf * _253;
+  short unsigned int _254;
+  unsigned int _255;
+  unsigned int _256;
+  struct pbuf * recv_data.51_257;
+  err_t (*<T744>) (void *, struct tcp_pcb *, struct pbuf *, err_t) _258;
+  err_t (*<T744>) (void *, struct tcp_pcb *, struct pbuf *, err_t) _259;
+  void * _260;
+  struct pbuf * recv_data.52_261;
+  struct pbuf * recv_data.53_262;
+  struct pbuf * recv_data.54_263;
+  unsigned char recv_flags.55_264;
+  int _265;
+  int _266;
+  struct pbuf * _267;
+  struct pbuf * _268;
+  unsigned char _269;
+  struct pbuf * _270;
+  unsigned char _271;
+  short unsigned int _272;
+  short unsigned int _273;
+  short unsigned int _274;
+  short unsigned int _275;
+  err_t (*<T744>) (void *, struct tcp_pcb *, struct pbuf *, err_t) _276;
+  err_t (*<T744>) (void *, struct tcp_pcb *, struct pbuf *, err_t) _277;
+  void * _278;
+  int _279;
+  struct pbuf * _280;
+  struct pbuf * _281;
+  struct tcp_hdr * tcphdr.56_282;
+  short unsigned int _283;
+  short unsigned int _284;
+  unsigned char _285;
+  unsigned int _286;
+  unsigned int _287;
+  short unsigned int _288;
+  short unsigned int _289;
+  short unsigned int _290;
+  short unsigned int _291;
+  long unsigned int ackno.57_292;
+  short unsigned int tcplen.58_293;
+  long unsigned int _294;
+  long unsigned int seqno.59_295;
+  long unsigned int _296;
+  struct tcp_hdr * tcphdr.60_297;
+  short unsigned int _298;
+  struct tcp_hdr * tcphdr.61_299;
+  short unsigned int _300;
+  short unsigned int _301;
+  short unsigned int _302;
+  long unsigned int _303;
+  long unsigned int _304;
+  _Bool iftmp.22_316;
+  _Bool iftmp.23_317;
+  int iftmp.24_318;
+  _Bool iftmp.25_319;
+  _Bool iftmp.26_320;
+  int iftmp.27_321;
+  _Bool iftmp.31_322;
+  _Bool iftmp.32_323;
+  int iftmp.33_324;
+  _Bool iftmp.34_325;
+  _Bool iftmp.35_326;
+  int iftmp.36_327;
+  _Bool iftmp.38_328;
+  _Bool iftmp.39_329;
+  int iftmp.40_330;
+  _Bool iftmp.41_331;
+  _Bool iftmp.42_332;
+  int iftmp.43_333;
+  int iftmp.44_334;
+  _Bool iftmp.22_411;
+  _Bool iftmp.23_412;
+  int iftmp.24_413;
+  int iftmp.24_414;
+  _Bool iftmp.23_415;
+  _Bool iftmp.22_416;
+  _Bool iftmp.25_417;
+  _Bool iftmp.26_418;
+  int iftmp.27_419;
+  int iftmp.27_420;
+  _Bool iftmp.26_421;
+  _Bool iftmp.25_422;
+  _Bool iftmp.38_438;
+  _Bool iftmp.39_439;
+  int iftmp.40_440;
+  int iftmp.40_441;
+  _Bool iftmp.39_442;
+  _Bool iftmp.38_443;
+  _Bool iftmp.41_444;
+  int iftmp.43_445;
+  int iftmp.43_446;
+  _Bool iftmp.42_447;
+  int iftmp.44_448;
+  int iftmp.44_449;
+  _Bool iftmp.42_450;
+  _Bool iftmp.41_451;
+  _Bool iftmp.31_460;
+  _Bool iftmp.32_461;
+  int iftmp.33_462;
+  int iftmp.33_463;
+  _Bool iftmp.32_464;
+  _Bool iftmp.31_465;
+  _Bool iftmp.34_466;
+  _Bool iftmp.35_467;
+  int iftmp.36_468;
+  int iftmp.36_469;
+  _Bool iftmp.35_470;
+  _Bool iftmp.34_471;
+
+  <bb 2> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  if (p_368(D) == 0B)
+    goto <bb 3>; [INV]
+  else
+    goto <bb 4>; [INV]
+
+  <bb 3> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  __asm__ __volatile__("BKPT #0
+	");
+  # DEBUG BEGIN_STMT
+  goto <bb 3>; [INV]
+
+  <bb 4> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _1 = lwip_stats.tcp.recv;
+  _2 = _1 + 1;
+  lwip_stats.tcp.recv = _2;
+  # DEBUG BEGIN_STMT
+  _3 = lwip_stats.mib2.tcpinsegs;
+  _4 = _3 + 1;
+  lwip_stats.mib2.tcpinsegs = _4;
+  # DEBUG BEGIN_STMT
+  _5 = p_368(D)->payload;
+  tcphdr = _5;
+  # DEBUG BEGIN_STMT
+  _6 = p_368(D)->len;
+  if (_6 <= 19)
+    goto <bb 5>; [INV]
+  else
+    goto <bb 6>; [INV]
+
+  <bb 5> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _7 = lwip_stats.tcp.lenerr;
+  _8 = _7 + 1;
+  lwip_stats.tcp.lenerr = _8;
+  # DEBUG BEGIN_STMT
+  // predicted unlikely by goto predictor.
+  goto <bb 220>; [INV]
+
+  <bb 6> :
+  # DEBUG BEGIN_STMT
+  _9 = ip_data.current_iphdr_dest.type;
+  if (_9 != 6)
+    goto <bb 7>; [INV]
+  else
+    goto <bb 8>; [INV]
+
+  <bb 7> :
+  _10 = ip_data.current_iphdr_dest.u_addr.ip4.addr;
+  _11 = ip_data.current_netif;
+  _12 = ip4_addr_isbroadcast_u32 (_10, _11);
+  if (_12 != 0)
+    goto <bb 11>; [INV]
+  else
+    goto <bb 8>; [INV]
+
+  <bb 8> :
+  _13 = ip_data.current_iphdr_dest.type;
+  if (_13 == 6)
+    goto <bb 9>; [INV]
+  else
+    goto <bb 10>; [INV]
+
+  <bb 9> :
+  _14 = ip_data.current_iphdr_dest.u_addr.ip6.addr[0];
+  _15 = _14 & 255;
+  if (_15 == 255)
+    goto <bb 11>; [INV]
+  else
+    goto <bb 12>; [INV]
+
+  <bb 10> :
+  _16 = ip_data.current_iphdr_dest.u_addr.ip4.addr;
+  _17 = _16 & 240;
+  if (_17 == 224)
+    goto <bb 11>; [INV]
+  else
+    goto <bb 12>; [INV]
+
+  <bb 11> :
+  # DEBUG BEGIN_STMT
+  _18 = lwip_stats.tcp.proterr;
+  _19 = _18 + 1;
+  lwip_stats.tcp.proterr = _19;
+  # DEBUG BEGIN_STMT
+  // predicted unlikely by goto predictor.
+  goto <bb 220>; [INV]
+
+  <bb 12> :
+  # DEBUG BEGIN_STMT
+  tcphdr.0_20 = tcphdr;
+  _21 = tcphdr.0_20->_hdrlen_rsvd_flags;
+  _22 = lwip_htons (_21);
+  _23 = _22 >> 12;
+  _24 = (unsigned char) _23;
+  hdrlen_bytes_375 = _24 << 2;
+  # DEBUG hdrlen_bytes => hdrlen_bytes_375
+  # DEBUG BEGIN_STMT
+  if (hdrlen_bytes_375 <= 19)
+    goto <bb 14>; [INV]
+  else
+    goto <bb 13>; [INV]
+
+  <bb 13> :
+  _25 = (short unsigned int) hdrlen_bytes_375;
+  _26 = p_368(D)->tot_len;
+  if (_25 > _26)
+    goto <bb 14>; [INV]
+  else
+    goto <bb 15>; [INV]
+
+  <bb 14> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _27 = lwip_stats.tcp.lenerr;
+  _28 = _27 + 1;
+  lwip_stats.tcp.lenerr = _28;
+  # DEBUG BEGIN_STMT
+  // predicted unlikely by goto predictor.
+  goto <bb 220>; [INV]
+
+  <bb 15> :
+  # DEBUG BEGIN_STMT
+  _29 = (short unsigned int) hdrlen_bytes_375;
+  _30 = _29 + 65516;
+  tcphdr_optlen = _30;
+  # DEBUG BEGIN_STMT
+  tcphdr_opt2 = 0B;
+  # DEBUG BEGIN_STMT
+  _31 = p_368(D)->len;
+  _32 = (short unsigned int) hdrlen_bytes_375;
+  if (_31 >= _32)
+    goto <bb 16>; [INV]
+  else
+    goto <bb 17>; [INV]
+
+  <bb 16> :
+  # DEBUG BEGIN_STMT
+  tcphdr_optlen.1_33 = tcphdr_optlen;
+  tcphdr_opt1len = tcphdr_optlen.1_33;
+  # DEBUG BEGIN_STMT
+  _34 = (unsigned int) hdrlen_bytes_375;
+  pbuf_remove_header (p_368(D), _34);
+  goto <bb 25>; [INV]
+
+  <bb 17> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _35 = p_368(D)->next;
+  if (_35 == 0B)
+    goto <bb 18>; [INV]
+  else
+    goto <bb 19>; [INV]
+
+  <bb 18> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  __asm__ __volatile__("BKPT #0
+	");
+  # DEBUG BEGIN_STMT
+  goto <bb 18>; [INV]
+
+  <bb 19> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  pbuf_remove_header (p_368(D), 20);
+  # DEBUG BEGIN_STMT
+  _36 = p_368(D)->len;
+  tcphdr_opt1len = _36;
+  # DEBUG BEGIN_STMT
+  tcphdr_optlen.2_37 = tcphdr_optlen;
+  tcphdr_opt1len.3_38 = tcphdr_opt1len;
+  opt2len_380 = tcphdr_optlen.2_37 - tcphdr_opt1len.3_38;
+  # DEBUG opt2len => opt2len_380
+  # DEBUG BEGIN_STMT
+  tcphdr_opt1len.4_39 = tcphdr_opt1len;
+  _40 = (unsigned int) tcphdr_opt1len.4_39;
+  pbuf_remove_header (p_368(D), _40);
+  # DEBUG BEGIN_STMT
+  _41 = p_368(D)->next;
+  _42 = _41->len;
+  if (opt2len_380 > _42)
+    goto <bb 20>; [INV]
+  else
+    goto <bb 21>; [INV]
+
+  <bb 20> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _43 = lwip_stats.tcp.lenerr;
+  _44 = _43 + 1;
+  lwip_stats.tcp.lenerr = _44;
+  # DEBUG BEGIN_STMT
+  // predicted unlikely by goto predictor.
+  goto <bb 220>; [INV]
+
+  <bb 21> :
+  # DEBUG BEGIN_STMT
+  _45 = p_368(D)->next;
+  _46 = _45->payload;
+  tcphdr_opt2 = _46;
+  # DEBUG BEGIN_STMT
+  _47 = p_368(D)->next;
+  _48 = (unsigned int) opt2len_380;
+  pbuf_remove_header (_47, _48);
+  # DEBUG BEGIN_STMT
+  _49 = p_368(D)->tot_len;
+  _50 = _49 - opt2len_380;
+  p_368(D)->tot_len = _50;
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _51 = p_368(D)->len;
+  if (_51 != 0)
+    goto <bb 22>; [INV]
+  else
+    goto <bb 23>; [INV]
+
+  <bb 22> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  __asm__ __volatile__("BKPT #0
+	");
+  # DEBUG BEGIN_STMT
+  goto <bb 22>; [INV]
+
+  <bb 23> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _52 = p_368(D)->tot_len;
+  _53 = p_368(D)->next;
+  _54 = _53->tot_len;
+  if (_52 != _54)
+    goto <bb 24>; [INV]
+  else
+    goto <bb 25>; [INV]
+
+  <bb 24> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  __asm__ __volatile__("BKPT #0
+	");
+  # DEBUG BEGIN_STMT
+  goto <bb 24>; [INV]
+
+  <bb 25> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  tcphdr.5_55 = tcphdr;
+  _56 = tcphdr.5_55->src;
+  tcphdr.6_57 = tcphdr;
+  _58 = lwip_htons (_56);
+  tcphdr.6_57->src = _58;
+  # DEBUG BEGIN_STMT
+  tcphdr.7_59 = tcphdr;
+  _60 = tcphdr.7_59->dest;
+  tcphdr.8_61 = tcphdr;
+  _62 = lwip_htons (_60);
+  tcphdr.8_61->dest = _62;
+  # DEBUG BEGIN_STMT
+  tcphdr.9_63 = tcphdr;
+  _64 = tcphdr.9_63->seqno;
+  tcphdr.10_65 = tcphdr;
+  _66 = lwip_htonl (_64);
+  tcphdr.10_65->seqno = _66;
+  _67 = tcphdr.10_65->seqno;
+  seqno = _67;
+  # DEBUG BEGIN_STMT
+  tcphdr.11_68 = tcphdr;
+  _69 = tcphdr.11_68->ackno;
+  tcphdr.12_70 = tcphdr;
+  _71 = lwip_htonl (_69);
+  tcphdr.12_70->ackno = _71;
+  _72 = tcphdr.12_70->ackno;
+  ackno = _72;
+  # DEBUG BEGIN_STMT
+  tcphdr.13_73 = tcphdr;
+  _74 = tcphdr.13_73->wnd;
+  tcphdr.14_75 = tcphdr;
+  _76 = lwip_htons (_74);
+  tcphdr.14_75->wnd = _76;
+  # DEBUG BEGIN_STMT
+  tcphdr.15_77 = tcphdr;
+  _78 = tcphdr.15_77->_hdrlen_rsvd_flags;
+  _79 = lwip_htons (_78);
+  _80 = (unsigned char) _79;
+  _81 = _80 & 63;
+  flags = _81;
+  # DEBUG BEGIN_STMT
+  _82 = p_368(D)->tot_len;
+  tcplen = _82;
+  # DEBUG BEGIN_STMT
+  flags.16_83 = flags;
+  _84 = (unsigned int) flags.16_83;
+  _85 = _84 & 3;
+  if (_85 != 0)
+    goto <bb 26>; [INV]
+  else
+    goto <bb 28>; [INV]
+
+  <bb 26> :
+  # DEBUG BEGIN_STMT
+  tcplen.17_86 = tcplen;
+  tcplen.18_87 = tcplen.17_86;
+  _88 = tcplen.18_87 + 1;
+  tcplen = _88;
+  # DEBUG BEGIN_STMT
+  _89 = p_368(D)->tot_len;
+  tcplen.19_90 = tcplen;
+  if (_89 > tcplen.19_90)
+    goto <bb 27>; [INV]
+  else
+    goto <bb 28>; [INV]
+
+  <bb 27> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _91 = lwip_stats.tcp.lenerr;
+  _92 = _91 + 1;
+  lwip_stats.tcp.lenerr = _92;
+  # DEBUG BEGIN_STMT
+  // predicted unlikely by goto predictor.
+  goto <bb 220>; [INV]
+
+  <bb 28> :
+  # DEBUG BEGIN_STMT
+  prev_408 = 0B;
+  # DEBUG prev => prev_408
+  # DEBUG BEGIN_STMT
+  pcb_409 = tcp_active_pcbs;
+  # DEBUG pcb => pcb_409
+  goto <bb 77>; [INV]
+
+  <bb 29> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _93 = pcb_305->state;
+  if (_93 == 0)
+    goto <bb 30>; [INV]
+  else
+    goto <bb 31>; [INV]
+
+  <bb 30> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  __asm__ __volatile__("BKPT #0
+	");
+  # DEBUG BEGIN_STMT
+  goto <bb 30>; [INV]
+
+  <bb 31> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _94 = pcb_305->state;
+  if (_94 == 10)
+    goto <bb 32>; [INV]
+  else
+    goto <bb 33>; [INV]
+
+  <bb 32> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  __asm__ __volatile__("BKPT #0
+	");
+  # DEBUG BEGIN_STMT
+  goto <bb 32>; [INV]
+
+  <bb 33> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _95 = pcb_305->state;
+  if (_95 == 1)
+    goto <bb 34>; [INV]
+  else
+    goto <bb 35>; [INV]
+
+  <bb 34> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  __asm__ __volatile__("BKPT #0
+	");
+  # DEBUG BEGIN_STMT
+  goto <bb 34>; [INV]
+
+  <bb 35> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _96 = pcb_305->netif_idx;
+  if (_96 != 0)
+    goto <bb 36>; [INV]
+  else
+    goto <bb 38>; [INV]
+
+  <bb 36> :
+  _97 = pcb_305->netif_idx;
+  _98 = ip_data.current_input_netif;
+  _99 = _98->num;
+  _100 = _99 + 1;
+  if (_97 != _100)
+    goto <bb 37>; [INV]
+  else
+    goto <bb 38>; [INV]
+
+  <bb 37> :
+  # DEBUG BEGIN_STMT
+  prev_410 = pcb_305;
+  # DEBUG prev => prev_410
+  # DEBUG BEGIN_STMT
+  // predicted unlikely by continue predictor.
+  goto <bb 76>; [INV]
+
+  <bb 38> :
+  # DEBUG BEGIN_STMT
+  _101 = pcb_305->remote_port;
+  tcphdr.20_102 = tcphdr;
+  _103 = tcphdr.20_102->src;
+  if (_101 == _103)
+    goto <bb 39>; [INV]
+  else
+    goto <bb 75>; [INV]
+
+  <bb 39> :
+  _104 = pcb_305->local_port;
+  tcphdr.21_105 = tcphdr;
+  _106 = tcphdr.21_105->dest;
+  if (_104 == _106)
+    goto <bb 40>; [INV]
+  else
+    goto <bb 75>; [INV]
+
+  <bb 40> :
+  _107 = pcb_305->remote_ip.type;
+  _108 = ip_data.current_iphdr_src.type;
+  if (_107 == _108)
+    goto <bb 41>; [INV]
+  else
+    goto <bb 52>; [INV]
+
+  <bb 41> :
+  _109 = pcb_305->remote_ip.type;
+  if (_109 == 6)
+    goto <bb 42>; [INV]
+  else
+    goto <bb 50>; [INV]
+
+  <bb 42> :
+  _110 = pcb_305->remote_ip.u_addr.ip6.addr[0];
+  _111 = ip_data.current_iphdr_src.u_addr.ip6.addr[0];
+  if (_110 == _111)
+    goto <bb 43>; [INV]
+  else
+    goto <bb 48>; [INV]
+
+  <bb 43> :
+  _112 = pcb_305->remote_ip.u_addr.ip6.addr[1];
+  _113 = ip_data.current_iphdr_src.u_addr.ip6.addr[1];
+  if (_112 == _113)
+    goto <bb 44>; [INV]
+  else
+    goto <bb 48>; [INV]
+
+  <bb 44> :
+  _114 = pcb_305->remote_ip.u_addr.ip6.addr[2];
+  _115 = ip_data.current_iphdr_src.u_addr.ip6.addr[2];
+  if (_114 == _115)
+    goto <bb 45>; [INV]
+  else
+    goto <bb 48>; [INV]
+
+  <bb 45> :
+  _116 = pcb_305->remote_ip.u_addr.ip6.addr[3];
+  _117 = ip_data.current_iphdr_src.u_addr.ip6.addr[3];
+  if (_116 == _117)
+    goto <bb 46>; [INV]
+  else
+    goto <bb 48>; [INV]
+
+  <bb 46> :
+  _118 = pcb_305->remote_ip.u_addr.ip6.zone;
+  _119 = ip_data.current_iphdr_src.u_addr.ip6.zone;
+  if (_118 == _119)
+    goto <bb 47>; [INV]
+  else
+    goto <bb 48>; [INV]
+
+  <bb 47> :
+  iftmp.24_413 = 1;
+  goto <bb 49>; [INV]
+
+  <bb 48> :
+  iftmp.24_414 = 0;
+
+  <bb 49> :
+  # iftmp.24_318 = PHI <iftmp.24_413(47), iftmp.24_414(48)>
+  iftmp.23_415 = (_Bool) iftmp.24_318;
+  goto <bb 51>; [INV]
+
+  <bb 50> :
+  _120 = pcb_305->remote_ip.u_addr.ip4.addr;
+  _121 = ip_data.current_iphdr_src.u_addr.ip4.addr;
+  iftmp.23_412 = _120 == _121;
+
+  <bb 51> :
+  # iftmp.23_317 = PHI <iftmp.23_415(49), iftmp.23_412(50)>
+  iftmp.22_416 = iftmp.23_317;
+  goto <bb 53>; [INV]
+
+  <bb 52> :
+  iftmp.22_411 = 0;
+
+  <bb 53> :
+  # iftmp.22_316 = PHI <iftmp.22_416(51), iftmp.22_411(52)>
+  if (iftmp.22_316 != 0)
+    goto <bb 54>; [INV]
+  else
+    goto <bb 75>; [INV]
+
+  <bb 54> :
+  _122 = pcb_305->local_ip.type;
+  _123 = ip_data.current_iphdr_dest.type;
+  if (_122 == _123)
+    goto <bb 55>; [INV]
+  else
+    goto <bb 66>; [INV]
+
+  <bb 55> :
+  _124 = pcb_305->local_ip.type;
+  if (_124 == 6)
+    goto <bb 56>; [INV]
+  else
+    goto <bb 64>; [INV]
+
+  <bb 56> :
+  _125 = pcb_305->local_ip.u_addr.ip6.addr[0];
+  _126 = ip_data.current_iphdr_dest.u_addr.ip6.addr[0];
+  if (_125 == _126)
+    goto <bb 57>; [INV]
+  else
+    goto <bb 62>; [INV]
+
+  <bb 57> :
+  _127 = pcb_305->local_ip.u_addr.ip6.addr[1];
+  _128 = ip_data.current_iphdr_dest.u_addr.ip6.addr[1];
+  if (_127 == _128)
+    goto <bb 58>; [INV]
+  else
+    goto <bb 62>; [INV]
+
+  <bb 58> :
+  _129 = pcb_305->local_ip.u_addr.ip6.addr[2];
+  _130 = ip_data.current_iphdr_dest.u_addr.ip6.addr[2];
+  if (_129 == _130)
+    goto <bb 59>; [INV]
+  else
+    goto <bb 62>; [INV]
+
+  <bb 59> :
+  _131 = pcb_305->local_ip.u_addr.ip6.addr[3];
+  _132 = ip_data.current_iphdr_dest.u_addr.ip6.addr[3];
+  if (_131 == _132)
+    goto <bb 60>; [INV]
+  else
+    goto <bb 62>; [INV]
+
+  <bb 60> :
+  _133 = pcb_305->local_ip.u_addr.ip6.zone;
+  _134 = ip_data.current_iphdr_dest.u_addr.ip6.zone;
+  if (_133 == _134)
+    goto <bb 61>; [INV]
+  else
+    goto <bb 62>; [INV]
+
+  <bb 61> :
+  iftmp.27_419 = 1;
+  goto <bb 63>; [INV]
+
+  <bb 62> :
+  iftmp.27_420 = 0;
+
+  <bb 63> :
+  # iftmp.27_321 = PHI <iftmp.27_419(61), iftmp.27_420(62)>
+  iftmp.26_421 = (_Bool) iftmp.27_321;
+  goto <bb 65>; [INV]
+
+  <bb 64> :
+  _135 = pcb_305->local_ip.u_addr.ip4.addr;
+  _136 = ip_data.current_iphdr_dest.u_addr.ip4.addr;
+  iftmp.26_418 = _135 == _136;
+
+  <bb 65> :
+  # iftmp.26_320 = PHI <iftmp.26_421(63), iftmp.26_418(64)>
+  iftmp.25_422 = iftmp.26_320;
+  goto <bb 67>; [INV]
+
+  <bb 66> :
+  iftmp.25_417 = 0;
+
+  <bb 67> :
+  # iftmp.25_319 = PHI <iftmp.25_422(65), iftmp.25_417(66)>
+  if (iftmp.25_319 != 0)
+    goto <bb 68>; [INV]
+  else
+    goto <bb 75>; [INV]
+
+  <bb 68> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _137 = pcb_305->next;
+  if (pcb_305 == _137)
+    goto <bb 69>; [INV]
+  else
+    goto <bb 70>; [INV]
+
+  <bb 69> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  __asm__ __volatile__("BKPT #0
+	");
+  # DEBUG BEGIN_STMT
+  goto <bb 69>; [INV]
+
+  <bb 70> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  if (prev_309 != 0B)
+    goto <bb 71>; [INV]
+  else
+    goto <bb 72>; [INV]
+
+  <bb 71> :
+  # DEBUG BEGIN_STMT
+  _138 = pcb_305->next;
+  prev_309->next = _138;
+  # DEBUG BEGIN_STMT
+  tcp_active_pcbs.28_139 = tcp_active_pcbs;
+  pcb_305->next = tcp_active_pcbs.28_139;
+  # DEBUG BEGIN_STMT
+  tcp_active_pcbs = pcb_305;
+  goto <bb 73>; [INV]
+
+  <bb 72> :
+  # DEBUG BEGIN_STMT
+  _140 = lwip_stats.tcp.cachehit;
+  _141 = _140 + 1;
+  lwip_stats.tcp.cachehit = _141;
+
+  <bb 73> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _142 = pcb_305->next;
+  if (pcb_305 == _142)
+    goto <bb 74>; [INV]
+  else
+    goto <bb 78>; [INV]
+
+  <bb 74> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  __asm__ __volatile__("BKPT #0
+	");
+  # DEBUG BEGIN_STMT
+  goto <bb 74>; [INV]
+
+  <bb 75> :
+  # DEBUG BEGIN_STMT
+  prev_429 = pcb_305;
+  # DEBUG prev => prev_429
+
+  <bb 76> :
+  # prev_308 = PHI <prev_410(37), prev_429(75)>
+  # DEBUG prev => prev_308
+  # DEBUG BEGIN_STMT
+  pcb_430 = pcb_305->next;
+  # DEBUG pcb => pcb_430
+
+  <bb 77> :
+  # pcb_305 = PHI <pcb_409(28), pcb_430(76)>
+  # prev_309 = PHI <prev_408(28), prev_308(76)>
+  # DEBUG prev => prev_309
+  # DEBUG pcb => pcb_305
+  # DEBUG BEGIN_STMT
+  if (pcb_305 != 0B)
+    goto <bb 29>; [INV]
+  else
+    goto <bb 78>; [INV]
+
+  <bb 78> :
+  # DEBUG BEGIN_STMT
+  if (pcb_305 == 0B)
+    goto <bb 79>; [INV]
+  else
+    goto <bb 166>; [INV]
+
+  <bb 79> :
+  # DEBUG BEGIN_STMT
+  pcb_434 = tcp_tw_pcbs;
+  # DEBUG pcb => pcb_434
+  goto <bb 117>; [INV]
+
+  <bb 80> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _143 = pcb_306->state;
+  if (_143 != 10)
+    goto <bb 81>; [INV]
+  else
+    goto <bb 82>; [INV]
+
+  <bb 81> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  __asm__ __volatile__("BKPT #0
+	");
+  # DEBUG BEGIN_STMT
+  goto <bb 81>; [INV]
+
+  <bb 82> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _144 = pcb_306->netif_idx;
+  if (_144 != 0)
+    goto <bb 83>; [INV]
+  else
+    goto <bb 85>; [INV]
+
+  <bb 83> :
+  _145 = pcb_306->netif_idx;
+  _146 = ip_data.current_input_netif;
+  _147 = _146->num;
+  _148 = _147 + 1;
+  if (_145 != _148)
+    goto <bb 84>; [INV]
+  else
+    goto <bb 85>; [INV]
+
+  <bb 84> :
+  # DEBUG BEGIN_STMT
+  // predicted unlikely by continue predictor.
+  goto <bb 116>; [INV]
+
+  <bb 85> :
+  # DEBUG BEGIN_STMT
+  _149 = pcb_306->remote_port;
+  tcphdr.29_150 = tcphdr;
+  _151 = tcphdr.29_150->src;
+  if (_149 == _151)
+    goto <bb 86>; [INV]
+  else
+    goto <bb 116>; [INV]
+
+  <bb 86> :
+  _152 = pcb_306->local_port;
+  tcphdr.30_153 = tcphdr;
+  _154 = tcphdr.30_153->dest;
+  if (_152 == _154)
+    goto <bb 87>; [INV]
+  else
+    goto <bb 116>; [INV]
+
+  <bb 87> :
+  _155 = pcb_306->remote_ip.type;
+  _156 = ip_data.current_iphdr_src.type;
+  if (_155 == _156)
+    goto <bb 88>; [INV]
+  else
+    goto <bb 99>; [INV]
+
+  <bb 88> :
+  _157 = pcb_306->remote_ip.type;
+  if (_157 == 6)
+    goto <bb 89>; [INV]
+  else
+    goto <bb 97>; [INV]
+
+  <bb 89> :
+  _158 = pcb_306->remote_ip.u_addr.ip6.addr[0];
+  _159 = ip_data.current_iphdr_src.u_addr.ip6.addr[0];
+  if (_158 == _159)
+    goto <bb 90>; [INV]
+  else
+    goto <bb 95>; [INV]
+
+  <bb 90> :
+  _160 = pcb_306->remote_ip.u_addr.ip6.addr[1];
+  _161 = ip_data.current_iphdr_src.u_addr.ip6.addr[1];
+  if (_160 == _161)
+    goto <bb 91>; [INV]
+  else
+    goto <bb 95>; [INV]
+
+  <bb 91> :
+  _162 = pcb_306->remote_ip.u_addr.ip6.addr[2];
+  _163 = ip_data.current_iphdr_src.u_addr.ip6.addr[2];
+  if (_162 == _163)
+    goto <bb 92>; [INV]
+  else
+    goto <bb 95>; [INV]
+
+  <bb 92> :
+  _164 = pcb_306->remote_ip.u_addr.ip6.addr[3];
+  _165 = ip_data.current_iphdr_src.u_addr.ip6.addr[3];
+  if (_164 == _165)
+    goto <bb 93>; [INV]
+  else
+    goto <bb 95>; [INV]
+
+  <bb 93> :
+  _166 = pcb_306->remote_ip.u_addr.ip6.zone;
+  _167 = ip_data.current_iphdr_src.u_addr.ip6.zone;
+  if (_166 == _167)
+    goto <bb 94>; [INV]
+  else
+    goto <bb 95>; [INV]
+
+  <bb 94> :
+  iftmp.33_462 = 1;
+  goto <bb 96>; [INV]
+
+  <bb 95> :
+  iftmp.33_463 = 0;
+
+  <bb 96> :
+  # iftmp.33_324 = PHI <iftmp.33_462(94), iftmp.33_463(95)>
+  iftmp.32_464 = (_Bool) iftmp.33_324;
+  goto <bb 98>; [INV]
+
+  <bb 97> :
+  _168 = pcb_306->remote_ip.u_addr.ip4.addr;
+  _169 = ip_data.current_iphdr_src.u_addr.ip4.addr;
+  iftmp.32_461 = _168 == _169;
+
+  <bb 98> :
+  # iftmp.32_323 = PHI <iftmp.32_464(96), iftmp.32_461(97)>
+  iftmp.31_465 = iftmp.32_323;
+  goto <bb 100>; [INV]
+
+  <bb 99> :
+  iftmp.31_460 = 0;
+
+  <bb 100> :
+  # iftmp.31_322 = PHI <iftmp.31_465(98), iftmp.31_460(99)>
+  if (iftmp.31_322 != 0)
+    goto <bb 101>; [INV]
+  else
+    goto <bb 116>; [INV]
+
+  <bb 101> :
+  _170 = pcb_306->local_ip.type;
+  _171 = ip_data.current_iphdr_dest.type;
+  if (_170 == _171)
+    goto <bb 102>; [INV]
+  else
+    goto <bb 113>; [INV]
+
+  <bb 102> :
+  _172 = pcb_306->local_ip.type;
+  if (_172 == 6)
+    goto <bb 103>; [INV]
+  else
+    goto <bb 111>; [INV]
+
+  <bb 103> :
+  _173 = pcb_306->local_ip.u_addr.ip6.addr[0];
+  _174 = ip_data.current_iphdr_dest.u_addr.ip6.addr[0];
+  if (_173 == _174)
+    goto <bb 104>; [INV]
+  else
+    goto <bb 109>; [INV]
+
+  <bb 104> :
+  _175 = pcb_306->local_ip.u_addr.ip6.addr[1];
+  _176 = ip_data.current_iphdr_dest.u_addr.ip6.addr[1];
+  if (_175 == _176)
+    goto <bb 105>; [INV]
+  else
+    goto <bb 109>; [INV]
+
+  <bb 105> :
+  _177 = pcb_306->local_ip.u_addr.ip6.addr[2];
+  _178 = ip_data.current_iphdr_dest.u_addr.ip6.addr[2];
+  if (_177 == _178)
+    goto <bb 106>; [INV]
+  else
+    goto <bb 109>; [INV]
+
+  <bb 106> :
+  _179 = pcb_306->local_ip.u_addr.ip6.addr[3];
+  _180 = ip_data.current_iphdr_dest.u_addr.ip6.addr[3];
+  if (_179 == _180)
+    goto <bb 107>; [INV]
+  else
+    goto <bb 109>; [INV]
+
+  <bb 107> :
+  _181 = pcb_306->local_ip.u_addr.ip6.zone;
+  _182 = ip_data.current_iphdr_dest.u_addr.ip6.zone;
+  if (_181 == _182)
+    goto <bb 108>; [INV]
+  else
+    goto <bb 109>; [INV]
+
+  <bb 108> :
+  iftmp.36_468 = 1;
+  goto <bb 110>; [INV]
+
+  <bb 109> :
+  iftmp.36_469 = 0;
+
+  <bb 110> :
+  # iftmp.36_327 = PHI <iftmp.36_468(108), iftmp.36_469(109)>
+  iftmp.35_470 = (_Bool) iftmp.36_327;
+  goto <bb 112>; [INV]
+
+  <bb 111> :
+  _183 = pcb_306->local_ip.u_addr.ip4.addr;
+  _184 = ip_data.current_iphdr_dest.u_addr.ip4.addr;
+  iftmp.35_467 = _183 == _184;
+
+  <bb 112> :
+  # iftmp.35_326 = PHI <iftmp.35_470(110), iftmp.35_467(111)>
+  iftmp.34_471 = iftmp.35_326;
+  goto <bb 114>; [INV]
+
+  <bb 113> :
+  iftmp.34_466 = 0;
+
+  <bb 114> :
+  # iftmp.34_325 = PHI <iftmp.34_471(112), iftmp.34_466(113)>
+  if (iftmp.34_325 != 0)
+    goto <bb 115>; [INV]
+  else
+    goto <bb 116>; [INV]
+
+  <bb 115> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  tcp_timewait_input (pcb_306);
+  # DEBUG BEGIN_STMT
+  pbuf_free (p_368(D));
+  # DEBUG BEGIN_STMT
+  // predicted unlikely by early return (on trees) predictor.
+  goto <bb 221>; [INV]
+
+  <bb 116> :
+  # DEBUG BEGIN_STMT
+  pcb_474 = pcb_306->next;
+  # DEBUG pcb => pcb_474
+
+  <bb 117> :
+  # pcb_306 = PHI <pcb_434(79), pcb_474(116)>
+  # DEBUG pcb => pcb_306
+  # DEBUG BEGIN_STMT
+  if (pcb_306 != 0B)
+    goto <bb 80>; [INV]
+  else
+    goto <bb 118>; [INV]
+
+  <bb 118> :
+  # DEBUG BEGIN_STMT
+  prev_435 = 0B;
+  # DEBUG prev => prev_435
+  # DEBUG BEGIN_STMT
+  lpcb_436 = tcp_listen_pcbs.listen_pcbs;
+  # DEBUG lpcb => lpcb_436
+  goto <bb 160>; [INV]
+
+  <bb 119> :
+  # DEBUG BEGIN_STMT
+  _185 = lpcb_312->netif_idx;
+  if (_185 != 0)
+    goto <bb 120>; [INV]
+  else
+    goto <bb 122>; [INV]
+
+  <bb 120> :
+  _186 = lpcb_312->netif_idx;
+  _187 = ip_data.current_input_netif;
+  _188 = _187->num;
+  _189 = _188 + 1;
+  if (_186 != _189)
+    goto <bb 121>; [INV]
+  else
+    goto <bb 122>; [INV]
+
+  <bb 121> :
+  # DEBUG BEGIN_STMT
+  prev_437 = lpcb_312;
+  # DEBUG prev => prev_437
+  # DEBUG BEGIN_STMT
+  // predicted unlikely by continue predictor.
+  goto <bb 159>; [INV]
+
+  <bb 122> :
+  # DEBUG BEGIN_STMT
+  _190 = lpcb_312->local_port;
+  tcphdr.37_191 = tcphdr;
+  _192 = tcphdr.37_191->dest;
+  if (_190 == _192)
+    goto <bb 123>; [INV]
+  else
+    goto <bb 158>; [INV]
+
+  <bb 123> :
+  # DEBUG BEGIN_STMT
+  _193 = lpcb_312->local_ip.type;
+  if (_193 == 46)
+    goto <bb 161>; [INV]
+  else
+    goto <bb 124>; [INV]
+
+  <bb 124> :
+  # DEBUG BEGIN_STMT
+  _194 = lpcb_312->local_ip.type;
+  _195 = ip_data.current_iphdr_dest.type;
+  if (_194 == _195)
+    goto <bb 125>; [INV]
+  else
+    goto <bb 158>; [INV]
+
+  <bb 125> :
+  # DEBUG BEGIN_STMT
+  _196 = lpcb_312->local_ip.type;
+  _197 = ip_data.current_iphdr_dest.type;
+  if (_196 == _197)
+    goto <bb 126>; [INV]
+  else
+    goto <bb 137>; [INV]
+
+  <bb 126> :
+  _198 = lpcb_312->local_ip.type;
+  if (_198 == 6)
+    goto <bb 127>; [INV]
+  else
+    goto <bb 135>; [INV]
+
+  <bb 127> :
+  _199 = lpcb_312->local_ip.u_addr.ip6.addr[0];
+  _200 = ip_data.current_iphdr_dest.u_addr.ip6.addr[0];
+  if (_199 == _200)
+    goto <bb 128>; [INV]
+  else
+    goto <bb 133>; [INV]
+
+  <bb 128> :
+  _201 = lpcb_312->local_ip.u_addr.ip6.addr[1];
+  _202 = ip_data.current_iphdr_dest.u_addr.ip6.addr[1];
+  if (_201 == _202)
+    goto <bb 129>; [INV]
+  else
+    goto <bb 133>; [INV]
+
+  <bb 129> :
+  _203 = lpcb_312->local_ip.u_addr.ip6.addr[2];
+  _204 = ip_data.current_iphdr_dest.u_addr.ip6.addr[2];
+  if (_203 == _204)
+    goto <bb 130>; [INV]
+  else
+    goto <bb 133>; [INV]
+
+  <bb 130> :
+  _205 = lpcb_312->local_ip.u_addr.ip6.addr[3];
+  _206 = ip_data.current_iphdr_dest.u_addr.ip6.addr[3];
+  if (_205 == _206)
+    goto <bb 131>; [INV]
+  else
+    goto <bb 133>; [INV]
+
+  <bb 131> :
+  _207 = lpcb_312->local_ip.u_addr.ip6.zone;
+  _208 = ip_data.current_iphdr_dest.u_addr.ip6.zone;
+  if (_207 == _208)
+    goto <bb 132>; [INV]
+  else
+    goto <bb 133>; [INV]
+
+  <bb 132> :
+  iftmp.40_440 = 1;
+  goto <bb 134>; [INV]
+
+  <bb 133> :
+  iftmp.40_441 = 0;
+
+  <bb 134> :
+  # iftmp.40_330 = PHI <iftmp.40_440(132), iftmp.40_441(133)>
+  iftmp.39_442 = (_Bool) iftmp.40_330;
+  goto <bb 136>; [INV]
+
+  <bb 135> :
+  _209 = lpcb_312->local_ip.u_addr.ip4.addr;
+  _210 = ip_data.current_iphdr_dest.u_addr.ip4.addr;
+  iftmp.39_439 = _209 == _210;
+
+  <bb 136> :
+  # iftmp.39_329 = PHI <iftmp.39_442(134), iftmp.39_439(135)>
+  iftmp.38_443 = iftmp.39_329;
+  goto <bb 138>; [INV]
+
+  <bb 137> :
+  iftmp.38_438 = 0;
+
+  <bb 138> :
+  # iftmp.38_328 = PHI <iftmp.38_443(136), iftmp.38_438(137)>
+  if (iftmp.38_328 != 0)
+    goto <bb 161>; [INV]
+  else
+    goto <bb 139>; [INV]
+
+  <bb 139> :
+  # DEBUG BEGIN_STMT
+  _211 = &lpcb_312->local_ip;
+  if (_211 != 0B)
+    goto <bb 140>; [INV]
+  else
+    goto <bb 156>; [INV]
+
+  <bb 140> :
+  _212 = &lpcb_312->local_ip;
+  if (_212 != 0B)
+    goto <bb 141>; [INV]
+  else
+    goto <bb 150>; [INV]
+
+  <bb 141> :
+  _213 = lpcb_312->local_ip.type;
+  if (_213 == 6)
+    goto <bb 142>; [INV]
+  else
+    goto <bb 150>; [INV]
+
+  <bb 142> :
+  _214 = &lpcb_312->local_ip.u_addr.ip6;
+  if (_214 == 0B)
+    goto <bb 147>; [INV]
+  else
+    goto <bb 143>; [INV]
+
+  <bb 143> :
+  _215 = lpcb_312->local_ip.u_addr.ip6.addr[0];
+  if (_215 == 0)
+    goto <bb 144>; [INV]
+  else
+    goto <bb 148>; [INV]
+
+  <bb 144> :
+  _216 = lpcb_312->local_ip.u_addr.ip6.addr[1];
+  if (_216 == 0)
+    goto <bb 145>; [INV]
+  else
+    goto <bb 148>; [INV]
+
+  <bb 145> :
+  _217 = lpcb_312->local_ip.u_addr.ip6.addr[2];
+  if (_217 == 0)
+    goto <bb 146>; [INV]
+  else
+    goto <bb 148>; [INV]
+
+  <bb 146> :
+  _218 = lpcb_312->local_ip.u_addr.ip6.addr[3];
+  if (_218 == 0)
+    goto <bb 147>; [INV]
+  else
+    goto <bb 148>; [INV]
+
+  <bb 147> :
+  iftmp.43_446 = 1;
+  goto <bb 149>; [INV]
+
+  <bb 148> :
+  iftmp.43_445 = 0;
+
+  <bb 149> :
+  # iftmp.43_333 = PHI <iftmp.43_446(147), iftmp.43_445(148)>
+  iftmp.42_447 = (_Bool) iftmp.43_333;
+  goto <bb 155>; [INV]
+
+  <bb 150> :
+  _219 = &lpcb_312->local_ip.u_addr.ip4;
+  if (_219 == 0B)
+    goto <bb 152>; [INV]
+  else
+    goto <bb 151>; [INV]
+
+  <bb 151> :
+  _220 = lpcb_312->local_ip.u_addr.ip4.addr;
+  if (_220 == 0)
+    goto <bb 152>; [INV]
+  else
+    goto <bb 153>; [INV]
+
+  <bb 152> :
+  iftmp.44_449 = 1;
+  goto <bb 154>; [INV]
+
+  <bb 153> :
+  iftmp.44_448 = 0;
+
+  <bb 154> :
+  # iftmp.44_334 = PHI <iftmp.44_449(152), iftmp.44_448(153)>
+  iftmp.42_450 = (_Bool) iftmp.44_334;
+
+  <bb 155> :
+  # iftmp.42_332 = PHI <iftmp.42_447(149), iftmp.42_450(154)>
+  iftmp.41_451 = iftmp.42_332;
+  goto <bb 157>; [INV]
+
+  <bb 156> :
+  iftmp.41_444 = 1;
+
+  <bb 157> :
+  # iftmp.41_331 = PHI <iftmp.41_451(155), iftmp.41_444(156)>
+  if (iftmp.41_331 != 0)
+    goto <bb 161>; [INV]
+  else
+    goto <bb 158>; [INV]
+
+  <bb 158> :
+  # DEBUG BEGIN_STMT
+  prev_452 = lpcb_312;
+  # DEBUG prev => prev_452
+
+  <bb 159> :
+  # prev_310 = PHI <prev_437(121), prev_452(158)>
+  # DEBUG prev => prev_310
+  # DEBUG BEGIN_STMT
+  lpcb_453 = lpcb_312->next;
+  # DEBUG lpcb => lpcb_453
+
+  <bb 160> :
+  # prev_311 = PHI <prev_435(118), prev_310(159)>
+  # lpcb_312 = PHI <lpcb_436(118), lpcb_453(159)>
+  # DEBUG lpcb => lpcb_312
+  # DEBUG prev => prev_311
+  # DEBUG BEGIN_STMT
+  if (lpcb_312 != 0B)
+    goto <bb 119>; [INV]
+  else
+    goto <bb 161>; [INV]
+
+  <bb 161> :
+  # DEBUG BEGIN_STMT
+  if (lpcb_312 != 0B)
+    goto <bb 162>; [INV]
+  else
+    goto <bb 166>; [INV]
+
+  <bb 162> :
+  # DEBUG BEGIN_STMT
+  if (prev_311 != 0B)
+    goto <bb 163>; [INV]
+  else
+    goto <bb 164>; [INV]
+
+  <bb 163> :
+  # DEBUG BEGIN_STMT
+  _221 = lpcb_312->next;
+  MEM[(struct tcp_pcb_listen *)prev_311].next = _221;
+  # DEBUG BEGIN_STMT
+  _222 = tcp_listen_pcbs.listen_pcbs;
+  lpcb_312->next = _222;
+  # DEBUG BEGIN_STMT
+  tcp_listen_pcbs.listen_pcbs = lpcb_312;
+  goto <bb 165>; [INV]
+
+  <bb 164> :
+  # DEBUG BEGIN_STMT
+  _223 = lwip_stats.tcp.cachehit;
+  _224 = _223 + 1;
+  lwip_stats.tcp.cachehit = _224;
+
+  <bb 165> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  tcp_listen_input (lpcb_312);
+  # DEBUG BEGIN_STMT
+  pbuf_free (p_368(D));
+  # DEBUG BEGIN_STMT
+  // predicted unlikely by early return (on trees) predictor.
+  goto <bb 221>; [INV]
+
+  <bb 166> :
+  # pcb_307 = PHI <pcb_305(78), pcb_306(161)>
+  # DEBUG pcb => pcb_307
+  # DEBUG BEGIN_STMT
+  if (pcb_307 != 0B)
+    goto <bb 167>; [INV]
+  else
+    goto <bb 217>; [INV]
+
+  <bb 167> :
+  # DEBUG BEGIN_STMT
+  inseg.next = 0B;
+  # DEBUG BEGIN_STMT
+  _225 = p_368(D)->tot_len;
+  inseg.len = _225;
+  # DEBUG BEGIN_STMT
+  inseg.p = p_368(D);
+  # DEBUG BEGIN_STMT
+  tcphdr.45_226 = tcphdr;
+  inseg.tcphdr = tcphdr.45_226;
+  # DEBUG BEGIN_STMT
+  recv_data = 0B;
+  # DEBUG BEGIN_STMT
+  recv_flags = 0;
+  # DEBUG BEGIN_STMT
+  recv_acked = 0;
+  # DEBUG BEGIN_STMT
+  flags.46_227 = flags;
+  _228 = (unsigned int) flags.46_227;
+  _229 = _228 & 8;
+  if (_229 != 0)
+    goto <bb 168>; [INV]
+  else
+    goto <bb 169>; [INV]
+
+  <bb 168> :
+  # DEBUG BEGIN_STMT
+  _230 = p_368(D)->flags;
+  _231 = _230 | 1;
+  p_368(D)->flags = _231;
+
+  <bb 169> :
+  # DEBUG BEGIN_STMT
+  _232 = pcb_307->refused_data;
+  if (_232 != 0B)
+    goto <bb 170>; [INV]
+  else
+    goto <bb 176>; [INV]
+
+  <bb 170> :
+  # DEBUG BEGIN_STMT
+  _233 = tcp_process_refused_data (pcb_307);
+  if (_233 == -13)
+    goto <bb 173>; [INV]
+  else
+    goto <bb 171>; [INV]
+
+  <bb 171> :
+  _234 = pcb_307->refused_data;
+  if (_234 != 0B)
+    goto <bb 172>; [INV]
+  else
+    goto <bb 176>; [INV]
+
+  <bb 172> :
+  tcplen.47_235 = tcplen;
+  if (tcplen.47_235 != 0)
+    goto <bb 173>; [INV]
+  else
+    goto <bb 176>; [INV]
+
+  <bb 173> :
+  # DEBUG BEGIN_STMT
+  _236 = pcb_307->rcv_ann_wnd;
+  if (_236 == 0)
+    goto <bb 174>; [INV]
+  else
+    goto <bb 175>; [INV]
+
+  <bb 174> :
+  # DEBUG BEGIN_STMT
+  tcp_send_empty_ack (pcb_307);
+
+  <bb 175> :
+  # DEBUG BEGIN_STMT
+  _237 = lwip_stats.tcp.drop;
+  _238 = _237 + 1;
+  lwip_stats.tcp.drop = _238;
+  # DEBUG BEGIN_STMT
+  _239 = lwip_stats.mib2.tcpinerrs;
+  _240 = _239 + 1;
+  lwip_stats.mib2.tcpinerrs = _240;
+  # DEBUG BEGIN_STMT
+  // predicted unlikely by goto predictor.
+  goto <bb 215>; [INV]
+
+  <bb 176> :
+  # DEBUG BEGIN_STMT
+  tcp_input_pcb = pcb_307;
+  # DEBUG BEGIN_STMT
+  err_495 = tcp_process (pcb_307);
+  # DEBUG err => err_495
+  # DEBUG BEGIN_STMT
+  if (err_495 != -13)
+    goto <bb 177>; [INV]
+  else
+    goto <bb 215>; [INV]
+
+  <bb 177> :
+  # DEBUG BEGIN_STMT
+  recv_flags.48_241 = recv_flags;
+  _242 = (int) recv_flags.48_241;
+  _243 = _242 & 8;
+  if (_243 != 0)
+    goto <bb 178>; [INV]
+  else
+    goto <bb 181>; [INV]
+
+  <bb 178> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _244 = pcb_307->errf;
+  if (_244 != 0B)
+    goto <bb 179>; [INV]
+  else
+    goto <bb 180>; [INV]
+
+  <bb 179> :
+  # DEBUG BEGIN_STMT
+  _245 = pcb_307->errf;
+  _246 = pcb_307->callback_arg;
+  _245 (_246, -14);
+
+  <bb 180> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  tcp_pcb_remove (&tcp_active_pcbs, pcb_307);
+  # DEBUG BEGIN_STMT
+  tcp_free (pcb_307);
+  goto <bb 215>; [INV]
+
+  <bb 181> :
+  # DEBUG BEGIN_STMT
+  err_496 = 0;
+  # DEBUG err => err_496
+  # DEBUG BEGIN_STMT
+  recv_acked.49_247 = recv_acked;
+  if (recv_acked.49_247 != 0)
+    goto <bb 182>; [INV]
+  else
+    goto <bb 188>; [INV]
+
+  <bb 182> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  acked16_497 = recv_acked;
+  # DEBUG acked16 => acked16_497
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _248 = pcb_307->sent;
+  if (_248 != 0B)
+    goto <bb 183>; [INV]
+  else
+    goto <bb 184>; [INV]
+
+  <bb 183> :
+  # DEBUG BEGIN_STMT
+  _249 = pcb_307->sent;
+  _250 = pcb_307->callback_arg;
+  err_500 = _249 (_250, pcb_307, acked16_497);
+  # DEBUG err => err_500
+  goto <bb 185>; [INV]
+
+  <bb 184> :
+  # DEBUG BEGIN_STMT
+  err_498 = 0;
+  # DEBUG err => err_498
+
+  <bb 185> :
+  # err_313 = PHI <err_500(183), err_498(184)>
+  # DEBUG err => err_313
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  if (err_313 == -13)
+    goto <bb 186>; [INV]
+  else
+    goto <bb 187>; [INV]
+
+  <bb 186> :
+  # DEBUG BEGIN_STMT
+  // predicted unlikely by goto predictor.
+  goto <bb 215>; [INV]
+
+  <bb 187> :
+  # DEBUG BEGIN_STMT
+  recv_acked = 0;
+
+  <bb 188> :
+  # DEBUG BEGIN_STMT
+  _251 = tcp_input_delayed_close (pcb_307);
+  if (_251 != 0)
+    goto <bb 189>; [INV]
+  else
+    goto <bb 190>; [INV]
+
+  <bb 189> :
+  # DEBUG BEGIN_STMT
+  // predicted unlikely by goto predictor.
+  goto <bb 215>; [INV]
+
+  <bb 190> :
+  # DEBUG BEGIN_STMT
+  recv_data.50_252 = recv_data;
+  if (recv_data.50_252 != 0B)
+    goto <bb 191>; [INV]
+  else
+    goto <bb 202>; [INV]
+
+  <bb 191> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _253 = pcb_307->refused_data;
+  if (_253 != 0B)
+    goto <bb 192>; [INV]
+  else
+    goto <bb 193>; [INV]
+
+  <bb 192> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  __asm__ __volatile__("BKPT #0
+	");
+  # DEBUG BEGIN_STMT
+  goto <bb 192>; [INV]
+
+  <bb 193> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _254 = pcb_307->flags;
+  _255 = (unsigned int) _254;
+  _256 = _255 & 16;
+  if (_256 != 0)
+    goto <bb 194>; [INV]
+  else
+    goto <bb 195>; [INV]
+
+  <bb 194> :
+  # DEBUG BEGIN_STMT
+  recv_data.51_257 = recv_data;
+  pbuf_free (recv_data.51_257);
+  # DEBUG BEGIN_STMT
+  tcp_abort (pcb_307);
+  # DEBUG BEGIN_STMT
+  // predicted unlikely by goto predictor.
+  goto <bb 215>; [INV]
+
+  <bb 195> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _258 = pcb_307->recv;
+  if (_258 != 0B)
+    goto <bb 196>; [INV]
+  else
+    goto <bb 197>; [INV]
+
+  <bb 196> :
+  # DEBUG BEGIN_STMT
+  _259 = pcb_307->recv;
+  _260 = pcb_307->callback_arg;
+  recv_data.52_261 = recv_data;
+  err_506 = _259 (_260, pcb_307, recv_data.52_261, 0);
+  # DEBUG err => err_506
+  goto <bb 198>; [INV]
+
+  <bb 197> :
+  # DEBUG BEGIN_STMT
+  recv_data.53_262 = recv_data;
+  err_504 = tcp_recv_null (0B, pcb_307, recv_data.53_262, 0);
+  # DEBUG err => err_504
+
+  <bb 198> :
+  # err_314 = PHI <err_506(196), err_504(197)>
+  # DEBUG err => err_314
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  if (err_314 == -13)
+    goto <bb 199>; [INV]
+  else
+    goto <bb 200>; [INV]
+
+  <bb 199> :
+  # DEBUG BEGIN_STMT
+  // predicted unlikely by goto predictor.
+  goto <bb 215>; [INV]
+
+  <bb 200> :
+  # DEBUG BEGIN_STMT
+  if (err_314 != 0)
+    goto <bb 201>; [INV]
+  else
+    goto <bb 202>; [INV]
+
+  <bb 201> :
+  # DEBUG BEGIN_STMT
+  recv_data.54_263 = recv_data;
+  pcb_307->refused_data = recv_data.54_263;
+
+  <bb 202> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  recv_flags.55_264 = recv_flags;
+  _265 = (int) recv_flags.55_264;
+  _266 = _265 & 32;
+  if (_266 != 0)
+    goto <bb 203>; [INV]
+  else
+    goto <bb 212>; [INV]
+
+  <bb 203> :
+  # DEBUG BEGIN_STMT
+  _267 = pcb_307->refused_data;
+  if (_267 != 0B)
+    goto <bb 204>; [INV]
+  else
+    goto <bb 205>; [INV]
+
+  <bb 204> :
+  # DEBUG BEGIN_STMT
+  _268 = pcb_307->refused_data;
+  _269 = _268->flags;
+  _270 = pcb_307->refused_data;
+  _271 = _269 | 32;
+  _270->flags = _271;
+  goto <bb 212>; [INV]
+
+  <bb 205> :
+  # DEBUG BEGIN_STMT
+  _272 = pcb_307->rcv_wnd;
+  if (_272 != 7300)
+    goto <bb 206>; [INV]
+  else
+    goto <bb 207>; [INV]
+
+  <bb 206> :
+  # DEBUG BEGIN_STMT
+  _273 = pcb_307->rcv_wnd;
+  _274 = _273;
+  _275 = _274 + 1;
+  pcb_307->rcv_wnd = _275;
+
+  <bb 207> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _276 = pcb_307->recv;
+  if (_276 != 0B)
+    goto <bb 208>; [INV]
+  else
+    goto <bb 209>; [INV]
+
+  <bb 208> :
+  # DEBUG BEGIN_STMT
+  _277 = pcb_307->recv;
+  _278 = pcb_307->callback_arg;
+  err_514 = _277 (_278, pcb_307, 0B, 0);
+  # DEBUG err => err_514
+  goto <bb 210>; [INV]
+
+  <bb 209> :
+  # DEBUG BEGIN_STMT
+  err_512 = 0;
+  # DEBUG err => err_512
+
+  <bb 210> :
+  # err_315 = PHI <err_514(208), err_512(209)>
+  # DEBUG err => err_315
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  if (err_315 == -13)
+    goto <bb 211>; [INV]
+  else
+    goto <bb 212>; [INV]
+
+  <bb 211> :
+  # DEBUG BEGIN_STMT
+  // predicted unlikely by goto predictor.
+  goto <bb 215>; [INV]
+
+  <bb 212> :
+  # DEBUG BEGIN_STMT
+  tcp_input_pcb = 0B;
+  # DEBUG BEGIN_STMT
+  _279 = tcp_input_delayed_close (pcb_307);
+  if (_279 != 0)
+    goto <bb 213>; [INV]
+  else
+    goto <bb 214>; [INV]
+
+  <bb 213> :
+  # DEBUG BEGIN_STMT
+  // predicted unlikely by goto predictor.
+  goto <bb 215>; [INV]
+
+  <bb 214> :
+  # DEBUG BEGIN_STMT
+  tcp_output (pcb_307);
+
+  <bb 215> :
+aborted:
+  # DEBUG BEGIN_STMT
+  tcp_input_pcb = 0B;
+  # DEBUG BEGIN_STMT
+  recv_data = 0B;
+  # DEBUG BEGIN_STMT
+  _280 = inseg.p;
+  if (_280 != 0B)
+    goto <bb 216>; [INV]
+  else
+    goto <bb 221>; [INV]
+
+  <bb 216> :
+  # DEBUG BEGIN_STMT
+  _281 = inseg.p;
+  pbuf_free (_281);
+  # DEBUG BEGIN_STMT
+  inseg.p = 0B;
+  goto <bb 221>; [INV]
+
+  <bb 217> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  tcphdr.56_282 = tcphdr;
+  _283 = tcphdr.56_282->_hdrlen_rsvd_flags;
+  _284 = lwip_htons (_283);
+  _285 = (unsigned char) _284;
+  _286 = (unsigned int) _285;
+  _287 = _286 & 4;
+  if (_287 == 0)
+    goto <bb 218>; [INV]
+  else
+    goto <bb 219>; [INV]
+
+  <bb 218> :
+  # DEBUG BEGIN_STMT
+  _288 = lwip_stats.tcp.proterr;
+  _289 = _288 + 1;
+  lwip_stats.tcp.proterr = _289;
+  # DEBUG BEGIN_STMT
+  _290 = lwip_stats.tcp.drop;
+  _291 = _290 + 1;
+  lwip_stats.tcp.drop = _291;
+  # DEBUG BEGIN_STMT
+  ackno.57_292 = ackno;
+  tcplen.58_293 = tcplen;
+  _294 = (long unsigned int) tcplen.58_293;
+  seqno.59_295 = seqno;
+  _296 = _294 + seqno.59_295;
+  tcphdr.60_297 = tcphdr;
+  _298 = tcphdr.60_297->dest;
+  tcphdr.61_299 = tcphdr;
+  _300 = tcphdr.61_299->src;
+  tcp_rst (0B, ackno.57_292, _296, &ip_data.current_iphdr_dest, &ip_data.current_iphdr_src, _298, _300);
+
+  <bb 219> :
+  # DEBUG BEGIN_STMT
+  pbuf_free (p_368(D));
+  goto <bb 221>; [INV]
+
+  <bb 220> :
+dropped:
+  # DEBUG BEGIN_STMT
+  _301 = lwip_stats.tcp.drop;
+  _302 = _301 + 1;
+  lwip_stats.tcp.drop = _302;
+  # DEBUG BEGIN_STMT
+  _303 = lwip_stats.mib2.tcpinerrs;
+  _304 = _303 + 1;
+  lwip_stats.mib2.tcpinerrs = _304;
+  # DEBUG BEGIN_STMT
+  pbuf_free (p_368(D));
+
+  <bb 221> :
+  return;
+
+}
+
+

@@ -1,0 +1,1171 @@
+mem_calloc (mem_size_t count, mem_size_t size)
+{
+  size_t alloc_size;
+  void * p;
+  void * D.6757;
+
+  <bb 2> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  alloc_size = count * size;
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  p = mem_malloc (alloc_size);
+  # DEBUG BEGIN_STMT
+  if (p != 0B)
+    goto <bb 3>; [INV]
+  else
+    goto <bb 4>; [INV]
+
+  <bb 3> :
+  # DEBUG BEGIN_STMT
+  memset (p, 0, alloc_size);
+
+  <bb 4> :
+  # DEBUG BEGIN_STMT
+  D.6757 = p;
+  return D.6757;
+
+}
+
+
+mem_malloc (mem_size_t size_in)
+{
+  struct mem * cur;
+  struct mem * mem2;
+  struct mem * mem;
+  mem_size_t size;
+  mem_size_t ptr2;
+  mem_size_t ptr;
+  void * D.6720;
+
+  <bb 2> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  if (size_in == 0)
+    goto <bb 3>; [INV]
+  else
+    goto <bb 4>; [INV]
+
+  <bb 3> :
+  # DEBUG BEGIN_STMT
+  D.6720 = 0B;
+  // predicted unlikely by early return (on trees) predictor.
+  goto <bb 39>; [INV]
+
+  <bb 4> :
+  # DEBUG BEGIN_STMT
+  _1 = size_in + 15;
+  size = _1 & 4294967280;
+  # DEBUG BEGIN_STMT
+  if (size <= 15)
+    goto <bb 5>; [INV]
+  else
+    goto <bb 6>; [INV]
+
+  <bb 5> :
+  # DEBUG BEGIN_STMT
+  size = 16;
+
+  <bb 6> :
+  # DEBUG BEGIN_STMT
+  if (size > 65536)
+    goto <bb 8>; [INV]
+  else
+    goto <bb 7>; [INV]
+
+  <bb 7> :
+  if (size < size_in)
+    goto <bb 8>; [INV]
+  else
+    goto <bb 9>; [INV]
+
+  <bb 8> :
+  # DEBUG BEGIN_STMT
+  D.6720 = 0B;
+  // predicted unlikely by early return (on trees) predictor.
+  goto <bb 39>; [INV]
+
+  <bb 9> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  lfree.24_2 = lfree;
+  ptr = mem_to_ptr (lfree.24_2);
+  goto <bb 37>; [INV]
+
+  <bb 10> :
+  # DEBUG BEGIN_STMT
+  mem = ptr_to_mem (ptr);
+  # DEBUG BEGIN_STMT
+  _3 = mem->used;
+  if (_3 == 0)
+    goto <bb 11>; [INV]
+  else
+    goto <bb 36>; [INV]
+
+  <bb 11> :
+  _4 = mem->next;
+  _5 = _4 - ptr;
+  _6 = _5 + 4294967280;
+  if (size <= _6)
+    goto <bb 12>; [INV]
+  else
+    goto <bb 36>; [INV]
+
+  <bb 12> :
+  # DEBUG BEGIN_STMT
+  _7 = mem->next;
+  _8 = _7 - ptr;
+  _9 = _8 + 4294967280;
+  _10 = size + 32;
+  if (_9 >= _10)
+    goto <bb 13>; [INV]
+  else
+    goto <bb 19>; [INV]
+
+  <bb 13> :
+  # DEBUG BEGIN_STMT
+  _11 = ptr + size;
+  ptr2 = _11 + 16;
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  if (ptr2 == 65536)
+    goto <bb 14>; [INV]
+  else
+    goto <bb 15>; [INV]
+
+  <bb 14> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  __asm__ __volatile__("BKPT #0
+	");
+  # DEBUG BEGIN_STMT
+  goto <bb 14>; [INV]
+
+  <bb 15> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  mem2 = ptr_to_mem (ptr2);
+  # DEBUG BEGIN_STMT
+  mem2->used = 0;
+  # DEBUG BEGIN_STMT
+  _12 = mem->next;
+  mem2->next = _12;
+  # DEBUG BEGIN_STMT
+  mem2->prev = ptr;
+  # DEBUG BEGIN_STMT
+  mem->next = ptr2;
+  # DEBUG BEGIN_STMT
+  mem->used = 1;
+  # DEBUG BEGIN_STMT
+  _13 = mem2->next;
+  if (_13 != 65536)
+    goto <bb 16>; [INV]
+  else
+    goto <bb 17>; [INV]
+
+  <bb 16> :
+  # DEBUG BEGIN_STMT
+  _14 = mem2->next;
+  _15 = ptr_to_mem (_14);
+  _15->prev = ptr2;
+
+  <bb 17> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _16 = lwip_stats.mem.used;
+  _17 = size + _16;
+  _18 = _17 + 16;
+  lwip_stats.mem.used = _18;
+  # DEBUG BEGIN_STMT
+  _19 = lwip_stats.mem.max;
+  _20 = lwip_stats.mem.used;
+  if (_19 < _20)
+    goto <bb 18>; [INV]
+  else
+    goto <bb 21>; [INV]
+
+  <bb 18> :
+  # DEBUG BEGIN_STMT
+  _21 = lwip_stats.mem.used;
+  lwip_stats.mem.max = _21;
+  goto <bb 21>; [INV]
+
+  <bb 19> :
+  # DEBUG BEGIN_STMT
+  mem->used = 1;
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _22 = lwip_stats.mem.used;
+  _23 = mem->next;
+  _24 = _22 + _23;
+  _25 = mem_to_ptr (mem);
+  _26 = _24 - _25;
+  lwip_stats.mem.used = _26;
+  # DEBUG BEGIN_STMT
+  _27 = lwip_stats.mem.max;
+  _28 = lwip_stats.mem.used;
+  if (_27 < _28)
+    goto <bb 20>; [INV]
+  else
+    goto <bb 21>; [INV]
+
+  <bb 20> :
+  # DEBUG BEGIN_STMT
+  _29 = lwip_stats.mem.used;
+  lwip_stats.mem.max = _29;
+
+  <bb 21> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  lfree.25_30 = lfree;
+  if (mem == lfree.25_30)
+    goto <bb 22>; [INV]
+  else
+    goto <bb 29>; [INV]
+
+  <bb 22> :
+  # DEBUG BEGIN_STMT
+  cur = lfree;
+  # DEBUG BEGIN_STMT
+  goto <bb 24>; [INV]
+
+  <bb 23> :
+  # DEBUG BEGIN_STMT
+  _31 = cur->next;
+  cur = ptr_to_mem (_31);
+
+  <bb 24> :
+  # DEBUG BEGIN_STMT
+  _32 = cur->used;
+  if (_32 != 0)
+    goto <bb 25>; [INV]
+  else
+    goto <bb 26>; [INV]
+
+  <bb 25> :
+  ram_end.26_33 = ram_end;
+  if (cur != ram_end.26_33)
+    goto <bb 23>; [INV]
+  else
+    goto <bb 26>; [INV]
+
+  <bb 26> :
+  # DEBUG BEGIN_STMT
+  lfree = cur;
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  lfree.27_34 = lfree;
+  ram_end.28_35 = ram_end;
+  if (lfree.27_34 != ram_end.28_35)
+    goto <bb 27>; [INV]
+  else
+    goto <bb 29>; [INV]
+
+  <bb 27> :
+  lfree.29_36 = lfree;
+  _37 = lfree.29_36->used;
+  if (_37 != 0)
+    goto <bb 28>; [INV]
+  else
+    goto <bb 29>; [INV]
+
+  <bb 28> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  __asm__ __volatile__("BKPT #0
+	");
+  # DEBUG BEGIN_STMT
+  goto <bb 28>; [INV]
+
+  <bb 29> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  mem.30_38 = (long unsigned int) mem;
+  _39 = size + mem.30_38;
+  _40 = _39 + 16;
+  ram_end.31_41 = ram_end;
+  ram_end.32_42 = (long unsigned int) ram_end.31_41;
+  if (_40 > ram_end.32_42)
+    goto <bb 30>; [INV]
+  else
+    goto <bb 31>; [INV]
+
+  <bb 30> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  __asm__ __volatile__("BKPT #0
+	");
+  # DEBUG BEGIN_STMT
+  goto <bb 30>; [INV]
+
+  <bb 31> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  mem.33_43 = (unsigned int) mem;
+  _44 = mem.33_43 & 15;
+  if (_44 != 0)
+    goto <bb 32>; [INV]
+  else
+    goto <bb 33>; [INV]
+
+  <bb 32> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  __asm__ __volatile__("BKPT #0
+	");
+  # DEBUG BEGIN_STMT
+  goto <bb 32>; [INV]
+
+  <bb 33> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  mem.34_45 = (unsigned int) mem;
+  _46 = mem.34_45 & 15;
+  if (_46 != 0)
+    goto <bb 34>; [INV]
+  else
+    goto <bb 35>; [INV]
+
+  <bb 34> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  __asm__ __volatile__("BKPT #0
+	");
+  # DEBUG BEGIN_STMT
+  goto <bb 34>; [INV]
+
+  <bb 35> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  D.6720 = mem + 16;
+  // predicted unlikely by early return (on trees) predictor.
+  goto <bb 39>; [INV]
+
+  <bb 36> :
+  # DEBUG BEGIN_STMT
+  _47 = ptr_to_mem (ptr);
+  ptr = _47->next;
+
+  <bb 37> :
+  # DEBUG BEGIN_STMT
+  _48 = 65536 - size;
+  if (ptr < _48)
+    goto <bb 10>; [INV]
+  else
+    goto <bb 38>; [INV]
+
+  <bb 38> :
+  # DEBUG BEGIN_STMT
+  _49 = lwip_stats.mem.err;
+  _50 = _49 + 1;
+  lwip_stats.mem.err = _50;
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  D.6720 = 0B;
+
+  <bb 39> :
+  return D.6720;
+
+}
+
+
+mem_trim (void * rmem, mem_size_t new_size)
+{
+  mem_size_t next;
+  struct mem * mem2;
+  struct mem * mem;
+  mem_size_t ptr2;
+  mem_size_t ptr;
+  mem_size_t newsize;
+  mem_size_t size;
+  void * D.6687;
+
+  <bb 2> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _1 = new_size + 15;
+  newsize = _1 & 4294967280;
+  # DEBUG BEGIN_STMT
+  if (newsize <= 15)
+    goto <bb 3>; [INV]
+  else
+    goto <bb 4>; [INV]
+
+  <bb 3> :
+  # DEBUG BEGIN_STMT
+  newsize = 16;
+
+  <bb 4> :
+  # DEBUG BEGIN_STMT
+  if (newsize > 65536)
+    goto <bb 6>; [INV]
+  else
+    goto <bb 5>; [INV]
+
+  <bb 5> :
+  if (newsize < new_size)
+    goto <bb 6>; [INV]
+  else
+    goto <bb 7>; [INV]
+
+  <bb 6> :
+  # DEBUG BEGIN_STMT
+  D.6687 = 0B;
+  // predicted unlikely by early return (on trees) predictor.
+  goto <bb 36>; [INV]
+
+  <bb 7> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  ram.18_2 = ram;
+  if (rmem < ram.18_2)
+    goto <bb 9>; [INV]
+  else
+    goto <bb 8>; [INV]
+
+  <bb 8> :
+  ram_end.19_3 = ram_end;
+  if (rmem >= ram_end.19_3)
+    goto <bb 9>; [INV]
+  else
+    goto <bb 10>; [INV]
+
+  <bb 9> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  __asm__ __volatile__("BKPT #0
+	");
+  # DEBUG BEGIN_STMT
+  goto <bb 9>; [INV]
+
+  <bb 10> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  ram.20_4 = ram;
+  if (rmem < ram.20_4)
+    goto <bb 12>; [INV]
+  else
+    goto <bb 11>; [INV]
+
+  <bb 11> :
+  ram_end.21_5 = ram_end;
+  if (rmem >= ram_end.21_5)
+    goto <bb 12>; [INV]
+  else
+    goto <bb 13>; [INV]
+
+  <bb 12> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _6 = lwip_stats.mem.illegal;
+  _7 = _6 + 1;
+  lwip_stats.mem.illegal = _7;
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  D.6687 = rmem;
+  // predicted unlikely by early return (on trees) predictor.
+  goto <bb 36>; [INV]
+
+  <bb 13> :
+  # DEBUG BEGIN_STMT
+  mem = rmem + 4294967280;
+  # DEBUG BEGIN_STMT
+  ptr = mem_to_ptr (mem);
+  # DEBUG BEGIN_STMT
+  _8 = mem->next;
+  _9 = _8 - ptr;
+  size = _9 + 4294967280;
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  if (newsize > size)
+    goto <bb 14>; [INV]
+  else
+    goto <bb 15>; [INV]
+
+  <bb 14> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  __asm__ __volatile__("BKPT #0
+	");
+  # DEBUG BEGIN_STMT
+  goto <bb 14>; [INV]
+
+  <bb 15> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  if (newsize > size)
+    goto <bb 16>; [INV]
+  else
+    goto <bb 17>; [INV]
+
+  <bb 16> :
+  # DEBUG BEGIN_STMT
+  D.6687 = 0B;
+  // predicted unlikely by early return (on trees) predictor.
+  goto <bb 36>; [INV]
+
+  <bb 17> :
+  # DEBUG BEGIN_STMT
+  if (newsize == size)
+    goto <bb 18>; [INV]
+  else
+    goto <bb 19>; [INV]
+
+  <bb 18> :
+  # DEBUG BEGIN_STMT
+  D.6687 = rmem;
+  // predicted unlikely by early return (on trees) predictor.
+  goto <bb 36>; [INV]
+
+  <bb 19> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _10 = mem->next;
+  mem2 = ptr_to_mem (_10);
+  # DEBUG BEGIN_STMT
+  _11 = mem2->used;
+  if (_11 == 0)
+    goto <bb 20>; [INV]
+  else
+    goto <bb 27>; [INV]
+
+  <bb 20> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _12 = mem->next;
+  if (_12 == 65536)
+    goto <bb 21>; [INV]
+  else
+    goto <bb 22>; [INV]
+
+  <bb 21> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  __asm__ __volatile__("BKPT #0
+	");
+  # DEBUG BEGIN_STMT
+  goto <bb 21>; [INV]
+
+  <bb 22> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  next = mem2->next;
+  # DEBUG BEGIN_STMT
+  _13 = ptr + newsize;
+  ptr2 = _13 + 16;
+  # DEBUG BEGIN_STMT
+  lfree.22_14 = lfree;
+  if (mem2 == lfree.22_14)
+    goto <bb 23>; [INV]
+  else
+    goto <bb 24>; [INV]
+
+  <bb 23> :
+  # DEBUG BEGIN_STMT
+  _15 = ptr_to_mem (ptr2);
+  lfree = _15;
+
+  <bb 24> :
+  # DEBUG BEGIN_STMT
+  mem2 = ptr_to_mem (ptr2);
+  # DEBUG BEGIN_STMT
+  mem2->used = 0;
+  # DEBUG BEGIN_STMT
+  mem2->next = next;
+  # DEBUG BEGIN_STMT
+  mem2->prev = ptr;
+  # DEBUG BEGIN_STMT
+  mem->next = ptr2;
+  # DEBUG BEGIN_STMT
+  _16 = mem2->next;
+  if (_16 != 65536)
+    goto <bb 25>; [INV]
+  else
+    goto <bb 26>; [INV]
+
+  <bb 25> :
+  # DEBUG BEGIN_STMT
+  _17 = mem2->next;
+  _18 = ptr_to_mem (_17);
+  _18->prev = ptr2;
+
+  <bb 26> :
+  # DEBUG BEGIN_STMT
+  _19 = lwip_stats.mem.used;
+  _20 = newsize - size;
+  _21 = _19 + _20;
+  lwip_stats.mem.used = _21;
+  goto <bb 35>; [INV]
+
+  <bb 27> :
+  # DEBUG BEGIN_STMT
+  _22 = newsize + 32;
+  if (size >= _22)
+    goto <bb 28>; [INV]
+  else
+    goto <bb 35>; [INV]
+
+  <bb 28> :
+  # DEBUG BEGIN_STMT
+  _23 = ptr + newsize;
+  ptr2 = _23 + 16;
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _24 = mem->next;
+  if (_24 == 65536)
+    goto <bb 29>; [INV]
+  else
+    goto <bb 30>; [INV]
+
+  <bb 29> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  __asm__ __volatile__("BKPT #0
+	");
+  # DEBUG BEGIN_STMT
+  goto <bb 29>; [INV]
+
+  <bb 30> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  mem2 = ptr_to_mem (ptr2);
+  # DEBUG BEGIN_STMT
+  lfree.23_25 = lfree;
+  if (mem2 < lfree.23_25)
+    goto <bb 31>; [INV]
+  else
+    goto <bb 32>; [INV]
+
+  <bb 31> :
+  # DEBUG BEGIN_STMT
+  lfree = mem2;
+
+  <bb 32> :
+  # DEBUG BEGIN_STMT
+  mem2->used = 0;
+  # DEBUG BEGIN_STMT
+  _26 = mem->next;
+  mem2->next = _26;
+  # DEBUG BEGIN_STMT
+  mem2->prev = ptr;
+  # DEBUG BEGIN_STMT
+  mem->next = ptr2;
+  # DEBUG BEGIN_STMT
+  _27 = mem2->next;
+  if (_27 != 65536)
+    goto <bb 33>; [INV]
+  else
+    goto <bb 34>; [INV]
+
+  <bb 33> :
+  # DEBUG BEGIN_STMT
+  _28 = mem2->next;
+  _29 = ptr_to_mem (_28);
+  _29->prev = ptr2;
+
+  <bb 34> :
+  # DEBUG BEGIN_STMT
+  _30 = lwip_stats.mem.used;
+  _31 = newsize - size;
+  _32 = _30 + _31;
+  lwip_stats.mem.used = _32;
+
+  <bb 35> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  D.6687 = rmem;
+
+  <bb 36> :
+  return D.6687;
+
+}
+
+
+mem_free (void * rmem)
+{
+  struct mem * mem;
+
+  <bb 2> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  if (rmem == 0B)
+    goto <bb 3>; [INV]
+  else
+    goto <bb 4>; [INV]
+
+  <bb 3> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  // predicted unlikely by early return (on trees) predictor.
+  goto <bb 16>; [INV]
+
+  <bb 4> :
+  # DEBUG BEGIN_STMT
+  rmem.6_1 = (unsigned int) rmem;
+  _2 = rmem.6_1 & 15;
+  if (_2 != 0)
+    goto <bb 5>; [INV]
+  else
+    goto <bb 6>; [INV]
+
+  <bb 5> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  __asm__ __volatile__("BKPT #0
+	");
+  # DEBUG BEGIN_STMT
+  goto <bb 5>; [INV]
+
+  <bb 6> :
+  # DEBUG BEGIN_STMT
+  mem = rmem + 4294967280;
+  # DEBUG BEGIN_STMT
+  ram.7_5 = ram;
+  if (mem < ram.7_5)
+    goto <bb 8>; [INV]
+  else
+    goto <bb 7>; [INV]
+
+  <bb 7> :
+  _6 = rmem + 16;
+  ram_end.8_7 = ram_end;
+  if (_6 > ram_end.8_7)
+    goto <bb 8>; [INV]
+  else
+    goto <bb 9>; [INV]
+
+  <bb 8> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  __asm__ __volatile__("BKPT #0
+	");
+  # DEBUG BEGIN_STMT
+  goto <bb 8>; [INV]
+
+  <bb 9> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _10 = mem->used;
+  if (_10 == 0)
+    goto <bb 10>; [INV]
+  else
+    goto <bb 11>; [INV]
+
+  <bb 10> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  __asm__ __volatile__("BKPT #0
+	");
+  # DEBUG BEGIN_STMT
+  goto <bb 10>; [INV]
+
+  <bb 11> :
+  # DEBUG BEGIN_STMT
+  _13 = mem_link_valid (mem);
+  if (_13 == 0)
+    goto <bb 12>; [INV]
+  else
+    goto <bb 13>; [INV]
+
+  <bb 12> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  __asm__ __volatile__("BKPT #0
+	");
+  # DEBUG BEGIN_STMT
+  goto <bb 12>; [INV]
+
+  <bb 13> :
+  # DEBUG BEGIN_STMT
+  mem->used = 0;
+  # DEBUG BEGIN_STMT
+  lfree.9_16 = lfree;
+  if (mem < lfree.9_16)
+    goto <bb 14>; [INV]
+  else
+    goto <bb 15>; [INV]
+
+  <bb 14> :
+  # DEBUG BEGIN_STMT
+  lfree = mem;
+
+  <bb 15> :
+  # DEBUG BEGIN_STMT
+  _17 = lwip_stats.mem.used;
+  ram.10_18 = ram;
+  _19 = mem - ram.10_18;
+  _20 = (long unsigned int) _19;
+  _21 = mem->next;
+  _22 = _20 - _21;
+  _23 = _17 + _22;
+  lwip_stats.mem.used = _23;
+  # DEBUG BEGIN_STMT
+  plug_holes (mem);
+
+  <bb 16> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  return;
+
+}
+
+
+mem_link_valid (struct mem * mem)
+{
+  mem_size_t rmem_idx;
+  struct mem * pmem;
+  struct mem * nmem;
+  int D.6652;
+
+  <bb 2> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  rmem_idx = mem_to_ptr (mem);
+  # DEBUG BEGIN_STMT
+  _1 = mem->next;
+  nmem = ptr_to_mem (_1);
+  # DEBUG BEGIN_STMT
+  _2 = mem->prev;
+  pmem = ptr_to_mem (_2);
+  # DEBUG BEGIN_STMT
+  _3 = mem->next;
+  if (_3 > 65536)
+    goto <bb 8>; [INV]
+  else
+    goto <bb 3>; [INV]
+
+  <bb 3> :
+  _4 = mem->prev;
+  if (_4 > 65536)
+    goto <bb 8>; [INV]
+  else
+    goto <bb 4>; [INV]
+
+  <bb 4> :
+  _5 = mem->prev;
+  if (rmem_idx != _5)
+    goto <bb 5>; [INV]
+  else
+    goto <bb 6>; [INV]
+
+  <bb 5> :
+  _6 = pmem->next;
+  if (rmem_idx != _6)
+    goto <bb 8>; [INV]
+  else
+    goto <bb 6>; [INV]
+
+  <bb 6> :
+  ram_end.11_7 = ram_end;
+  if (nmem != ram_end.11_7)
+    goto <bb 7>; [INV]
+  else
+    goto <bb 9>; [INV]
+
+  <bb 7> :
+  _8 = nmem->prev;
+  if (rmem_idx != _8)
+    goto <bb 8>; [INV]
+  else
+    goto <bb 9>; [INV]
+
+  <bb 8> :
+  # DEBUG BEGIN_STMT
+  D.6652 = 0;
+  // predicted unlikely by early return (on trees) predictor.
+  goto <bb 10>; [INV]
+
+  <bb 9> :
+  # DEBUG BEGIN_STMT
+  D.6652 = 1;
+
+  <bb 10> :
+  return D.6652;
+
+}
+
+
+mem_init ()
+{
+  struct mem * mem;
+
+  <bb 2> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  ram_heap.0_1 = (unsigned int) &ram_heap;
+  _2 = ram_heap.0_1 + 15;
+  _3 = _2 & 4294967280;
+  _4 = (u8_t *) _3;
+  ram = _4;
+  # DEBUG BEGIN_STMT
+  mem = ram;
+  # DEBUG BEGIN_STMT
+  mem->next = 65536;
+  # DEBUG BEGIN_STMT
+  mem->prev = 0;
+  # DEBUG BEGIN_STMT
+  mem->used = 0;
+  # DEBUG BEGIN_STMT
+  _5 = ptr_to_mem (65536);
+  ram_end = _5;
+  # DEBUG BEGIN_STMT
+  ram_end.1_6 = ram_end;
+  ram_end.1_6->used = 1;
+  # DEBUG BEGIN_STMT
+  ram_end.2_7 = ram_end;
+  ram_end.2_7->next = 65536;
+  # DEBUG BEGIN_STMT
+  ram_end.3_8 = ram_end;
+  ram_end.3_8->prev = 65536;
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  ram.4_9 = ram;
+  lfree = ram.4_9;
+  # DEBUG BEGIN_STMT
+  lwip_stats.mem.avail = 65536;
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  return;
+
+}
+
+
+plug_holes (struct mem * mem)
+{
+  struct mem * pmem;
+  struct mem * nmem;
+
+  <bb 2> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  ram.13_1 = ram;
+  if (mem < ram.13_1)
+    goto <bb 3>; [INV]
+  else
+    goto <bb 4>; [INV]
+
+  <bb 3> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  __asm__ __volatile__("BKPT #0
+	");
+  # DEBUG BEGIN_STMT
+  goto <bb 3>; [INV]
+
+  <bb 4> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  ram_end.14_2 = ram_end;
+  if (mem >= ram_end.14_2)
+    goto <bb 5>; [INV]
+  else
+    goto <bb 6>; [INV]
+
+  <bb 5> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  __asm__ __volatile__("BKPT #0
+	");
+  # DEBUG BEGIN_STMT
+  goto <bb 5>; [INV]
+
+  <bb 6> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _3 = mem->used;
+  if (_3 != 0)
+    goto <bb 7>; [INV]
+  else
+    goto <bb 8>; [INV]
+
+  <bb 7> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  __asm__ __volatile__("BKPT #0
+	");
+  # DEBUG BEGIN_STMT
+  goto <bb 7>; [INV]
+
+  <bb 8> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _4 = mem->next;
+  if (_4 > 65536)
+    goto <bb 9>; [INV]
+  else
+    goto <bb 10>; [INV]
+
+  <bb 9> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  __asm__ __volatile__("BKPT #0
+	");
+  # DEBUG BEGIN_STMT
+  goto <bb 9>; [INV]
+
+  <bb 10> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _5 = mem->next;
+  nmem = ptr_to_mem (_5);
+  # DEBUG BEGIN_STMT
+  if (mem != nmem)
+    goto <bb 11>; [INV]
+  else
+    goto <bb 17>; [INV]
+
+  <bb 11> :
+  _6 = nmem->used;
+  if (_6 == 0)
+    goto <bb 12>; [INV]
+  else
+    goto <bb 17>; [INV]
+
+  <bb 12> :
+  ram_end.15_7 = ram_end;
+  if (nmem != ram_end.15_7)
+    goto <bb 13>; [INV]
+  else
+    goto <bb 17>; [INV]
+
+  <bb 13> :
+  # DEBUG BEGIN_STMT
+  lfree.16_8 = lfree;
+  if (nmem == lfree.16_8)
+    goto <bb 14>; [INV]
+  else
+    goto <bb 15>; [INV]
+
+  <bb 14> :
+  # DEBUG BEGIN_STMT
+  lfree = mem;
+
+  <bb 15> :
+  # DEBUG BEGIN_STMT
+  _9 = nmem->next;
+  mem->next = _9;
+  # DEBUG BEGIN_STMT
+  _10 = nmem->next;
+  if (_10 != 65536)
+    goto <bb 16>; [INV]
+  else
+    goto <bb 17>; [INV]
+
+  <bb 16> :
+  # DEBUG BEGIN_STMT
+  _11 = nmem->next;
+  _12 = ptr_to_mem (_11);
+  _13 = mem_to_ptr (mem);
+  _12->prev = _13;
+
+  <bb 17> :
+  # DEBUG BEGIN_STMT
+  _14 = mem->prev;
+  pmem = ptr_to_mem (_14);
+  # DEBUG BEGIN_STMT
+  if (pmem != mem)
+    goto <bb 18>; [INV]
+  else
+    goto <bb 23>; [INV]
+
+  <bb 18> :
+  _15 = pmem->used;
+  if (_15 == 0)
+    goto <bb 19>; [INV]
+  else
+    goto <bb 23>; [INV]
+
+  <bb 19> :
+  # DEBUG BEGIN_STMT
+  lfree.17_16 = lfree;
+  if (mem == lfree.17_16)
+    goto <bb 20>; [INV]
+  else
+    goto <bb 21>; [INV]
+
+  <bb 20> :
+  # DEBUG BEGIN_STMT
+  lfree = pmem;
+
+  <bb 21> :
+  # DEBUG BEGIN_STMT
+  _17 = mem->next;
+  pmem->next = _17;
+  # DEBUG BEGIN_STMT
+  _18 = mem->next;
+  if (_18 != 65536)
+    goto <bb 22>; [INV]
+  else
+    goto <bb 23>; [INV]
+
+  <bb 22> :
+  # DEBUG BEGIN_STMT
+  _19 = mem->next;
+  _20 = ptr_to_mem (_19);
+  _21 = mem_to_ptr (pmem);
+  _20->prev = _21;
+
+  <bb 23> :
+  return;
+
+}
+
+
+mem_to_ptr (void * mem)
+{
+  mem_size_t D.6654;
+
+  <bb 2> :
+  # DEBUG BEGIN_STMT
+  ram.12_1 = ram;
+  _2 = mem - ram.12_1;
+  D.6654 = (mem_size_t) _2;
+  return D.6654;
+
+}
+
+
+ptr_to_mem (mem_size_t ptr)
+{
+  struct mem * D.6621;
+
+  <bb 2> :
+  # DEBUG BEGIN_STMT
+  ram.5_1 = ram;
+  D.6621 = ram.5_1 + ptr;
+  return D.6621;
+
+}
+
+

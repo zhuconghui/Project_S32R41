@@ -1,0 +1,4091 @@
+Parsed function:mqtt_tcp_recv_cb.part.0
+Parsed function:mqtt_tcp_connect_cb.part.0
+Parsed function:mqtt_tcp_err_cb.part.0
+Parsed function:mqtt_tcp_sent_cb.part.0
+Parsed function:mqtt_create_request.part.0
+Parsed function:mqtt_ringbuf_advance_get_idx.isra.0.part.0
+Parsed function:mqtt_ringbuf_advance_get_idx.isra.0
+Parsed function:msg_generate_packet_id.isra.0
+Parsed function:mqtt_client_is_connected
+Parsed function:mqtt_disconnect
+Parsed function:mqtt_client_connect
+Parsed function:mqtt_client_free
+Parsed function:mqtt_client_new
+Parsed function:mqtt_set_inpub_callback
+Parsed function:mqtt_sub_unsub
+Parsed function:mqtt_publish
+Parsed function:mqtt_tcp_connect_cb
+Parsed function:mqtt_tcp_poll_cb
+Parsed function:mqtt_tcp_err_cb
+Parsed function:mqtt_tcp_sent_cb
+Parsed function:mqtt_tcp_recv_cb
+Parsed function:mqtt_parse_incoming
+Parsed function:mqtt_message_received
+Parsed function:mqtt_incomming_suback
+Parsed function:pub_ack_rec_rel_response
+Parsed function:mqtt_cyclic_timer
+Parsed function:mqtt_close
+Parsed function:mqtt_output_check_space
+Parsed function:mqtt_output_append_fixed_header
+Parsed function:mqtt_output_append_string
+Parsed function:mqtt_output_append_buf
+Parsed function:mqtt_output_append_u16
+Parsed function:mqtt_init_requests
+Parsed function:mqtt_clear_requests
+Parsed function:mqtt_request_time_elapsed
+Parsed function:mqtt_take_request
+Parsed function:mqtt_delete_request
+Parsed function:mqtt_append_request
+Parsed function:mqtt_create_request
+Parsed function:mqtt_output_send
+Parsed function:mqtt_ringbuf_len
+Parsed function:mqtt_ringbuf_put
+Dump after hash based groups
+Congruence classes: 42 (unique hash values: 42), with total: 42 items
+Class size histogram [num of members]: number of classe number of classess
+[1]: 42 classes
+
+
+Dump after WPA based types groups
+Congruence classes: 42 (unique hash values: 42), with total: 42 items
+Class size histogram [num of members]: number of classe number of classess
+[1]: 42 classes
+
+
+Worklist has been filled with: 34
+Address reference subdivision created: 0 new classes.
+Dump after callgraph-based congruence reduction
+Congruence classes: 42 (unique hash values: 42), with total: 42 items
+Class size histogram [num of members]: number of classe number of classess
+[1]: 42 classes
+
+
+Init called for 0 items (0.00%).
+Dump after full equality comparison of groups
+Congruence classes: 42 (unique hash values: 42), with total: 42 items
+Class size histogram [num of members]: number of classe number of classess
+[1]: 42 classes
+
+
+Worklist has been filled with: 34
+Address reference subdivision created: 0 new classes.
+Congruence classes: 42 (unique hash values: 42), with total: 42 items
+Class size histogram [num of members]: number of classe number of classess
+[1]: 42 classes
+
+
+
+Item count: 42
+Congruent classes before: 42, after: 42
+Average class size before: 1.00, after: 1.00
+Average non-singular class size: 0.00, count: 0
+Equal symbols: 0
+Fraction of visited symbols: 0.00%
+
+mqtt_tcp_recv_cb.part.0 (void * arg, struct tcp_pcb * pcb, struct pbuf * p)
+{
+  struct mqtt_client_t * client;
+  mqtt_connection_status_t res;
+  err_t err;
+  short unsigned int _2;
+  short unsigned int _6;
+  signed char _7;
+
+  <bb 7> [local count: 1073741824]:
+  # DEBUG D#12 s=> err
+  # DEBUG err => D#12
+
+  <bb 2> [local count: 1073741824]:
+  # DEBUG BEGIN_STMT
+  _2 = p_1(D)->tot_len;
+  tcp_recved (pcb_3(D), _2);
+  # DEBUG BEGIN_STMT
+  res_5 = mqtt_parse_incoming (arg_4(D), p_1(D));
+  # DEBUG res => res_5
+  # DEBUG BEGIN_STMT
+  pbuf_free (p_1(D));
+  # DEBUG BEGIN_STMT
+  if (res_5 != 0)
+    goto <bb 3>; [33.00%]
+  else
+    goto <bb 4>; [67.00%]
+
+  <bb 3> [local count: 354334802]:
+  # DEBUG BEGIN_STMT
+  mqtt_close (arg_4(D), res_5);
+
+  <bb 4> [local count: 1073741824]:
+  # DEBUG BEGIN_STMT
+  _6 = MEM[(struct mqtt_client_t *)arg_4(D)].keep_alive;
+  if (_6 != 0)
+    goto <bb 5>; [50.00%]
+  else
+    goto <bb 6>; [50.00%]
+
+  <bb 5> [local count: 536870913]:
+  # DEBUG BEGIN_STMT
+  MEM[(struct mqtt_client_t *)arg_4(D)].server_watchdog = 0;
+
+  <bb 6> [local count: 1073741824]:
+  # _7 = PHI <0(4), 0(5)>
+  return _7;
+
+}
+
+
+mqtt_tcp_connect_cb.part.0 (void * arg, struct tcp_pcb * tpcb)
+{
+  struct mqtt_client_t * client;
+  err_t err;
+  struct mqtt_ringbuf_t * _3;
+  struct tcp_pcb * _4;
+  signed char _5;
+
+  <bb 4> [local count: 1073741824]:
+  # DEBUG D#10 s=> err
+  # DEBUG err => D#10
+
+  <bb 2> [local count: 1073741824]:
+  # DEBUG BEGIN_STMT
+  MEM[(struct mqtt_client_t *)arg_1(D)].msg_idx = 0;
+  # DEBUG BEGIN_STMT
+  tcp_recv (tpcb_2(D), mqtt_tcp_recv_cb);
+  # DEBUG BEGIN_STMT
+  tcp_sent (tpcb_2(D), mqtt_tcp_sent_cb);
+  # DEBUG BEGIN_STMT
+  tcp_poll (tpcb_2(D), mqtt_tcp_poll_cb, 2);
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  MEM[(struct mqtt_client_t *)arg_1(D)].conn_state = 2;
+  # DEBUG BEGIN_STMT
+  sys_timeout (5000, mqtt_cyclic_timer, arg_1(D));
+  # DEBUG BEGIN_STMT
+  MEM[(struct mqtt_client_t *)arg_1(D)].cyclic_tick = 0;
+  # DEBUG BEGIN_STMT
+  _3 = &MEM[(struct mqtt_client_t *)arg_1(D)].output;
+  _4 = MEM[(struct mqtt_client_t *)arg_1(D)].conn;
+  mqtt_output_send (_3, _4);
+  # DEBUG BEGIN_STMT
+
+  <bb 3> [local count: 1073741824]:
+  # _5 = PHI <0(2)>
+  return _5;
+
+}
+
+
+mqtt_tcp_err_cb.part.0 (void * arg)
+{
+  struct mqtt_client_t * client;
+  err_t err;
+
+  <bb 3> [local count: 1073741824]:
+  # DEBUG D#8 s=> err
+  # DEBUG err => D#8
+
+  <bb 2> [local count: 1073741824]:
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  MEM[(struct mqtt_client_t *)arg_1(D)].conn = 0B;
+  # DEBUG BEGIN_STMT
+  mqtt_close (arg_1(D), 256);
+  return;
+
+}
+
+
+mqtt_tcp_sent_cb.part.0 (void * arg)
+{
+  struct mqtt_client_t * client;
+  struct mqtt_request_t * r;
+  struct tcp_pcb * tpcb;
+  u16_t len;
+  void (*<T655>) (void *, err_t) _2;
+  void * _3;
+  struct mqtt_request_t * * _5;
+  struct mqtt_ringbuf_t * _6;
+  struct tcp_pcb * _7;
+
+  <bb 8> [local count: 118111600]:
+  # DEBUG D#6 s=> tpcb
+  # DEBUG tpcb => D#6
+  # DEBUG D#5 s=> len
+  # DEBUG len => D#5
+  goto <bb 5>; [100.00%]
+
+  <bb 2> [local count: 955630223]:
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _2 = r_1->cb;
+  if (_2 != 0B)
+    goto <bb 3>; [70.00%]
+  else
+    goto <bb 4>; [30.00%]
+
+  <bb 3> [local count: 668941156]:
+  # DEBUG BEGIN_STMT
+  _3 = r_1->arg;
+  _2 (_3, 0);
+
+  <bb 4> [local count: 955630223]:
+  # DEBUG BEGIN_STMT
+  mqtt_delete_request (r_1);
+
+  <bb 5> [local count: 1073741824]:
+  # DEBUG BEGIN_STMT
+  _5 = &MEM[(struct mqtt_client_t *)arg_4(D)].pend_req_queue;
+  r_1 = mqtt_take_request (_5, 0);
+  # DEBUG r => r_1
+  if (r_1 != 0B)
+    goto <bb 2>; [89.00%]
+  else
+    goto <bb 6>; [11.00%]
+
+  <bb 6> [local count: 118111601]:
+  # DEBUG BEGIN_STMT
+  _6 = &MEM[(struct mqtt_client_t *)arg_4(D)].output;
+  _7 = MEM[(struct mqtt_client_t *)arg_4(D)].conn;
+  mqtt_output_send (_6, _7);
+
+  <bb 7> [local count: 118111601]:
+  return;
+
+}
+
+
+mqtt_create_request.part.0 (struct mqtt_request_t * r_objs, size_t r_objs_len, u16_t pkt_id, void (*mqtt_request_cb_t) (void *, err_t) cb, void * arg)
+{
+  struct mqtt_request_t * r;
+  u8_t n;
+  unsigned int _1;
+  unsigned int _2;
+  struct mqtt_request_t * _4;
+  struct mqtt_request_t * _5;
+  struct mqtt_request_t * _6;
+
+  <bb 7> [local count: 114863532]:
+  goto <bb 5>; [100.00%]
+
+  <bb 2> [local count: 1014686025]:
+  # DEBUG BEGIN_STMT
+  _2 = _1 * 16;
+  _4 = r_objs_3(D) + _2;
+  _5 = _4->next;
+  if (_4 == _5)
+    goto <bb 3>; [5.50%]
+  else
+    goto <bb 4>; [94.50%]
+
+  <bb 3> [local count: 55807731]:
+  # _6 = PHI <_4(2)>
+  # DEBUG BEGIN_STMT
+  # DEBUG r => _6
+  # DEBUG BEGIN_STMT
+  _6->next = 0B;
+  # DEBUG BEGIN_STMT
+  _6->cb = cb_7(D);
+  # DEBUG BEGIN_STMT
+  _6->arg = arg_8(D);
+  # DEBUG BEGIN_STMT
+  _6->pkt_id = pkt_id_9(D);
+  # DEBUG BEGIN_STMT
+  goto <bb 6>; [100.00%]
+
+  <bb 4> [local count: 958878293]:
+  # DEBUG BEGIN_STMT
+  n_11 = n_10 + 1;
+  # DEBUG n => n_11
+
+  <bb 5> [local count: 1073741824]:
+  # n_10 = PHI <n_11(4), 0(7)>
+  # DEBUG n => n_10
+  # DEBUG BEGIN_STMT
+  _1 = (unsigned int) n_10;
+  if (_1 < r_objs_len_12(D))
+    goto <bb 2>; [94.50%]
+  else
+    goto <bb 6>; [5.50%]
+
+  <bb 6> [local count: 114863532]:
+  # r_13 = PHI <_6(3), 0B(5)>
+  # DEBUG r => r_13
+  # DEBUG BEGIN_STMT
+  return r_13;
+
+}
+
+
+mqtt_ringbuf_advance_get_idx.isra.0.part.0 (u16_t * ISRA.31, u16_t len)
+{
+  struct mqtt_ringbuf_t * rb;
+  short unsigned int _2;
+  short unsigned int _4;
+  short unsigned int _5;
+
+  <bb 5> [local count: 1073741824]:
+
+  <bb 2> [local count: 1073741824]:
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _2 = *ISRA.31_1(D);
+  _4 = _2 + len_3(D);
+  *ISRA.31_1(D) = _4;
+  # DEBUG BEGIN_STMT
+  if (_4 > 255)
+    goto <bb 3>; [50.00%]
+  else
+    goto <bb 4>; [50.00%]
+
+  <bb 3> [local count: 536870913]:
+  # DEBUG BEGIN_STMT
+  _5 = _4 + 65280;
+  *ISRA.31_1(D) = _5;
+
+  <bb 4> [local count: 1073741824]:
+  return;
+
+}
+
+
+mqtt_ringbuf_advance_get_idx.isra.0 (u16_t * ISRA.31, u16_t len)
+{
+  <bb 2> [local count: 214748]:
+  # DEBUG rb s=> rb
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  if (len_1(D) > 255)
+    goto <bb 5>; [50.00%]
+  else
+    goto <bb 4>; [50.00%]
+
+  <bb 5> [local count: 107374]:
+
+  <bb 3> [local count: 1073741824]:
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  __asm__ __volatile__("BKPT #0
+	");
+  # DEBUG BEGIN_STMT
+
+  <bb 6> [local count: 1073741824]:
+  goto <bb 3>; [100.00%]
+
+  <bb 4> [local count: 107374]:
+  mqtt_ringbuf_advance_get_idx.isra.0.part.0 (ISRA.31_6(D), len_1(D));
+  return;
+
+}
+
+
+msg_generate_packet_id.isra.0 (u16_t * ISRA.27)
+{
+  short unsigned int _2;
+  short unsigned int _3;
+  short unsigned int _4;
+
+  <bb 5> [local count: 1073741824]:
+  # DEBUG client s=> client
+
+  <bb 2> [local count: 1073741824]:
+  # DEBUG BEGIN_STMT
+  _2 = *ISRA.27_9(D);
+  _3 = _2 + 1;
+  *ISRA.27_9(D) = _3;
+  # DEBUG BEGIN_STMT
+  if (_3 == 0)
+    goto <bb 3>; [50.00%]
+  else
+    goto <bb 4>; [50.00%]
+
+  <bb 3> [local count: 536870913]:
+  # DEBUG BEGIN_STMT
+  *ISRA.27_9(D) = 1;
+
+  <bb 4> [local count: 1073741824]:
+  # DEBUG BEGIN_STMT
+  _4 = *ISRA.27_9(D);
+  return _4;
+
+}
+
+
+mqtt_client_is_connected (struct mqtt_client_t * client)
+{
+  unsigned char _1;
+  _Bool _2;
+  u8_t _6;
+
+  <bb 2> [local count: 357913]:
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  if (client_4(D) == 0B)
+    goto <bb 5>; [30.00%]
+  else
+    goto <bb 4>; [70.00%]
+
+  <bb 5> [local count: 107374]:
+
+  <bb 3> [local count: 1073741824]:
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  __asm__ __volatile__("BKPT #0
+	");
+  # DEBUG BEGIN_STMT
+
+  <bb 6> [local count: 1073741824]:
+  goto <bb 3>; [100.00%]
+
+  <bb 4> [local count: 250539]:
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _1 = client_4(D)->conn_state;
+  _2 = _1 == 3;
+  _6 = (u8_t) _2;
+  return _6;
+
+}
+
+
+mqtt_disconnect (struct mqtt_client_t * client)
+{
+  unsigned char _1;
+
+  <bb 2> [local count: 357913]:
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  if (client_4(D) == 0B)
+    goto <bb 7>; [30.00%]
+  else
+    goto <bb 4>; [70.00%]
+
+  <bb 7> [local count: 107374]:
+
+  <bb 3> [local count: 1073741824]:
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  __asm__ __volatile__("BKPT #0
+	");
+  # DEBUG BEGIN_STMT
+
+  <bb 8> [local count: 1073741824]:
+  goto <bb 3>; [100.00%]
+
+  <bb 4> [local count: 250539]:
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _1 = client_4(D)->conn_state;
+  if (_1 != 0)
+    goto <bb 5>; [33.00%]
+  else
+    goto <bb 6>; [67.00%]
+
+  <bb 5> [local count: 82678]:
+  # DEBUG BEGIN_STMT
+  client_4(D)->conn_state = 0;
+  # DEBUG BEGIN_STMT
+  mqtt_close (client_4(D), 0);
+
+  <bb 6> [local count: 250539]:
+  return;
+
+}
+
+
+mqtt_client_connect (struct mqtt_client_t * client, const struct ip_addr_t * ip_addr, u16_t port, void (*mqtt_connection_cb_t) (struct mqtt_client_t *, void *, mqtt_connection_status_t) cb, void * arg, const struct mqtt_connect_client_info_t * client_info)
+{
+  u16_t client_pass_len;
+  u16_t client_user_len;
+  u8_t will_msg_len;
+  u8_t will_topic_len;
+  u8_t flags;
+  u16_t remaining_length;
+  u16_t client_id_length;
+  size_t len;
+  err_t err;
+  const char * _1;
+  unsigned char _2;
+  short unsigned int _3;
+  struct mqtt_request_t[4] * _4;
+  const char * _5;
+  const char * _6;
+  unsigned char _7;
+  int _8;
+  int _9;
+  signed char _10;
+  signed char _11;
+  signed char _12;
+  unsigned char _13;
+  int _14;
+  int _15;
+  int _16;
+  int _17;
+  const char * _18;
+  int _19;
+  int _20;
+  int _21;
+  int _22;
+  const char * _23;
+  int _24;
+  int _25;
+  int _26;
+  int _27;
+  const char * _28;
+  int _29;
+  int _30;
+  int _31;
+  int _32;
+  struct mqtt_ringbuf_t * _33;
+  unsigned char _34;
+  unsigned char _35;
+  struct tcp_pcb * _36;
+  struct tcp_pcb * _37;
+  struct tcp_pcb * _38;
+  struct tcp_pcb * _39;
+  short unsigned int _40;
+  const char * _41;
+  const char * _42;
+  short unsigned int _43;
+  const char * _44;
+  short unsigned int _45;
+  signed char flags.15_46;
+  const char * _47;
+  const char * _48;
+  struct tcp_pcb * _49;
+  err_t _62;
+  unsigned int _71;
+  unsigned int _72;
+  unsigned int _73;
+  unsigned int _74;
+  unsigned char _75;
+  unsigned char _76;
+  unsigned int _95;
+
+  <bb 2> [local count: 357913]:
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG remaining_length => 10
+  # DEBUG BEGIN_STMT
+  # DEBUG flags => 0
+  # DEBUG will_topic_len => 0
+  # DEBUG will_msg_len => 0
+  # DEBUG BEGIN_STMT
+  # DEBUG client_user_len => 0
+  # DEBUG client_pass_len => 0
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  if (client_77(D) == 0B)
+    goto <bb 45>; [30.00%]
+  else
+    goto <bb 4>; [70.00%]
+
+  <bb 45> [local count: 107374]:
+
+  <bb 3> [local count: 1073741824]:
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  __asm__ __volatile__("BKPT #0
+	");
+  # DEBUG BEGIN_STMT
+
+  <bb 49> [local count: 1073741824]:
+  goto <bb 3>; [100.00%]
+
+  <bb 4> [local count: 250539]:
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  if (ip_addr_79(D) == 0B)
+    goto <bb 46>; [30.00%]
+  else
+    goto <bb 6>; [70.00%]
+
+  <bb 46> [local count: 75162]:
+
+  <bb 5> [local count: 751619279]:
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  __asm__ __volatile__("BKPT #0
+	");
+  # DEBUG BEGIN_STMT
+
+  <bb 50> [local count: 751619279]:
+  goto <bb 5>; [100.00%]
+
+  <bb 6> [local count: 175378]:
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  if (client_info_80(D) == 0B)
+    goto <bb 47>; [30.00%]
+  else
+    goto <bb 8>; [70.00%]
+
+  <bb 47> [local count: 52613]:
+
+  <bb 7> [local count: 526133495]:
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  __asm__ __volatile__("BKPT #0
+	");
+  # DEBUG BEGIN_STMT
+
+  <bb 51> [local count: 526133495]:
+  goto <bb 7>; [100.00%]
+
+  <bb 8> [local count: 122764]:
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _1 = client_info_80(D)->client_id;
+  if (_1 == 0B)
+    goto <bb 48>; [30.00%]
+  else
+    goto <bb 10>; [70.00%]
+
+  <bb 48> [local count: 36829]:
+
+  <bb 9> [local count: 368293446]:
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  __asm__ __volatile__("BKPT #0
+	");
+  # DEBUG BEGIN_STMT
+
+  <bb 52> [local count: 368293446]:
+  goto <bb 9>; [100.00%]
+
+  <bb 10> [local count: 85935]:
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _2 = client_77(D)->conn_state;
+  if (_2 != 0)
+    goto <bb 44>; [2.09%]
+  else
+    goto <bb 11>; [97.91%]
+
+  <bb 11> [local count: 84139]:
+  # DEBUG BEGIN_STMT
+  memset (client_77(D), 0, 496);
+  # DEBUG BEGIN_STMT
+  client_77(D)->connect_arg = arg_82(D);
+  # DEBUG BEGIN_STMT
+  client_77(D)->connect_cb = cb_84(D);
+  # DEBUG BEGIN_STMT
+  _3 = client_info_80(D)->keep_alive;
+  client_77(D)->keep_alive = _3;
+  # DEBUG BEGIN_STMT
+  _4 = &client_77(D)->req_list;
+  mqtt_init_requests (_4, 4);
+  # DEBUG BEGIN_STMT
+  _5 = client_info_80(D)->will_topic;
+  if (_5 != 0B)
+    goto <bb 12>; [70.00%]
+  else
+    goto <bb 19>; [30.00%]
+
+  <bb 12> [local count: 58897]:
+  _6 = client_info_80(D)->will_msg;
+  if (_6 != 0B)
+    goto <bb 13>; [70.00%]
+  else
+    goto <bb 19>; [30.00%]
+
+  <bb 13> [local count: 41228]:
+  # DEBUG BEGIN_STMT
+  # DEBUG flags => 4
+  # DEBUG BEGIN_STMT
+  _7 = client_info_80(D)->will_qos;
+  _8 = (int) _7;
+  _9 = _8 << 3;
+  _10 = (signed char) _9;
+  _11 = _10 & 24;
+  _12 = _11 | 4;
+  flags_88 = (u8_t) _12;
+  # DEBUG flags => flags_88
+  # DEBUG BEGIN_STMT
+  _13 = client_info_80(D)->will_retain;
+  if (_13 != 0)
+    goto <bb 14>; [50.00%]
+  else
+    goto <bb 15>; [50.00%]
+
+  <bb 14> [local count: 20614]:
+  # DEBUG BEGIN_STMT
+  flags_89 = flags_88 | 32;
+  # DEBUG flags => flags_89
+
+  <bb 15> [local count: 41228]:
+  # flags_54 = PHI <flags_88(13), flags_89(14)>
+  # DEBUG flags => flags_54
+  # DEBUG BEGIN_STMT
+  len_90 = strlen (_5);
+  # DEBUG len => len_90
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  if (len_90 > 255)
+    goto <bb 44>; [1.04%]
+  else
+    goto <bb 16>; [98.96%]
+
+  <bb 16> [local count: 40799]:
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  if (len_90 == 0)
+    goto <bb 44>; [1.04%]
+  else
+    goto <bb 17>; [98.96%]
+
+  <bb 17> [local count: 40375]:
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  will_topic_len_91 = (u8_t) len_90;
+  # DEBUG will_topic_len => will_topic_len_91
+  # DEBUG BEGIN_STMT
+  len_92 = strlen (_6);
+  # DEBUG len => len_92
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  if (len_92 > 255)
+    goto <bb 44>; [1.04%]
+  else
+    goto <bb 18>; [98.96%]
+
+  <bb 18> [local count: 39955]:
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  will_msg_len_93 = (u8_t) len_92;
+  # DEBUG will_msg_len => will_msg_len_93
+  # DEBUG BEGIN_STMT
+  _95 = len_90;
+  _14 = (int) _95;
+  _15 = _14 + 14;
+  _71 = len_92;
+  _16 = (int) _71;
+  _17 = _15 + _16;
+  # DEBUG len => (size_t) _17
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  remaining_length_94 = (u16_t) _17;
+  # DEBUG remaining_length => remaining_length_94
+
+  <bb 19> [local count: 82866]:
+  # remaining_length_51 = PHI <10(11), 10(12), remaining_length_94(18)>
+  # flags_55 = PHI <0(11), 0(12), flags_54(18)>
+  # will_topic_len_58 = PHI <0(11), 0(12), will_topic_len_91(18)>
+  # will_msg_len_59 = PHI <0(11), 0(12), will_msg_len_93(18)>
+  # DEBUG will_msg_len => will_msg_len_59
+  # DEBUG will_topic_len => will_topic_len_58
+  # DEBUG flags => flags_55
+  # DEBUG remaining_length => remaining_length_51
+  # DEBUG BEGIN_STMT
+  _18 = client_info_80(D)->client_user;
+  if (_18 != 0B)
+    goto <bb 20>; [70.00%]
+  else
+    goto <bb 24>; [30.00%]
+
+  <bb 20> [local count: 58006]:
+  # DEBUG BEGIN_STMT
+  flags_96 = flags_55 | 128;
+  # DEBUG flags => flags_96
+  # DEBUG BEGIN_STMT
+  len_97 = strlen (_18);
+  # DEBUG len => len_97
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  if (len_97 > 65535)
+    goto <bb 44>; [1.04%]
+  else
+    goto <bb 21>; [98.96%]
+
+  <bb 21> [local count: 57403]:
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  if (len_97 == 0)
+    goto <bb 44>; [1.04%]
+  else
+    goto <bb 22>; [98.96%]
+
+  <bb 22> [local count: 56806]:
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  client_user_len_98 = (u16_t) len_97;
+  # DEBUG client_user_len => client_user_len_98
+  # DEBUG BEGIN_STMT
+  _19 = (int) remaining_length_51;
+  _20 = _19 + 2;
+  _72 = len_97;
+  _21 = (int) _72;
+  _22 = _20 + _21;
+  len_99 = (size_t) _22;
+  # DEBUG len => len_99
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  if (len_99 > 65535)
+    goto <bb 44>; [1.04%]
+  else
+    goto <bb 23>; [98.96%]
+
+  <bb 23> [local count: 56215]:
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  remaining_length_100 = (u16_t) _22;
+  # DEBUG remaining_length => remaining_length_100
+
+  <bb 24> [local count: 81075]:
+  # remaining_length_52 = PHI <remaining_length_51(19), remaining_length_100(23)>
+  # flags_56 = PHI <flags_55(19), flags_96(23)>
+  # client_user_len_60 = PHI <0(19), client_user_len_98(23)>
+  # DEBUG client_user_len => client_user_len_60
+  # DEBUG flags => flags_56
+  # DEBUG remaining_length => remaining_length_52
+  # DEBUG BEGIN_STMT
+  _23 = client_info_80(D)->client_pass;
+  if (_23 != 0B)
+    goto <bb 25>; [70.00%]
+  else
+    goto <bb 29>; [30.00%]
+
+  <bb 25> [local count: 56752]:
+  # DEBUG BEGIN_STMT
+  flags_101 = flags_56 | 64;
+  # DEBUG flags => flags_101
+  # DEBUG BEGIN_STMT
+  len_102 = strlen (_23);
+  # DEBUG len => len_102
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  if (len_102 > 65535)
+    goto <bb 44>; [1.04%]
+  else
+    goto <bb 26>; [98.96%]
+
+  <bb 26> [local count: 56162]:
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  if (len_102 == 0)
+    goto <bb 44>; [1.04%]
+  else
+    goto <bb 27>; [98.96%]
+
+  <bb 27> [local count: 55578]:
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  client_pass_len_103 = (u16_t) len_102;
+  # DEBUG client_pass_len => client_pass_len_103
+  # DEBUG BEGIN_STMT
+  _24 = (int) remaining_length_52;
+  _25 = _24 + 2;
+  _73 = len_102;
+  _26 = (int) _73;
+  _27 = _25 + _26;
+  len_104 = (size_t) _27;
+  # DEBUG len => len_104
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  if (len_104 > 65535)
+    goto <bb 44>; [1.04%]
+  else
+    goto <bb 28>; [98.96%]
+
+  <bb 28> [local count: 55000]:
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  remaining_length_105 = (u16_t) _27;
+  # DEBUG remaining_length => remaining_length_105
+
+  <bb 29> [local count: 79323]:
+  # remaining_length_53 = PHI <remaining_length_52(24), remaining_length_105(28)>
+  # flags_57 = PHI <flags_56(24), flags_101(28)>
+  # client_pass_len_61 = PHI <0(24), client_pass_len_103(28)>
+  # DEBUG client_pass_len => client_pass_len_61
+  # DEBUG flags => flags_57
+  # DEBUG remaining_length => remaining_length_53
+  # DEBUG BEGIN_STMT
+  flags_106 = flags_57 | 2;
+  # DEBUG flags => flags_106
+  # DEBUG BEGIN_STMT
+  _28 = client_info_80(D)->client_id;
+  len_107 = strlen (_28);
+  # DEBUG len => len_107
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  if (len_107 > 65535)
+    goto <bb 44>; [1.04%]
+  else
+    goto <bb 30>; [98.96%]
+
+  <bb 30> [local count: 78498]:
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  client_id_length_108 = (u16_t) len_107;
+  # DEBUG client_id_length => client_id_length_108
+  # DEBUG BEGIN_STMT
+  _29 = (int) remaining_length_53;
+  _30 = _29 + 2;
+  _74 = len_107;
+  _31 = (int) _74;
+  _32 = _30 + _31;
+  len_109 = (size_t) _32;
+  # DEBUG len => len_109
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  if (len_109 > 65535)
+    goto <bb 44>; [2.09%]
+  else
+    goto <bb 31>; [97.91%]
+
+  <bb 31> [local count: 76857]:
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  remaining_length_110 = (u16_t) _32;
+  # DEBUG remaining_length => remaining_length_110
+  # DEBUG BEGIN_STMT
+  _33 = &client_77(D)->output;
+  _34 = mqtt_output_check_space (_33, remaining_length_110);
+  if (_34 == 0)
+    goto <bb 44>; [2.09%]
+  else
+    goto <bb 32>; [97.91%]
+
+  <bb 32> [local count: 75251]:
+  # DEBUG BEGIN_STMT
+  _35 = ip_addr_79(D)->type;
+  _36 = tcp_new_ip_type (_35);
+  client_77(D)->conn = _36;
+  # DEBUG BEGIN_STMT
+  if (_36 == 0B)
+    goto <bb 44>; [0.91%]
+  else
+    goto <bb 33>; [99.09%]
+
+  <bb 33> [local count: 74566]:
+  # DEBUG BEGIN_STMT
+  tcp_arg (_36, client_77(D));
+  # DEBUG BEGIN_STMT
+  _37 = client_77(D)->conn;
+  err_116 = tcp_bind (_37, &ip_addr_any, 0);
+  # DEBUG err => err_116
+  # DEBUG BEGIN_STMT
+  if (err_116 != 0)
+    goto <bb 34>; [51.12%]
+  else
+    goto <bb 35>; [48.88%]
+
+  <bb 34> [local count: 38118]:
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  // predicted unlikely by goto predictor.
+  goto <bb 43>; [100.00%]
+
+  <bb 35> [local count: 36448]:
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _38 = client_77(D)->conn;
+  err_119 = tcp_connect (_38, ip_addr_79(D), port_117(D), mqtt_tcp_connect_cb);
+  # DEBUG err => err_119
+  # DEBUG BEGIN_STMT
+  if (err_119 != 0)
+    goto <bb 36>; [51.12%]
+  else
+    goto <bb 37>; [48.88%]
+
+  <bb 36> [local count: 18632]:
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  // predicted unlikely by goto predictor.
+  goto <bb 43>; [100.00%]
+
+  <bb 37> [local count: 17816]:
+  # DEBUG BEGIN_STMT
+  _39 = client_77(D)->conn;
+  tcp_err (_39, mqtt_tcp_err_cb);
+  # DEBUG BEGIN_STMT
+  client_77(D)->conn_state = 1;
+  # DEBUG BEGIN_STMT
+  mqtt_output_append_fixed_header (_33, 1, 0, 0, 0, remaining_length_110);
+  # DEBUG BEGIN_STMT
+  mqtt_output_append_string (_33, "MQTT", 4);
+  # DEBUG BEGIN_STMT
+  # DEBUG rb => _33
+  # DEBUG value => 4
+  # DEBUG INLINE_ENTRY mqtt_output_append_u8
+  # DEBUG BEGIN_STMT
+  mqtt_ringbuf_put (_33, 4);
+  # DEBUG rb => NULL
+  # DEBUG value => NULL
+  # DEBUG BEGIN_STMT
+  # DEBUG rb => _33
+  # DEBUG value => flags_106
+  # DEBUG INLINE_ENTRY mqtt_output_append_u8
+  # DEBUG BEGIN_STMT
+  mqtt_ringbuf_put (_33, flags_106);
+  # DEBUG rb => NULL
+  # DEBUG value => NULL
+  # DEBUG BEGIN_STMT
+  _40 = client_info_80(D)->keep_alive;
+  mqtt_output_append_u16 (_33, _40);
+  # DEBUG BEGIN_STMT
+  _41 = client_info_80(D)->client_id;
+  mqtt_output_append_string (_33, _41, client_id_length_108);
+  # DEBUG BEGIN_STMT
+  _75 = flags_57 & 4;
+  if (_75 != 0)
+    goto <bb 38>; [33.00%]
+  else
+    goto <bb 39>; [67.00%]
+
+  <bb 38> [local count: 5879]:
+  # DEBUG BEGIN_STMT
+  _42 = client_info_80(D)->will_topic;
+  _43 = (short unsigned int) will_topic_len_58;
+  mqtt_output_append_string (_33, _42, _43);
+  # DEBUG BEGIN_STMT
+  _44 = client_info_80(D)->will_msg;
+  _45 = (short unsigned int) will_msg_len_59;
+  mqtt_output_append_string (_33, _44, _45);
+
+  <bb 39> [local count: 17816]:
+  # DEBUG BEGIN_STMT
+  flags.15_46 = (signed char) flags_106;
+  if (flags.15_46 < 0)
+    goto <bb 40>; [25.50%]
+  else
+    goto <bb 41>; [74.50%]
+
+  <bb 40> [local count: 4543]:
+  # DEBUG BEGIN_STMT
+  _47 = client_info_80(D)->client_user;
+  mqtt_output_append_string (_33, _47, client_user_len_60);
+
+  <bb 41> [local count: 17816]:
+  # DEBUG BEGIN_STMT
+  _76 = flags_57 & 64;
+  if (_76 != 0)
+    goto <bb 42>; [33.00%]
+  else
+    goto <bb 44>; [67.00%]
+
+  <bb 42> [local count: 5879]:
+  # DEBUG BEGIN_STMT
+  _48 = client_info_80(D)->client_pass;
+  mqtt_output_append_string (_33, _48, client_pass_len_61);
+  goto <bb 44>; [100.00%]
+
+  <bb 43> [local count: 56750]:
+  # err_50 = PHI <err_116(34), err_119(36)>
+tcp_fail:
+  # DEBUG err => err_50
+  # DEBUG BEGIN_STMT
+  _49 = client_77(D)->conn;
+  tcp_abort (_49);
+  # DEBUG BEGIN_STMT
+  client_77(D)->conn = 0B;
+  # DEBUG BEGIN_STMT
+
+  <bb 44> [local count: 85935]:
+  # _62 = PHI <-10(10), -6(15), -6(16), -6(17), err_50(43), -6(20), -6(21), -6(22), -6(25), -6(26), -6(27), -6(29), -6(30), -1(31), -1(32), 0(42), 0(41)>
+  return _62;
+
+}
+
+
+mqtt_client_free (struct mqtt_client_t * client)
+{
+  <bb 2> [local count: 1073741824]:
+  # DEBUG BEGIN_STMT
+  mem_free (client_2(D));
+  return;
+
+}
+
+
+mqtt_client_new ()
+{
+  struct mqtt_client_t * _3;
+
+  <bb 2> [local count: 1073741824]:
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _3 = mem_calloc (1, 496);
+  return _3;
+
+}
+
+
+mqtt_set_inpub_callback (struct mqtt_client_t * client, void (*mqtt_incoming_publish_cb_t) (void *, const char *, u32_t) pub_cb, void (*mqtt_incoming_data_cb_t) (void *, const u8_t *, u16_t, u8_t) data_cb, void * arg)
+{
+  <bb 2> [local count: 357913]:
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  if (client_2(D) == 0B)
+    goto <bb 5>; [30.00%]
+  else
+    goto <bb 4>; [70.00%]
+
+  <bb 5> [local count: 107374]:
+
+  <bb 3> [local count: 1073741824]:
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  __asm__ __volatile__("BKPT #0
+	");
+  # DEBUG BEGIN_STMT
+
+  <bb 6> [local count: 1073741824]:
+  goto <bb 3>; [100.00%]
+
+  <bb 4> [local count: 250539]:
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  client_2(D)->data_cb = data_cb_4(D);
+  # DEBUG BEGIN_STMT
+  client_2(D)->pub_cb = pub_cb_6(D);
+  # DEBUG BEGIN_STMT
+  client_2(D)->inpub_arg = arg_8(D);
+  return;
+
+}
+
+
+mqtt_sub_unsub (struct mqtt_client_t * client, const char * topic, u8_t qos, void (*mqtt_request_cb_t) (void *, err_t) cb, void * arg, u8_t sub)
+{
+  struct mqtt_request_t * r;
+  u16_t pkt_id;
+  u16_t remaining_length;
+  u16_t topic_len;
+  size_t total_len;
+  size_t topic_strlen;
+  int _1;
+  int _2;
+  _Bool _3;
+  int _4;
+  int _5;
+  unsigned char _6;
+  struct mqtt_request_t[4] * _7;
+  struct mqtt_ringbuf_t * _8;
+  unsigned char _9;
+  unsigned char _10;
+  struct mqtt_request_t * * _11;
+  struct tcp_pcb * _12;
+  err_t _13;
+  u8_t iftmp.13_14;
+  unsigned int _36;
+  u16_t * _46;
+
+  <bb 2> [local count: 357913]:
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  if (client_20(D) == 0B)
+    goto <bb 20>; [30.00%]
+  else
+    goto <bb 4>; [70.00%]
+
+  <bb 20> [local count: 107374]:
+
+  <bb 3> [local count: 1073741824]:
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  __asm__ __volatile__("BKPT #0
+	");
+  # DEBUG BEGIN_STMT
+
+  <bb 23> [local count: 1073741824]:
+  goto <bb 3>; [100.00%]
+
+  <bb 4> [local count: 250539]:
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  if (topic_22(D) == 0B)
+    goto <bb 21>; [30.00%]
+  else
+    goto <bb 6>; [70.00%]
+
+  <bb 21> [local count: 75162]:
+
+  <bb 5> [local count: 751619279]:
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  __asm__ __volatile__("BKPT #0
+	");
+  # DEBUG BEGIN_STMT
+
+  <bb 24> [local count: 751619279]:
+  goto <bb 5>; [100.00%]
+
+  <bb 6> [local count: 175378]:
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  topic_strlen_23 = strlen (topic_22(D));
+  # DEBUG topic_strlen => topic_strlen_23
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  if (topic_strlen_23 > 65533)
+    goto <bb 19>; [1.04%]
+  else
+    goto <bb 7>; [98.96%]
+
+  <bb 7> [local count: 173554]:
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  topic_len_24 = (u16_t) topic_strlen_23;
+  # DEBUG topic_len => topic_len_24
+  # DEBUG BEGIN_STMT
+  _36 = topic_strlen_23;
+  _1 = (int) _36;
+  _2 = _1 + 4;
+  _3 = sub_25(D) != 0;
+  _4 = (int) _3;
+  _5 = _2 + _4;
+  total_len_26 = (size_t) _5;
+  # DEBUG total_len => total_len_26
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  if (total_len_26 > 65535)
+    goto <bb 19>; [1.04%]
+  else
+    goto <bb 8>; [98.96%]
+
+  <bb 8> [local count: 171749]:
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  remaining_length_27 = (u16_t) _5;
+  # DEBUG remaining_length => remaining_length_27
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  if (qos_28(D) > 2)
+    goto <bb 22>; [50.00%]
+  else
+    goto <bb 10>; [50.00%]
+
+  <bb 22> [local count: 85875]:
+
+  <bb 9> [local count: 858744708]:
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  __asm__ __volatile__("BKPT #0
+	");
+  # DEBUG BEGIN_STMT
+
+  <bb 25> [local count: 858744708]:
+  goto <bb 9>; [100.00%]
+
+  <bb 10> [local count: 85874]:
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _6 = client_20(D)->conn_state;
+  if (_6 == 0)
+    goto <bb 19>; [2.09%]
+  else
+    goto <bb 11>; [97.91%]
+
+  <bb 11> [local count: 84080]:
+  # DEBUG BEGIN_STMT
+  _46 = &MEM[(short unsigned int *)client_20(D) + 6B];
+  # DEBUG D#1 => client_20(D)
+  pkt_id_30 = msg_generate_packet_id.isra.0 (_46);
+  # DEBUG pkt_id => pkt_id_30
+  # DEBUG BEGIN_STMT
+  _7 = &client_20(D)->req_list;
+  r_34 = mqtt_create_request (_7, 4, pkt_id_30, cb_31(D), arg_32(D));
+  # DEBUG r => r_34
+  # DEBUG BEGIN_STMT
+  if (r_34 == 0B)
+    goto <bb 19>; [0.91%]
+  else
+    goto <bb 12>; [99.09%]
+
+  <bb 12> [local count: 83314]:
+  # DEBUG BEGIN_STMT
+  _8 = &client_20(D)->output;
+  _9 = mqtt_output_check_space (_8, remaining_length_27);
+  if (_9 == 0)
+    goto <bb 13>; [0.52%]
+  else
+    goto <bb 14>; [99.48%]
+
+  <bb 13> [local count: 433]:
+  # DEBUG BEGIN_STMT
+  mqtt_delete_request (r_34);
+  # DEBUG BEGIN_STMT
+  goto <bb 19>; [100.00%]
+
+  <bb 14> [local count: 82881]:
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  if (sub_25(D) != 0)
+    goto <bb 16>; [50.00%]
+  else
+    goto <bb 15>; [50.00%]
+
+  <bb 15> [local count: 41441]:
+
+  <bb 16> [local count: 82881]:
+  # iftmp.13_14 = PHI <8(14), 10(15)>
+  mqtt_output_append_fixed_header (_8, iftmp.13_14, 0, 1, 0, remaining_length_27);
+  # DEBUG BEGIN_STMT
+  mqtt_output_append_u16 (_8, pkt_id_30);
+  # DEBUG BEGIN_STMT
+  mqtt_output_append_string (_8, topic_22(D), topic_len_24);
+  # DEBUG BEGIN_STMT
+  if (sub_25(D) != 0)
+    goto <bb 17>; [33.00%]
+  else
+    goto <bb 18>; [67.00%]
+
+  <bb 17> [local count: 27351]:
+  # DEBUG BEGIN_STMT
+  _10 = qos_28(D);
+  # DEBUG rb => _8
+  # DEBUG value => _10
+  # DEBUG INLINE_ENTRY mqtt_output_append_u8
+  # DEBUG BEGIN_STMT
+  mqtt_ringbuf_put (_8, _10);
+
+  <bb 18> [local count: 82881]:
+  # DEBUG rb => NULL
+  # DEBUG value => NULL
+  # DEBUG BEGIN_STMT
+  _11 = &client_20(D)->pend_req_queue;
+  mqtt_append_request (_11, r_34);
+  # DEBUG BEGIN_STMT
+  _12 = client_20(D)->conn;
+  mqtt_output_send (_8, _12);
+  # DEBUG BEGIN_STMT
+
+  <bb 19> [local count: 89503]:
+  # _13 = PHI <-16(6), -16(7), -11(10), -1(11), -1(13), 0(18)>
+  return _13;
+
+}
+
+
+mqtt_publish (struct mqtt_client_t * client, const char * topic, const void * payload, u16_t payload_length, u8_t qos, u8_t retain, void (*mqtt_request_cb_t) (void *, err_t) cb, void * arg)
+{
+  u16_t remaining_length;
+  u16_t topic_len;
+  size_t total_len;
+  size_t topic_strlen;
+  u16_t pkt_id;
+  struct mqtt_request_t * r;
+  unsigned char _1;
+  int _2;
+  int _3;
+  int _4;
+  int _5;
+  struct mqtt_request_t[4] * _6;
+  struct mqtt_ringbuf_t * _7;
+  unsigned char _8;
+  struct mqtt_request_t * * _9;
+  struct tcp_pcb * _10;
+  err_t _13;
+  unsigned int _28;
+  u16_t * _49;
+
+  <bb 2> [local count: 357913]:
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  if (client_20(D) == 0B)
+    goto <bb 21>; [30.00%]
+  else
+    goto <bb 4>; [70.00%]
+
+  <bb 21> [local count: 107374]:
+
+  <bb 3> [local count: 1073741824]:
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  __asm__ __volatile__("BKPT #0
+	");
+  # DEBUG BEGIN_STMT
+
+  <bb 23> [local count: 1073741824]:
+  goto <bb 3>; [100.00%]
+
+  <bb 4> [local count: 250539]:
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  if (topic_22(D) == 0B)
+    goto <bb 22>; [30.00%]
+  else
+    goto <bb 6>; [70.00%]
+
+  <bb 22> [local count: 75162]:
+
+  <bb 5> [local count: 751619279]:
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  __asm__ __volatile__("BKPT #0
+	");
+  # DEBUG BEGIN_STMT
+
+  <bb 24> [local count: 751619279]:
+  goto <bb 5>; [100.00%]
+
+  <bb 6> [local count: 175378]:
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _1 = client_20(D)->conn_state;
+  if (_1 == 0)
+    goto <bb 20>; [1.04%]
+  else
+    goto <bb 7>; [98.96%]
+
+  <bb 7> [local count: 173554]:
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  topic_strlen_23 = strlen (topic_22(D));
+  # DEBUG topic_strlen => topic_strlen_23
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  if (topic_strlen_23 > 65533)
+    goto <bb 20>; [1.04%]
+  else
+    goto <bb 8>; [98.96%]
+
+  <bb 8> [local count: 171749]:
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  topic_len_24 = (u16_t) topic_strlen_23;
+  # DEBUG topic_len => topic_len_24
+  # DEBUG BEGIN_STMT
+  _28 = topic_strlen_23;
+  _2 = (int) _28;
+  _3 = _2 + 2;
+  _4 = (int) payload_length_25(D);
+  _5 = _3 + _4;
+  total_len_26 = (size_t) _5;
+  # DEBUG total_len => total_len_26
+  # DEBUG BEGIN_STMT
+  if (qos_27(D) != 0)
+    goto <bb 9>; [33.00%]
+  else
+    goto <bb 10>; [67.00%]
+
+  <bb 9> [local count: 56677]:
+  # DEBUG BEGIN_STMT
+  total_len_29 = total_len_26 + 2;
+  # DEBUG total_len => total_len_29
+  # DEBUG BEGIN_STMT
+  _49 = &MEM[(short unsigned int *)client_20(D) + 6B];
+  # DEBUG D#1 => client_20(D)
+  pkt_id_31 = msg_generate_packet_id.isra.0 (_49);
+  # DEBUG pkt_id => pkt_id_31
+
+  <bb 10> [local count: 171749]:
+  # pkt_id_11 = PHI <pkt_id_31(9), 0(8)>
+  # total_len_12 = PHI <total_len_29(9), total_len_26(8)>
+  # DEBUG total_len => total_len_12
+  # DEBUG pkt_id => pkt_id_11
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  if (total_len_12 > 65535)
+    goto <bb 20>; [2.09%]
+  else
+    goto <bb 11>; [97.91%]
+
+  <bb 11> [local count: 168159]:
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  remaining_length_32 = (u16_t) total_len_12;
+  # DEBUG remaining_length => remaining_length_32
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _6 = &client_20(D)->req_list;
+  r_36 = mqtt_create_request (_6, 4, pkt_id_11, cb_33(D), arg_34(D));
+  # DEBUG r => r_36
+  # DEBUG BEGIN_STMT
+  if (r_36 == 0B)
+    goto <bb 20>; [0.91%]
+  else
+    goto <bb 12>; [99.09%]
+
+  <bb 12> [local count: 166629]:
+  # DEBUG BEGIN_STMT
+  _7 = &client_20(D)->output;
+  _8 = mqtt_output_check_space (_7, remaining_length_32);
+  if (_8 == 0)
+    goto <bb 13>; [1.04%]
+  else
+    goto <bb 14>; [98.96%]
+
+  <bb 13> [local count: 1733]:
+  # DEBUG BEGIN_STMT
+  mqtt_delete_request (r_36);
+  # DEBUG BEGIN_STMT
+  goto <bb 20>; [100.00%]
+
+  <bb 14> [local count: 164896]:
+  # DEBUG BEGIN_STMT
+  mqtt_output_append_fixed_header (_7, 3, 0, qos_27(D), retain_38(D), remaining_length_32);
+  # DEBUG BEGIN_STMT
+  mqtt_output_append_string (_7, topic_22(D), topic_len_24);
+  # DEBUG BEGIN_STMT
+  if (qos_27(D) != 0)
+    goto <bb 15>; [33.00%]
+  else
+    goto <bb 16>; [67.00%]
+
+  <bb 15> [local count: 54416]:
+  # DEBUG BEGIN_STMT
+  mqtt_output_append_u16 (_7, pkt_id_11);
+
+  <bb 16> [local count: 164896]:
+  # DEBUG BEGIN_STMT
+  if (payload_42(D) != 0B)
+    goto <bb 17>; [70.00%]
+  else
+    goto <bb 19>; [30.00%]
+
+  <bb 17> [local count: 115427]:
+  if (payload_length_25(D) != 0)
+    goto <bb 18>; [33.00%]
+  else
+    goto <bb 19>; [67.00%]
+
+  <bb 18> [local count: 38091]:
+  # DEBUG BEGIN_STMT
+  mqtt_output_append_buf (_7, payload_42(D), payload_length_25(D));
+
+  <bb 19> [local count: 164896]:
+  # DEBUG BEGIN_STMT
+  _9 = &client_20(D)->pend_req_queue;
+  mqtt_append_request (_9, r_36);
+  # DEBUG BEGIN_STMT
+  _10 = client_20(D)->conn;
+  mqtt_output_send (_7, _10);
+  # DEBUG BEGIN_STMT
+
+  <bb 20> [local count: 175378]:
+  # _13 = PHI <-11(6), -16(7), -16(10), -1(11), -1(13), 0(19)>
+  return _13;
+
+}
+
+
+mqtt_tcp_connect_cb (void * arg, struct tcp_pcb * tpcb, err_t err)
+{
+  err_t _1;
+  signed char _3;
+
+  <bb 2> [local count: 1073741824]:
+  # DEBUG BEGIN_STMT
+  # DEBUG client => arg_2(D)
+  # DEBUG BEGIN_STMT
+  if (err_4(D) != 0)
+    goto <bb 4>; [51.12%]
+  else
+    goto <bb 3>; [48.88%]
+
+  <bb 3> [local count: 524845000]:
+  # DEBUG D#9 => err_4(D)
+  _3 = mqtt_tcp_connect_cb.part.0 (arg_2(D), tpcb_6(D));
+
+  <bb 4> [local count: 1073741824]:
+  # _1 = PHI <err_4(D)(2), _3(3)>
+  return _1;
+
+}
+
+
+mqtt_tcp_poll_cb (void * arg, struct tcp_pcb * tpcb)
+{
+  unsigned char _1;
+  struct mqtt_ringbuf_t * _2;
+
+  <bb 2> [local count: 1073741824]:
+  # DEBUG BEGIN_STMT
+  # DEBUG client => arg_4(D)
+  # DEBUG BEGIN_STMT
+  _1 = MEM[(struct mqtt_client_t *)arg_4(D)].conn_state;
+  if (_1 == 3)
+    goto <bb 3>; [20.24%]
+  else
+    goto <bb 4>; [79.76%]
+
+  <bb 3> [local count: 217325345]:
+  # DEBUG BEGIN_STMT
+  _2 = &MEM[(struct mqtt_client_t *)arg_4(D)].output;
+  mqtt_output_send (_2, tpcb_6(D));
+
+  <bb 4> [local count: 1073741824]:
+  # DEBUG BEGIN_STMT
+  return 0;
+
+}
+
+
+mqtt_tcp_err_cb (void * arg, err_t err)
+{
+  <bb 2> [local count: 230763]:
+  # DEBUG BEGIN_STMT
+  # DEBUG client => arg_2(D)
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  if (arg_2(D) == 0B)
+    goto <bb 5>; [46.53%]
+  else
+    goto <bb 4>; [53.47%]
+
+  <bb 5> [local count: 107374]:
+
+  <bb 3> [local count: 1073741824]:
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  __asm__ __volatile__("BKPT #0
+	");
+  # DEBUG BEGIN_STMT
+
+  <bb 6> [local count: 1073741824]:
+  goto <bb 3>; [100.00%]
+
+  <bb 4> [local count: 123389]:
+  # DEBUG D#7 => err_3(D)
+  mqtt_tcp_err_cb.part.0 (arg_2(D));
+  return;
+
+}
+
+
+mqtt_tcp_sent_cb (void * arg, struct tcp_pcb * tpcb, u16_t len)
+{
+  unsigned char _1;
+
+  <bb 2> [local count: 347387059]:
+  # DEBUG BEGIN_STMT
+  # DEBUG client => arg_3(D)
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _1 = MEM[(struct mqtt_client_t *)arg_3(D)].conn_state;
+  if (_1 == 3)
+    goto <bb 3>; [34.00%]
+  else
+    goto <bb 4>; [66.00%]
+
+  <bb 3> [local count: 118111600]:
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  MEM[(struct mqtt_client_t *)arg_3(D)].cyclic_tick = 0;
+  # DEBUG BEGIN_STMT
+  MEM[(struct mqtt_client_t *)arg_3(D)].server_watchdog = 0;
+  # DEBUG BEGIN_STMT
+  # DEBUG D#3 => tpcb_2(D)
+  # DEBUG D#4 => len_4(D)
+  mqtt_tcp_sent_cb.part.0 (arg_3(D));
+
+  <bb 4> [local count: 347387060]:
+  # DEBUG BEGIN_STMT
+  return 0;
+
+}
+
+
+mqtt_tcp_recv_cb (void * arg, struct tcp_pcb * pcb, struct pbuf * p, err_t err)
+{
+  struct tcp_pcb * _1;
+  err_t _2;
+  signed char _5;
+
+  <bb 2> [local count: 219131]:
+  # DEBUG BEGIN_STMT
+  # DEBUG client => arg_6(D)
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  if (arg_6(D) == 0B)
+    goto <bb 12>; [30.00%]
+  else
+    goto <bb 4>; [70.00%]
+
+  <bb 12> [local count: 65739]:
+
+  <bb 3> [local count: 657392954]:
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  __asm__ __volatile__("BKPT #0
+	");
+  # DEBUG BEGIN_STMT
+
+  <bb 14> [local count: 657392954]:
+  goto <bb 3>; [100.00%]
+
+  <bb 4> [local count: 153391]:
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _1 = MEM[(struct mqtt_client_t *)arg_6(D)].conn;
+  if (_1 != pcb_9(D))
+    goto <bb 13>; [70.00%]
+  else
+    goto <bb 6>; [30.00%]
+
+  <bb 13> [local count: 107374]:
+
+  <bb 5> [local count: 1073741824]:
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  __asm__ __volatile__("BKPT #0
+	");
+  # DEBUG BEGIN_STMT
+
+  <bb 15> [local count: 1073741824]:
+  goto <bb 5>; [100.00%]
+
+  <bb 6> [local count: 46017]:
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  if (p_10(D) == 0B)
+    goto <bb 7>; [17.43%]
+  else
+    goto <bb 8>; [82.57%]
+
+  <bb 7> [local count: 8021]:
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  mqtt_close (arg_6(D), 256);
+  goto <bb 11>; [100.00%]
+
+  <bb 8> [local count: 37997]:
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  if (err_11(D) != 0)
+    goto <bb 9>; [34.00%]
+  else
+    goto <bb 10>; [66.00%]
+
+  <bb 9> [local count: 12919]:
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  pbuf_free (p_10(D));
+  # DEBUG BEGIN_STMT
+  goto <bb 11>; [100.00%]
+
+  <bb 10> [local count: 25078]:
+  # DEBUG D#11 => err_11(D)
+  _5 = mqtt_tcp_recv_cb.part.0 (arg_6(D), pcb_9(D), p_10(D));
+
+  <bb 11> [local count: 46017]:
+  # _2 = PHI <err_11(D)(9), _5(10), 0(7)>
+  return _2;
+
+}
+
+
+mqtt_parse_incoming (struct mqtt_client_t * client, struct pbuf * p)
+{
+  mqtt_connection_status_t res;
+  u16_t buffer_space;
+  u16_t cpy_len;
+  u8_t b;
+  u8_t fixed_hdr_len;
+  u32_t msg_rem_len;
+  u16_t in_offset;
+  signed char b.16_1;
+  long unsigned int _2;
+  long unsigned int _3;
+  int _4;
+  long unsigned int _6;
+  long unsigned int _7;
+  long unsigned int _9;
+  int _10;
+  int _11;
+  int _12;
+  long unsigned int _13;
+  signed char b.19_14;
+  long unsigned int _15;
+  long unsigned int _16;
+  long unsigned int _17;
+  short unsigned int _19;
+  long unsigned int _20;
+  short unsigned int _22;
+  u8_t[128] * _23;
+  sizetype _24;
+  void * _25;
+  long unsigned int _26;
+  long unsigned int _27;
+  long unsigned int _28;
+  short unsigned int _30;
+  short unsigned int iftmp.20_37;
+  mqtt_connection_status_t _38;
+  unsigned char _42;
+  short unsigned int iftmp.20_45;
+
+  <bb 2> [local count: 69891998]:
+  # DEBUG BEGIN_STMT
+  # DEBUG in_offset => 0
+  # DEBUG BEGIN_STMT
+  # DEBUG msg_rem_len => 0
+  # DEBUG BEGIN_STMT
+  # DEBUG fixed_hdr_len => 0
+  # DEBUG BEGIN_STMT
+  # DEBUG b => 0
+  # DEBUG BEGIN_STMT
+  goto <bb 22>; [100.00%]
+
+  <bb 3> [local count: 1014686024]:
+  # DEBUG BEGIN_STMT
+  if (fixed_hdr_len_34 <= 1)
+    goto <bb 5>; [41.00%]
+  else
+    goto <bb 4>; [59.00%]
+
+  <bb 4> [local count: 598664755]:
+  b.16_1 = (signed char) b_36;
+  if (b.16_1 < 0)
+    goto <bb 5>; [41.00%]
+  else
+    goto <bb 13>; [59.00%]
+
+  <bb 5> [local count: 661473820]:
+  # DEBUG BEGIN_STMT
+  _2 = (long unsigned int) fixed_hdr_len_34;
+  _3 = client_49(D)->msg_idx;
+  if (_2 < _3)
+    goto <bb 6>; [67.00%]
+  else
+    goto <bb 7>; [33.00%]
+
+  <bb 6> [local count: 443187459]:
+  # DEBUG BEGIN_STMT
+  _4 = (int) fixed_hdr_len_34;
+  b_62 = client_49(D)->rx_buffer[_4];
+  # DEBUG b => b_62
+  goto <bb 8>; [100.00%]
+
+  <bb 7> [local count: 218286360]:
+  # DEBUG BEGIN_STMT
+  in_offset_57 = in_offset_32 + 1;
+  # DEBUG in_offset => in_offset_57
+  b_59 = pbuf_get_at (p_44(D), in_offset_32);
+  # DEBUG b => b_59
+  # DEBUG BEGIN_STMT
+  _6 = client_49(D)->msg_idx;
+  _7 = _6 + 1;
+  client_49(D)->msg_idx = _7;
+  client_49(D)->rx_buffer[_6] = b_59;
+
+  <bb 8> [local count: 661473820]:
+  # in_offset_31 = PHI <in_offset_32(6), in_offset_57(7)>
+  # b_35 = PHI <b_62(6), b_59(7)>
+  # DEBUG b => b_35
+  # DEBUG in_offset => in_offset_31
+  # DEBUG BEGIN_STMT
+  fixed_hdr_len_63 = fixed_hdr_len_34 + 1;
+  # DEBUG fixed_hdr_len => fixed_hdr_len_63
+  # DEBUG BEGIN_STMT
+  if (fixed_hdr_len_63 > 1)
+    goto <bb 9>; [59.00%]
+  else
+    goto <bb 21>; [41.00%]
+
+  <bb 9> [local count: 390269554]:
+  # DEBUG BEGIN_STMT
+  _42 = b_35 & 127;
+  _9 = (long unsigned int) _42;
+  _10 = (int) fixed_hdr_len_63;
+  _11 = _10 + -2;
+  _12 = _11 * 7;
+  _13 = _9 << _12;
+  msg_rem_len_64 = _13 | msg_rem_len_33;
+  # DEBUG msg_rem_len => msg_rem_len_64
+  # DEBUG BEGIN_STMT
+  b.19_14 = (signed char) b_35;
+  if (b.19_14 >= 0)
+    goto <bb 10>; [59.00%]
+  else
+    goto <bb 21>; [41.00%]
+
+  <bb 10> [local count: 230259037]:
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  if (msg_rem_len_64 == 0)
+    goto <bb 11>; [33.00%]
+  else
+    goto <bb 12>; [67.00%]
+
+  <bb 11> [local count: 75985482]:
+  # DEBUG BEGIN_STMT
+  mqtt_message_received (client_49(D), fixed_hdr_len_63, 0, 0);
+  # DEBUG BEGIN_STMT
+  client_49(D)->msg_idx = 0;
+  # DEBUG BEGIN_STMT
+  # DEBUG fixed_hdr_len => 0
+  goto <bb 21>; [100.00%]
+
+  <bb 12> [local count: 154273555]:
+  # DEBUG BEGIN_STMT
+  _15 = (long unsigned int) fixed_hdr_len_63;
+  _16 = _15 + msg_rem_len_64;
+  _17 = client_49(D)->msg_idx;
+  msg_rem_len_65 = _16 - _17;
+  # DEBUG msg_rem_len => msg_rem_len_65
+  goto <bb 21>; [100.00%]
+
+  <bb 13> [local count: 353212205]:
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _19 = _30 - in_offset_32;
+  _20 = (long unsigned int) _19;
+  if (_20 < msg_rem_len_33)
+    goto <bb 15>; [50.00%]
+  else
+    goto <bb 14>; [50.00%]
+
+  <bb 14> [local count: 176606102]:
+  iftmp.20_45 = (short unsigned int) msg_rem_len_33;
+
+  <bb 15> [local count: 353212205]:
+  # iftmp.20_37 = PHI <_19(13), iftmp.20_45(14)>
+  # DEBUG cpy_len => iftmp.20_37
+  # DEBUG BEGIN_STMT
+  _22 = (short unsigned int) fixed_hdr_len_34;
+  buffer_space_48 = 128 - _22;
+  # DEBUG buffer_space => buffer_space_48
+  # DEBUG BEGIN_STMT
+  cpy_len_8 = MIN_EXPR <buffer_space_48, iftmp.20_37>;
+  # DEBUG cpy_len => cpy_len_8
+  # DEBUG BEGIN_STMT
+  _23 = &client_49(D)->rx_buffer;
+  _24 = (sizetype) fixed_hdr_len_34;
+  _25 = _23 + _24;
+  pbuf_copy_partial (p_44(D), _25, cpy_len_8, in_offset_32);
+  # DEBUG BEGIN_STMT
+  _26 = client_49(D)->msg_idx;
+  _27 = (long unsigned int) cpy_len_8;
+  _28 = _26 + _27;
+  client_49(D)->msg_idx = _28;
+  # DEBUG BEGIN_STMT
+  in_offset_52 = cpy_len_8 + in_offset_32;
+  # DEBUG in_offset => in_offset_52
+  # DEBUG BEGIN_STMT
+  msg_rem_len_53 = msg_rem_len_33 - _27;
+  # DEBUG msg_rem_len => msg_rem_len_53
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  if (msg_rem_len_53 == 0)
+    goto <bb 17>; [33.00%]
+  else
+    goto <bb 16>; [67.00%]
+
+  <bb 16> [local count: 236652177]:
+  if (cpy_len_8 == buffer_space_48)
+    goto <bb 17>; [34.00%]
+  else
+    goto <bb 21>; [66.00%]
+
+  <bb 17> [local count: 197021768]:
+  # DEBUG BEGIN_STMT
+  res_55 = mqtt_message_received (client_49(D), fixed_hdr_len_34, cpy_len_8, msg_rem_len_53);
+  # DEBUG res => res_55
+  # DEBUG BEGIN_STMT
+  if (res_55 != 0)
+    goto <bb 18>; [5.50%]
+  else
+    goto <bb 19>; [94.50%]
+
+  <bb 18> [local count: 10836197]:
+  # res_5 = PHI <res_55(17)>
+  # DEBUG BEGIN_STMT
+  goto <bb 23>; [100.00%]
+
+  <bb 19> [local count: 186185571]:
+  # DEBUG BEGIN_STMT
+  if (msg_rem_len_53 == 0)
+    goto <bb 20>; [50.00%]
+  else
+    goto <bb 21>; [50.00%]
+
+  <bb 20> [local count: 93092785]:
+  # DEBUG BEGIN_STMT
+  client_49(D)->msg_idx = 0;
+  # DEBUG BEGIN_STMT
+  # DEBUG fixed_hdr_len => 0
+
+  <bb 21> [local count: 1003849828]:
+  # in_offset_29 = PHI <in_offset_31(9), in_offset_52(16), in_offset_31(11), in_offset_31(12), in_offset_31(8), in_offset_52(20), in_offset_52(19)>
+  # msg_rem_len_47 = PHI <msg_rem_len_64(9), msg_rem_len_53(16), 0(11), msg_rem_len_65(12), msg_rem_len_33(8), 0(20), msg_rem_len_53(19)>
+  # fixed_hdr_len_46 = PHI <fixed_hdr_len_63(9), fixed_hdr_len_34(16), 0(11), fixed_hdr_len_63(12), fixed_hdr_len_63(8), 0(20), fixed_hdr_len_34(19)>
+  # b_21 = PHI <b_35(9), b_36(16), b_35(11), b_35(12), b_35(8), b_36(20), b_36(19)>
+
+  <bb 22> [local count: 1073741824]:
+  # in_offset_32 = PHI <in_offset_29(21), 0(2)>
+  # msg_rem_len_33 = PHI <msg_rem_len_47(21), 0(2)>
+  # fixed_hdr_len_34 = PHI <fixed_hdr_len_46(21), 0(2)>
+  # b_36 = PHI <b_21(21), 0(2)>
+  # DEBUG b => b_36
+  # DEBUG fixed_hdr_len => fixed_hdr_len_34
+  # DEBUG msg_rem_len => msg_rem_len_33
+  # DEBUG in_offset => in_offset_32
+  # DEBUG BEGIN_STMT
+  _30 = p_44(D)->tot_len;
+  if (_30 > in_offset_32)
+    goto <bb 3>; [94.50%]
+  else
+    goto <bb 23>; [5.50%]
+
+  <bb 23> [local count: 69891998]:
+  # _38 = PHI <res_5(18), 0(22)>
+  return _38;
+
+}
+
+
+mqtt_message_received (struct mqtt_client_t * client, u8_t fixed_hdr_len, u16_t length, u32_t remaining_length)
+{
+  struct mqtt_request_t * r;
+  u16_t topic_len;
+  u8_t bkp;
+  u16_t after_topic;
+  u8_t * topic;
+  u8_t qos;
+  u16_t payload_length;
+  u16_t payload_offset;
+  u16_t pkt_id;
+  u8_t pkt_type;
+  size_t var_hdr_payload_bufsize;
+  u8_t * var_hdr_payload;
+  mqtt_connection_status_t res;
+  u8_t[128] * _1;
+  sizetype _2;
+  unsigned char _3;
+  long unsigned int _4;
+  int _5;
+  int _6;
+  int _7;
+  unsigned char _8;
+  unsigned char _9;
+  void (*<T643>) (struct mqtt_client_t *, void *, mqtt_connection_status_t) _10;
+  void * _11;
+  int _12;
+  int _13;
+  unsigned char _14;
+  int _15;
+  int _16;
+  unsigned char _17;
+  short unsigned int _18;
+  unsigned char _19;
+  short unsigned int _20;
+  int _21;
+  int _22;
+  int _23;
+  unsigned int _24;
+  unsigned int _25;
+  unsigned int _26;
+  unsigned int _27;
+  unsigned int _28;
+  unsigned int _29;
+  unsigned int _30;
+  unsigned int _31;
+  u8_t * _32;
+  unsigned char _33;
+  short unsigned int _34;
+  short unsigned int _35;
+  sizetype _36;
+  u8_t * _37;
+  unsigned char _38;
+  short unsigned int _39;
+  short unsigned int _40;
+  u8_t * _41;
+  void (*<T650>) (void *, const char *, u32_t) _42;
+  void * _43;
+  long unsigned int _44;
+  long unsigned int _45;
+  unsigned int _46;
+  int _47;
+  int _48;
+  int _49;
+  unsigned int _50;
+  void (*<T64b>) (void *, const u8_t *, u16_t, u8_t) _51;
+  void * _52;
+  sizetype _53;
+  u8_t * _54;
+  _Bool _55;
+  unsigned char _56;
+  short unsigned int _57;
+  unsigned char _58;
+  short unsigned int _59;
+  unsigned char _60;
+  short unsigned int _61;
+  struct mqtt_request_t * * _62;
+  unsigned char _63;
+  void (*<T655>) (void *, err_t) _64;
+  void * _65;
+  mqtt_connection_status_t _69;
+  u16_t iftmp.21_70;
+  unsigned int iftmp.22_71;
+  u8_t iftmp.23_72;
+
+  <bb 2> [local count: 214748]:
+  # DEBUG BEGIN_STMT
+  # DEBUG res => 0
+  # DEBUG BEGIN_STMT
+  _1 = &client_80(D)->rx_buffer;
+  _2 = (sizetype) fixed_hdr_len_81(D);
+  var_hdr_payload_82 = _1 + _2;
+  # DEBUG var_hdr_payload => var_hdr_payload_82
+  # DEBUG BEGIN_STMT
+  var_hdr_payload_bufsize_83 = 128 - _2;
+  # DEBUG var_hdr_payload_bufsize => var_hdr_payload_bufsize_83
+  # DEBUG BEGIN_STMT
+  _3 = client_80(D)->rx_buffer[0];
+  pkt_type_85 = _3 >> 4;
+  # DEBUG pkt_type => pkt_type_85
+  # DEBUG BEGIN_STMT
+  # DEBUG pkt_id => 0
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _4 = client_80(D)->msg_idx;
+  if (_2 > _4)
+    goto <bb 65>; [50.00%]
+  else
+    goto <bb 4>; [50.00%]
+
+  <bb 65> [local count: 107374]:
+
+  <bb 3> [local count: 1073741824]:
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  __asm__ __volatile__("BKPT #0
+	");
+  # DEBUG BEGIN_STMT
+
+  <bb 66> [local count: 1073741824]:
+  goto <bb 3>; [100.00%]
+
+  <bb 4> [local count: 107374]:
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _5 = (int) fixed_hdr_len_81(D);
+  _6 = (int) length_86(D);
+  _7 = _5 + _6;
+  if (_7 > 128)
+    goto <bb 64>; [21.72%]
+  else
+    goto <bb 5>; [78.28%]
+
+  <bb 5> [local count: 84052]:
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  if (pkt_type_85 == 2)
+    goto <bb 6>; [34.00%]
+  else
+    goto <bb 12>; [66.00%]
+
+  <bb 6> [local count: 28578]:
+  # DEBUG BEGIN_STMT
+  _8 = client_80(D)->conn_state;
+  if (_8 == 2)
+    goto <bb 7>; [34.00%]
+  else
+    goto <bb 64>; [66.00%]
+
+  <bb 7> [local count: 9716]:
+  # DEBUG BEGIN_STMT
+  if (length_86(D) <= 1)
+    goto <bb 8>; [16.16%]
+  else
+    goto <bb 9>; [83.84%]
+
+  <bb 8> [local count: 1570]:
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  // predicted unlikely by goto predictor.
+  goto <bb 64>; [100.00%]
+
+  <bb 9> [local count: 8146]:
+  # DEBUG BEGIN_STMT
+  _9 = MEM[(u8_t *)var_hdr_payload_82 + 1B];
+  res_112 = (mqtt_connection_status_t) _9;
+  # DEBUG res => res_112
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  if (res_112 == 0)
+    goto <bb 10>; [50.00%]
+  else
+    goto <bb 64>; [50.00%]
+
+  <bb 10> [local count: 4073]:
+  # DEBUG BEGIN_STMT
+  client_80(D)->cyclic_tick = 0;
+  # DEBUG BEGIN_STMT
+  client_80(D)->conn_state = 3;
+  # DEBUG BEGIN_STMT
+  _10 = client_80(D)->connect_cb;
+  if (_10 != 0B)
+    goto <bb 11>; [70.00%]
+  else
+    goto <bb 64>; [30.00%]
+
+  <bb 11> [local count: 2851]:
+  # DEBUG BEGIN_STMT
+  _11 = client_80(D)->connect_arg;
+  _10 (client_80(D), _11, 0);
+  goto <bb 64>; [100.00%]
+
+  <bb 12> [local count: 55475]:
+  # DEBUG BEGIN_STMT
+  if (pkt_type_85 == 13)
+    goto <bb 64>; [34.00%]
+  else
+    goto <bb 13>; [66.00%]
+
+  <bb 13> [local count: 36613]:
+  # DEBUG BEGIN_STMT
+  if (pkt_type_85 == 3)
+    goto <bb 14>; [34.00%]
+  else
+    goto <bb 45>; [66.00%]
+
+  <bb 14> [local count: 12448]:
+  # DEBUG BEGIN_STMT
+  # DEBUG payload_offset => 0
+  # DEBUG BEGIN_STMT
+  # DEBUG payload_length => length_86(D)
+  # DEBUG BEGIN_STMT
+  _12 = (int) _3;
+  _13 = _12 >> 1;
+  _14 = (unsigned char) _13;
+  qos_96 = _14 & 3;
+  # DEBUG qos => qos_96
+  # DEBUG BEGIN_STMT
+  if (_4 <= 128)
+    goto <bb 15>; [50.00%]
+  else
+    goto <bb 34>; [50.00%]
+
+  <bb 15> [local count: 6224]:
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  if (qos_96 != 0)
+    goto <bb 17>; [50.00%]
+  else
+    goto <bb 16>; [50.00%]
+
+  <bb 16> [local count: 3112]:
+
+  <bb 17> [local count: 6224]:
+  # iftmp.21_70 = PHI <2(15), 0(16)>
+  # DEBUG qos_len => iftmp.21_70
+  # DEBUG BEGIN_STMT
+  _15 = (int) iftmp.21_70;
+  _16 = _15 + 1;
+  if (_6 <= _16)
+    goto <bb 18>; [21.72%]
+  else
+    goto <bb 19>; [78.28%]
+
+  <bb 18> [local count: 1352]:
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  // predicted unlikely by goto predictor.
+  goto <bb 64>; [100.00%]
+
+  <bb 19> [local count: 4872]:
+  # DEBUG BEGIN_STMT
+  _17 = *var_hdr_payload_82;
+  topic_len_97 = (u16_t) _17;
+  # DEBUG topic_len => topic_len_97
+  # DEBUG BEGIN_STMT
+  _18 = topic_len_97 << 8;
+  _19 = MEM[(u8_t *)var_hdr_payload_82 + 1B];
+  _20 = (short unsigned int) _19;
+  topic_len_98 = _18 + _20;
+  # DEBUG topic_len => topic_len_98
+  # DEBUG BEGIN_STMT
+  _21 = (int) topic_len_98;
+  _22 = _15 + 2;
+  _23 = _6 - _22;
+  if (_21 > _23)
+    goto <bb 21>; [21.72%]
+  else
+    goto <bb 20>; [78.28%]
+
+  <bb 20> [local count: 3814]:
+  _24 = (unsigned int) topic_len_98;
+  _25 = (unsigned int) iftmp.21_70;
+  _26 = var_hdr_payload_bufsize_83 - _25;
+  _27 = _26 + 4294967294;
+  if (_24 > _27)
+    goto <bb 21>; [21.72%]
+  else
+    goto <bb 22>; [78.28%]
+
+  <bb 21> [local count: 1887]:
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  // predicted unlikely by goto predictor.
+  goto <bb 64>; [100.00%]
+
+  <bb 22> [local count: 2986]:
+  # DEBUG BEGIN_STMT
+  topic_99 = var_hdr_payload_82 + 2;
+  # DEBUG topic => topic_99
+  # DEBUG BEGIN_STMT
+  after_topic_100 = topic_len_98 + 2;
+  # DEBUG after_topic => after_topic_100
+  # DEBUG BEGIN_STMT
+  _28 = (unsigned int) after_topic_100;
+  if (qos_96 != 0)
+    goto <bb 24>; [50.00%]
+  else
+    goto <bb 23>; [50.00%]
+
+  <bb 23> [local count: 1493]:
+
+  <bb 24> [local count: 2986]:
+  # iftmp.22_71 = PHI <2(22), 1(23)>
+  _29 = _28 + iftmp.22_71;
+  if (_29 > var_hdr_payload_bufsize_83)
+    goto <bb 25>; [21.72%]
+  else
+    goto <bb 26>; [78.28%]
+
+  <bb 25> [local count: 648]:
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  // predicted unlikely by goto predictor.
+  goto <bb 64>; [100.00%]
+
+  <bb 26> [local count: 2337]:
+  # DEBUG BEGIN_STMT
+  if (qos_96 != 0)
+    goto <bb 27>; [50.00%]
+  else
+    goto <bb 30>; [50.00%]
+
+  <bb 27> [local count: 1169]:
+  # DEBUG BEGIN_STMT
+  _30 = (unsigned int) length_86(D);
+  _31 = _28 + 2;
+  if (_30 < _31)
+    goto <bb 28>; [21.72%]
+  else
+    goto <bb 29>; [78.28%]
+
+  <bb 28> [local count: 254]:
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  // predicted unlikely by goto predictor.
+  goto <bb 64>; [100.00%]
+
+  <bb 29> [local count: 915]:
+  # DEBUG BEGIN_STMT
+  _32 = var_hdr_payload_82 + _28;
+  _33 = *_32;
+  _34 = (short unsigned int) _33;
+  _35 = _34 << 8;
+  _36 = _28 + 1;
+  _37 = var_hdr_payload_82 + _36;
+  _38 = *_37;
+  _39 = (short unsigned int) _38;
+  _40 = _35 + _39;
+  client_80(D)->inpub_pkt_id = _40;
+  # DEBUG BEGIN_STMT
+  after_topic_103 = topic_len_98 + 4;
+  # DEBUG after_topic => after_topic_103
+  goto <bb 31>; [100.00%]
+
+  <bb 30> [local count: 1169]:
+  # DEBUG BEGIN_STMT
+  client_80(D)->inpub_pkt_id = 0;
+
+  <bb 31> [local count: 2083]:
+  # after_topic_68 = PHI <after_topic_103(29), after_topic_100(30)>
+  # DEBUG after_topic => after_topic_68
+  # DEBUG BEGIN_STMT
+  _41 = topic_99 + _24;
+  bkp_104 = *_41;
+  # DEBUG bkp => bkp_104
+  # DEBUG BEGIN_STMT
+  *_41 = 0;
+  # DEBUG BEGIN_STMT
+  payload_length_106 = length_86(D) - after_topic_68;
+  # DEBUG payload_length => payload_length_106
+  # DEBUG BEGIN_STMT
+  # DEBUG payload_offset => after_topic_68
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _42 = client_80(D)->pub_cb;
+  if (_42 != 0B)
+    goto <bb 32>; [70.00%]
+  else
+    goto <bb 33>; [30.00%]
+
+  <bb 32> [local count: 1458]:
+  # DEBUG BEGIN_STMT
+  _43 = client_80(D)->inpub_arg;
+  _44 = (long unsigned int) payload_length_106;
+  _45 = _44 + remaining_length_107(D);
+  _42 (_43, topic_99, _45);
+
+  <bb 33> [local count: 2083]:
+  # DEBUG BEGIN_STMT
+  *_41 = bkp_104;
+
+  <bb 34> [local count: 8308]:
+  # payload_offset_66 = PHI <0(14), after_topic_68(33)>
+  # payload_length_67 = PHI <length_86(D)(14), payload_length_106(33)>
+  # DEBUG payload_length => payload_length_67
+  # DEBUG payload_offset => payload_offset_66
+  # DEBUG BEGIN_STMT
+  if (payload_length_67 != 0)
+    goto <bb 36>; [50.00%]
+  else
+    goto <bb 35>; [50.00%]
+
+  <bb 35> [local count: 4154]:
+  if (remaining_length_107(D) == 0)
+    goto <bb 36>; [50.00%]
+  else
+    goto <bb 64>; [50.00%]
+
+  <bb 36> [local count: 6231]:
+  # DEBUG BEGIN_STMT
+  _46 = (unsigned int) length_86(D);
+  _47 = (int) payload_offset_66;
+  _48 = (int) payload_length_67;
+  _49 = _47 + _48;
+  _50 = (unsigned int) _49;
+  if (_46 < _50)
+    goto <bb 37>; [21.72%]
+  else
+    goto <bb 38>; [78.28%]
+
+  <bb 37> [local count: 1353]:
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  // predicted unlikely by goto predictor.
+  goto <bb 64>; [100.00%]
+
+  <bb 38> [local count: 4877]:
+  # DEBUG BEGIN_STMT
+  _51 = client_80(D)->data_cb;
+  if (_51 != 0B)
+    goto <bb 39>; [70.00%]
+  else
+    goto <bb 40>; [30.00%]
+
+  <bb 39> [local count: 3414]:
+  # DEBUG BEGIN_STMT
+  _52 = client_80(D)->inpub_arg;
+  _53 = (sizetype) payload_offset_66;
+  _54 = var_hdr_payload_82 + _53;
+  _55 = remaining_length_107(D) == 0;
+  _56 = (unsigned char) _55;
+  _51 (_52, _54, payload_length_67, _56);
+
+  <bb 40> [local count: 4877]:
+  # DEBUG BEGIN_STMT
+  if (remaining_length_107(D) == 0)
+    goto <bb 41>; [50.00%]
+  else
+    goto <bb 64>; [50.00%]
+
+  <bb 41> [local count: 2439]:
+  if (qos_96 != 0)
+    goto <bb 42>; [50.00%]
+  else
+    goto <bb 64>; [50.00%]
+
+  <bb 42> [local count: 1219]:
+  # DEBUG BEGIN_STMT
+  if (qos_96 == 1)
+    goto <bb 44>; [34.00%]
+  else
+    goto <bb 43>; [66.00%]
+
+  <bb 43> [local count: 805]:
+
+  <bb 44> [local count: 1219]:
+  # iftmp.23_72 = PHI <4(42), 5(43)>
+  # DEBUG resp_msg => iftmp.23_72
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _57 = client_80(D)->inpub_pkt_id;
+  pub_ack_rec_rel_response (client_80(D), iftmp.23_72, _57, 0);
+  goto <bb 64>; [100.00%]
+
+  <bb 45> [local count: 24165]:
+  # DEBUG BEGIN_STMT
+  _58 = *var_hdr_payload_82;
+  _59 = (short unsigned int) _58;
+  pkt_id_87 = _59 << 8;
+  # DEBUG pkt_id => pkt_id_87
+  # DEBUG BEGIN_STMT
+  _60 = MEM[(u8_t *)var_hdr_payload_82 + 1B];
+  _61 = (short unsigned int) _60;
+  pkt_id_88 = _61 | pkt_id_87;
+  # DEBUG pkt_id => pkt_id_88
+  # DEBUG BEGIN_STMT
+  if (pkt_id_88 == 0)
+    goto <bb 46>; [21.72%]
+  else
+    goto <bb 47>; [78.28%]
+
+  <bb 46> [local count: 5249]:
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  // predicted unlikely by goto predictor.
+  goto <bb 64>; [100.00%]
+
+  <bb 47> [local count: 18916]:
+  # DEBUG BEGIN_STMT
+  if (pkt_type_85 == 5)
+    goto <bb 48>; [20.24%]
+  else
+    goto <bb 49>; [79.76%]
+
+  <bb 48> [local count: 3829]:
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  pub_ack_rec_rel_response (client_80(D), 6, pkt_id_88, 1);
+  goto <bb 64>; [100.00%]
+
+  <bb 49> [local count: 15088]:
+  # DEBUG BEGIN_STMT
+  if (pkt_type_85 == 6)
+    goto <bb 50>; [20.24%]
+  else
+    goto <bb 51>; [79.76%]
+
+  <bb 50> [local count: 3054]:
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  pub_ack_rec_rel_response (client_80(D), 7, pkt_id_88, 0);
+  goto <bb 64>; [100.00%]
+
+  <bb 51> [local count: 12034]:
+  # DEBUG BEGIN_STMT
+  if (pkt_type_85 == 9)
+    goto <bb 55>; [20.24%]
+  else
+    goto <bb 52>; [79.76%]
+
+  <bb 52> [local count: 9598]:
+  if (pkt_type_85 == 11)
+    goto <bb 55>; [34.00%]
+  else
+    goto <bb 53>; [66.00%]
+
+  <bb 53> [local count: 6335]:
+  if (pkt_type_85 == 7)
+    goto <bb 55>; [34.00%]
+  else
+    goto <bb 54>; [66.00%]
+
+  <bb 54> [local count: 4181]:
+  if (pkt_type_85 == 4)
+    goto <bb 55>; [65.00%]
+  else
+    goto <bb 63>; [35.00%]
+
+  <bb 55> [local count: 10570]:
+  # DEBUG BEGIN_STMT
+  _62 = &client_80(D)->pend_req_queue;
+  r_90 = mqtt_take_request (_62, pkt_id_88);
+  # DEBUG r => r_90
+  # DEBUG BEGIN_STMT
+  if (r_90 != 0B)
+    goto <bb 56>; [70.00%]
+  else
+    goto <bb 64>; [30.00%]
+
+  <bb 56> [local count: 7399]:
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  if (pkt_type_85 == 9)
+    goto <bb 57>; [34.00%]
+  else
+    goto <bb 60>; [66.00%]
+
+  <bb 57> [local count: 2516]:
+  # DEBUG BEGIN_STMT
+  if (length_86(D) <= 2)
+    goto <bb 58>; [36.03%]
+  else
+    goto <bb 59>; [63.97%]
+
+  <bb 58> [local count: 906]:
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  // predicted unlikely by goto predictor.
+  goto <bb 64>; [100.00%]
+
+  <bb 59> [local count: 1609]:
+  # DEBUG BEGIN_STMT
+  _63 = MEM[(u8_t *)var_hdr_payload_82 + 2B];
+  mqtt_incomming_suback (r_90, _63);
+  goto <bb 62>; [100.00%]
+
+  <bb 60> [local count: 4884]:
+  # DEBUG BEGIN_STMT
+  _64 = r_90->cb;
+  if (_64 != 0B)
+    goto <bb 61>; [70.00%]
+  else
+    goto <bb 62>; [30.00%]
+
+  <bb 61> [local count: 3418]:
+  # DEBUG BEGIN_STMT
+  _65 = r_90->arg;
+  _64 (_65, 0);
+
+  <bb 62> [local count: 6493]:
+  # DEBUG BEGIN_STMT
+  mqtt_delete_request (r_90);
+  goto <bb 64>; [100.00%]
+
+  <bb 63> [local count: 1463]:
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  // predicted unlikely by goto predictor.
+
+  <bb 64> [local count: 107374]:
+  # _69 = PHI <256(4), 0(12), 256(18), 256(8), 256(63), 256(58), 256(46), 256(37), 256(28), 256(25), 256(21), 0(10), 0(55), 0(41), 0(44), 0(35), res_112(9), 0(11), 0(6), 0(62), 0(50), 0(48), 0(40)>
+  # DEBUG res => NULL
+  return _69;
+
+}
+
+
+mqtt_incomming_suback (struct mqtt_request_t * r, u8_t result)
+{
+  void (*<T655>) (void *, err_t) _1;
+  void * _2;
+  err_t iftmp.24_3;
+
+  <bb 2> [local count: 1073741824]:
+  # DEBUG BEGIN_STMT
+  _1 = r_6(D)->cb;
+  if (_1 != 0B)
+    goto <bb 3>; [70.00%]
+  else
+    goto <bb 6>; [30.00%]
+
+  <bb 3> [local count: 751619278]:
+  # DEBUG BEGIN_STMT
+  _2 = r_6(D)->arg;
+  if (result_7(D) <= 2)
+    goto <bb 5>; [50.00%]
+  else
+    goto <bb 4>; [50.00%]
+
+  <bb 4> [local count: 375809639]:
+
+  <bb 5> [local count: 751619278]:
+  # iftmp.24_3 = PHI <0(3), -13(4)>
+  _1 (_2, iftmp.24_3);
+
+  <bb 6> [local count: 1073741824]:
+  return;
+
+}
+
+
+pub_ack_rec_rel_response (struct mqtt_client_t * client, u8_t msg, u16_t pkt_id, u8_t qos)
+{
+  err_t err;
+  struct mqtt_ringbuf_t * _1;
+  unsigned char _2;
+  struct tcp_pcb * _3;
+
+  <bb 2> [local count: 1073741824]:
+  # DEBUG BEGIN_STMT
+  # DEBUG err => 0
+  # DEBUG BEGIN_STMT
+  _1 = &client_6(D)->output;
+  _2 = mqtt_output_check_space (_1, 2);
+  if (_2 != 0)
+    goto <bb 3>; [96.02%]
+  else
+    goto <bb 4>; [3.98%]
+
+  <bb 3> [local count: 1031006900]:
+  # DEBUG BEGIN_STMT
+  mqtt_output_append_fixed_header (_1, msg_9(D), 0, qos_10(D), 0, 2);
+  # DEBUG BEGIN_STMT
+  mqtt_output_append_u16 (_1, pkt_id_12(D));
+  # DEBUG BEGIN_STMT
+  _3 = client_6(D)->conn;
+  mqtt_output_send (_1, _3);
+
+  <bb 4> [local count: 1073741824]:
+  # err_4 = PHI <0(3), -1(2)>
+  # DEBUG err => err_4
+  # DEBUG BEGIN_STMT
+  return err_4;
+
+}
+
+
+mqtt_cyclic_timer (void * arg)
+{
+  u8_t restart_timer;
+  unsigned char _1;
+  short unsigned int _2;
+  short unsigned int _3;
+  int _4;
+  int _5;
+  struct mqtt_request_t * * _6;
+  short unsigned int _7;
+  short unsigned int _8;
+  short unsigned int _9;
+  int _10;
+  int _11;
+  int _12;
+  short unsigned int _13;
+  int _14;
+  int _15;
+  short unsigned int _16;
+  int _17;
+  int _18;
+  short unsigned int _19;
+  int _20;
+  struct mqtt_ringbuf_t * _21;
+  unsigned char _22;
+  short unsigned int _23;
+
+  <bb 2> [local count: 357913]:
+  # DEBUG BEGIN_STMT
+  # DEBUG restart_timer => 1
+  # DEBUG BEGIN_STMT
+  # DEBUG client => arg_29(D)
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  if (arg_29(D) == 0B)
+    goto <bb 21>; [30.00%]
+  else
+    goto <bb 4>; [70.00%]
+
+  <bb 21> [local count: 107374]:
+
+  <bb 3> [local count: 1073741824]:
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  __asm__ __volatile__("BKPT #0
+	");
+  # DEBUG BEGIN_STMT
+
+  <bb 22> [local count: 1073741824]:
+  goto <bb 3>; [100.00%]
+
+  <bb 4> [local count: 250539]:
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _1 = MEM[(struct mqtt_client_t *)arg_29(D)].conn_state;
+  if (_1 == 2)
+    goto <bb 5>; [34.00%]
+  else
+    goto <bb 8>; [66.00%]
+
+  <bb 5> [local count: 85183]:
+  # DEBUG BEGIN_STMT
+  _2 = MEM[(struct mqtt_client_t *)arg_29(D)].cyclic_tick;
+  _3 = _2 + 1;
+  MEM[(struct mqtt_client_t *)arg_29(D)].cyclic_tick = _3;
+  # DEBUG BEGIN_STMT
+  _4 = (int) _3;
+  _5 = _4 * 5;
+  if (_5 > 99)
+    goto <bb 7>; [33.00%]
+  else
+    goto <bb 19>; [67.00%]
+
+  <bb 7> [local count: 28111]:
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  mqtt_close (arg_29(D), 257);
+  # DEBUG BEGIN_STMT
+  # DEBUG restart_timer => 0
+  # DEBUG BEGIN_STMT
+  goto <bb 20>; [100.00%]
+
+  <bb 8> [local count: 165356]:
+  # DEBUG BEGIN_STMT
+  if (_1 == 3)
+    goto <bb 10>; [20.24%]
+  else
+    goto <bb 20>; [79.76%]
+
+  <bb 10> [local count: 33468]:
+  # DEBUG BEGIN_STMT
+  _6 = &MEM[(struct mqtt_client_t *)arg_29(D)].pend_req_queue;
+  mqtt_request_time_elapsed (_6, 5);
+  # DEBUG BEGIN_STMT
+  _7 = MEM[(struct mqtt_client_t *)arg_29(D)].keep_alive;
+  if (_7 != 0)
+    goto <bb 12>; [50.00%]
+  else
+    goto <bb 19>; [50.00%]
+
+  <bb 12> [local count: 16734]:
+  # DEBUG BEGIN_STMT
+  _8 = MEM[(struct mqtt_client_t *)arg_29(D)].server_watchdog;
+  _9 = _8 + 1;
+  MEM[(struct mqtt_client_t *)arg_29(D)].server_watchdog = _9;
+  # DEBUG BEGIN_STMT
+  _10 = (int) _9;
+  _11 = _10 * 5;
+  _12 = (int) _7;
+  _13 = _7 >> 1;
+  _14 = (int) _13;
+  _15 = _12 + _14;
+  if (_11 > _15)
+    goto <bb 13>; [33.00%]
+  else
+    goto <bb 14>; [67.00%]
+
+  <bb 13> [local count: 5522]:
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  mqtt_close (arg_29(D), 257);
+  # DEBUG BEGIN_STMT
+  # DEBUG restart_timer => 0
+
+  <bb 14> [local count: 16734]:
+  # restart_timer_24 = PHI <1(12), 0(13)>
+  # DEBUG restart_timer => restart_timer_24
+  # DEBUG BEGIN_STMT
+  _16 = MEM[(struct mqtt_client_t *)arg_29(D)].cyclic_tick;
+  _17 = (int) _16;
+  _18 = _17 * 5;
+  _19 = MEM[(struct mqtt_client_t *)arg_29(D)].keep_alive;
+  _20 = (int) _19;
+  if (_18 >= _20)
+    goto <bb 15>; [33.00%]
+  else
+    goto <bb 17>; [67.00%]
+
+  <bb 15> [local count: 5522]:
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _21 = &MEM[(struct mqtt_client_t *)arg_29(D)].output;
+  _22 = mqtt_output_check_space (_21, 0);
+  if (_22 != 0)
+    goto <bb 16>; [33.00%]
+  else
+    goto <bb 18>; [67.00%]
+
+  <bb 16> [local count: 1822]:
+  # DEBUG BEGIN_STMT
+  mqtt_output_append_fixed_header (_21, 12, 0, 0, 0, 0);
+  # DEBUG BEGIN_STMT
+  MEM[(struct mqtt_client_t *)arg_29(D)].cyclic_tick = 0;
+  goto <bb 18>; [100.00%]
+
+  <bb 17> [local count: 11212]:
+  # DEBUG BEGIN_STMT
+  _23 = _16 + 1;
+  MEM[(struct mqtt_client_t *)arg_29(D)].cyclic_tick = _23;
+
+  <bb 18> [local count: 16734]:
+  # DEBUG restart_timer => restart_timer_24
+  # DEBUG BEGIN_STMT
+  if (restart_timer_24 != 0)
+    goto <bb 19>; [50.00%]
+  else
+    goto <bb 20>; [50.00%]
+
+  <bb 19> [local count: 82174]:
+  # DEBUG restart_timer => NULL
+  # DEBUG BEGIN_STMT
+  sys_timeout (5000, mqtt_cyclic_timer, arg_29(D));
+
+  <bb 20> [local count: 250539]:
+  # DEBUG restart_timer => NULL
+  return;
+
+}
+
+
+mqtt_close (struct mqtt_client_t * client, mqtt_connection_status_t reason)
+{
+  err_t res;
+  struct tcp_pcb * _1;
+  struct tcp_pcb * _2;
+  struct tcp_pcb * _3;
+  struct tcp_pcb * _4;
+  struct tcp_pcb * _5;
+  struct mqtt_request_t * * _6;
+  unsigned char _7;
+  void (*<T643>) (struct mqtt_client_t *, void *, mqtt_connection_status_t) _8;
+  void * _9;
+
+  <bb 2> [local count: 357913]:
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  if (client_14(D) == 0B)
+    goto <bb 12>; [30.00%]
+  else
+    goto <bb 4>; [70.00%]
+
+  <bb 12> [local count: 107374]:
+
+  <bb 3> [local count: 1073741824]:
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  __asm__ __volatile__("BKPT #0
+	");
+  # DEBUG BEGIN_STMT
+
+  <bb 13> [local count: 1073741824]:
+  goto <bb 3>; [100.00%]
+
+  <bb 4> [local count: 250539]:
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _1 = client_14(D)->conn;
+  if (_1 != 0B)
+    goto <bb 5>; [53.47%]
+  else
+    goto <bb 8>; [46.53%]
+
+  <bb 5> [local count: 133963]:
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  tcp_recv (_1, 0B);
+  # DEBUG BEGIN_STMT
+  _2 = client_14(D)->conn;
+  tcp_err (_2, 0B);
+  # DEBUG BEGIN_STMT
+  _3 = client_14(D)->conn;
+  tcp_sent (_3, 0B);
+  # DEBUG BEGIN_STMT
+  _4 = client_14(D)->conn;
+  res_20 = tcp_close (_4);
+  # DEBUG res => res_20
+  # DEBUG BEGIN_STMT
+  if (res_20 != 0)
+    goto <bb 6>; [33.00%]
+  else
+    goto <bb 7>; [67.00%]
+
+  <bb 6> [local count: 44208]:
+  # DEBUG BEGIN_STMT
+  _5 = client_14(D)->conn;
+  tcp_abort (_5);
+
+  <bb 7> [local count: 133963]:
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  client_14(D)->conn = 0B;
+
+  <bb 8> [local count: 250539]:
+  # DEBUG BEGIN_STMT
+  _6 = &client_14(D)->pend_req_queue;
+  mqtt_clear_requests (_6);
+  # DEBUG BEGIN_STMT
+  sys_untimeout (mqtt_cyclic_timer, client_14(D));
+  # DEBUG BEGIN_STMT
+  _7 = client_14(D)->conn_state;
+  if (_7 != 0)
+    goto <bb 9>; [50.00%]
+  else
+    goto <bb 11>; [50.00%]
+
+  <bb 9> [local count: 125270]:
+  # DEBUG BEGIN_STMT
+  client_14(D)->conn_state = 0;
+  # DEBUG BEGIN_STMT
+  _8 = client_14(D)->connect_cb;
+  if (_8 != 0B)
+    goto <bb 10>; [70.00%]
+  else
+    goto <bb 11>; [30.00%]
+
+  <bb 10> [local count: 87689]:
+  # DEBUG BEGIN_STMT
+  _9 = client_14(D)->connect_arg;
+  _8 (client_14(D), _9, reason_26(D));
+
+  <bb 11> [local count: 250539]:
+  return;
+
+}
+
+
+mqtt_output_check_space (struct mqtt_ringbuf_t * rb, u16_t r_length)
+{
+  u16_t total_len;
+  int _2;
+  short unsigned int _3;
+  int _4;
+  int _5;
+  _Bool _6;
+  u8_t _16;
+
+  <bb 2> [local count: 357913]:
+  # DEBUG BEGIN_STMT
+  total_len_11 = r_length_10(D) + 1;
+  # DEBUG total_len => total_len_11
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  if (rb_12(D) == 0B)
+    goto <bb 6>; [30.00%]
+  else
+    goto <bb 7>; [70.00%]
+
+  <bb 6> [local count: 107374]:
+
+  <bb 3> [local count: 1073741824]:
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  __asm__ __volatile__("BKPT #0
+	");
+  # DEBUG BEGIN_STMT
+
+  <bb 8> [local count: 1073741824]:
+  goto <bb 3>; [100.00%]
+
+  <bb 7> [local count: 250539]:
+
+  <bb 4> [local count: 2277630]:
+  # r_length_7 = PHI <r_length_10(D)(7), r_length_15(9)>
+  # total_len_8 = PHI <total_len_11(7), total_len_14(9)>
+  # DEBUG total_len => total_len_8
+  # DEBUG r_length => r_length_7
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  total_len_14 = total_len_8 + 1;
+  # DEBUG total_len => total_len_14
+  # DEBUG BEGIN_STMT
+  r_length_15 = r_length_7 >> 7;
+  # DEBUG r_length => r_length_15
+  # DEBUG BEGIN_STMT
+  if (r_length_15 != 0)
+    goto <bb 9>; [89.00%]
+  else
+    goto <bb 5>; [11.00%]
+
+  <bb 9> [local count: 2027091]:
+  goto <bb 4>; [100.00%]
+
+  <bb 5> [local count: 250539]:
+  # total_len_1 = PHI <total_len_14(4)>
+  # DEBUG BEGIN_STMT
+  _2 = (int) total_len_1;
+  _3 = mqtt_ringbuf_len (rb_12(D));
+  _4 = (int) _3;
+  _5 = 256 - _4;
+  _6 = _2 <= _5;
+  _16 = (u8_t) _6;
+  return _16;
+
+}
+
+
+mqtt_output_append_fixed_header (struct mqtt_ringbuf_t * rb, u8_t msg_type, u8_t fdup, u8_t fqos, u8_t fretain, u16_t r_length)
+{
+  int _1;
+  int _2;
+  signed char _3;
+  int _4;
+  int _5;
+  signed char _6;
+  signed char _7;
+  signed char _8;
+  int _9;
+  int _10;
+  signed char _11;
+  signed char _12;
+  signed char _13;
+  signed char fretain.2_14;
+  signed char _15;
+  signed char _16;
+  unsigned char _17;
+  signed char _18;
+  signed char _19;
+  signed char _20;
+  unsigned char _21;
+  signed char iftmp.3_23;
+
+  <bb 2> [local count: 118111600]:
+  # DEBUG BEGIN_STMT
+  _1 = (int) msg_type_25(D);
+  _2 = _1 << 4;
+  _3 = (signed char) _2;
+  _4 = (int) fdup_26(D);
+  _5 = _4 << 3;
+  _6 = (signed char) _5;
+  _7 = _6 & 8;
+  _8 = _3 | _7;
+  _9 = (int) fqos_27(D);
+  _10 = _9 << 1;
+  _11 = (signed char) _10;
+  _12 = _11 & 6;
+  _13 = _8 | _12;
+  fretain.2_14 = (signed char) fretain_28(D);
+  _15 = fretain.2_14 & 1;
+  _16 = _13 | _15;
+  _17 = (unsigned char) _16;
+  # DEBUG rb => rb_30(D)
+  # DEBUG value => _17
+  # DEBUG INLINE_ENTRY mqtt_output_append_u8
+  # DEBUG BEGIN_STMT
+  mqtt_ringbuf_put (rb_30(D), _17);
+
+  <bb 3> [local count: 1073741824]:
+  # r_length_22 = PHI <r_length_31(D)(2), r_length_32(7)>
+  # DEBUG rb => NULL
+  # DEBUG value => NULL
+  # DEBUG r_length => r_length_22
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _18 = (signed char) r_length_22;
+  _19 = _18 & 127;
+  if (r_length_22 > 127)
+    goto <bb 5>; [50.00%]
+  else
+    goto <bb 4>; [50.00%]
+
+  <bb 4> [local count: 536870913]:
+
+  <bb 5> [local count: 1073741824]:
+  # iftmp.3_23 = PHI <-128(3), 0(4)>
+  _20 = _19 | iftmp.3_23;
+  _21 = (unsigned char) _20;
+  # DEBUG rb => rb_30(D)
+  # DEBUG value => _21
+  # DEBUG INLINE_ENTRY mqtt_output_append_u8
+  # DEBUG BEGIN_STMT
+  mqtt_ringbuf_put (rb_30(D), _21);
+  # DEBUG rb => NULL
+  # DEBUG value => NULL
+  # DEBUG BEGIN_STMT
+  r_length_32 = r_length_22 >> 7;
+  # DEBUG r_length => r_length_32
+  # DEBUG BEGIN_STMT
+  if (r_length_32 != 0)
+    goto <bb 7>; [89.00%]
+  else
+    goto <bb 6>; [11.00%]
+
+  <bb 7> [local count: 955630223]:
+  goto <bb 3>; [100.00%]
+
+  <bb 6> [local count: 118111601]:
+  return;
+
+}
+
+
+mqtt_output_append_string (struct mqtt_ringbuf_t * rb, const char * str, u16_t length)
+{
+  u16_t n;
+  short unsigned int _1;
+  unsigned char _2;
+  unsigned char _3;
+  sizetype _4;
+  const char * _5;
+  char _6;
+
+  <bb 2> [local count: 118111600]:
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _1 = length_9(D) >> 8;
+  _2 = (unsigned char) _1;
+  mqtt_ringbuf_put (rb_11(D), _2);
+  # DEBUG BEGIN_STMT
+  _3 = (unsigned char) length_9(D);
+  mqtt_ringbuf_put (rb_11(D), _3);
+  # DEBUG BEGIN_STMT
+  # DEBUG n => 0
+  goto <bb 4>; [100.00%]
+
+  <bb 3> [local count: 955630223]:
+  # DEBUG BEGIN_STMT
+  _4 = (sizetype) n_7;
+  _5 = str_14(D) + _4;
+  _6 = *_5;
+  mqtt_ringbuf_put (rb_11(D), _6);
+  # DEBUG BEGIN_STMT
+  n_16 = n_7 + 1;
+  # DEBUG n => n_16
+
+  <bb 4> [local count: 1073741824]:
+  # n_7 = PHI <0(2), n_16(3)>
+  # DEBUG n => n_7
+  # DEBUG BEGIN_STMT
+  if (n_7 < length_9(D))
+    goto <bb 3>; [89.00%]
+  else
+    goto <bb 5>; [11.00%]
+
+  <bb 5> [local count: 118111601]:
+  return;
+
+}
+
+
+mqtt_output_append_buf (struct mqtt_ringbuf_t * rb, const void * data, u16_t length)
+{
+  u16_t n;
+  sizetype _1;
+  const u8_t * _2;
+  unsigned char _3;
+
+  <bb 2> [local count: 118111600]:
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG n => 0
+  goto <bb 4>; [100.00%]
+
+  <bb 3> [local count: 955630223]:
+  # DEBUG BEGIN_STMT
+  _1 = (sizetype) n_4;
+  _2 = data_8(D) + _1;
+  _3 = *_2;
+  mqtt_ringbuf_put (rb_9(D), _3);
+  # DEBUG BEGIN_STMT
+  n_11 = n_4 + 1;
+  # DEBUG n => n_11
+
+  <bb 4> [local count: 1073741824]:
+  # n_4 = PHI <0(2), n_11(3)>
+  # DEBUG n => n_4
+  # DEBUG BEGIN_STMT
+  if (n_4 < length_7(D))
+    goto <bb 3>; [89.00%]
+  else
+    goto <bb 5>; [11.00%]
+
+  <bb 5> [local count: 118111601]:
+  return;
+
+}
+
+
+mqtt_output_append_u16 (struct mqtt_ringbuf_t * rb, u16_t value)
+{
+  short unsigned int _1;
+  unsigned char _2;
+  unsigned char _3;
+
+  <bb 2> [local count: 1073741824]:
+  # DEBUG BEGIN_STMT
+  _1 = value_4(D) >> 8;
+  _2 = (unsigned char) _1;
+  mqtt_ringbuf_put (rb_6(D), _2);
+  # DEBUG BEGIN_STMT
+  _3 = (unsigned char) value_4(D);
+  mqtt_ringbuf_put (rb_6(D), _3);
+  return;
+
+}
+
+
+mqtt_init_requests (struct mqtt_request_t * r_objs, size_t r_objs_len)
+{
+  u8_t n;
+  unsigned int _1;
+  struct mqtt_request_t * _2;
+  unsigned int _3;
+
+  <bb 2> [local count: 357913]:
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  if (r_objs_7(D) == 0B)
+    goto <bb 7>; [30.00%]
+  else
+    goto <bb 8>; [70.00%]
+
+  <bb 8> [local count: 250539]:
+  goto <bb 5>; [100.00%]
+
+  <bb 7> [local count: 107374]:
+
+  <bb 3> [local count: 1073741824]:
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  __asm__ __volatile__("BKPT #0
+	");
+  # DEBUG BEGIN_STMT
+
+  <bb 9> [local count: 1073741824]:
+  goto <bb 3>; [100.00%]
+
+  <bb 4> [local count: 2027091]:
+  # DEBUG BEGIN_STMT
+  _1 = _3 * 16;
+  _2 = r_objs_7(D) + _1;
+  _2->next = _2;
+  # DEBUG BEGIN_STMT
+  n_11 = n_4 + 1;
+  # DEBUG n => n_11
+
+  <bb 5> [local count: 2277630]:
+  # n_4 = PHI <n_11(4), 0(8)>
+  # DEBUG n => n_4
+  # DEBUG BEGIN_STMT
+  _3 = (unsigned int) n_4;
+  if (_3 < r_objs_len_9(D))
+    goto <bb 4>; [89.00%]
+  else
+    goto <bb 6>; [11.00%]
+
+  <bb 6> [local count: 250539]:
+  return;
+
+}
+
+
+mqtt_clear_requests (struct mqtt_request_t * * tail)
+{
+  struct mqtt_request_t * next;
+  struct mqtt_request_t * iter;
+
+  <bb 2> [local count: 357913]:
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  if (tail_4(D) == 0B)
+    goto <bb 8>; [30.00%]
+  else
+    goto <bb 4>; [70.00%]
+
+  <bb 8> [local count: 107374]:
+
+  <bb 3> [local count: 1073741824]:
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  __asm__ __volatile__("BKPT #0
+	");
+  # DEBUG BEGIN_STMT
+
+  <bb 9> [local count: 1073741824]:
+  goto <bb 3>; [100.00%]
+
+  <bb 4> [local count: 250539]:
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  iter_6 = *tail_4(D);
+  # DEBUG iter => iter_6
+  goto <bb 6>; [100.00%]
+
+  <bb 5> [local count: 2027091]:
+  # DEBUG BEGIN_STMT
+  next_8 = iter_1->next;
+  # DEBUG next => next_8
+  # DEBUG BEGIN_STMT
+  mqtt_delete_request (iter_1);
+  # DEBUG BEGIN_STMT
+  # DEBUG iter => next_8
+
+  <bb 6> [local count: 2277630]:
+  # iter_1 = PHI <iter_6(4), next_8(5)>
+  # DEBUG iter => iter_1
+  # DEBUG BEGIN_STMT
+  if (iter_1 != 0B)
+    goto <bb 5>; [89.00%]
+  else
+    goto <bb 7>; [11.00%]
+
+  <bb 7> [local count: 250539]:
+  # DEBUG BEGIN_STMT
+  *tail_4(D) = 0B;
+  return;
+
+}
+
+
+mqtt_request_time_elapsed (struct mqtt_request_t * * tail, u8_t t)
+{
+  struct mqtt_request_t * r;
+  short unsigned int _1;
+  short unsigned int _2;
+  unsigned char _4;
+  struct mqtt_request_t * _5;
+  void (*<T655>) (void *, err_t) _6;
+  void * _7;
+  short unsigned int _8;
+  short unsigned int _9;
+  short unsigned int _10;
+
+  <bb 2> [local count: 357913]:
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  if (tail_16(D) == 0B)
+    goto <bb 13>; [30.00%]
+  else
+    goto <bb 4>; [70.00%]
+
+  <bb 13> [local count: 107374]:
+
+  <bb 3> [local count: 1073741824]:
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  __asm__ __volatile__("BKPT #0
+	");
+  # DEBUG BEGIN_STMT
+
+  <bb 14> [local count: 1073741824]:
+  goto <bb 3>; [100.00%]
+
+  <bb 4> [local count: 250539]:
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  r_18 = *tail_16(D);
+  # DEBUG r => r_18
+  # DEBUG BEGIN_STMT
+  goto <bb 10>; [100.00%]
+
+  <bb 5> [local count: 2197248]:
+  # DEBUG BEGIN_STMT
+  _1 = (short unsigned int) t_11;
+  _2 = r_12->timeout_diff;
+  if (_1 >= _2)
+    goto <bb 6>; [96.34%]
+  else
+    goto <bb 9>; [3.66%]
+
+  <bb 6> [local count: 2116828]:
+  # DEBUG BEGIN_STMT
+  _4 = (unsigned char) _2;
+  t_21 = t_11 - _4;
+  # DEBUG t => t_21
+  # DEBUG BEGIN_STMT
+  _5 = r_12->next;
+  *tail_16(D) = _5;
+  # DEBUG BEGIN_STMT
+  _6 = r_12->cb;
+  if (_6 != 0B)
+    goto <bb 7>; [70.00%]
+  else
+    goto <bb 8>; [30.00%]
+
+  <bb 7> [local count: 1481780]:
+  # DEBUG BEGIN_STMT
+  _7 = r_12->arg;
+  _6 (_7, -3);
+
+  <bb 8> [local count: 2116828]:
+  # DEBUG BEGIN_STMT
+  mqtt_delete_request (r_12);
+  # DEBUG BEGIN_STMT
+  r_25 ={v} MEM[(struct mqtt_request_t * const volatile *)tail_16(D)];
+  # DEBUG r => r_25
+  goto <bb 10>; [100.00%]
+
+  <bb 9> [local count: 80419]:
+  # _8 = PHI <_1(5)>
+  # _9 = PHI <_2(5)>
+  # r_3 = PHI <r_12(5)>
+  # DEBUG BEGIN_STMT
+  _10 = _9 - _8;
+  r_3->timeout_diff = _10;
+  # DEBUG BEGIN_STMT
+  # DEBUG r => r_3
+  # DEBUG t => 0
+  # DEBUG BEGIN_STMT
+  goto <bb 12>; [100.00%]
+
+  <bb 10> [local count: 2367368]:
+  # t_11 = PHI <t_19(D)(4), t_21(8)>
+  # r_12 = PHI <r_18(4), r_25(8)>
+  # DEBUG r => r_12
+  # DEBUG t => t_11
+  # DEBUG BEGIN_STMT
+  if (t_11 != 0)
+    goto <bb 11>; [96.34%]
+  else
+    goto <bb 12>; [3.66%]
+
+  <bb 11> [local count: 2280722]:
+  if (r_12 != 0B)
+    goto <bb 5>; [96.34%]
+  else
+    goto <bb 12>; [3.66%]
+
+  <bb 12> [local count: 250539]:
+  return;
+
+}
+
+
+mqtt_take_request (struct mqtt_request_t * * tail, u16_t pkt_id)
+{
+  struct mqtt_request_t * prev;
+  struct mqtt_request_t * iter;
+  short unsigned int _1;
+  struct mqtt_request_t * _2;
+  struct mqtt_request_t * _3;
+  struct mqtt_request_t * _4;
+  short unsigned int _6;
+  short unsigned int _7;
+  short unsigned int _8;
+
+  <bb 2> [local count: 357913]:
+  # DEBUG BEGIN_STMT
+  # DEBUG iter => 0B
+  # DEBUG prev => 0B
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  if (tail_15(D) == 0B)
+    goto <bb 16>; [30.00%]
+  else
+    goto <bb 4>; [70.00%]
+
+  <bb 16> [local count: 107374]:
+
+  <bb 3> [local count: 1073741824]:
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  __asm__ __volatile__("BKPT #0
+	");
+  # DEBUG BEGIN_STMT
+
+  <bb 17> [local count: 1073741824]:
+  goto <bb 3>; [100.00%]
+
+  <bb 4> [local count: 250539]:
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  iter_17 = *tail_15(D);
+  # DEBUG iter => iter_17
+  goto <bb 7>; [100.00%]
+
+  <bb 5> [local count: 2213224]:
+  # DEBUG BEGIN_STMT
+  _1 = iter_9->pkt_id;
+  if (_1 == pkt_id_18(D))
+    goto <bb 8>; [5.50%]
+  else
+    goto <bb 6>; [94.50%]
+
+  <bb 6> [local count: 2091497]:
+  # DEBUG BEGIN_STMT
+  # DEBUG prev => iter_9
+  # DEBUG BEGIN_STMT
+  iter_20 = iter_9->next;
+  # DEBUG iter => iter_20
+
+  <bb 7> [local count: 2342036]:
+  # iter_9 = PHI <iter_17(4), iter_20(6)>
+  # prev_10 = PHI <0B(4), iter_9(6)>
+  # DEBUG prev => prev_10
+  # DEBUG iter => iter_9
+  # DEBUG BEGIN_STMT
+  if (iter_9 != 0B)
+    goto <bb 5>; [94.50%]
+  else
+    goto <bb 8>; [5.50%]
+
+  <bb 8> [local count: 250539]:
+  # iter_19 = PHI <iter_9(5), iter_9(7)>
+  # prev_5 = PHI <prev_10(5), prev_10(7)>
+  # DEBUG BEGIN_STMT
+  if (iter_19 != 0B)
+    goto <bb 9>; [70.00%]
+  else
+    goto <bb 15>; [30.00%]
+
+  <bb 9> [local count: 175378]:
+  # DEBUG BEGIN_STMT
+  if (prev_5 == 0B)
+    goto <bb 10>; [30.00%]
+  else
+    goto <bb 11>; [70.00%]
+
+  <bb 10> [local count: 52613]:
+  # DEBUG BEGIN_STMT
+  _2 = iter_19->next;
+  *tail_15(D) = _2;
+  goto <bb 12>; [100.00%]
+
+  <bb 11> [local count: 122764]:
+  # DEBUG BEGIN_STMT
+  _3 = iter_19->next;
+  prev_5->next = _3;
+
+  <bb 12> [local count: 175378]:
+  # DEBUG BEGIN_STMT
+  _4 = iter_19->next;
+  if (_4 != 0B)
+    goto <bb 13>; [70.00%]
+  else
+    goto <bb 14>; [30.00%]
+
+  <bb 13> [local count: 122764]:
+  # DEBUG BEGIN_STMT
+  _6 = _4->timeout_diff;
+  _7 = iter_19->timeout_diff;
+  _8 = _6 + _7;
+  _4->timeout_diff = _8;
+
+  <bb 14> [local count: 175378]:
+  # DEBUG BEGIN_STMT
+  iter_19->next = 0B;
+
+  <bb 15> [local count: 250539]:
+  # DEBUG BEGIN_STMT
+  return iter_19;
+
+}
+
+
+mqtt_delete_request (struct mqtt_request_t * r)
+{
+  <bb 2> [local count: 1073741824]:
+  # DEBUG BEGIN_STMT
+  if (r_2(D) != 0B)
+    goto <bb 3>; [70.00%]
+  else
+    goto <bb 4>; [30.00%]
+
+  <bb 3> [local count: 751619278]:
+  # DEBUG BEGIN_STMT
+  r_2(D)->next = r_2(D);
+
+  <bb 4> [local count: 1073741824]:
+  return;
+
+}
+
+
+mqtt_append_request (struct mqtt_request_t * * tail, struct mqtt_request_t * r)
+{
+  struct mqtt_request_t * iter;
+  s16_t time_before;
+  struct mqtt_request_t * head;
+  short unsigned int _1;
+  unsigned short time_before.6_2;
+  unsigned short _3;
+  short unsigned int time_before.7_4;
+  short unsigned int _5;
+
+  <bb 2> [local count: 306783]:
+  # DEBUG BEGIN_STMT
+  # DEBUG head => 0B
+  # DEBUG BEGIN_STMT
+  # DEBUG time_before => 0
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  if (tail_13(D) == 0B)
+    goto <bb 13>; [30.00%]
+  else
+    goto <bb 4>; [70.00%]
+
+  <bb 13> [local count: 92035]:
+
+  <bb 3> [local count: 920350130]:
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  __asm__ __volatile__("BKPT #0
+	");
+  # DEBUG BEGIN_STMT
+
+  <bb 15> [local count: 920350130]:
+  goto <bb 3>; [100.00%]
+
+  <bb 4> [local count: 214748]:
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  iter_15 = *tail_13(D);
+  # DEBUG iter => iter_15
+  goto <bb 6>; [100.00%]
+
+  <bb 5> [local count: 1737507]:
+  # DEBUG BEGIN_STMT
+  _1 = iter_8->timeout_diff;
+  time_before.6_2 = (unsigned short) time_before_7;
+  _3 = _1 + time_before.6_2;
+  time_before_21 = (s16_t) _3;
+  # DEBUG time_before => time_before_21
+  # DEBUG BEGIN_STMT
+  # DEBUG head => iter_8
+  # DEBUG BEGIN_STMT
+  iter_23 = iter_8->next;
+  # DEBUG iter => iter_23
+
+  <bb 6> [local count: 1952255]:
+  # head_6 = PHI <0B(4), iter_8(5)>
+  # time_before_7 = PHI <0(4), time_before_21(5)>
+  # iter_8 = PHI <iter_15(4), iter_23(5)>
+  # DEBUG iter => iter_8
+  # DEBUG time_before => time_before_7
+  # DEBUG head => head_6
+  # DEBUG BEGIN_STMT
+  if (iter_8 != 0B)
+    goto <bb 5>; [89.00%]
+  else
+    goto <bb 7>; [11.00%]
+
+  <bb 7> [local count: 214748]:
+  # head_22 = PHI <head_6(6)>
+  # time_before_12 = PHI <time_before_7(6)>
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  if (time_before_12 > 30)
+    goto <bb 14>; [50.00%]
+  else
+    goto <bb 9>; [50.00%]
+
+  <bb 14> [local count: 107374]:
+
+  <bb 8> [local count: 1073741824]:
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  __asm__ __volatile__("BKPT #0
+	");
+  # DEBUG BEGIN_STMT
+
+  <bb 16> [local count: 1073741824]:
+  goto <bb 8>; [100.00%]
+
+  <bb 9> [local count: 107374]:
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  time_before.7_4 = (short unsigned int) time_before_12;
+  _5 = 30 - time_before.7_4;
+  r_16(D)->timeout_diff = _5;
+  # DEBUG BEGIN_STMT
+  if (head_22 == 0B)
+    goto <bb 10>; [30.00%]
+  else
+    goto <bb 11>; [70.00%]
+
+  <bb 10> [local count: 32212]:
+  # DEBUG BEGIN_STMT
+  *tail_13(D) = r_16(D);
+  goto <bb 12>; [100.00%]
+
+  <bb 11> [local count: 75162]:
+  # DEBUG BEGIN_STMT
+  head_22->next = r_16(D);
+
+  <bb 12> [local count: 107374]:
+  return;
+
+}
+
+
+mqtt_create_request (struct mqtt_request_t * r_objs, size_t r_objs_len, u16_t pkt_id, void (*mqtt_request_cb_t) (void *, err_t) cb, void * arg)
+{
+  u8_t n;
+  struct mqtt_request_t * r;
+
+  <bb 2> [local count: 357913]:
+  # DEBUG BEGIN_STMT
+  # DEBUG r => 0B
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  if (r_objs_5(D) == 0B)
+    goto <bb 5>; [30.00%]
+  else
+    goto <bb 4>; [70.00%]
+
+  <bb 5> [local count: 107374]:
+
+  <bb 3> [local count: 1073741824]:
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  __asm__ __volatile__("BKPT #0
+	");
+  # DEBUG BEGIN_STMT
+
+  <bb 6> [local count: 1073741824]:
+  goto <bb 3>; [100.00%]
+
+  <bb 4> [local count: 250539]:
+  # n_3 = PHI <0(2)>
+  r_1 = mqtt_create_request.part.0 (r_objs_5(D), r_objs_len_7(D), pkt_id_10(D), cb_8(D), arg_9(D));
+  # DEBUG r => r_1
+  # DEBUG BEGIN_STMT
+  return r_1;
+
+}
+
+
+mqtt_output_send (struct mqtt_ringbuf_t * rb, struct tcp_pcb * tpcb)
+{
+  u16_t send_len;
+  u8_t wrap;
+  err_t err;
+  short unsigned int _1;
+  int _2;
+  short unsigned int _3;
+  int _4;
+  int _5;
+  _Bool _6;
+  short unsigned int _7;
+  int _8;
+  short unsigned int _9;
+  int _10;
+  short unsigned int _11;
+  int _12;
+  int _13;
+  u16_t iftmp.8_18;
+  u8_t iftmp.9_19;
+  u16_t iftmp.10_20;
+  int iftmp.11_21;
+  u16_t iftmp.8_26;
+  u8_t * _30;
+  u8_t * _34;
+  u16_t iftmp.12_35;
+  u16_t * _40;
+  u16_t * _41;
+
+  <bb 2> [local count: 1073741823]:
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG wrap => 0
+  # DEBUG BEGIN_STMT
+  _1 = mqtt_ringbuf_len (rb_25(D));
+  _2 = (int) _1;
+  _3 = rb_25(D)->get;
+  _4 = (int) _3;
+  _5 = 256 - _4;
+  if (_2 < _5)
+    goto <bb 4>; [50.00%]
+  else
+    goto <bb 3>; [50.00%]
+
+  <bb 3> [local count: 536870911]:
+  iftmp.8_26 = 256 - _3;
+
+  <bb 4> [local count: 1073741823]:
+  # iftmp.8_18 = PHI <_1(2), iftmp.8_26(3)>
+  # DEBUG ringbuf_lin_len => iftmp.8_18
+  # DEBUG BEGIN_STMT
+  send_len_28 = tpcb_27(D)->snd_buf;
+  # DEBUG send_len => send_len_28
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  if (send_len_28 == 0)
+    goto <bb 18>; [34.00%]
+  else
+    goto <bb 5>; [66.00%]
+
+  <bb 5> [local count: 708669604]:
+  if (iftmp.8_18 == 0)
+    goto <bb 18>; [34.00%]
+  else
+    goto <bb 6>; [66.00%]
+
+  <bb 6> [local count: 467721938]:
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  if (iftmp.8_18 < send_len_28)
+    goto <bb 7>; [50.00%]
+  else
+    goto <bb 8>; [50.00%]
+
+  <bb 7> [local count: 233860969]:
+  # DEBUG BEGIN_STMT
+  # DEBUG send_len => iftmp.8_18
+  # DEBUG BEGIN_STMT
+  _6 = _1 > iftmp.8_18;
+  wrap_29 = (u8_t) _6;
+  # DEBUG wrap => wrap_29
+
+  <bb 8> [local count: 467721938]:
+  # wrap_15 = PHI <0(6), wrap_29(7)>
+  # send_len_16 = PHI <send_len_28(6), iftmp.8_18(7)>
+  # DEBUG send_len => send_len_16
+  # DEBUG wrap => wrap_15
+  # DEBUG BEGIN_STMT
+  # DEBUG rb => rb_25(D)
+  # DEBUG INLINE_ENTRY mqtt_ringbuf_get_ptr
+  # DEBUG BEGIN_STMT
+  _34 = &rb_25(D)->buf[_4];
+  # DEBUG rb => NULL
+  if (wrap_15 != 0)
+    goto <bb 10>; [50.00%]
+  else
+    goto <bb 9>; [50.00%]
+
+  <bb 9> [local count: 233860969]:
+
+  <bb 10> [local count: 467721938]:
+  # iftmp.9_19 = PHI <3(8), 1(9)>
+  err_32 = tcp_write (tpcb_27(D), _34, send_len_16, iftmp.9_19);
+  # DEBUG err => err_32
+  # DEBUG BEGIN_STMT
+  if (err_32 == 0)
+    goto <bb 11>; [50.00%]
+  else
+    goto <bb 16>; [50.00%]
+
+  <bb 11> [local count: 233860969]:
+  if (wrap_15 != 0)
+    goto <bb 12>; [33.00%]
+  else
+    goto <bb 16>; [67.00%]
+
+  <bb 12> [local count: 77174120]:
+  # DEBUG BEGIN_STMT
+  _40 = &MEM[(short unsigned int *)rb_25(D) + 2B];
+  # DEBUG D#2 => rb_25(D)
+  mqtt_ringbuf_advance_get_idx.isra.0 (_40, send_len_16);
+  # DEBUG BEGIN_STMT
+  _7 = tpcb_27(D)->snd_buf;
+  _8 = (int) _7;
+  _9 = mqtt_ringbuf_len (rb_25(D));
+  _10 = (int) _9;
+  _11 = rb_25(D)->get;
+  _12 = (int) _11;
+  _13 = 256 - _12;
+  iftmp.11_21 = MIN_EXPR <_13, _10>;
+  if (_8 < iftmp.11_21)
+    goto <bb 15>; [50.00%]
+  else
+    goto <bb 13>; [50.00%]
+
+  <bb 13> [local count: 38587060]:
+  if (_10 < _13)
+    goto <bb 15>; [50.00%]
+  else
+    goto <bb 14>; [50.00%]
+
+  <bb 14> [local count: 19293530]:
+  iftmp.12_35 = 256 - _11;
+
+  <bb 15> [local count: 77174120]:
+  # iftmp.10_20 = PHI <_7(12), iftmp.12_35(14), _9(13)>
+  # DEBUG send_len => iftmp.10_20
+  # DEBUG BEGIN_STMT
+  # DEBUG rb => rb_25(D)
+  # DEBUG INLINE_ENTRY mqtt_ringbuf_get_ptr
+  # DEBUG BEGIN_STMT
+  _30 = &rb_25(D)->buf[_12];
+  # DEBUG rb => NULL
+  err_37 = tcp_write (tpcb_27(D), _30, iftmp.10_20, 1);
+  # DEBUG err => err_37
+
+  <bb 16> [local count: 467721938]:
+  # err_14 = PHI <err_32(10), 0(11), err_37(15)>
+  # send_len_17 = PHI <send_len_16(10), send_len_16(11), iftmp.10_20(15)>
+  # DEBUG send_len => send_len_17
+  # DEBUG err => err_14
+  # DEBUG BEGIN_STMT
+  if (err_14 == 0)
+    goto <bb 17>; [33.00%]
+  else
+    goto <bb 18>; [67.00%]
+
+  <bb 17> [local count: 154348240]:
+  # DEBUG BEGIN_STMT
+  _41 = &MEM[(short unsigned int *)rb_25(D) + 2B];
+  # DEBUG D#2 => rb_25(D)
+  mqtt_ringbuf_advance_get_idx.isra.0 (_41, send_len_17);
+  # DEBUG BEGIN_STMT
+  tcp_output (tpcb_27(D));
+
+  <bb 18> [local count: 1073741824]:
+  # DEBUG BEGIN_STMT
+  return;
+
+}
+
+
+mqtt_ringbuf_len (struct mqtt_ringbuf_t * rb)
+{
+  u32_t len;
+  short unsigned int _1;
+  int _2;
+  short unsigned int _3;
+  int _4;
+  int _5;
+  u16_t _11;
+
+  <bb 2> [local count: 1073741824]:
+  # DEBUG BEGIN_STMT
+  _1 = rb_8(D)->put;
+  _2 = (int) _1;
+  _3 = rb_8(D)->get;
+  _4 = (int) _3;
+  _5 = _2 - _4;
+  len_9 = (u32_t) _5;
+  # DEBUG len => len_9
+  # DEBUG BEGIN_STMT
+  if (len_9 > 65535)
+    goto <bb 3>; [50.00%]
+  else
+    goto <bb 4>; [50.00%]
+
+  <bb 3> [local count: 536870913]:
+  # DEBUG BEGIN_STMT
+  len_10 = len_9 + 256;
+  # DEBUG len => len_10
+
+  <bb 4> [local count: 1073741824]:
+  # len_6 = PHI <len_9(2), len_10(3)>
+  # DEBUG len => len_6
+  # DEBUG BEGIN_STMT
+  _11 = (u16_t) len_6;
+  return _11;
+
+}
+
+
+mqtt_ringbuf_put (struct mqtt_ringbuf_t * rb, u8_t item)
+{
+  short unsigned int _1;
+  int _2;
+  short unsigned int _3;
+
+  <bb 2> [local count: 1073741824]:
+  # DEBUG BEGIN_STMT
+  _1 = rb_6(D)->put;
+  _2 = (int) _1;
+  rb_6(D)->buf[_2] = item_7(D);
+  # DEBUG BEGIN_STMT
+  _3 = _1 + 1;
+  rb_6(D)->put = _3;
+  # DEBUG BEGIN_STMT
+  if (_3 > 255)
+    goto <bb 3>; [50.00%]
+  else
+    goto <bb 4>; [50.00%]
+
+  <bb 3> [local count: 536870913]:
+  # DEBUG BEGIN_STMT
+  rb_6(D)->put = 0;
+
+  <bb 4> [local count: 1073741824]:
+  return;
+
+}
+
+

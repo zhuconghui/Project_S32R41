@@ -1,0 +1,762 @@
+icmp_send_response (struct pbuf * p, u8_t type, u8_t code)
+{
+  u16_t response_pkt_len;
+  struct netif * netif;
+  struct ip4_addr_t iphdr_src;
+  struct icmp_echo_hdr * icmphdr;
+  struct ip_hdr * iphdr;
+  struct pbuf * q;
+  long unsigned int _1;
+  long unsigned int _2;
+  short unsigned int _3;
+  short unsigned int _4;
+  long unsigned int _5;
+  long unsigned int _6;
+  short unsigned int _7;
+  unsigned int _8;
+  unsigned int _9;
+  unsigned int _10;
+  void * _11;
+  void * _12;
+  void * _13;
+  unsigned int _14;
+  long unsigned int _15;
+  short unsigned int _16;
+  short unsigned int _17;
+
+  <bb 2> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _1 = lwip_stats.mib2.icmpoutmsgs;
+  _2 = _1 + 1;
+  lwip_stats.mib2.icmpoutmsgs = _2;
+  # DEBUG BEGIN_STMT
+  response_pkt_len_24 = 28;
+  # DEBUG response_pkt_len => response_pkt_len_24
+  # DEBUG BEGIN_STMT
+  _3 = p_25(D)->tot_len;
+  if (response_pkt_len_24 > _3)
+    goto <bb 3>; [INV]
+  else
+    goto <bb 4>; [INV]
+
+  <bb 3> :
+  # DEBUG BEGIN_STMT
+  response_pkt_len_26 = p_25(D)->tot_len;
+  # DEBUG response_pkt_len => response_pkt_len_26
+
+  <bb 4> :
+  # response_pkt_len_18 = PHI <response_pkt_len_24(2), response_pkt_len_26(3)>
+  # DEBUG response_pkt_len => response_pkt_len_18
+  # DEBUG BEGIN_STMT
+  _4 = response_pkt_len_18 + 8;
+  q_28 = pbuf_alloc (54, _4, 640);
+  # DEBUG q => q_28
+  # DEBUG BEGIN_STMT
+  if (q_28 == 0B)
+    goto <bb 5>; [INV]
+  else
+    goto <bb 6>; [INV]
+
+  <bb 5> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _5 = lwip_stats.mib2.icmpouterrors;
+  _6 = _5 + 1;
+  lwip_stats.mib2.icmpouterrors = _6;
+  # DEBUG BEGIN_STMT
+  // predicted unlikely by early return (on trees) predictor.
+  iphdr_src ={v} {CLOBBER};
+  goto <bb 11>; [INV]
+
+  <bb 6> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _7 = q_28->len;
+  _8 = (unsigned int) _7;
+  _9 = (unsigned int) response_pkt_len_18;
+  _10 = _9 + 8;
+  if (_8 < _10)
+    goto <bb 7>; [INV]
+  else
+    goto <bb 8>; [INV]
+
+  <bb 7> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  __asm__ __volatile__("BKPT #0
+	");
+  # DEBUG BEGIN_STMT
+  goto <bb 7>; [INV]
+
+  <bb 8> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  iphdr_29 = p_25(D)->payload;
+  # DEBUG iphdr => iphdr_29
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  icmphdr_30 = q_28->payload;
+  # DEBUG icmphdr => icmphdr_30
+  # DEBUG BEGIN_STMT
+  icmphdr_30->type = type_31(D);
+  # DEBUG BEGIN_STMT
+  icmphdr_30->code = code_33(D);
+  # DEBUG BEGIN_STMT
+  icmphdr_30->id = 0;
+  # DEBUG BEGIN_STMT
+  icmphdr_30->seqno = 0;
+  # DEBUG BEGIN_STMT
+  _11 = q_28->payload;
+  _12 = _11 + 8;
+  _13 = p_25(D)->payload;
+  _14 = (unsigned int) response_pkt_len_18;
+  memcpy (_12, _13, _14);
+  # DEBUG BEGIN_STMT
+  _15 = iphdr_29->src.addr;
+  iphdr_src.addr = _15;
+  # DEBUG BEGIN_STMT
+  netif_40 = ip4_route (&iphdr_src);
+  # DEBUG netif => netif_40
+  # DEBUG BEGIN_STMT
+  if (netif_40 != 0B)
+    goto <bb 9>; [INV]
+  else
+    goto <bb 10>; [INV]
+
+  <bb 9> :
+  # DEBUG BEGIN_STMT
+  icmphdr_30->chksum = 0;
+  # DEBUG BEGIN_STMT
+  _16 = lwip_stats.icmp.xmit;
+  _17 = _16 + 1;
+  lwip_stats.icmp.xmit = _17;
+  # DEBUG BEGIN_STMT
+  ip4_output_if (q_28, 0B, &iphdr_src, 255, 0, 1, netif_40);
+
+  <bb 10> :
+  # DEBUG BEGIN_STMT
+  pbuf_free (q_28);
+  iphdr_src ={v} {CLOBBER};
+
+  <bb 11> :
+  return;
+
+}
+
+
+icmp_time_exceeded (struct pbuf * p, icmp_te_type t)
+{
+  long unsigned int _1;
+  long unsigned int _2;
+
+  <bb 2> :
+  # DEBUG BEGIN_STMT
+  _1 = lwip_stats.mib2.icmpouttimeexcds;
+  _2 = _1 + 1;
+  lwip_stats.mib2.icmpouttimeexcds = _2;
+  # DEBUG BEGIN_STMT
+  icmp_send_response (p_5(D), 11, t_6(D));
+  return;
+
+}
+
+
+icmp_dest_unreach (struct pbuf * p, icmp_dur_type t)
+{
+  long unsigned int _1;
+  long unsigned int _2;
+
+  <bb 2> :
+  # DEBUG BEGIN_STMT
+  _1 = lwip_stats.mib2.icmpoutdestunreachs;
+  _2 = _1 + 1;
+  lwip_stats.mib2.icmpoutdestunreachs = _2;
+  # DEBUG BEGIN_STMT
+  icmp_send_response (p_5(D), 3, t_6(D));
+  return;
+
+}
+
+
+icmp_input (struct pbuf * p, struct netif * inp)
+{
+  struct ip_hdr * iphdr;
+  err_t ret;
+  u16_t alloc_len;
+  struct pbuf * r;
+  const struct ip4_addr_t * src;
+  u16_t hlen;
+  const struct ip_hdr * iphdr_in;
+  struct icmp_echo_hdr * iecho;
+  u8_t type;
+  short unsigned int _1;
+  short unsigned int _2;
+  long unsigned int _3;
+  long unsigned int _4;
+  unsigned char _5;
+  unsigned char _6;
+  unsigned char _7;
+  short unsigned int _8;
+  void * _9;
+  int _10;
+  long unsigned int _11;
+  long unsigned int _12;
+  long unsigned int _13;
+  long unsigned int _14;
+  long unsigned int _15;
+  long unsigned int _16;
+  long unsigned int _17;
+  struct netif * _18;
+  unsigned char _19;
+  short unsigned int _20;
+  int _21;
+  int _22;
+  unsigned int _23;
+  unsigned char _24;
+  short unsigned int _25;
+  short unsigned int _26;
+  short unsigned int _27;
+  unsigned int _28;
+  unsigned int _29;
+  unsigned int _30;
+  void * _31;
+  unsigned int _32;
+  unsigned int _33;
+  unsigned char _34;
+  signed char _35;
+  int _36;
+  int _37;
+  unsigned int _38;
+  unsigned char _39;
+  unsigned int _40;
+  unsigned char _41;
+  long unsigned int _42;
+  long unsigned int _43;
+  short unsigned int _44;
+  short unsigned int _45;
+  long unsigned int _46;
+  long unsigned int _47;
+  long unsigned int _48;
+  long unsigned int _49;
+  long unsigned int _50;
+  long unsigned int _51;
+  long unsigned int _52;
+  long unsigned int _53;
+  long unsigned int _54;
+  long unsigned int _55;
+  long unsigned int _56;
+  long unsigned int _57;
+  long unsigned int _58;
+  long unsigned int _59;
+  long unsigned int _60;
+  long unsigned int _61;
+  long unsigned int _62;
+  long unsigned int _63;
+  long unsigned int _64;
+  long unsigned int _65;
+  long unsigned int _66;
+  long unsigned int _67;
+  short unsigned int _68;
+  short unsigned int _69;
+  short unsigned int _70;
+  short unsigned int _71;
+  short unsigned int _72;
+  short unsigned int _73;
+  long unsigned int _74;
+  long unsigned int _75;
+  short unsigned int _76;
+  short unsigned int _77;
+  long unsigned int _78;
+  long unsigned int _79;
+
+  <bb 2> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _1 = lwip_stats.icmp.recv;
+  _2 = _1 + 1;
+  lwip_stats.icmp.recv = _2;
+  # DEBUG BEGIN_STMT
+  _3 = lwip_stats.mib2.icmpinmsgs;
+  _4 = _3 + 1;
+  lwip_stats.mib2.icmpinmsgs = _4;
+  # DEBUG BEGIN_STMT
+  iphdr_in_93 = ip_data.current_ip4_header;
+  # DEBUG iphdr_in => iphdr_in_93
+  # DEBUG BEGIN_STMT
+  _5 = iphdr_in_93->_v_hl;
+  _6 = _5 & 15;
+  _7 = _6 * 4;
+  hlen_94 = (u16_t) _7;
+  # DEBUG hlen => hlen_94
+  # DEBUG BEGIN_STMT
+  if (hlen_94 <= 19)
+    goto <bb 3>; [INV]
+  else
+    goto <bb 4>; [INV]
+
+  <bb 3> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  // predicted unlikely by goto predictor.
+  goto <bb 50>; [INV]
+
+  <bb 4> :
+  # DEBUG BEGIN_STMT
+  _8 = p_95(D)->len;
+  if (_8 <= 3)
+    goto <bb 5>; [INV]
+  else
+    goto <bb 6>; [INV]
+
+  <bb 5> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  // predicted unlikely by goto predictor.
+  goto <bb 50>; [INV]
+
+  <bb 6> :
+  # DEBUG BEGIN_STMT
+  _9 = p_95(D)->payload;
+  type_96 = MEM[(u8_t *)_9];
+  # DEBUG type => type_96
+  # DEBUG BEGIN_STMT
+  _10 = (int) type_96;
+  switch (_10) <default: <L38> [INV], case 0: <L4> [INV], case 8: <L5> [INV]>
+
+  <bb 7> :
+<L4>:
+  # DEBUG BEGIN_STMT
+  _11 = lwip_stats.mib2.icmpinechoreps;
+  _12 = _11 + 1;
+  lwip_stats.mib2.icmpinechoreps = _12;
+  # DEBUG BEGIN_STMT
+  goto <bb 49>; [INV]
+
+  <bb 8> :
+<L5>:
+  # DEBUG BEGIN_STMT
+  _13 = lwip_stats.mib2.icmpinechos;
+  _14 = _13 + 1;
+  lwip_stats.mib2.icmpinechos = _14;
+  # DEBUG BEGIN_STMT
+  src_98 = &ip_data.current_iphdr_dest.u_addr.ip4;
+  # DEBUG src => src_98
+  # DEBUG BEGIN_STMT
+  _15 = ip_data.current_iphdr_dest.u_addr.ip4.addr;
+  _16 = _15 & 240;
+  if (_16 == 224)
+    goto <bb 9>; [INV]
+  else
+    goto <bb 10>; [INV]
+
+  <bb 9> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  // predicted unlikely by goto predictor.
+  goto <bb 51>; [INV]
+
+  <bb 10> :
+  # DEBUG BEGIN_STMT
+  _17 = ip_data.current_iphdr_dest.u_addr.ip4.addr;
+  _18 = ip_data.current_netif;
+  _19 = ip4_addr_isbroadcast_u32 (_17, _18);
+  if (_19 != 0)
+    goto <bb 11>; [INV]
+  else
+    goto <bb 12>; [INV]
+
+  <bb 11> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  // predicted unlikely by goto predictor.
+  goto <bb 51>; [INV]
+
+  <bb 12> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _20 = p_95(D)->tot_len;
+  if (_20 <= 7)
+    goto <bb 13>; [INV]
+  else
+    goto <bb 14>; [INV]
+
+  <bb 13> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  // predicted unlikely by goto predictor.
+  goto <bb 50>; [INV]
+
+  <bb 14> :
+  # DEBUG BEGIN_STMT
+  _21 = (int) hlen_94;
+  _22 = _21 + 14;
+  _23 = (unsigned int) _22;
+  _24 = pbuf_add_header (p_95(D), _23);
+  if (_24 != 0)
+    goto <bb 15>; [INV]
+  else
+    goto <bb 26>; [INV]
+
+  <bb 15> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _25 = p_95(D)->tot_len;
+  alloc_len_103 = hlen_94 + _25;
+  # DEBUG alloc_len => alloc_len_103
+  # DEBUG BEGIN_STMT
+  _26 = p_95(D)->tot_len;
+  if (alloc_len_103 < _26)
+    goto <bb 16>; [INV]
+  else
+    goto <bb 17>; [INV]
+
+  <bb 16> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  // predicted unlikely by goto predictor.
+  goto <bb 51>; [INV]
+
+  <bb 17> :
+  # DEBUG BEGIN_STMT
+  r_105 = pbuf_alloc (14, alloc_len_103, 640);
+  # DEBUG r => r_105
+  # DEBUG BEGIN_STMT
+  if (r_105 == 0B)
+    goto <bb 18>; [INV]
+  else
+    goto <bb 19>; [INV]
+
+  <bb 18> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  // predicted unlikely by goto predictor.
+  goto <bb 51>; [INV]
+
+  <bb 19> :
+  # DEBUG BEGIN_STMT
+  _27 = r_105->len;
+  _28 = (unsigned int) _27;
+  _29 = (unsigned int) hlen_94;
+  _30 = _29 + 8;
+  if (_28 < _30)
+    goto <bb 20>; [INV]
+  else
+    goto <bb 21>; [INV]
+
+  <bb 20> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  pbuf_free (r_105);
+  # DEBUG BEGIN_STMT
+  // predicted unlikely by goto predictor.
+  goto <bb 51>; [INV]
+
+  <bb 21> :
+  # DEBUG BEGIN_STMT
+  _31 = r_105->payload;
+  _32 = (unsigned int) hlen_94;
+  memcpy (_31, iphdr_in_93, _32);
+  # DEBUG BEGIN_STMT
+  _33 = (unsigned int) hlen_94;
+  _34 = pbuf_remove_header (r_105, _33);
+  if (_34 != 0)
+    goto <bb 22>; [INV]
+  else
+    goto <bb 23>; [INV]
+
+  <bb 22> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  __asm__ __volatile__("BKPT #0
+	");
+  # DEBUG BEGIN_STMT
+  goto <bb 22>; [INV]
+
+  <bb 23> :
+  # DEBUG BEGIN_STMT
+  _35 = pbuf_copy (r_105, p_95(D));
+  if (_35 != 0)
+    goto <bb 24>; [INV]
+  else
+    goto <bb 25>; [INV]
+
+  <bb 24> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  pbuf_free (r_105);
+  # DEBUG BEGIN_STMT
+  // predicted unlikely by goto predictor.
+  goto <bb 51>; [INV]
+
+  <bb 25> :
+  # DEBUG BEGIN_STMT
+  pbuf_free (p_95(D));
+  # DEBUG BEGIN_STMT
+  p_110 = r_105;
+  # DEBUG p => p_110
+  goto <bb 28>; [INV]
+
+  <bb 26> :
+  # DEBUG BEGIN_STMT
+  _36 = (int) hlen_94;
+  _37 = _36 + 14;
+  _38 = (unsigned int) _37;
+  _39 = pbuf_remove_header (p_95(D), _38);
+  if (_39 != 0)
+    goto <bb 27>; [INV]
+  else
+    goto <bb 28>; [INV]
+
+  <bb 27> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  __asm__ __volatile__("BKPT #0
+	");
+  # DEBUG BEGIN_STMT
+  goto <bb 27>; [INV]
+
+  <bb 28> :
+  # p_80 = PHI <p_110(25), p_95(D)(26)>
+  # DEBUG p => p_80
+  # DEBUG BEGIN_STMT
+  iecho_114 = p_80->payload;
+  # DEBUG iecho => iecho_114
+  # DEBUG BEGIN_STMT
+  _40 = (unsigned int) hlen_94;
+  _41 = pbuf_add_header (p_80, _40);
+  if (_41 != 0)
+    goto <bb 49>; [INV]
+  else
+    goto <bb 29>; [INV]
+
+  <bb 29> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  iphdr_116 = p_80->payload;
+  # DEBUG iphdr => iphdr_116
+  # DEBUG BEGIN_STMT
+  _42 = src_98->addr;
+  iphdr_116->src.addr = _42;
+  # DEBUG BEGIN_STMT
+  _43 = ip_data.current_iphdr_src.u_addr.ip4.addr;
+  iphdr_116->dest.addr = _43;
+  # DEBUG BEGIN_STMT
+  iecho_114->type = 0;
+  # DEBUG BEGIN_STMT
+  iecho_114->chksum = 0;
+  # DEBUG BEGIN_STMT
+  iphdr_116->_ttl = 255;
+  # DEBUG BEGIN_STMT
+  iphdr_116->_chksum = 0;
+  # DEBUG BEGIN_STMT
+  _44 = lwip_stats.icmp.xmit;
+  _45 = _44 + 1;
+  lwip_stats.icmp.xmit = _45;
+  # DEBUG BEGIN_STMT
+  _46 = lwip_stats.mib2.icmpoutmsgs;
+  _47 = _46 + 1;
+  lwip_stats.mib2.icmpoutmsgs = _47;
+  # DEBUG BEGIN_STMT
+  _48 = lwip_stats.mib2.icmpoutechoreps;
+  _49 = _48 + 1;
+  lwip_stats.mib2.icmpoutechoreps = _49;
+  # DEBUG BEGIN_STMT
+  ret_128 = ip4_output_if (p_80, src_98, 0B, 255, 0, 1, inp_126(D));
+  # DEBUG ret => ret_128
+  # DEBUG BEGIN_STMT
+  goto <bb 49>; [INV]
+
+  <bb 30> :
+<L38>:
+  # DEBUG BEGIN_STMT
+  if (type_96 == 3)
+    goto <bb 31>; [INV]
+  else
+    goto <bb 32>; [INV]
+
+  <bb 31> :
+  # DEBUG BEGIN_STMT
+  _50 = lwip_stats.mib2.icmpindestunreachs;
+  _51 = _50 + 1;
+  lwip_stats.mib2.icmpindestunreachs = _51;
+  goto <bb 48>; [INV]
+
+  <bb 32> :
+  # DEBUG BEGIN_STMT
+  if (type_96 == 11)
+    goto <bb 33>; [INV]
+  else
+    goto <bb 34>; [INV]
+
+  <bb 33> :
+  # DEBUG BEGIN_STMT
+  _52 = lwip_stats.mib2.icmpintimeexcds;
+  _53 = _52 + 1;
+  lwip_stats.mib2.icmpintimeexcds = _53;
+  goto <bb 48>; [INV]
+
+  <bb 34> :
+  # DEBUG BEGIN_STMT
+  if (type_96 == 12)
+    goto <bb 35>; [INV]
+  else
+    goto <bb 36>; [INV]
+
+  <bb 35> :
+  # DEBUG BEGIN_STMT
+  _54 = lwip_stats.mib2.icmpinparmprobs;
+  _55 = _54 + 1;
+  lwip_stats.mib2.icmpinparmprobs = _55;
+  goto <bb 48>; [INV]
+
+  <bb 36> :
+  # DEBUG BEGIN_STMT
+  if (type_96 == 4)
+    goto <bb 37>; [INV]
+  else
+    goto <bb 38>; [INV]
+
+  <bb 37> :
+  # DEBUG BEGIN_STMT
+  _56 = lwip_stats.mib2.icmpinsrcquenchs;
+  _57 = _56 + 1;
+  lwip_stats.mib2.icmpinsrcquenchs = _57;
+  goto <bb 48>; [INV]
+
+  <bb 38> :
+  # DEBUG BEGIN_STMT
+  if (type_96 == 5)
+    goto <bb 39>; [INV]
+  else
+    goto <bb 40>; [INV]
+
+  <bb 39> :
+  # DEBUG BEGIN_STMT
+  _58 = lwip_stats.mib2.icmpinredirects;
+  _59 = _58 + 1;
+  lwip_stats.mib2.icmpinredirects = _59;
+  goto <bb 48>; [INV]
+
+  <bb 40> :
+  # DEBUG BEGIN_STMT
+  if (type_96 == 13)
+    goto <bb 41>; [INV]
+  else
+    goto <bb 42>; [INV]
+
+  <bb 41> :
+  # DEBUG BEGIN_STMT
+  _60 = lwip_stats.mib2.icmpintimestamps;
+  _61 = _60 + 1;
+  lwip_stats.mib2.icmpintimestamps = _61;
+  goto <bb 48>; [INV]
+
+  <bb 42> :
+  # DEBUG BEGIN_STMT
+  if (type_96 == 14)
+    goto <bb 43>; [INV]
+  else
+    goto <bb 44>; [INV]
+
+  <bb 43> :
+  # DEBUG BEGIN_STMT
+  _62 = lwip_stats.mib2.icmpintimestampreps;
+  _63 = _62 + 1;
+  lwip_stats.mib2.icmpintimestampreps = _63;
+  goto <bb 48>; [INV]
+
+  <bb 44> :
+  # DEBUG BEGIN_STMT
+  if (type_96 == 17)
+    goto <bb 45>; [INV]
+  else
+    goto <bb 46>; [INV]
+
+  <bb 45> :
+  # DEBUG BEGIN_STMT
+  _64 = lwip_stats.mib2.icmpinaddrmasks;
+  _65 = _64 + 1;
+  lwip_stats.mib2.icmpinaddrmasks = _65;
+  goto <bb 48>; [INV]
+
+  <bb 46> :
+  # DEBUG BEGIN_STMT
+  if (type_96 == 18)
+    goto <bb 47>; [INV]
+  else
+    goto <bb 48>; [INV]
+
+  <bb 47> :
+  # DEBUG BEGIN_STMT
+  _66 = lwip_stats.mib2.icmpinaddrmaskreps;
+  _67 = _66 + 1;
+  lwip_stats.mib2.icmpinaddrmaskreps = _67;
+
+  <bb 48> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _68 = lwip_stats.icmp.proterr;
+  _69 = _68 + 1;
+  lwip_stats.icmp.proterr = _69;
+  # DEBUG BEGIN_STMT
+  _70 = lwip_stats.icmp.drop;
+  _71 = _70 + 1;
+  lwip_stats.icmp.drop = _71;
+
+  <bb 49> :
+  # p_81 = PHI <p_95(D)(7), p_80(29), p_95(D)(48), p_80(28)>
+  # DEBUG p => p_81
+  # DEBUG BEGIN_STMT
+  pbuf_free (p_81);
+  # DEBUG BEGIN_STMT
+  goto <bb 52>; [INV]
+
+  <bb 50> :
+lenerr:
+  # DEBUG BEGIN_STMT
+  pbuf_free (p_95(D));
+  # DEBUG BEGIN_STMT
+  _72 = lwip_stats.icmp.lenerr;
+  _73 = _72 + 1;
+  lwip_stats.icmp.lenerr = _73;
+  # DEBUG BEGIN_STMT
+  _74 = lwip_stats.mib2.icmpinerrors;
+  _75 = _74 + 1;
+  lwip_stats.mib2.icmpinerrors = _75;
+  # DEBUG BEGIN_STMT
+  goto <bb 52>; [INV]
+
+  <bb 51> :
+icmperr:
+  # DEBUG BEGIN_STMT
+  pbuf_free (p_95(D));
+  # DEBUG BEGIN_STMT
+  _76 = lwip_stats.icmp.err;
+  _77 = _76 + 1;
+  lwip_stats.icmp.err = _77;
+  # DEBUG BEGIN_STMT
+  _78 = lwip_stats.mib2.icmpinerrors;
+  _79 = _78 + 1;
+  lwip_stats.mib2.icmpinerrors = _79;
+  # DEBUG BEGIN_STMT
+
+  <bb 52> :
+  return;
+
+}
+
+
