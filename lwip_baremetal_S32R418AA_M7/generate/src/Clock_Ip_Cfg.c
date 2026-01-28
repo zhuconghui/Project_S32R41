@@ -358,7 +358,7 @@ static const Clock_Ip_SelectorConfigType Clock_Ip_SelectorConfigurations_0[CLOCK
     #if CLOCK_IP_CONFIGURED_SELECTORS_0_NO > 22U
     {
         GMAC0_TX_CLK,                    /* Clock name associated to selector */
-        PERIPHPLL_PHI6_CLK,                    /* Name of the selected input source */
+        FIRC_CLK,                    /* Name of the selected input source */
     },
     #endif
 
@@ -372,7 +372,7 @@ static const Clock_Ip_SelectorConfigType Clock_Ip_SelectorConfigurations_0[CLOCK
     #if CLOCK_IP_CONFIGURED_SELECTORS_0_NO > 24U
     {
         GMAC0_RX_CLK,                    /* Clock name associated to selector */
-        PERIPHPLL_PHI6_CLK,                    /* Name of the selected input source */
+        FIRC_CLK,                    /* Name of the selected input source */
     },
     #endif
 };
