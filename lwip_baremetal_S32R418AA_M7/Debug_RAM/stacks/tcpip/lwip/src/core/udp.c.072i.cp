@@ -508,7 +508,7 @@ Reclaiming variables:
 Clearing address taken flags:
 Symbol table:
 
-memset/45 (memset) @0632cee0
+memset/45 (memset) @062fdee0
   Type: function
   Visibility: external public
   References: 
@@ -517,7 +517,7 @@ memset/45 (memset) @0632cee0
   Function flags: optimize_size
   Called by: udp_new/18 (574129754 (estimated locally),0.53 per call) 
   Calls: 
-memp_malloc/44 (memp_malloc) @0632ce00
+memp_malloc/44 (memp_malloc) @062fde00
   Type: function
   Visibility: external public
   References: 
@@ -526,7 +526,7 @@ memp_malloc/44 (memp_malloc) @0632ce00
   Function flags: optimize_size
   Called by: udp_new/18 (1073741824 (estimated locally),1.00 per call) 
   Calls: 
-memp_free/43 (memp_free) @0632cc40
+memp_free/43 (memp_free) @062fdc40
   Type: function
   Visibility: external public
   References: 
@@ -535,7 +535,7 @@ memp_free/43 (memp_free) @0632cc40
   Function flags: optimize_size
   Called by: udp_remove/17 (140173161 (estimated locally),0.82 per call) 
   Calls: 
-ip_addr_any_type/42 (ip_addr_any_type) @06361900
+ip_addr_any_type/42 (ip_addr_any_type) @06332900
   Type: variable
   Body removed by symtab_remove_unreachable_nodes
   Visibility: external public
@@ -543,7 +543,7 @@ ip_addr_any_type/42 (ip_addr_any_type) @06361900
   Referring: udp_disconnect/15 (read)udp_disconnect/15 (read)udp_disconnect/15 (read)udp_disconnect/15 (read)udp_disconnect/15 (read)udp_disconnect/15 (read)udp_disconnect/15 (read)
   Availability: not_available
   Varpool flags: read-only
-ip_addr_any/41 (ip_addr_any) @06352990
+ip_addr_any/41 (ip_addr_any) @06323990
   Type: variable
   Body removed by symtab_remove_unreachable_nodes
   Visibility: external public
@@ -551,7 +551,7 @@ ip_addr_any/41 (ip_addr_any) @06352990
   Referring: udp_bind/12 (addr)
   Availability: not_available
   Varpool flags: read-only
-ip4_output_if_src/40 (ip4_output_if_src) @0632c000
+ip4_output_if_src/40 (ip4_output_if_src) @062fd000
   Type: function
   Visibility: external public
   References: 
@@ -560,7 +560,7 @@ ip4_output_if_src/40 (ip4_output_if_src) @0632c000
   Function flags: optimize_size
   Called by: udp_sendto_if_src/11 (34905 (estimated locally),0.18 per call) 
   Calls: 
-ip6_output_if_src/39 (ip6_output_if_src) @06304ee0
+ip6_output_if_src/39 (ip6_output_if_src) @062d5ee0
   Type: function
   Visibility: external public
   References: 
@@ -569,7 +569,7 @@ ip6_output_if_src/39 (ip6_output_if_src) @06304ee0
   Function flags: optimize_size
   Called by: udp_sendto_if_src/11 (17981 (estimated locally),0.09 per call) 
   Calls: 
-pbuf_chain/38 (pbuf_chain) @063041c0
+pbuf_chain/38 (pbuf_chain) @062d51c0
   Type: function
   Visibility: external public
   References: 
@@ -578,7 +578,7 @@ pbuf_chain/38 (pbuf_chain) @063041c0
   Function flags: optimize_size
   Called by: udp_sendto_if_src/11 (17400 (estimated locally),0.09 per call) 
   Calls: 
-pbuf_alloc/37 (pbuf_alloc) @06304380
+pbuf_alloc/37 (pbuf_alloc) @062d5380
   Type: function
   Visibility: external public
   References: 
@@ -587,7 +587,7 @@ pbuf_alloc/37 (pbuf_alloc) @06304380
   Function flags: optimize_size
   Called by: udp_sendto_if_src/11 (52964 (estimated locally),0.27 per call) 
   Calls: 
-pbuf_add_header/36 (pbuf_add_header) @063042a0
+pbuf_add_header/36 (pbuf_add_header) @062d52a0
   Type: function
   Visibility: external public
   References: 
@@ -596,7 +596,7 @@ pbuf_add_header/36 (pbuf_add_header) @063042a0
   Function flags: optimize_size
   Called by: udp_sendto_if_src/11 (160498 (estimated locally),0.83 per call) 
   Calls: 
-ip6_select_source_address/35 (ip6_select_source_address) @06304d20
+ip6_select_source_address/35 (ip6_select_source_address) @062d5d20
   Type: function
   Visibility: external public
   References: 
@@ -605,7 +605,7 @@ ip6_select_source_address/35 (ip6_select_source_address) @06304d20
   Function flags: optimize_size
   Called by: udp_sendto_if/10 (191677839 (estimated locally),0.18 per call) 
   Calls: 
-ip6_route/34 (ip6_route) @063049a0
+ip6_route/34 (ip6_route) @062d59a0
   Type: function
   Visibility: external public
   References: 
@@ -614,7 +614,7 @@ ip6_route/34 (ip6_route) @063049a0
   Function flags: optimize_size
   Called by: udp_connect/14 (12742515 (estimated locally),0.10 per call) udp_sendto/9 (203798594 (estimated locally),0.19 per call) udp_bind/12 (4195868 (estimated locally),0.08 per call) 
   Calls: 
-ip4_route/33 (ip4_route) @063048c0
+ip4_route/33 (ip4_route) @062d58c0
   Type: function
   Visibility: external public
   References: 
@@ -623,7 +623,7 @@ ip4_route/33 (ip4_route) @063048c0
   Function flags: optimize_size
   Called by: udp_sendto/9 (395609036 (estimated locally),0.37 per call) udp_sendto/9 (28671051 (estimated locally),0.03 per call) 
   Calls: 
-ip_addr_broadcast/32 (ip_addr_broadcast) @06312ea0
+ip_addr_broadcast/32 (ip_addr_broadcast) @062e3ea0
   Type: variable
   Body removed by symtab_remove_unreachable_nodes
   Visibility: external public
@@ -631,7 +631,7 @@ ip_addr_broadcast/32 (ip_addr_broadcast) @06312ea0
   Referring: udp_sendto/9 (read)
   Availability: not_available
   Varpool flags: read-only
-netif_get_by_index/31 (netif_get_by_index) @063047e0
+netif_get_by_index/31 (netif_get_by_index) @062d57e0
   Type: function
   Visibility: external public
   References: 
@@ -640,7 +640,7 @@ netif_get_by_index/31 (netif_get_by_index) @063047e0
   Function flags: optimize_size
   Called by: udp_sendto/9 (115561069 (estimated locally),0.11 per call) udp_sendto/9 (344958415 (estimated locally),0.32 per call) 
   Calls: 
-icmp_dest_unreach/30 (icmp_dest_unreach) @06304000
+icmp_dest_unreach/30 (icmp_dest_unreach) @062d5000
   Type: function
   Visibility: external public
   References: 
@@ -649,7 +649,7 @@ icmp_dest_unreach/30 (icmp_dest_unreach) @06304000
   Function flags: optimize_size
   Called by: udp_input/7 (879 (estimated locally),0.00 per call) 
   Calls: 
-icmp6_dest_unreach/29 (icmp6_dest_unreach) @062b9c40
+icmp6_dest_unreach/29 (icmp6_dest_unreach) @0628ac40
   Type: function
   Visibility: external public
   References: 
@@ -658,7 +658,7 @@ icmp6_dest_unreach/29 (icmp6_dest_unreach) @062b9c40
   Function flags: optimize_size
   Called by: udp_input/7 (2051 (estimated locally),0.01 per call) 
   Calls: 
-pbuf_header_force/28 (pbuf_header_force) @062b9b60
+pbuf_header_force/28 (pbuf_header_force) @0628ab60
   Type: function
   Visibility: external public
   References: 
@@ -667,7 +667,7 @@ pbuf_header_force/28 (pbuf_header_force) @062b9b60
   Function flags: optimize_size
   Called by: udp_input/7 (2930 (estimated locally),0.01 per call) 
   Calls: 
-pbuf_remove_header/27 (pbuf_remove_header) @062b9a80
+pbuf_remove_header/27 (pbuf_remove_header) @0628aa80
   Type: function
   Visibility: external public
   References: 
@@ -676,7 +676,7 @@ pbuf_remove_header/27 (pbuf_remove_header) @062b9a80
   Function flags: optimize_size
   Called by: udp_input/7 (118403 (estimated locally),0.33 per call) 
   Calls: 
-netif_get_ip6_addr_match/26 (netif_get_ip6_addr_match) @062b99a0
+netif_get_ip6_addr_match/26 (netif_get_ip6_addr_match) @0628a9a0
   Type: function
   Visibility: external public
   References: 
@@ -685,7 +685,7 @@ netif_get_ip6_addr_match/26 (netif_get_ip6_addr_match) @062b99a0
   Function flags: optimize_size
   Called by: udp_sendto_if/10 (162134508 (estimated locally),0.15 per call) udp_input/7 (34802 (estimated locally),0.10 per call) 
   Calls: 
-lwip_htons/25 (lwip_htons) @062b9ee0
+lwip_htons/25 (lwip_htons) @0628aee0
   Type: function
   Visibility: external public
   References: 
@@ -694,7 +694,7 @@ lwip_htons/25 (lwip_htons) @062b9ee0
   Function flags: optimize_size
   Called by: udp_sendto_if_src/11 (17452 (estimated locally),0.09 per call) udp_sendto_if_src/11 (35433 (estimated locally),0.18 per call) udp_sendto_if_src/11 (52886 (estimated locally),0.27 per call) udp_sendto_if_src/11 (52886 (estimated locally),0.27 per call) udp_input/7 (139881 (estimated locally),0.39 per call) udp_input/7 (139881 (estimated locally),0.39 per call) 
   Calls: 
-ip4_addr_isbroadcast_u32/24 (ip4_addr_isbroadcast_u32) @062b9e00
+ip4_addr_isbroadcast_u32/24 (ip4_addr_isbroadcast_u32) @0628ae00
   Type: function
   Visibility: external public
   References: 
@@ -703,7 +703,7 @@ ip4_addr_isbroadcast_u32/24 (ip4_addr_isbroadcast_u32) @062b9e00
   Function flags: optimize_size
   Called by: udp_input/7 (68374 (estimated locally),0.19 per call) 
   Calls: 
-pbuf_free/23 (pbuf_free) @062b9d20
+pbuf_free/23 (pbuf_free) @0628ad20
   Type: function
   Visibility: external public
   References: 
@@ -712,7 +712,7 @@ pbuf_free/23 (pbuf_free) @062b9d20
   Function flags: optimize_size
   Called by: udp_sendto_if_src/11 (28278 (estimated locally),0.15 per call) udp_input/7 (21479 (estimated locally),0.06 per call) udp_input/7 (17760 (estimated locally),0.05 per call) udp_input/7 (4065 (estimated locally),0.01 per call) udp_input/7 (35496 (estimated locally),0.10 per call) 
   Calls: 
-lwip_stats/22 (lwip_stats) @062feaf8
+lwip_stats/22 (lwip_stats) @062cfaf8
   Type: variable
   Body removed by symtab_remove_unreachable_nodes
   Visibility: external public
@@ -720,7 +720,7 @@ lwip_stats/22 (lwip_stats) @062feaf8
   Referring: udp_input/7 (read)udp_input/7 (write)udp_input/7 (read)udp_input/7 (write)udp_sendto_if_src/11 (read)udp_sendto_if_src/11 (write)udp_input/7 (read)udp_input/7 (write)udp_input/7 (read)udp_input/7 (write)udp_input/7 (read)udp_input/7 (write)udp_input/7 (read)udp_input/7 (write)udp_input/7 (read)udp_input/7 (write)udp_input/7 (read)udp_input/7 (write)udp_input/7 (read)udp_input/7 (write)udp_sendto_if_src/11 (read)udp_sendto_if_src/11 (write)udp_sendto/9 (read)udp_sendto/9 (write)
   Availability: not_available
   Varpool flags:
-rand/21 (rand) @062b98c0
+rand/21 (rand) @0628a8c0
   Type: function
   Visibility: external public
   References: 
@@ -729,7 +729,7 @@ rand/21 (rand) @062b98c0
   Function flags: optimize_size
   Called by: udp_init/3 (1073741824 (estimated locally),1.00 per call) 
   Calls: 
-udp_netif_ip_addr_changed/20 (udp_netif_ip_addr_changed) @062b9460
+udp_netif_ip_addr_changed/20 (udp_netif_ip_addr_changed) @0628a460
   Type: function definition analyzed
   Visibility: externally_visible public
   References: udp_pcbs/2 (read)
@@ -738,7 +738,7 @@ udp_netif_ip_addr_changed/20 (udp_netif_ip_addr_changed) @062b9460
   Function flags: count:964176328 (estimated locally) body optimize_size
   Called by: 
   Calls: 
-udp_new_ip_type/19 (udp_new_ip_type) @062aa7e0
+udp_new_ip_type/19 (udp_new_ip_type) @0627b7e0
   Type: function definition analyzed
   Visibility: externally_visible public
   References: 
@@ -747,7 +747,7 @@ udp_new_ip_type/19 (udp_new_ip_type) @062aa7e0
   Function flags: count:1073741824 (estimated locally) body optimize_size
   Called by: 
   Calls: udp_new/18 (1073741824 (estimated locally),1.00 per call) 
-udp_new/18 (udp_new) @062aa380
+udp_new/18 (udp_new) @0627b380
   Type: function definition analyzed
   Visibility: externally_visible public
   References: 
@@ -756,7 +756,7 @@ udp_new/18 (udp_new) @062aa380
   Function flags: count:1073741824 (estimated locally) body optimize_size
   Called by: udp_new_ip_type/19 (1073741824 (estimated locally),1.00 per call) 
   Calls: memset/45 (574129754 (estimated locally),0.53 per call) memp_malloc/44 (1073741824 (estimated locally),1.00 per call) 
-udp_remove/17 (udp_remove) @062aa000
+udp_remove/17 (udp_remove) @0627b000
   Type: function definition analyzed
   Visibility: externally_visible public
   References: udp_pcbs/2 (read)udp_pcbs/2 (write)
@@ -765,7 +765,7 @@ udp_remove/17 (udp_remove) @062aa000
   Function flags: count:171130708 (estimated locally) body optimize_size
   Called by: 
   Calls: memp_free/43 (140173161 (estimated locally),0.82 per call) 
-udp_recv/16 (udp_recv) @062a3ee0
+udp_recv/16 (udp_recv) @06274ee0
   Type: function definition analyzed
   Visibility: externally_visible public
   References: 
@@ -774,7 +774,7 @@ udp_recv/16 (udp_recv) @062a3ee0
   Function flags: count:1073741824 (estimated locally) body optimize_size
   Called by: 
   Calls: 
-udp_disconnect/15 (udp_disconnect) @062a3c40
+udp_disconnect/15 (udp_disconnect) @06274c40
   Type: function definition analyzed
   Visibility: externally_visible public
   References: ip_addr_any_type/42 (read)ip_addr_any_type/42 (read)ip_addr_any_type/42 (read)ip_addr_any_type/42 (read)ip_addr_any_type/42 (read)ip_addr_any_type/42 (read)ip_addr_any_type/42 (read)
@@ -783,7 +783,7 @@ udp_disconnect/15 (udp_disconnect) @062a3c40
   Function flags: count:1073741824 (estimated locally) body optimize_size
   Called by: 
   Calls: 
-udp_connect/14 (udp_connect) @06266c40
+udp_connect/14 (udp_connect) @06229c40
   Type: function definition analyzed
   Visibility: externally_visible public
   References: udp_pcbs/2 (read)udp_pcbs/2 (write)
@@ -792,7 +792,7 @@ udp_connect/14 (udp_connect) @06266c40
   Function flags: count:130552291 (estimated locally) body optimize_size
   Called by: 
   Calls: ip6_route/34 (12742515 (estimated locally),0.10 per call) udp_bind/12 (42695388 (estimated locally),0.33 per call) 
-udp_bind_netif/13 (udp_bind_netif) @06250b60
+udp_bind_netif/13 (udp_bind_netif) @06215b60
   Type: function definition analyzed
   Visibility: externally_visible public
   References: 
@@ -801,7 +801,7 @@ udp_bind_netif/13 (udp_bind_netif) @06250b60
   Function flags: count:1073741824 (estimated locally) body optimize_size
   Called by: 
   Calls: 
-udp_bind/12 (udp_bind) @062508c0
+udp_bind/12 (udp_bind) @062158c0
   Type: function definition analyzed
   Visibility: externally_visible public
   References: ip_addr_any/41 (addr)udp_pcbs/2 (read)udp_pcbs/2 (read)udp_pcbs/2 (read)udp_pcbs/2 (write)
@@ -810,7 +810,7 @@ udp_bind/12 (udp_bind) @062508c0
   Function flags: count:54276207 (estimated locally) body optimize_size
   Called by: udp_connect/14 (42695388 (estimated locally),0.33 per call) udp_sendto_if_src/11 (60931 (estimated locally),0.31 per call) 
   Calls: udp_new_port/4 (17830548 (estimated locally),0.33 per call) ip6_route/34 (4195868 (estimated locally),0.08 per call) 
-udp_sendto_if_src/11 (udp_sendto_if_src) @06204620
+udp_sendto_if_src/11 (udp_sendto_if_src) @061cd620
   Type: function definition analyzed
   Visibility: externally_visible public
   References: lwip_stats/22 (read)lwip_stats/22 (write)lwip_stats/22 (read)lwip_stats/22 (write)
@@ -819,7 +819,7 @@ udp_sendto_if_src/11 (udp_sendto_if_src) @06204620
   Function flags: count:193920 (estimated locally) body optimize_size
   Called by: udp_sendto_if/10 (1034045458 (estimated locally),0.96 per call) 
   Calls: pbuf_free/23 (28278 (estimated locally),0.15 per call) ip4_output_if_src/40 (34905 (estimated locally),0.18 per call) ip6_output_if_src/39 (17981 (estimated locally),0.09 per call) lwip_htons/25 (17452 (estimated locally),0.09 per call) lwip_htons/25 (35433 (estimated locally),0.18 per call) lwip_htons/25 (52886 (estimated locally),0.27 per call) lwip_htons/25 (52886 (estimated locally),0.27 per call) pbuf_chain/38 (17400 (estimated locally),0.09 per call) pbuf_alloc/37 (52964 (estimated locally),0.27 per call) pbuf_add_header/36 (160498 (estimated locally),0.83 per call) udp_bind/12 (60931 (estimated locally),0.31 per call) 
-udp_sendto_if/10 (udp_sendto_if) @061deee0
+udp_sendto_if/10 (udp_sendto_if) @061aaee0
   Type: function definition analyzed
   Visibility: externally_visible public
   References: 
@@ -828,7 +828,7 @@ udp_sendto_if/10 (udp_sendto_if) @061deee0
   Function flags: count:1073741824 (estimated locally) body optimize_size
   Called by: udp_sendto/9 (1035816040 (estimated locally),0.96 per call) 
   Calls: udp_sendto_if_src/11 (1034045458 (estimated locally),0.96 per call) netif_get_ip6_addr_match/26 (162134508 (estimated locally),0.15 per call) ip6_select_source_address/35 (191677839 (estimated locally),0.18 per call) 
-udp_sendto/9 (udp_sendto) @061de1c0
+udp_sendto/9 (udp_sendto) @061aa1c0
   Type: function definition analyzed
   Visibility: externally_visible public
   References: ip_addr_broadcast/32 (read)lwip_stats/22 (read)lwip_stats/22 (write)
@@ -837,7 +837,7 @@ udp_sendto/9 (udp_sendto) @061de1c0
   Function flags: count:1073741824 (estimated locally) body optimize_size
   Called by: udp_send/8 (1052501202 (estimated locally),0.98 per call) 
   Calls: udp_sendto_if/10 (1035816040 (estimated locally),0.96 per call) ip4_route/33 (395609036 (estimated locally),0.37 per call) ip6_route/34 (203798594 (estimated locally),0.19 per call) ip4_route/33 (28671051 (estimated locally),0.03 per call) netif_get_by_index/31 (115561069 (estimated locally),0.11 per call) netif_get_by_index/31 (344958415 (estimated locally),0.32 per call) 
-udp_send/8 (udp_send) @061d42a0
+udp_send/8 (udp_send) @061a02a0
   Type: function definition analyzed
   Visibility: externally_visible public
   References: 
@@ -846,7 +846,7 @@ udp_send/8 (udp_send) @061d42a0
   Function flags: count:1073741824 (estimated locally) body optimize_size
   Called by: 
   Calls: udp_sendto/9 (1052501202 (estimated locally),0.98 per call) 
-udp_input/7 (udp_input) @061d4000
+udp_input/7 (udp_input) @061a0000
   Type: function definition analyzed
   Visibility: externally_visible public
   References: lwip_stats/22 (read)lwip_stats/22 (write)lwip_stats/22 (read)lwip_stats/22 (write)lwip_stats/22 (read)lwip_stats/22 (write)lwip_stats/22 (read)lwip_stats/22 (write)ip_data/6 (read)ip_data/6 (read)ip_data/6 (read)udp_pcbs/2 (read)ip_data/6 (read)ip_data/6 (read)ip_data/6 (read)ip_data/6 (read)ip_data/6 (read)ip_data/6 (read)ip_data/6 (read)ip_data/6 (read)udp_pcbs/2 (read)udp_pcbs/2 (write)lwip_stats/22 (read)lwip_stats/22 (write)ip_data/6 (read)ip_data/6 (addr)ip_data/6 (read)ip_data/6 (read)lwip_stats/22 (read)lwip_stats/22 (write)ip_data/6 (addr)ip_data/6 (read)ip_data/6 (read)ip_data/6 (read)ip_data/6 (read)ip_data/6 (read)lwip_stats/22 (read)lwip_stats/22 (write)lwip_stats/22 (read)lwip_stats/22 (write)lwip_stats/22 (read)lwip_stats/22 (write)
@@ -856,7 +856,7 @@ udp_input/7 (udp_input) @061d4000
   Called by: 
   Calls: pbuf_free/23 (21479 (estimated locally),0.06 per call) pbuf_free/23 (17760 (estimated locally),0.05 per call) icmp_dest_unreach/30 (879 (estimated locally),0.00 per call) icmp6_dest_unreach/29 (2051 (estimated locally),0.01 per call) pbuf_header_force/28 (2930 (estimated locally),0.01 per call) pbuf_free/23 (4065 (estimated locally),0.01 per call) pbuf_remove_header/27 (118403 (estimated locally),0.33 per call) netif_get_ip6_addr_match/26 (34802 (estimated locally),0.10 per call) udp_input_local_match/5 (1204580 (estimated locally),3.37 per call) lwip_htons/25 (139881 (estimated locally),0.39 per call) lwip_htons/25 (139881 (estimated locally),0.39 per call) ip4_addr_isbroadcast_u32/24 (68374 (estimated locally),0.19 per call) pbuf_free/23 (35496 (estimated locally),0.10 per call) 
    Indirect call(37376 (estimated locally),0.10 per call) 
-ip_data/6 (ip_data) @0616fd80
+ip_data/6 (ip_data) @0612ed80
   Type: variable
   Body removed by symtab_remove_unreachable_nodes
   Visibility: external public
@@ -864,7 +864,7 @@ ip_data/6 (ip_data) @0616fd80
   Referring: udp_input_local_match/5 (read)udp_input_local_match/5 (read)udp_input_local_match/5 (read)udp_input_local_match/5 (read)udp_input_local_match/5 (read)udp_input_local_match/5 (read)udp_input_local_match/5 (read)udp_input_local_match/5 (read)udp_input_local_match/5 (read)udp_input/7 (read)udp_input/7 (read)udp_input/7 (read)udp_input/7 (read)udp_input/7 (read)udp_input/7 (read)udp_input/7 (read)udp_input/7 (read)udp_input/7 (read)udp_input/7 (read)udp_input/7 (read)udp_input/7 (read)udp_input/7 (addr)udp_input/7 (read)udp_input/7 (read)udp_input/7 (addr)udp_input/7 (read)udp_input/7 (read)udp_input/7 (read)udp_input/7 (read)udp_input/7 (read)
   Availability: not_available
   Varpool flags:
-udp_input_local_match/5 (udp_input_local_match) @06174b60
+udp_input_local_match/5 (udp_input_local_match) @06133b60
   Type: function definition analyzed
   Visibility: prevailing_def_ironly
   References: ip_data/6 (read)ip_data/6 (read)ip_data/6 (read)ip_data/6 (read)ip_data/6 (read)ip_data/6 (read)ip_data/6 (read)ip_data/6 (read)ip_data/6 (read)
@@ -873,7 +873,7 @@ udp_input_local_match/5 (udp_input_local_match) @06174b60
   Function flags: count:357913 (estimated locally) body local optimize_size
   Called by: udp_input/7 (1204580 (estimated locally),3.37 per call) 
   Calls: 
-udp_new_port/4 (udp_new_port) @061708c0
+udp_new_port/4 (udp_new_port) @0612f8c0
   Type: function definition analyzed
   Visibility: prevailing_def_ironly
   References: udp_port/1 (read)udp_port/1 (write)udp_port/1 (write)udp_pcbs/2 (read)udp_port/1 (read)udp_port/1 (read)
@@ -882,7 +882,7 @@ udp_new_port/4 (udp_new_port) @061708c0
   Function flags: count:59613878 (estimated locally) body local optimize_size
   Called by: udp_bind/12 (17830548 (estimated locally),0.33 per call) 
   Calls: 
-udp_init/3 (udp_init) @06170620
+udp_init/3 (udp_init) @0612f620
   Type: function definition analyzed
   Visibility: externally_visible public
   References: udp_port/1 (write)
@@ -891,14 +891,14 @@ udp_init/3 (udp_init) @06170620
   Function flags: count:1073741824 (estimated locally) body optimize_size
   Called by: 
   Calls: rand/21 (1073741824 (estimated locally),1.00 per call) 
-udp_pcbs/2 (udp_pcbs) @0616f870
+udp_pcbs/2 (udp_pcbs) @0612e870
   Type: variable definition analyzed
   Visibility: externally_visible public
   References: 
   Referring: udp_bind/12 (read)udp_bind/12 (write)udp_remove/17 (write)udp_bind/12 (read)udp_bind/12 (read)udp_connect/14 (read)udp_new_port/4 (read)udp_connect/14 (write)udp_input/7 (read)udp_input/7 (read)udp_input/7 (write)udp_remove/17 (read)udp_netif_ip_addr_changed/20 (read)
   Availability: available
   Varpool flags:
-udp_port/1 (udp_port) @0616f828
+udp_port/1 (udp_port) @0612e828
   Type: variable definition analyzed
   Visibility: prevailing_def_ironly
   References: 

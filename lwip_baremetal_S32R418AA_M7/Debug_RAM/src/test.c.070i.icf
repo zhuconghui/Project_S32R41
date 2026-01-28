@@ -1,48 +1,52 @@
 Parsed function:mainLoopTask.isra.0
 Parsed function:test_init.isra.0
+Parsed function:udp_perf_recv.part.0
 Parsed function:start_example
 Parsed function:apps_init
+Parsed function:udp_perf_init
+Parsed function:udp_perf_report
+Parsed function:udp_perf_recv
 Parsed function:my_udp_init
 Parsed function:my_udp_send_callback
 Parsed function:lwiperf_report
 Parsed function:interface_init
 Dump after hash based groups
-Congruence classes: 8 (unique hash values: 8), with total: 8 items
+Congruence classes: 12 (unique hash values: 12), with total: 12 items
 Class size histogram [num of members]: number of classe number of classess
-[1]: 8 classes
+[1]: 12 classes
 
 
 Dump after WPA based types groups
-Congruence classes: 8 (unique hash values: 8), with total: 8 items
+Congruence classes: 12 (unique hash values: 12), with total: 12 items
 Class size histogram [num of members]: number of classe number of classess
-[1]: 8 classes
+[1]: 12 classes
 
 
-Worklist has been filled with: 7
+Worklist has been filled with: 11
 Address reference subdivision created: 0 new classes.
 Dump after callgraph-based congruence reduction
-Congruence classes: 8 (unique hash values: 8), with total: 8 items
+Congruence classes: 12 (unique hash values: 12), with total: 12 items
 Class size histogram [num of members]: number of classe number of classess
-[1]: 8 classes
+[1]: 12 classes
 
 
 Init called for 0 items (0.00%).
 Dump after full equality comparison of groups
-Congruence classes: 8 (unique hash values: 8), with total: 8 items
+Congruence classes: 12 (unique hash values: 12), with total: 12 items
 Class size histogram [num of members]: number of classe number of classess
-[1]: 8 classes
+[1]: 12 classes
 
 
-Worklist has been filled with: 7
+Worklist has been filled with: 11
 Address reference subdivision created: 0 new classes.
-Congruence classes: 8 (unique hash values: 8), with total: 8 items
+Congruence classes: 12 (unique hash values: 12), with total: 12 items
 Class size histogram [num of members]: number of classe number of classess
-[1]: 8 classes
+[1]: 12 classes
 
 
 
-Item count: 8
-Congruent classes before: 8, after: 8
+Item count: 12
+Congruent classes before: 12, after: 12
 Average class size before: 1.00, after: 1.00
 Average non-singular class size: 0.00, count: 0
 Equal symbols: 0
@@ -63,7 +67,7 @@ mainLoopTask.isra.0 ()
   # DEBUG BEGIN_STMT
   lwip_init ();
   # DEBUG BEGIN_STMT
-  # DEBUG D#1 => 0B
+  # DEBUG D#10 => 0B
   test_init.isra.0 ();
 
   <bb 3> [local count: 118111600]:
@@ -131,11 +135,48 @@ test_init.isra.0 ()
 }
 
 
+udp_perf_recv.part.0 (struct pbuf * p)
+{
+  void * arg;
+  struct udp_pcb * pcb;
+  const struct ip_addr_t * addr;
+  u16_t port;
+  short unsigned int _2;
+  long unsigned int _3;
+  long unsigned int udp_perf_rx_bytes.9_4;
+  long unsigned int _5;
+
+  <bb 4> [local count: 1073741824]:
+  # DEBUG D#9 s=> arg
+  # DEBUG arg => D#9
+  # DEBUG D#8 s=> pcb
+  # DEBUG pcb => D#8
+  # DEBUG D#7 s=> addr
+  # DEBUG addr => D#7
+  # DEBUG D#6 s=> port
+  # DEBUG port => D#6
+
+  <bb 2> [local count: 1073741824]:
+  # DEBUG BEGIN_STMT
+  _2 = p_1(D)->tot_len;
+  _3 = (long unsigned int) _2;
+  udp_perf_rx_bytes.9_4 ={v} udp_perf_rx_bytes;
+  _5 = _3 + udp_perf_rx_bytes.9_4;
+  udp_perf_rx_bytes ={v} _5;
+  # DEBUG BEGIN_STMT
+  pbuf_free (p_1(D));
+
+  <bb 3> [local count: 1073741824]:
+  return;
+
+}
+
+
 start_example ()
 {
   <bb 2> [local count: 1073741824]:
   # DEBUG BEGIN_STMT
-  # DEBUG D#2 => 0B
+  # DEBUG D#11 => 0B
   mainLoopTask.isra.0 ();
 
 }
@@ -157,6 +198,90 @@ apps_init ()
   lwiperf_start_tcp_server_default (lwiperf_report, 0B);
   # DEBUG BEGIN_STMT
   my_udp_init ();
+  # DEBUG BEGIN_STMT
+  udp_perf_init ();
+  return;
+
+}
+
+
+udp_perf_init ()
+{
+  struct udp_pcb * _1;
+  signed char _2;
+  struct udp_pcb * udp_perf_pcb.7_3;
+
+  <bb 2> [local count: 1073741824]:
+  # DEBUG BEGIN_STMT
+  _1 = udp_new ();
+  udp_perf_pcb = _1;
+  # DEBUG BEGIN_STMT
+  if (_1 != 0B)
+    goto <bb 3>; [53.47%]
+  else
+    goto <bb 5>; [46.53%]
+
+  <bb 3> [local count: 574129754]:
+  # DEBUG BEGIN_STMT
+  _2 = udp_bind (_1, &ip_addr_any, 5001);
+  if (_2 == 0)
+    goto <bb 4>; [33.00%]
+  else
+    goto <bb 5>; [67.00%]
+
+  <bb 4> [local count: 189462818]:
+  # DEBUG BEGIN_STMT
+  udp_perf_pcb.7_3 = udp_perf_pcb;
+  udp_recv (udp_perf_pcb.7_3, udp_perf_recv, 0B);
+  # DEBUG BEGIN_STMT
+  sys_timeout (1000, udp_perf_report, 0B);
+
+  <bb 5> [local count: 1073741824]:
+  return;
+
+}
+
+
+udp_perf_report (void * arg)
+{
+  long unsigned int udp_perf_rx_bytes.8_1;
+
+  <bb 2> [local count: 1073741824]:
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  udp_perf_rx_bytes.8_1 ={v} udp_perf_rx_bytes;
+  # DEBUG D#1 => udp_perf_rx_bytes.8_1 * 8
+  # DEBUG kbit_s => D#1 / 1000
+  # DEBUG BEGIN_STMT
+  udp_perf_rx_bytes ={v} 0;
+  # DEBUG BEGIN_STMT
+  sys_timeout (1000, udp_perf_report, 0B);
+  return;
+
+}
+
+
+udp_perf_recv (void * arg, struct udp_pcb * pcb, struct pbuf * p, const struct ip_addr_t * addr, u16_t port)
+{
+  <bb 2> [local count: 1073741824]:
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  if (p_1(D) != 0B)
+    goto <bb 3>; [53.47%]
+  else
+    goto <bb 4>; [46.53%]
+
+  <bb 3> [local count: 574129752]:
+  # DEBUG D#2 => arg_3(D)
+  # DEBUG D#3 => pcb_4(D)
+  # DEBUG D#4 => addr_5(D)
+  # DEBUG D#5 => port_6(D)
+  udp_perf_recv.part.0 (p_1(D));
+
+  <bb 4> [local count: 1073741824]:
   return;
 
 }

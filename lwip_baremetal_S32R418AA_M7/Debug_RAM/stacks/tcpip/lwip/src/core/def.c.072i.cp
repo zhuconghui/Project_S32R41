@@ -110,7 +110,7 @@ Reclaiming variables:
 Clearing address taken flags:
 Symbol table:
 
-memmove/9 (memmove) @06c63620
+memmove/9 (memmove) @06043620
   Type: function
   Visibility: external public
   References: 
@@ -119,7 +119,7 @@ memmove/9 (memmove) @06c63620
   Function flags: optimize_size
   Called by: lwip_itoa/6 (37055894 (estimated locally),0.24 per call) 
   Calls: 
-strncmp/8 (strncmp) @06c632a0
+strncmp/8 (strncmp) @060432a0
   Type: function
   Visibility: external public
   References: 
@@ -128,7 +128,7 @@ strncmp/8 (strncmp) @06c632a0
   Function flags: optimize_size
   Called by: lwip_strnstr/3 (338837970 (estimated locally),2.50 per call) 
   Calls: 
-strlen/7 (strlen) @06c631c0
+strlen/7 (strlen) @060431c0
   Type: function
   Visibility: external public
   References: 
@@ -137,7 +137,7 @@ strlen/7 (strlen) @06c631c0
   Function flags: optimize_size
   Called by: lwip_strnstr/3 (135698530 (estimated locally),1.00 per call) 
   Calls: 
-lwip_itoa/6 (lwip_itoa) @06c3d460
+lwip_itoa/6 (lwip_itoa) @06018460
   Type: function definition analyzed
   Visibility: externally_visible public
   References: 
@@ -146,7 +146,7 @@ lwip_itoa/6 (lwip_itoa) @06c3d460
   Function flags: count:155979810 (estimated locally) body optimize_size
   Called by: 
   Calls: memmove/9 (37055894 (estimated locally),0.24 per call) 
-lwip_strnicmp/5 (lwip_strnicmp) @06c3de00
+lwip_strnicmp/5 (lwip_strnicmp) @06018e00
   Type: function definition analyzed
   Visibility: externally_visible public
   References: 
@@ -155,7 +155,7 @@ lwip_strnicmp/5 (lwip_strnicmp) @06c3de00
   Function flags: count:94599502 (estimated locally) body optimize_size
   Called by: 
   Calls: 
-lwip_stricmp/4 (lwip_stricmp) @06c3db60
+lwip_stricmp/4 (lwip_stricmp) @06018b60
   Type: function definition analyzed
   Visibility: externally_visible public
   References: 
@@ -164,7 +164,7 @@ lwip_stricmp/4 (lwip_stricmp) @06c3db60
   Function flags: count:88360394 (estimated locally) body optimize_size
   Called by: 
   Calls: 
-lwip_strnstr/3 (lwip_strnstr) @06c3d8c0
+lwip_strnstr/3 (lwip_strnstr) @060188c0
   Type: function definition analyzed
   Visibility: externally_visible public
   References: 
@@ -173,7 +173,7 @@ lwip_strnstr/3 (lwip_strnstr) @06c3d8c0
   Function flags: count:135698530 (estimated locally) body optimize_size
   Called by: 
   Calls: strncmp/8 (338837970 (estimated locally),2.50 per call) strlen/7 (135698530 (estimated locally),1.00 per call) 
-lwip_htonl/2 (lwip_htonl) @06c3d620
+lwip_htonl/2 (lwip_htonl) @06018620
   Type: function definition analyzed
   Visibility: externally_visible public
   References: 
@@ -182,7 +182,7 @@ lwip_htonl/2 (lwip_htonl) @06c3d620
   Function flags: count:1073741824 (estimated locally) body optimize_size
   Called by: 
   Calls: 
-lwip_htons/1 (lwip_htons) @06c3d380
+lwip_htons/1 (lwip_htons) @06018380
   Type: function definition analyzed
   Visibility: externally_visible public
   References: 

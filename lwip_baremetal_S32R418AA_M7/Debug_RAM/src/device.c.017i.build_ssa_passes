@@ -16,10 +16,17 @@ device_init ()
   _5 = err == 0;
   DevAssert (_5);
   # DEBUG BEGIN_STMT
-  err = Clock_Ip_Init (&Clock_Ip_aClockConfig[0]);
+  _6 = sys_init_clock_full ();
+  if (_6 != 0)
+    goto <bb 3>; [INV]
+  else
+    goto <bb 4>; [INV]
+
+  <bb 3> :
   # DEBUG BEGIN_STMT
-  _6 = err == 0;
-  DevAssert (_6);
+  DevAssert (0);
+
+  <bb 4> :
   # DEBUG BEGIN_STMT
   IntCtrl_Ip_InstallHandler (53, PIT_0_ISR, 0B);
   # DEBUG BEGIN_STMT

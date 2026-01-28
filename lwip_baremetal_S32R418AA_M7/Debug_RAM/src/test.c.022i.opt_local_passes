@@ -122,6 +122,105 @@ apps_init ()
   lwiperf_start_tcp_server_default (lwiperf_report, 0B);
   # DEBUG BEGIN_STMT
   my_udp_init ();
+  # DEBUG BEGIN_STMT
+  udp_perf_init ();
+  return;
+
+}
+
+
+udp_perf_init ()
+{
+  struct udp_pcb * _1;
+  struct udp_pcb * udp_perf_pcb.5_2;
+  struct udp_pcb * udp_perf_pcb.6_3;
+  signed char _4;
+  struct udp_pcb * udp_perf_pcb.7_5;
+
+  <bb 2> :
+  # DEBUG BEGIN_STMT
+  _1 = udp_new ();
+  udp_perf_pcb = _1;
+  # DEBUG BEGIN_STMT
+  udp_perf_pcb.5_2 = udp_perf_pcb;
+  if (udp_perf_pcb.5_2 != 0B)
+    goto <bb 3>; [INV]
+  else
+    goto <bb 5>; [INV]
+
+  <bb 3> :
+  # DEBUG BEGIN_STMT
+  udp_perf_pcb.6_3 = udp_perf_pcb;
+  _4 = udp_bind (udp_perf_pcb.6_3, &ip_addr_any, 5001);
+  if (_4 == 0)
+    goto <bb 4>; [INV]
+  else
+    goto <bb 5>; [INV]
+
+  <bb 4> :
+  # DEBUG BEGIN_STMT
+  udp_perf_pcb.7_5 = udp_perf_pcb;
+  udp_recv (udp_perf_pcb.7_5, udp_perf_recv, 0B);
+  # DEBUG BEGIN_STMT
+  sys_timeout (1000, udp_perf_report, 0B);
+
+  <bb 5> :
+  return;
+
+}
+
+
+udp_perf_report (void * arg)
+{
+  u32_t kbit_s;
+  long unsigned int udp_perf_rx_bytes.8_1;
+  long unsigned int _2;
+
+  <bb 2> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  udp_perf_rx_bytes.8_1 ={v} udp_perf_rx_bytes;
+  _2 = udp_perf_rx_bytes.8_1 * 8;
+  kbit_s_4 = _2 / 1000;
+  # DEBUG kbit_s => kbit_s_4
+  # DEBUG BEGIN_STMT
+  udp_perf_rx_bytes ={v} 0;
+  # DEBUG BEGIN_STMT
+  sys_timeout (1000, udp_perf_report, 0B);
+  return;
+
+}
+
+
+udp_perf_recv (void * arg, struct udp_pcb * pcb, struct pbuf * p, const struct ip_addr_t * addr, u16_t port)
+{
+  short unsigned int _1;
+  long unsigned int _2;
+  long unsigned int udp_perf_rx_bytes.9_3;
+  long unsigned int _4;
+
+  <bb 2> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  if (p_6(D) != 0B)
+    goto <bb 3>; [INV]
+  else
+    goto <bb 4>; [INV]
+
+  <bb 3> :
+  # DEBUG BEGIN_STMT
+  _1 = p_6(D)->tot_len;
+  _2 = (long unsigned int) _1;
+  udp_perf_rx_bytes.9_3 ={v} udp_perf_rx_bytes;
+  _4 = _2 + udp_perf_rx_bytes.9_3;
+  udp_perf_rx_bytes ={v} _4;
+  # DEBUG BEGIN_STMT
+  pbuf_free (p_6(D));
+
+  <bb 4> :
   return;
 
 }

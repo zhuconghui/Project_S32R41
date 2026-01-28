@@ -50,7 +50,7 @@ Reclaiming variables:
 Clearing address taken flags:
 Symbol table:
 
-gmac_ethernetif_shutdown/6 (gmac_ethernetif_shutdown) @06ff8b60
+gmac_ethernetif_shutdown/6 (gmac_ethernetif_shutdown) @063a0b60
   Type: function
   Visibility: external public
   References: 
@@ -59,7 +59,7 @@ gmac_ethernetif_shutdown/6 (gmac_ethernetif_shutdown) @06ff8b60
   Function flags: optimize_size
   Called by: end_tcpip_execution/4 (574129754 (estimated locally),0.53 per call) 
   Calls: 
-strncmp/5 (strncmp) @06ff89a0
+strncmp/5 (strncmp) @063a09a0
   Type: function
   Visibility: external public
   References: 
@@ -68,7 +68,7 @@ strncmp/5 (strncmp) @06ff89a0
   Function flags: optimize_size
   Called by: is_netif_shutdown_command/3 (365072220 (estimated locally),0.34 per call) 
   Calls: 
-end_tcpip_execution/4 (end_tcpip_execution) @06ff8460
+end_tcpip_execution/4 (end_tcpip_execution) @063a0460
   Type: function definition analyzed
   Visibility: externally_visible public
   References: 
@@ -77,7 +77,7 @@ end_tcpip_execution/4 (end_tcpip_execution) @06ff8460
   Function flags: count:1073741824 (estimated locally) body optimize_size
   Called by: 
   Calls: gmac_ethernetif_shutdown/6 (574129754 (estimated locally),0.53 per call) 
-is_netif_shutdown_command/3 (is_netif_shutdown_command) @06ff81c0
+is_netif_shutdown_command/3 (is_netif_shutdown_command) @063a01c0
   Type: function definition analyzed
   Visibility: externally_visible public
   References: netif_shutdown_cmd/1 (addr)
@@ -86,7 +86,7 @@ is_netif_shutdown_command/3 (is_netif_shutdown_command) @06ff81c0
   Function flags: count:1073741823 (estimated locally) body optimize_size
   Called by: 
   Calls: strncmp/5 (365072220 (estimated locally),0.34 per call) 
-set_software_breakpoint/2 (set_software_breakpoint) @06ff5e00
+set_software_breakpoint/2 (set_software_breakpoint) @0639de00
   Type: function definition analyzed
   Visibility: externally_visible public
   References: 
@@ -95,7 +95,7 @@ set_software_breakpoint/2 (set_software_breakpoint) @06ff5e00
   Function flags: count:1073741824 (estimated locally) body optimize_size
   Called by: 
   Calls: 
-netif_shutdown_cmd/1 (netif_shutdown_cmd) @06caec18
+netif_shutdown_cmd/1 (netif_shutdown_cmd) @0604bc18
   Type: variable definition analyzed
   Visibility: prevailing_def_ironly
   References: 

@@ -117,7 +117,7 @@ Reclaiming variables:
 Clearing address taken flags:
 Symbol table:
 
-interfaces_get_value.part.0/29 (interfaces_get_value.part.0) @05fa78c0
+interfaces_get_value.part.0/29 (interfaces_get_value.part.0) @05fd08c0
   Type: function definition analyzed
   Visibility: prevailing_def_ironly artificial
   References: netif_list/23 (read)
@@ -126,7 +126,7 @@ interfaces_get_value.part.0/29 (interfaces_get_value.part.0) @05fa78c0
   Function flags: count:118111600 (estimated locally) first_run:1 body local split_part optimize_size
   Called by: interfaces_get_value/1 (118111600 (estimated locally),0.12 per call) 
   Calls: 
-snmp_scalar_get_next_instance/28 (snmp_scalar_get_next_instance) @061a2e00
+snmp_scalar_get_next_instance/28 (snmp_scalar_get_next_instance) @061cce00
   Type: function
   Visibility: external public
   Address is taken.
@@ -136,7 +136,7 @@ snmp_scalar_get_next_instance/28 (snmp_scalar_get_next_instance) @061a2e00
   Function flags: optimize_size
   Called by: 
   Calls: 
-snmp_scalar_get_instance/27 (snmp_scalar_get_instance) @061a2d20
+snmp_scalar_get_instance/27 (snmp_scalar_get_instance) @061ccd20
   Type: function
   Visibility: external public
   Address is taken.
@@ -146,7 +146,7 @@ snmp_scalar_get_instance/27 (snmp_scalar_get_instance) @061a2d20
   Function flags: optimize_size
   Called by: 
   Calls: 
-snmp_oid_in_range/26 (snmp_oid_in_range) @061a2c40
+snmp_oid_in_range/26 (snmp_oid_in_range) @061ccc40
   Type: function
   Visibility: external public
   References: 
@@ -155,7 +155,7 @@ snmp_oid_in_range/26 (snmp_oid_in_range) @061a2c40
   Function flags: optimize_size
   Called by: interfaces_Table_get_cell_instance/9 (146734200 (estimated locally),1.00 per call) 
   Calls: 
-snmp_oid_assign/25 (snmp_oid_assign) @061a2a80
+snmp_oid_assign/25 (snmp_oid_assign) @061cca80
   Type: function
   Visibility: external public
   References: 
@@ -164,7 +164,7 @@ snmp_oid_assign/25 (snmp_oid_assign) @061a2a80
   Function flags: optimize_size
   Called by: interfaces_Table_get_next_cell_instance/10 (37831146 (estimated locally),0.32 per call) 
   Calls: 
-snmp_next_oid_check/24 (snmp_next_oid_check) @061a29a0
+snmp_next_oid_check/24 (snmp_next_oid_check) @061cc9a0
   Type: function
   Visibility: external public
   References: 
@@ -173,7 +173,7 @@ snmp_next_oid_check/24 (snmp_next_oid_check) @061a29a0
   Function flags: optimize_size
   Called by: interfaces_Table_get_next_cell_instance/10 (955630223 (estimated locally),8.09 per call) 
   Calls: 
-netif_list/23 (netif_list) @061c4798
+netif_list/23 (netif_list) @061e5798
   Type: variable
   Body removed by symtab_remove_unreachable_nodes
   Visibility: external public
@@ -181,7 +181,7 @@ netif_list/23 (netif_list) @061c4798
   Referring: interfaces_Table_get_next_cell_instance/10 (read)interfaces_get_value.part.0/29 (read)interfaces_Table_get_cell_instance/9 (read)
   Availability: not_available
   Varpool flags:
-snmp_next_oid_init/22 (snmp_next_oid_init) @061a28c0
+snmp_next_oid_init/22 (snmp_next_oid_init) @061cc8c0
   Type: function
   Visibility: external public
   References: 
@@ -190,7 +190,7 @@ snmp_next_oid_init/22 (snmp_next_oid_init) @061a28c0
   Function flags: optimize_size
   Called by: interfaces_Table_get_next_cell_instance/10 (118111600 (estimated locally),1.00 per call) 
   Calls: 
-snmp_zero_dot_zero/21 (snmp_zero_dot_zero) @061c43f0
+snmp_zero_dot_zero/21 (snmp_zero_dot_zero) @061e53f0
   Type: variable
   Body removed by symtab_remove_unreachable_nodes
   Visibility: external public
@@ -198,7 +198,7 @@ snmp_zero_dot_zero/21 (snmp_zero_dot_zero) @061c43f0
   Referring: interfaces_Table_get_value/11 (read)interfaces_Table_get_value/11 (read)
   Availability: not_available
   Varpool flags: read-only
-memcpy/20 (memcpy) @061a2700
+memcpy/20 (memcpy) @061cc700
   Type: function
   Visibility: external public
   References: 
@@ -207,7 +207,7 @@ memcpy/20 (memcpy) @061a2700
   Function flags: optimize_size
   Called by: interfaces_Table_get_value/11 (46684427 (estimated locally),0.04 per call) interfaces_Table_get_value/11 (46684427 (estimated locally),0.04 per call) 
   Calls: 
-netif_to_num/19 (netif_to_num) @061a2620
+netif_to_num/19 (netif_to_num) @061cc620
   Type: function
   Visibility: external public
   References: 
@@ -216,7 +216,7 @@ netif_to_num/19 (netif_to_num) @061a2620
   Function flags: optimize_size
   Called by: interfaces_Table_get_cell_instance/9 (1014686024 (estimated locally),6.92 per call) interfaces_Table_get_next_cell_instance/10 (955630223 (estimated locally),8.09 per call) interfaces_Table_get_value/11 (46684427 (estimated locally),0.04 per call) 
   Calls: 
-snmp_table_get_next_instance/18 (snmp_table_get_next_instance) @0619fee0
+snmp_table_get_next_instance/18 (snmp_table_get_next_instance) @061c9ee0
   Type: function
   Visibility: external public
   Address is taken.
@@ -226,7 +226,7 @@ snmp_table_get_next_instance/18 (snmp_table_get_next_instance) @0619fee0
   Function flags: optimize_size
   Called by: 
   Calls: 
-snmp_table_get_instance/17 (snmp_table_get_instance) @0619fe00
+snmp_table_get_instance/17 (snmp_table_get_instance) @061c9e00
   Type: function
   Visibility: external public
   Address is taken.
@@ -236,42 +236,42 @@ snmp_table_get_instance/17 (snmp_table_get_instance) @0619fe00
   Function flags: optimize_size
   Called by: 
   Calls: 
-snmp_mib2_interface_root/16 (snmp_mib2_interface_root) @06173630
+snmp_mib2_interface_root/16 (snmp_mib2_interface_root) @0619d630
   Type: variable definition analyzed
   Visibility: externally_visible public
   References: interface_nodes/15 (addr)
   Referring: 
   Availability: available
   Varpool flags: initialized read-only const-value-known
-interface_nodes/15 (interface_nodes) @061735a0
+interface_nodes/15 (interface_nodes) @0619d5a0
   Type: variable definition analyzed
   Visibility: prevailing_def_ironly
   References: interfaces_Number/12 (addr)interfaces_Table/14 (addr)
   Referring: snmp_mib2_interface_root/16 (addr)
   Availability: available
   Varpool flags: initialized read-only const-value-known
-interfaces_Table/14 (interfaces_Table) @06173510
+interfaces_Table/14 (interfaces_Table) @0619d510
   Type: variable definition analyzed
   Visibility: prevailing_def_ironly
   References: snmp_table_get_instance/17 (addr)snmp_table_get_next_instance/18 (addr)interfaces_Table_columns/13 (addr)interfaces_Table_get_cell_instance/9 (addr)interfaces_Table_get_next_cell_instance/10 (addr)interfaces_Table_get_value/11 (addr)
   Referring: interface_nodes/15 (addr)
   Availability: available
   Varpool flags: initialized read-only const-value-known
-interfaces_Table_columns/13 (interfaces_Table_columns) @06173438
+interfaces_Table_columns/13 (interfaces_Table_columns) @0619d438
   Type: variable definition analyzed
   Visibility: prevailing_def_ironly
   References: 
   Referring: interfaces_Table/14 (addr)
   Availability: available
   Varpool flags: initialized read-only const-value-known
-interfaces_Number/12 (interfaces_Number) @06173360
+interfaces_Number/12 (interfaces_Number) @0619d360
   Type: variable definition analyzed
   Visibility: prevailing_def_ironly
   References: snmp_scalar_get_instance/27 (addr)snmp_scalar_get_next_instance/28 (addr)interfaces_get_value/1 (addr)
   Referring: interface_nodes/15 (addr)
   Availability: available
   Varpool flags: initialized read-only const-value-known
-interfaces_Table_get_value/11 (interfaces_Table_get_value) @06171b60
+interfaces_Table_get_value/11 (interfaces_Table_get_value) @0619bb60
   Type: function definition analyzed
   Visibility: prevailing_def_ironly
   Address is taken.
@@ -281,7 +281,7 @@ interfaces_Table_get_value/11 (interfaces_Table_get_value) @06171b60
   Function flags: count:1073205225 (estimated locally) body optimize_size
   Called by: 
   Calls: memcpy/20 (46684427 (estimated locally),0.04 per call) memcpy/20 (46684427 (estimated locally),0.04 per call) netif_to_num/19 (46684427 (estimated locally),0.04 per call) 
-interfaces_Table_get_next_cell_instance/10 (interfaces_Table_get_next_cell_instance) @06171540
+interfaces_Table_get_next_cell_instance/10 (interfaces_Table_get_next_cell_instance) @0619b540
   Type: function definition analyzed
   Visibility: prevailing_def_ironly
   Address is taken.
@@ -291,7 +291,7 @@ interfaces_Table_get_next_cell_instance/10 (interfaces_Table_get_next_cell_insta
   Function flags: count:118111600 (estimated locally) body optimize_size
   Called by: 
   Calls: snmp_oid_assign/25 (37831146 (estimated locally),0.32 per call) snmp_next_oid_check/24 (955630223 (estimated locally),8.09 per call) netif_to_num/19 (955630223 (estimated locally),8.09 per call) snmp_next_oid_init/22 (118111600 (estimated locally),1.00 per call) 
-interfaces_Table_get_cell_instance/9 (interfaces_Table_get_cell_instance) @0616bee0
+interfaces_Table_get_cell_instance/9 (interfaces_Table_get_cell_instance) @06195ee0
   Type: function definition analyzed
   Visibility: prevailing_def_ironly
   Address is taken.
@@ -301,14 +301,14 @@ interfaces_Table_get_cell_instance/9 (interfaces_Table_get_cell_instance) @0616b
   Function flags: count:146734200 (estimated locally) body optimize_size
   Called by: 
   Calls: netif_to_num/19 (1014686024 (estimated locally),6.92 per call) snmp_oid_in_range/26 (146734200 (estimated locally),1.00 per call) 
-interfaces_Table_oid_ranges/2 (interfaces_Table_oid_ranges) @0616aab0
+interfaces_Table_oid_ranges/2 (interfaces_Table_oid_ranges) @06194ab0
   Type: variable definition analyzed
   Visibility: prevailing_def_ironly
   References: 
   Referring: interfaces_Table_get_cell_instance/9 (addr)
   Availability: available
   Varpool flags: initialized read-only const-value-known
-interfaces_get_value/1 (interfaces_get_value) @0616b0e0
+interfaces_get_value/1 (interfaces_get_value) @061950e0
   Type: function definition analyzed
   Visibility: prevailing_def_ironly
   Address is taken.

@@ -60,7 +60,7 @@ Reclaiming variables:
 Clearing address taken flags:
 Symbol table:
 
-Clock_Ip_ReportClockErrors/11 (Clock_Ip_ReportClockErrors) @06294d20
+Clock_Ip_ReportClockErrors/11 (Clock_Ip_ReportClockErrors) @06311380
   Type: function
   Visibility: external public
   References: 
@@ -69,7 +69,7 @@ Clock_Ip_ReportClockErrors/11 (Clock_Ip_ReportClockErrors) @06294d20
   Function flags: optimize_size
   Called by: Clock_Ip_SetCgmXDeDivStatWithoutPhase/1 (37904965 (estimated locally),0.23 per call) 
   Calls: 
-Clock_Ip_TimeoutExpired/10 (Clock_Ip_TimeoutExpired) @06294c40
+Clock_Ip_TimeoutExpired/10 (Clock_Ip_TimeoutExpired) @063110e0
   Type: function
   Visibility: external public
   References: 
@@ -78,7 +78,7 @@ Clock_Ip_TimeoutExpired/10 (Clock_Ip_TimeoutExpired) @06294c40
   Function flags: optimize_size
   Called by: Clock_Ip_SetCgmXDeDivStatWithoutPhase/1 (1073741824 (estimated locally),6.54 per call) 
   Calls: 
-Clock_Ip_StartTimeout/9 (Clock_Ip_StartTimeout) @06294b60
+Clock_Ip_StartTimeout/9 (Clock_Ip_StartTimeout) @06311ee0
   Type: function
   Visibility: external public
   References: 
@@ -87,7 +87,7 @@ Clock_Ip_StartTimeout/9 (Clock_Ip_StartTimeout) @06294b60
   Function flags: optimize_size
   Called by: Clock_Ip_SetCgmXDeDivStatWithoutPhase/1 (114863532 (estimated locally),0.70 per call) 
   Calls: 
-Clock_Ip_apxCgm/8 (Clock_Ip_apxCgm) @06296798
+Clock_Ip_apxCgm/8 (Clock_Ip_apxCgm) @06315798
   Type: variable
   Body removed by symtab_remove_unreachable_nodes
   Visibility: external public
@@ -95,7 +95,7 @@ Clock_Ip_apxCgm/8 (Clock_Ip_apxCgm) @06296798
   Referring: Clock_Ip_SetCgmXDeDivWithoutPhase/2 (read)Clock_Ip_SetCgmXDeDivStatWithoutPhase/1 (read)
   Availability: not_available
   Varpool flags: read-only
-Clock_Ip_axFeatureExtensions/7 (Clock_Ip_axFeatureExtensions) @06296750
+Clock_Ip_axFeatureExtensions/7 (Clock_Ip_axFeatureExtensions) @06315750
   Type: variable
   Body removed by symtab_remove_unreachable_nodes
   Visibility: external public
@@ -103,7 +103,7 @@ Clock_Ip_axFeatureExtensions/7 (Clock_Ip_axFeatureExtensions) @06296750
   Referring: Clock_Ip_SetCgmXDeDivWithoutPhase/2 (read)Clock_Ip_SetCgmXDeDivWithoutPhase/2 (read)Clock_Ip_SetCgmXDeDivStatWithoutPhase/1 (read)Clock_Ip_SetCgmXDeDivStatWithoutPhase/1 (read)
   Availability: not_available
   Varpool flags: read-only
-Clock_Ip_apxPll/6 (Clock_Ip_apxPll) @062964c8
+Clock_Ip_apxPll/6 (Clock_Ip_apxPll) @063154c8
   Type: variable
   Body removed by symtab_remove_unreachable_nodes
   Visibility: external public
@@ -111,7 +111,7 @@ Clock_Ip_apxPll/6 (Clock_Ip_apxPll) @062964c8
   Referring: Clock_Ip_SetPlldigPll0divDeDivOutput/3 (read)
   Availability: not_available
   Varpool flags: read-only
-Clock_Ip_au8ClockFeatures/5 (Clock_Ip_au8ClockFeatures) @06296480
+Clock_Ip_au8ClockFeatures/5 (Clock_Ip_au8ClockFeatures) @06315480
   Type: variable
   Body removed by symtab_remove_unreachable_nodes
   Visibility: external public
@@ -119,14 +119,14 @@ Clock_Ip_au8ClockFeatures/5 (Clock_Ip_au8ClockFeatures) @06296480
   Referring: Clock_Ip_SetPlldigPll0divDeDivOutput/3 (read)Clock_Ip_SetPlldigPll0divDeDivOutput/3 (read)Clock_Ip_SetCgmXDeDivWithoutPhase/2 (read)Clock_Ip_SetCgmXDeDivWithoutPhase/2 (read)Clock_Ip_SetCgmXDeDivWithoutPhase/2 (read)Clock_Ip_SetCgmXDeDivWithoutPhase/2 (read)Clock_Ip_SetCgmXDeDivStatWithoutPhase/1 (read)Clock_Ip_SetCgmXDeDivStatWithoutPhase/1 (read)Clock_Ip_SetCgmXDeDivStatWithoutPhase/1 (read)Clock_Ip_SetCgmXDeDivStatWithoutPhase/1 (read)
   Availability: not_available
   Varpool flags: read-only
-Clock_Ip_axDividerCallbacks/4 (Clock_Ip_axDividerCallbacks) @06296090
+Clock_Ip_axDividerCallbacks/4 (Clock_Ip_axDividerCallbacks) @06315090
   Type: variable definition analyzed
   Visibility: externally_visible public
   References: Clock_Ip_Callback_DividerEmpty/0 (addr)Clock_Ip_SetCgmXDeDivStatWithoutPhase/1 (addr)Clock_Ip_SetCgmXDeDivWithoutPhase/2 (addr)Clock_Ip_SetPlldigPll0divDeDivOutput/3 (addr)
   Referring: 
   Availability: available
   Varpool flags: initialized read-only const-value-known
-Clock_Ip_SetPlldigPll0divDeDivOutput/3 (Clock_Ip_SetPlldigPll0divDeDivOutput) @062942a0
+Clock_Ip_SetPlldigPll0divDeDivOutput/3 (Clock_Ip_SetPlldigPll0divDeDivOutput) @06311620
   Type: function definition analyzed
   Visibility: prevailing_def_ironly
   Address is taken.
@@ -136,7 +136,7 @@ Clock_Ip_SetPlldigPll0divDeDivOutput/3 (Clock_Ip_SetPlldigPll0divDeDivOutput) @0
   Function flags: count:1073741823 (estimated locally) body optimize_size
   Called by: 
   Calls: 
-Clock_Ip_SetCgmXDeDivWithoutPhase/2 (Clock_Ip_SetCgmXDeDivWithoutPhase) @06289e00
+Clock_Ip_SetCgmXDeDivWithoutPhase/2 (Clock_Ip_SetCgmXDeDivWithoutPhase) @063112a0
   Type: function definition analyzed
   Visibility: prevailing_def_ironly
   Address is taken.
@@ -146,7 +146,7 @@ Clock_Ip_SetCgmXDeDivWithoutPhase/2 (Clock_Ip_SetCgmXDeDivWithoutPhase) @06289e0
   Function flags: count:1073741824 (estimated locally) body optimize_size
   Called by: 
   Calls: 
-Clock_Ip_SetCgmXDeDivStatWithoutPhase/1 (Clock_Ip_SetCgmXDeDivStatWithoutPhase) @06289000
+Clock_Ip_SetCgmXDeDivStatWithoutPhase/1 (Clock_Ip_SetCgmXDeDivStatWithoutPhase) @06311000
   Type: function definition analyzed
   Visibility: prevailing_def_ironly
   Address is taken.
@@ -156,7 +156,7 @@ Clock_Ip_SetCgmXDeDivStatWithoutPhase/1 (Clock_Ip_SetCgmXDeDivStatWithoutPhase) 
   Function flags: count:164090760 (estimated locally) body optimize_size
   Called by: 
   Calls: Clock_Ip_ReportClockErrors/11 (37904965 (estimated locally),0.23 per call) Clock_Ip_TimeoutExpired/10 (1073741824 (estimated locally),6.54 per call) Clock_Ip_StartTimeout/9 (114863532 (estimated locally),0.70 per call) 
-Clock_Ip_Callback_DividerEmpty/0 (Clock_Ip_Callback_DividerEmpty) @06289d20
+Clock_Ip_Callback_DividerEmpty/0 (Clock_Ip_Callback_DividerEmpty) @062f80e0
   Type: function definition analyzed
   Visibility: prevailing_def_ironly
   Address is taken.
@@ -167,7 +167,7 @@ Clock_Ip_Callback_DividerEmpty/0 (Clock_Ip_Callback_DividerEmpty) @06289d20
   Called by: 
   Calls: 
 
-;; Function Clock_Ip_Callback_DividerEmpty (Clock_Ip_Callback_DividerEmpty, funcdef_no=0, decl_uid=6368, cgraph_uid=1, symbol_order=0)
+;; Function Clock_Ip_Callback_DividerEmpty (Clock_Ip_Callback_DividerEmpty, funcdef_no=0, decl_uid=6375, cgraph_uid=1, symbol_order=0)
 
 Modification phase of node Clock_Ip_Callback_DividerEmpty/0
 Clock_Ip_Callback_DividerEmpty (const struct Clock_Ip_DividerConfigType * Config)
@@ -180,7 +180,7 @@ Clock_Ip_Callback_DividerEmpty (const struct Clock_Ip_DividerConfigType * Config
 
 
 
-;; Function Clock_Ip_SetCgmXDeDivWithoutPhase (Clock_Ip_SetCgmXDeDivWithoutPhase, funcdef_no=2, decl_uid=6372, cgraph_uid=3, symbol_order=2)
+;; Function Clock_Ip_SetCgmXDeDivWithoutPhase (Clock_Ip_SetCgmXDeDivWithoutPhase, funcdef_no=2, decl_uid=6379, cgraph_uid=3, symbol_order=2)
 
 Modification phase of node Clock_Ip_SetCgmXDeDivWithoutPhase/2
 Clock_Ip_SetCgmXDeDivWithoutPhase (const struct Clock_Ip_DividerConfigType * Config)
@@ -291,7 +291,7 @@ Clock_Ip_SetCgmXDeDivWithoutPhase (const struct Clock_Ip_DividerConfigType * Con
 
 
 
-;; Function Clock_Ip_SetPlldigPll0divDeDivOutput (Clock_Ip_SetPlldigPll0divDeDivOutput, funcdef_no=3, decl_uid=6374, cgraph_uid=4, symbol_order=3)
+;; Function Clock_Ip_SetPlldigPll0divDeDivOutput (Clock_Ip_SetPlldigPll0divDeDivOutput, funcdef_no=3, decl_uid=6381, cgraph_uid=4, symbol_order=3)
 
 Modification phase of node Clock_Ip_SetPlldigPll0divDeDivOutput/3
 Clock_Ip_SetPlldigPll0divDeDivOutput (const struct Clock_Ip_DividerConfigType * Config)
@@ -369,7 +369,7 @@ Clock_Ip_SetPlldigPll0divDeDivOutput (const struct Clock_Ip_DividerConfigType * 
 
 
 
-;; Function Clock_Ip_SetCgmXDeDivStatWithoutPhase (Clock_Ip_SetCgmXDeDivStatWithoutPhase, funcdef_no=1, decl_uid=6370, cgraph_uid=2, symbol_order=1)
+;; Function Clock_Ip_SetCgmXDeDivStatWithoutPhase (Clock_Ip_SetCgmXDeDivStatWithoutPhase, funcdef_no=1, decl_uid=6377, cgraph_uid=2, symbol_order=1)
 
 Modification phase of node Clock_Ip_SetCgmXDeDivStatWithoutPhase/1
 Clock_Ip_SetCgmXDeDivStatWithoutPhase (const struct Clock_Ip_DividerConfigType * Config)

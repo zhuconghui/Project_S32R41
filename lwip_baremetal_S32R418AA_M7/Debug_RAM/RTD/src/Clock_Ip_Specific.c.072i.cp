@@ -68,7 +68,7 @@ Reclaiming variables:
 Clearing address taken flags:
 Symbol table:
 
-Clock_Ip_SpecificPlatformInitClock.isra.0/14 (Clock_Ip_SpecificPlatformInitClock.isra.0) @063a72a0
+Clock_Ip_SpecificPlatformInitClock.isra.0/14 (Clock_Ip_SpecificPlatformInitClock.isra.0) @063a7540
   Type: function definition analyzed
   Visibility: prevailing_def_ironly artificial
   References: 
@@ -77,7 +77,7 @@ Clock_Ip_SpecificPlatformInitClock.isra.0/14 (Clock_Ip_SpecificPlatformInitClock
   Function flags: count:1073741824 (estimated locally) body local optimize_size
   Called by: Clock_Ip_Command/6 (217325345 (estimated locally),0.20 per call) 
   Calls: Clock_Ip_PowerClockIpModules/1 (1073741824 (estimated locally),1.00 per call) 
-Clock_Ip_ReportClockErrors/13 (Clock_Ip_ReportClockErrors) @063272a0
+Clock_Ip_ReportClockErrors/13 (Clock_Ip_ReportClockErrors) @06374540
   Type: function
   Visibility: external public
   References: 
@@ -86,7 +86,7 @@ Clock_Ip_ReportClockErrors/13 (Clock_Ip_ReportClockErrors) @063272a0
   Function flags: optimize_size
   Called by: SRAMController_SetRamIWS/7 (310556958 (estimated locally),2.95 per call) SRAMController_SetRamIWS/7 (37904966 (estimated locally),0.36 per call) Clock_Ip_PowerClockIpModules/1 (12508639 (estimated locally),0.11 per call) Clock_Ip_PowerClockIpModules/1 (37904965 (estimated locally),0.33 per call) Clock_Ip_PowerClockIpModules/1 (12508639 (estimated locally),0.11 per call) 
   Calls: 
-Clock_Ip_TimeoutExpired/12 (Clock_Ip_TimeoutExpired) @063271c0
+Clock_Ip_TimeoutExpired/12 (Clock_Ip_TimeoutExpired) @06374460
   Type: function
   Visibility: external public
   References: 
@@ -95,7 +95,7 @@ Clock_Ip_TimeoutExpired/12 (Clock_Ip_TimeoutExpired) @063271c0
   Function flags: optimize_size
   Called by: SRAMController_SetRamIWS/7 (1073741824 (estimated locally),10.21 per call) Clock_Ip_PowerClockIpModules/1 (354334801 (estimated locally),3.08 per call) Clock_Ip_PowerClockIpModules/1 (1073741824 (estimated locally),9.35 per call) Clock_Ip_PowerClockIpModules/1 (354334803 (estimated locally),3.08 per call) 
   Calls: 
-Clock_Ip_StartTimeout/11 (Clock_Ip_StartTimeout) @063270e0
+Clock_Ip_StartTimeout/11 (Clock_Ip_StartTimeout) @06374380
   Type: function
   Visibility: external public
   References: 
@@ -104,7 +104,7 @@ Clock_Ip_StartTimeout/11 (Clock_Ip_StartTimeout) @063270e0
   Function flags: optimize_size
   Called by: SRAMController_SetRamIWS/7 (114863532 (estimated locally),1.09 per call) Clock_Ip_PowerClockIpModules/1 (37904965 (estimated locally),0.33 per call) Clock_Ip_PowerClockIpModules/1 (114863532 (estimated locally),1.00 per call) Clock_Ip_PowerClockIpModules/1 (37904966 (estimated locally),0.33 per call) 
   Calls: 
-Clock_Ip_FreqIds/10 (Clock_Ip_FreqIds) @06317990
+Clock_Ip_FreqIds/10 (Clock_Ip_FreqIds) @06315990
   Type: variable
   Body removed by symtab_remove_unreachable_nodes
   Visibility: external public
@@ -112,7 +112,7 @@ Clock_Ip_FreqIds/10 (Clock_Ip_FreqIds) @06317990
   Referring: Clock_Ip_SetRamWaitStates/3 (read)Clock_Ip_SetRamWaitStates/3 (read)
   Availability: not_available
   Varpool flags:
-Clock_Ip_pxConfig/9 (Clock_Ip_pxConfig) @06317948
+Clock_Ip_pxConfig/9 (Clock_Ip_pxConfig) @06315948
   Type: variable
   Body removed by symtab_remove_unreachable_nodes
   Visibility: external public
@@ -120,7 +120,7 @@ Clock_Ip_pxConfig/9 (Clock_Ip_pxConfig) @06317948
   Referring: Clock_Ip_SetRamWaitStates/3 (read)Clock_Ip_SetRamWaitStates/3 (read)
   Availability: not_available
   Varpool flags:
-Sys_GetCoreID/8 (Sys_GetCoreID) @0631cd20
+Sys_GetCoreID/8 (Sys_GetCoreID) @0631a540
   Type: function
   Visibility: external public
   References: 
@@ -129,7 +129,7 @@ Sys_GetCoreID/8 (Sys_GetCoreID) @0631cd20
   Function flags: optimize_size
   Called by: Clock_Ip_SetRamWaitStates/3 (1073741824 (estimated locally),1.00 per call) 
   Calls: 
-SRAMController_SetRamIWS/7 (SRAMController_SetRamIWS) @0631c8c0
+SRAMController_SetRamIWS/7 (SRAMController_SetRamIWS) @0631ab60
   Type: function definition analyzed
   Visibility: externally_visible public
   References: 
@@ -138,7 +138,7 @@ SRAMController_SetRamIWS/7 (SRAMController_SetRamIWS) @0631c8c0
   Function flags: count:105160121 (estimated locally) body optimize_size
   Called by: Clock_Ip_SetRamWaitStates/3 (1073634451 (estimated locally),1.00 per call) 
   Calls: Clock_Ip_ReportClockErrors/13 (310556958 (estimated locally),2.95 per call) Clock_Ip_ReportClockErrors/13 (37904966 (estimated locally),0.36 per call) Clock_Ip_TimeoutExpired/12 (1073741824 (estimated locally),10.21 per call) Clock_Ip_StartTimeout/11 (114863532 (estimated locally),1.09 per call) 
-Clock_Ip_Command/6 (Clock_Ip_Command) @0631c460
+Clock_Ip_Command/6 (Clock_Ip_Command) @0631a700
   Type: function definition analyzed
   Visibility: externally_visible public
   References: 
@@ -147,7 +147,7 @@ Clock_Ip_Command/6 (Clock_Ip_Command) @0631c460
   Function flags: count:1073741824 (estimated locally) body optimize_size
   Called by: 
   Calls: Clock_Ip_SpecificPlatformInitClock.isra.0/14 (217325345 (estimated locally),0.20 per call) 
-Clock_Ip_McMeEnterKey/4 (Clock_Ip_McMeEnterKey) @062fcd20
+Clock_Ip_McMeEnterKey/4 (Clock_Ip_McMeEnterKey) @061ee620
   Type: function definition analyzed
   Visibility: externally_visible public
   References: 
@@ -156,7 +156,7 @@ Clock_Ip_McMeEnterKey/4 (Clock_Ip_McMeEnterKey) @062fcd20
   Function flags: count:1073741824 (estimated locally) body optimize_size
   Called by: Clock_Ip_PowerClockIpModules/1 (37904965 (estimated locally),0.33 per call) Clock_Ip_PowerClockIpModules/1 (37904966 (estimated locally),0.33 per call) 
   Calls: 
-Clock_Ip_SetRamWaitStates/3 (Clock_Ip_SetRamWaitStates) @062fca80
+Clock_Ip_SetRamWaitStates/3 (Clock_Ip_SetRamWaitStates) @061eed20
   Type: function definition analyzed
   Visibility: externally_visible public
   References: Clock_Ip_pxConfig/9 (read)Clock_Ip_FreqIds/10 (read)Clock_Ip_pxConfig/9 (read)Clock_Ip_FreqIds/10 (read)
@@ -165,7 +165,7 @@ Clock_Ip_SetRamWaitStates/3 (Clock_Ip_SetRamWaitStates) @062fca80
   Function flags: count:1073741824 (estimated locally) body optimize_size
   Called by: 
   Calls: SRAMController_SetRamIWS/7 (1073634451 (estimated locally),1.00 per call) Sys_GetCoreID/8 (1073741824 (estimated locally),1.00 per call) 
-Clock_Ip_PowerClockIpModules/1 (Clock_Ip_PowerClockIpModules) @062fc540
+Clock_Ip_PowerClockIpModules/1 (Clock_Ip_PowerClockIpModules) @061ee7e0
   Type: function definition analyzed
   Visibility: prevailing_def_ironly
   References: 
@@ -175,7 +175,7 @@ Clock_Ip_PowerClockIpModules/1 (Clock_Ip_PowerClockIpModules) @062fc540
   Called by: Clock_Ip_SpecificPlatformInitClock.isra.0/14 (1073741824 (estimated locally),1.00 per call) 
   Calls: Clock_Ip_ReportClockErrors/13 (12508639 (estimated locally),0.11 per call) Clock_Ip_TimeoutExpired/12 (354334801 (estimated locally),3.08 per call) Clock_Ip_StartTimeout/11 (37904965 (estimated locally),0.33 per call) Clock_Ip_McMeEnterKey/4 (37904965 (estimated locally),0.33 per call) Clock_Ip_ReportClockErrors/13 (37904965 (estimated locally),0.33 per call) Clock_Ip_TimeoutExpired/12 (1073741824 (estimated locally),9.35 per call) Clock_Ip_StartTimeout/11 (114863532 (estimated locally),1.00 per call) Clock_Ip_ReportClockErrors/13 (12508639 (estimated locally),0.11 per call) Clock_Ip_TimeoutExpired/12 (354334803 (estimated locally),3.08 per call) Clock_Ip_StartTimeout/11 (37904966 (estimated locally),0.33 per call) Clock_Ip_McMeEnterKey/4 (37904966 (estimated locally),0.33 per call) 
 
-;; Function Clock_Ip_McMeEnterKey (Clock_Ip_McMeEnterKey, funcdef_no=3, decl_uid=6186, cgraph_uid=4, symbol_order=4)
+;; Function Clock_Ip_McMeEnterKey (Clock_Ip_McMeEnterKey, funcdef_no=3, decl_uid=6188, cgraph_uid=4, symbol_order=4)
 
 Modification phase of node Clock_Ip_McMeEnterKey/4
 Clock_Ip_McMeEnterKey ()
@@ -191,7 +191,7 @@ Clock_Ip_McMeEnterKey ()
 
 
 
-;; Function Clock_Ip_Command (Clock_Ip_Command, funcdef_no=5, decl_uid=6357, cgraph_uid=6, symbol_order=6)
+;; Function Clock_Ip_Command (Clock_Ip_Command, funcdef_no=5, decl_uid=6364, cgraph_uid=6, symbol_order=6)
 
 Modification phase of node Clock_Ip_Command/6
 Clock_Ip_Command (const struct Clock_Ip_ClockConfigType * Config, Clock_Ip_CommandType Command)
@@ -217,7 +217,7 @@ Clock_Ip_Command (const struct Clock_Ip_ClockConfigType * Config, Clock_Ip_Comma
 
 
 
-;; Function SRAMController_SetRamIWS (SRAMController_SetRamIWS, funcdef_no=6, decl_uid=6371, cgraph_uid=7, symbol_order=7)
+;; Function SRAMController_SetRamIWS (SRAMController_SetRamIWS, funcdef_no=6, decl_uid=6378, cgraph_uid=7, symbol_order=7)
 
 Modification phase of node SRAMController_SetRamIWS/7
 SRAMController_SetRamIWS (uint32 IwsSetting)
@@ -366,7 +366,7 @@ SRAMController_SetRamIWS (uint32 IwsSetting)
 
 
 
-;; Function Clock_Ip_SetRamWaitStates (Clock_Ip_SetRamWaitStates, funcdef_no=2, decl_uid=6354, cgraph_uid=3, symbol_order=3)
+;; Function Clock_Ip_SetRamWaitStates (Clock_Ip_SetRamWaitStates, funcdef_no=2, decl_uid=6361, cgraph_uid=3, symbol_order=3)
 
 Modification phase of node Clock_Ip_SetRamWaitStates/3
 Clock_Ip_SetRamWaitStates ()

@@ -6,16 +6,19 @@
 C_SRCS += \
 ../src/device.c \
 ../src/main.c \
+../src/sys_init.c \
 ../src/test.c 
 
 OBJS += \
 ./src/device.o \
 ./src/main.o \
+./src/sys_init.o \
 ./src/test.o 
 
 C_DEPS += \
 ./src/device.d \
 ./src/main.d \
+./src/sys_init.d \
 ./src/test.d 
 
 

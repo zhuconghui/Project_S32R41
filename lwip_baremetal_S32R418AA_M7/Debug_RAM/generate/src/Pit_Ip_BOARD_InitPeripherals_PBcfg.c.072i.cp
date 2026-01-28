@@ -25,7 +25,7 @@ Reclaiming variables:
 Clearing address taken flags:
 Symbol table:
 
-OsIf_Millisecond/2 (OsIf_Millisecond) @05ffac40
+OsIf_Millisecond/2 (OsIf_Millisecond) @05f3ac40
   Type: function
   Visibility: external public
   Address is taken.
@@ -35,14 +35,14 @@ OsIf_Millisecond/2 (OsIf_Millisecond) @05ffac40
   Function flags: optimize_size
   Called by: 
   Calls: 
-PIT_0_ChannelConfig_PB_BOARD_InitPeripherals/1 (PIT_0_ChannelConfig_PB_BOARD_InitPeripherals) @060012d0
+PIT_0_ChannelConfig_PB_BOARD_InitPeripherals/1 (PIT_0_ChannelConfig_PB_BOARD_InitPeripherals) @05f412d0
   Type: variable definition analyzed
   Visibility: externally_visible public
   References: OsIf_Millisecond/2 (addr)
   Referring: 
   Availability: available
   Varpool flags: initialized read-only const-value-known
-PIT_0_InitConfig_PB_BOARD_InitPeripherals/0 (PIT_0_InitConfig_PB_BOARD_InitPeripherals) @06001240
+PIT_0_InitConfig_PB_BOARD_InitPeripherals/0 (PIT_0_InitConfig_PB_BOARD_InitPeripherals) @05f41240
   Type: variable definition analyzed
   Visibility: externally_visible public
   References: 

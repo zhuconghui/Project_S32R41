@@ -1,9 +1,3500 @@
 Clock_Ip_SetExternalSignalFrequency (Clock_Ip_NameType SignalName, uint32 Frequency)
 {
+  uint32 Index;
+
   <bb 2> :
   # DEBUG BEGIN_STMT
   # DEBUG BEGIN_STMT
+  Index = 0;
+  goto <bb 6>; [INV]
+
+  <bb 3> :
+  # DEBUG BEGIN_STMT
+  _1 = Clock_Ip_axExtSignalFreqEntries[Index].Name;
+  if (SignalName == _1)
+    goto <bb 4>; [INV]
+  else
+    goto <bb 5>; [INV]
+
+  <bb 4> :
+  # DEBUG BEGIN_STMT
+  Clock_Ip_axExtSignalFreqEntries[Index].Frequency = Frequency;
+  # DEBUG BEGIN_STMT
+  goto <bb 7>; [INV]
+
+  <bb 5> :
+  # DEBUG BEGIN_STMT
+  Index = Index + 1;
+
+  <bb 6> :
+  # DEBUG BEGIN_STMT
+  if (Index <= 14)
+    goto <bb 3>; [INV]
+  else
+    goto <bb 7>; [INV]
+
+  <bb 7> :
   return;
+
+}
+
+
+Clock_Ip_GetFreq (Clock_Ip_NameType ClockName)
+{
+  uint32 D.6982;
+
+  <bb 2> :
+  # DEBUG BEGIN_STMT
+  _1 = (int) ClockName;
+  _2 = Clock_Ip_apfFreqTable[_1];
+  D.6982 = _2 ();
+  return D.6982;
+
+}
+
+
+Clock_Ip_SetExternalOscillatorFrequency (Clock_Ip_NameType ExtOscName, uint32 Frequency)
+{
+  <bb 2> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  Clock_Ip_u32Fxosc = Frequency;
+  return;
+
+}
+
+
+Clock_Ip_DFS_OUTPUT (const struct DFS_Type * Base, uint32 Channel, uint32 Fin)
+{
+  uint32 DividerModulo;
+  uint32 DividerResult;
+  uint32 Divider;
+  uint32 Mfn;
+  uint32 Mfi;
+  uint32 iftmp.3;
+  uint32 D.7175;
+  long unsigned int iftmp.2;
+
+  <bb 2> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _1 = Base->DVPORT[Channel];
+  _2 = _1 >> 8;
+  Mfi = _2 & 255;
+  # DEBUG BEGIN_STMT
+  _3 = Base->DVPORT[Channel];
+  Mfn = _3 & 63;
+  # DEBUG BEGIN_STMT
+  _4 = Mfi << 5;
+  _5 = Mfi << 2;
+  _6 = _4 + _5;
+  Divider = Mfn + _6;
+  # DEBUG BEGIN_STMT
+  if (Divider != 0)
+    goto <bb 3>; [INV]
+  else
+    goto <bb 4>; [INV]
+
+  <bb 3> :
+  iftmp.2 = Fin / Divider;
+  goto <bb 5>; [INV]
+
+  <bb 4> :
+  iftmp.2 = 0;
+
+  <bb 5> :
+  DividerResult = iftmp.2;
+  # DEBUG BEGIN_STMT
+  _7 = Divider * DividerResult;
+  DividerModulo = Fin - _7;
+  # DEBUG BEGIN_STMT
+  if (Divider != 0)
+    goto <bb 6>; [INV]
+  else
+    goto <bb 7>; [INV]
+
+  <bb 6> :
+  _8 = DividerResult << 4;
+  _9 = DividerResult << 1;
+  _10 = _8 + _9;
+  _11 = DividerModulo << 4;
+  _12 = DividerModulo << 1;
+  _13 = _11 + _12;
+  _14 = _13 / Divider;
+  iftmp.3 = _10 + _14;
+  goto <bb 8>; [INV]
+
+  <bb 7> :
+  iftmp.3 = 0;
+
+  <bb 8> :
+  D.7175 = iftmp.3;
+  return D.7175;
+
+}
+
+
+Clock_Ip_PLL_VCO (const struct PLLDIG_Type * Base)
+{
+  uint32 Var5;
+  uint32 Var4;
+  uint32 Var3;
+  uint32 Var2;
+  uint32 Var1;
+  uint32 Mfn;
+  uint32 Mfi;
+  uint32 Rdiv;
+  uint32 Fout;
+  uint32 Fin;
+  uint32 D.7321;
+  uint32 iftmp.65;
+
+  <bb 2> :
+  # DEBUG BEGIN_STMT
+  Fin = 0;
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _1 = Base->PLLCR;
+  _2 = (signed int) _1;
+  if (_2 >= 0)
+    goto <bb 3>; [INV]
+  else
+    goto <bb 10>; [INV]
+
+  <bb 3> :
+  # DEBUG BEGIN_STMT
+  _3 = Base->PLLCLKMUX;
+  _4 = _3 & 1;
+  if (_4 == 0)
+    goto <bb 4>; [INV]
+  else
+    goto <bb 5>; [INV]
+
+  <bb 4> :
+  iftmp.65 = Clock_Ip_Get_FIRC_CLK_Frequency ();
+  goto <bb 6>; [INV]
+
+  <bb 5> :
+  iftmp.65 = Clock_Ip_Get_FXOSC_CLK_Frequency ();
+
+  <bb 6> :
+  Fin = iftmp.65;
+  # DEBUG BEGIN_STMT
+  _5 = Base->PLLDV;
+  _6 = _5 >> 12;
+  Rdiv = _6 & 7;
+  # DEBUG BEGIN_STMT
+  _7 = Base->PLLDV;
+  Mfi = _7 & 255;
+  # DEBUG BEGIN_STMT
+  if (Base == 1074511872B)
+    goto <bb 7>; [INV]
+  else
+    goto <bb 8>; [INV]
+
+  <bb 7> :
+  # DEBUG BEGIN_STMT
+  Mfn = 0;
+  goto <bb 9>; [INV]
+
+  <bb 8> :
+  # DEBUG BEGIN_STMT
+  _8 = Base->PLLFD;
+  Mfn = _8 & 32767;
+
+  <bb 9> :
+  # DEBUG BEGIN_STMT
+  Var1 = Mfi / Rdiv;
+  # DEBUG BEGIN_STMT
+  _9 = Var1 * Rdiv;
+  Var2 = Mfi - _9;
+  # DEBUG BEGIN_STMT
+  _10 = Rdiv << 14;
+  _11 = Rdiv << 11;
+  Var3 = _10 + _11;
+  # DEBUG BEGIN_STMT
+  Var4 = Fin / Var3;
+  # DEBUG BEGIN_STMT
+  _12 = Var4 * Var3;
+  Var5 = Fin - _12;
+  # DEBUG BEGIN_STMT
+  Fout = Var1 * Fin;
+  # DEBUG BEGIN_STMT
+  _13 = Fin / Rdiv;
+  _14 = Var2 * _13;
+  Fout = Fout + _14;
+  # DEBUG BEGIN_STMT
+  _15 = Var4 * Mfn;
+  Fout = Fout + _15;
+  # DEBUG BEGIN_STMT
+  _16 = Var5 * Mfn;
+  _17 = _16 / Var3;
+  Fout = Fout + _17;
+  goto <bb 11>; [INV]
+
+  <bb 10> :
+  # DEBUG BEGIN_STMT
+  Fout = 0;
+
+  <bb 11> :
+  # DEBUG BEGIN_STMT
+  D.7321 = Fout;
+  return D.7321;
+
+}
+
+
+Clock_Ip_Get_TCLK_CLK_Frequency ()
+{
+  uint32 Frequency;
+  uint32 D.6986;
+  long unsigned int D.6985;
+  long unsigned int D.6984;
+
+  <bb 2> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _1 = 1074561024B;
+  _2 = _1->MUX_6_CSS;
+  _3 = _2 >> 24;
+  _4 = _3 & 31;
+  _5 = Clock_Ip_apfFreqTableClkSrc[_4];
+  Frequency = _5 ();
+  # DEBUG BEGIN_STMT
+  _6 = 1074561024B;
+  _7 = _6->MUX_6_DC_2;
+  _8 = _7 >> 31;
+  _9 = _8 & 1;
+  D.6984 = Clock_Ip_u32EnableDivider[_9];
+  Frequency = D.6984 & Frequency;
+  # DEBUG BEGIN_STMT
+  _10 = 1074561024B;
+  _11 = _10->MUX_6_DC_2;
+  _12 = _11 >> 16;
+  _13 = _12 & 255;
+  D.6985 = _13 + 1;
+  Frequency = Frequency / D.6985;
+  # DEBUG BEGIN_STMT
+  D.6986 = Frequency;
+  return D.6986;
+
+}
+
+
+Clock_Ip_Get_TMU_CLK_Frequency ()
+{
+  uint32 Frequency;
+  uint32 D.6990;
+  long unsigned int D.6989;
+  long unsigned int D.6988;
+
+  <bb 2> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _1 = 1074561024B;
+  _2 = _1->MUX_6_CSS;
+  _3 = _2 >> 24;
+  _4 = _3 & 31;
+  _5 = Clock_Ip_apfFreqTableClkSrc[_4];
+  Frequency = _5 ();
+  # DEBUG BEGIN_STMT
+  _6 = 1074561024B;
+  _7 = _6->MUX_6_DC_1;
+  _8 = _7 >> 31;
+  _9 = _8 & 1;
+  D.6988 = Clock_Ip_u32EnableDivider[_9];
+  Frequency = D.6988 & Frequency;
+  # DEBUG BEGIN_STMT
+  _10 = 1074561024B;
+  _11 = _10->MUX_6_DC_1;
+  _12 = _11 >> 16;
+  _13 = _12 & 255;
+  D.6989 = _13 + 1;
+  Frequency = Frequency / D.6989;
+  # DEBUG BEGIN_STMT
+  D.6990 = Frequency;
+  return D.6990;
+
+}
+
+
+Clock_Ip_Get_STCU_CLK_Frequency ()
+{
+  uint32 Frequency;
+  uint32 D.6994;
+  long unsigned int D.6993;
+  long unsigned int D.6992;
+
+  <bb 2> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _1 = 1074561024B;
+  _2 = _1->MUX_6_CSS;
+  _3 = _2 >> 24;
+  _4 = _3 & 31;
+  _5 = Clock_Ip_apfFreqTableClkSrc[_4];
+  Frequency = _5 ();
+  # DEBUG BEGIN_STMT
+  _6 = 1074561024B;
+  _7 = _6->MUX_6_DC_4;
+  _8 = _7 >> 31;
+  _9 = _8 & 1;
+  D.6992 = Clock_Ip_u32EnableDivider[_9];
+  Frequency = D.6992 & Frequency;
+  # DEBUG BEGIN_STMT
+  _10 = 1074561024B;
+  _11 = _10->MUX_6_DC_4;
+  _12 = _11 >> 16;
+  _13 = _12 & 255;
+  D.6993 = _13 + 1;
+  Frequency = Frequency / D.6993;
+  # DEBUG BEGIN_STMT
+  D.6994 = Frequency;
+  return D.6994;
+
+}
+
+
+Clock_Ip_Get_SPT_CLK_Frequency ()
+{
+  uint32 Frequency;
+  uint32 D.6997;
+  long unsigned int D.6996;
+
+  <bb 2> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _1 = 1141669888B;
+  _2 = _1->MUX_1_CSS;
+  _3 = _2 >> 24;
+  _4 = _3 & 63;
+  _5 = Clock_Ip_apfFreqTableClkSrc[_4];
+  Frequency = _5 ();
+  # DEBUG BEGIN_STMT
+  _6 = 1074593792B;
+  _7 = _6->PRTN1_COFB0_STAT;
+  _8 = _7 >> 1;
+  _9 = _8 & 1;
+  D.6996 = Clock_Ip_u32EnableGate[_9];
+  Frequency = D.6996 & Frequency;
+  # DEBUG BEGIN_STMT
+  D.6997 = Frequency;
+  return D.6997;
+
+}
+
+
+Clock_Ip_Get_SPI_CLK_Frequency ()
+{
+  uint32 Frequency;
+  uint32 D.6999;
+
+  <bb 2> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _1 = 1074561024B;
+  _2 = _1->MUX_4_CSS;
+  _3 = _2 >> 24;
+  _4 = _3 & 31;
+  _5 = Clock_Ip_apfFreqTableClkSrc[_4];
+  Frequency = _5 ();
+  # DEBUG BEGIN_STMT
+  D.6999 = Frequency;
+  return D.6999;
+
+}
+
+
+Clock_Ip_Get_QSPI0_CLK_Frequency ()
+{
+  uint32 Frequency;
+  uint32 D.7003;
+  long unsigned int D.7002;
+  long unsigned int D.7001;
+
+  <bb 2> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _1 = 1074561024B;
+  _2 = _1->MUX_5_CSS;
+  _3 = _2 >> 24;
+  _4 = _3 & 31;
+  _5 = Clock_Ip_apfFreqTableClkSrc[_4];
+  Frequency = _5 ();
+  # DEBUG BEGIN_STMT
+  _6 = 1074561024B;
+  _7 = _6->MUX_5_DC_0;
+  _8 = _7 >> 31;
+  _9 = _8 & 1;
+  D.7001 = Clock_Ip_u32EnableDivider[_9];
+  Frequency = D.7001 & Frequency;
+  # DEBUG BEGIN_STMT
+  _10 = 1074561024B;
+  _11 = _10->MUX_5_DC_0;
+  _12 = _11 >> 16;
+  _13 = _12 & 255;
+  D.7002 = _13 + 1;
+  Frequency = Frequency / D.7002;
+  # DEBUG BEGIN_STMT
+  D.7003 = Frequency;
+  return D.7003;
+
+}
+
+
+Clock_Ip_Get_QSPI_1X_CLK_Frequency ()
+{
+  uint32 D.7005;
+
+  <bb 2> :
+  # DEBUG BEGIN_STMT
+  _1 = Clock_Ip_Get_QSPI_2X_CLK_Frequency ();
+  D.7005 = _1 >> 1;
+  return D.7005;
+
+}
+
+
+Clock_Ip_Get_QSPI_2X_CLK_Frequency ()
+{
+  uint32 Frequency;
+  uint32 D.7009;
+  long unsigned int D.7008;
+  long unsigned int D.7007;
+
+  <bb 2> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _1 = 1074561024B;
+  _2 = _1->MUX_5_CSS;
+  _3 = _2 >> 24;
+  _4 = _3 & 31;
+  _5 = Clock_Ip_apfFreqTableClkSrc[_4];
+  Frequency = _5 ();
+  # DEBUG BEGIN_STMT
+  _6 = 1074561024B;
+  _7 = _6->MUX_5_DC_0;
+  _8 = _7 >> 31;
+  _9 = _8 & 1;
+  D.7007 = Clock_Ip_u32EnableDivider[_9];
+  Frequency = D.7007 & Frequency;
+  # DEBUG BEGIN_STMT
+  _10 = 1074561024B;
+  _11 = _10->MUX_5_DC_0;
+  _12 = _11 >> 16;
+  _13 = _12 & 255;
+  D.7008 = _13 + 1;
+  Frequency = Frequency / D.7008;
+  # DEBUG BEGIN_STMT
+  D.7009 = Frequency;
+  return D.7009;
+
+}
+
+
+Clock_Ip_Get_NOC_TRACE_CLK_Frequency ()
+{
+  uint32 Frequency;
+  uint32 D.7011;
+
+  <bb 2> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _1 = 1141669888B;
+  _2 = _1->MUX_5_CSS;
+  _3 = _2 >> 24;
+  _4 = _3 & 31;
+  _5 = Clock_Ip_apfFreqTableClkSrc[_4];
+  Frequency = _5 ();
+  # DEBUG BEGIN_STMT
+  D.7011 = Frequency;
+  return D.7011;
+
+}
+
+
+Clock_Ip_Get_MIPICSI2_1_CLK_Frequency ()
+{
+  uint32 Frequency;
+  uint32 D.7014;
+  long unsigned int D.7013;
+
+  <bb 2> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _1 = 1141669888B;
+  _2 = _1->MUX_3_CSS;
+  _3 = _2 >> 24;
+  _4 = _3 & 63;
+  _5 = Clock_Ip_apfFreqTableClkSrc[_4];
+  Frequency = _5 ();
+  # DEBUG BEGIN_STMT
+  _6 = 1074593792B;
+  _7 = _6->PRTN1_COFB0_STAT;
+  _8 = _7 >> 2;
+  _9 = _8 & 1;
+  D.7013 = Clock_Ip_u32EnableGate[_9];
+  Frequency = D.7013 & Frequency;
+  # DEBUG BEGIN_STMT
+  D.7014 = Frequency;
+  return D.7014;
+
+}
+
+
+Clock_Ip_Get_MIPICSI2_0_CLK_Frequency ()
+{
+  uint32 Frequency;
+  uint32 D.7017;
+  long unsigned int D.7016;
+
+  <bb 2> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _1 = 1141669888B;
+  _2 = _1->MUX_3_CSS;
+  _3 = _2 >> 24;
+  _4 = _3 & 63;
+  _5 = Clock_Ip_apfFreqTableClkSrc[_4];
+  Frequency = _5 ();
+  # DEBUG BEGIN_STMT
+  _6 = 1074593792B;
+  _7 = _6->PRTN1_COFB0_STAT;
+  _8 = _7 >> 2;
+  _9 = _8 & 1;
+  D.7016 = Clock_Ip_u32EnableGate[_9];
+  Frequency = D.7016 & Frequency;
+  # DEBUG BEGIN_STMT
+  D.7017 = Frequency;
+  return D.7017;
+
+}
+
+
+Clock_Ip_Get_LINFLEXD_CLK_Frequency ()
+{
+  uint32 D.7019;
+
+  <bb 2> :
+  # DEBUG BEGIN_STMT
+  _1 = Clock_Ip_Get_LIN_BAUD_CLK_Frequency ();
+  D.7019 = _1 >> 1;
+  return D.7019;
+
+}
+
+
+Clock_Ip_Get_LIN_BAUD_CLK_Frequency ()
+{
+  uint32 Frequency;
+  uint32 D.7021;
+
+  <bb 2> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _1 = 1074561024B;
+  _2 = _1->MUX_8_CSS;
+  _3 = _2 >> 24;
+  _4 = _3 & 31;
+  _5 = Clock_Ip_apfFreqTableClkSrc[_4];
+  Frequency = _5 ();
+  # DEBUG BEGIN_STMT
+  D.7021 = Frequency;
+  return D.7021;
+
+}
+
+
+Clock_Ip_Get_LBIST_CLK_Frequency ()
+{
+  uint32 Frequency;
+  uint32 D.7025;
+  long unsigned int D.7024;
+  long unsigned int D.7023;
+
+  <bb 2> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _1 = 1141669888B;
+  _2 = _1->MUX_6_CSS;
+  _3 = _2 >> 24;
+  _4 = _3 & 15;
+  _5 = Clock_Ip_apfFreqTableClkSrc[_4];
+  Frequency = _5 ();
+  # DEBUG BEGIN_STMT
+  _6 = 1141669888B;
+  _7 = _6->MUX_6_DC_0;
+  _8 = _7 >> 31;
+  _9 = _8 & 1;
+  D.7023 = Clock_Ip_u32EnableDivider[_9];
+  Frequency = D.7023 & Frequency;
+  # DEBUG BEGIN_STMT
+  _10 = 1141669888B;
+  _11 = _10->MUX_6_DC_0;
+  _12 = _11 >> 16;
+  _13 = _12 & 255;
+  D.7024 = _13 + 1;
+  Frequency = Frequency / D.7024;
+  # DEBUG BEGIN_STMT
+  D.7025 = Frequency;
+  return D.7025;
+
+}
+
+
+Clock_Ip_Get_GMAC1_TX_CLK_Frequency ()
+{
+  uint32 Frequency;
+  uint32 D.7029;
+  long unsigned int D.7028;
+  long unsigned int D.7027;
+
+  <bb 2> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _1 = 1141391360B;
+  _2 = _1->MUX_2_CSS;
+  _3 = _2 >> 24;
+  _4 = _3 & 63;
+  _5 = Clock_Ip_apfFreqTableClkSrc[_4];
+  Frequency = _5 ();
+  # DEBUG BEGIN_STMT
+  _6 = 1141391360B;
+  _7 = _6->MUX_2_DC_0;
+  _8 = _7 >> 31;
+  _9 = _8 & 1;
+  D.7027 = Clock_Ip_u32EnableDivider[_9];
+  Frequency = D.7027 & Frequency;
+  # DEBUG BEGIN_STMT
+  _10 = 1141391360B;
+  _11 = _10->MUX_2_DC_0;
+  _12 = _11 >> 16;
+  _13 = _12 & 255;
+  D.7028 = _13 + 1;
+  Frequency = Frequency / D.7028;
+  # DEBUG BEGIN_STMT
+  D.7029 = Frequency;
+  return D.7029;
+
+}
+
+
+Clock_Ip_Get_GMAC1_TS_CLK_Frequency ()
+{
+  uint32 Frequency;
+  uint32 D.7033;
+  long unsigned int D.7032;
+  long unsigned int D.7031;
+
+  <bb 2> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _1 = 1141391360B;
+  _2 = _1->MUX_1_CSS;
+  _3 = _2 >> 24;
+  _4 = _3 & 63;
+  _5 = Clock_Ip_apfFreqTableClkSrc[_4];
+  Frequency = _5 ();
+  # DEBUG BEGIN_STMT
+  _6 = 1141391360B;
+  _7 = _6->MUX_1_DC_0;
+  _8 = _7 >> 31;
+  _9 = _8 & 1;
+  D.7031 = Clock_Ip_u32EnableDivider[_9];
+  Frequency = D.7031 & Frequency;
+  # DEBUG BEGIN_STMT
+  _10 = 1141391360B;
+  _11 = _10->MUX_1_DC_0;
+  _12 = _11 >> 16;
+  _13 = _12 & 255;
+  D.7032 = _13 + 1;
+  Frequency = Frequency / D.7032;
+  # DEBUG BEGIN_STMT
+  D.7033 = Frequency;
+  return D.7033;
+
+}
+
+
+Clock_Ip_Get_GMAC1_RX_CLK_Frequency ()
+{
+  uint32 Frequency;
+  uint32 D.7035;
+
+  <bb 2> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _1 = 1141391360B;
+  _2 = _1->MUX_4_CSS;
+  _3 = _2 >> 24;
+  _4 = _3 & 63;
+  _5 = Clock_Ip_apfFreqTableClkSrc[_4];
+  Frequency = _5 ();
+  # DEBUG BEGIN_STMT
+  D.7035 = Frequency;
+  return D.7035;
+
+}
+
+
+Clock_Ip_Get_GMAC0_TX_CLK_Frequency ()
+{
+  uint32 Frequency;
+  uint32 D.7037;
+
+  <bb 2> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _1 = 1074774016B;
+  _2 = _1->MUX_2_CSS;
+  _3 = _2 >> 24;
+  _4 = _3 & 63;
+  _5 = Clock_Ip_apfFreqTableClkSrc[_4];
+  Frequency = _5 ();
+  # DEBUG BEGIN_STMT
+  D.7037 = Frequency;
+  return D.7037;
+
+}
+
+
+Clock_Ip_Get_GMAC0_TS_CLK_Frequency ()
+{
+  uint32 Frequency;
+  uint32 D.7041;
+  long unsigned int D.7040;
+  long unsigned int D.7039;
+
+  <bb 2> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _1 = 1074774016B;
+  _2 = _1->MUX_1_CSS;
+  _3 = _2 >> 24;
+  _4 = _3 & 63;
+  _5 = Clock_Ip_apfFreqTableClkSrc[_4];
+  Frequency = _5 ();
+  # DEBUG BEGIN_STMT
+  _6 = 1074774016B;
+  _7 = _6->MUX_1_DC_0;
+  _8 = _7 >> 31;
+  _9 = _8 & 1;
+  D.7039 = Clock_Ip_u32EnableDivider[_9];
+  Frequency = D.7039 & Frequency;
+  # DEBUG BEGIN_STMT
+  _10 = 1074774016B;
+  _11 = _10->MUX_1_DC_0;
+  _12 = _11 >> 16;
+  _13 = _12 & 255;
+  D.7040 = _13 + 1;
+  Frequency = Frequency / D.7040;
+  # DEBUG BEGIN_STMT
+  D.7041 = Frequency;
+  return D.7041;
+
+}
+
+
+Clock_Ip_Get_GMAC0_RX_CLK_Frequency ()
+{
+  uint32 Frequency;
+  uint32 D.7043;
+
+  <bb 2> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _1 = 1074774016B;
+  _2 = _1->MUX_4_CSS;
+  _3 = _2 >> 24;
+  _4 = _3 & 63;
+  _5 = Clock_Ip_apfFreqTableClkSrc[_4];
+  Frequency = _5 ();
+  # DEBUG BEGIN_STMT
+  D.7043 = Frequency;
+  return D.7043;
+
+}
+
+
+Clock_Ip_Get_FTM0_EXT_CLK_Frequency ()
+{
+  uint32 Frequency;
+  uint32 D.7047;
+  long unsigned int D.7046;
+  long unsigned int D.7045;
+
+  <bb 2> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _1 = 1074774016B;
+  _2 = _1->MUX_0_CSS;
+  _3 = _2 >> 24;
+  _4 = _3 & 63;
+  _5 = Clock_Ip_apfFreqTableClkSrc[_4];
+  Frequency = _5 ();
+  # DEBUG BEGIN_STMT
+  _6 = 1074774016B;
+  _7 = _6->MUX_0_DC_0;
+  _8 = _7 >> 31;
+  _9 = _8 & 1;
+  D.7045 = Clock_Ip_u32EnableDivider[_9];
+  Frequency = D.7045 & Frequency;
+  # DEBUG BEGIN_STMT
+  _10 = 1074774016B;
+  _11 = _10->MUX_0_DC_0;
+  _12 = _11 >> 16;
+  _13 = _12 & 255;
+  D.7046 = _13 + 1;
+  Frequency = Frequency / D.7046;
+  # DEBUG BEGIN_STMT
+  D.7047 = Frequency;
+  return D.7047;
+
+}
+
+
+Clock_Ip_Get_FCCU_IPS_CLK_Frequency ()
+{
+  uint32 Frequency;
+  uint32 D.7051;
+  long unsigned int D.7050;
+  long unsigned int D.7049;
+
+  <bb 2> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _1 = 1074561024B;
+  _2 = _1->MUX_6_CSS;
+  _3 = _2 >> 24;
+  _4 = _3 & 31;
+  _5 = Clock_Ip_apfFreqTableClkSrc[_4];
+  Frequency = _5 ();
+  # DEBUG BEGIN_STMT
+  _6 = 1074561024B;
+  _7 = _6->MUX_6_DC_1;
+  _8 = _7 >> 31;
+  _9 = _8 & 1;
+  D.7049 = Clock_Ip_u32EnableDivider[_9];
+  Frequency = D.7049 & Frequency;
+  # DEBUG BEGIN_STMT
+  _10 = 1074561024B;
+  _11 = _10->MUX_6_DC_1;
+  _12 = _11 >> 16;
+  _13 = _12 & 255;
+  D.7050 = _13 + 1;
+  Frequency = Frequency / D.7050;
+  # DEBUG BEGIN_STMT
+  D.7051 = Frequency;
+  return D.7051;
+
+}
+
+
+Clock_Ip_Get_DSPI_SCK_TST_CLK_Frequency ()
+{
+  uint32 Frequency;
+  uint32 D.7055;
+  long unsigned int D.7054;
+  long unsigned int D.7053;
+
+  <bb 2> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _1 = 1074561024B;
+  _2 = _1->MUX_6_CSS;
+  _3 = _2 >> 24;
+  _4 = _3 & 31;
+  _5 = Clock_Ip_apfFreqTableClkSrc[_4];
+  Frequency = _5 ();
+  # DEBUG BEGIN_STMT
+  _6 = 1074561024B;
+  _7 = _6->MUX_6_DC_3;
+  _8 = _7 >> 31;
+  _9 = _8 & 1;
+  D.7053 = Clock_Ip_u32EnableDivider[_9];
+  Frequency = D.7053 & Frequency;
+  # DEBUG BEGIN_STMT
+  _10 = 1074561024B;
+  _11 = _10->MUX_6_DC_3;
+  _12 = _11 >> 16;
+  _13 = _12 & 255;
+  D.7054 = _13 + 1;
+  Frequency = Frequency / D.7054;
+  # DEBUG BEGIN_STMT
+  D.7055 = Frequency;
+  return D.7055;
+
+}
+
+
+Clock_Ip_Get_DAPB_CLK_Frequency ()
+{
+  uint32 Frequency;
+  uint32 D.7059;
+  long unsigned int D.7058;
+  long unsigned int D.7057;
+
+  <bb 2> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _1 = 1074561024B;
+  _2 = _1->MUX_6_CSS;
+  _3 = _2 >> 24;
+  _4 = _3 & 31;
+  _5 = Clock_Ip_apfFreqTableClkSrc[_4];
+  Frequency = _5 ();
+  # DEBUG BEGIN_STMT
+  _6 = 1074561024B;
+  _7 = _6->MUX_6_DC_4;
+  _8 = _7 >> 31;
+  _9 = _8 & 1;
+  D.7057 = Clock_Ip_u32EnableDivider[_9];
+  Frequency = D.7057 & Frequency;
+  # DEBUG BEGIN_STMT
+  _10 = 1074561024B;
+  _11 = _10->MUX_6_DC_4;
+  _12 = _11 >> 16;
+  _13 = _12 & 255;
+  D.7058 = _13 + 1;
+  Frequency = Frequency / D.7058;
+  # DEBUG BEGIN_STMT
+  D.7059 = Frequency;
+  return D.7059;
+
+}
+
+
+Clock_Ip_Get_CTU_IPS_CLK_Frequency ()
+{
+  uint32 Frequency;
+  uint32 D.7063;
+  long unsigned int D.7062;
+  long unsigned int D.7061;
+
+  <bb 2> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _1 = 1074561024B;
+  _2 = _1->MUX_6_CSS;
+  _3 = _2 >> 24;
+  _4 = _3 & 31;
+  _5 = Clock_Ip_apfFreqTableClkSrc[_4];
+  Frequency = _5 ();
+  # DEBUG BEGIN_STMT
+  _6 = 1074561024B;
+  _7 = _6->MUX_6_DC_1;
+  _8 = _7 >> 31;
+  _9 = _8 & 1;
+  D.7061 = Clock_Ip_u32EnableDivider[_9];
+  Frequency = D.7061 & Frequency;
+  # DEBUG BEGIN_STMT
+  _10 = 1074561024B;
+  _11 = _10->MUX_6_DC_1;
+  _12 = _11 >> 16;
+  _13 = _12 & 255;
+  D.7062 = _13 + 1;
+  Frequency = Frequency / D.7062;
+  # DEBUG BEGIN_STMT
+  D.7063 = Frequency;
+  return D.7063;
+
+}
+
+
+Clock_Ip_Get_MC_CLK_Frequency ()
+{
+  uint32 Frequency;
+  uint32 D.7065;
+
+  <bb 2> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _1 = 1074561024B;
+  _2 = _1->MUX_3_CSS;
+  _3 = _2 >> 24;
+  _4 = _3 & 31;
+  _5 = Clock_Ip_apfFreqTableClkSrc[_4];
+  Frequency = _5 ();
+  # DEBUG BEGIN_STMT
+  D.7065 = Frequency;
+  return D.7065;
+
+}
+
+
+Clock_Ip_Get_CSI_TXCLK_CLK_Frequency ()
+{
+  uint32 Frequency;
+  uint32 D.7069;
+  long unsigned int D.7068;
+  long unsigned int D.7067;
+
+  <bb 2> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _1 = 1141669888B;
+  _2 = _1->MUX_4_CSS;
+  _3 = _2 >> 24;
+  _4 = _3 & 63;
+  _5 = Clock_Ip_apfFreqTableClkSrc[_4];
+  Frequency = _5 ();
+  # DEBUG BEGIN_STMT
+  _6 = 1141669888B;
+  _7 = _6->MUX_4_DC_1;
+  _8 = _7 >> 31;
+  _9 = _8 & 1;
+  D.7067 = Clock_Ip_u32EnableDivider[_9];
+  Frequency = D.7067 & Frequency;
+  # DEBUG BEGIN_STMT
+  _10 = 1141669888B;
+  _11 = _10->MUX_4_DC_1;
+  _12 = _11 >> 16;
+  _13 = _12 & 255;
+  D.7068 = _13 + 1;
+  Frequency = Frequency / D.7068;
+  # DEBUG BEGIN_STMT
+  D.7069 = Frequency;
+  return D.7069;
+
+}
+
+
+Clock_Ip_Get_CTE_CLK_Frequency ()
+{
+  uint32 Frequency;
+  uint32 D.7071;
+
+  <bb 2> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _1 = 1141669888B;
+  _2 = _1->MUX_3_CSS;
+  _3 = _2 >> 24;
+  _4 = _3 & 63;
+  _5 = Clock_Ip_apfFreqTableClkSrc[_4];
+  Frequency = _5 ();
+  # DEBUG BEGIN_STMT
+  D.7071 = Frequency;
+  return D.7071;
+
+}
+
+
+Clock_Ip_Get_CSI_CFG_CLK_Frequency ()
+{
+  uint32 Frequency;
+  uint32 D.7075;
+  long unsigned int D.7074;
+  long unsigned int D.7073;
+
+  <bb 2> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _1 = 1141669888B;
+  _2 = _1->MUX_4_CSS;
+  _3 = _2 >> 24;
+  _4 = _3 & 63;
+  _5 = Clock_Ip_apfFreqTableClkSrc[_4];
+  Frequency = _5 ();
+  # DEBUG BEGIN_STMT
+  _6 = 1141669888B;
+  _7 = _6->MUX_4_DC_0;
+  _8 = _7 >> 31;
+  _9 = _8 & 1;
+  D.7073 = Clock_Ip_u32EnableDivider[_9];
+  Frequency = D.7073 & Frequency;
+  # DEBUG BEGIN_STMT
+  _10 = 1141669888B;
+  _11 = _10->MUX_4_DC_0;
+  _12 = _11 >> 16;
+  _13 = _12 & 255;
+  D.7074 = _13 + 1;
+  Frequency = Frequency / D.7074;
+  # DEBUG BEGIN_STMT
+  D.7075 = Frequency;
+  return D.7075;
+
+}
+
+
+Clock_Ip_Get_CSI_CLK_Frequency ()
+{
+  uint32 Frequency;
+  uint32 D.7077;
+
+  <bb 2> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _1 = 1141669888B;
+  _2 = _1->MUX_4_CSS;
+  _3 = _2 >> 24;
+  _4 = _3 & 63;
+  _5 = Clock_Ip_apfFreqTableClkSrc[_4];
+  Frequency = _5 ();
+  # DEBUG BEGIN_STMT
+  D.7077 = Frequency;
+  return D.7077;
+
+}
+
+
+Clock_Ip_Get_CLKOUT1_CLK_Frequency ()
+{
+  uint32 Frequency;
+  uint32 D.7081;
+  long unsigned int D.7080;
+  long unsigned int D.7079;
+
+  <bb 2> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _1 = 1074561024B;
+  _2 = _1->MUX_2_CSS;
+  _3 = _2 >> 24;
+  _4 = _3 & 63;
+  _5 = Clock_Ip_apfFreqTableClkSrc[_4];
+  Frequency = _5 ();
+  # DEBUG BEGIN_STMT
+  _6 = 1074561024B;
+  _7 = _6->MUX_2_DC_0;
+  _8 = _7 >> 31;
+  _9 = _8 & 1;
+  D.7079 = Clock_Ip_u32EnableDivider[_9];
+  Frequency = D.7079 & Frequency;
+  # DEBUG BEGIN_STMT
+  _10 = 1074561024B;
+  _11 = _10->MUX_2_DC_0;
+  _12 = _11 >> 16;
+  _13 = _12 & 255;
+  D.7080 = _13 + 1;
+  Frequency = Frequency / D.7080;
+  # DEBUG BEGIN_STMT
+  D.7081 = Frequency;
+  return D.7081;
+
+}
+
+
+Clock_Ip_Get_CLKOUT0_CLK_Frequency ()
+{
+  uint32 Frequency;
+  uint32 D.7085;
+  long unsigned int D.7084;
+  long unsigned int D.7083;
+
+  <bb 2> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _1 = 1074561024B;
+  _2 = _1->MUX_1_CSS;
+  _3 = _2 >> 24;
+  _4 = _3 & 63;
+  _5 = Clock_Ip_apfFreqTableClkSrc[_4];
+  Frequency = _5 ();
+  # DEBUG BEGIN_STMT
+  _6 = 1074561024B;
+  _7 = _6->MUX_1_DC_0;
+  _8 = _7 >> 31;
+  _9 = _8 & 1;
+  D.7083 = Clock_Ip_u32EnableDivider[_9];
+  Frequency = D.7083 & Frequency;
+  # DEBUG BEGIN_STMT
+  _10 = 1074561024B;
+  _11 = _10->MUX_1_DC_0;
+  _12 = _11 >> 16;
+  _13 = _12 & 255;
+  D.7084 = _13 + 1;
+  Frequency = Frequency / D.7084;
+  # DEBUG BEGIN_STMT
+  D.7085 = Frequency;
+  return D.7085;
+
+}
+
+
+Clock_Ip_Get_CAN_PE_CLK_Frequency ()
+{
+  uint32 Frequency;
+  uint32 D.7087;
+
+  <bb 2> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _1 = 1074561024B;
+  _2 = _1->MUX_7_CSS;
+  _3 = _2 >> 24;
+  _4 = _3 & 31;
+  _5 = Clock_Ip_apfFreqTableClkSrc[_4];
+  Frequency = _5 ();
+  # DEBUG BEGIN_STMT
+  D.7087 = Frequency;
+  return D.7087;
+
+}
+
+
+Clock_Ip_Get_CAN_TS_CLK_Frequency ()
+{
+  uint32 Frequency;
+  uint32 D.7091;
+  long unsigned int D.7090;
+  long unsigned int D.7089;
+
+  <bb 2> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _1 = 1074561024B;
+  _2 = _1->MUX_6_CSS;
+  _3 = _2 >> 24;
+  _4 = _3 & 31;
+  _5 = Clock_Ip_apfFreqTableClkSrc[_4];
+  Frequency = _5 ();
+  # DEBUG BEGIN_STMT
+  _6 = 1074561024B;
+  _7 = _6->MUX_6_DC_0;
+  _8 = _7 >> 31;
+  _9 = _8 & 1;
+  D.7089 = Clock_Ip_u32EnableDivider[_9];
+  Frequency = D.7089 & Frequency;
+  # DEBUG BEGIN_STMT
+  _10 = 1074561024B;
+  _11 = _10->MUX_6_DC_0;
+  _12 = _11 >> 16;
+  _13 = _12 & 255;
+  D.7090 = _13 + 1;
+  Frequency = Frequency / D.7090;
+  # DEBUG BEGIN_STMT
+  D.7091 = Frequency;
+  return D.7091;
+
+}
+
+
+Clock_Ip_Get_CAN_CHI_CLK_Frequency ()
+{
+  uint32 Frequency;
+  uint32 D.7095;
+  long unsigned int D.7094;
+  long unsigned int D.7093;
+
+  <bb 2> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _1 = 1074561024B;
+  _2 = _1->MUX_6_CSS;
+  _3 = _2 >> 24;
+  _4 = _3 & 31;
+  _5 = Clock_Ip_apfFreqTableClkSrc[_4];
+  Frequency = _5 ();
+  # DEBUG BEGIN_STMT
+  _6 = 1074561024B;
+  _7 = _6->MUX_6_DC_1;
+  _8 = _7 >> 31;
+  _9 = _8 & 1;
+  D.7093 = Clock_Ip_u32EnableDivider[_9];
+  Frequency = D.7093 & Frequency;
+  # DEBUG BEGIN_STMT
+  _10 = 1074561024B;
+  _11 = _10->MUX_6_DC_1;
+  _12 = _11 >> 16;
+  _13 = _12 & 255;
+  D.7094 = _13 + 1;
+  Frequency = Frequency / D.7094;
+  # DEBUG BEGIN_STMT
+  D.7095 = Frequency;
+  return D.7095;
+
+}
+
+
+Clock_Ip_Get_BBE32EP_DSP_CLK_Frequency ()
+{
+  uint32 Frequency;
+  uint32 D.7098;
+  long unsigned int D.7097;
+
+  <bb 2> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _1 = 1141669888B;
+  _2 = _1->MUX_1_CSS;
+  _3 = _2 >> 24;
+  _4 = _3 & 63;
+  _5 = Clock_Ip_apfFreqTableClkSrc[_4];
+  Frequency = _5 ();
+  # DEBUG BEGIN_STMT
+  _6 = 1074593792B;
+  _7 = _6->PRTN1_COFB0_STAT;
+  _8 = _7 & 1;
+  D.7097 = Clock_Ip_u32EnableGate[_8];
+  Frequency = D.7097 & Frequency;
+  # DEBUG BEGIN_STMT
+  D.7098 = Frequency;
+  return D.7098;
+
+}
+
+
+Clock_Ip_Get_GMAC1_INT_CLK_Frequency ()
+{
+  uint32 Frequency;
+  uint32 D.7105;
+
+  <bb 2> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _1 = 1074561024B;
+  _2 = _1->MUX_6_CSS;
+  _3 = _2 >> 24;
+  _4 = _3 & 31;
+  _5 = Clock_Ip_apfTableClockGeneration[_4];
+  Frequency = _5 ();
+  # DEBUG BEGIN_STMT
+  D.7105 = Frequency;
+  return D.7105;
+
+}
+
+
+Clock_Ip_Get_GMAC_1_INT_REF_CLK_Frequency ()
+{
+  uint32 Frequency;
+  uint32 D.7103;
+
+  <bb 2> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _1 = 1074561024B;
+  _2 = _1->MUX_6_CSS;
+  _3 = _2 >> 24;
+  _4 = _3 & 31;
+  if (_4 != 23)
+    goto <bb 3>; [INV]
+  else
+    goto <bb 4>; [INV]
+
+  <bb 3> :
+  # DEBUG BEGIN_STMT
+  Frequency = Clock_Ip_Get_FIRC_CLK_Frequency ();
+  goto <bb 5>; [INV]
+
+  <bb 4> :
+  # DEBUG BEGIN_STMT
+  Frequency = Clock_Ip_Get_PERIPHPLL_PHI5_Frequency ();
+
+  <bb 5> :
+  # DEBUG BEGIN_STMT
+  Frequency = Frequency / 10;
+  # DEBUG BEGIN_STMT
+  D.7103 = Frequency;
+  return D.7103;
+
+}
+
+
+Clock_Ip_Get_GMAC1_REF_DIV_CLK_Frequency ()
+{
+  uint32 Frequency;
+  uint32 D.7109;
+  long unsigned int D.7108;
+  long unsigned int D.7107;
+
+  <bb 2> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _1 = 1141391360B;
+  _2 = _1->MUX_3_CSS;
+  _3 = _2 >> 24;
+  _4 = _3 & 63;
+  _5 = Clock_Ip_apfTableClockGeneration[_4];
+  Frequency = _5 ();
+  # DEBUG BEGIN_STMT
+  _6 = 1141391360B;
+  _7 = _6->MUX_3_DC_0;
+  _8 = _7 >> 31;
+  _9 = _8 & 1;
+  D.7107 = Clock_Ip_u32EnableDivider[_9];
+  Frequency = D.7107 & Frequency;
+  # DEBUG BEGIN_STMT
+  _10 = 1141391360B;
+  _11 = _10->MUX_3_DC_0;
+  _12 = _11 >> 16;
+  _13 = _12 & 255;
+  D.7108 = _13 + 1;
+  Frequency = Frequency / D.7108;
+  # DEBUG BEGIN_STMT
+  D.7109 = Frequency;
+  return D.7109;
+
+}
+
+
+Clock_Ip_Get_GMAC1_REF_CLK_Frequency ()
+{
+  uint32 Frequency;
+  uint32 D.7111;
+
+  <bb 2> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _1 = 1141391360B;
+  _2 = _1->MUX_3_CSS;
+  _3 = _2 >> 24;
+  _4 = _3 & 63;
+  _5 = Clock_Ip_apfFreqTableClkSrc[_4];
+  Frequency = _5 ();
+  # DEBUG BEGIN_STMT
+  D.7111 = Frequency;
+  return D.7111;
+
+}
+
+
+Clock_Ip_Get_GMAC0_REF_DIV_CLK_Frequency ()
+{
+  uint32 Frequency;
+  uint32 D.7115;
+  long unsigned int D.7114;
+  long unsigned int D.7113;
+
+  <bb 2> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _1 = 1074774016B;
+  _2 = _1->MUX_3_CSS;
+  _3 = _2 >> 24;
+  _4 = _3 & 63;
+  _5 = Clock_Ip_apfTableClockGeneration[_4];
+  Frequency = _5 ();
+  # DEBUG BEGIN_STMT
+  _6 = 1074774016B;
+  _7 = _6->MUX_3_DC_0;
+  _8 = _7 >> 31;
+  _9 = _8 & 1;
+  D.7113 = Clock_Ip_u32EnableDivider[_9];
+  Frequency = D.7113 & Frequency;
+  # DEBUG BEGIN_STMT
+  _10 = 1074774016B;
+  _11 = _10->MUX_3_DC_0;
+  _12 = _11 >> 16;
+  _13 = _12 & 255;
+  D.7114 = _13 + 1;
+  Frequency = Frequency / D.7114;
+  # DEBUG BEGIN_STMT
+  D.7115 = Frequency;
+  return D.7115;
+
+}
+
+
+Clock_Ip_Get_GMAC0_REF_CLK_Frequency ()
+{
+  uint32 Frequency;
+  uint32 D.7117;
+
+  <bb 2> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _1 = 1074774016B;
+  _2 = _1->MUX_3_CSS;
+  _3 = _2 >> 24;
+  _4 = _3 & 63;
+  _5 = Clock_Ip_apfFreqTableClkSrc[_4];
+  Frequency = _5 ();
+  # DEBUG BEGIN_STMT
+  D.7117 = Frequency;
+  return D.7117;
+
+}
+
+
+Clock_Ip_Get_ACCEL_XBAR_DIV8_CLK_Frequency ()
+{
+  uint32 D.7119;
+
+  <bb 2> :
+  # DEBUG BEGIN_STMT
+  _1 = Clock_Ip_Get_ACCEL_XBAR_CLK_Frequency ();
+  D.7119 = _1 >> 3;
+  return D.7119;
+
+}
+
+
+Clock_Ip_Get_ACCEL_XBAR_DIV4_CLK_Frequency ()
+{
+  uint32 D.7121;
+
+  <bb 2> :
+  # DEBUG BEGIN_STMT
+  _1 = Clock_Ip_Get_ACCEL_XBAR_CLK_Frequency ();
+  D.7121 = _1 >> 2;
+  return D.7121;
+
+}
+
+
+Clock_Ip_Get_ACCEL_XBAR_DIV2_CLK_Frequency ()
+{
+  uint32 D.7123;
+
+  <bb 2> :
+  # DEBUG BEGIN_STMT
+  _1 = Clock_Ip_Get_ACCEL_XBAR_CLK_Frequency ();
+  D.7123 = _1 >> 1;
+  return D.7123;
+
+}
+
+
+Clock_Ip_Get_ACCEL_XBAR_CLK_Frequency ()
+{
+  uint32 Frequency;
+  uint32 D.7125;
+
+  <bb 2> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _1 = 1141669888B;
+  _2 = _1->MUX_2_CSS;
+  _3 = _2 >> 24;
+  _4 = _3 & 63;
+  _5 = Clock_Ip_apfFreqTableClkSrc[_4];
+  Frequency = _5 ();
+  # DEBUG BEGIN_STMT
+  D.7125 = Frequency;
+  return D.7125;
+
+}
+
+
+Clock_Ip_Get_ACCEL_DIV3_CLK_Frequency ()
+{
+  uint32 D.7127;
+
+  <bb 2> :
+  # DEBUG BEGIN_STMT
+  _1 = Clock_Ip_Get_ACCEL_CLK_Frequency ();
+  D.7127 = _1 / 3;
+  return D.7127;
+
+}
+
+
+Clock_Ip_Get_ACCEL_CLK_Frequency ()
+{
+  uint32 Frequency;
+  uint32 D.7129;
+
+  <bb 2> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _1 = 1141669888B;
+  _2 = _1->MUX_1_CSS;
+  _3 = _2 >> 24;
+  _4 = _3 & 63;
+  _5 = Clock_Ip_apfFreqTableClkSrc[_4];
+  Frequency = _5 ();
+  # DEBUG BEGIN_STMT
+  D.7129 = Frequency;
+  return D.7129;
+
+}
+
+
+Clock_Ip_Get_A53_CORE_DIV10_CLK_Frequency ()
+{
+  uint32 D.7131;
+
+  <bb 2> :
+  # DEBUG BEGIN_STMT
+  _1 = Clock_Ip_Get_A53_CORE_CLK_Frequency ();
+  D.7131 = _1 / 10;
+  return D.7131;
+
+}
+
+
+Clock_Ip_Get_A53_CORE_DIV2_CLK_Frequency ()
+{
+  uint32 D.7133;
+
+  <bb 2> :
+  # DEBUG BEGIN_STMT
+  _1 = Clock_Ip_Get_A53_CORE_CLK_Frequency ();
+  D.7133 = _1 >> 1;
+  return D.7133;
+
+}
+
+
+Clock_Ip_Get_A53_CORE_CLK_Frequency ()
+{
+  uint32 Frequency;
+  uint32 D.7135;
+
+  <bb 2> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _1 = 1141669888B;
+  _2 = _1->MUX_0_CSS;
+  _3 = _2 >> 24;
+  _4 = _3 & 63;
+  _5 = Clock_Ip_apfFreqTableClkSrc[_4];
+  Frequency = _5 ();
+  # DEBUG BEGIN_STMT
+  D.7135 = Frequency;
+  return D.7135;
+
+}
+
+
+Clock_Ip_Get_SYS_DIV8_CLK_Frequency ()
+{
+  uint32 D.7137;
+
+  <bb 2> :
+  # DEBUG BEGIN_STMT
+  _1 = Clock_Ip_Get_SYS_CLK_Frequency ();
+  D.7137 = _1 >> 3;
+  return D.7137;
+
+}
+
+
+Clock_Ip_Get_SYS_DIV4_CLK_Frequency ()
+{
+  uint32 D.7139;
+
+  <bb 2> :
+  # DEBUG BEGIN_STMT
+  _1 = Clock_Ip_Get_SYS_CLK_Frequency ();
+  D.7139 = _1 >> 2;
+  return D.7139;
+
+}
+
+
+Clock_Ip_Get_SYS_DIV2_CLK_Frequency ()
+{
+  uint32 D.7141;
+
+  <bb 2> :
+  # DEBUG BEGIN_STMT
+  _1 = Clock_Ip_Get_SYS_CLK_Frequency ();
+  D.7141 = _1 >> 1;
+  return D.7141;
+
+}
+
+
+Clock_Ip_Get_SYS_CLK_Frequency ()
+{
+  uint32 Frequency;
+  uint32 D.7143;
+
+  <bb 2> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _1 = 1074561024B;
+  _2 = _1->MUX_0_CSS;
+  _3 = _2 >> 24;
+  _4 = _3 & 31;
+  _5 = Clock_Ip_apfFreqTableClkSrc[_4];
+  Frequency = _5 ();
+  # DEBUG BEGIN_STMT
+  D.7143 = Frequency;
+  return D.7143;
+
+}
+
+
+Clock_Ip_Get_gmac_1_ext_ts_Frequency ()
+{
+  uint32 D.7145;
+
+  <bb 2> :
+  # DEBUG BEGIN_STMT
+  D.7145 = Clock_Ip_axExtSignalFreqEntries[8].Frequency;
+  return D.7145;
+
+}
+
+
+Clock_Ip_Get_gmac_1_ext_tx_Frequency ()
+{
+  uint32 D.7147;
+
+  <bb 2> :
+  # DEBUG BEGIN_STMT
+  D.7147 = Clock_Ip_axExtSignalFreqEntries[7].Frequency;
+  return D.7147;
+
+}
+
+
+Clock_Ip_Get_gmac_1_ext_rx_Frequency ()
+{
+  uint32 D.7149;
+
+  <bb 2> :
+  # DEBUG BEGIN_STMT
+  D.7149 = Clock_Ip_axExtSignalFreqEntries[6].Frequency;
+  return D.7149;
+
+}
+
+
+Clock_Ip_Get_gmac_1_ext_ref_Frequency ()
+{
+  uint32 D.7151;
+
+  <bb 2> :
+  # DEBUG BEGIN_STMT
+  D.7151 = Clock_Ip_axExtSignalFreqEntries[5].Frequency;
+  return D.7151;
+
+}
+
+
+Clock_Ip_Get_gmac_0_ext_ts_Frequency ()
+{
+  uint32 D.7153;
+
+  <bb 2> :
+  # DEBUG BEGIN_STMT
+  D.7153 = Clock_Ip_axExtSignalFreqEntries[4].Frequency;
+  return D.7153;
+
+}
+
+
+Clock_Ip_Get_gmac_0_ext_tx_Frequency ()
+{
+  uint32 D.7155;
+
+  <bb 2> :
+  # DEBUG BEGIN_STMT
+  D.7155 = Clock_Ip_axExtSignalFreqEntries[3].Frequency;
+  return D.7155;
+
+}
+
+
+Clock_Ip_Get_gmac_0_ext_rx_Frequency ()
+{
+  uint32 D.7157;
+
+  <bb 2> :
+  # DEBUG BEGIN_STMT
+  D.7157 = Clock_Ip_axExtSignalFreqEntries[2].Frequency;
+  return D.7157;
+
+}
+
+
+Clock_Ip_Get_gmac_0_ext_ref_Frequency ()
+{
+  uint32 D.7159;
+
+  <bb 2> :
+  # DEBUG BEGIN_STMT
+  D.7159 = Clock_Ip_axExtSignalFreqEntries[1].Frequency;
+  return D.7159;
+
+}
+
+
+Clock_Ip_Get_ftm_0_ext_ref_Frequency ()
+{
+  uint32 D.7161;
+
+  <bb 2> :
+  # DEBUG BEGIN_STMT
+  D.7161 = Clock_Ip_axExtSignalFreqEntries[0].Frequency;
+  return D.7161;
+
+}
+
+
+Clock_Ip_Get_PERIPHPLL_DFS2_Frequency ()
+{
+  uint32 iftmp.1;
+  uint32 D.7165;
+
+  <bb 2> :
+  # DEBUG BEGIN_STMT
+  _1 = 1074511872B;
+  _2 = _1->PLLCLKMUX;
+  _3 = 1074511872B;
+  _4 = _3->PLLDV;
+  _5 = _2 ^ _4;
+  _6 = 1074511872B;
+  _7 = _6->PLLSR;
+  _8 = _5 ^ _7;
+  _9 = 1074528256B;
+  _10 = _9->DVPORT[1];
+  _11 = _8 ^ _10;
+  Clock_Ip_u32PeriphDfs2Checksum.0_12 = Clock_Ip_u32PeriphDfs2Checksum;
+  if (_11 != Clock_Ip_u32PeriphDfs2Checksum.0_12)
+    goto <bb 3>; [INV]
+  else
+    goto <bb 4>; [INV]
+
+  <bb 3> :
+  # DEBUG BEGIN_STMT
+  _13 = 1074511872B;
+  _14 = _13->PLLCLKMUX;
+  _15 = 1074511872B;
+  _16 = _15->PLLDV;
+  _17 = _14 ^ _16;
+  _18 = 1074511872B;
+  _19 = _18->PLLSR;
+  _20 = _17 ^ _19;
+  _21 = 1074528256B;
+  _22 = _21->DVPORT[1];
+  _23 = _20 ^ _22;
+  Clock_Ip_u32PeriphDfs2Checksum = _23;
+  # DEBUG BEGIN_STMT
+  _24 = Clock_Ip_Get_PERIPHPLL_CLK_Frequency ();
+  _25 = Clock_Ip_DFS_OUTPUT (1074528256B, 1, _24);
+  Clock_Ip_u32PeriphDfs2Freq = _25;
+
+  <bb 4> :
+  # DEBUG BEGIN_STMT
+  _26 = 1074528256B;
+  _27 = _26->PORTSR;
+  _28 = _27 & 2;
+  if (_28 != 0)
+    goto <bb 5>; [INV]
+  else
+    goto <bb 6>; [INV]
+
+  <bb 5> :
+  iftmp.1 = Clock_Ip_u32PeriphDfs2Freq;
+  goto <bb 7>; [INV]
+
+  <bb 6> :
+  iftmp.1 = 0;
+
+  <bb 7> :
+  D.7165 = iftmp.1;
+  return D.7165;
+
+}
+
+
+Clock_Ip_Get_PERIPHPLL_DFS1_Frequency ()
+{
+  uint32 iftmp.5;
+  uint32 D.7183;
+
+  <bb 2> :
+  # DEBUG BEGIN_STMT
+  _1 = 1074511872B;
+  _2 = _1->PLLCLKMUX;
+  _3 = 1074511872B;
+  _4 = _3->PLLDV;
+  _5 = _2 ^ _4;
+  _6 = 1074511872B;
+  _7 = _6->PLLSR;
+  _8 = _5 ^ _7;
+  _9 = 1074528256B;
+  _10 = _9->DVPORT[0];
+  _11 = _8 ^ _10;
+  Clock_Ip_u32PeriphDfs1Checksum.4_12 = Clock_Ip_u32PeriphDfs1Checksum;
+  if (_11 != Clock_Ip_u32PeriphDfs1Checksum.4_12)
+    goto <bb 3>; [INV]
+  else
+    goto <bb 4>; [INV]
+
+  <bb 3> :
+  # DEBUG BEGIN_STMT
+  _13 = 1074511872B;
+  _14 = _13->PLLCLKMUX;
+  _15 = 1074511872B;
+  _16 = _15->PLLDV;
+  _17 = _14 ^ _16;
+  _18 = 1074511872B;
+  _19 = _18->PLLSR;
+  _20 = _17 ^ _19;
+  _21 = 1074528256B;
+  _22 = _21->DVPORT[0];
+  _23 = _20 ^ _22;
+  Clock_Ip_u32PeriphDfs1Checksum = _23;
+  # DEBUG BEGIN_STMT
+  _24 = Clock_Ip_Get_PERIPHPLL_CLK_Frequency ();
+  _25 = Clock_Ip_DFS_OUTPUT (1074528256B, 0, _24);
+  Clock_Ip_u32PeriphDfs1Freq = _25;
+
+  <bb 4> :
+  # DEBUG BEGIN_STMT
+  _26 = 1074528256B;
+  _27 = _26->PORTSR;
+  _28 = _27 & 1;
+  if (_28 != 0)
+    goto <bb 5>; [INV]
+  else
+    goto <bb 6>; [INV]
+
+  <bb 5> :
+  iftmp.5 = Clock_Ip_u32PeriphDfs1Freq;
+  goto <bb 7>; [INV]
+
+  <bb 6> :
+  iftmp.5 = 0;
+
+  <bb 7> :
+  D.7183 = iftmp.5;
+  return D.7183;
+
+}
+
+
+Clock_Ip_Get_PERIPHPLL_PHI9_Frequency ()
+{
+  uint32 D.7193;
+  long unsigned int D.7192;
+  long unsigned int D.7191;
+
+  <bb 2> :
+  # DEBUG BEGIN_STMT
+  _1 = 1074511872B;
+  _2 = _1->PLLCLKMUX;
+  _3 = 1074511872B;
+  _4 = _3->PLLDV;
+  _5 = _2 ^ _4;
+  _6 = 1074511872B;
+  _7 = _6->PLLSR;
+  _8 = _5 ^ _7;
+  _9 = 1074511872B;
+  _10 = _9->PLLODIV[9];
+  _11 = _8 ^ _10;
+  Clock_Ip_u32PeriphPhi9Checksum.6_12 = Clock_Ip_u32PeriphPhi9Checksum;
+  if (_11 != Clock_Ip_u32PeriphPhi9Checksum.6_12)
+    goto <bb 3>; [INV]
+  else
+    goto <bb 4>; [INV]
+
+  <bb 3> :
+  # DEBUG BEGIN_STMT
+  _13 = 1074511872B;
+  _14 = _13->PLLCLKMUX;
+  _15 = 1074511872B;
+  _16 = _15->PLLDV;
+  _17 = _14 ^ _16;
+  _18 = 1074511872B;
+  _19 = _18->PLLSR;
+  _20 = _17 ^ _19;
+  _21 = 1074511872B;
+  _22 = _21->PLLODIV[9];
+  _23 = _20 ^ _22;
+  Clock_Ip_u32PeriphPhi9Checksum = _23;
+  # DEBUG BEGIN_STMT
+  _24 = Clock_Ip_Get_PERIPHPLL_CLK_Frequency ();
+  Clock_Ip_u32PeriphPhi9Freq = _24;
+  # DEBUG BEGIN_STMT
+  _25 = 1074511872B;
+  _26 = _25->PLLODIV[9];
+  _27 = _26 >> 31;
+  _28 = _27 & 1;
+  D.7191 = Clock_Ip_u32EnableDivider[_28];
+  Clock_Ip_u32PeriphPhi9Freq.7_29 = Clock_Ip_u32PeriphPhi9Freq;
+  _30 = D.7191 & Clock_Ip_u32PeriphPhi9Freq.7_29;
+  Clock_Ip_u32PeriphPhi9Freq = _30;
+  # DEBUG BEGIN_STMT
+  _31 = 1074511872B;
+  _32 = _31->PLLODIV[9];
+  _33 = _32 >> 16;
+  _34 = _33 & 255;
+  D.7192 = _34 + 1;
+  Clock_Ip_u32PeriphPhi9Freq.8_35 = Clock_Ip_u32PeriphPhi9Freq;
+  _36 = Clock_Ip_u32PeriphPhi9Freq.8_35 / D.7192;
+  Clock_Ip_u32PeriphPhi9Freq = _36;
+
+  <bb 4> :
+  # DEBUG BEGIN_STMT
+  D.7193 = Clock_Ip_u32PeriphPhi9Freq;
+  return D.7193;
+
+}
+
+
+Clock_Ip_Get_PERIPHPLL_PHI8_Frequency ()
+{
+  uint32 D.7199;
+  long unsigned int D.7198;
+  long unsigned int D.7197;
+
+  <bb 2> :
+  # DEBUG BEGIN_STMT
+  _1 = 1074511872B;
+  _2 = _1->PLLCLKMUX;
+  _3 = 1074511872B;
+  _4 = _3->PLLDV;
+  _5 = _2 ^ _4;
+  _6 = 1074511872B;
+  _7 = _6->PLLSR;
+  _8 = _5 ^ _7;
+  _9 = 1074511872B;
+  _10 = _9->PLLODIV[8];
+  _11 = _8 ^ _10;
+  Clock_Ip_u32PeriphPhi8Checksum.9_12 = Clock_Ip_u32PeriphPhi8Checksum;
+  if (_11 != Clock_Ip_u32PeriphPhi8Checksum.9_12)
+    goto <bb 3>; [INV]
+  else
+    goto <bb 4>; [INV]
+
+  <bb 3> :
+  # DEBUG BEGIN_STMT
+  _13 = 1074511872B;
+  _14 = _13->PLLCLKMUX;
+  _15 = 1074511872B;
+  _16 = _15->PLLDV;
+  _17 = _14 ^ _16;
+  _18 = 1074511872B;
+  _19 = _18->PLLSR;
+  _20 = _17 ^ _19;
+  _21 = 1074511872B;
+  _22 = _21->PLLODIV[8];
+  _23 = _20 ^ _22;
+  Clock_Ip_u32PeriphPhi8Checksum = _23;
+  # DEBUG BEGIN_STMT
+  _24 = Clock_Ip_Get_PERIPHPLL_CLK_Frequency ();
+  Clock_Ip_u32PeriphPhi8Freq = _24;
+  # DEBUG BEGIN_STMT
+  _25 = 1074511872B;
+  _26 = _25->PLLODIV[8];
+  _27 = _26 >> 31;
+  _28 = _27 & 1;
+  D.7197 = Clock_Ip_u32EnableDivider[_28];
+  Clock_Ip_u32PeriphPhi8Freq.10_29 = Clock_Ip_u32PeriphPhi8Freq;
+  _30 = D.7197 & Clock_Ip_u32PeriphPhi8Freq.10_29;
+  Clock_Ip_u32PeriphPhi8Freq = _30;
+  # DEBUG BEGIN_STMT
+  _31 = 1074511872B;
+  _32 = _31->PLLODIV[8];
+  _33 = _32 >> 16;
+  _34 = _33 & 255;
+  D.7198 = _34 + 1;
+  Clock_Ip_u32PeriphPhi8Freq.11_35 = Clock_Ip_u32PeriphPhi8Freq;
+  _36 = Clock_Ip_u32PeriphPhi8Freq.11_35 / D.7198;
+  Clock_Ip_u32PeriphPhi8Freq = _36;
+
+  <bb 4> :
+  # DEBUG BEGIN_STMT
+  D.7199 = Clock_Ip_u32PeriphPhi8Freq;
+  return D.7199;
+
+}
+
+
+Clock_Ip_Get_PERIPHPLL_PHI7_Frequency ()
+{
+  uint32 D.7205;
+  long unsigned int D.7204;
+  long unsigned int D.7203;
+
+  <bb 2> :
+  # DEBUG BEGIN_STMT
+  _1 = 1074511872B;
+  _2 = _1->PLLCLKMUX;
+  _3 = 1074511872B;
+  _4 = _3->PLLDV;
+  _5 = _2 ^ _4;
+  _6 = 1074511872B;
+  _7 = _6->PLLSR;
+  _8 = _5 ^ _7;
+  _9 = 1074511872B;
+  _10 = _9->PLLODIV[7];
+  _11 = _8 ^ _10;
+  Clock_Ip_u32PeriphPhi7Checksum.12_12 = Clock_Ip_u32PeriphPhi7Checksum;
+  if (_11 != Clock_Ip_u32PeriphPhi7Checksum.12_12)
+    goto <bb 3>; [INV]
+  else
+    goto <bb 4>; [INV]
+
+  <bb 3> :
+  # DEBUG BEGIN_STMT
+  _13 = 1074511872B;
+  _14 = _13->PLLCLKMUX;
+  _15 = 1074511872B;
+  _16 = _15->PLLDV;
+  _17 = _14 ^ _16;
+  _18 = 1074511872B;
+  _19 = _18->PLLSR;
+  _20 = _17 ^ _19;
+  _21 = 1074511872B;
+  _22 = _21->PLLODIV[7];
+  _23 = _20 ^ _22;
+  Clock_Ip_u32PeriphPhi7Checksum = _23;
+  # DEBUG BEGIN_STMT
+  _24 = Clock_Ip_Get_PERIPHPLL_CLK_Frequency ();
+  Clock_Ip_u32PeriphPhi7Freq = _24;
+  # DEBUG BEGIN_STMT
+  _25 = 1074511872B;
+  _26 = _25->PLLODIV[7];
+  _27 = _26 >> 31;
+  _28 = _27 & 1;
+  D.7203 = Clock_Ip_u32EnableDivider[_28];
+  Clock_Ip_u32PeriphPhi7Freq.13_29 = Clock_Ip_u32PeriphPhi7Freq;
+  _30 = D.7203 & Clock_Ip_u32PeriphPhi7Freq.13_29;
+  Clock_Ip_u32PeriphPhi7Freq = _30;
+  # DEBUG BEGIN_STMT
+  _31 = 1074511872B;
+  _32 = _31->PLLODIV[7];
+  _33 = _32 >> 16;
+  _34 = _33 & 255;
+  D.7204 = _34 + 1;
+  Clock_Ip_u32PeriphPhi7Freq.14_35 = Clock_Ip_u32PeriphPhi7Freq;
+  _36 = Clock_Ip_u32PeriphPhi7Freq.14_35 / D.7204;
+  Clock_Ip_u32PeriphPhi7Freq = _36;
+
+  <bb 4> :
+  # DEBUG BEGIN_STMT
+  D.7205 = Clock_Ip_u32PeriphPhi7Freq;
+  return D.7205;
+
+}
+
+
+Clock_Ip_Get_PERIPHPLL_PHI6_Frequency ()
+{
+  uint32 D.7211;
+  long unsigned int D.7210;
+  long unsigned int D.7209;
+
+  <bb 2> :
+  # DEBUG BEGIN_STMT
+  _1 = 1074511872B;
+  _2 = _1->PLLCLKMUX;
+  _3 = 1074511872B;
+  _4 = _3->PLLDV;
+  _5 = _2 ^ _4;
+  _6 = 1074511872B;
+  _7 = _6->PLLSR;
+  _8 = _5 ^ _7;
+  _9 = 1074511872B;
+  _10 = _9->PLLODIV[6];
+  _11 = _8 ^ _10;
+  Clock_Ip_u32PeriphPhi6Checksum.15_12 = Clock_Ip_u32PeriphPhi6Checksum;
+  if (_11 != Clock_Ip_u32PeriphPhi6Checksum.15_12)
+    goto <bb 3>; [INV]
+  else
+    goto <bb 4>; [INV]
+
+  <bb 3> :
+  # DEBUG BEGIN_STMT
+  _13 = 1074511872B;
+  _14 = _13->PLLCLKMUX;
+  _15 = 1074511872B;
+  _16 = _15->PLLDV;
+  _17 = _14 ^ _16;
+  _18 = 1074511872B;
+  _19 = _18->PLLSR;
+  _20 = _17 ^ _19;
+  _21 = 1074511872B;
+  _22 = _21->PLLODIV[6];
+  _23 = _20 ^ _22;
+  Clock_Ip_u32PeriphPhi6Checksum = _23;
+  # DEBUG BEGIN_STMT
+  _24 = Clock_Ip_Get_PERIPHPLL_CLK_Frequency ();
+  Clock_Ip_u32PeriphPhi6Freq = _24;
+  # DEBUG BEGIN_STMT
+  _25 = 1074511872B;
+  _26 = _25->PLLODIV[6];
+  _27 = _26 >> 31;
+  _28 = _27 & 1;
+  D.7209 = Clock_Ip_u32EnableDivider[_28];
+  Clock_Ip_u32PeriphPhi6Freq.16_29 = Clock_Ip_u32PeriphPhi6Freq;
+  _30 = D.7209 & Clock_Ip_u32PeriphPhi6Freq.16_29;
+  Clock_Ip_u32PeriphPhi6Freq = _30;
+  # DEBUG BEGIN_STMT
+  _31 = 1074511872B;
+  _32 = _31->PLLODIV[6];
+  _33 = _32 >> 16;
+  _34 = _33 & 255;
+  D.7210 = _34 + 1;
+  Clock_Ip_u32PeriphPhi6Freq.17_35 = Clock_Ip_u32PeriphPhi6Freq;
+  _36 = Clock_Ip_u32PeriphPhi6Freq.17_35 / D.7210;
+  Clock_Ip_u32PeriphPhi6Freq = _36;
+
+  <bb 4> :
+  # DEBUG BEGIN_STMT
+  D.7211 = Clock_Ip_u32PeriphPhi6Freq;
+  return D.7211;
+
+}
+
+
+Clock_Ip_Get_PERIPHPLL_PHI5_Frequency ()
+{
+  uint32 D.7217;
+  long unsigned int D.7216;
+  long unsigned int D.7215;
+
+  <bb 2> :
+  # DEBUG BEGIN_STMT
+  _1 = 1074511872B;
+  _2 = _1->PLLCLKMUX;
+  _3 = 1074511872B;
+  _4 = _3->PLLDV;
+  _5 = _2 ^ _4;
+  _6 = 1074511872B;
+  _7 = _6->PLLSR;
+  _8 = _5 ^ _7;
+  _9 = 1074511872B;
+  _10 = _9->PLLODIV[5];
+  _11 = _8 ^ _10;
+  Clock_Ip_u32PeriphPhi5Checksum.18_12 = Clock_Ip_u32PeriphPhi5Checksum;
+  if (_11 != Clock_Ip_u32PeriphPhi5Checksum.18_12)
+    goto <bb 3>; [INV]
+  else
+    goto <bb 4>; [INV]
+
+  <bb 3> :
+  # DEBUG BEGIN_STMT
+  _13 = 1074511872B;
+  _14 = _13->PLLCLKMUX;
+  _15 = 1074511872B;
+  _16 = _15->PLLDV;
+  _17 = _14 ^ _16;
+  _18 = 1074511872B;
+  _19 = _18->PLLSR;
+  _20 = _17 ^ _19;
+  _21 = 1074511872B;
+  _22 = _21->PLLODIV[5];
+  _23 = _20 ^ _22;
+  Clock_Ip_u32PeriphPhi5Checksum = _23;
+  # DEBUG BEGIN_STMT
+  _24 = Clock_Ip_Get_PERIPHPLL_CLK_Frequency ();
+  Clock_Ip_u32PeriphPhi5Freq = _24;
+  # DEBUG BEGIN_STMT
+  _25 = 1074511872B;
+  _26 = _25->PLLODIV[5];
+  _27 = _26 >> 31;
+  _28 = _27 & 1;
+  D.7215 = Clock_Ip_u32EnableDivider[_28];
+  Clock_Ip_u32PeriphPhi5Freq.19_29 = Clock_Ip_u32PeriphPhi5Freq;
+  _30 = D.7215 & Clock_Ip_u32PeriphPhi5Freq.19_29;
+  Clock_Ip_u32PeriphPhi5Freq = _30;
+  # DEBUG BEGIN_STMT
+  _31 = 1074511872B;
+  _32 = _31->PLLODIV[5];
+  _33 = _32 >> 16;
+  _34 = _33 & 255;
+  D.7216 = _34 + 1;
+  Clock_Ip_u32PeriphPhi5Freq.20_35 = Clock_Ip_u32PeriphPhi5Freq;
+  _36 = Clock_Ip_u32PeriphPhi5Freq.20_35 / D.7216;
+  Clock_Ip_u32PeriphPhi5Freq = _36;
+
+  <bb 4> :
+  # DEBUG BEGIN_STMT
+  D.7217 = Clock_Ip_u32PeriphPhi5Freq;
+  return D.7217;
+
+}
+
+
+Clock_Ip_Get_PERIPHPLL_PHI4_Frequency ()
+{
+  uint32 D.7223;
+  long unsigned int D.7222;
+  long unsigned int D.7221;
+
+  <bb 2> :
+  # DEBUG BEGIN_STMT
+  _1 = 1074511872B;
+  _2 = _1->PLLCLKMUX;
+  _3 = 1074511872B;
+  _4 = _3->PLLDV;
+  _5 = _2 ^ _4;
+  _6 = 1074511872B;
+  _7 = _6->PLLSR;
+  _8 = _5 ^ _7;
+  _9 = 1074511872B;
+  _10 = _9->PLLODIV[4];
+  _11 = _8 ^ _10;
+  Clock_Ip_u32PeriphPhi4Checksum.21_12 = Clock_Ip_u32PeriphPhi4Checksum;
+  if (_11 != Clock_Ip_u32PeriphPhi4Checksum.21_12)
+    goto <bb 3>; [INV]
+  else
+    goto <bb 4>; [INV]
+
+  <bb 3> :
+  # DEBUG BEGIN_STMT
+  _13 = 1074511872B;
+  _14 = _13->PLLCLKMUX;
+  _15 = 1074511872B;
+  _16 = _15->PLLDV;
+  _17 = _14 ^ _16;
+  _18 = 1074511872B;
+  _19 = _18->PLLSR;
+  _20 = _17 ^ _19;
+  _21 = 1074511872B;
+  _22 = _21->PLLODIV[4];
+  _23 = _20 ^ _22;
+  Clock_Ip_u32PeriphPhi4Checksum = _23;
+  # DEBUG BEGIN_STMT
+  _24 = Clock_Ip_Get_PERIPHPLL_CLK_Frequency ();
+  Clock_Ip_u32PeriphPhi4Freq = _24;
+  # DEBUG BEGIN_STMT
+  _25 = 1074511872B;
+  _26 = _25->PLLODIV[4];
+  _27 = _26 >> 31;
+  _28 = _27 & 1;
+  D.7221 = Clock_Ip_u32EnableDivider[_28];
+  Clock_Ip_u32PeriphPhi4Freq.22_29 = Clock_Ip_u32PeriphPhi4Freq;
+  _30 = D.7221 & Clock_Ip_u32PeriphPhi4Freq.22_29;
+  Clock_Ip_u32PeriphPhi4Freq = _30;
+  # DEBUG BEGIN_STMT
+  _31 = 1074511872B;
+  _32 = _31->PLLODIV[4];
+  _33 = _32 >> 16;
+  _34 = _33 & 255;
+  D.7222 = _34 + 1;
+  Clock_Ip_u32PeriphPhi4Freq.23_35 = Clock_Ip_u32PeriphPhi4Freq;
+  _36 = Clock_Ip_u32PeriphPhi4Freq.23_35 / D.7222;
+  Clock_Ip_u32PeriphPhi4Freq = _36;
+
+  <bb 4> :
+  # DEBUG BEGIN_STMT
+  D.7223 = Clock_Ip_u32PeriphPhi4Freq;
+  return D.7223;
+
+}
+
+
+Clock_Ip_Get_PERIPHPLL_PHI3_Frequency ()
+{
+  uint32 D.7229;
+  long unsigned int D.7228;
+  long unsigned int D.7227;
+
+  <bb 2> :
+  # DEBUG BEGIN_STMT
+  _1 = 1074511872B;
+  _2 = _1->PLLCLKMUX;
+  _3 = 1074511872B;
+  _4 = _3->PLLDV;
+  _5 = _2 ^ _4;
+  _6 = 1074511872B;
+  _7 = _6->PLLSR;
+  _8 = _5 ^ _7;
+  _9 = 1074511872B;
+  _10 = _9->PLLODIV[3];
+  _11 = _8 ^ _10;
+  Clock_Ip_u32PeriphPhi3Checksum.24_12 = Clock_Ip_u32PeriphPhi3Checksum;
+  if (_11 != Clock_Ip_u32PeriphPhi3Checksum.24_12)
+    goto <bb 3>; [INV]
+  else
+    goto <bb 4>; [INV]
+
+  <bb 3> :
+  # DEBUG BEGIN_STMT
+  _13 = 1074511872B;
+  _14 = _13->PLLCLKMUX;
+  _15 = 1074511872B;
+  _16 = _15->PLLDV;
+  _17 = _14 ^ _16;
+  _18 = 1074511872B;
+  _19 = _18->PLLSR;
+  _20 = _17 ^ _19;
+  _21 = 1074511872B;
+  _22 = _21->PLLODIV[3];
+  _23 = _20 ^ _22;
+  Clock_Ip_u32PeriphPhi3Checksum = _23;
+  # DEBUG BEGIN_STMT
+  _24 = Clock_Ip_Get_PERIPHPLL_CLK_Frequency ();
+  Clock_Ip_u32PeriphPhi3Freq = _24;
+  # DEBUG BEGIN_STMT
+  _25 = 1074511872B;
+  _26 = _25->PLLODIV[3];
+  _27 = _26 >> 31;
+  _28 = _27 & 1;
+  D.7227 = Clock_Ip_u32EnableDivider[_28];
+  Clock_Ip_u32PeriphPhi3Freq.25_29 = Clock_Ip_u32PeriphPhi3Freq;
+  _30 = D.7227 & Clock_Ip_u32PeriphPhi3Freq.25_29;
+  Clock_Ip_u32PeriphPhi3Freq = _30;
+  # DEBUG BEGIN_STMT
+  _31 = 1074511872B;
+  _32 = _31->PLLODIV[3];
+  _33 = _32 >> 16;
+  _34 = _33 & 255;
+  D.7228 = _34 + 1;
+  Clock_Ip_u32PeriphPhi3Freq.26_35 = Clock_Ip_u32PeriphPhi3Freq;
+  _36 = Clock_Ip_u32PeriphPhi3Freq.26_35 / D.7228;
+  Clock_Ip_u32PeriphPhi3Freq = _36;
+
+  <bb 4> :
+  # DEBUG BEGIN_STMT
+  D.7229 = Clock_Ip_u32PeriphPhi3Freq;
+  return D.7229;
+
+}
+
+
+Clock_Ip_Get_PERIPHPLL_PHI2_Frequency ()
+{
+  uint32 D.7235;
+  long unsigned int D.7234;
+  long unsigned int D.7233;
+
+  <bb 2> :
+  # DEBUG BEGIN_STMT
+  _1 = 1074511872B;
+  _2 = _1->PLLCLKMUX;
+  _3 = 1074511872B;
+  _4 = _3->PLLDV;
+  _5 = _2 ^ _4;
+  _6 = 1074511872B;
+  _7 = _6->PLLSR;
+  _8 = _5 ^ _7;
+  _9 = 1074511872B;
+  _10 = _9->PLLODIV[2];
+  _11 = _8 ^ _10;
+  Clock_Ip_u32PeriphPhi2Checksum.27_12 = Clock_Ip_u32PeriphPhi2Checksum;
+  if (_11 != Clock_Ip_u32PeriphPhi2Checksum.27_12)
+    goto <bb 3>; [INV]
+  else
+    goto <bb 4>; [INV]
+
+  <bb 3> :
+  # DEBUG BEGIN_STMT
+  _13 = 1074511872B;
+  _14 = _13->PLLCLKMUX;
+  _15 = 1074511872B;
+  _16 = _15->PLLDV;
+  _17 = _14 ^ _16;
+  _18 = 1074511872B;
+  _19 = _18->PLLSR;
+  _20 = _17 ^ _19;
+  _21 = 1074511872B;
+  _22 = _21->PLLODIV[2];
+  _23 = _20 ^ _22;
+  Clock_Ip_u32PeriphPhi2Checksum = _23;
+  # DEBUG BEGIN_STMT
+  _24 = Clock_Ip_Get_PERIPHPLL_CLK_Frequency ();
+  Clock_Ip_u32PeriphPhi2Freq = _24;
+  # DEBUG BEGIN_STMT
+  _25 = 1074511872B;
+  _26 = _25->PLLODIV[2];
+  _27 = _26 >> 31;
+  _28 = _27 & 1;
+  D.7233 = Clock_Ip_u32EnableDivider[_28];
+  Clock_Ip_u32PeriphPhi2Freq.28_29 = Clock_Ip_u32PeriphPhi2Freq;
+  _30 = D.7233 & Clock_Ip_u32PeriphPhi2Freq.28_29;
+  Clock_Ip_u32PeriphPhi2Freq = _30;
+  # DEBUG BEGIN_STMT
+  _31 = 1074511872B;
+  _32 = _31->PLLODIV[2];
+  _33 = _32 >> 16;
+  _34 = _33 & 255;
+  D.7234 = _34 + 1;
+  Clock_Ip_u32PeriphPhi2Freq.29_35 = Clock_Ip_u32PeriphPhi2Freq;
+  _36 = Clock_Ip_u32PeriphPhi2Freq.29_35 / D.7234;
+  Clock_Ip_u32PeriphPhi2Freq = _36;
+
+  <bb 4> :
+  # DEBUG BEGIN_STMT
+  D.7235 = Clock_Ip_u32PeriphPhi2Freq;
+  return D.7235;
+
+}
+
+
+Clock_Ip_Get_PERIPHPLL_PHI1_Frequency ()
+{
+  uint32 D.7241;
+  long unsigned int D.7240;
+  long unsigned int D.7239;
+
+  <bb 2> :
+  # DEBUG BEGIN_STMT
+  _1 = 1074511872B;
+  _2 = _1->PLLCLKMUX;
+  _3 = 1074511872B;
+  _4 = _3->PLLDV;
+  _5 = _2 ^ _4;
+  _6 = 1074511872B;
+  _7 = _6->PLLSR;
+  _8 = _5 ^ _7;
+  _9 = 1074511872B;
+  _10 = _9->PLLODIV[1];
+  _11 = _8 ^ _10;
+  Clock_Ip_u32PeriphPhi1Checksum.30_12 = Clock_Ip_u32PeriphPhi1Checksum;
+  if (_11 != Clock_Ip_u32PeriphPhi1Checksum.30_12)
+    goto <bb 3>; [INV]
+  else
+    goto <bb 4>; [INV]
+
+  <bb 3> :
+  # DEBUG BEGIN_STMT
+  _13 = 1074511872B;
+  _14 = _13->PLLCLKMUX;
+  _15 = 1074511872B;
+  _16 = _15->PLLDV;
+  _17 = _14 ^ _16;
+  _18 = 1074511872B;
+  _19 = _18->PLLSR;
+  _20 = _17 ^ _19;
+  _21 = 1074511872B;
+  _22 = _21->PLLODIV[1];
+  _23 = _20 ^ _22;
+  Clock_Ip_u32PeriphPhi1Checksum = _23;
+  # DEBUG BEGIN_STMT
+  _24 = Clock_Ip_Get_PERIPHPLL_CLK_Frequency ();
+  Clock_Ip_u32PeriphPhi1Freq = _24;
+  # DEBUG BEGIN_STMT
+  _25 = 1074511872B;
+  _26 = _25->PLLODIV[1];
+  _27 = _26 >> 31;
+  _28 = _27 & 1;
+  D.7239 = Clock_Ip_u32EnableDivider[_28];
+  Clock_Ip_u32PeriphPhi1Freq.31_29 = Clock_Ip_u32PeriphPhi1Freq;
+  _30 = D.7239 & Clock_Ip_u32PeriphPhi1Freq.31_29;
+  Clock_Ip_u32PeriphPhi1Freq = _30;
+  # DEBUG BEGIN_STMT
+  _31 = 1074511872B;
+  _32 = _31->PLLODIV[1];
+  _33 = _32 >> 16;
+  _34 = _33 & 255;
+  D.7240 = _34 + 1;
+  Clock_Ip_u32PeriphPhi1Freq.32_35 = Clock_Ip_u32PeriphPhi1Freq;
+  _36 = Clock_Ip_u32PeriphPhi1Freq.32_35 / D.7240;
+  Clock_Ip_u32PeriphPhi1Freq = _36;
+
+  <bb 4> :
+  # DEBUG BEGIN_STMT
+  D.7241 = Clock_Ip_u32PeriphPhi1Freq;
+  return D.7241;
+
+}
+
+
+Clock_Ip_Get_PERIPHPLL_PHI0_Frequency ()
+{
+  uint32 D.7247;
+  long unsigned int D.7246;
+  long unsigned int D.7245;
+
+  <bb 2> :
+  # DEBUG BEGIN_STMT
+  _1 = 1074511872B;
+  _2 = _1->PLLCLKMUX;
+  _3 = 1074511872B;
+  _4 = _3->PLLDV;
+  _5 = _2 ^ _4;
+  _6 = 1074511872B;
+  _7 = _6->PLLSR;
+  _8 = _5 ^ _7;
+  _9 = 1074511872B;
+  _10 = _9->PLLODIV[0];
+  _11 = _8 ^ _10;
+  Clock_Ip_u32PeriphPhi0Checksum.33_12 = Clock_Ip_u32PeriphPhi0Checksum;
+  if (_11 != Clock_Ip_u32PeriphPhi0Checksum.33_12)
+    goto <bb 3>; [INV]
+  else
+    goto <bb 4>; [INV]
+
+  <bb 3> :
+  # DEBUG BEGIN_STMT
+  _13 = 1074511872B;
+  _14 = _13->PLLCLKMUX;
+  _15 = 1074511872B;
+  _16 = _15->PLLDV;
+  _17 = _14 ^ _16;
+  _18 = 1074511872B;
+  _19 = _18->PLLSR;
+  _20 = _17 ^ _19;
+  _21 = 1074511872B;
+  _22 = _21->PLLODIV[0];
+  _23 = _20 ^ _22;
+  Clock_Ip_u32PeriphPhi0Checksum = _23;
+  # DEBUG BEGIN_STMT
+  _24 = Clock_Ip_Get_PERIPHPLL_CLK_Frequency ();
+  Clock_Ip_u32PeriphPhi0Freq = _24;
+  # DEBUG BEGIN_STMT
+  _25 = 1074511872B;
+  _26 = _25->PLLODIV[0];
+  _27 = _26 >> 31;
+  _28 = _27 & 1;
+  D.7245 = Clock_Ip_u32EnableDivider[_28];
+  Clock_Ip_u32PeriphPhi0Freq.34_29 = Clock_Ip_u32PeriphPhi0Freq;
+  _30 = D.7245 & Clock_Ip_u32PeriphPhi0Freq.34_29;
+  Clock_Ip_u32PeriphPhi0Freq = _30;
+  # DEBUG BEGIN_STMT
+  _31 = 1074511872B;
+  _32 = _31->PLLODIV[0];
+  _33 = _32 >> 16;
+  _34 = _33 & 255;
+  D.7246 = _34 + 1;
+  Clock_Ip_u32PeriphPhi0Freq.35_35 = Clock_Ip_u32PeriphPhi0Freq;
+  _36 = Clock_Ip_u32PeriphPhi0Freq.35_35 / D.7246;
+  Clock_Ip_u32PeriphPhi0Freq = _36;
+
+  <bb 4> :
+  # DEBUG BEGIN_STMT
+  D.7247 = Clock_Ip_u32PeriphPhi0Freq;
+  return D.7247;
+
+}
+
+
+Clock_Ip_Get_COREPLL_PHI9_Frequency ()
+{
+  uint32 D.7253;
+  long unsigned int D.7252;
+  long unsigned int D.7251;
+
+  <bb 2> :
+  # DEBUG BEGIN_STMT
+  _1 = 1141637120B;
+  _2 = _1->PLLCLKMUX;
+  _3 = 1141637120B;
+  _4 = _3->PLLDV;
+  _5 = _2 ^ _4;
+  _6 = 1141637120B;
+  _7 = _6->PLLFD;
+  _8 = _5 ^ _7;
+  _9 = 1141637120B;
+  _10 = _9->PLLSR;
+  _11 = _8 ^ _10;
+  _12 = 1141637120B;
+  _13 = _12->PLLODIV[9];
+  _14 = _11 ^ _13;
+  Clock_Ip_u32CorePhi9Checksum.36_15 = Clock_Ip_u32CorePhi9Checksum;
+  if (_14 != Clock_Ip_u32CorePhi9Checksum.36_15)
+    goto <bb 3>; [INV]
+  else
+    goto <bb 4>; [INV]
+
+  <bb 3> :
+  # DEBUG BEGIN_STMT
+  _16 = 1141637120B;
+  _17 = _16->PLLCLKMUX;
+  _18 = 1141637120B;
+  _19 = _18->PLLDV;
+  _20 = _17 ^ _19;
+  _21 = 1141637120B;
+  _22 = _21->PLLFD;
+  _23 = _20 ^ _22;
+  _24 = 1141637120B;
+  _25 = _24->PLLSR;
+  _26 = _23 ^ _25;
+  _27 = 1141637120B;
+  _28 = _27->PLLODIV[9];
+  _29 = _26 ^ _28;
+  Clock_Ip_u32CorePhi9Checksum = _29;
+  # DEBUG BEGIN_STMT
+  _30 = Clock_Ip_Get_COREPLL_CLK_Frequency ();
+  Clock_Ip_u32CorePhi9Freq = _30;
+  # DEBUG BEGIN_STMT
+  _31 = 1141637120B;
+  _32 = _31->PLLODIV[9];
+  _33 = _32 >> 31;
+  _34 = _33 & 1;
+  D.7251 = Clock_Ip_u32EnableDivider[_34];
+  Clock_Ip_u32CorePhi9Freq.37_35 = Clock_Ip_u32CorePhi9Freq;
+  _36 = D.7251 & Clock_Ip_u32CorePhi9Freq.37_35;
+  Clock_Ip_u32CorePhi9Freq = _36;
+  # DEBUG BEGIN_STMT
+  _37 = 1141637120B;
+  _38 = _37->PLLODIV[9];
+  _39 = _38 >> 16;
+  _40 = _39 & 255;
+  D.7252 = _40 + 1;
+  Clock_Ip_u32CorePhi9Freq.38_41 = Clock_Ip_u32CorePhi9Freq;
+  _42 = Clock_Ip_u32CorePhi9Freq.38_41 / D.7252;
+  Clock_Ip_u32CorePhi9Freq = _42;
+
+  <bb 4> :
+  # DEBUG BEGIN_STMT
+  D.7253 = Clock_Ip_u32CorePhi9Freq;
+  return D.7253;
+
+}
+
+
+Clock_Ip_Get_COREPLL_PHI8_Frequency ()
+{
+  uint32 D.7259;
+  long unsigned int D.7258;
+  long unsigned int D.7257;
+
+  <bb 2> :
+  # DEBUG BEGIN_STMT
+  _1 = 1141637120B;
+  _2 = _1->PLLCLKMUX;
+  _3 = 1141637120B;
+  _4 = _3->PLLDV;
+  _5 = _2 ^ _4;
+  _6 = 1141637120B;
+  _7 = _6->PLLFD;
+  _8 = _5 ^ _7;
+  _9 = 1141637120B;
+  _10 = _9->PLLSR;
+  _11 = _8 ^ _10;
+  _12 = 1141637120B;
+  _13 = _12->PLLODIV[8];
+  _14 = _11 ^ _13;
+  Clock_Ip_u32CorePhi8Checksum.39_15 = Clock_Ip_u32CorePhi8Checksum;
+  if (_14 != Clock_Ip_u32CorePhi8Checksum.39_15)
+    goto <bb 3>; [INV]
+  else
+    goto <bb 4>; [INV]
+
+  <bb 3> :
+  # DEBUG BEGIN_STMT
+  _16 = 1141637120B;
+  _17 = _16->PLLCLKMUX;
+  _18 = 1141637120B;
+  _19 = _18->PLLDV;
+  _20 = _17 ^ _19;
+  _21 = 1141637120B;
+  _22 = _21->PLLFD;
+  _23 = _20 ^ _22;
+  _24 = 1141637120B;
+  _25 = _24->PLLSR;
+  _26 = _23 ^ _25;
+  _27 = 1141637120B;
+  _28 = _27->PLLODIV[8];
+  _29 = _26 ^ _28;
+  Clock_Ip_u32CorePhi8Checksum = _29;
+  # DEBUG BEGIN_STMT
+  _30 = Clock_Ip_Get_COREPLL_CLK_Frequency ();
+  Clock_Ip_u32CorePhi8Freq = _30;
+  # DEBUG BEGIN_STMT
+  _31 = 1141637120B;
+  _32 = _31->PLLODIV[8];
+  _33 = _32 >> 31;
+  _34 = _33 & 1;
+  D.7257 = Clock_Ip_u32EnableDivider[_34];
+  Clock_Ip_u32CorePhi8Freq.40_35 = Clock_Ip_u32CorePhi8Freq;
+  _36 = D.7257 & Clock_Ip_u32CorePhi8Freq.40_35;
+  Clock_Ip_u32CorePhi8Freq = _36;
+  # DEBUG BEGIN_STMT
+  _37 = 1141637120B;
+  _38 = _37->PLLODIV[8];
+  _39 = _38 >> 16;
+  _40 = _39 & 255;
+  D.7258 = _40 + 1;
+  Clock_Ip_u32CorePhi8Freq.41_41 = Clock_Ip_u32CorePhi8Freq;
+  _42 = Clock_Ip_u32CorePhi8Freq.41_41 / D.7258;
+  Clock_Ip_u32CorePhi8Freq = _42;
+
+  <bb 4> :
+  # DEBUG BEGIN_STMT
+  D.7259 = Clock_Ip_u32CorePhi8Freq;
+  return D.7259;
+
+}
+
+
+Clock_Ip_Get_COREPLL_PHI6_Frequency ()
+{
+  uint32 D.7265;
+  long unsigned int D.7264;
+  long unsigned int D.7263;
+
+  <bb 2> :
+  # DEBUG BEGIN_STMT
+  _1 = 1141637120B;
+  _2 = _1->PLLCLKMUX;
+  _3 = 1141637120B;
+  _4 = _3->PLLDV;
+  _5 = _2 ^ _4;
+  _6 = 1141637120B;
+  _7 = _6->PLLFD;
+  _8 = _5 ^ _7;
+  _9 = 1141637120B;
+  _10 = _9->PLLSR;
+  _11 = _8 ^ _10;
+  _12 = 1141637120B;
+  _13 = _12->PLLODIV[6];
+  _14 = _11 ^ _13;
+  Clock_Ip_u32CorePhi6Checksum.42_15 = Clock_Ip_u32CorePhi6Checksum;
+  if (_14 != Clock_Ip_u32CorePhi6Checksum.42_15)
+    goto <bb 3>; [INV]
+  else
+    goto <bb 4>; [INV]
+
+  <bb 3> :
+  # DEBUG BEGIN_STMT
+  _16 = 1141637120B;
+  _17 = _16->PLLCLKMUX;
+  _18 = 1141637120B;
+  _19 = _18->PLLDV;
+  _20 = _17 ^ _19;
+  _21 = 1141637120B;
+  _22 = _21->PLLFD;
+  _23 = _20 ^ _22;
+  _24 = 1141637120B;
+  _25 = _24->PLLSR;
+  _26 = _23 ^ _25;
+  _27 = 1141637120B;
+  _28 = _27->PLLODIV[6];
+  _29 = _26 ^ _28;
+  Clock_Ip_u32CorePhi6Checksum = _29;
+  # DEBUG BEGIN_STMT
+  _30 = Clock_Ip_Get_COREPLL_CLK_Frequency ();
+  Clock_Ip_u32CorePhi6Freq = _30;
+  # DEBUG BEGIN_STMT
+  _31 = 1141637120B;
+  _32 = _31->PLLODIV[6];
+  _33 = _32 >> 31;
+  _34 = _33 & 1;
+  D.7263 = Clock_Ip_u32EnableDivider[_34];
+  Clock_Ip_u32CorePhi6Freq.43_35 = Clock_Ip_u32CorePhi6Freq;
+  _36 = D.7263 & Clock_Ip_u32CorePhi6Freq.43_35;
+  Clock_Ip_u32CorePhi6Freq = _36;
+  # DEBUG BEGIN_STMT
+  _37 = 1141637120B;
+  _38 = _37->PLLODIV[6];
+  _39 = _38 >> 16;
+  _40 = _39 & 255;
+  D.7264 = _40 + 1;
+  Clock_Ip_u32CorePhi6Freq.44_41 = Clock_Ip_u32CorePhi6Freq;
+  _42 = Clock_Ip_u32CorePhi6Freq.44_41 / D.7264;
+  Clock_Ip_u32CorePhi6Freq = _42;
+
+  <bb 4> :
+  # DEBUG BEGIN_STMT
+  D.7265 = Clock_Ip_u32CorePhi6Freq;
+  return D.7265;
+
+}
+
+
+Clock_Ip_Get_COREPLL_PHI5_Frequency ()
+{
+  uint32 D.7271;
+  long unsigned int D.7270;
+  long unsigned int D.7269;
+
+  <bb 2> :
+  # DEBUG BEGIN_STMT
+  _1 = 1141637120B;
+  _2 = _1->PLLCLKMUX;
+  _3 = 1141637120B;
+  _4 = _3->PLLDV;
+  _5 = _2 ^ _4;
+  _6 = 1141637120B;
+  _7 = _6->PLLFD;
+  _8 = _5 ^ _7;
+  _9 = 1141637120B;
+  _10 = _9->PLLSR;
+  _11 = _8 ^ _10;
+  _12 = 1141637120B;
+  _13 = _12->PLLODIV[5];
+  _14 = _11 ^ _13;
+  Clock_Ip_u32CorePhi5Checksum.45_15 = Clock_Ip_u32CorePhi5Checksum;
+  if (_14 != Clock_Ip_u32CorePhi5Checksum.45_15)
+    goto <bb 3>; [INV]
+  else
+    goto <bb 4>; [INV]
+
+  <bb 3> :
+  # DEBUG BEGIN_STMT
+  _16 = 1141637120B;
+  _17 = _16->PLLCLKMUX;
+  _18 = 1141637120B;
+  _19 = _18->PLLDV;
+  _20 = _17 ^ _19;
+  _21 = 1141637120B;
+  _22 = _21->PLLFD;
+  _23 = _20 ^ _22;
+  _24 = 1141637120B;
+  _25 = _24->PLLSR;
+  _26 = _23 ^ _25;
+  _27 = 1141637120B;
+  _28 = _27->PLLODIV[5];
+  _29 = _26 ^ _28;
+  Clock_Ip_u32CorePhi5Checksum = _29;
+  # DEBUG BEGIN_STMT
+  _30 = Clock_Ip_Get_COREPLL_CLK_Frequency ();
+  Clock_Ip_u32CorePhi5Freq = _30;
+  # DEBUG BEGIN_STMT
+  _31 = 1141637120B;
+  _32 = _31->PLLODIV[5];
+  _33 = _32 >> 31;
+  _34 = _33 & 1;
+  D.7269 = Clock_Ip_u32EnableDivider[_34];
+  Clock_Ip_u32CorePhi5Freq.46_35 = Clock_Ip_u32CorePhi5Freq;
+  _36 = D.7269 & Clock_Ip_u32CorePhi5Freq.46_35;
+  Clock_Ip_u32CorePhi5Freq = _36;
+  # DEBUG BEGIN_STMT
+  _37 = 1141637120B;
+  _38 = _37->PLLODIV[5];
+  _39 = _38 >> 16;
+  _40 = _39 & 255;
+  D.7270 = _40 + 1;
+  Clock_Ip_u32CorePhi5Freq.47_41 = Clock_Ip_u32CorePhi5Freq;
+  _42 = Clock_Ip_u32CorePhi5Freq.47_41 / D.7270;
+  Clock_Ip_u32CorePhi5Freq = _42;
+
+  <bb 4> :
+  # DEBUG BEGIN_STMT
+  D.7271 = Clock_Ip_u32CorePhi5Freq;
+  return D.7271;
+
+}
+
+
+Clock_Ip_Get_COREPLL_PHI4_Frequency ()
+{
+  uint32 D.7277;
+  long unsigned int D.7276;
+  long unsigned int D.7275;
+
+  <bb 2> :
+  # DEBUG BEGIN_STMT
+  _1 = 1141637120B;
+  _2 = _1->PLLCLKMUX;
+  _3 = 1141637120B;
+  _4 = _3->PLLDV;
+  _5 = _2 ^ _4;
+  _6 = 1141637120B;
+  _7 = _6->PLLFD;
+  _8 = _5 ^ _7;
+  _9 = 1141637120B;
+  _10 = _9->PLLSR;
+  _11 = _8 ^ _10;
+  _12 = 1141637120B;
+  _13 = _12->PLLODIV[4];
+  _14 = _11 ^ _13;
+  Clock_Ip_u32CorePhi4Checksum.48_15 = Clock_Ip_u32CorePhi4Checksum;
+  if (_14 != Clock_Ip_u32CorePhi4Checksum.48_15)
+    goto <bb 3>; [INV]
+  else
+    goto <bb 4>; [INV]
+
+  <bb 3> :
+  # DEBUG BEGIN_STMT
+  _16 = 1141637120B;
+  _17 = _16->PLLCLKMUX;
+  _18 = 1141637120B;
+  _19 = _18->PLLDV;
+  _20 = _17 ^ _19;
+  _21 = 1141637120B;
+  _22 = _21->PLLFD;
+  _23 = _20 ^ _22;
+  _24 = 1141637120B;
+  _25 = _24->PLLSR;
+  _26 = _23 ^ _25;
+  _27 = 1141637120B;
+  _28 = _27->PLLODIV[4];
+  _29 = _26 ^ _28;
+  Clock_Ip_u32CorePhi4Checksum = _29;
+  # DEBUG BEGIN_STMT
+  _30 = Clock_Ip_Get_COREPLL_CLK_Frequency ();
+  Clock_Ip_u32CorePhi4Freq = _30;
+  # DEBUG BEGIN_STMT
+  _31 = 1141637120B;
+  _32 = _31->PLLODIV[4];
+  _33 = _32 >> 31;
+  _34 = _33 & 1;
+  D.7275 = Clock_Ip_u32EnableDivider[_34];
+  Clock_Ip_u32CorePhi4Freq.49_35 = Clock_Ip_u32CorePhi4Freq;
+  _36 = D.7275 & Clock_Ip_u32CorePhi4Freq.49_35;
+  Clock_Ip_u32CorePhi4Freq = _36;
+  # DEBUG BEGIN_STMT
+  _37 = 1141637120B;
+  _38 = _37->PLLODIV[4];
+  _39 = _38 >> 16;
+  _40 = _39 & 255;
+  D.7276 = _40 + 1;
+  Clock_Ip_u32CorePhi4Freq.50_41 = Clock_Ip_u32CorePhi4Freq;
+  _42 = Clock_Ip_u32CorePhi4Freq.50_41 / D.7276;
+  Clock_Ip_u32CorePhi4Freq = _42;
+
+  <bb 4> :
+  # DEBUG BEGIN_STMT
+  D.7277 = Clock_Ip_u32CorePhi4Freq;
+  return D.7277;
+
+}
+
+
+Clock_Ip_Get_COREPLL_PHI3_Frequency ()
+{
+  uint32 D.7283;
+  long unsigned int D.7282;
+  long unsigned int D.7281;
+
+  <bb 2> :
+  # DEBUG BEGIN_STMT
+  _1 = 1141637120B;
+  _2 = _1->PLLCLKMUX;
+  _3 = 1141637120B;
+  _4 = _3->PLLDV;
+  _5 = _2 ^ _4;
+  _6 = 1141637120B;
+  _7 = _6->PLLFD;
+  _8 = _5 ^ _7;
+  _9 = 1141637120B;
+  _10 = _9->PLLSR;
+  _11 = _8 ^ _10;
+  _12 = 1141637120B;
+  _13 = _12->PLLODIV[3];
+  _14 = _11 ^ _13;
+  Clock_Ip_u32CorePhi3Checksum.51_15 = Clock_Ip_u32CorePhi3Checksum;
+  if (_14 != Clock_Ip_u32CorePhi3Checksum.51_15)
+    goto <bb 3>; [INV]
+  else
+    goto <bb 4>; [INV]
+
+  <bb 3> :
+  # DEBUG BEGIN_STMT
+  _16 = 1141637120B;
+  _17 = _16->PLLCLKMUX;
+  _18 = 1141637120B;
+  _19 = _18->PLLDV;
+  _20 = _17 ^ _19;
+  _21 = 1141637120B;
+  _22 = _21->PLLFD;
+  _23 = _20 ^ _22;
+  _24 = 1141637120B;
+  _25 = _24->PLLSR;
+  _26 = _23 ^ _25;
+  _27 = 1141637120B;
+  _28 = _27->PLLODIV[3];
+  _29 = _26 ^ _28;
+  Clock_Ip_u32CorePhi3Checksum = _29;
+  # DEBUG BEGIN_STMT
+  _30 = Clock_Ip_Get_COREPLL_CLK_Frequency ();
+  Clock_Ip_u32CorePhi3Freq = _30;
+  # DEBUG BEGIN_STMT
+  _31 = 1141637120B;
+  _32 = _31->PLLODIV[3];
+  _33 = _32 >> 31;
+  _34 = _33 & 1;
+  D.7281 = Clock_Ip_u32EnableDivider[_34];
+  Clock_Ip_u32CorePhi3Freq.52_35 = Clock_Ip_u32CorePhi3Freq;
+  _36 = D.7281 & Clock_Ip_u32CorePhi3Freq.52_35;
+  Clock_Ip_u32CorePhi3Freq = _36;
+  # DEBUG BEGIN_STMT
+  _37 = 1141637120B;
+  _38 = _37->PLLODIV[3];
+  _39 = _38 >> 16;
+  _40 = _39 & 255;
+  D.7282 = _40 + 1;
+  Clock_Ip_u32CorePhi3Freq.53_41 = Clock_Ip_u32CorePhi3Freq;
+  _42 = Clock_Ip_u32CorePhi3Freq.53_41 / D.7282;
+  Clock_Ip_u32CorePhi3Freq = _42;
+
+  <bb 4> :
+  # DEBUG BEGIN_STMT
+  D.7283 = Clock_Ip_u32CorePhi3Freq;
+  return D.7283;
+
+}
+
+
+Clock_Ip_Get_COREPLL_PHI2_Frequency ()
+{
+  uint32 D.7289;
+  long unsigned int D.7288;
+  long unsigned int D.7287;
+
+  <bb 2> :
+  # DEBUG BEGIN_STMT
+  _1 = 1141637120B;
+  _2 = _1->PLLCLKMUX;
+  _3 = 1141637120B;
+  _4 = _3->PLLDV;
+  _5 = _2 ^ _4;
+  _6 = 1141637120B;
+  _7 = _6->PLLFD;
+  _8 = _5 ^ _7;
+  _9 = 1141637120B;
+  _10 = _9->PLLSR;
+  _11 = _8 ^ _10;
+  _12 = 1141637120B;
+  _13 = _12->PLLODIV[2];
+  _14 = _11 ^ _13;
+  Clock_Ip_u32CorePhi2Checksum.54_15 = Clock_Ip_u32CorePhi2Checksum;
+  if (_14 != Clock_Ip_u32CorePhi2Checksum.54_15)
+    goto <bb 3>; [INV]
+  else
+    goto <bb 4>; [INV]
+
+  <bb 3> :
+  # DEBUG BEGIN_STMT
+  _16 = 1141637120B;
+  _17 = _16->PLLCLKMUX;
+  _18 = 1141637120B;
+  _19 = _18->PLLDV;
+  _20 = _17 ^ _19;
+  _21 = 1141637120B;
+  _22 = _21->PLLFD;
+  _23 = _20 ^ _22;
+  _24 = 1141637120B;
+  _25 = _24->PLLSR;
+  _26 = _23 ^ _25;
+  _27 = 1141637120B;
+  _28 = _27->PLLODIV[2];
+  _29 = _26 ^ _28;
+  Clock_Ip_u32CorePhi2Checksum = _29;
+  # DEBUG BEGIN_STMT
+  _30 = Clock_Ip_Get_COREPLL_CLK_Frequency ();
+  Clock_Ip_u32CorePhi2Freq = _30;
+  # DEBUG BEGIN_STMT
+  _31 = 1141637120B;
+  _32 = _31->PLLODIV[2];
+  _33 = _32 >> 31;
+  _34 = _33 & 1;
+  D.7287 = Clock_Ip_u32EnableDivider[_34];
+  Clock_Ip_u32CorePhi2Freq.55_35 = Clock_Ip_u32CorePhi2Freq;
+  _36 = D.7287 & Clock_Ip_u32CorePhi2Freq.55_35;
+  Clock_Ip_u32CorePhi2Freq = _36;
+  # DEBUG BEGIN_STMT
+  _37 = 1141637120B;
+  _38 = _37->PLLODIV[2];
+  _39 = _38 >> 16;
+  _40 = _39 & 255;
+  D.7288 = _40 + 1;
+  Clock_Ip_u32CorePhi2Freq.56_41 = Clock_Ip_u32CorePhi2Freq;
+  _42 = Clock_Ip_u32CorePhi2Freq.56_41 / D.7288;
+  Clock_Ip_u32CorePhi2Freq = _42;
+
+  <bb 4> :
+  # DEBUG BEGIN_STMT
+  D.7289 = Clock_Ip_u32CorePhi2Freq;
+  return D.7289;
+
+}
+
+
+Clock_Ip_Get_COREPLL_PHI1_Frequency ()
+{
+  uint32 D.7295;
+  long unsigned int D.7294;
+  long unsigned int D.7293;
+
+  <bb 2> :
+  # DEBUG BEGIN_STMT
+  _1 = 1141637120B;
+  _2 = _1->PLLCLKMUX;
+  _3 = 1141637120B;
+  _4 = _3->PLLDV;
+  _5 = _2 ^ _4;
+  _6 = 1141637120B;
+  _7 = _6->PLLFD;
+  _8 = _5 ^ _7;
+  _9 = 1141637120B;
+  _10 = _9->PLLSR;
+  _11 = _8 ^ _10;
+  _12 = 1141637120B;
+  _13 = _12->PLLODIV[1];
+  _14 = _11 ^ _13;
+  Clock_Ip_u32CorePhi1Checksum.57_15 = Clock_Ip_u32CorePhi1Checksum;
+  if (_14 != Clock_Ip_u32CorePhi1Checksum.57_15)
+    goto <bb 3>; [INV]
+  else
+    goto <bb 4>; [INV]
+
+  <bb 3> :
+  # DEBUG BEGIN_STMT
+  _16 = 1141637120B;
+  _17 = _16->PLLCLKMUX;
+  _18 = 1141637120B;
+  _19 = _18->PLLDV;
+  _20 = _17 ^ _19;
+  _21 = 1141637120B;
+  _22 = _21->PLLFD;
+  _23 = _20 ^ _22;
+  _24 = 1141637120B;
+  _25 = _24->PLLSR;
+  _26 = _23 ^ _25;
+  _27 = 1141637120B;
+  _28 = _27->PLLODIV[1];
+  _29 = _26 ^ _28;
+  Clock_Ip_u32CorePhi1Checksum = _29;
+  # DEBUG BEGIN_STMT
+  _30 = Clock_Ip_Get_COREPLL_CLK_Frequency ();
+  Clock_Ip_u32CorePhi1Freq = _30;
+  # DEBUG BEGIN_STMT
+  _31 = 1141637120B;
+  _32 = _31->PLLODIV[1];
+  _33 = _32 >> 31;
+  _34 = _33 & 1;
+  D.7293 = Clock_Ip_u32EnableDivider[_34];
+  Clock_Ip_u32CorePhi1Freq.58_35 = Clock_Ip_u32CorePhi1Freq;
+  _36 = D.7293 & Clock_Ip_u32CorePhi1Freq.58_35;
+  Clock_Ip_u32CorePhi1Freq = _36;
+  # DEBUG BEGIN_STMT
+  _37 = 1141637120B;
+  _38 = _37->PLLODIV[1];
+  _39 = _38 >> 16;
+  _40 = _39 & 255;
+  D.7294 = _40 + 1;
+  Clock_Ip_u32CorePhi1Freq.59_41 = Clock_Ip_u32CorePhi1Freq;
+  _42 = Clock_Ip_u32CorePhi1Freq.59_41 / D.7294;
+  Clock_Ip_u32CorePhi1Freq = _42;
+
+  <bb 4> :
+  # DEBUG BEGIN_STMT
+  D.7295 = Clock_Ip_u32CorePhi1Freq;
+  return D.7295;
+
+}
+
+
+Clock_Ip_Get_COREPLL_PHI0_Frequency ()
+{
+  uint32 D.7301;
+  long unsigned int D.7300;
+  long unsigned int D.7299;
+
+  <bb 2> :
+  # DEBUG BEGIN_STMT
+  _1 = 1141637120B;
+  _2 = _1->PLLCLKMUX;
+  _3 = 1141637120B;
+  _4 = _3->PLLDV;
+  _5 = _2 ^ _4;
+  _6 = 1141637120B;
+  _7 = _6->PLLFD;
+  _8 = _5 ^ _7;
+  _9 = 1141637120B;
+  _10 = _9->PLLSR;
+  _11 = _8 ^ _10;
+  _12 = 1141637120B;
+  _13 = _12->PLLODIV[0];
+  _14 = _11 ^ _13;
+  Clock_Ip_u32CorePhi0Checksum.60_15 = Clock_Ip_u32CorePhi0Checksum;
+  if (_14 != Clock_Ip_u32CorePhi0Checksum.60_15)
+    goto <bb 3>; [INV]
+  else
+    goto <bb 4>; [INV]
+
+  <bb 3> :
+  # DEBUG BEGIN_STMT
+  _16 = 1141637120B;
+  _17 = _16->PLLCLKMUX;
+  _18 = 1141637120B;
+  _19 = _18->PLLDV;
+  _20 = _17 ^ _19;
+  _21 = 1141637120B;
+  _22 = _21->PLLFD;
+  _23 = _20 ^ _22;
+  _24 = 1141637120B;
+  _25 = _24->PLLSR;
+  _26 = _23 ^ _25;
+  _27 = 1141637120B;
+  _28 = _27->PLLODIV[0];
+  _29 = _26 ^ _28;
+  Clock_Ip_u32CorePhi0Checksum = _29;
+  # DEBUG BEGIN_STMT
+  _30 = Clock_Ip_Get_COREPLL_CLK_Frequency ();
+  Clock_Ip_u32CorePhi0Freq = _30;
+  # DEBUG BEGIN_STMT
+  _31 = 1141637120B;
+  _32 = _31->PLLODIV[0];
+  _33 = _32 >> 31;
+  _34 = _33 & 1;
+  D.7299 = Clock_Ip_u32EnableDivider[_34];
+  Clock_Ip_u32CorePhi0Freq.61_35 = Clock_Ip_u32CorePhi0Freq;
+  _36 = D.7299 & Clock_Ip_u32CorePhi0Freq.61_35;
+  Clock_Ip_u32CorePhi0Freq = _36;
+  # DEBUG BEGIN_STMT
+  _37 = 1141637120B;
+  _38 = _37->PLLODIV[0];
+  _39 = _38 >> 16;
+  _40 = _39 & 255;
+  D.7300 = _40 + 1;
+  Clock_Ip_u32CorePhi0Freq.62_41 = Clock_Ip_u32CorePhi0Freq;
+  _42 = Clock_Ip_u32CorePhi0Freq.62_41 / D.7300;
+  Clock_Ip_u32CorePhi0Freq = _42;
+
+  <bb 4> :
+  # DEBUG BEGIN_STMT
+  D.7301 = Clock_Ip_u32CorePhi0Freq;
+  return D.7301;
+
+}
+
+
+Clock_Ip_Get_PERIPHPLL_CLK_Frequency ()
+{
+  uint32 iftmp.64;
+  uint32 D.7305;
+
+  <bb 2> :
+  # DEBUG BEGIN_STMT
+  _1 = 1074511872B;
+  _2 = _1->PLLCLKMUX;
+  _3 = 1074511872B;
+  _4 = _3->PLLDV;
+  _5 = _2 ^ _4;
+  Clock_Ip_u32PeriphPllChecksum.63_6 = Clock_Ip_u32PeriphPllChecksum;
+  if (_5 != Clock_Ip_u32PeriphPllChecksum.63_6)
+    goto <bb 3>; [INV]
+  else
+    goto <bb 4>; [INV]
+
+  <bb 3> :
+  # DEBUG BEGIN_STMT
+  _7 = 1074511872B;
+  _8 = _7->PLLCLKMUX;
+  _9 = 1074511872B;
+  _10 = _9->PLLDV;
+  _11 = _8 ^ _10;
+  Clock_Ip_u32PeriphPllChecksum = _11;
+  # DEBUG BEGIN_STMT
+  _12 = Clock_Ip_PLL_VCO (1074511872B);
+  Clock_Ip_u32PeriphPllFreq = _12;
+
+  <bb 4> :
+  # DEBUG BEGIN_STMT
+  _13 = 1074511872B;
+  _14 = _13->PLLSR;
+  _15 = _14 & 4;
+  if (_15 != 0)
+    goto <bb 5>; [INV]
+  else
+    goto <bb 6>; [INV]
+
+  <bb 5> :
+  iftmp.64 = Clock_Ip_u32PeriphPllFreq;
+  goto <bb 7>; [INV]
+
+  <bb 6> :
+  iftmp.64 = 0;
+
+  <bb 7> :
+  D.7305 = iftmp.64;
+  return D.7305;
+
+}
+
+
+Clock_Ip_Get_COREPLL_CLK_Frequency ()
+{
+  uint32 iftmp.67;
+  uint32 D.7325;
+
+  <bb 2> :
+  # DEBUG BEGIN_STMT
+  _1 = 1141637120B;
+  _2 = _1->PLLCLKMUX;
+  _3 = 1141637120B;
+  _4 = _3->PLLDV;
+  _5 = _2 ^ _4;
+  _6 = 1141637120B;
+  _7 = _6->PLLFD;
+  _8 = _5 ^ _7;
+  Clock_Ip_u32CorePllChecksum.66_9 = Clock_Ip_u32CorePllChecksum;
+  if (_8 != Clock_Ip_u32CorePllChecksum.66_9)
+    goto <bb 3>; [INV]
+  else
+    goto <bb 4>; [INV]
+
+  <bb 3> :
+  # DEBUG BEGIN_STMT
+  _10 = 1141637120B;
+  _11 = _10->PLLCLKMUX;
+  _12 = 1141637120B;
+  _13 = _12->PLLDV;
+  _14 = _11 ^ _13;
+  _15 = 1141637120B;
+  _16 = _15->PLLFD;
+  _17 = _14 ^ _16;
+  Clock_Ip_u32CorePllChecksum = _17;
+  # DEBUG BEGIN_STMT
+  _18 = Clock_Ip_PLL_VCO (1141637120B);
+  Clock_Ip_u32CorePllFreq = _18;
+
+  <bb 4> :
+  # DEBUG BEGIN_STMT
+  _19 = 1141637120B;
+  _20 = _19->PLLSR;
+  _21 = _20 & 4;
+  if (_21 != 0)
+    goto <bb 5>; [INV]
+  else
+    goto <bb 6>; [INV]
+
+  <bb 5> :
+  iftmp.67 = Clock_Ip_u32CorePllFreq;
+  goto <bb 7>; [INV]
+
+  <bb 6> :
+  iftmp.67 = 0;
+
+  <bb 7> :
+  D.7325 = iftmp.67;
+  return D.7325;
+
+}
+
+
+Clock_Ip_Get_FXOSC_CLK_Frequency ()
+{
+  uint32 Frequency;
+  uint32 D.7335;
+  long unsigned int iftmp.68;
+
+  <bb 2> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _1 = 1074282496B;
+  _2 = _1->STAT;
+  _3 = (signed int) _2;
+  if (_3 < 0)
+    goto <bb 3>; [INV]
+  else
+    goto <bb 4>; [INV]
+
+  <bb 3> :
+  iftmp.68 = Clock_Ip_u32Fxosc;
+  goto <bb 5>; [INV]
+
+  <bb 4> :
+  iftmp.68 = 0;
+
+  <bb 5> :
+  Frequency = iftmp.68;
+  # DEBUG BEGIN_STMT
+  D.7335 = Frequency;
+  return D.7335;
+
+}
+
+
+Clock_Ip_Get_FIRC_CLK_Frequency ()
+{
+  uint32 D.7337;
+
+  <bb 2> :
+  # DEBUG BEGIN_STMT
+  D.7337 = 48000000;
+  return D.7337;
+
+}
+
+
+Clock_Ip_Get_Zero_Frequency ()
+{
+  uint32 D.7339;
+
+  <bb 2> :
+  # DEBUG BEGIN_STMT
+  D.7339 = 0;
+  return D.7339;
 
 }
 

@@ -111,7 +111,7 @@ Reclaiming variables:
 Clearing address taken flags:
 Symbol table:
 
-netio_recv.part.0/16 (netio_recv.part.0) @060f5380
+netio_recv.part.0/16 (netio_recv.part.0) @061af380
   Type: function definition analyzed
   Visibility: prevailing_def_ironly artificial
   References: 
@@ -120,7 +120,7 @@ netio_recv.part.0/16 (netio_recv.part.0) @060f5380
   Function flags: count:1073741824 (estimated locally) first_run:1 body local split_part optimize_size
   Called by: netio_recv/1 (93576600 (estimated locally),0.09 per call) 
   Calls: tcp_arg/9 (1073741824 (estimated locally),1.00 per call) tcp_sent/10 (1073741824 (estimated locally),1.00 per call) tcp_recv/11 (1073741824 (estimated locally),1.00 per call) tcp_close/14 (1073741824 (estimated locally),1.00 per call) 
-netio_accept.part.0/15 (netio_accept.part.0) @05f319a0
+netio_accept.part.0/15 (netio_accept.part.0) @05fd69a0
   Type: function definition analyzed
   Visibility: prevailing_def_ironly artificial
   References: netio_recv/1 (addr)
@@ -129,7 +129,7 @@ netio_accept.part.0/15 (netio_accept.part.0) @05f319a0
   Function flags: count:1073741824 (estimated locally) first_run:1 body local split_part optimize_size
   Called by: netio_accept/2 (574129752 (estimated locally),0.53 per call) 
   Calls: tcp_arg/9 (1073741824 (estimated locally),1.00 per call) tcp_sent/10 (1073741824 (estimated locally),1.00 per call) tcp_recv/11 (1073741824 (estimated locally),1.00 per call) 
-tcp_close/14 (tcp_close) @060eb2a0
+tcp_close/14 (tcp_close) @061a52a0
   Type: function
   Visibility: external public
   References: 
@@ -138,7 +138,7 @@ tcp_close/14 (tcp_close) @060eb2a0
   Function flags: optimize_size
   Called by: netio_recv.part.0/16 (1073741824 (estimated locally),1.00 per call) 
   Calls: 
-pbuf_free/13 (pbuf_free) @060eb1c0
+pbuf_free/13 (pbuf_free) @061a51c0
   Type: function
   Visibility: external public
   References: 
@@ -147,7 +147,7 @@ pbuf_free/13 (pbuf_free) @060eb1c0
   Function flags: optimize_size
   Called by: netio_recv/1 (689074890 (estimated locally),0.64 per call) netio_recv/1 (384666935 (estimated locally),0.36 per call) 
   Calls: 
-tcp_recved/12 (tcp_recved) @060eb0e0
+tcp_recved/12 (tcp_recved) @061a50e0
   Type: function
   Visibility: external public
   References: 
@@ -156,7 +156,7 @@ tcp_recved/12 (tcp_recved) @060eb0e0
   Function flags: optimize_size
   Called by: netio_recv/1 (384666935 (estimated locally),0.36 per call) 
   Calls: 
-tcp_recv/11 (tcp_recv) @060e8380
+tcp_recv/11 (tcp_recv) @061a2380
   Type: function
   Visibility: external public
   References: 
@@ -165,7 +165,7 @@ tcp_recv/11 (tcp_recv) @060e8380
   Function flags: optimize_size
   Called by: netio_recv.part.0/16 (1073741824 (estimated locally),1.00 per call) netio_accept.part.0/15 (1073741824 (estimated locally),1.00 per call) 
   Calls: 
-tcp_sent/10 (tcp_sent) @060e8ee0
+tcp_sent/10 (tcp_sent) @061a2ee0
   Type: function
   Visibility: external public
   References: 
@@ -174,7 +174,7 @@ tcp_sent/10 (tcp_sent) @060e8ee0
   Function flags: optimize_size
   Called by: netio_recv.part.0/16 (1073741824 (estimated locally),1.00 per call) netio_accept.part.0/15 (1073741824 (estimated locally),1.00 per call) 
   Calls: 
-tcp_arg/9 (tcp_arg) @060e8e00
+tcp_arg/9 (tcp_arg) @061a2e00
   Type: function
   Visibility: external public
   References: 
@@ -183,7 +183,7 @@ tcp_arg/9 (tcp_arg) @060e8e00
   Function flags: optimize_size
   Called by: netio_recv.part.0/16 (1073741824 (estimated locally),1.00 per call) netio_accept.part.0/15 (1073741824 (estimated locally),1.00 per call) 
   Calls: 
-tcp_accept/8 (tcp_accept) @060e8c40
+tcp_accept/8 (tcp_accept) @061a2c40
   Type: function
   Visibility: external public
   References: 
@@ -192,7 +192,7 @@ tcp_accept/8 (tcp_accept) @060e8c40
   Function flags: optimize_size
   Called by: netio_init/3 (1073741824 (estimated locally),1.00 per call) 
   Calls: 
-tcp_listen_with_backlog/7 (tcp_listen_with_backlog) @060e8b60
+tcp_listen_with_backlog/7 (tcp_listen_with_backlog) @061a2b60
   Type: function
   Visibility: external public
   References: 
@@ -201,7 +201,7 @@ tcp_listen_with_backlog/7 (tcp_listen_with_backlog) @060e8b60
   Function flags: optimize_size
   Called by: netio_init/3 (1073741824 (estimated locally),1.00 per call) 
   Calls: 
-ip_addr_any_type/6 (ip_addr_any_type) @060e1dc8
+ip_addr_any_type/6 (ip_addr_any_type) @06199dc8
   Type: variable
   Body removed by symtab_remove_unreachable_nodes
   Visibility: external public
@@ -209,7 +209,7 @@ ip_addr_any_type/6 (ip_addr_any_type) @060e1dc8
   Referring: netio_init/3 (addr)
   Availability: not_available
   Varpool flags: read-only
-tcp_bind/5 (tcp_bind) @060e8a80
+tcp_bind/5 (tcp_bind) @061a2a80
   Type: function
   Visibility: external public
   References: 
@@ -218,7 +218,7 @@ tcp_bind/5 (tcp_bind) @060e8a80
   Function flags: optimize_size
   Called by: netio_init/3 (1073741824 (estimated locally),1.00 per call) 
   Calls: 
-tcp_new_ip_type/4 (tcp_new_ip_type) @060e89a0
+tcp_new_ip_type/4 (tcp_new_ip_type) @061a29a0
   Type: function
   Visibility: external public
   References: 
@@ -227,7 +227,7 @@ tcp_new_ip_type/4 (tcp_new_ip_type) @060e89a0
   Function flags: optimize_size
   Called by: netio_init/3 (1073741824 (estimated locally),1.00 per call) 
   Calls: 
-netio_init/3 (netio_init) @060e8540
+netio_init/3 (netio_init) @061a2540
   Type: function definition analyzed
   Visibility: externally_visible public
   References: ip_addr_any_type/6 (addr)netio_accept/2 (addr)
@@ -236,7 +236,7 @@ netio_init/3 (netio_init) @060e8540
   Function flags: count:1073741824 (estimated locally) body optimize_size
   Called by: 
   Calls: tcp_accept/8 (1073741824 (estimated locally),1.00 per call) tcp_listen_with_backlog/7 (1073741824 (estimated locally),1.00 per call) tcp_bind/5 (1073741824 (estimated locally),1.00 per call) tcp_new_ip_type/4 (1073741824 (estimated locally),1.00 per call) 
-netio_accept/2 (netio_accept) @060e82a0
+netio_accept/2 (netio_accept) @061a22a0
   Type: function definition analyzed
   Visibility: prevailing_def_ironly
   Address is taken.
@@ -246,7 +246,7 @@ netio_accept/2 (netio_accept) @060e82a0
   Function flags: count:1073741824 (estimated locally) body optimize_size
   Called by: 
   Calls: netio_accept.part.0/15 (574129752 (estimated locally),0.53 per call) 
-netio_recv/1 (netio_recv) @060e8000
+netio_recv/1 (netio_recv) @061a2000
   Type: function definition analyzed
   Visibility: prevailing_def_ironly
   Address is taken.

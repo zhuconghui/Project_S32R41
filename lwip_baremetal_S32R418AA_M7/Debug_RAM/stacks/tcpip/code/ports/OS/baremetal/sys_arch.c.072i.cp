@@ -35,7 +35,7 @@ Reclaiming variables:
 Clearing address taken flags:
 Symbol table:
 
-OsIf_GetMilliseconds/5 (OsIf_GetMilliseconds) @060362a0
+OsIf_GetMilliseconds/5 (OsIf_GetMilliseconds) @060c02a0
   Type: function
   Visibility: external public
   References: 
@@ -44,7 +44,7 @@ OsIf_GetMilliseconds/5 (OsIf_GetMilliseconds) @060362a0
   Function flags: optimize_size
   Called by: sys_jiffies/2 (1073741824 (estimated locally),1.00 per call) 
   Calls: 
-OsIf_Init/4 (OsIf_Init) @06036e00
+OsIf_Init/4 (OsIf_Init) @060c0e00
   Type: function
   Visibility: external public
   References: 
@@ -53,7 +53,7 @@ OsIf_Init/4 (OsIf_Init) @06036e00
   Function flags: optimize_size
   Called by: sys_init/1 (1073741824 (estimated locally),1.00 per call) 
   Calls: 
-sys_now/3 (sys_now) @060369a0
+sys_now/3 (sys_now) @060c09a0
   Type: function definition analyzed
   Visibility: externally_visible public
   References: 
@@ -62,7 +62,7 @@ sys_now/3 (sys_now) @060369a0
   Function flags: count:1073741824 (estimated locally) body icf_merged optimize_size
   Called by: 
   Calls: sys_jiffies/2 (1073741824 (estimated locally),1.00 per call) 
-sys_jiffies/2 (sys_jiffies) @06036700
+sys_jiffies/2 (sys_jiffies) @060c0700
   Type: function definition analyzed
   Visibility: externally_visible public
   References: 
@@ -71,7 +71,7 @@ sys_jiffies/2 (sys_jiffies) @06036700
   Function flags: count:1073741824 (estimated locally) body icf_merged optimize_size
   Called by: sys_now/3 (1073741824 (estimated locally),1.00 per call) 
   Calls: OsIf_GetMilliseconds/5 (1073741824 (estimated locally),1.00 per call) 
-sys_init/1 (sys_init) @06036460
+sys_init/1 (sys_init) @060c0460
   Type: function definition analyzed
   Visibility: externally_visible public
   References: 

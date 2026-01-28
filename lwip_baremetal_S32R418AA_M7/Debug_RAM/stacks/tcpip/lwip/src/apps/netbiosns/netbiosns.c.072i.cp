@@ -104,7 +104,7 @@ Reclaiming variables:
 Clearing address taken flags:
 Symbol table:
 
-netbiosns_name_decode.isra.0/21 (netbiosns_name_decode.isra.0) @05f6e8c0
+netbiosns_name_decode.isra.0/21 (netbiosns_name_decode.isra.0) @05f2e8c0
   Type: function definition analyzed
   Visibility: prevailing_def_ironly artificial
   References: _ctype_/18 (addr)_ctype_/18 (addr)
@@ -113,7 +113,7 @@ netbiosns_name_decode.isra.0/21 (netbiosns_name_decode.isra.0) @05f6e8c0
   Function flags: count:113328204 (estimated locally) body local optimize_size
   Called by: netbiosns_recv/4 (42467980 (estimated locally),0.04 per call) 
   Calls: 
-udp_remove/20 (udp_remove) @061347e0
+udp_remove/20 (udp_remove) @060e97e0
   Type: function
   Visibility: external public
   References: 
@@ -122,7 +122,7 @@ udp_remove/20 (udp_remove) @061347e0
   Function flags: optimize_size
   Called by: netbiosns_stop/7 (574129754 (estimated locally),0.53 per call) 
   Calls: 
-strlen/19 (strlen) @06134620
+strlen/19 (strlen) @060e9620
   Type: function
   Visibility: external public
   References: 
@@ -131,7 +131,7 @@ strlen/19 (strlen) @06134620
   Function flags: optimize_size
   Called by: netbiosns_set_name/6 (214748 (estimated locally),1.00 per call) 
   Calls: 
-_ctype_/18 (_ctype_) @06133b88
+_ctype_/18 (_ctype_) @060e8b88
   Type: variable
   Body removed by symtab_remove_unreachable_nodes
   Visibility: external public
@@ -139,7 +139,7 @@ _ctype_/18 (_ctype_) @06133b88
   Referring: netbiosns_name_decode.isra.0/21 (addr)netbiosns_name_decode.isra.0/21 (addr)netbiosns_set_name/6 (addr)
   Availability: not_available
   Varpool flags: read-only
-udp_sendto/17 (udp_sendto) @06134380
+udp_sendto/17 (udp_sendto) @060e9380
   Type: function
   Visibility: external public
   References: 
@@ -148,7 +148,7 @@ udp_sendto/17 (udp_sendto) @06134380
   Function flags: optimize_size
   Called by: netbiosns_recv/4 (1516688 (estimated locally),0.00 per call) 
   Calls: 
-memcpy/16 (memcpy) @061342a0
+memcpy/16 (memcpy) @060e92a0
   Type: function
   Visibility: external public
   References: 
@@ -157,7 +157,7 @@ memcpy/16 (memcpy) @061342a0
   Function flags: optimize_size
   Called by: netbiosns_recv/4 (1516688 (estimated locally),0.00 per call) 
   Calls: 
-pbuf_alloc/15 (pbuf_alloc) @061341c0
+pbuf_alloc/15 (pbuf_alloc) @060e91c0
   Type: function
   Visibility: external public
   References: 
@@ -166,7 +166,7 @@ pbuf_alloc/15 (pbuf_alloc) @061341c0
   Function flags: optimize_size
   Called by: netbiosns_recv/4 (2836521 (estimated locally),0.00 per call) 
   Calls: 
-lwip_strnicmp/14 (lwip_strnicmp) @061340e0
+lwip_strnicmp/14 (lwip_strnicmp) @060e90e0
   Type: function
   Visibility: external public
   References: 
@@ -175,7 +175,7 @@ lwip_strnicmp/14 (lwip_strnicmp) @061340e0
   Function flags: optimize_size
   Called by: netbiosns_recv/4 (8595519 (estimated locally),0.01 per call) 
   Calls: 
-netif_default/13 (netif_default) @061333a8
+netif_default/13 (netif_default) @060e83a8
   Type: variable
   Body removed by symtab_remove_unreachable_nodes
   Visibility: external public
@@ -183,7 +183,7 @@ netif_default/13 (netif_default) @061333a8
   Referring: netbiosns_recv/4 (read)netbiosns_recv/4 (read)
   Availability: not_available
   Varpool flags:
-pbuf_free/12 (pbuf_free) @06134000
+pbuf_free/12 (pbuf_free) @060e9000
   Type: function
   Visibility: external public
   References: 
@@ -192,7 +192,7 @@ pbuf_free/12 (pbuf_free) @06134000
   Function flags: optimize_size
   Called by: netbiosns_recv/4 (599491536 (estimated locally),0.56 per call) netbiosns_recv/4 (1516688 (estimated locally),0.00 per call) netbiosns_recv/4 (152127742 (estimated locally),0.14 per call) 
   Calls: 
-udp_recv/11 (udp_recv) @0612c380
+udp_recv/11 (udp_recv) @060e1380
   Type: function
   Visibility: external public
   References: 
@@ -201,7 +201,7 @@ udp_recv/11 (udp_recv) @0612c380
   Function flags: optimize_size
   Called by: netbiosns_init/5 (574129754 (estimated locally),0.53 per call) 
   Calls: 
-ip_addr_any_type/10 (ip_addr_any_type) @06118e10
+ip_addr_any_type/10 (ip_addr_any_type) @060cfe10
   Type: variable
   Body removed by symtab_remove_unreachable_nodes
   Visibility: external public
@@ -209,7 +209,7 @@ ip_addr_any_type/10 (ip_addr_any_type) @06118e10
   Referring: netbiosns_init/5 (addr)
   Availability: not_available
   Varpool flags: read-only
-udp_bind/9 (udp_bind) @0612cee0
+udp_bind/9 (udp_bind) @060e1ee0
   Type: function
   Visibility: external public
   References: 
@@ -218,7 +218,7 @@ udp_bind/9 (udp_bind) @0612cee0
   Function flags: optimize_size
   Called by: netbiosns_init/5 (574129754 (estimated locally),0.53 per call) 
   Calls: 
-udp_new_ip_type/8 (udp_new_ip_type) @0612ce00
+udp_new_ip_type/8 (udp_new_ip_type) @060e1e00
   Type: function
   Visibility: external public
   References: 
@@ -227,7 +227,7 @@ udp_new_ip_type/8 (udp_new_ip_type) @0612ce00
   Function flags: optimize_size
   Called by: netbiosns_init/5 (1073741824 (estimated locally),1.00 per call) 
   Calls: 
-netbiosns_stop/7 (netbiosns_stop) @0612c9a0
+netbiosns_stop/7 (netbiosns_stop) @060e19a0
   Type: function definition analyzed
   Visibility: externally_visible public
   References: netbiosns_pcb/2 (read)netbiosns_pcb/2 (write)
@@ -236,7 +236,7 @@ netbiosns_stop/7 (netbiosns_stop) @0612c9a0
   Function flags: count:1073741824 (estimated locally) body optimize_size
   Called by: 
   Calls: udp_remove/20 (574129754 (estimated locally),0.53 per call) 
-netbiosns_set_name/6 (netbiosns_set_name) @0612c700
+netbiosns_set_name/6 (netbiosns_set_name) @060e1700
   Type: function definition analyzed
   Visibility: externally_visible public
   References: _ctype_/18 (addr)netbiosns_local_name/1 (write)netbiosns_local_name/1 (write)
@@ -245,7 +245,7 @@ netbiosns_set_name/6 (netbiosns_set_name) @0612c700
   Function flags: count:214748 (estimated locally) body optimize_size
   Called by: 
   Calls: strlen/19 (214748 (estimated locally),1.00 per call) 
-netbiosns_init/5 (netbiosns_init) @0612c2a0
+netbiosns_init/5 (netbiosns_init) @060e12a0
   Type: function definition analyzed
   Visibility: externally_visible public
   References: netbiosns_pcb/2 (write)ip_addr_any_type/10 (addr)netbiosns_pcb/2 (read)netbiosns_recv/4 (addr)
@@ -254,7 +254,7 @@ netbiosns_init/5 (netbiosns_init) @0612c2a0
   Function flags: count:1073741824 (estimated locally) body optimize_size
   Called by: 
   Calls: udp_recv/11 (574129754 (estimated locally),0.53 per call) udp_bind/9 (574129754 (estimated locally),0.53 per call) udp_new_ip_type/8 (1073741824 (estimated locally),1.00 per call) 
-netbiosns_recv/4 (netbiosns_recv) @0612c000
+netbiosns_recv/4 (netbiosns_recv) @060e1000
   Type: function definition analyzed
   Visibility: prevailing_def_ironly
   Address is taken.
@@ -264,14 +264,14 @@ netbiosns_recv/4 (netbiosns_recv) @0612c000
   Function flags: count:1073741824 (estimated locally) body optimize_size
   Called by: 
   Calls: pbuf_free/12 (599491536 (estimated locally),0.56 per call) pbuf_free/12 (1516688 (estimated locally),0.00 per call) udp_sendto/17 (1516688 (estimated locally),0.00 per call) memcpy/16 (1516688 (estimated locally),0.00 per call) pbuf_alloc/15 (2836521 (estimated locally),0.00 per call) lwip_strnicmp/14 (8595519 (estimated locally),0.01 per call) netbiosns_name_decode.isra.0/21 (42467980 (estimated locally),0.04 per call) pbuf_free/12 (152127742 (estimated locally),0.14 per call) 
-netbiosns_pcb/2 (netbiosns_pcb) @061181f8
+netbiosns_pcb/2 (netbiosns_pcb) @060cf1f8
   Type: variable definition analyzed
   Visibility: prevailing_def_ironly
   References: 
   Referring: netbiosns_init/5 (read)netbiosns_init/5 (write)netbiosns_stop/7 (read)netbiosns_stop/7 (write)
   Availability: available
   Varpool flags:
-netbiosns_local_name/1 (netbiosns_local_name) @06118168
+netbiosns_local_name/1 (netbiosns_local_name) @060cf168
   Type: variable definition analyzed
   Visibility: prevailing_def_ironly
   References: 

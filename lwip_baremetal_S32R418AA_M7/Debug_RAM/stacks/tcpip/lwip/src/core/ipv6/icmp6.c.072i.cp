@@ -416,7 +416,7 @@ Reclaiming variables:
 Clearing address taken flags:
 Symbol table:
 
-icmp6_send_response_with_addrs.constprop.0/24 (icmp6_send_response_with_addrs.constprop) @0617ba80
+icmp6_send_response_with_addrs.constprop.0/24 (icmp6_send_response_with_addrs.constprop) @0618ba80
   Type: function definition analyzed
   Visibility:
   References: lwip_stats/10 (read)lwip_stats/10 (write)
@@ -426,7 +426,7 @@ icmp6_send_response_with_addrs.constprop.0/24 (icmp6_send_response_with_addrs.co
   Function flags: count:329661 (estimated locally) local optimize_size
   Called by: icmp6_time_exceeded_with_addrs/5 (1073741824 (estimated locally),1.00 per call) 
   Calls: ip6_route/22 (123389 (estimated locally),0.37 per call) icmp6_send_response_with_addrs_and_netif/9 (85200 (estimated locally),0.26 per call) 
-icmp6_send_response.part.0/23 (icmp6_send_response.part.0) @05f4e8c0
+icmp6_send_response.part.0/23 (icmp6_send_response.part.0) @05f5e8c0
   Type: function definition analyzed
   Visibility: prevailing_def_ironly artificial
   References: lwip_stats/10 (read)lwip_stats/10 (write)
@@ -435,7 +435,7 @@ icmp6_send_response.part.0/23 (icmp6_send_response.part.0) @05f4e8c0
   Function flags: count:1073741824 (estimated locally) first_run:1 body local split_part optimize_size
   Called by: icmp6_send_response/7 (38189 (estimated locally),0.17 per call) 
   Calls: 
-ip6_route/22 (ip6_route) @06109700
+ip6_route/22 (ip6_route) @06119700
   Type: function
   Visibility: external public
   References: 
@@ -444,7 +444,7 @@ ip6_route/22 (ip6_route) @06109700
   Function flags: optimize_size
   Called by: icmp6_send_response_with_addrs.constprop/24 (123389 (estimated locally),0.37 per call) 
   Calls: 
-pbuf_take_at/21 (pbuf_take_at) @061092a0
+pbuf_take_at/21 (pbuf_take_at) @061192a0
   Type: function
   Visibility: external public
   References: 
@@ -453,7 +453,7 @@ pbuf_take_at/21 (pbuf_take_at) @061092a0
   Function flags: optimize_size
   Called by: icmp6_send_response_with_addrs_and_netif/9 (463811 (estimated locally),2.37 per call) 
   Calls: 
-lwip_htonl/20 (lwip_htonl) @061091c0
+lwip_htonl/20 (lwip_htonl) @061191c0
   Type: function
   Visibility: external public
   References: 
@@ -462,7 +462,7 @@ lwip_htonl/20 (lwip_htonl) @061091c0
   Function flags: optimize_size
   Called by: icmp6_send_response_with_addrs_and_netif/9 (52886 (estimated locally),0.27 per call) 
   Calls: 
-ip6_select_source_address/19 (ip6_select_source_address) @06109000
+ip6_select_source_address/19 (ip6_select_source_address) @06119000
   Type: function
   Visibility: external public
   References: 
@@ -471,7 +471,7 @@ ip6_select_source_address/19 (ip6_select_source_address) @06109000
   Function flags: optimize_size
   Called by: icmp6_send_response/7 (123389 (estimated locally),0.53 per call) 
   Calls: 
-ip6_output_if/18 (ip6_output_if) @060fa000
+ip6_output_if/18 (ip6_output_if) @0610a000
   Type: function
   Visibility: external public
   References: 
@@ -480,7 +480,7 @@ ip6_output_if/18 (ip6_output_if) @060fa000
   Function flags: optimize_size
   Called by: icmp6_input/1 (48298294 (estimated locally),0.04 per call) icmp6_send_response_with_addrs_and_netif/9 (52886 (estimated locally),0.27 per call) 
   Calls: 
-pbuf_copy/17 (pbuf_copy) @060faee0
+pbuf_copy/17 (pbuf_copy) @0610aee0
   Type: function
   Visibility: external public
   References: 
@@ -489,7 +489,7 @@ pbuf_copy/17 (pbuf_copy) @060faee0
   Function flags: optimize_size
   Called by: icmp6_input/1 (73179233 (estimated locally),0.07 per call) 
   Calls: 
-pbuf_alloc/16 (pbuf_alloc) @060fae00
+pbuf_alloc/16 (pbuf_alloc) @0610ae00
   Type: function
   Visibility: external public
   References: 
@@ -498,7 +498,7 @@ pbuf_alloc/16 (pbuf_alloc) @060fae00
   Function flags: optimize_size
   Called by: icmp6_input/1 (89341024 (estimated locally),0.08 per call) icmp6_send_response_with_addrs_and_netif/9 (195653 (estimated locally),1.00 per call) 
   Calls: 
-mld6_input/15 (mld6_input) @060fad20
+mld6_input/15 (mld6_input) @0610ad20
   Type: function
   Visibility: external public
   References: 
@@ -507,7 +507,7 @@ mld6_input/15 (mld6_input) @060fad20
   Function flags: optimize_size
   Called by: icmp6_input/1 (113046975 (estimated locally),0.11 per call) 
   Calls: 
-nd6_input/14 (nd6_input) @060fac40
+nd6_input/14 (nd6_input) @0610ac40
   Type: function
   Visibility: external public
   References: 
@@ -516,7 +516,7 @@ nd6_input/14 (nd6_input) @060fac40
   Function flags: optimize_size
   Called by: icmp6_input/1 (113046975 (estimated locally),0.11 per call) 
   Calls: 
-ip_data/13 (ip_data) @06103708
+ip_data/13 (ip_data) @06113708
   Type: variable
   Body removed by symtab_remove_unreachable_nodes
   Visibility: external public
@@ -524,7 +524,7 @@ ip_data/13 (ip_data) @06103708
   Referring: icmp6_send_response/7 (addr)icmp6_send_response/7 (addr)icmp6_input/1 (addr)icmp6_send_response/7 (read)icmp6_input/1 (addr)icmp6_input/1 (addr)icmp6_input/1 (read)icmp6_input/1 (addr)icmp6_input/1 (addr)icmp6_input/1 (addr)icmp6_param_problem/6 (read)
   Availability: not_available
   Varpool flags:
-ip6_chksum_pseudo/12 (ip6_chksum_pseudo) @060fab60
+ip6_chksum_pseudo/12 (ip6_chksum_pseudo) @0610ab60
   Type: function
   Visibility: external public
   References: 
@@ -533,7 +533,7 @@ ip6_chksum_pseudo/12 (ip6_chksum_pseudo) @060fab60
   Function flags: optimize_size
   Called by: icmp6_input/1 (48298294 (estimated locally),0.04 per call) icmp6_input/1 (708669604 (estimated locally),0.66 per call) icmp6_send_response_with_addrs_and_netif/9 (52886 (estimated locally),0.27 per call) 
   Calls: 
-pbuf_free/11 (pbuf_free) @060fa9a0
+pbuf_free/11 (pbuf_free) @0610a9a0
   Type: function
   Visibility: external public
   References: 
@@ -542,7 +542,7 @@ pbuf_free/11 (pbuf_free) @060fa9a0
   Function flags: optimize_size
   Called by: icmp6_input/1 (274392244 (estimated locally),0.26 per call) icmp6_input/1 (48298294 (estimated locally),0.04 per call) icmp6_input/1 (24880939 (estimated locally),0.02 per call) icmp6_input/1 (24880939 (estimated locally),0.02 per call) icmp6_input/1 (16161791 (estimated locally),0.02 per call) icmp6_input/1 (23705951 (estimated locally),0.02 per call) icmp6_input/1 (143434728 (estimated locally),0.13 per call) icmp6_input/1 (365072220 (estimated locally),0.34 per call) icmp6_send_response_with_addrs_and_netif/9 (52886 (estimated locally),0.27 per call) 
   Calls: 
-lwip_stats/10 (lwip_stats) @06103630
+lwip_stats/10 (lwip_stats) @06113630
   Type: variable
   Body removed by symtab_remove_unreachable_nodes
   Visibility: external public
@@ -550,7 +550,7 @@ lwip_stats/10 (lwip_stats) @06103630
   Referring: icmp6_send_response_with_addrs_and_netif/9 (read)icmp6_send_response_with_addrs_and_netif/9 (write)icmp6_send_response_with_addrs_and_netif/9 (read)icmp6_send_response_with_addrs_and_netif/9 (write)icmp6_send_response.part.0/23 (read)icmp6_send_response.part.0/23 (write)icmp6_send_response_with_addrs.constprop.0/24 (read)icmp6_send_response_with_addrs.constprop.0/24 (write)icmp6_input/1 (read)icmp6_input/1 (write)icmp6_input/1 (read)icmp6_input/1 (write)icmp6_input/1 (read)icmp6_input/1 (write)icmp6_input/1 (read)icmp6_input/1 (write)icmp6_input/1 (read)icmp6_input/1 (write)icmp6_input/1 (read)icmp6_input/1 (write)icmp6_input/1 (read)icmp6_input/1 (write)icmp6_input/1 (read)icmp6_input/1 (write)icmp6_input/1 (read)icmp6_input/1 (write)icmp6_input/1 (read)icmp6_input/1 (write)icmp6_input/1 (read)icmp6_input/1 (write)
   Availability: not_available
   Varpool flags:
-icmp6_send_response_with_addrs_and_netif/9 (icmp6_send_response_with_addrs_and_netif) @060fa460
+icmp6_send_response_with_addrs_and_netif/9 (icmp6_send_response_with_addrs_and_netif) @0610a460
   Type: function definition analyzed
   Visibility: prevailing_def_ironly
   References: lwip_stats/10 (read)lwip_stats/10 (write)lwip_stats/10 (read)lwip_stats/10 (write)
@@ -559,7 +559,7 @@ icmp6_send_response_with_addrs_and_netif/9 (icmp6_send_response_with_addrs_and_n
   Function flags: count:195653 (estimated locally) body local optimize_size
   Called by: icmp6_send_response_with_addrs.constprop/24 (85200 (estimated locally),0.26 per call) icmp6_send_response/7 (85200 (estimated locally),0.37 per call) 
   Calls: pbuf_free/11 (52886 (estimated locally),0.27 per call) ip6_output_if/18 (52886 (estimated locally),0.27 per call) ip6_chksum_pseudo/12 (52886 (estimated locally),0.27 per call) pbuf_take_at/21 (463811 (estimated locally),2.37 per call) lwip_htonl/20 (52886 (estimated locally),0.27 per call) pbuf_alloc/16 (195653 (estimated locally),1.00 per call) 
-icmp6_send_response_with_addrs/8 (icmp6_send_response_with_addrs) @060fa1c0
+icmp6_send_response_with_addrs/8 (icmp6_send_response_with_addrs) @0610a1c0
   Type: function
   Body removed by symtab_remove_unreachable_nodes
   Visibility: prevailing_def_ironly
@@ -569,7 +569,7 @@ icmp6_send_response_with_addrs/8 (icmp6_send_response_with_addrs) @060fa1c0
   Function flags: count:329661 (estimated locally) body optimize_size
   Called by: 
   Calls: 
-icmp6_send_response/7 (icmp6_send_response) @060f5e00
+icmp6_send_response/7 (icmp6_send_response) @06105e00
   Type: function definition analyzed
   Visibility: prevailing_def_ironly
   References: ip_data/13 (read)ip_data/13 (addr)ip_data/13 (addr)
@@ -578,7 +578,7 @@ icmp6_send_response/7 (icmp6_send_response) @060f5e00
   Function flags: count:230763 (estimated locally) body local optimize_size
   Called by: icmp6_param_problem/6 (1073741824 (estimated locally),1.00 per call) icmp6_time_exceeded/4 (1073741824 (estimated locally),1.00 per call) icmp6_packet_too_big/3 (1073741824 (estimated locally),1.00 per call) icmp6_dest_unreach/2 (1073741824 (estimated locally),1.00 per call) 
   Calls: icmp6_send_response_with_addrs_and_netif/9 (85200 (estimated locally),0.37 per call) icmp6_send_response.part.0/23 (38189 (estimated locally),0.17 per call) ip6_select_source_address/19 (123389 (estimated locally),0.53 per call) 
-icmp6_param_problem/6 (icmp6_param_problem) @060f5380
+icmp6_param_problem/6 (icmp6_param_problem) @06105380
   Type: function definition analyzed
   Visibility: externally_visible public
   References: ip_data/13 (read)
@@ -587,7 +587,7 @@ icmp6_param_problem/6 (icmp6_param_problem) @060f5380
   Function flags: count:1073741824 (estimated locally) body optimize_size
   Called by: 
   Calls: icmp6_send_response/7 (1073741824 (estimated locally),1.00 per call) 
-icmp6_time_exceeded_with_addrs/5 (icmp6_time_exceeded_with_addrs) @060f5d20
+icmp6_time_exceeded_with_addrs/5 (icmp6_time_exceeded_with_addrs) @06105d20
   Type: function definition analyzed
   Visibility: externally_visible public
   References: 
@@ -596,7 +596,7 @@ icmp6_time_exceeded_with_addrs/5 (icmp6_time_exceeded_with_addrs) @060f5d20
   Function flags: count:1073741824 (estimated locally) body optimize_size
   Called by: 
   Calls: icmp6_send_response_with_addrs.constprop/24 (1073741824 (estimated locally),1.00 per call) 
-icmp6_time_exceeded/4 (icmp6_time_exceeded) @060f5a80
+icmp6_time_exceeded/4 (icmp6_time_exceeded) @06105a80
   Type: function definition analyzed
   Visibility: externally_visible public
   References: 
@@ -605,7 +605,7 @@ icmp6_time_exceeded/4 (icmp6_time_exceeded) @060f5a80
   Function flags: count:1073741824 (estimated locally) body optimize_size
   Called by: 
   Calls: icmp6_send_response/7 (1073741824 (estimated locally),1.00 per call) 
-icmp6_packet_too_big/3 (icmp6_packet_too_big) @060f57e0
+icmp6_packet_too_big/3 (icmp6_packet_too_big) @061057e0
   Type: function definition analyzed
   Visibility: externally_visible public
   References: 
@@ -614,7 +614,7 @@ icmp6_packet_too_big/3 (icmp6_packet_too_big) @060f57e0
   Function flags: count:1073741824 (estimated locally) body optimize_size
   Called by: 
   Calls: icmp6_send_response/7 (1073741824 (estimated locally),1.00 per call) 
-icmp6_dest_unreach/2 (icmp6_dest_unreach) @060f5540
+icmp6_dest_unreach/2 (icmp6_dest_unreach) @06105540
   Type: function definition analyzed
   Visibility: externally_visible public
   References: 
@@ -623,7 +623,7 @@ icmp6_dest_unreach/2 (icmp6_dest_unreach) @060f5540
   Function flags: count:1073741824 (estimated locally) body optimize_size
   Called by: 
   Calls: icmp6_send_response/7 (1073741824 (estimated locally),1.00 per call) 
-icmp6_input/1 (icmp6_input) @060f52a0
+icmp6_input/1 (icmp6_input) @061052a0
   Type: function definition analyzed
   Visibility: externally_visible public
   References: lwip_stats/10 (read)lwip_stats/10 (write)lwip_stats/10 (read)lwip_stats/10 (write)lwip_stats/10 (read)lwip_stats/10 (write)ip_data/13 (addr)ip_data/13 (addr)lwip_stats/10 (read)lwip_stats/10 (write)lwip_stats/10 (read)lwip_stats/10 (write)ip_data/13 (read)lwip_stats/10 (read)lwip_stats/10 (write)lwip_stats/10 (read)lwip_stats/10 (write)lwip_stats/10 (read)lwip_stats/10 (write)ip_data/13 (addr)ip_data/13 (addr)lwip_stats/10 (read)lwip_stats/10 (write)ip_data/13 (addr)ip_data/13 (addr)lwip_stats/10 (read)lwip_stats/10 (write)lwip_stats/10 (read)lwip_stats/10 (write)

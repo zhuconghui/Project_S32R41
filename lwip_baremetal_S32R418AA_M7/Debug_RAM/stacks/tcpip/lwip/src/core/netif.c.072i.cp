@@ -1012,7 +1012,7 @@ Reclaiming variables:
 Clearing address taken flags:
 Symbol table:
 
-netif_null_output_ip6.constprop.0/68 (netif_null_output_ip6.constprop) @06da8ee0
+netif_null_output_ip6.constprop.0/68 (netif_null_output_ip6.constprop) @06218ee0
   Type: function definition analyzed
   Visibility:
   References: 
@@ -1022,7 +1022,7 @@ netif_null_output_ip6.constprop.0/68 (netif_null_output_ip6.constprop) @06da8ee0
   Function flags: count:1073741824 (estimated locally) local icf_merged optimize_size
   Called by: netif_null_output_ip4/32 (1073741824 (estimated locally),1.00 per call) 
   Calls: 
-netif_get_ip6_addr_match.part.0/67 (netif_get_ip6_addr_match.part.0) @06fd2000
+netif_get_ip6_addr_match.part.0/67 (netif_get_ip6_addr_match.part.0) @06432000
   Type: function definition analyzed
   Visibility: prevailing_def_ironly artificial
   References: 
@@ -1031,7 +1031,7 @@ netif_get_ip6_addr_match.part.0/67 (netif_get_ip6_addr_match.part.0) @06fd2000
   Function flags: count:269305878 (estimated locally) first_run:1 body local split_part optimize_size
   Called by: netif_get_ip6_addr_match/28 (173624 (estimated locally),0.49 per call) 
   Calls: 
-netif_ip6_addr_set_state.part.0/66 (netif_ip6_addr_set_state.part.0) @06f200e0
+netif_ip6_addr_set_state.part.0/66 (netif_ip6_addr_set_state.part.0) @063800e0
   Type: function definition analyzed
   Visibility: prevailing_def_ironly artificial
   References: 
@@ -1040,7 +1040,7 @@ netif_ip6_addr_set_state.part.0/66 (netif_ip6_addr_set_state.part.0) @06f200e0
   Function flags: count:1073741824 (estimated locally) first_run:1 body local split_part optimize_size
   Called by: netif_ip6_addr_set_state/27 (107374 (estimated locally),0.35 per call) 
   Calls: nd6_adjust_mld_membership/54 (233860969 (estimated locally),0.22 per call) netif_do_ip_addr_changed/9 (116930485 (estimated locally),0.11 per call) netif_issue_reports/20 (116930485 (estimated locally),0.11 per call) 
-netif_ip6_addr_set_parts.part.0/65 (netif_ip6_addr_set_parts.part.0) @06b528c0
+netif_ip6_addr_set_parts.part.0/65 (netif_ip6_addr_set_parts.part.0) @05fb28c0
   Type: function definition analyzed
   Visibility: prevailing_def_ironly artificial
   References: 
@@ -1049,7 +1049,7 @@ netif_ip6_addr_set_parts.part.0/65 (netif_ip6_addr_set_parts.part.0) @06b528c0
   Function flags: count:1073741824 (estimated locally) first_run:1 body local split_part optimize_size
   Called by: netif_ip6_addr_set_parts/26 (107374 (estimated locally),0.35 per call) 
   Calls: netif_do_ip_addr_changed/9 (349599698 (estimated locally),0.33 per call) netif_issue_reports/20 (349599698 (estimated locally),0.33 per call) 
-netif_do_set_ipaddr.part.0/61 (netif_do_set_ipaddr.part.0) @06f20ee0
+netif_do_set_ipaddr.part.0/61 (netif_do_set_ipaddr.part.0) @06380ee0
   Type: function definition analyzed
   Visibility: prevailing_def_ironly artificial
   References: 
@@ -1058,7 +1058,7 @@ netif_do_set_ipaddr.part.0/61 (netif_do_set_ipaddr.part.0) @06f20ee0
   Function flags: count:1073741824 (estimated locally) first_run:1 body local split_part optimize_size
   Called by: netif_do_set_ipaddr/10 (175378 (estimated locally),0.49 per call) 
   Calls: netif_do_ip_addr_changed/9 (536870913 (estimated locally),0.50 per call) netif_issue_reports/20 (536870913 (estimated locally),0.50 per call) 
-netif_issue_reports.part.0/60 (netif_issue_reports.part.0) @06f207e0
+netif_issue_reports.part.0/60 (netif_issue_reports.part.0) @063807e0
   Type: function definition analyzed
   Visibility: prevailing_def_ironly artificial
   References: 
@@ -1067,7 +1067,7 @@ netif_issue_reports.part.0/60 (netif_issue_reports.part.0) @06f207e0
   Function flags: count:1073741824 (estimated locally) first_run:1 body local split_part optimize_size
   Called by: netif_issue_reports/20 (125270 (estimated locally),0.35 per call) 
   Calls: mld6_report_groups/48 (354334802 (estimated locally),0.33 per call) 
-atoi/57 (atoi) @06ea3ee0
+atoi/57 (atoi) @06303ee0
   Type: function
   Visibility: external public
   References: 
@@ -1076,7 +1076,7 @@ atoi/57 (atoi) @06ea3ee0
   Function flags: optimize_size
   Called by: netif_find/36 (76616578 (estimated locally),0.85 per call) 
   Calls: 
-lwip_itoa/56 (lwip_itoa) @06ea3c40
+lwip_itoa/56 (lwip_itoa) @06303c40
   Type: function
   Visibility: external public
   References: 
@@ -1085,7 +1085,7 @@ lwip_itoa/56 (lwip_itoa) @06ea3c40
   Function flags: optimize_size
   Called by: netif_index_to_name/34 (635440412 (estimated locally),0.59 per call) 
   Calls: 
-lwip_htonl/55 (lwip_htonl) @06ea37e0
+lwip_htonl/55 (lwip_htonl) @063037e0
   Type: function
   Visibility: external public
   References: 
@@ -1094,7 +1094,7 @@ lwip_htonl/55 (lwip_htonl) @06ea37e0
   Function flags: optimize_size
   Called by: netif_create_ip6_linklocal_address/29 (881341 (estimated locally),2.46 per call) netif_create_ip6_linklocal_address/29 (82678 (estimated locally),0.23 per call) netif_create_ip6_linklocal_address/29 (82678 (estimated locally),0.23 per call) 
   Calls: 
-nd6_adjust_mld_membership/54 (nd6_adjust_mld_membership) @06ea3460
+nd6_adjust_mld_membership/54 (nd6_adjust_mld_membership) @06303460
   Type: function
   Visibility: external public
   References: 
@@ -1103,7 +1103,7 @@ nd6_adjust_mld_membership/54 (nd6_adjust_mld_membership) @06ea3460
   Function flags: optimize_size
   Called by: netif_ip6_addr_set_state.part.0/66 (233860969 (estimated locally),0.22 per call) 
   Calls: 
-nd6_cleanup_netif/53 (nd6_cleanup_netif) @06e6cd20
+nd6_cleanup_netif/53 (nd6_cleanup_netif) @062ccd20
   Type: function
   Visibility: external public
   References: 
@@ -1112,7 +1112,7 @@ nd6_cleanup_netif/53 (nd6_cleanup_netif) @06e6cd20
   Function flags: optimize_size
   Called by: netif_set_down/21 (290235636 (estimated locally),0.27 per call) 
   Calls: 
-etharp_cleanup_netif/52 (etharp_cleanup_netif) @06e6cc40
+etharp_cleanup_netif/52 (etharp_cleanup_netif) @062ccc40
   Type: function
   Visibility: external public
   References: 
@@ -1121,7 +1121,7 @@ etharp_cleanup_netif/52 (etharp_cleanup_netif) @06e6cc40
   Function flags: optimize_size
   Called by: netif_set_down/21 (95777760 (estimated locally),0.09 per call) 
   Calls: 
-sys_now/51 (sys_now) @06e6ca80
+sys_now/51 (sys_now) @062cca80
   Type: function
   Visibility: external public
   References: 
@@ -1130,7 +1130,7 @@ sys_now/51 (sys_now) @06e6ca80
   Function flags: optimize_size
   Called by: netif_set_down/21 (290235636 (estimated locally),0.27 per call) netif_set_up/19 (290235636 (estimated locally),0.27 per call) 
   Calls: 
-mld6_stop/50 (mld6_stop) @06e6c7e0
+mld6_stop/50 (mld6_stop) @062cc7e0
   Type: function
   Visibility: external public
   References: 
@@ -1139,7 +1139,7 @@ mld6_stop/50 (mld6_stop) @06e6c7e0
   Function flags: optimize_size
   Called by: netif_remove/17 (164090760 (estimated locally),0.82 per call) 
   Calls: 
-igmp_stop/49 (igmp_stop) @06e6c700
+igmp_stop/49 (igmp_stop) @062cc700
   Type: function
   Visibility: external public
   References: 
@@ -1148,7 +1148,7 @@ igmp_stop/49 (igmp_stop) @06e6c700
   Function flags: optimize_size
   Called by: netif_remove/17 (54149951 (estimated locally),0.27 per call) 
   Calls: 
-mld6_report_groups/48 (mld6_report_groups) @06e19ee0
+mld6_report_groups/48 (mld6_report_groups) @06282ee0
   Type: function
   Visibility: external public
   References: 
@@ -1157,7 +1157,7 @@ mld6_report_groups/48 (mld6_report_groups) @06e19ee0
   Function flags: optimize_size
   Called by: netif_issue_reports.part.0/60 (354334802 (estimated locally),0.33 per call) 
   Calls: 
-igmp_report_groups/47 (igmp_report_groups) @06e19e00
+igmp_report_groups/47 (igmp_report_groups) @06282e00
   Type: function
   Visibility: external public
   References: 
@@ -1166,7 +1166,7 @@ igmp_report_groups/47 (igmp_report_groups) @06e19e00
   Function flags: optimize_size
   Called by: netif_issue_reports/20 (10335 (estimated locally),0.03 per call) 
   Calls: 
-etharp_request/46 (etharp_request) @06e19d20
+etharp_request/46 (etharp_request) @06282d20
   Type: function
   Visibility: external public
   References: 
@@ -1175,7 +1175,7 @@ etharp_request/46 (etharp_request) @06e19d20
   Function flags: optimize_size
   Called by: netif_issue_reports/20 (10335 (estimated locally),0.03 per call) 
   Calls: 
-raw_netif_ip_addr_changed/45 (raw_netif_ip_addr_changed) @06e19b60
+raw_netif_ip_addr_changed/45 (raw_netif_ip_addr_changed) @06282b60
   Type: function
   Visibility: external public
   References: 
@@ -1184,7 +1184,7 @@ raw_netif_ip_addr_changed/45 (raw_netif_ip_addr_changed) @06e19b60
   Function flags: optimize_size
   Called by: netif_do_ip_addr_changed/9 (1073741824 (estimated locally),1.00 per call) 
   Calls: 
-udp_netif_ip_addr_changed/44 (udp_netif_ip_addr_changed) @06e19a80
+udp_netif_ip_addr_changed/44 (udp_netif_ip_addr_changed) @06282a80
   Type: function
   Visibility: external public
   References: 
@@ -1193,7 +1193,7 @@ udp_netif_ip_addr_changed/44 (udp_netif_ip_addr_changed) @06e19a80
   Function flags: optimize_size
   Called by: netif_do_ip_addr_changed/9 (1073741824 (estimated locally),1.00 per call) 
   Calls: 
-tcp_netif_ip_addr_changed/43 (tcp_netif_ip_addr_changed) @06e199a0
+tcp_netif_ip_addr_changed/43 (tcp_netif_ip_addr_changed) @062829a0
   Type: function
   Visibility: external public
   References: 
@@ -1202,7 +1202,7 @@ tcp_netif_ip_addr_changed/43 (tcp_netif_ip_addr_changed) @06e199a0
   Function flags: optimize_size
   Called by: netif_do_ip_addr_changed/9 (1073741824 (estimated locally),1.00 per call) 
   Calls: 
-igmp_start/42 (igmp_start) @06e19460
+igmp_start/42 (igmp_start) @06282460
   Type: function
   Visibility: external public
   References: 
@@ -1211,7 +1211,7 @@ igmp_start/42 (igmp_start) @06e19460
   Function flags: optimize_size
   Called by: netif_add/8 (2582 (estimated locally),0.01 per call) 
   Calls: 
-nd6_restart_netif/41 (nd6_restart_netif) @06e192a0
+nd6_restart_netif/41 (nd6_restart_netif) @062822a0
   Type: function
   Visibility: external public
   References: 
@@ -1220,7 +1220,7 @@ nd6_restart_netif/41 (nd6_restart_netif) @06e192a0
   Function flags: optimize_size
   Called by: netif_set_link_up/22 (290235636 (estimated locally),0.27 per call) netif_set_up/19 (290235636 (estimated locally),0.27 per call) netif_add/8 (185391 (estimated locally),0.84 per call) 
   Calls: 
-memset/40 (memset) @06e191c0
+memset/40 (memset) @062821c0
   Type: function
   Visibility: external public
   References: 
@@ -1229,7 +1229,7 @@ memset/40 (memset) @06e191c0
   Function flags: optimize_size
   Called by: netif_add/8 (185391 (estimated locally),0.84 per call) 
   Calls: 
-ip_addr_any/39 (ip_addr_any) @06e1a0d8
+ip_addr_any/39 (ip_addr_any) @062830d8
   Type: variable
   Body removed by symtab_remove_unreachable_nodes
   Visibility: external public
@@ -1237,7 +1237,7 @@ ip_addr_any/39 (ip_addr_any) @06e1a0d8
   Referring: netif_set_addr/16 (addr)netif_set_addr/16 (addr)netif_set_gw/15 (addr)netif_set_netmask/13 (addr)netif_set_addr/16 (addr)netif_set_ipaddr/11 (addr)netif_add/8 (addr)netif_add/8 (addr)netif_add/8 (addr)
   Availability: not_available
   Varpool flags: read-only
-ip_input/38 (ip_input) @06e09380
+ip_input/38 (ip_input) @06272380
   Type: function
   Visibility: external public
   References: 
@@ -1246,7 +1246,7 @@ ip_input/38 (ip_input) @06e09380
   Function flags: optimize_size
   Called by: netif_input/6 (87689 (estimated locally),0.25 per call) 
   Calls: 
-ethernet_input/37 (ethernet_input) @06e090e0
+ethernet_input/37 (ethernet_input) @062720e0
   Type: function
   Visibility: external public
   References: 
@@ -1255,7 +1255,7 @@ ethernet_input/37 (ethernet_input) @06e090e0
   Function flags: optimize_size
   Called by: netif_input/6 (87689 (estimated locally),0.25 per call) 
   Calls: 
-netif_find/36 (netif_find) @06e09a80
+netif_find/36 (netif_find) @06272a80
   Type: function definition analyzed
   Visibility: externally_visible public
   References: netif_list/1 (read)
@@ -1264,7 +1264,7 @@ netif_find/36 (netif_find) @06e09a80
   Function flags: count:90638327 (estimated locally) body optimize_size
   Called by: netif_name_to_index/33 (1073741824 (estimated locally),1.00 per call) 
   Calls: atoi/57 (76616578 (estimated locally),0.85 per call) 
-netif_get_by_index/35 (netif_get_by_index) @06e097e0
+netif_get_by_index/35 (netif_get_by_index) @062727e0
   Type: function definition analyzed
   Visibility: externally_visible public
   References: netif_list/1 (read)
@@ -1273,7 +1273,7 @@ netif_get_by_index/35 (netif_get_by_index) @06e097e0
   Function flags: count:161779623 (estimated locally) body optimize_size
   Called by: netif_index_to_name/34 (1073741824 (estimated locally),1.00 per call) 
   Calls: 
-netif_index_to_name/34 (netif_index_to_name) @06e09540
+netif_index_to_name/34 (netif_index_to_name) @06272540
   Type: function definition analyzed
   Visibility: externally_visible public
   References: 
@@ -1282,7 +1282,7 @@ netif_index_to_name/34 (netif_index_to_name) @06e09540
   Function flags: count:1073741824 (estimated locally) body optimize_size
   Called by: 
   Calls: lwip_itoa/56 (635440412 (estimated locally),0.59 per call) netif_get_by_index/35 (1073741824 (estimated locally),1.00 per call) 
-netif_name_to_index/33 (netif_name_to_index) @06e092a0
+netif_name_to_index/33 (netif_name_to_index) @062722a0
   Type: function definition analyzed
   Visibility: externally_visible public
   References: 
@@ -1291,7 +1291,7 @@ netif_name_to_index/33 (netif_name_to_index) @06e092a0
   Function flags: count:1073741824 (estimated locally) body optimize_size
   Called by: 
   Calls: netif_find/36 (1073741824 (estimated locally),1.00 per call) 
-netif_null_output_ip4/32 (netif_null_output_ip4) @06e09000
+netif_null_output_ip4/32 (netif_null_output_ip4) @06272000
   Type: function definition analyzed
   Visibility: prevailing_def_ironly
   Address is taken.
@@ -1301,7 +1301,7 @@ netif_null_output_ip4/32 (netif_null_output_ip4) @06e09000
   Function flags: count:1073741824 (estimated locally) body icf_merged optimize_size
   Called by: 
   Calls: netif_null_output_ip6.constprop/68 (1073741824 (estimated locally),1.00 per call) 
-netif_null_output_ip6/31 (netif_null_output_ip6) @06ded700
+netif_null_output_ip6/31 (netif_null_output_ip6) @0625d700
   Type: function definition analyzed
   Visibility: prevailing_def_ironly
   Address is taken.
@@ -1311,7 +1311,7 @@ netif_null_output_ip6/31 (netif_null_output_ip6) @06ded700
   Function flags: count:1073741824 (estimated locally) body icf_merged optimize_size
   Called by: 
   Calls: 
-netif_add_ip6_address/30 (netif_add_ip6_address) @06dedd20
+netif_add_ip6_address/30 (netif_add_ip6_address) @0625dd20
   Type: function definition analyzed
   Visibility: externally_visible public
   References: 
@@ -1320,7 +1320,7 @@ netif_add_ip6_address/30 (netif_add_ip6_address) @06dedd20
   Function flags: count:329661 (estimated locally) body optimize_size
   Called by: 
   Calls: netif_ip6_addr_set_state/27 (34429 (estimated locally),0.10 per call) netif_get_ip6_addr_match/28 (123389 (estimated locally),0.37 per call) 
-netif_create_ip6_linklocal_address/29 (netif_create_ip6_linklocal_address) @06ded620
+netif_create_ip6_linklocal_address/29 (netif_create_ip6_linklocal_address) @0625d620
   Type: function definition analyzed
   Visibility: externally_visible public
   References: 
@@ -1329,7 +1329,7 @@ netif_create_ip6_linklocal_address/29 (netif_create_ip6_linklocal_address) @06de
   Function flags: count:357913 (estimated locally) body optimize_size
   Called by: 
   Calls: netif_ip6_addr_set_state/27 (250539 (estimated locally),0.70 per call) lwip_htonl/55 (881341 (estimated locally),2.46 per call) lwip_htonl/55 (82678 (estimated locally),0.23 per call) lwip_htonl/55 (82678 (estimated locally),0.23 per call) 
-netif_get_ip6_addr_match/28 (netif_get_ip6_addr_match) @06de7ee0
+netif_get_ip6_addr_match/28 (netif_get_ip6_addr_match) @06257ee0
   Type: function definition analyzed
   Visibility: externally_visible public
   References: 
@@ -1338,7 +1338,7 @@ netif_get_ip6_addr_match/28 (netif_get_ip6_addr_match) @06de7ee0
   Function flags: count:357913 (estimated locally) body optimize_size
   Called by: netif_add_ip6_address/30 (123389 (estimated locally),0.37 per call) 
   Calls: netif_get_ip6_addr_match.part.0/67 (173624 (estimated locally),0.49 per call) 
-netif_ip6_addr_set_state/27 (netif_ip6_addr_set_state) @06de78c0
+netif_ip6_addr_set_state/27 (netif_ip6_addr_set_state) @062578c0
   Type: function definition analyzed
   Visibility: externally_visible public
   References: 
@@ -1347,7 +1347,7 @@ netif_ip6_addr_set_state/27 (netif_ip6_addr_set_state) @06de78c0
   Function flags: count:306783 (estimated locally) body optimize_size
   Called by: netif_add_ip6_address/30 (34429 (estimated locally),0.10 per call) netif_create_ip6_linklocal_address/29 (250539 (estimated locally),0.70 per call) 
   Calls: netif_ip6_addr_set_state.part.0/66 (107374 (estimated locally),0.35 per call) 
-netif_ip6_addr_set_parts/26 (netif_ip6_addr_set_parts) @06de7540
+netif_ip6_addr_set_parts/26 (netif_ip6_addr_set_parts) @06257540
   Type: function definition analyzed
   Visibility: externally_visible public
   References: 
@@ -1356,7 +1356,7 @@ netif_ip6_addr_set_parts/26 (netif_ip6_addr_set_parts) @06de7540
   Function flags: count:306783 (estimated locally) body optimize_size
   Called by: netif_ip6_addr_set/25 (123389 (estimated locally),0.37 per call) 
   Calls: netif_ip6_addr_set_parts.part.0/65 (107374 (estimated locally),0.35 per call) 
-netif_ip6_addr_set/25 (netif_ip6_addr_set) @06dc17e0
+netif_ip6_addr_set/25 (netif_ip6_addr_set) @062317e0
   Type: function definition analyzed
   Visibility: externally_visible public
   References: 
@@ -1365,7 +1365,7 @@ netif_ip6_addr_set/25 (netif_ip6_addr_set) @06dc17e0
   Function flags: count:329661 (estimated locally) body optimize_size
   Called by: 
   Calls: netif_ip6_addr_set_parts/26 (123389 (estimated locally),0.37 per call) 
-netif_alloc_client_data_id/24 (netif_alloc_client_data_id) @06dc1540
+netif_alloc_client_data_id/24 (netif_alloc_client_data_id) @06231540
   Type: function definition analyzed
   Visibility: externally_visible public
   References: netif_client_id/4 (read)netif_client_id/4 (write)
@@ -1374,7 +1374,7 @@ netif_alloc_client_data_id/24 (netif_alloc_client_data_id) @06dc1540
   Function flags: count:214748 (estimated locally) body optimize_size
   Called by: 
   Calls: 
-netif_set_link_down/23 (netif_set_link_down) @06dc12a0
+netif_set_link_down/23 (netif_set_link_down) @062312a0
   Type: function definition analyzed
   Visibility: externally_visible public
   References: 
@@ -1383,7 +1383,7 @@ netif_set_link_down/23 (netif_set_link_down) @06dc12a0
   Function flags: count:1073741824 (estimated locally) body optimize_size
   Called by: 
   Calls: 
-netif_set_link_up/22 (netif_set_link_up) @06dc1000
+netif_set_link_up/22 (netif_set_link_up) @06231000
   Type: function definition analyzed
   Visibility: externally_visible public
   References: 
@@ -1392,7 +1392,7 @@ netif_set_link_up/22 (netif_set_link_up) @06dc1000
   Function flags: count:1073741824 (estimated locally) body optimize_size
   Called by: 
   Calls: nd6_restart_netif/41 (290235636 (estimated locally),0.27 per call) netif_issue_reports/20 (290235636 (estimated locally),0.27 per call) 
-netif_set_down/21 (netif_set_down) @06db78c0
+netif_set_down/21 (netif_set_down) @062278c0
   Type: function definition analyzed
   Visibility: externally_visible public
   References: 
@@ -1401,7 +1401,7 @@ netif_set_down/21 (netif_set_down) @06db78c0
   Function flags: count:1073741824 (estimated locally) body optimize_size
   Called by: netif_remove/17 (54149951 (estimated locally),0.27 per call) 
   Calls: nd6_cleanup_netif/53 (290235636 (estimated locally),0.27 per call) etharp_cleanup_netif/52 (95777760 (estimated locally),0.09 per call) sys_now/51 (290235636 (estimated locally),0.27 per call) 
-netif_issue_reports/20 (netif_issue_reports) @06db7e00
+netif_issue_reports/20 (netif_issue_reports) @06227e00
   Type: function definition analyzed
   Visibility: prevailing_def_ironly
   References: 
@@ -1410,7 +1410,7 @@ netif_issue_reports/20 (netif_issue_reports) @06db7e00
   Function flags: count:357913 (estimated locally) body local optimize_size
   Called by: netif_ip6_addr_set_state.part.0/66 (116930485 (estimated locally),0.11 per call) netif_ip6_addr_set_parts.part.0/65 (349599698 (estimated locally),0.33 per call) netif_set_link_up/22 (290235636 (estimated locally),0.27 per call) netif_set_up/19 (290235636 (estimated locally),0.27 per call) netif_do_set_ipaddr.part.0/61 (536870913 (estimated locally),0.50 per call) 
   Calls: netif_issue_reports.part.0/60 (125270 (estimated locally),0.35 per call) igmp_report_groups/47 (10335 (estimated locally),0.03 per call) etharp_request/46 (10335 (estimated locally),0.03 per call) 
-netif_set_up/19 (netif_set_up) @06db77e0
+netif_set_up/19 (netif_set_up) @062277e0
   Type: function definition analyzed
   Visibility: externally_visible public
   References: 
@@ -1419,7 +1419,7 @@ netif_set_up/19 (netif_set_up) @06db77e0
   Function flags: count:1073741824 (estimated locally) body optimize_size
   Called by: 
   Calls: nd6_restart_netif/41 (290235636 (estimated locally),0.27 per call) netif_issue_reports/20 (290235636 (estimated locally),0.27 per call) sys_now/51 (290235636 (estimated locally),0.27 per call) 
-netif_set_default/18 (netif_set_default) @06db7460
+netif_set_default/18 (netif_set_default) @06227460
   Type: function definition analyzed
   Visibility: externally_visible public
   References: netif_default/2 (write)
@@ -1428,7 +1428,7 @@ netif_set_default/18 (netif_set_default) @06db7460
   Function flags: count:1073741824 (estimated locally) body optimize_size
   Called by: 
   Calls: 
-netif_remove/17 (netif_remove) @06db71c0
+netif_remove/17 (netif_remove) @062271c0
   Type: function definition analyzed
   Visibility: externally_visible public
   References: netif_default/2 (read)netif_default/2 (write)netif_list/1 (read)netif_list/1 (write)
@@ -1437,7 +1437,7 @@ netif_remove/17 (netif_remove) @06db71c0
   Function flags: count:200330558 (estimated locally) body optimize_size
   Called by: 
   Calls: netif_set_down/21 (54149951 (estimated locally),0.27 per call) mld6_stop/50 (164090760 (estimated locally),0.82 per call) netif_do_ip_addr_changed/9 (162449853 (estimated locally),0.81 per call) igmp_stop/49 (54149951 (estimated locally),0.27 per call) netif_do_ip_addr_changed/9 (54149951 (estimated locally),0.27 per call) 
-netif_set_addr/16 (netif_set_addr) @06db1c40
+netif_set_addr/16 (netif_set_addr) @06221c40
   Type: function definition analyzed
   Visibility: externally_visible public
   References: ip_addr_any/39 (addr)ip_addr_any/39 (addr)ip_addr_any/39 (addr)
@@ -1446,7 +1446,7 @@ netif_set_addr/16 (netif_set_addr) @06db1c40
   Function flags: count:1073741824 (estimated locally) body optimize_size
   Called by: netif_add/8 (185391 (estimated locally),0.84 per call) 
   Calls: netif_do_set_ipaddr/10 (354334802 (estimated locally),0.33 per call) netif_do_set_ipaddr/10 (630447513 (estimated locally),0.59 per call) 
-netif_set_gw/15 (netif_set_gw) @06db18c0
+netif_set_gw/15 (netif_set_gw) @062218c0
   Type: function definition analyzed
   Visibility: externally_visible public
   References: ip_addr_any/39 (addr)
@@ -1455,7 +1455,7 @@ netif_set_gw/15 (netif_set_gw) @06db18c0
   Function flags: count:1073741824 (estimated locally) body optimize_size
   Called by: 
   Calls: 
-netif_set_netmask/13 (netif_set_netmask) @06db1000
+netif_set_netmask/13 (netif_set_netmask) @06221000
   Type: function definition analyzed
   Visibility: externally_visible public
   References: ip_addr_any/39 (addr)
@@ -1464,7 +1464,7 @@ netif_set_netmask/13 (netif_set_netmask) @06db1000
   Function flags: count:1073741824 (estimated locally) body optimize_size
   Called by: 
   Calls: 
-netif_set_ipaddr/11 (netif_set_ipaddr) @06da88c0
+netif_set_ipaddr/11 (netif_set_ipaddr) @062188c0
   Type: function definition analyzed
   Visibility: externally_visible public
   References: ip_addr_any/39 (addr)
@@ -1473,7 +1473,7 @@ netif_set_ipaddr/11 (netif_set_ipaddr) @06da88c0
   Function flags: count:1073741824 (estimated locally) body optimize_size
   Called by: 
   Calls: netif_do_set_ipaddr/10 (879501928 (estimated locally),0.82 per call) 
-netif_do_set_ipaddr/10 (netif_do_set_ipaddr) @06da8620
+netif_do_set_ipaddr/10 (netif_do_set_ipaddr) @06218620
   Type: function definition analyzed
   Visibility: prevailing_def_ironly
   References: 
@@ -1482,7 +1482,7 @@ netif_do_set_ipaddr/10 (netif_do_set_ipaddr) @06da8620
   Function flags: count:357913 (estimated locally) body local optimize_size
   Called by: netif_set_addr/16 (354334802 (estimated locally),0.33 per call) netif_set_addr/16 (630447513 (estimated locally),0.59 per call) netif_set_ipaddr/11 (879501928 (estimated locally),0.82 per call) 
   Calls: netif_do_set_ipaddr.part.0/61 (175378 (estimated locally),0.49 per call) 
-netif_do_ip_addr_changed/9 (netif_do_ip_addr_changed) @06d7c8c0
+netif_do_ip_addr_changed/9 (netif_do_ip_addr_changed) @061ea8c0
   Type: function definition analyzed
   Visibility: prevailing_def_ironly
   References: 
@@ -1491,7 +1491,7 @@ netif_do_ip_addr_changed/9 (netif_do_ip_addr_changed) @06d7c8c0
   Function flags: count:1073741824 (estimated locally) body local optimize_size
   Called by: netif_ip6_addr_set_state.part.0/66 (116930485 (estimated locally),0.11 per call) netif_ip6_addr_set_parts.part.0/65 (349599698 (estimated locally),0.33 per call) netif_remove/17 (162449853 (estimated locally),0.81 per call) netif_remove/17 (54149951 (estimated locally),0.27 per call) netif_do_set_ipaddr.part.0/61 (536870913 (estimated locally),0.50 per call) 
   Calls: raw_netif_ip_addr_changed/45 (1073741824 (estimated locally),1.00 per call) udp_netif_ip_addr_changed/44 (1073741824 (estimated locally),1.00 per call) tcp_netif_ip_addr_changed/43 (1073741824 (estimated locally),1.00 per call) 
-netif_add/8 (netif_add) @06d7c620
+netif_add/8 (netif_add) @061ea620
   Type: function definition analyzed
   Visibility: externally_visible public
   References: ip_addr_any/39 (addr)ip_addr_any/39 (addr)netif_null_output_ip4/32 (addr)ip_addr_any/39 (addr)netif_null_output_ip6/31 (addr)netif_num/3 (read)netif_list/1 (read)netif_num/3 (write)netif_num/3 (write)netif_list/1 (write)
@@ -1501,7 +1501,7 @@ netif_add/8 (netif_add) @06d7c620
   Called by: netif_add_noaddr/7 (1073741824 (estimated locally),1.00 per call) 
   Calls: igmp_start/42 (2582 (estimated locally),0.01 per call) netif_set_addr/16 (185391 (estimated locally),0.84 per call) nd6_restart_netif/41 (185391 (estimated locally),0.84 per call) memset/40 (185391 (estimated locally),0.84 per call) 
    Indirect call(185391 (estimated locally),0.84 per call)  of param:5 (vptr maybe changed)
-netif_add_noaddr/7 (netif_add_noaddr) @06d61d20
+netif_add_noaddr/7 (netif_add_noaddr) @061c6d20
   Type: function definition analyzed
   Visibility: externally_visible public
   References: 
@@ -1510,7 +1510,7 @@ netif_add_noaddr/7 (netif_add_noaddr) @06d61d20
   Function flags: count:1073741824 (estimated locally) body optimize_size
   Called by: 
   Calls: netif_add/8 (1073741824 (estimated locally),1.00 per call) 
-netif_input/6 (netif_input) @06d61ee0
+netif_input/6 (netif_input) @061c6ee0
   Type: function definition analyzed
   Visibility: externally_visible public
   References: 
@@ -1519,7 +1519,7 @@ netif_input/6 (netif_input) @06d61ee0
   Function flags: count:357913 (estimated locally) body optimize_size
   Called by: 
   Calls: ip_input/38 (87689 (estimated locally),0.25 per call) ethernet_input/37 (87689 (estimated locally),0.25 per call) 
-netif_init/5 (netif_init) @06d61c40
+netif_init/5 (netif_init) @061c6c40
   Type: function definition analyzed
   Visibility: externally_visible public
   References: 
@@ -1528,28 +1528,28 @@ netif_init/5 (netif_init) @06d61c40
   Function flags: count:1073741824 (estimated locally) body optimize_size
   Called by: 
   Calls: 
-netif_client_id/4 (netif_client_id) @06d5ad80
+netif_client_id/4 (netif_client_id) @061bfd80
   Type: variable definition analyzed
   Visibility: prevailing_def_ironly
   References: 
   Referring: netif_alloc_client_data_id/24 (read)netif_alloc_client_data_id/24 (write)
   Availability: available
   Varpool flags:
-netif_num/3 (netif_num) @06d5acf0
+netif_num/3 (netif_num) @061bfcf0
   Type: variable definition analyzed
   Visibility: prevailing_def_ironly
   References: 
   Referring: netif_add/8 (read)netif_add/8 (write)netif_add/8 (write)
   Availability: available
   Varpool flags:
-netif_default/2 (netif_default) @06d5ac18
+netif_default/2 (netif_default) @061bfc18
   Type: variable definition analyzed
   Visibility: externally_visible public
   References: 
   Referring: netif_set_default/18 (write)netif_remove/17 (read)netif_remove/17 (write)
   Availability: available
   Varpool flags:
-netif_list/1 (netif_list) @06d5abd0
+netif_list/1 (netif_list) @061bfbd0
   Type: variable definition analyzed
   Visibility: externally_visible public
   References: 

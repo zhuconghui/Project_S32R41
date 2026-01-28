@@ -2299,7 +2299,7 @@ Reclaiming variables:
 Clearing address taken flags:
 Symbol table:
 
-mqtt_create_request.part.0.constprop.0/79 (mqtt_create_request.part.0.constprop) @064062a0
+mqtt_create_request.part.0.constprop.0/79 (mqtt_create_request.part.0.constprop) @065162a0
   Type: function definition analyzed
   Visibility: artificial
   References: 
@@ -2309,7 +2309,7 @@ mqtt_create_request.part.0.constprop.0/79 (mqtt_create_request.part.0.constprop)
   Function flags: count:114863532 (estimated locally) first_run:1 local split_part optimize_size
   Called by: mqtt_create_request.constprop/78 (250539 (estimated locally),0.70 per call) 
   Calls: 
-mqtt_create_request.constprop.0/78 (mqtt_create_request.constprop) @063af2a0
+mqtt_create_request.constprop.0/78 (mqtt_create_request.constprop) @064be2a0
   Type: function definition analyzed
   Visibility:
   References: 
@@ -2319,7 +2319,7 @@ mqtt_create_request.constprop.0/78 (mqtt_create_request.constprop) @063af2a0
   Function flags: count:357913 (estimated locally) local optimize_size
   Called by: mqtt_publish/31 (168159 (estimated locally),0.47 per call) mqtt_sub_unsub/32 (84080 (estimated locally),0.23 per call) 
   Calls: mqtt_create_request.part.0.constprop/79 (250539 (estimated locally),0.70 per call) 
-mqtt_request_time_elapsed.constprop.0/77 (mqtt_request_time_elapsed.constprop) @06147620
+mqtt_request_time_elapsed.constprop.0/77 (mqtt_request_time_elapsed.constprop) @0626d620
   Type: function definition analyzed
   Visibility:
   References: 
@@ -2330,7 +2330,7 @@ mqtt_request_time_elapsed.constprop.0/77 (mqtt_request_time_elapsed.constprop) @
   Called by: mqtt_cyclic_timer/21 (33468 (estimated locally),0.09 per call) 
   Calls: mqtt_delete_request/9 (2116828 (estimated locally),5.91 per call) 
    Indirect call(1481780 (estimated locally),4.14 per call) 
-mqtt_init_requests.constprop.0/76 (mqtt_init_requests.constprop) @0612e8c0
+mqtt_init_requests.constprop.0/76 (mqtt_init_requests.constprop) @062548c0
   Type: function definition analyzed
   Visibility:
   References: 
@@ -2340,7 +2340,7 @@ mqtt_init_requests.constprop.0/76 (mqtt_init_requests.constprop) @0612e8c0
   Function flags: count:357913 (estimated locally) local optimize_size
   Called by: mqtt_client_connect/36 (84139 (estimated locally),0.24 per call) 
   Calls: 
-mqtt_output_append_fixed_header.constprop.0/75 (mqtt_output_append_fixed_header.constprop) @0612e0e0
+mqtt_output_append_fixed_header.constprop.0/75 (mqtt_output_append_fixed_header.constprop) @062540e0
   Type: function definition analyzed
   Visibility:
   References: 
@@ -2350,7 +2350,7 @@ mqtt_output_append_fixed_header.constprop.0/75 (mqtt_output_append_fixed_header.
   Function flags: count:118111600 (estimated locally) local optimize_size
   Called by: pub_ack_rec_rel_response/22 (1031006900 (estimated locally),0.96 per call) mqtt_cyclic_timer/21 (1822 (estimated locally),0.01 per call) mqtt_publish/31 (164896 (estimated locally),0.46 per call) mqtt_sub_unsub/32 (82881 (estimated locally),0.23 per call) mqtt_client_connect/36 (17816 (estimated locally),0.05 per call) 
   Calls: mqtt_ringbuf_put/2 (118111600 (estimated locally),1.00 per call) mqtt_ringbuf_put/2 (1073741824 (estimated locally),9.09 per call) 
-mqtt_tcp_recv_cb.part.0/72 (mqtt_tcp_recv_cb.part.0) @063afb60
+mqtt_tcp_recv_cb.part.0/72 (mqtt_tcp_recv_cb.part.0) @064beb60
   Type: function definition analyzed
   Visibility: prevailing_def_ironly artificial
   References: 
@@ -2359,7 +2359,7 @@ mqtt_tcp_recv_cb.part.0/72 (mqtt_tcp_recv_cb.part.0) @063afb60
   Function flags: count:1073741824 (estimated locally) first_run:1 body local split_part optimize_size
   Called by: mqtt_tcp_recv_cb/26 (25078 (estimated locally),0.11 per call) 
   Calls: tcp_recved/59 (1073741824 (estimated locally),1.00 per call) mqtt_parse_incoming/25 (1073741824 (estimated locally),1.00 per call) pbuf_free/58 (1073741824 (estimated locally),1.00 per call) mqtt_close/20 (354334802 (estimated locally),0.33 per call) 
-mqtt_tcp_connect_cb.part.0/71 (mqtt_tcp_connect_cb.part.0) @0638aa80
+mqtt_tcp_connect_cb.part.0/71 (mqtt_tcp_connect_cb.part.0) @0649ca80
   Type: function definition analyzed
   Visibility: prevailing_def_ironly artificial
   References: mqtt_tcp_recv_cb/26 (addr)mqtt_tcp_sent_cb/27 (addr)mqtt_tcp_poll_cb/29 (addr)mqtt_cyclic_timer/21 (addr)
@@ -2368,7 +2368,7 @@ mqtt_tcp_connect_cb.part.0/71 (mqtt_tcp_connect_cb.part.0) @0638aa80
   Function flags: count:1073741824 (estimated locally) first_run:1 body local split_part optimize_size
   Called by: mqtt_tcp_connect_cb/30 (524845000 (estimated locally),0.49 per call) 
   Calls: tcp_recv/52 (1073741824 (estimated locally),1.00 per call) tcp_sent/53 (1073741824 (estimated locally),1.00 per call) tcp_poll/57 (1073741824 (estimated locally),1.00 per call) sys_timeout/56 (1073741824 (estimated locally),1.00 per call) mqtt_output_send/6 (1073741824 (estimated locally),1.00 per call) 
-mqtt_tcp_err_cb.part.0/70 (mqtt_tcp_err_cb.part.0) @0612e620
+mqtt_tcp_err_cb.part.0/70 (mqtt_tcp_err_cb.part.0) @06254620
   Type: function definition analyzed
   Visibility: prevailing_def_ironly artificial
   References: 
@@ -2377,7 +2377,7 @@ mqtt_tcp_err_cb.part.0/70 (mqtt_tcp_err_cb.part.0) @0612e620
   Function flags: count:1073741824 (estimated locally) first_run:1 body local split_part optimize_size
   Called by: mqtt_tcp_err_cb/28 (123389 (estimated locally),0.53 per call) 
   Calls: mqtt_close/20 (1073741824 (estimated locally),1.00 per call) 
-mqtt_tcp_sent_cb.part.0/69 (mqtt_tcp_sent_cb.part.0) @0638a9a0
+mqtt_tcp_sent_cb.part.0/69 (mqtt_tcp_sent_cb.part.0) @0649c9a0
   Type: function definition analyzed
   Visibility: prevailing_def_ironly artificial
   References: 
@@ -2387,7 +2387,7 @@ mqtt_tcp_sent_cb.part.0/69 (mqtt_tcp_sent_cb.part.0) @0638a9a0
   Called by: mqtt_tcp_sent_cb/27 (118111600 (estimated locally),0.34 per call) 
   Calls: mqtt_delete_request/9 (955630223 (estimated locally),8.09 per call) mqtt_take_request/10 (1073741824 (estimated locally),9.09 per call) mqtt_output_send/6 (118111601 (estimated locally),1.00 per call) 
    Indirect call(668941156 (estimated locally),5.66 per call) 
-mqtt_create_request.part.0/65 (mqtt_create_request.part.0) @062d9e00
+mqtt_create_request.part.0/65 (mqtt_create_request.part.0) @063e9e00
   Type: function
   Body removed by symtab_remove_unreachable_nodes
   Visibility: prevailing_def_ironly artificial
@@ -2397,7 +2397,7 @@ mqtt_create_request.part.0/65 (mqtt_create_request.part.0) @062d9e00
   Function flags: count:114863532 (estimated locally) first_run:1 body split_part optimize_size
   Called by: 
   Calls: 
-mqtt_ringbuf_advance_get_idx.isra.0.part.0/64 (mqtt_ringbuf_advance_get_idx.isra.0.part.0) @062d9540
+mqtt_ringbuf_advance_get_idx.isra.0.part.0/64 (mqtt_ringbuf_advance_get_idx.isra.0.part.0) @063e9540
   Type: function definition analyzed
   Visibility: prevailing_def_ironly artificial
   References: 
@@ -2406,7 +2406,7 @@ mqtt_ringbuf_advance_get_idx.isra.0.part.0/64 (mqtt_ringbuf_advance_get_idx.isra
   Function flags: count:1073741824 (estimated locally) first_run:1 body local split_part optimize_size
   Called by: mqtt_ringbuf_advance_get_idx.isra.0/63 (107374 (estimated locally),0.50 per call) 
   Calls: 
-mqtt_ringbuf_advance_get_idx.isra.0/63 (mqtt_ringbuf_advance_get_idx.isra.0) @062d9000
+mqtt_ringbuf_advance_get_idx.isra.0/63 (mqtt_ringbuf_advance_get_idx.isra.0) @063e9000
   Type: function definition analyzed
   Visibility: prevailing_def_ironly artificial
   References: 
@@ -2415,7 +2415,7 @@ mqtt_ringbuf_advance_get_idx.isra.0/63 (mqtt_ringbuf_advance_get_idx.isra.0) @06
   Function flags: count:214748 (estimated locally) body local optimize_size
   Called by: mqtt_output_send/6 (154348240 (estimated locally),0.14 per call) mqtt_output_send/6 (77174120 (estimated locally),0.07 per call) 
   Calls: mqtt_ringbuf_advance_get_idx.isra.0.part.0/64 (107374 (estimated locally),0.50 per call) 
-msg_generate_packet_id.isra.0/62 (msg_generate_packet_id.isra.0) @05f468c0
+msg_generate_packet_id.isra.0/62 (msg_generate_packet_id.isra.0) @0607a8c0
   Type: function definition analyzed
   Visibility: prevailing_def_ironly artificial
   References: 
@@ -2424,7 +2424,7 @@ msg_generate_packet_id.isra.0/62 (msg_generate_packet_id.isra.0) @05f468c0
   Function flags: count:1073741824 (estimated locally) body local optimize_size
   Called by: mqtt_sub_unsub/32 (84080 (estimated locally),0.23 per call) mqtt_publish/31 (56677 (estimated locally),0.16 per call) 
   Calls: 
-pbuf_copy_partial/61 (pbuf_copy_partial) @0623ae00
+pbuf_copy_partial/61 (pbuf_copy_partial) @0633fe00
   Type: function
   Visibility: external public
   References: 
@@ -2433,7 +2433,7 @@ pbuf_copy_partial/61 (pbuf_copy_partial) @0623ae00
   Function flags: optimize_size
   Called by: mqtt_parse_incoming/25 (353212205 (estimated locally),5.05 per call) 
   Calls: 
-pbuf_get_at/60 (pbuf_get_at) @0623ad20
+pbuf_get_at/60 (pbuf_get_at) @0633fd20
   Type: function
   Visibility: external public
   References: 
@@ -2442,7 +2442,7 @@ pbuf_get_at/60 (pbuf_get_at) @0623ad20
   Function flags: optimize_size
   Called by: mqtt_parse_incoming/25 (218286360 (estimated locally),3.12 per call) 
   Calls: 
-tcp_recved/59 (tcp_recved) @0623a9a0
+tcp_recved/59 (tcp_recved) @0633f9a0
   Type: function
   Visibility: external public
   References: 
@@ -2451,7 +2451,7 @@ tcp_recved/59 (tcp_recved) @0623a9a0
   Function flags: optimize_size
   Called by: mqtt_tcp_recv_cb.part.0/72 (1073741824 (estimated locally),1.00 per call) 
   Calls: 
-pbuf_free/58 (pbuf_free) @0623a8c0
+pbuf_free/58 (pbuf_free) @0633f8c0
   Type: function
   Visibility: external public
   References: 
@@ -2460,7 +2460,7 @@ pbuf_free/58 (pbuf_free) @0623a8c0
   Function flags: optimize_size
   Called by: mqtt_tcp_recv_cb/26 (12919 (estimated locally),0.06 per call) mqtt_tcp_recv_cb.part.0/72 (1073741824 (estimated locally),1.00 per call) 
   Calls: 
-tcp_poll/57 (tcp_poll) @0623a460
+tcp_poll/57 (tcp_poll) @0633f460
   Type: function
   Visibility: external public
   References: 
@@ -2469,7 +2469,7 @@ tcp_poll/57 (tcp_poll) @0623a460
   Function flags: optimize_size
   Called by: mqtt_tcp_connect_cb.part.0/71 (1073741824 (estimated locally),1.00 per call) 
   Calls: 
-sys_timeout/56 (sys_timeout) @0623a0e0
+sys_timeout/56 (sys_timeout) @0633f0e0
   Type: function
   Visibility: external public
   References: 
@@ -2478,7 +2478,7 @@ sys_timeout/56 (sys_timeout) @0623a0e0
   Function flags: optimize_size
   Called by: mqtt_tcp_connect_cb.part.0/71 (1073741824 (estimated locally),1.00 per call) mqtt_cyclic_timer/21 (82174 (estimated locally),0.23 per call) 
   Calls: 
-sys_untimeout/55 (sys_untimeout) @06221460
+sys_untimeout/55 (sys_untimeout) @06326460
   Type: function
   Visibility: external public
   References: 
@@ -2487,7 +2487,7 @@ sys_untimeout/55 (sys_untimeout) @06221460
   Function flags: optimize_size
   Called by: mqtt_close/20 (250539 (estimated locally),0.70 per call) 
   Calls: 
-tcp_close/54 (tcp_close) @06221380
+tcp_close/54 (tcp_close) @06326380
   Type: function
   Visibility: external public
   References: 
@@ -2496,7 +2496,7 @@ tcp_close/54 (tcp_close) @06221380
   Function flags: optimize_size
   Called by: mqtt_close/20 (133963 (estimated locally),0.37 per call) 
   Calls: 
-tcp_sent/53 (tcp_sent) @06221ee0
+tcp_sent/53 (tcp_sent) @06326ee0
   Type: function
   Visibility: external public
   References: 
@@ -2505,7 +2505,7 @@ tcp_sent/53 (tcp_sent) @06221ee0
   Function flags: optimize_size
   Called by: mqtt_tcp_connect_cb.part.0/71 (1073741824 (estimated locally),1.00 per call) mqtt_close/20 (133963 (estimated locally),0.37 per call) 
   Calls: 
-tcp_recv/52 (tcp_recv) @06221e00
+tcp_recv/52 (tcp_recv) @06326e00
   Type: function
   Visibility: external public
   References: 
@@ -2514,7 +2514,7 @@ tcp_recv/52 (tcp_recv) @06221e00
   Function flags: optimize_size
   Called by: mqtt_tcp_connect_cb.part.0/71 (1073741824 (estimated locally),1.00 per call) mqtt_close/20 (133963 (estimated locally),0.37 per call) 
   Calls: 
-tcp_abort/51 (tcp_abort) @06221b60
+tcp_abort/51 (tcp_abort) @06326b60
   Type: function
   Visibility: external public
   References: 
@@ -2523,7 +2523,7 @@ tcp_abort/51 (tcp_abort) @06221b60
   Function flags: optimize_size
   Called by: mqtt_client_connect/36 (56750 (estimated locally),0.16 per call) mqtt_close/20 (44208 (estimated locally),0.12 per call) 
   Calls: 
-tcp_err/50 (tcp_err) @06221a80
+tcp_err/50 (tcp_err) @06326a80
   Type: function
   Visibility: external public
   References: 
@@ -2532,7 +2532,7 @@ tcp_err/50 (tcp_err) @06221a80
   Function flags: optimize_size
   Called by: mqtt_client_connect/36 (17816 (estimated locally),0.05 per call) mqtt_close/20 (133963 (estimated locally),0.37 per call) 
   Calls: 
-tcp_connect/49 (tcp_connect) @062219a0
+tcp_connect/49 (tcp_connect) @063269a0
   Type: function
   Visibility: external public
   References: 
@@ -2541,7 +2541,7 @@ tcp_connect/49 (tcp_connect) @062219a0
   Function flags: optimize_size
   Called by: mqtt_client_connect/36 (36448 (estimated locally),0.10 per call) 
   Calls: 
-ip_addr_any/48 (ip_addr_any) @06232360
+ip_addr_any/48 (ip_addr_any) @06337360
   Type: variable
   Body removed by symtab_remove_unreachable_nodes
   Visibility: external public
@@ -2549,7 +2549,7 @@ ip_addr_any/48 (ip_addr_any) @06232360
   Referring: mqtt_client_connect/36 (addr)
   Availability: not_available
   Varpool flags: read-only
-tcp_bind/47 (tcp_bind) @062218c0
+tcp_bind/47 (tcp_bind) @063268c0
   Type: function
   Visibility: external public
   References: 
@@ -2558,7 +2558,7 @@ tcp_bind/47 (tcp_bind) @062218c0
   Function flags: optimize_size
   Called by: mqtt_client_connect/36 (74566 (estimated locally),0.21 per call) 
   Calls: 
-tcp_arg/46 (tcp_arg) @062217e0
+tcp_arg/46 (tcp_arg) @063267e0
   Type: function
   Visibility: external public
   References: 
@@ -2567,7 +2567,7 @@ tcp_arg/46 (tcp_arg) @062217e0
   Function flags: optimize_size
   Called by: mqtt_client_connect/36 (74566 (estimated locally),0.21 per call) 
   Calls: 
-tcp_new_ip_type/45 (tcp_new_ip_type) @06221700
+tcp_new_ip_type/45 (tcp_new_ip_type) @06326700
   Type: function
   Visibility: external public
   References: 
@@ -2576,7 +2576,7 @@ tcp_new_ip_type/45 (tcp_new_ip_type) @06221700
   Function flags: optimize_size
   Called by: mqtt_client_connect/36 (75251 (estimated locally),0.21 per call) 
   Calls: 
-memset/44 (memset) @06221620
+memset/44 (memset) @06326620
   Type: function
   Visibility: external public
   References: 
@@ -2585,7 +2585,7 @@ memset/44 (memset) @06221620
   Function flags: optimize_size
   Called by: mqtt_client_connect/36 (84139 (estimated locally),0.24 per call) 
   Calls: 
-mem_free/43 (mem_free) @062212a0
+mem_free/43 (mem_free) @063262a0
   Type: function
   Visibility: external public
   References: 
@@ -2594,7 +2594,7 @@ mem_free/43 (mem_free) @062212a0
   Function flags: optimize_size
   Called by: mqtt_client_free/35 (1073741824 (estimated locally),1.00 per call) 
   Calls: 
-mem_calloc/42 (mem_calloc) @062210e0
+mem_calloc/42 (mem_calloc) @063260e0
   Type: function
   Visibility: external public
   References: 
@@ -2603,7 +2603,7 @@ mem_calloc/42 (mem_calloc) @062210e0
   Function flags: optimize_size
   Called by: mqtt_client_new/34 (1073741824 (estimated locally),1.00 per call) 
   Calls: 
-tcp_output/41 (tcp_output) @061cda80
+tcp_output/41 (tcp_output) @062eba80
   Type: function
   Visibility: external public
   References: 
@@ -2612,7 +2612,7 @@ tcp_output/41 (tcp_output) @061cda80
   Function flags: optimize_size
   Called by: mqtt_output_send/6 (154348240 (estimated locally),0.14 per call) 
   Calls: 
-tcp_write/40 (tcp_write) @061cd9a0
+tcp_write/40 (tcp_write) @062eb9a0
   Type: function
   Visibility: external public
   References: 
@@ -2621,7 +2621,7 @@ tcp_write/40 (tcp_write) @061cd9a0
   Function flags: optimize_size
   Called by: mqtt_output_send/6 (77174120 (estimated locally),0.07 per call) mqtt_output_send/6 (467721938 (estimated locally),0.44 per call) 
   Calls: 
-strlen/39 (strlen) @0619ed20
+strlen/39 (strlen) @062bcd20
   Type: function
   Visibility: external public
   References: 
@@ -2630,7 +2630,7 @@ strlen/39 (strlen) @0619ed20
   Function flags: optimize_size
   Called by: mqtt_client_connect/36 (79323 (estimated locally),0.22 per call) mqtt_client_connect/36 (56752 (estimated locally),0.16 per call) mqtt_client_connect/36 (58006 (estimated locally),0.16 per call) mqtt_client_connect/36 (40375 (estimated locally),0.11 per call) mqtt_client_connect/36 (41228 (estimated locally),0.12 per call) mqtt_sub_unsub/32 (175378 (estimated locally),0.49 per call) mqtt_publish/31 (173554 (estimated locally),0.48 per call) 
   Calls: 
-mqtt_client_is_connected/38 (mqtt_client_is_connected) @0619e700
+mqtt_client_is_connected/38 (mqtt_client_is_connected) @062bc700
   Type: function definition analyzed
   Visibility: externally_visible public
   References: 
@@ -2639,7 +2639,7 @@ mqtt_client_is_connected/38 (mqtt_client_is_connected) @0619e700
   Function flags: count:357913 (estimated locally) body optimize_size
   Called by: 
   Calls: 
-mqtt_disconnect/37 (mqtt_disconnect) @0619e380
+mqtt_disconnect/37 (mqtt_disconnect) @062bc380
   Type: function definition analyzed
   Visibility: externally_visible public
   References: 
@@ -2648,7 +2648,7 @@ mqtt_disconnect/37 (mqtt_disconnect) @0619e380
   Function flags: count:357913 (estimated locally) body optimize_size
   Called by: 
   Calls: mqtt_close/20 (82678 (estimated locally),0.23 per call) 
-mqtt_client_connect/36 (mqtt_client_connect) @0619e000
+mqtt_client_connect/36 (mqtt_client_connect) @062bc000
   Type: function definition analyzed
   Visibility: externally_visible public
   References: ip_addr_any/48 (addr)mqtt_tcp_connect_cb/30 (addr)mqtt_tcp_err_cb/28 (addr)
@@ -2657,7 +2657,7 @@ mqtt_client_connect/36 (mqtt_client_connect) @0619e000
   Function flags: count:357913 (estimated locally) body optimize_size
   Called by: 
   Calls: tcp_abort/51 (56750 (estimated locally),0.16 per call) mqtt_output_append_string/17 (5879 (estimated locally),0.02 per call) mqtt_output_append_string/17 (4543 (estimated locally),0.01 per call) mqtt_output_append_string/17 (5879 (estimated locally),0.02 per call) mqtt_output_append_string/17 (5879 (estimated locally),0.02 per call) mqtt_output_append_string/17 (17816 (estimated locally),0.05 per call) mqtt_output_append_u16/15 (17816 (estimated locally),0.05 per call) mqtt_ringbuf_put/2 (17816 (estimated locally),0.05 per call) mqtt_ringbuf_put/2 (17816 (estimated locally),0.05 per call) mqtt_output_append_string/17 (17816 (estimated locally),0.05 per call) mqtt_output_append_fixed_header.constprop/75 (17816 (estimated locally),0.05 per call) tcp_err/50 (17816 (estimated locally),0.05 per call) tcp_connect/49 (36448 (estimated locally),0.10 per call) tcp_bind/47 (74566 (estimated locally),0.21 per call) tcp_arg/46 (74566 (estimated locally),0.21 per call) tcp_new_ip_type/45 (75251 (estimated locally),0.21 per call) mqtt_output_check_space/19 (76857 (estimated locally),0.21 per call) strlen/39 (79323 (estimated locally),0.22 per call) strlen/39 (56752 (estimated locally),0.16 per call) strlen/39 (58006 (estimated locally),0.16 per call) strlen/39 (40375 (estimated locally),0.11 per call) strlen/39 (41228 (estimated locally),0.12 per call) mqtt_init_requests.constprop/76 (84139 (estimated locally),0.24 per call) memset/44 (84139 (estimated locally),0.24 per call) 
-mqtt_client_free/35 (mqtt_client_free) @06192460
+mqtt_client_free/35 (mqtt_client_free) @062b0460
   Type: function definition analyzed
   Visibility: externally_visible public
   References: 
@@ -2666,7 +2666,7 @@ mqtt_client_free/35 (mqtt_client_free) @06192460
   Function flags: count:1073741824 (estimated locally) body optimize_size
   Called by: 
   Calls: mem_free/43 (1073741824 (estimated locally),1.00 per call) 
-mqtt_client_new/34 (mqtt_client_new) @061921c0
+mqtt_client_new/34 (mqtt_client_new) @062b01c0
   Type: function definition analyzed
   Visibility: externally_visible public
   References: 
@@ -2675,7 +2675,7 @@ mqtt_client_new/34 (mqtt_client_new) @061921c0
   Function flags: count:1073741824 (estimated locally) body optimize_size
   Called by: 
   Calls: mem_calloc/42 (1073741824 (estimated locally),1.00 per call) 
-mqtt_set_inpub_callback/33 (mqtt_set_inpub_callback) @061877e0
+mqtt_set_inpub_callback/33 (mqtt_set_inpub_callback) @062a57e0
   Type: function definition analyzed
   Visibility: externally_visible public
   References: 
@@ -2684,7 +2684,7 @@ mqtt_set_inpub_callback/33 (mqtt_set_inpub_callback) @061877e0
   Function flags: count:357913 (estimated locally) body optimize_size
   Called by: 
   Calls: 
-mqtt_sub_unsub/32 (mqtt_sub_unsub) @06187ee0
+mqtt_sub_unsub/32 (mqtt_sub_unsub) @062a5ee0
   Type: function definition analyzed
   Visibility: externally_visible public
   References: 
@@ -2693,7 +2693,7 @@ mqtt_sub_unsub/32 (mqtt_sub_unsub) @06187ee0
   Function flags: count:357913 (estimated locally) body optimize_size
   Called by: 
   Calls: mqtt_output_send/6 (82881 (estimated locally),0.23 per call) mqtt_append_request/8 (82881 (estimated locally),0.23 per call) mqtt_ringbuf_put/2 (27351 (estimated locally),0.08 per call) mqtt_output_append_string/17 (82881 (estimated locally),0.23 per call) mqtt_output_append_u16/15 (82881 (estimated locally),0.23 per call) mqtt_output_append_fixed_header.constprop/75 (82881 (estimated locally),0.23 per call) mqtt_delete_request/9 (433 (estimated locally),0.00 per call) mqtt_output_check_space/19 (83314 (estimated locally),0.23 per call) mqtt_create_request.constprop/78 (84080 (estimated locally),0.23 per call) msg_generate_packet_id.isra.0/62 (84080 (estimated locally),0.23 per call) strlen/39 (175378 (estimated locally),0.49 per call) 
-mqtt_publish/31 (mqtt_publish) @06187700
+mqtt_publish/31 (mqtt_publish) @062a5700
   Type: function definition analyzed
   Visibility: externally_visible public
   References: 
@@ -2702,7 +2702,7 @@ mqtt_publish/31 (mqtt_publish) @06187700
   Function flags: count:357913 (estimated locally) body optimize_size
   Called by: 
   Calls: mqtt_output_send/6 (164896 (estimated locally),0.46 per call) mqtt_append_request/8 (164896 (estimated locally),0.46 per call) mqtt_output_append_buf/16 (38091 (estimated locally),0.11 per call) mqtt_output_append_u16/15 (54416 (estimated locally),0.15 per call) mqtt_output_append_string/17 (164896 (estimated locally),0.46 per call) mqtt_output_append_fixed_header.constprop/75 (164896 (estimated locally),0.46 per call) mqtt_delete_request/9 (1733 (estimated locally),0.00 per call) mqtt_output_check_space/19 (166629 (estimated locally),0.47 per call) mqtt_create_request.constprop/78 (168159 (estimated locally),0.47 per call) msg_generate_packet_id.isra.0/62 (56677 (estimated locally),0.16 per call) strlen/39 (173554 (estimated locally),0.48 per call) 
-mqtt_tcp_connect_cb/30 (mqtt_tcp_connect_cb) @061870e0
+mqtt_tcp_connect_cb/30 (mqtt_tcp_connect_cb) @062a50e0
   Type: function definition analyzed
   Visibility: prevailing_def_ironly
   Address is taken.
@@ -2712,7 +2712,7 @@ mqtt_tcp_connect_cb/30 (mqtt_tcp_connect_cb) @061870e0
   Function flags: count:1073741824 (estimated locally) body optimize_size
   Called by: 
   Calls: mqtt_tcp_connect_cb.part.0/71 (524845000 (estimated locally),0.49 per call) 
-mqtt_tcp_poll_cb/29 (mqtt_tcp_poll_cb) @06179e00
+mqtt_tcp_poll_cb/29 (mqtt_tcp_poll_cb) @06297e00
   Type: function definition analyzed
   Visibility: prevailing_def_ironly
   Address is taken.
@@ -2722,7 +2722,7 @@ mqtt_tcp_poll_cb/29 (mqtt_tcp_poll_cb) @06179e00
   Function flags: count:1073741824 (estimated locally) body optimize_size
   Called by: 
   Calls: mqtt_output_send/6 (217325345 (estimated locally),0.20 per call) 
-mqtt_tcp_err_cb/28 (mqtt_tcp_err_cb) @06179b60
+mqtt_tcp_err_cb/28 (mqtt_tcp_err_cb) @06297b60
   Type: function definition analyzed
   Visibility: prevailing_def_ironly
   Address is taken.
@@ -2732,7 +2732,7 @@ mqtt_tcp_err_cb/28 (mqtt_tcp_err_cb) @06179b60
   Function flags: count:230763 (estimated locally) body optimize_size
   Called by: 
   Calls: mqtt_tcp_err_cb.part.0/70 (123389 (estimated locally),0.53 per call) 
-mqtt_tcp_sent_cb/27 (mqtt_tcp_sent_cb) @061798c0
+mqtt_tcp_sent_cb/27 (mqtt_tcp_sent_cb) @062978c0
   Type: function definition analyzed
   Visibility: prevailing_def_ironly
   Address is taken.
@@ -2742,7 +2742,7 @@ mqtt_tcp_sent_cb/27 (mqtt_tcp_sent_cb) @061798c0
   Function flags: count:347387059 (estimated locally) body optimize_size
   Called by: 
   Calls: mqtt_tcp_sent_cb.part.0/69 (118111600 (estimated locally),0.34 per call) 
-mqtt_tcp_recv_cb/26 (mqtt_tcp_recv_cb) @06179620
+mqtt_tcp_recv_cb/26 (mqtt_tcp_recv_cb) @06297620
   Type: function definition analyzed
   Visibility: prevailing_def_ironly
   Address is taken.
@@ -2752,7 +2752,7 @@ mqtt_tcp_recv_cb/26 (mqtt_tcp_recv_cb) @06179620
   Function flags: count:219131 (estimated locally) body optimize_size
   Called by: 
   Calls: mqtt_tcp_recv_cb.part.0/72 (25078 (estimated locally),0.11 per call) pbuf_free/58 (12919 (estimated locally),0.06 per call) mqtt_close/20 (8021 (estimated locally),0.04 per call) 
-mqtt_parse_incoming/25 (mqtt_parse_incoming) @06179380
+mqtt_parse_incoming/25 (mqtt_parse_incoming) @06297380
   Type: function definition analyzed
   Visibility: prevailing_def_ironly
   References: 
@@ -2761,7 +2761,7 @@ mqtt_parse_incoming/25 (mqtt_parse_incoming) @06179380
   Function flags: count:69891998 (estimated locally) body local optimize_size
   Called by: mqtt_tcp_recv_cb.part.0/72 (1073741824 (estimated locally),1.00 per call) 
   Calls: mqtt_message_received/24 (197021768 (estimated locally),2.82 per call) pbuf_copy_partial/61 (353212205 (estimated locally),5.05 per call) mqtt_message_received/24 (75985482 (estimated locally),1.09 per call) pbuf_get_at/60 (218286360 (estimated locally),3.12 per call) 
-mqtt_message_received/24 (mqtt_message_received) @061790e0
+mqtt_message_received/24 (mqtt_message_received) @062970e0
   Type: function definition analyzed
   Visibility: prevailing_def_ironly
   References: 
@@ -2774,7 +2774,7 @@ mqtt_message_received/24 (mqtt_message_received) @061790e0
    Indirect call(3414 (estimated locally),0.02 per call)  of param:0 loaded from aggregate passed by reference at offset 768 (vptr maybe changed)
    Indirect call(1458 (estimated locally),0.01 per call)  of param:0 loaded from aggregate passed by reference at offset 800 (vptr maybe changed)
    Indirect call(2851 (estimated locally),0.01 per call)  of param:0 loaded from aggregate passed by reference at offset 160 (vptr maybe changed)
-mqtt_incomming_suback/23 (mqtt_incomming_suback) @0614be00
+mqtt_incomming_suback/23 (mqtt_incomming_suback) @06271e00
   Type: function definition analyzed
   Visibility: prevailing_def_ironly
   References: 
@@ -2784,7 +2784,7 @@ mqtt_incomming_suback/23 (mqtt_incomming_suback) @0614be00
   Called by: mqtt_message_received/24 (1609 (estimated locally),0.01 per call) 
   Calls: 
    Indirect call(751619278 (estimated locally),0.70 per call)  of param:0 loaded from aggregate passed by reference at offset 32 (vptr maybe changed)
-pub_ack_rec_rel_response/22 (pub_ack_rec_rel_response) @0614bb60
+pub_ack_rec_rel_response/22 (pub_ack_rec_rel_response) @06271b60
   Type: function definition analyzed
   Visibility: prevailing_def_ironly
   References: 
@@ -2793,7 +2793,7 @@ pub_ack_rec_rel_response/22 (pub_ack_rec_rel_response) @0614bb60
   Function flags: count:1073741824 (estimated locally) body local optimize_size
   Called by: mqtt_message_received/24 (3054 (estimated locally),0.01 per call) mqtt_message_received/24 (3829 (estimated locally),0.02 per call) mqtt_message_received/24 (1219 (estimated locally),0.01 per call) 
   Calls: mqtt_output_send/6 (1031006900 (estimated locally),0.96 per call) mqtt_output_append_u16/15 (1031006900 (estimated locally),0.96 per call) mqtt_output_append_fixed_header.constprop/75 (1031006900 (estimated locally),0.96 per call) mqtt_output_check_space/19 (1073741824 (estimated locally),1.00 per call) 
-mqtt_cyclic_timer/21 (mqtt_cyclic_timer) @0614b8c0
+mqtt_cyclic_timer/21 (mqtt_cyclic_timer) @062718c0
   Type: function definition analyzed
   Visibility: prevailing_def_ironly
   Address is taken.
@@ -2803,7 +2803,7 @@ mqtt_cyclic_timer/21 (mqtt_cyclic_timer) @0614b8c0
   Function flags: count:357913 (estimated locally) body optimize_size
   Called by: 
   Calls: sys_timeout/56 (82174 (estimated locally),0.23 per call) mqtt_output_append_fixed_header.constprop/75 (1822 (estimated locally),0.01 per call) mqtt_output_check_space/19 (5522 (estimated locally),0.02 per call) mqtt_close/20 (5522 (estimated locally),0.02 per call) mqtt_request_time_elapsed.constprop/77 (33468 (estimated locally),0.09 per call) mqtt_close/20 (28111 (estimated locally),0.08 per call) 
-mqtt_close/20 (mqtt_close) @0614b620
+mqtt_close/20 (mqtt_close) @06271620
   Type: function definition analyzed
   Visibility: prevailing_def_ironly
   References: mqtt_cyclic_timer/21 (addr)
@@ -2813,7 +2813,7 @@ mqtt_close/20 (mqtt_close) @0614b620
   Called by: mqtt_disconnect/37 (82678 (estimated locally),0.23 per call) mqtt_tcp_recv_cb/26 (8021 (estimated locally),0.04 per call) mqtt_tcp_recv_cb.part.0/72 (354334802 (estimated locally),0.33 per call) mqtt_cyclic_timer/21 (5522 (estimated locally),0.02 per call) mqtt_cyclic_timer/21 (28111 (estimated locally),0.08 per call) mqtt_tcp_err_cb.part.0/70 (1073741824 (estimated locally),1.00 per call) 
   Calls: sys_untimeout/55 (250539 (estimated locally),0.70 per call) mqtt_clear_requests/12 (250539 (estimated locally),0.70 per call) tcp_abort/51 (44208 (estimated locally),0.12 per call) tcp_close/54 (133963 (estimated locally),0.37 per call) tcp_sent/53 (133963 (estimated locally),0.37 per call) tcp_err/50 (133963 (estimated locally),0.37 per call) tcp_recv/52 (133963 (estimated locally),0.37 per call) 
    Indirect call(87689 (estimated locally),0.25 per call)  of param:0 loaded from aggregate passed by reference at offset 160 (vptr maybe changed)
-mqtt_output_check_space/19 (mqtt_output_check_space) @0614b380
+mqtt_output_check_space/19 (mqtt_output_check_space) @06271380
   Type: function definition analyzed
   Visibility: prevailing_def_ironly
   References: 
@@ -2822,7 +2822,7 @@ mqtt_output_check_space/19 (mqtt_output_check_space) @0614b380
   Function flags: count:357913 (estimated locally) body local optimize_size
   Called by: mqtt_client_connect/36 (76857 (estimated locally),0.21 per call) mqtt_sub_unsub/32 (83314 (estimated locally),0.23 per call) mqtt_publish/31 (166629 (estimated locally),0.47 per call) mqtt_cyclic_timer/21 (5522 (estimated locally),0.02 per call) pub_ack_rec_rel_response/22 (1073741824 (estimated locally),1.00 per call) 
   Calls: mqtt_ringbuf_len/5 (250539 (estimated locally),0.70 per call) 
-mqtt_output_append_fixed_header/18 (mqtt_output_append_fixed_header) @0614b0e0
+mqtt_output_append_fixed_header/18 (mqtt_output_append_fixed_header) @062710e0
   Type: function
   Body removed by symtab_remove_unreachable_nodes
   Visibility: prevailing_def_ironly
@@ -2832,7 +2832,7 @@ mqtt_output_append_fixed_header/18 (mqtt_output_append_fixed_header) @0614b0e0
   Function flags: count:118111600 (estimated locally) body optimize_size
   Called by: 
   Calls: 
-mqtt_output_append_string/17 (mqtt_output_append_string) @06147e00
+mqtt_output_append_string/17 (mqtt_output_append_string) @0626de00
   Type: function definition analyzed
   Visibility: prevailing_def_ironly
   References: 
@@ -2841,7 +2841,7 @@ mqtt_output_append_string/17 (mqtt_output_append_string) @06147e00
   Function flags: count:118111600 (estimated locally) body local optimize_size
   Called by: mqtt_client_connect/36 (5879 (estimated locally),0.02 per call) mqtt_client_connect/36 (4543 (estimated locally),0.01 per call) mqtt_client_connect/36 (5879 (estimated locally),0.02 per call) mqtt_client_connect/36 (5879 (estimated locally),0.02 per call) mqtt_client_connect/36 (17816 (estimated locally),0.05 per call) mqtt_client_connect/36 (17816 (estimated locally),0.05 per call) mqtt_sub_unsub/32 (82881 (estimated locally),0.23 per call) mqtt_publish/31 (164896 (estimated locally),0.46 per call) 
   Calls: mqtt_ringbuf_put/2 (955630223 (estimated locally),8.09 per call) mqtt_ringbuf_put/2 (118111600 (estimated locally),1.00 per call) mqtt_ringbuf_put/2 (118111600 (estimated locally),1.00 per call) 
-mqtt_output_append_buf/16 (mqtt_output_append_buf) @06147b60
+mqtt_output_append_buf/16 (mqtt_output_append_buf) @0626db60
   Type: function definition analyzed
   Visibility: prevailing_def_ironly
   References: 
@@ -2850,7 +2850,7 @@ mqtt_output_append_buf/16 (mqtt_output_append_buf) @06147b60
   Function flags: count:118111600 (estimated locally) body local optimize_size
   Called by: mqtt_publish/31 (38091 (estimated locally),0.11 per call) 
   Calls: mqtt_ringbuf_put/2 (955630223 (estimated locally),8.09 per call) 
-mqtt_output_append_u16/15 (mqtt_output_append_u16) @061478c0
+mqtt_output_append_u16/15 (mqtt_output_append_u16) @0626d8c0
   Type: function definition analyzed
   Visibility: prevailing_def_ironly
   References: 
@@ -2859,7 +2859,7 @@ mqtt_output_append_u16/15 (mqtt_output_append_u16) @061478c0
   Function flags: count:1073741824 (estimated locally) body local optimize_size
   Called by: mqtt_client_connect/36 (17816 (estimated locally),0.05 per call) mqtt_sub_unsub/32 (82881 (estimated locally),0.23 per call) mqtt_publish/31 (54416 (estimated locally),0.15 per call) pub_ack_rec_rel_response/22 (1031006900 (estimated locally),0.96 per call) 
   Calls: mqtt_ringbuf_put/2 (1073741824 (estimated locally),1.00 per call) mqtt_ringbuf_put/2 (1073741824 (estimated locally),1.00 per call) 
-mqtt_init_requests/13 (mqtt_init_requests) @06147380
+mqtt_init_requests/13 (mqtt_init_requests) @0626d380
   Type: function
   Body removed by symtab_remove_unreachable_nodes
   Visibility: prevailing_def_ironly
@@ -2869,7 +2869,7 @@ mqtt_init_requests/13 (mqtt_init_requests) @06147380
   Function flags: count:357913 (estimated locally) body optimize_size
   Called by: 
   Calls: 
-mqtt_clear_requests/12 (mqtt_clear_requests) @061470e0
+mqtt_clear_requests/12 (mqtt_clear_requests) @0626d0e0
   Type: function definition analyzed
   Visibility: prevailing_def_ironly
   References: 
@@ -2878,7 +2878,7 @@ mqtt_clear_requests/12 (mqtt_clear_requests) @061470e0
   Function flags: count:357913 (estimated locally) body local optimize_size
   Called by: mqtt_close/20 (250539 (estimated locally),0.70 per call) 
   Calls: mqtt_delete_request/9 (2027091 (estimated locally),5.66 per call) 
-mqtt_request_time_elapsed/11 (mqtt_request_time_elapsed) @06136e00
+mqtt_request_time_elapsed/11 (mqtt_request_time_elapsed) @0625ce00
   Type: function
   Body removed by symtab_remove_unreachable_nodes
   Visibility: prevailing_def_ironly
@@ -2888,7 +2888,7 @@ mqtt_request_time_elapsed/11 (mqtt_request_time_elapsed) @06136e00
   Function flags: count:357913 (estimated locally) body optimize_size
   Called by: 
   Calls: 
-mqtt_take_request/10 (mqtt_take_request) @06136b60
+mqtt_take_request/10 (mqtt_take_request) @0625cb60
   Type: function definition analyzed
   Visibility: prevailing_def_ironly
   References: 
@@ -2897,7 +2897,7 @@ mqtt_take_request/10 (mqtt_take_request) @06136b60
   Function flags: count:357913 (estimated locally) body local optimize_size
   Called by: mqtt_message_received/24 (10570 (estimated locally),0.05 per call) mqtt_tcp_sent_cb.part.0/69 (1073741824 (estimated locally),9.09 per call) 
   Calls: 
-mqtt_delete_request/9 (mqtt_delete_request) @061368c0
+mqtt_delete_request/9 (mqtt_delete_request) @0625c8c0
   Type: function definition analyzed
   Visibility: prevailing_def_ironly
   References: 
@@ -2906,7 +2906,7 @@ mqtt_delete_request/9 (mqtt_delete_request) @061368c0
   Function flags: count:1073741824 (estimated locally) body local optimize_size
   Called by: mqtt_request_time_elapsed.constprop/77 (2116828 (estimated locally),5.91 per call) mqtt_sub_unsub/32 (433 (estimated locally),0.00 per call) mqtt_publish/31 (1733 (estimated locally),0.00 per call) mqtt_message_received/24 (6493 (estimated locally),0.03 per call) mqtt_tcp_sent_cb.part.0/69 (955630223 (estimated locally),8.09 per call) mqtt_clear_requests/12 (2027091 (estimated locally),5.66 per call) 
   Calls: 
-mqtt_append_request/8 (mqtt_append_request) @06136620
+mqtt_append_request/8 (mqtt_append_request) @0625c620
   Type: function definition analyzed
   Visibility: prevailing_def_ironly
   References: 
@@ -2915,7 +2915,7 @@ mqtt_append_request/8 (mqtt_append_request) @06136620
   Function flags: count:306783 (estimated locally) body local optimize_size
   Called by: mqtt_sub_unsub/32 (82881 (estimated locally),0.23 per call) mqtt_publish/31 (164896 (estimated locally),0.46 per call) 
   Calls: 
-mqtt_create_request/7 (mqtt_create_request) @06136380
+mqtt_create_request/7 (mqtt_create_request) @0625c380
   Type: function
   Body removed by symtab_remove_unreachable_nodes
   Visibility: prevailing_def_ironly
@@ -2925,7 +2925,7 @@ mqtt_create_request/7 (mqtt_create_request) @06136380
   Function flags: count:357913 (estimated locally) body optimize_size
   Called by: 
   Calls: 
-mqtt_output_send/6 (mqtt_output_send) @061360e0
+mqtt_output_send/6 (mqtt_output_send) @0625c0e0
   Type: function definition analyzed
   Visibility: prevailing_def_ironly
   References: 
@@ -2934,7 +2934,7 @@ mqtt_output_send/6 (mqtt_output_send) @061360e0
   Function flags: count:1073741823 (estimated locally) body local optimize_size
   Called by: mqtt_sub_unsub/32 (82881 (estimated locally),0.23 per call) mqtt_publish/31 (164896 (estimated locally),0.46 per call) mqtt_tcp_connect_cb.part.0/71 (1073741824 (estimated locally),1.00 per call) pub_ack_rec_rel_response/22 (1031006900 (estimated locally),0.96 per call) mqtt_tcp_sent_cb.part.0/69 (118111601 (estimated locally),1.00 per call) mqtt_tcp_poll_cb/29 (217325345 (estimated locally),0.20 per call) 
   Calls: tcp_output/41 (154348240 (estimated locally),0.14 per call) mqtt_ringbuf_advance_get_idx.isra.0/63 (154348240 (estimated locally),0.14 per call) tcp_write/40 (77174120 (estimated locally),0.07 per call) mqtt_ringbuf_len/5 (77174120 (estimated locally),0.07 per call) mqtt_ringbuf_advance_get_idx.isra.0/63 (77174120 (estimated locally),0.07 per call) tcp_write/40 (467721938 (estimated locally),0.44 per call) mqtt_ringbuf_len/5 (1073741823 (estimated locally),1.00 per call) 
-mqtt_ringbuf_len/5 (mqtt_ringbuf_len) @0612eb60
+mqtt_ringbuf_len/5 (mqtt_ringbuf_len) @06254b60
   Type: function definition analyzed
   Visibility: prevailing_def_ironly
   References: 
@@ -2943,7 +2943,7 @@ mqtt_ringbuf_len/5 (mqtt_ringbuf_len) @0612eb60
   Function flags: count:1073741824 (estimated locally) body local optimize_size
   Called by: mqtt_output_send/6 (77174120 (estimated locally),0.07 per call) mqtt_output_send/6 (1073741823 (estimated locally),1.00 per call) mqtt_output_check_space/19 (250539 (estimated locally),0.70 per call) 
   Calls: 
-mqtt_ringbuf_put/2 (mqtt_ringbuf_put) @0612e380
+mqtt_ringbuf_put/2 (mqtt_ringbuf_put) @06254380
   Type: function definition analyzed
   Visibility: prevailing_def_ironly
   References: 

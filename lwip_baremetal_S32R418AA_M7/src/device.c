@@ -40,6 +40,8 @@
  */
 
 #include "S32R41.h"
+#include "sys_init.h"
+
 #include "Pit_Ip.h"
 #include "OsIf.h"
 #if defined USING_OS_BAREMETAL
@@ -52,6 +54,8 @@
 #include "Gmac_Ip.h"
 #include "Gmac_Ip_Irq.h"
 #include "Osif_rtd_port.h"
+
+extern Std_ReturnType sys_init_clock_full(void);
 
 #ifndef USING_OS_AUTOSAROS
 extern void PIT_0_ISR(void);
@@ -222,9 +226,12 @@ void device_init(void)
     err = Siul2_Port_Ip_Init(NUM_OF_CONFIGURED_PINS_PortContainer_0_BOARD_InitPeripherals, g_pin_mux_InitConfigArr_PortContainer_0_BOARD_InitPeripherals);
     DevAssert((StatusType)E_OK == err);
 
-    /* Initialize Clocks */
-    err = Clock_Ip_Init(&Clock_Ip_aClockConfig[0U]);
-    DevAssert((StatusType)E_OK == err);
+    /* Initialize clocks using full sys_init flow */
+    if (sys_init_clock_full() != E_OK)
+    {
+        DevAssert(FALSE);
+    }
+
 
 #ifndef USING_OS_AUTOSAROS
     /* Install interrupt handlers for PIT and EMAC */

@@ -44,7 +44,7 @@ Reclaiming variables:
 Clearing address taken flags:
 Symbol table:
 
-OsIf_Timer_System_Internal_GetElapsed/2 (OsIf_Timer_System_Internal_GetElapsed) @06b5eee0
+OsIf_Timer_System_Internal_GetElapsed/2 (OsIf_Timer_System_Internal_GetElapsed) @06b3eee0
   Type: function definition analyzed
   Visibility: externally_visible public
   References: 
@@ -53,7 +53,7 @@ OsIf_Timer_System_Internal_GetElapsed/2 (OsIf_Timer_System_Internal_GetElapsed) 
   Function flags: count:1073741824 (estimated locally) body optimize_size
   Called by: 
   Calls: 
-OsIf_Timer_System_Internal_GetCounter/1 (OsIf_Timer_System_Internal_GetCounter) @06b5eb60
+OsIf_Timer_System_Internal_GetCounter/1 (OsIf_Timer_System_Internal_GetCounter) @06b3eb60
   Type: function definition analyzed
   Visibility: externally_visible public
   References: 
@@ -62,7 +62,7 @@ OsIf_Timer_System_Internal_GetCounter/1 (OsIf_Timer_System_Internal_GetCounter) 
   Function flags: count:1073741824 (estimated locally) body optimize_size
   Called by: 
   Calls: 
-OsIf_Timer_System_Internal_Init/0 (OsIf_Timer_System_Internal_Init) @06b5e8c0
+OsIf_Timer_System_Internal_Init/0 (OsIf_Timer_System_Internal_Init) @06b3e8c0
   Type: function definition analyzed
   Visibility: externally_visible public
   References: 

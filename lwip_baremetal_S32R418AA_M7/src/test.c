@@ -537,6 +537,54 @@ static void my_udp_init(void)
 }
 /* --- CUSTOM UDP SENDER END --- */
 
+/* --- UDP PERF SERVER START --- */
+static struct udp_pcb *udp_perf_pcb;
+static volatile u32_t udp_perf_rx_bytes = 0;
+
+static void udp_perf_recv(void *arg, struct udp_pcb *pcb, struct pbuf *p,
+                          const ip_addr_t *addr, u16_t port)
+{
+  LWIP_UNUSED_ARG(arg);
+  LWIP_UNUSED_ARG(pcb);
+  LWIP_UNUSED_ARG(addr);
+  LWIP_UNUSED_ARG(port);
+
+  if (p != NULL) {
+    udp_perf_rx_bytes += p->tot_len;
+    pbuf_free(p);
+  }
+}
+
+static void udp_perf_report(void *arg)
+{
+  LWIP_UNUSED_ARG(arg);
+  
+  /* Calculate throughput in kbit/s: bytes * 8 / 1000 ms */
+  u32_t kbit_s = (udp_perf_rx_bytes * 8) / 1000;
+
+#if defined(PRINTF_SUPPORT) && PRINTF_SUPPORT != 0
+  printf("UDP Perf: %lu kbit/s\n", kbit_s);
+#endif
+
+  udp_perf_rx_bytes = 0;
+  sys_timeout(1000, udp_perf_report, NULL);
+}
+
+static void udp_perf_init(void)
+{
+  udp_perf_pcb = udp_new();
+  if (udp_perf_pcb != NULL) {
+    if (udp_bind(udp_perf_pcb, IP_ADDR_ANY, 5001) == ERR_OK) {
+      udp_recv(udp_perf_pcb, udp_perf_recv, NULL);
+      sys_timeout(1000, udp_perf_report, NULL);
+#if defined(PRINTF_SUPPORT) && PRINTF_SUPPORT != 0
+      printf("UDP Perf Server started on port 5001\n");
+#endif
+    }
+  }
+}
+/* --- UDP PERF SERVER END --- */
+
 /* This function initializes applications
  * Implements apps_init_Activity
  */
@@ -643,6 +691,9 @@ apps_init(void)
 
   /* 启动自定义 UDP 发送任务 */
   my_udp_init();
+
+  /* 启动 UDP Perf Server */
+  udp_perf_init();
 }
 
 /* This function initializes this lwIP test. When NO_SYS=1, this is done in

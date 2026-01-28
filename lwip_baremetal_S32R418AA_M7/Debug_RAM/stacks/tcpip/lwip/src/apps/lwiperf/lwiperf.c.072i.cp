@@ -1274,7 +1274,7 @@ Reclaiming variables:
 Clearing address taken flags:
 Symbol table:
 
-lwiperf_start_tcp_server_impl.part.0.constprop.0/58 (lwiperf_start_tcp_server_impl.part.0.constprop) @06345ee0
+lwiperf_start_tcp_server_impl.part.0.constprop.0/58 (lwiperf_start_tcp_server_impl.part.0.constprop) @061e0ee0
   Type: function definition analyzed
   Visibility: artificial
   References: lwiperf_tcp_accept/16 (addr)
@@ -1284,7 +1284,7 @@ lwiperf_start_tcp_server_impl.part.0.constprop.0/58 (lwiperf_start_tcp_server_im
   Function flags: count:1073741824 (estimated locally) first_run:1 local split_part optimize_size
   Called by: lwiperf_start_tcp_server_impl.constprop/57 (248259 (estimated locally),0.69 per call) 
   Calls: lwiperf_list_add/3 (513017274 (estimated locally),0.48 per call) tcp_accept/32 (513017274 (estimated locally),0.48 per call) tcp_arg/31 (513017274 (estimated locally),0.48 per call) mem_free/30 (2319013 (estimated locally),0.00 per call) tcp_close/29 (2319013 (estimated locally),0.00 per call) tcp_listen_with_backlog/28 (515336287 (estimated locally),0.48 per call) tcp_bind/27 (1054288640 (estimated locally),0.98 per call) tcp_new_ip_type/26 (1063970774 (estimated locally),0.99 per call) memset/25 (1063970774 (estimated locally),0.99 per call) mem_malloc/24 (1073741824 (estimated locally),1.00 per call) 
-lwiperf_start_tcp_server_impl.constprop.0/57 (lwiperf_start_tcp_server_impl.constprop) @0647eb60
+lwiperf_start_tcp_server_impl.constprop.0/57 (lwiperf_start_tcp_server_impl.constprop) @0632db60
   Type: function definition analyzed
   Visibility:
   References: 
@@ -1294,7 +1294,7 @@ lwiperf_start_tcp_server_impl.constprop.0/57 (lwiperf_start_tcp_server_impl.cons
   Function flags: count:357913 (estimated locally) local optimize_size
   Called by: lwiperf_start_tcp_server/18 (1073741824 (estimated locally),1.00 per call) lwiperf_start_tcp_client/21 (122464 (estimated locally),0.18 per call) 
   Calls: lwiperf_start_tcp_server_impl.part.0.constprop/58 (248259 (estimated locally),0.69 per call) 
-lwiperf_tcp_client_connected.part.0/56 (lwiperf_tcp_client_connected.part.0) @0644ca80
+lwiperf_tcp_client_connected.part.0/56 (lwiperf_tcp_client_connected.part.0) @062fca80
   Type: function definition analyzed
   Visibility: prevailing_def_ironly artificial
   References: 
@@ -1303,7 +1303,7 @@ lwiperf_tcp_client_connected.part.0/56 (lwiperf_tcp_client_connected.part.0) @06
   Function flags: count:1073741824 (estimated locally) first_run:1 body local split_part optimize_size
   Called by: lwiperf_tcp_client_connected/10 (30371 (estimated locally),0.20 per call) 
   Calls: sys_now/33 (1073741824 (estimated locally),1.00 per call) lwiperf_tcp_client_send_more/8 (1073741824 (estimated locally),1.00 per call) 
-lwiperf_tcp_recv.part.0/55 (lwiperf_tcp_recv.part.0) @0644cee0
+lwiperf_tcp_recv.part.0/55 (lwiperf_tcp_recv.part.0) @062fcee0
   Type: function definition analyzed
   Visibility: prevailing_def_ironly artificial
   References: 
@@ -1312,7 +1312,7 @@ lwiperf_tcp_recv.part.0/55 (lwiperf_tcp_recv.part.0) @0644cee0
   Function flags: count:323907 (estimated locally) first_run:1 body local split_part optimize_size
   Called by: lwiperf_tcp_recv/13 (30064 (estimated locally),0.20 per call) 
   Calls: lwiperf_tcp_close/7 (49169 (estimated locally),0.15 per call) pbuf_free/40 (49169 (estimated locally),0.15 per call) pbuf_copy_partial/41 (63941 (estimated locally),0.20 per call) lwiperf_tcp_close/7 (21101 (estimated locally),0.07 per call) pbuf_free/40 (21101 (estimated locally),0.07 per call) lwiperf_tx_start_passive/12 (7069 (estimated locally),0.02 per call) lwiperf_tcp_close/7 (1431 (estimated locally),0.00 per call) pbuf_free/40 (1431 (estimated locally),0.00 per call) pbuf_memcmp/42 (42841 (estimated locally),0.13 per call) lwiperf_tcp_close/7 (8671 (estimated locally),0.03 per call) pbuf_free/40 (8671 (estimated locally),0.03 per call) sys_now/33 (55270 (estimated locally),0.17 per call) tcp_recved/43 (55270 (estimated locally),0.17 per call) pbuf_free/40 (55270 (estimated locally),0.17 per call) pbuf_remove_header/44 (107289 (estimated locally),0.33 per call) tcp_recved/43 (27247 (estimated locally),0.08 per call) pbuf_free/40 (27247 (estimated locally),0.08 per call) 
-lwiperf_tx_start_impl.part.0/54 (lwiperf_tx_start_impl.part.0) @0644c700
+lwiperf_tx_start_impl.part.0/54 (lwiperf_tx_start_impl.part.0) @062fc700
   Type: function definition analyzed
   Visibility: prevailing_def_ironly artificial
   References: lwiperf_tcp_client_sent/9 (addr)lwiperf_tcp_poll/15 (addr)lwiperf_tcp_err/14 (addr)lwiperf_tcp_client_connected/10 (addr)
@@ -1321,7 +1321,7 @@ lwiperf_tx_start_impl.part.0/54 (lwiperf_tx_start_impl.part.0) @0644c700
   Function flags: count:1073741824 (estimated locally) first_run:1 body local split_part optimize_size
   Called by: lwiperf_tx_start_impl/11 (93775 (estimated locally),0.26 per call) 
   Calls: mem_malloc/24 (1073741824 (estimated locally),1.00 per call) tcp_new_ip_type/26 (1063970774 (estimated locally),0.99 per call) mem_free/30 (4787868 (estimated locally),0.00 per call) memset/25 (1059182906 (estimated locally),0.99 per call) sys_now/33 (1059182906 (estimated locally),0.99 per call) memcpy/45 (1059182906 (estimated locally),0.99 per call) tcp_arg/31 (1059182906 (estimated locally),0.99 per call) tcp_sent/46 (1059182906 (estimated locally),0.99 per call) tcp_poll/35 (1059182906 (estimated locally),0.99 per call) tcp_err/36 (1059182906 (estimated locally),0.99 per call) tcp_connect/47 (1059182906 (estimated locally),0.99 per call) lwiperf_tcp_close/7 (360122188 (estimated locally),0.34 per call) lwiperf_list_add/3 (699060718 (estimated locally),0.65 per call) 
-lwiperf_tcp_poll.part.0/53 (lwiperf_tcp_poll.part.0) @0644c0e0
+lwiperf_tcp_poll.part.0/53 (lwiperf_tcp_poll.part.0) @062fc0e0
   Type: function definition analyzed
   Visibility: prevailing_def_ironly artificial
   References: 
@@ -1330,7 +1330,7 @@ lwiperf_tcp_poll.part.0/53 (lwiperf_tcp_poll.part.0) @0644c0e0
   Function flags: count:1073741824 (estimated locally) first_run:1 body local split_part optimize_size
   Called by: lwiperf_tcp_poll/15 (36703 (estimated locally),0.24 per call) 
   Calls: lwiperf_tcp_client_send_more/8 (354334802 (estimated locally),0.33 per call) 
-lwiperf_tcp_client_sent.part.0/52 (lwiperf_tcp_client_sent.part.0) @06345e00
+lwiperf_tcp_client_sent.part.0/52 (lwiperf_tcp_client_sent.part.0) @061e0e00
   Type: function definition analyzed
   Visibility: prevailing_def_ironly artificial
   References: 
@@ -1339,7 +1339,7 @@ lwiperf_tcp_client_sent.part.0/52 (lwiperf_tcp_client_sent.part.0) @06345e00
   Function flags: count:1073741824 (estimated locally) first_run:1 body local split_part optimize_size
   Called by: lwiperf_tcp_client_sent/9 (22666 (estimated locally),0.17 per call) 
   Calls: lwiperf_tcp_client_send_more/8 (1073741824 (estimated locally),1.00 per call) 
-lwiperf_tcp_client_send_more.part.0/51 (lwiperf_tcp_client_send_more.part.0) @06345460
+lwiperf_tcp_client_send_more.part.0/51 (lwiperf_tcp_client_send_more.part.0) @061e0460
   Type: function definition analyzed
   Visibility: prevailing_def_ironly artificial
   References: lwiperf_txbuf_const/2 (addr)
@@ -1348,7 +1348,7 @@ lwiperf_tcp_client_send_more.part.0/51 (lwiperf_tcp_client_send_more.part.0) @06
   Function flags: count:9478698 (estimated locally) first_run:1 body local split_part optimize_size
   Called by: lwiperf_tcp_client_send_more/8 (22776 (estimated locally),0.17 per call) 
   Calls: sys_now/33 (59055800 (estimated locally),6.23 per call) lwip_htonl/37 (59055800 (estimated locally),6.23 per call) lwiperf_tcp_close/7 (1624035 (estimated locally),0.17 per call) lwip_htonl/37 (59055800 (estimated locally),6.23 per call) lwiperf_tcp_close/7 (1624035 (estimated locally),0.17 per call) tcp_write/38 (1073741823 (estimated locally),113.28 per call) tcp_output/39 (6230629 (estimated locally),0.66 per call) 
-lwiperf_tcp_accept.part.0/50 (lwiperf_tcp_accept.part.0) @063457e0
+lwiperf_tcp_accept.part.0/50 (lwiperf_tcp_accept.part.0) @061e07e0
   Type: function definition analyzed
   Visibility: prevailing_def_ironly artificial
   References: lwiperf_tcp_recv/13 (addr)lwiperf_tcp_poll/15 (addr)lwiperf_tcp_err/14 (addr)
@@ -1357,7 +1357,7 @@ lwiperf_tcp_accept.part.0/50 (lwiperf_tcp_accept.part.0) @063457e0
   Function flags: count:306783 (estimated locally) first_run:1 body local split_part optimize_size
   Called by: lwiperf_tcp_accept/16 (22549 (estimated locally),0.10 per call) 
   Calls: mem_malloc/24 (150150 (estimated locally),0.49 per call) memset/25 (148783 (estimated locally),0.48 per call) sys_now/33 (148783 (estimated locally),0.48 per call) tcp_arg/31 (148783 (estimated locally),0.48 per call) tcp_recv/34 (148783 (estimated locally),0.48 per call) tcp_poll/35 (148783 (estimated locally),0.48 per call) tcp_err/36 (148783 (estimated locally),0.48 per call) lwiperf_list_find/5 (37196 (estimated locally),0.12 per call) lwiperf_tcp_close/7 (48355 (estimated locally),0.16 per call) lwiperf_list_add/3 (148783 (estimated locally),0.48 per call) 
-lwiperf_start_tcp_server_impl.part.0/49 (lwiperf_start_tcp_server_impl.part.0) @060698c0
+lwiperf_start_tcp_server_impl.part.0/49 (lwiperf_start_tcp_server_impl.part.0) @05f218c0
   Type: function
   Body removed by symtab_remove_unreachable_nodes
   Visibility: prevailing_def_ironly artificial
@@ -1367,7 +1367,7 @@ lwiperf_start_tcp_server_impl.part.0/49 (lwiperf_start_tcp_server_impl.part.0) @
   Function flags: count:1073741824 (estimated locally) first_run:1 body split_part optimize_size
   Called by: 
   Calls: 
-tcp_abort/48 (tcp_abort) @06309000
+tcp_abort/48 (tcp_abort) @061bf000
   Type: function
   Visibility: external public
   References: 
@@ -1376,7 +1376,7 @@ tcp_abort/48 (tcp_abort) @06309000
   Function flags: optimize_size
   Called by: lwiperf_tcp_close/7 (165356 (estimated locally),0.23 per call) 
   Calls: 
-tcp_connect/47 (tcp_connect) @062efb60
+tcp_connect/47 (tcp_connect) @061a5b60
   Type: function
   Visibility: external public
   References: 
@@ -1385,7 +1385,7 @@ tcp_connect/47 (tcp_connect) @062efb60
   Function flags: optimize_size
   Called by: lwiperf_tx_start_impl.part.0/54 (1059182906 (estimated locally),0.99 per call) 
   Calls: 
-tcp_sent/46 (tcp_sent) @062efa80
+tcp_sent/46 (tcp_sent) @061a5a80
   Type: function
   Visibility: external public
   References: 
@@ -1394,7 +1394,7 @@ tcp_sent/46 (tcp_sent) @062efa80
   Function flags: optimize_size
   Called by: lwiperf_tx_start_impl.part.0/54 (1059182906 (estimated locally),0.99 per call) lwiperf_tcp_close/7 (501079 (estimated locally),0.70 per call) 
   Calls: 
-memcpy/45 (memcpy) @062ef9a0
+memcpy/45 (memcpy) @061a59a0
   Type: function
   Visibility: external public
   References: 
@@ -1403,7 +1403,7 @@ memcpy/45 (memcpy) @062ef9a0
   Function flags: optimize_size
   Called by: lwiperf_tx_start_impl.part.0/54 (1059182906 (estimated locally),0.99 per call) 
   Calls: 
-pbuf_remove_header/44 (pbuf_remove_header) @062ef700
+pbuf_remove_header/44 (pbuf_remove_header) @061a5700
   Type: function
   Visibility: external public
   References: 
@@ -1412,7 +1412,7 @@ pbuf_remove_header/44 (pbuf_remove_header) @062ef700
   Function flags: optimize_size
   Called by: lwiperf_tcp_recv.part.0/55 (107289 (estimated locally),0.33 per call) 
   Calls: 
-tcp_recved/43 (tcp_recved) @062ef620
+tcp_recved/43 (tcp_recved) @061a5620
   Type: function
   Visibility: external public
   References: 
@@ -1421,7 +1421,7 @@ tcp_recved/43 (tcp_recved) @062ef620
   Function flags: optimize_size
   Called by: lwiperf_tcp_recv.part.0/55 (55270 (estimated locally),0.17 per call) lwiperf_tcp_recv.part.0/55 (27247 (estimated locally),0.08 per call) 
   Calls: 
-pbuf_memcmp/42 (pbuf_memcmp) @062ef540
+pbuf_memcmp/42 (pbuf_memcmp) @061a5540
   Type: function
   Visibility: external public
   References: 
@@ -1430,7 +1430,7 @@ pbuf_memcmp/42 (pbuf_memcmp) @062ef540
   Function flags: optimize_size
   Called by: lwiperf_tcp_recv.part.0/55 (42841 (estimated locally),0.13 per call) 
   Calls: 
-pbuf_copy_partial/41 (pbuf_copy_partial) @062ef460
+pbuf_copy_partial/41 (pbuf_copy_partial) @061a5460
   Type: function
   Visibility: external public
   References: 
@@ -1439,7 +1439,7 @@ pbuf_copy_partial/41 (pbuf_copy_partial) @062ef460
   Function flags: optimize_size
   Called by: lwiperf_tcp_recv.part.0/55 (63941 (estimated locally),0.20 per call) 
   Calls: 
-pbuf_free/40 (pbuf_free) @062ef380
+pbuf_free/40 (pbuf_free) @061a5380
   Type: function
   Visibility: external public
   References: 
@@ -1448,7 +1448,7 @@ pbuf_free/40 (pbuf_free) @062ef380
   Function flags: optimize_size
   Called by: lwiperf_tcp_recv.part.0/55 (49169 (estimated locally),0.15 per call) lwiperf_tcp_recv.part.0/55 (21101 (estimated locally),0.07 per call) lwiperf_tcp_recv.part.0/55 (1431 (estimated locally),0.00 per call) lwiperf_tcp_recv.part.0/55 (8671 (estimated locally),0.03 per call) lwiperf_tcp_recv.part.0/55 (55270 (estimated locally),0.17 per call) lwiperf_tcp_recv.part.0/55 (27247 (estimated locally),0.08 per call) 
   Calls: 
-tcp_output/39 (tcp_output) @062ef000
+tcp_output/39 (tcp_output) @061a5000
   Type: function
   Visibility: external public
   References: 
@@ -1457,7 +1457,7 @@ tcp_output/39 (tcp_output) @062ef000
   Function flags: optimize_size
   Called by: lwiperf_tcp_client_send_more.part.0/51 (6230629 (estimated locally),0.66 per call) 
   Calls: 
-tcp_write/38 (tcp_write) @062bdee0
+tcp_write/38 (tcp_write) @06173ee0
   Type: function
   Visibility: external public
   References: 
@@ -1466,7 +1466,7 @@ tcp_write/38 (tcp_write) @062bdee0
   Function flags: optimize_size
   Called by: lwiperf_tcp_client_send_more.part.0/51 (1073741823 (estimated locally),113.28 per call) 
   Calls: 
-lwip_htonl/37 (lwip_htonl) @062bde00
+lwip_htonl/37 (lwip_htonl) @06173e00
   Type: function
   Visibility: external public
   References: 
@@ -1475,7 +1475,7 @@ lwip_htonl/37 (lwip_htonl) @062bde00
   Function flags: optimize_size
   Called by: lwiperf_start_tcp_client/21 (504103 (estimated locally),0.75 per call) lwiperf_start_tcp_client/21 (504103 (estimated locally),0.75 per call) lwiperf_start_tcp_client/21 (504103 (estimated locally),0.75 per call) lwiperf_start_tcp_client/21 (168034 (estimated locally),0.25 per call) lwiperf_start_tcp_client/21 (168034 (estimated locally),0.25 per call) lwiperf_tx_start_passive/12 (715827 (estimated locally),1.00 per call) lwiperf_tcp_client_send_more.part.0/51 (59055800 (estimated locally),6.23 per call) lwiperf_tcp_client_send_more.part.0/51 (59055800 (estimated locally),6.23 per call) 
   Calls: 
-tcp_err/36 (tcp_err) @062bd8c0
+tcp_err/36 (tcp_err) @061738c0
   Type: function
   Visibility: external public
   References: 
@@ -1484,7 +1484,7 @@ tcp_err/36 (tcp_err) @062bd8c0
   Function flags: optimize_size
   Called by: lwiperf_tx_start_impl.part.0/54 (1059182906 (estimated locally),0.99 per call) lwiperf_tcp_accept.part.0/50 (148783 (estimated locally),0.48 per call) lwiperf_tcp_close/7 (501079 (estimated locally),0.70 per call) 
   Calls: 
-tcp_poll/35 (tcp_poll) @062bd7e0
+tcp_poll/35 (tcp_poll) @061737e0
   Type: function
   Visibility: external public
   References: 
@@ -1493,7 +1493,7 @@ tcp_poll/35 (tcp_poll) @062bd7e0
   Function flags: optimize_size
   Called by: lwiperf_tx_start_impl.part.0/54 (1059182906 (estimated locally),0.99 per call) lwiperf_tcp_accept.part.0/50 (148783 (estimated locally),0.48 per call) lwiperf_tcp_close/7 (501079 (estimated locally),0.70 per call) 
   Calls: 
-tcp_recv/34 (tcp_recv) @062bd700
+tcp_recv/34 (tcp_recv) @06173700
   Type: function
   Visibility: external public
   References: 
@@ -1502,7 +1502,7 @@ tcp_recv/34 (tcp_recv) @062bd700
   Function flags: optimize_size
   Called by: lwiperf_tcp_accept.part.0/50 (148783 (estimated locally),0.48 per call) lwiperf_tcp_close/7 (501079 (estimated locally),0.70 per call) 
   Calls: 
-sys_now/33 (sys_now) @062bd620
+sys_now/33 (sys_now) @06173620
   Type: function
   Visibility: external public
   References: 
@@ -1511,7 +1511,7 @@ sys_now/33 (sys_now) @062bd620
   Function flags: optimize_size
   Called by: lwiperf_tcp_client_connected.part.0/56 (1073741824 (estimated locally),1.00 per call) lwiperf_tcp_recv.part.0/55 (55270 (estimated locally),0.17 per call) lwiperf_tx_start_impl.part.0/54 (1059182906 (estimated locally),0.99 per call) lwiperf_tcp_client_send_more.part.0/51 (59055800 (estimated locally),6.23 per call) lwiperf_tcp_accept.part.0/50 (148783 (estimated locally),0.48 per call) lwip_tcp_conn_report/6 (401890827 (estimated locally),0.37 per call) 
   Calls: 
-tcp_accept/32 (tcp_accept) @062bd2a0
+tcp_accept/32 (tcp_accept) @061732a0
   Type: function
   Visibility: external public
   References: 
@@ -1520,7 +1520,7 @@ tcp_accept/32 (tcp_accept) @062bd2a0
   Function flags: optimize_size
   Called by: lwiperf_start_tcp_server_impl.part.0.constprop/58 (513017274 (estimated locally),0.48 per call) 
   Calls: 
-tcp_arg/31 (tcp_arg) @062bd1c0
+tcp_arg/31 (tcp_arg) @061731c0
   Type: function
   Visibility: external public
   References: 
@@ -1529,7 +1529,7 @@ tcp_arg/31 (tcp_arg) @062bd1c0
   Function flags: optimize_size
   Called by: lwiperf_start_tcp_server_impl.part.0.constprop/58 (513017274 (estimated locally),0.48 per call) lwiperf_tx_start_impl.part.0/54 (1059182906 (estimated locally),0.99 per call) lwiperf_tcp_accept.part.0/50 (148783 (estimated locally),0.48 per call) lwiperf_tcp_close/7 (501079 (estimated locally),0.70 per call) 
   Calls: 
-mem_free/30 (mem_free) @062bd0e0
+mem_free/30 (mem_free) @061730e0
   Type: function
   Visibility: external public
   References: 
@@ -1538,7 +1538,7 @@ mem_free/30 (mem_free) @062bd0e0
   Function flags: optimize_size
   Called by: lwiperf_start_tcp_server_impl.part.0.constprop/58 (2319013 (estimated locally),0.00 per call) lwiperf_abort/22 (487371413 (estimated locally),4.13 per call) lwiperf_tx_start_impl.part.0/54 (4787868 (estimated locally),0.00 per call) lwiperf_tcp_close/7 (608453 (estimated locally),0.85 per call) 
   Calls: 
-tcp_close/29 (tcp_close) @062bd000
+tcp_close/29 (tcp_close) @06173000
   Type: function
   Visibility: external public
   References: 
@@ -1547,7 +1547,7 @@ tcp_close/29 (tcp_close) @062bd000
   Function flags: optimize_size
   Called by: lwiperf_start_tcp_server_impl.part.0.constprop/58 (2319013 (estimated locally),0.00 per call) lwiperf_tcp_close/7 (214748 (estimated locally),0.30 per call) lwiperf_tcp_close/7 (501079 (estimated locally),0.70 per call) 
   Calls: 
-tcp_listen_with_backlog/28 (tcp_listen_with_backlog) @062ad620
+tcp_listen_with_backlog/28 (tcp_listen_with_backlog) @06163620
   Type: function
   Visibility: external public
   References: 
@@ -1556,7 +1556,7 @@ tcp_listen_with_backlog/28 (tcp_listen_with_backlog) @062ad620
   Function flags: optimize_size
   Called by: lwiperf_start_tcp_server_impl.part.0.constprop/58 (515336287 (estimated locally),0.48 per call) 
   Calls: 
-tcp_bind/27 (tcp_bind) @062ad380
+tcp_bind/27 (tcp_bind) @06163380
   Type: function
   Visibility: external public
   References: 
@@ -1565,7 +1565,7 @@ tcp_bind/27 (tcp_bind) @062ad380
   Function flags: optimize_size
   Called by: lwiperf_start_tcp_server_impl.part.0.constprop/58 (1054288640 (estimated locally),0.98 per call) 
   Calls: 
-tcp_new_ip_type/26 (tcp_new_ip_type) @062ad0e0
+tcp_new_ip_type/26 (tcp_new_ip_type) @061630e0
   Type: function
   Visibility: external public
   References: 
@@ -1574,7 +1574,7 @@ tcp_new_ip_type/26 (tcp_new_ip_type) @062ad0e0
   Function flags: optimize_size
   Called by: lwiperf_start_tcp_server_impl.part.0.constprop/58 (1063970774 (estimated locally),0.99 per call) lwiperf_tx_start_impl.part.0/54 (1063970774 (estimated locally),0.99 per call) 
   Calls: 
-memset/25 (memset) @062adee0
+memset/25 (memset) @06163ee0
   Type: function
   Visibility: external public
   References: 
@@ -1583,7 +1583,7 @@ memset/25 (memset) @062adee0
   Function flags: optimize_size
   Called by: lwiperf_start_tcp_server_impl.part.0.constprop/58 (1063970774 (estimated locally),0.99 per call) lwiperf_start_tcp_client/21 (672138 (estimated locally),1.00 per call) lwiperf_tx_start_impl.part.0/54 (1059182906 (estimated locally),0.99 per call) lwiperf_tcp_accept.part.0/50 (148783 (estimated locally),0.48 per call) 
   Calls: 
-mem_malloc/24 (mem_malloc) @062ade00
+mem_malloc/24 (mem_malloc) @06163e00
   Type: function
   Visibility: external public
   References: 
@@ -1592,7 +1592,7 @@ mem_malloc/24 (mem_malloc) @062ade00
   Function flags: optimize_size
   Called by: lwiperf_start_tcp_server_impl.part.0.constprop/58 (1073741824 (estimated locally),1.00 per call) lwiperf_tx_start_impl.part.0/54 (1073741824 (estimated locally),1.00 per call) lwiperf_tcp_accept.part.0/50 (150150 (estimated locally),0.49 per call) 
   Calls: 
-ip_addr_any/23 (ip_addr_any) @062b24c8
+ip_addr_any/23 (ip_addr_any) @061684c8
   Type: variable
   Body removed by symtab_remove_unreachable_nodes
   Visibility: external public
@@ -1600,7 +1600,7 @@ ip_addr_any/23 (ip_addr_any) @062b24c8
   Referring: lwiperf_start_tcp_server_default/17 (addr)
   Availability: not_available
   Varpool flags: read-only
-lwiperf_abort/22 (lwiperf_abort) @062ad7e0
+lwiperf_abort/22 (lwiperf_abort) @061637e0
   Type: function definition analyzed
   Visibility: externally_visible public
   References: lwiperf_all_connections/1 (read)
@@ -1609,7 +1609,7 @@ lwiperf_abort/22 (lwiperf_abort) @062ad7e0
   Function flags: count:118111600 (estimated locally) body optimize_size
   Called by: lwiperf_start_tcp_client/21 (20513 (estimated locally),0.03 per call) 
   Calls: mem_free/30 (487371413 (estimated locally),4.13 per call) 
-lwiperf_start_tcp_client/21 (lwiperf_start_tcp_client) @062ad540
+lwiperf_start_tcp_client/21 (lwiperf_start_tcp_client) @06163540
   Type: function definition analyzed
   Visibility: externally_visible public
   References: 
@@ -1618,7 +1618,7 @@ lwiperf_start_tcp_client/21 (lwiperf_start_tcp_client) @062ad540
   Function flags: count:672138 (estimated locally) body optimize_size
   Called by: lwiperf_start_tcp_client_default/20 (1073741824 (estimated locally),1.00 per call) 
   Calls: lwiperf_abort/22 (20513 (estimated locally),0.03 per call) lwiperf_start_tcp_server_impl.constprop/57 (122464 (estimated locally),0.18 per call) lwiperf_tx_start_impl/11 (504103 (estimated locally),0.75 per call) lwip_htonl/37 (504103 (estimated locally),0.75 per call) lwip_htonl/37 (504103 (estimated locally),0.75 per call) lwip_htonl/37 (504103 (estimated locally),0.75 per call) lwip_htonl/37 (168034 (estimated locally),0.25 per call) lwip_htonl/37 (168034 (estimated locally),0.25 per call) memset/25 (672138 (estimated locally),1.00 per call) 
-lwiperf_start_tcp_client_default/20 (lwiperf_start_tcp_client_default) @062ad2a0
+lwiperf_start_tcp_client_default/20 (lwiperf_start_tcp_client_default) @061632a0
   Type: function definition analyzed
   Visibility: externally_visible public
   References: 
@@ -1627,7 +1627,7 @@ lwiperf_start_tcp_client_default/20 (lwiperf_start_tcp_client_default) @062ad2a0
   Function flags: count:1073741824 (estimated locally) body optimize_size
   Called by: 
   Calls: lwiperf_start_tcp_client/21 (1073741824 (estimated locally),1.00 per call) 
-lwiperf_start_tcp_server_impl/19 (lwiperf_start_tcp_server_impl) @062ad000
+lwiperf_start_tcp_server_impl/19 (lwiperf_start_tcp_server_impl) @06163000
   Type: function
   Body removed by symtab_remove_unreachable_nodes
   Visibility: prevailing_def_ironly
@@ -1637,7 +1637,7 @@ lwiperf_start_tcp_server_impl/19 (lwiperf_start_tcp_server_impl) @062ad000
   Function flags: count:357913 (estimated locally) body optimize_size
   Called by: 
   Calls: 
-lwiperf_start_tcp_server/18 (lwiperf_start_tcp_server) @062a02a0
+lwiperf_start_tcp_server/18 (lwiperf_start_tcp_server) @061542a0
   Type: function definition analyzed
   Visibility: externally_visible public
   References: 
@@ -1646,7 +1646,7 @@ lwiperf_start_tcp_server/18 (lwiperf_start_tcp_server) @062a02a0
   Function flags: count:1073741824 (estimated locally) body optimize_size
   Called by: lwiperf_start_tcp_server_default/17 (1073741824 (estimated locally),1.00 per call) 
   Calls: lwiperf_start_tcp_server_impl.constprop/57 (1073741824 (estimated locally),1.00 per call) 
-lwiperf_start_tcp_server_default/17 (lwiperf_start_tcp_server_default) @062a0ee0
+lwiperf_start_tcp_server_default/17 (lwiperf_start_tcp_server_default) @06154ee0
   Type: function definition analyzed
   Visibility: externally_visible public
   References: ip_addr_any/23 (addr)
@@ -1655,7 +1655,7 @@ lwiperf_start_tcp_server_default/17 (lwiperf_start_tcp_server_default) @062a0ee0
   Function flags: count:1073741824 (estimated locally) body optimize_size
   Called by: 
   Calls: lwiperf_start_tcp_server/18 (1073741824 (estimated locally),1.00 per call) 
-lwiperf_tcp_accept/16 (lwiperf_tcp_accept) @062a0c40
+lwiperf_tcp_accept/16 (lwiperf_tcp_accept) @06154c40
   Type: function definition analyzed
   Visibility: prevailing_def_ironly
   Address is taken.
@@ -1665,7 +1665,7 @@ lwiperf_tcp_accept/16 (lwiperf_tcp_accept) @062a0c40
   Function flags: count:218971 (estimated locally) body optimize_size
   Called by: 
   Calls: lwiperf_tcp_accept.part.0/50 (22549 (estimated locally),0.10 per call) 
-lwiperf_tcp_poll/15 (lwiperf_tcp_poll) @062a0460
+lwiperf_tcp_poll/15 (lwiperf_tcp_poll) @06154460
   Type: function definition analyzed
   Visibility: prevailing_def_ironly
   Address is taken.
@@ -1675,7 +1675,7 @@ lwiperf_tcp_poll/15 (lwiperf_tcp_poll) @062a0460
   Function flags: count:153391 (estimated locally) body optimize_size
   Called by: 
   Calls: lwiperf_tcp_poll.part.0/53 (36703 (estimated locally),0.24 per call) lwiperf_tcp_close/7 (9314 (estimated locally),0.06 per call) 
-lwiperf_tcp_err/14 (lwiperf_tcp_err) @062a01c0
+lwiperf_tcp_err/14 (lwiperf_tcp_err) @061541c0
   Type: function definition analyzed
   Visibility: prevailing_def_ironly
   Address is taken.
@@ -1685,7 +1685,7 @@ lwiperf_tcp_err/14 (lwiperf_tcp_err) @062a01c0
   Function flags: count:1073741824 (estimated locally) body optimize_size
   Called by: 
   Calls: lwiperf_tcp_close/7 (1073741824 (estimated locally),1.00 per call) 
-lwiperf_tcp_recv/13 (lwiperf_tcp_recv) @06274ee0
+lwiperf_tcp_recv/13 (lwiperf_tcp_recv) @06129ee0
   Type: function definition analyzed
   Visibility: prevailing_def_ironly
   Address is taken.
@@ -1695,7 +1695,7 @@ lwiperf_tcp_recv/13 (lwiperf_tcp_recv) @06274ee0
   Function flags: count:153391 (estimated locally) body optimize_size
   Called by: 
   Calls: lwiperf_tcp_recv.part.0/55 (30064 (estimated locally),0.20 per call) lwiperf_tcp_close/7 (6640 (estimated locally),0.04 per call) lwiperf_tx_start_passive/12 (1096 (estimated locally),0.01 per call) lwiperf_tcp_close/7 (9314 (estimated locally),0.06 per call) 
-lwiperf_tx_start_passive/12 (lwiperf_tx_start_passive) @06274b60
+lwiperf_tx_start_passive/12 (lwiperf_tx_start_passive) @06129b60
   Type: function definition analyzed
   Visibility: prevailing_def_ironly
   References: 
@@ -1704,7 +1704,7 @@ lwiperf_tx_start_passive/12 (lwiperf_tx_start_passive) @06274b60
   Function flags: count:715827 (estimated locally) body local optimize_size
   Called by: lwiperf_tcp_recv/13 (1096 (estimated locally),0.01 per call) lwiperf_tcp_recv.part.0/55 (7069 (estimated locally),0.02 per call) 
   Calls: lwiperf_tx_start_impl/11 (715827 (estimated locally),1.00 per call) lwip_htonl/37 (715827 (estimated locally),1.00 per call) 
-lwiperf_tx_start_impl/11 (lwiperf_tx_start_impl) @062748c0
+lwiperf_tx_start_impl/11 (lwiperf_tx_start_impl) @061298c0
   Type: function definition analyzed
   Visibility: prevailing_def_ironly
   References: 
@@ -1713,7 +1713,7 @@ lwiperf_tx_start_impl/11 (lwiperf_tx_start_impl) @062748c0
   Function flags: count:357913 (estimated locally) body local optimize_size
   Called by: lwiperf_start_tcp_client/21 (504103 (estimated locally),0.75 per call) lwiperf_tx_start_passive/12 (715827 (estimated locally),1.00 per call) 
   Calls: lwiperf_tx_start_impl.part.0/54 (93775 (estimated locally),0.26 per call) 
-lwiperf_tcp_client_connected/10 (lwiperf_tcp_client_connected) @062741c0
+lwiperf_tcp_client_connected/10 (lwiperf_tcp_client_connected) @061291c0
   Type: function definition analyzed
   Visibility: prevailing_def_ironly
   Address is taken.
@@ -1723,7 +1723,7 @@ lwiperf_tcp_client_connected/10 (lwiperf_tcp_client_connected) @062741c0
   Function flags: count:153391 (estimated locally) body optimize_size
   Called by: 
   Calls: lwiperf_tcp_client_connected.part.0/56 (30371 (estimated locally),0.20 per call) lwiperf_tcp_close/7 (15646 (estimated locally),0.10 per call) 
-lwiperf_tcp_client_sent/9 (lwiperf_tcp_client_sent) @06265ee0
+lwiperf_tcp_client_sent/9 (lwiperf_tcp_client_sent) @06118ee0
   Type: function definition analyzed
   Visibility: prevailing_def_ironly
   Address is taken.
@@ -1733,7 +1733,7 @@ lwiperf_tcp_client_sent/9 (lwiperf_tcp_client_sent) @06265ee0
   Function flags: count:130040 (estimated locally) body optimize_size
   Called by: 
   Calls: lwiperf_tcp_client_sent.part.0/52 (22666 (estimated locally),0.17 per call) 
-lwiperf_tcp_client_send_more/8 (lwiperf_tcp_client_send_more) @06265c40
+lwiperf_tcp_client_send_more/8 (lwiperf_tcp_client_send_more) @06118c40
   Type: function definition analyzed
   Visibility: prevailing_def_ironly
   References: 
@@ -1742,7 +1742,7 @@ lwiperf_tcp_client_send_more/8 (lwiperf_tcp_client_send_more) @06265c40
   Function flags: count:130150 (estimated locally) body local optimize_size
   Called by: lwiperf_tcp_client_connected.part.0/56 (1073741824 (estimated locally),1.00 per call) lwiperf_tcp_poll.part.0/53 (354334802 (estimated locally),0.33 per call) lwiperf_tcp_client_sent.part.0/52 (1073741824 (estimated locally),1.00 per call) 
   Calls: lwiperf_tcp_client_send_more.part.0/51 (22776 (estimated locally),0.17 per call) 
-lwiperf_tcp_close/7 (lwiperf_tcp_close) @062658c0
+lwiperf_tcp_close/7 (lwiperf_tcp_close) @061188c0
   Type: function definition analyzed
   Visibility: prevailing_def_ironly
   References: 
@@ -1751,7 +1751,7 @@ lwiperf_tcp_close/7 (lwiperf_tcp_close) @062658c0
   Function flags: count:715827 (estimated locally) body local optimize_size
   Called by: lwiperf_tcp_client_connected/10 (15646 (estimated locally),0.10 per call) lwiperf_tcp_recv/13 (6640 (estimated locally),0.04 per call) lwiperf_tcp_recv/13 (9314 (estimated locally),0.06 per call) lwiperf_tcp_recv.part.0/55 (49169 (estimated locally),0.15 per call) lwiperf_tcp_recv.part.0/55 (21101 (estimated locally),0.07 per call) lwiperf_tcp_recv.part.0/55 (1431 (estimated locally),0.00 per call) lwiperf_tcp_recv.part.0/55 (8671 (estimated locally),0.03 per call) lwiperf_tx_start_impl.part.0/54 (360122188 (estimated locally),0.34 per call) lwiperf_tcp_poll/15 (9314 (estimated locally),0.06 per call) lwiperf_tcp_client_send_more.part.0/51 (1624035 (estimated locally),0.17 per call) lwiperf_tcp_client_send_more.part.0/51 (1624035 (estimated locally),0.17 per call) lwiperf_tcp_err/14 (1073741824 (estimated locally),1.00 per call) lwiperf_tcp_accept.part.0/50 (48355 (estimated locally),0.16 per call) 
   Calls: mem_free/30 (608453 (estimated locally),0.85 per call) tcp_close/29 (214748 (estimated locally),0.30 per call) tcp_abort/48 (165356 (estimated locally),0.23 per call) tcp_close/29 (501079 (estimated locally),0.70 per call) tcp_err/36 (501079 (estimated locally),0.70 per call) tcp_recv/34 (501079 (estimated locally),0.70 per call) tcp_sent/46 (501079 (estimated locally),0.70 per call) tcp_poll/35 (501079 (estimated locally),0.70 per call) tcp_arg/31 (501079 (estimated locally),0.70 per call) lwip_tcp_conn_report/6 (715827 (estimated locally),1.00 per call) lwiperf_list_remove/4 (715827 (estimated locally),1.00 per call) 
-lwip_tcp_conn_report/6 (lwip_tcp_conn_report) @06265540
+lwip_tcp_conn_report/6 (lwip_tcp_conn_report) @06118540
   Type: function definition analyzed
   Visibility: prevailing_def_ironly
   References: 
@@ -1761,7 +1761,7 @@ lwip_tcp_conn_report/6 (lwip_tcp_conn_report) @06265540
   Called by: lwiperf_tcp_close/7 (715827 (estimated locally),1.00 per call) 
   Calls: sys_now/33 (401890827 (estimated locally),0.37 per call) 
    Indirect call(401890827 (estimated locally),0.37 per call)  of param:0 loaded from aggregate passed by reference at offset 192 (vptr maybe changed)
-lwiperf_list_find/5 (lwiperf_list_find) @062652a0
+lwiperf_list_find/5 (lwiperf_list_find) @061182a0
   Type: function definition analyzed
   Visibility: prevailing_def_ironly
   References: lwiperf_all_connections/1 (read)
@@ -1770,7 +1770,7 @@ lwiperf_list_find/5 (lwiperf_list_find) @062652a0
   Function flags: count:114863532 (estimated locally) body local optimize_size
   Called by: lwiperf_tcp_accept.part.0/50 (37196 (estimated locally),0.12 per call) 
   Calls: 
-lwiperf_list_remove/4 (lwiperf_list_remove) @06265000
+lwiperf_list_remove/4 (lwiperf_list_remove) @06118000
   Type: function definition analyzed
   Visibility: prevailing_def_ironly
   References: lwiperf_all_connections/1 (read)lwiperf_all_connections/1 (write)
@@ -1779,7 +1779,7 @@ lwiperf_list_remove/4 (lwiperf_list_remove) @06265000
   Function flags: count:454857 (estimated locally) body local optimize_size
   Called by: lwiperf_tcp_close/7 (715827 (estimated locally),1.00 per call) 
   Calls: 
-lwiperf_list_add/3 (lwiperf_list_add) @0623bd20
+lwiperf_list_add/3 (lwiperf_list_add) @060eed20
   Type: function definition analyzed
   Visibility: prevailing_def_ironly
   References: lwiperf_all_connections/1 (read)lwiperf_all_connections/1 (write)
@@ -1788,14 +1788,14 @@ lwiperf_list_add/3 (lwiperf_list_add) @0623bd20
   Function flags: count:1073741824 (estimated locally) body local optimize_size
   Called by: lwiperf_start_tcp_server_impl.part.0.constprop/58 (513017274 (estimated locally),0.48 per call) lwiperf_tx_start_impl.part.0/54 (699060718 (estimated locally),0.65 per call) lwiperf_tcp_accept.part.0/50 (148783 (estimated locally),0.48 per call) 
   Calls: 
-lwiperf_txbuf_const/2 (lwiperf_txbuf_const) @06237828
+lwiperf_txbuf_const/2 (lwiperf_txbuf_const) @060ea828
   Type: variable definition analyzed
   Visibility: prevailing_def_ironly
   References: 
   Referring: lwiperf_tcp_client_send_more.part.0/51 (addr)
   Availability: available
   Varpool flags: initialized read-only const-value-known
-lwiperf_all_connections/1 (lwiperf_all_connections) @06237750
+lwiperf_all_connections/1 (lwiperf_all_connections) @060ea750
   Type: variable definition analyzed
   Visibility: prevailing_def_ironly
   References: 
