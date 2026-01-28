@@ -134,6 +134,7 @@ static void Eth_T_InitPhys(void)
     phy_reg_val0 |= ((uint16)1U << 13U); /* Speed LSB = 1 */
     phy_reg_val0 &= ~((uint16)1U << 6U); /* Speed MSB = 0 */
 
+
     phy_reg_val0 &= ~((uint16)1U << 8U);
     phy_reg_val0 |= ((uint16)ENABLE_PHY_FULL_DUPLEX << 8U); /* FULL_DUPLEX or HALF_DUPLEX */
 
@@ -270,10 +271,14 @@ void device_init(void)
 //    err = Gmac_Ip_Init(INST_GMAC_1, &Gmac_1_ConfigPB_BOARD_INITPERIPHERALS);
     err = Gmac_Ip_Init(INST_GMAC_0, &Gmac_0_ConfigPB_BOARD_INITPERIPHERALS);
     DevAssert((StatusType)E_OK == err);
-
-    /*TO DO: check if phy has link and if it finished the initialization */
-
-    /* Initialize Ethernet Phy */
-    Gmac_Ip_EnableMDIO(CFG_PHY_CTRL_IDX, FALSE, 400000000U);
-    Eth_T_InitPhys();
+    
+    /* Re-verify PHY Speed after MAC init to ensure no overwrite */
+    uint16 phy_reg_val = 0U;
+    (void)Gmac_Ip_MDIORead(CFG_PHY_CTRL_IDX, 0U /*Assuming PHY ADDR 0*/, 0U, &phy_reg_val, 1U);
+    if ((phy_reg_val & 0x2000U) == 0U) { /* If speed is not 100M (bit 13) */
+         /* Force re-apply 100M config */
+         phy_reg_val |= ((uint16)1U << 13U);
+         phy_reg_val &= ~((uint16)1U << 6U);
+         (void)Gmac_Ip_MDIOWrite(CFG_PHY_CTRL_IDX, 0U, 0U, phy_reg_val, 1U);
+    }
 }
