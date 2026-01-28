@@ -533,7 +533,7 @@ static const Clock_Ip_DividerConfigType Clock_Ip_DividerConfigurations_0[CLOCK_I
     #if CLOCK_IP_CONFIGURED_DIVIDERS_0_NO > 15U
     {
         PERIPHPLL_PHI6_CLK,                    /* name */
-        20U,                              /* value */
+        40U,                              /* value */
         {
             0U,
         }

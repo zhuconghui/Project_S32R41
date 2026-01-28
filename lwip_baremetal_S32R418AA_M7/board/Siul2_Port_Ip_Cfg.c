@@ -179,14 +179,14 @@ const Siul2_Port_Ip_PinSettingsConfig g_pin_mux_InitConfigArr_PortContainer_0_BO
     {
         .base                        = IP_SIUL2_0,
         .pinPortIdx                  = 76u,
-        .mux                         = PORT_MUX_AS_GPIO,
+        .mux                         = PORT_MUX_ALT4,
         .safeMode                    = PORT_SAFE_MODE_DISABLED,
         .receiverSel                 = PORT_RECEIVER_NOT_AVAILABLE,
         .pullConfig                  = PORT_INTERNAL_PULL_NOT_ENABLED,
         .slewRateCtrlSel             = PORT_SLEW_RATE_CONTROL4,
         .inputBuffer                 = PORT_INPUT_BUFFER_ENABLED,
         .openDrain                   = PORT_OPEN_DRAIN_DISABLED,
-        .outputBuffer                = PORT_OUTPUT_BUFFER_DISABLED,
+        .outputBuffer                = PORT_OUTPUT_BUFFER_ENABLED,
         .inputMuxReg                 = {
                                          68u
                                        },
