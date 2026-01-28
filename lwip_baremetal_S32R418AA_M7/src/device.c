@@ -139,6 +139,10 @@ static void Eth_T_InitPhys(void)
 
     err = Gmac_Ip_MDIOWrite(CFG_PHY_CTRL_IDX, phy_addr, 0U, phy_reg_val0, 1U);
     DevAssert(GMAC_STATUS_SUCCESS == err);
+
+    /* Verify speed configuration */
+    err = Gmac_Ip_MDIORead(CFG_PHY_CTRL_IDX, phy_addr, 0U, &phy_reg_val0, 1U);
+    DevAssert(GMAC_STATUS_SUCCESS == err);
     
     /* Config RMII Mode if needed by PHY specific registers - depends on PHY model */
 }
