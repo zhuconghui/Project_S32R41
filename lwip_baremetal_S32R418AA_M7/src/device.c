@@ -86,8 +86,6 @@ static inline bool freq_in_range(float result, float target)
 }
 
 
-#if 0
-/* This feature is not used. Uncomment it if needed. */
 
 static void Eth_T_InitPhys(void)
 {
@@ -96,15 +94,16 @@ static void Eth_T_InitPhys(void)
     uint16 phy_addr = 0U;
     Gmac_Ip_StatusType err;
 
-    Gmac_Ip_EnableMDIO(CFG_PHY_CTRL_IDX, FALSE, 400000000U);
-
     /* Search for the PHY address */
     for (phy_addr = 0U; phy_addr < 32U; ++phy_addr)
     {
         err = Gmac_Ip_MDIORead(CFG_PHY_CTRL_IDX, phy_addr, 2U, &phy_reg_val0, 1U);
-        DevAssert(GMAC_STATUS_SUCCESS == err);
+        /* DevAssert(GMAC_STATUS_SUCCESS == err); */
+        if(GMAC_STATUS_SUCCESS != err) continue;
+        
         err = Gmac_Ip_MDIORead(CFG_PHY_CTRL_IDX, phy_addr, 3U, &phy_reg_val1, 1U);
-        DevAssert(GMAC_STATUS_SUCCESS == err);
+        /* DevAssert(GMAC_STATUS_SUCCESS == err); */
+        if(GMAC_STATUS_SUCCESS != err) continue;
 
         /* Check for PHY ID */
         if ((phy_reg_val0 == PHY_ID1) && (phy_reg_val1 == PHY_ID2))
@@ -112,6 +111,8 @@ static void Eth_T_InitPhys(void)
             break; /* found the PHY ID*/
         }
     }
+    
+    if (phy_addr >= 32U) return; /* PHY not found */
 
     /* Reset the PHY */
     err = Gmac_Ip_MDIOWrite(CFG_PHY_CTRL_IDX, phy_addr, 0U, 0x8000U, 1U);
@@ -126,26 +127,22 @@ static void Eth_T_InitPhys(void)
 
     /* Configure the PHY */
     phy_reg_val0 &= ~((uint16)1U << 14U);    /* Disable Loop-back */
-    phy_reg_val0 |= ((uint16)ENABLE_PHY_LOOPBACK << 14U);  /* Configure Loop back */
+    /* phy_reg_val0 |= ((uint16)ENABLE_PHY_LOOPBACK << 14U); */ /* Configure Loop back */
     phy_reg_val0 &= ~((uint16)1U << 12U); /* Disable AN */
 
-    /* Configure speed 1G */
-    phy_reg_val0 &= ~((uint16)1U << 13U);
-    phy_reg_val0 |= ((uint16)1U << 6U);
+    /* Configure speed 100M for RMII */
+    phy_reg_val0 |= ((uint16)1U << 13U); /* Speed LSB = 1 */
+    phy_reg_val0 &= ~((uint16)1U << 6U); /* Speed MSB = 0 */
 
     phy_reg_val0 &= ~((uint16)1U << 8U);
     phy_reg_val0 |= ((uint16)ENABLE_PHY_FULL_DUPLEX << 8U); /* FULL_DUPLEX or HALF_DUPLEX */
 
     err = Gmac_Ip_MDIOWrite(CFG_PHY_CTRL_IDX, phy_addr, 0U, phy_reg_val0, 1U);
     DevAssert(GMAC_STATUS_SUCCESS == err);
-
-    /* Wait to establish link */
-    do
-    {
-        (void)Gmac_Ip_MDIORead(CFG_PHY_CTRL_IDX, phy_addr, 1U, &phy_reg_val0, 1U);
-    } while (0U == (phy_reg_val0 & ((uint16)1U << 2U)));
+    
+    /* Config RMII Mode if needed by PHY specific registers - depends on PHY model */
 }
-#endif
+
 
 static void Eth_T_EnableIRQs(void)
 {
@@ -273,5 +270,6 @@ void device_init(void)
     /*TO DO: check if phy has link and if it finished the initialization */
 
     /* Initialize Ethernet Phy */
-    /* Eth_T_InitPhys(); */
+    Gmac_Ip_EnableMDIO(CFG_PHY_CTRL_IDX, FALSE, 400000000U);
+    Eth_T_InitPhys();
 }
