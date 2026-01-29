@@ -541,6 +541,27 @@ static void my_udp_init(void)
 static struct udp_pcb *udp_perf_pcb;
 static volatile u32_t udp_perf_rx_bytes = 0;
 
+/* Iperf UDP header */
+typedef struct {
+  s32_t id;
+  u32_t tv_sec;
+  u32_t tv_usec;
+} iperf_udp_hdr_t;
+
+/* Iperf Server Header (Report) */
+typedef struct {
+  s32_t flags;
+  u32_t total_len1;
+  u32_t total_len2;
+  u32_t stop_sec;
+  u32_t stop_usec;
+  u32_t error_cnt;
+  u32_t outorder_cnt;
+  u32_t datagrams;
+  u32_t jitter1;
+  u32_t jitter2;
+} iperf_server_hdr_t;
+
 static void udp_perf_recv(void *arg, struct udp_pcb *pcb, struct pbuf *p,
                           const ip_addr_t *addr, u16_t port)
 {
@@ -550,6 +571,32 @@ static void udp_perf_recv(void *arg, struct udp_pcb *pcb, struct pbuf *p,
   LWIP_UNUSED_ARG(port);
 
   if (p != NULL) {
+    /* Check for iperf termination packet to avoid "did not receive ack" warning */
+    if (p->len >= sizeof(iperf_udp_hdr_t)) {
+      iperf_udp_hdr_t *hdr = (iperf_udp_hdr_t *)p->payload;
+      s32_t id = (s32_t)lwip_ntohl(hdr->id);
+
+      if (id < 0) {
+        /* This is the termination packet. Send back a report to acknowledge. */
+        struct pbuf *otp;
+        iperf_server_hdr_t *shdr;
+
+        otp = pbuf_alloc(PBUF_TRANSPORT, sizeof(iperf_server_hdr_t), PBUF_RAM);
+        if (otp != NULL) {
+          shdr = (iperf_server_hdr_t *)otp->payload;
+          memset(shdr, 0, sizeof(iperf_server_hdr_t));
+          /* Set the high bit of flags to indicate this is a report/ACK (0x80000000) */
+          shdr->flags = (s32_t)lwip_htonl(0x80000000L);
+          
+          /* Report total bytes received (simplification) */
+          shdr->total_len2 = (u32_t)lwip_htonl(udp_perf_rx_bytes);
+          
+          udp_sendto(pcb, otp, addr, port);
+          pbuf_free(otp);
+        }
+      }
+    }
+
     udp_perf_rx_bytes += p->tot_len;
     pbuf_free(p);
   }
@@ -563,6 +610,11 @@ static void udp_perf_report(void *arg)
   u32_t kbit_s = (udp_perf_rx_bytes * 8) / 1000;
 
 #if defined(PRINTF_SUPPORT) && PRINTF_SUPPORT != 0
+  /* 
+   * NOTE: If you see bandwidth around 1 Mbit/sec, it is likely because 
+   * the iperf client defaults to 1 Mbit/sec for UDP. 
+   * Use 'iperf -c <ip> -u -b 100M' to test higher bandwidth.
+   */
   printf("UDP Perf: %lu kbit/s\n", kbit_s);
 #endif
 
