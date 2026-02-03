@@ -3,7 +3,7 @@ bridgeif_fdb_init (u16_t max_fdb_entries)
   mem_size_t alloc_len;
   size_t alloc_len_sizet;
   struct bridgeif_dfdb_t * fdb;
-  void * D.6513;
+  void * D.6520;
 
   <bb 2> :
   # DEBUG BEGIN_STMT
@@ -41,7 +41,7 @@ bridgeif_fdb_init (u16_t max_fdb_entries)
 
   <bb 5> :
   # DEBUG BEGIN_STMT
-  D.6513 = 0B;
+  D.6520 = 0B;
   // predicted unlikely by early return (on trees) predictor.
   goto <bb 7>; [INV]
 
@@ -54,10 +54,10 @@ bridgeif_fdb_init (u16_t max_fdb_entries)
   # DEBUG BEGIN_STMT
   sys_timeout (1000, bridgeif_age_tmr, fdb);
   # DEBUG BEGIN_STMT
-  D.6513 = fdb;
+  D.6520 = fdb;
 
   <bb 7> :
-  return D.6513;
+  return D.6520;
 
 }
 
@@ -98,6 +98,7 @@ bridgeif_age_tmr (void * arg)
 bridgeif_fdb_age_one_second (void * fdb_ptr)
 {
   struct bridgeif_dfdb_entry_t * e;
+  sys_prot_t lev;
   struct bridgeif_dfdb_t * fdb;
   int i;
 
@@ -108,6 +109,7 @@ bridgeif_fdb_age_one_second (void * fdb_ptr)
   # DEBUG BEGIN_STMT
   fdb = fdb_ptr;
   # DEBUG BEGIN_STMT
+  lev = sys_arch_protect ();
   # DEBUG BEGIN_STMT
   i = 0;
   goto <bb 10>; [INV]
@@ -179,6 +181,7 @@ bridgeif_fdb_age_one_second (void * fdb_ptr)
 
   <bb 11> :
   # DEBUG BEGIN_STMT
+  sys_arch_unprotect (lev);
   return;
 
 }
@@ -188,9 +191,10 @@ bridgeif_fdb_get_dst_ports (void * fdb_ptr, struct eth_addr * dst_addr)
 {
   bridgeif_portmask_t ret;
   struct bridgeif_dfdb_entry_t * e;
+  sys_prot_t lev;
   struct bridgeif_dfdb_t * fdb;
   int i;
-  bridgeif_portmask_t D.6507;
+  bridgeif_portmask_t D.6514;
 
   <bb 2> :
   # DEBUG BEGIN_STMT
@@ -198,6 +202,7 @@ bridgeif_fdb_get_dst_ports (void * fdb_ptr, struct eth_addr * dst_addr)
   fdb = fdb_ptr;
   # DEBUG BEGIN_STMT
   # DEBUG BEGIN_STMT
+  lev = sys_arch_protect ();
   # DEBUG BEGIN_STMT
   i = 0;
   goto <bb 8>; [INV]
@@ -238,8 +243,9 @@ bridgeif_fdb_get_dst_ports (void * fdb_ptr, struct eth_addr * dst_addr)
   _10 = 1 << _9;
   ret = (bridgeif_portmask_t) _10;
   # DEBUG BEGIN_STMT
+  sys_arch_unprotect (lev);
   # DEBUG BEGIN_STMT
-  D.6507 = ret;
+  D.6514 = ret;
   // predicted unlikely by early return (on trees) predictor.
   goto <bb 10>; [INV]
 
@@ -258,11 +264,12 @@ bridgeif_fdb_get_dst_ports (void * fdb_ptr, struct eth_addr * dst_addr)
 
   <bb 9> :
   # DEBUG BEGIN_STMT
+  sys_arch_unprotect (lev);
   # DEBUG BEGIN_STMT
-  D.6507 = 255;
+  D.6514 = 255;
 
   <bb 10> :
-  return D.6507;
+  return D.6514;
 
 }
 
@@ -271,6 +278,7 @@ bridgeif_fdb_update_src (void * fdb_ptr, struct eth_addr * src_addr, u8_t port_i
 {
   struct bridgeif_dfdb_entry_t * e;
   struct bridgeif_dfdb_entry_t * e;
+  sys_prot_t lev;
   struct bridgeif_dfdb_t * fdb;
   int i;
 
@@ -280,6 +288,7 @@ bridgeif_fdb_update_src (void * fdb_ptr, struct eth_addr * src_addr, u8_t port_i
   fdb = fdb_ptr;
   # DEBUG BEGIN_STMT
   # DEBUG BEGIN_STMT
+  lev = sys_arch_protect ();
   # DEBUG BEGIN_STMT
   i = 0;
   goto <bb 8>; [INV]
@@ -322,9 +331,10 @@ bridgeif_fdb_update_src (void * fdb_ptr, struct eth_addr * src_addr, u8_t port_i
   e->port = port_idx;
   # DEBUG BEGIN_STMT
   # DEBUG BEGIN_STMT
+  sys_arch_unprotect (lev);
   # DEBUG BEGIN_STMT
   // predicted unlikely by early return (on trees) predictor.
-  goto <bb 17>; [INV]
+  goto <bb 18>; [INV]
 
   <bb 7> :
   # DEBUG BEGIN_STMT
@@ -393,9 +403,10 @@ bridgeif_fdb_update_src (void * fdb_ptr, struct eth_addr * src_addr, u8_t port_i
   e->used = 1;
   # DEBUG BEGIN_STMT
   # DEBUG BEGIN_STMT
+  sys_arch_unprotect (lev);
   # DEBUG BEGIN_STMT
   // predicted unlikely by early return (on trees) predictor.
-  goto <bb 17>; [INV]
+  goto <bb 18>; [INV]
 
   <bb 15> :
   # DEBUG BEGIN_STMT
@@ -413,6 +424,9 @@ bridgeif_fdb_update_src (void * fdb_ptr, struct eth_addr * src_addr, u8_t port_i
 
   <bb 17> :
   # DEBUG BEGIN_STMT
+  sys_arch_unprotect (lev);
+
+  <bb 18> :
   return;
 
 }

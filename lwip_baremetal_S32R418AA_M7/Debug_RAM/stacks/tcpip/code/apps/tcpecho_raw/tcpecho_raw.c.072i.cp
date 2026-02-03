@@ -376,7 +376,7 @@ Reclaiming variables:
 Clearing address taken flags:
 Symbol table:
 
-tcpecho_raw_recv.part.0/34 (tcpecho_raw_recv.part.0) @061a6c40
+tcpecho_raw_recv.part.0/34 (tcpecho_raw_recv.part.0) @06230c40
   Type: function definition analyzed
   Visibility: prevailing_def_ironly artificial
   References: 
@@ -385,7 +385,7 @@ tcpecho_raw_recv.part.0/34 (tcpecho_raw_recv.part.0) @061a6c40
   Function flags: count:1073741824 (estimated locally) first_run:1 body local split_part optimize_size
   Called by: tcpecho_raw_recv/8 (117503 (estimated locally),0.33 per call) 
   Calls: tcpecho_raw_send.isra.0/31 (217325345 (estimated locally),0.20 per call) tcpecho_raw_send.isra.0/31 (131340031 (estimated locally),0.12 per call) pbuf_cat/30 (306460073 (estimated locally),0.29 per call) tcp_recved/26 (418616375 (estimated locally),0.39 per call) pbuf_free/25 (418616375 (estimated locally),0.39 per call) 
-tcpecho_raw_poll.part.0/33 (tcpecho_raw_poll.part.0) @061a6620
+tcpecho_raw_poll.part.0/33 (tcpecho_raw_poll.part.0) @06230620
   Type: function definition analyzed
   Visibility: prevailing_def_ironly artificial
   References: 
@@ -394,7 +394,7 @@ tcpecho_raw_poll.part.0/33 (tcpecho_raw_poll.part.0) @061a6620
   Function flags: count:1073741824 (estimated locally) first_run:1 body local split_part optimize_size
   Called by: tcpecho_raw_poll/6 (497463740 (estimated locally),0.46 per call) 
   Calls: tcpecho_raw_close/3 (217325345 (estimated locally),0.20 per call) 
-tcpecho_raw_sent.part.0/32 (tcpecho_raw_sent.part.0) @061a6b60
+tcpecho_raw_sent.part.0/32 (tcpecho_raw_sent.part.0) @06230b60
   Type: function definition analyzed
   Visibility: prevailing_def_ironly artificial
   References: 
@@ -403,7 +403,7 @@ tcpecho_raw_sent.part.0/32 (tcpecho_raw_sent.part.0) @061a6b60
   Function flags: count:1073741824 (estimated locally) first_run:1 body local split_part optimize_size
   Called by: tcpecho_raw_sent/7 (499612072 (estimated locally),0.47 per call) 
   Calls: tcpecho_raw_close/3 (217325345 (estimated locally),0.20 per call) 
-tcpecho_raw_send.isra.0/31 (tcpecho_raw_send.isra.0) @05f998c0
+tcpecho_raw_send.isra.0/31 (tcpecho_raw_send.isra.0) @0601b8c0
   Type: function definition analyzed
   Visibility: prevailing_def_ironly artificial
   References: 
@@ -412,7 +412,7 @@ tcpecho_raw_send.isra.0/31 (tcpecho_raw_send.isra.0) @05f998c0
   Function flags: count:113634470 (estimated locally) body local optimize_size
   Called by: tcpecho_raw_recv/8 (52613 (estimated locally),0.15 per call) tcpecho_raw_recv.part.0/34 (217325345 (estimated locally),0.20 per call) tcpecho_raw_recv.part.0/34 (131340031 (estimated locally),0.12 per call) tcpecho_raw_poll/6 (571660996 (estimated locally),0.53 per call) tcpecho_raw_sent/7 (574129754 (estimated locally),0.53 per call) 
   Calls: tcp_recved/26 (480053677 (estimated locally),4.22 per call) pbuf_free/25 (480053677 (estimated locally),4.22 per call) pbuf_ref/24 (256684701 (estimated locally),2.26 per call) tcp_write/23 (960107354 (estimated locally),8.45 per call) 
-pbuf_cat/30 (pbuf_cat) @0615ca80
+pbuf_cat/30 (pbuf_cat) @061efa80
   Type: function
   Visibility: external public
   References: 
@@ -421,7 +421,7 @@ pbuf_cat/30 (pbuf_cat) @0615ca80
   Function flags: optimize_size
   Called by: tcpecho_raw_recv.part.0/34 (306460073 (estimated locally),0.29 per call) 
   Calls: 
-tcp_abort/29 (tcp_abort) @0615c700
+tcp_abort/29 (tcp_abort) @061ef700
   Type: function
   Visibility: external public
   References: 
@@ -430,7 +430,7 @@ tcp_abort/29 (tcp_abort) @0615c700
   Function flags: optimize_size
   Called by: tcpecho_raw_poll/6 (4617090 (estimated locally),0.00 per call) 
   Calls: 
-mem_free/28 (mem_free) @0615c540
+mem_free/28 (mem_free) @061ef540
   Type: function
   Visibility: external public
   References: 
@@ -439,7 +439,7 @@ mem_free/28 (mem_free) @0615c540
   Function flags: optimize_size
   Called by: tcpecho_raw_free/2 (751619278 (estimated locally),0.70 per call) 
   Calls: 
-tcp_close/27 (tcp_close) @0615c380
+tcp_close/27 (tcp_close) @061ef380
   Type: function
   Visibility: external public
   References: 
@@ -448,7 +448,7 @@ tcp_close/27 (tcp_close) @0615c380
   Function flags: optimize_size
   Called by: tcpecho_raw_close/3 (1073741824 (estimated locally),1.00 per call) 
   Calls: 
-tcp_recved/26 (tcp_recved) @0615c1c0
+tcp_recved/26 (tcp_recved) @061ef1c0
   Type: function
   Visibility: external public
   References: 
@@ -457,7 +457,7 @@ tcp_recved/26 (tcp_recved) @0615c1c0
   Function flags: optimize_size
   Called by: tcpecho_raw_recv.part.0/34 (418616375 (estimated locally),0.39 per call) tcpecho_raw_send.isra.0/31 (480053677 (estimated locally),4.22 per call) 
   Calls: 
-pbuf_free/25 (pbuf_free) @0615c0e0
+pbuf_free/25 (pbuf_free) @061ef0e0
   Type: function
   Visibility: external public
   References: 
@@ -466,7 +466,7 @@ pbuf_free/25 (pbuf_free) @0615c0e0
   Function flags: optimize_size
   Called by: tcpecho_raw_recv/8 (57875 (estimated locally),0.16 per call) tcpecho_raw_recv.part.0/34 (418616375 (estimated locally),0.39 per call) tcpecho_raw_free/2 (401890828 (estimated locally),0.37 per call) tcpecho_raw_send.isra.0/31 (480053677 (estimated locally),4.22 per call) 
   Calls: 
-pbuf_ref/24 (pbuf_ref) @0615c000
+pbuf_ref/24 (pbuf_ref) @061ef000
   Type: function
   Visibility: external public
   References: 
@@ -475,7 +475,7 @@ pbuf_ref/24 (pbuf_ref) @0615c000
   Function flags: optimize_size
   Called by: tcpecho_raw_send.isra.0/31 (256684701 (estimated locally),2.26 per call) 
   Calls: 
-tcp_write/23 (tcp_write) @06157ee0
+tcp_write/23 (tcp_write) @061eaee0
   Type: function
   Visibility: external public
   References: 
@@ -484,7 +484,7 @@ tcp_write/23 (tcp_write) @06157ee0
   Function flags: optimize_size
   Called by: tcpecho_raw_send.isra.0/31 (960107354 (estimated locally),8.45 per call) 
   Calls: 
-tcp_sent/22 (tcp_sent) @06157c40
+tcp_sent/22 (tcp_sent) @061eac40
   Type: function
   Visibility: external public
   References: 
@@ -493,7 +493,7 @@ tcp_sent/22 (tcp_sent) @06157c40
   Function flags: optimize_size
   Called by: tcpecho_raw_sent/7 (574129754 (estimated locally),0.53 per call) tcpecho_raw_close/3 (1073741824 (estimated locally),1.00 per call) tcpecho_raw_accept/9 (1034584922 (estimated locally),0.96 per call) 
   Calls: 
-tcp_poll/21 (tcp_poll) @06157b60
+tcp_poll/21 (tcp_poll) @061eab60
   Type: function
   Visibility: external public
   References: 
@@ -502,7 +502,7 @@ tcp_poll/21 (tcp_poll) @06157b60
   Function flags: optimize_size
   Called by: tcpecho_raw_close/3 (1073741824 (estimated locally),1.00 per call) tcpecho_raw_accept/9 (1034584922 (estimated locally),0.96 per call) 
   Calls: 
-tcp_err/20 (tcp_err) @06157a80
+tcp_err/20 (tcp_err) @061eaa80
   Type: function
   Visibility: external public
   References: 
@@ -511,7 +511,7 @@ tcp_err/20 (tcp_err) @06157a80
   Function flags: optimize_size
   Called by: tcpecho_raw_close/3 (1073741824 (estimated locally),1.00 per call) tcpecho_raw_accept/9 (1034584922 (estimated locally),0.96 per call) 
   Calls: 
-tcp_recv/19 (tcp_recv) @061579a0
+tcp_recv/19 (tcp_recv) @061ea9a0
   Type: function
   Visibility: external public
   References: 
@@ -520,7 +520,7 @@ tcp_recv/19 (tcp_recv) @061579a0
   Function flags: optimize_size
   Called by: tcpecho_raw_close/3 (1073741824 (estimated locally),1.00 per call) tcpecho_raw_accept/9 (1034584922 (estimated locally),0.96 per call) 
   Calls: 
-tcp_arg/18 (tcp_arg) @061578c0
+tcp_arg/18 (tcp_arg) @061ea8c0
   Type: function
   Visibility: external public
   References: 
@@ -529,7 +529,7 @@ tcp_arg/18 (tcp_arg) @061578c0
   Function flags: optimize_size
   Called by: tcpecho_raw_close/3 (1073741824 (estimated locally),1.00 per call) tcpecho_raw_accept/9 (1034584922 (estimated locally),0.96 per call) 
   Calls: 
-mem_malloc/17 (mem_malloc) @061577e0
+mem_malloc/17 (mem_malloc) @061ea7e0
   Type: function
   Visibility: external public
   References: 
@@ -538,7 +538,7 @@ mem_malloc/17 (mem_malloc) @061577e0
   Function flags: optimize_size
   Called by: tcpecho_raw_accept/9 (1052905478 (estimated locally),0.98 per call) 
   Calls: 
-tcp_setprio/16 (tcp_setprio) @06157700
+tcp_setprio/16 (tcp_setprio) @061ea700
   Type: function
   Visibility: external public
   References: 
@@ -547,7 +547,7 @@ tcp_setprio/16 (tcp_setprio) @06157700
   Function flags: optimize_size
   Called by: tcpecho_raw_accept/9 (1052905478 (estimated locally),0.98 per call) 
   Calls: 
-tcp_accept/15 (tcp_accept) @06157540
+tcp_accept/15 (tcp_accept) @061ea540
   Type: function
   Visibility: external public
   References: 
@@ -556,7 +556,7 @@ tcp_accept/15 (tcp_accept) @06157540
   Function flags: optimize_size
   Called by: tcpecho_raw_init/10 (189462818 (estimated locally),0.18 per call) 
   Calls: 
-tcp_listen_with_backlog/14 (tcp_listen_with_backlog) @06157380
+tcp_listen_with_backlog/14 (tcp_listen_with_backlog) @061ea380
   Type: function
   Visibility: external public
   References: 
@@ -565,7 +565,7 @@ tcp_listen_with_backlog/14 (tcp_listen_with_backlog) @06157380
   Function flags: optimize_size
   Called by: tcpecho_raw_init/10 (189462818 (estimated locally),0.18 per call) 
   Calls: 
-ip_addr_any_type/13 (ip_addr_any_type) @0614b870
+ip_addr_any_type/13 (ip_addr_any_type) @061de870
   Type: variable
   Body removed by symtab_remove_unreachable_nodes
   Visibility: external public
@@ -573,7 +573,7 @@ ip_addr_any_type/13 (ip_addr_any_type) @0614b870
   Referring: tcpecho_raw_init/10 (addr)
   Availability: not_available
   Varpool flags: read-only
-tcp_bind/12 (tcp_bind) @061572a0
+tcp_bind/12 (tcp_bind) @061ea2a0
   Type: function
   Visibility: external public
   References: 
@@ -582,7 +582,7 @@ tcp_bind/12 (tcp_bind) @061572a0
   Function flags: optimize_size
   Called by: tcpecho_raw_init/10 (574129754 (estimated locally),0.53 per call) 
   Calls: 
-tcp_new_ip_type/11 (tcp_new_ip_type) @061571c0
+tcp_new_ip_type/11 (tcp_new_ip_type) @061ea1c0
   Type: function
   Visibility: external public
   References: 
@@ -591,7 +591,7 @@ tcp_new_ip_type/11 (tcp_new_ip_type) @061571c0
   Function flags: optimize_size
   Called by: tcpecho_raw_init/10 (1073741824 (estimated locally),1.00 per call) 
   Calls: 
-tcpecho_raw_init/10 (tcpecho_raw_init) @06148e00
+tcpecho_raw_init/10 (tcpecho_raw_init) @061dbe00
   Type: function definition analyzed
   Visibility: externally_visible public
   References: tcpecho_raw_pcb/1 (write)ip_addr_any_type/13 (addr)tcpecho_raw_pcb/1 (read)tcpecho_raw_pcb/1 (write)tcpecho_raw_accept/9 (addr)
@@ -600,7 +600,7 @@ tcpecho_raw_init/10 (tcpecho_raw_init) @06148e00
   Function flags: count:1073741824 (estimated locally) body optimize_size
   Called by: 
   Calls: tcp_accept/15 (189462818 (estimated locally),0.18 per call) tcp_listen_with_backlog/14 (189462818 (estimated locally),0.18 per call) tcp_bind/12 (574129754 (estimated locally),0.53 per call) tcp_new_ip_type/11 (1073741824 (estimated locally),1.00 per call) 
-tcpecho_raw_accept/9 (tcpecho_raw_accept) @06148b60
+tcpecho_raw_accept/9 (tcpecho_raw_accept) @061dbb60
   Type: function definition analyzed
   Visibility: prevailing_def_ironly
   Address is taken.
@@ -610,7 +610,7 @@ tcpecho_raw_accept/9 (tcpecho_raw_accept) @06148b60
   Function flags: count:1073741824 (estimated locally) body optimize_size
   Called by: 
   Calls: tcp_sent/22 (1034584922 (estimated locally),0.96 per call) tcp_poll/21 (1034584922 (estimated locally),0.96 per call) tcp_err/20 (1034584922 (estimated locally),0.96 per call) tcp_recv/19 (1034584922 (estimated locally),0.96 per call) tcp_arg/18 (1034584922 (estimated locally),0.96 per call) mem_malloc/17 (1052905478 (estimated locally),0.98 per call) tcp_setprio/16 (1052905478 (estimated locally),0.98 per call) 
-tcpecho_raw_recv/8 (tcpecho_raw_recv) @061488c0
+tcpecho_raw_recv/8 (tcpecho_raw_recv) @061db8c0
   Type: function definition analyzed
   Visibility: prevailing_def_ironly
   Address is taken.
@@ -620,7 +620,7 @@ tcpecho_raw_recv/8 (tcpecho_raw_recv) @061488c0
   Function flags: count:357913 (estimated locally) body optimize_size
   Called by: 
   Calls: tcpecho_raw_recv.part.0/34 (117503 (estimated locally),0.33 per call) pbuf_free/25 (57875 (estimated locally),0.16 per call) tcpecho_raw_send.isra.0/31 (52613 (estimated locally),0.15 per call) tcpecho_raw_close/3 (22549 (estimated locally),0.06 per call) 
-tcpecho_raw_sent/7 (tcpecho_raw_sent) @06148620
+tcpecho_raw_sent/7 (tcpecho_raw_sent) @061db620
   Type: function definition analyzed
   Visibility: prevailing_def_ironly
   Address is taken.
@@ -630,7 +630,7 @@ tcpecho_raw_sent/7 (tcpecho_raw_sent) @06148620
   Function flags: count:1073741824 (estimated locally) body optimize_size
   Called by: 
   Calls: tcpecho_raw_sent.part.0/32 (499612072 (estimated locally),0.47 per call) tcpecho_raw_send.isra.0/31 (574129754 (estimated locally),0.53 per call) tcp_sent/22 (574129754 (estimated locally),0.53 per call) 
-tcpecho_raw_poll/6 (tcpecho_raw_poll) @06148380
+tcpecho_raw_poll/6 (tcpecho_raw_poll) @061db380
   Type: function definition analyzed
   Visibility: prevailing_def_ironly
   Address is taken.
@@ -640,7 +640,7 @@ tcpecho_raw_poll/6 (tcpecho_raw_poll) @06148380
   Function flags: count:1073741824 (estimated locally) body optimize_size
   Called by: 
   Calls: tcp_abort/29 (4617090 (estimated locally),0.00 per call) tcpecho_raw_poll.part.0/33 (497463740 (estimated locally),0.46 per call) tcpecho_raw_send.isra.0/31 (571660996 (estimated locally),0.53 per call) 
-tcpecho_raw_error/5 (tcpecho_raw_error) @061480e0
+tcpecho_raw_error/5 (tcpecho_raw_error) @061db0e0
   Type: function definition analyzed
   Visibility: prevailing_def_ironly
   Address is taken.
@@ -650,7 +650,7 @@ tcpecho_raw_error/5 (tcpecho_raw_error) @061480e0
   Function flags: count:1073741824 (estimated locally) body optimize_size
   Called by: 
   Calls: tcpecho_raw_free/2 (1073741824 (estimated locally),1.00 per call) 
-tcpecho_raw_close/3 (tcpecho_raw_close) @06145b60
+tcpecho_raw_close/3 (tcpecho_raw_close) @061d8b60
   Type: function definition analyzed
   Visibility: prevailing_def_ironly
   References: 
@@ -659,7 +659,7 @@ tcpecho_raw_close/3 (tcpecho_raw_close) @06145b60
   Function flags: count:1073741824 (estimated locally) body local optimize_size
   Called by: tcpecho_raw_recv/8 (22549 (estimated locally),0.06 per call) tcpecho_raw_poll.part.0/33 (217325345 (estimated locally),0.20 per call) tcpecho_raw_sent.part.0/32 (217325345 (estimated locally),0.20 per call) 
   Calls: tcp_close/27 (1073741824 (estimated locally),1.00 per call) tcpecho_raw_free/2 (1073741824 (estimated locally),1.00 per call) tcp_poll/21 (1073741824 (estimated locally),1.00 per call) tcp_err/20 (1073741824 (estimated locally),1.00 per call) tcp_recv/19 (1073741824 (estimated locally),1.00 per call) tcp_sent/22 (1073741824 (estimated locally),1.00 per call) tcp_arg/18 (1073741824 (estimated locally),1.00 per call) 
-tcpecho_raw_free/2 (tcpecho_raw_free) @061458c0
+tcpecho_raw_free/2 (tcpecho_raw_free) @061d88c0
   Type: function definition analyzed
   Visibility: prevailing_def_ironly
   References: 
@@ -668,7 +668,7 @@ tcpecho_raw_free/2 (tcpecho_raw_free) @061458c0
   Function flags: count:1073741824 (estimated locally) body local optimize_size
   Called by: tcpecho_raw_error/5 (1073741824 (estimated locally),1.00 per call) tcpecho_raw_close/3 (1073741824 (estimated locally),1.00 per call) 
   Calls: mem_free/28 (751619278 (estimated locally),0.70 per call) pbuf_free/25 (401890828 (estimated locally),0.37 per call) 
-tcpecho_raw_pcb/1 (tcpecho_raw_pcb) @0613e990
+tcpecho_raw_pcb/1 (tcpecho_raw_pcb) @061d1990
   Type: variable definition analyzed
   Visibility: prevailing_def_ironly
   References: 

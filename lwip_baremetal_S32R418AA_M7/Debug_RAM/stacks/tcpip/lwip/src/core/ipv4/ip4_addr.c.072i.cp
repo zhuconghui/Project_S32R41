@@ -122,14 +122,14 @@ Reclaiming variables:
 Clearing address taken flags:
 Symbol table:
 
-str.6854/11 (str) @060c1480
+str.6854/11 (str) @060bb480
   Type: variable definition analyzed
   Visibility: prevailing_def_ironly
   References: 
   Referring: ip4addr_ntoa/7 (addr)
   Availability: available
   Varpool flags:
-_ctype_/10 (_ctype_) @060c1288
+_ctype_/10 (_ctype_) @060bb288
   Type: variable
   Body removed by symtab_remove_unreachable_nodes
   Visibility: external public
@@ -137,7 +137,7 @@ _ctype_/10 (_ctype_) @060c1288
   Referring: ip4addr_aton/6 (addr)ip4addr_aton/6 (addr)
   Availability: not_available
   Varpool flags: read-only
-lwip_htonl/9 (lwip_htonl) @060ae540
+lwip_htonl/9 (lwip_htonl) @060a4540
   Type: function
   Visibility: external public
   References: 
@@ -146,7 +146,7 @@ lwip_htonl/9 (lwip_htonl) @060ae540
   Function flags: optimize_size
   Called by: ip4addr_aton/6 (109822 (estimated locally),0.02 per call) ip4_addr_netmask_valid/4 (89800788 (estimated locally),1.00 per call) 
   Calls: 
-ip4addr_ntoa_r/8 (ip4addr_ntoa_r) @060ae000
+ip4addr_ntoa_r/8 (ip4addr_ntoa_r) @060a4000
   Type: function definition analyzed
   Visibility: externally_visible public
   References: 
@@ -155,7 +155,7 @@ ip4addr_ntoa_r/8 (ip4addr_ntoa_r) @060ae000
   Function flags: count:86685056 (estimated locally) body optimize_size
   Called by: ip4addr_ntoa/7 (1073741824 (estimated locally),1.00 per call) 
   Calls: 
-ip4addr_ntoa/7 (ip4addr_ntoa) @06060460
+ip4addr_ntoa/7 (ip4addr_ntoa) @06051460
   Type: function definition analyzed
   Visibility: externally_visible public
   References: str.6854/11 (addr)
@@ -164,7 +164,7 @@ ip4addr_ntoa/7 (ip4addr_ntoa) @06060460
   Function flags: count:1073741824 (estimated locally) body optimize_size
   Called by: 
   Calls: ip4addr_ntoa_r/8 (1073741824 (estimated locally),1.00 per call) 
-ip4addr_aton/6 (ip4addr_aton) @06060ee0
+ip4addr_aton/6 (ip4addr_aton) @06051ee0
   Type: function definition analyzed
   Visibility: externally_visible public
   References: _ctype_/10 (addr)_ctype_/10 (addr)
@@ -173,7 +173,7 @@ ip4addr_aton/6 (ip4addr_aton) @06060ee0
   Function flags: count:6688392 (estimated locally) body optimize_size
   Called by: ipaddr_addr/5 (1073741824 (estimated locally),1.00 per call) 
   Calls: lwip_htonl/9 (109822 (estimated locally),0.02 per call) 
-ipaddr_addr/5 (ipaddr_addr) @06060620
+ipaddr_addr/5 (ipaddr_addr) @06051620
   Type: function definition analyzed
   Visibility: externally_visible public
   References: 
@@ -182,7 +182,7 @@ ipaddr_addr/5 (ipaddr_addr) @06060620
   Function flags: count:1073741824 (estimated locally) body optimize_size
   Called by: 
   Calls: ip4addr_aton/6 (1073741824 (estimated locally),1.00 per call) 
-ip4_addr_netmask_valid/4 (ip4_addr_netmask_valid) @06060380
+ip4_addr_netmask_valid/4 (ip4_addr_netmask_valid) @06051380
   Type: function definition analyzed
   Visibility: externally_visible public
   References: 
@@ -191,7 +191,7 @@ ip4_addr_netmask_valid/4 (ip4_addr_netmask_valid) @06060380
   Function flags: count:89800788 (estimated locally) body optimize_size
   Called by: 
   Calls: lwip_htonl/9 (89800788 (estimated locally),1.00 per call) 
-ip4_addr_isbroadcast_u32/3 (ip4_addr_isbroadcast_u32) @060600e0
+ip4_addr_isbroadcast_u32/3 (ip4_addr_isbroadcast_u32) @060510e0
   Type: function definition analyzed
   Visibility: externally_visible public
   References: 
@@ -200,7 +200,7 @@ ip4_addr_isbroadcast_u32/3 (ip4_addr_isbroadcast_u32) @060600e0
   Function flags: count:1073741824 (estimated locally) body optimize_size
   Called by: 
   Calls: 
-ip_addr_broadcast/2 (ip_addr_broadcast) @0605c000
+ip_addr_broadcast/2 (ip_addr_broadcast) @0604d000
   Type: variable definition analyzed
   Visibility: externally_visible public
   References: 

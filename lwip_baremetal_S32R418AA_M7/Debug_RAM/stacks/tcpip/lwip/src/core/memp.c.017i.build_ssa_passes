@@ -88,6 +88,7 @@ memp_free_pool (const struct memp_desc * desc, void * mem)
 
 do_memp_free_pool (const struct memp_desc * desc, void * mem)
 {
+  sys_prot_t old_level;
   struct memp * memp;
 
   <bb 2> :
@@ -115,6 +116,7 @@ do_memp_free_pool (const struct memp_desc * desc, void * mem)
   # DEBUG BEGIN_STMT
   memp = mem;
   # DEBUG BEGIN_STMT
+  old_level = sys_arch_protect ();
   # DEBUG BEGIN_STMT
   _3 = desc->stats;
   _4 = _3->used;
@@ -128,6 +130,7 @@ do_memp_free_pool (const struct memp_desc * desc, void * mem)
   _8 = desc->tab;
   *_8 = memp;
   # DEBUG BEGIN_STMT
+  sys_arch_unprotect (old_level);
   return;
 
 }
@@ -136,7 +139,7 @@ do_memp_free_pool (const struct memp_desc * desc, void * mem)
 memp_malloc (memp_t type)
 {
   void * memp;
-  void * D.7996;
+  void * D.8002;
 
   <bb 2> :
   # DEBUG BEGIN_STMT
@@ -149,7 +152,7 @@ memp_malloc (memp_t type)
 
   <bb 3> :
   # DEBUG BEGIN_STMT
-  D.7996 = 0B;
+  D.8002 = 0B;
   // predicted unlikely by early return (on trees) predictor.
   goto <bb 5>; [INV]
 
@@ -161,17 +164,17 @@ memp_malloc (memp_t type)
   _2 = memp_pools[_1];
   memp = do_memp_malloc_pool (_2);
   # DEBUG BEGIN_STMT
-  D.7996 = memp;
+  D.8002 = memp;
 
   <bb 5> :
-  return D.7996;
+  return D.8002;
 
 }
 
 
 memp_malloc_pool (const struct memp_desc * desc)
 {
-  void * D.7984;
+  void * D.7990;
 
   <bb 2> :
   # DEBUG BEGIN_STMT
@@ -199,29 +202,31 @@ memp_malloc_pool (const struct memp_desc * desc)
 
   <bb 5> :
   # DEBUG BEGIN_STMT
-  D.7984 = 0B;
+  D.7990 = 0B;
   // predicted unlikely by early return (on trees) predictor.
   goto <bb 7>; [INV]
 
   <bb 6> :
   # DEBUG BEGIN_STMT
-  D.7984 = do_memp_malloc_pool (desc);
+  D.7990 = do_memp_malloc_pool (desc);
 
   <bb 7> :
-  return D.7984;
+  return D.7990;
 
 }
 
 
 do_memp_malloc_pool (const struct memp_desc * desc)
 {
+  sys_prot_t old_level;
   struct memp * memp;
-  void * D.7992;
+  void * D.7998;
 
   <bb 2> :
   # DEBUG BEGIN_STMT
   # DEBUG BEGIN_STMT
   # DEBUG BEGIN_STMT
+  old_level = sys_arch_protect ();
   # DEBUG BEGIN_STMT
   _1 = desc->tab;
   memp = *_1;
@@ -279,8 +284,9 @@ do_memp_malloc_pool (const struct memp_desc * desc)
 
   <bb 7> :
   # DEBUG BEGIN_STMT
+  sys_arch_unprotect (old_level);
   # DEBUG BEGIN_STMT
-  D.7992 = memp;
+  D.7998 = memp;
   // predicted unlikely by early return (on trees) predictor.
   goto <bb 9>; [INV]
 
@@ -292,12 +298,13 @@ do_memp_malloc_pool (const struct memp_desc * desc)
   _19 = _18 + 1;
   _16->err = _19;
   # DEBUG BEGIN_STMT
+  sys_arch_unprotect (old_level);
   # DEBUG BEGIN_STMT
   # DEBUG BEGIN_STMT
-  D.7992 = 0B;
+  D.7998 = 0B;
 
   <bb 9> :
-  return D.7992;
+  return D.7998;
 
 }
 

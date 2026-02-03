@@ -81,50 +81,50 @@ extern "C"{
                                        GLOBAL VARIABLES
 ==================================================================================================*/
 #define GMAC_CONFIG_SA_BOARD_INITPERIPHERALS_PB \
-    extern const Gmac_CtrlConfigType Gmac_0_ConfigPB_BOARD_INITPERIPHERALS; 
+    extern const Gmac_CtrlConfigType Gmac_1_ConfigPB_BOARD_INITPERIPHERALS; 
 
 /*! @brief Device instance number */
-#ifndef INST_GMAC_0
-    #define INST_GMAC_0        (0U)
-#elif (INST_GMAC_0 != 0)
+#ifndef INST_GMAC_1
+    #define INST_GMAC_1        (1U)
+#elif (INST_GMAC_1 != 1)
     #error "[TPS_ECUC_06074] Invalid configuration due to symbolic name values"
 #endif
 
 /* Used for allocation of TX buffers */
-#ifndef GMAC_0_TXRING_0_DESCR
-    #define GMAC_0_TXRING_0_DESCR
+#ifndef GMAC_1_TXRING_0_DESCR
+    #define GMAC_1_TXRING_0_DESCR
 #endif
 
 /* Used for allocation of RX buffers */
-#ifndef GMAC_0_RXRING_0_DESCR
-    #define GMAC_0_RXRING_0_DESCR
+#ifndef GMAC_1_RXRING_0_DESCR
+    #define GMAC_1_RXRING_0_DESCR
 #endif
 
 
 /* Maximum number of configured buffers for a Tx Ring */
-#ifndef GMAC_0_MAX_TXBUFF_SUPPORTED
-    #define GMAC_0_MAX_TXBUFF_SUPPORTED    (5U)
-#elif (GMAC_0_MAX_TXBUFF_SUPPORTED < 5)
-    #undef GMAC_0_MAX_TXBUFF_SUPPORTED
-    #define GMAC_0_MAX_TXBUFF_SUPPORTED    (5U) 
+#ifndef GMAC_1_MAX_TXBUFF_SUPPORTED
+    #define GMAC_1_MAX_TXBUFF_SUPPORTED    (5U)
+#elif (GMAC_1_MAX_TXBUFF_SUPPORTED < 5)
+    #undef GMAC_1_MAX_TXBUFF_SUPPORTED
+    #define GMAC_1_MAX_TXBUFF_SUPPORTED    (5U) 
 #endif
 
 /* Maximum number of configured buffers for an Rx Ring */
-#ifndef GMAC_0_MAX_RXBUFF_SUPPORTED
-    #define GMAC_0_MAX_RXBUFF_SUPPORTED    (5U)
-#elif (GMAC_0_MAX_RXBUFF_SUPPORTED < 5)
-    #undef GMAC_0_MAX_RXBUFF_SUPPORTED
-    #define GMAC_0_MAX_RXBUFF_SUPPORTED    (5U) 
+#ifndef GMAC_1_MAX_RXBUFF_SUPPORTED
+    #define GMAC_1_MAX_RXBUFF_SUPPORTED    (5U)
+#elif (GMAC_1_MAX_RXBUFF_SUPPORTED < 5)
+    #undef GMAC_1_MAX_RXBUFF_SUPPORTED
+    #define GMAC_1_MAX_RXBUFF_SUPPORTED    (5U) 
 #endif
 
 /* Maximum length of a single buffer across all Tx Rings */
-#ifndef GMAC_0_MAX_TXBUFFLEN_SUPPORTED
-    #define GMAC_0_MAX_TXBUFFLEN_SUPPORTED	(1536U)
+#ifndef GMAC_1_MAX_TXBUFFLEN_SUPPORTED
+    #define GMAC_1_MAX_TXBUFFLEN_SUPPORTED	(1536U)
 #endif
 
 /* Maximum length of a single buffer across all Rx Rings */
-#ifndef GMAC_0_MAX_RXBUFFLEN_SUPPORTED
-    #define GMAC_0_MAX_RXBUFFLEN_SUPPORTED	(1536U)
+#ifndef GMAC_1_MAX_RXBUFFLEN_SUPPORTED
+    #define GMAC_1_MAX_RXBUFFLEN_SUPPORTED	(1536U)
 #endif
 
 /*==================================================================================================

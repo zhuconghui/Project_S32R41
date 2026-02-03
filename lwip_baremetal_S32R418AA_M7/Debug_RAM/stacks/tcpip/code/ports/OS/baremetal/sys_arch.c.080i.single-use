@@ -1,10 +1,37 @@
-sys_now ()
+sys_arch_unprotect (sys_prot_t pval)
 {
-  u32_t retval.3;
+  <bb 2> [local count: 1073741824]:
+  # DEBUG BEGIN_STMT
+  __asm__ __volatile__("msr primask, %0" :  : "r" pval_1(D));
+  return;
+
+}
+
+
+sys_arch_protect ()
+{
+  sys_prot_t pval;
 
   <bb 2> [local count: 1073741824]:
-  retval.3_3 = sys_jiffies (); [tail call]
-  return retval.3_3;
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  __asm__ __volatile__("mrs %0, primask" : "=r" pval_1);
+  # DEBUG pval => pval_1
+  # DEBUG BEGIN_STMT
+  __asm__ __volatile__("cpsid i");
+  # DEBUG BEGIN_STMT
+  return pval_1;
+
+}
+
+
+sys_now ()
+{
+  u32_t retval.5;
+
+  <bb 2> [local count: 1073741824]:
+  retval.5_3 = sys_jiffies (); [tail call]
+  return retval.5_3;
 
 }
 

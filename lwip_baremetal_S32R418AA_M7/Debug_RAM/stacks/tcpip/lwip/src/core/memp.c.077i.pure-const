@@ -1,33 +1,24 @@
 
 
  local analysis of do_memp_free_pool.part.0
-   scanning: _2 = desc_1(D)->stats;
+   scanning: old_level_1 = sys_arch_protect ();
+  scanning: _3 = desc_2(D)->stats;
     Indirect ref read is not const
-  scanning: _3 = _2->used;
+  scanning: _4 = _3->used;
     Indirect ref read is not const
-  scanning: _4 = _3 + 4294967295;
-  scanning: _2->used = _4;
+  scanning: _5 = _4 + 4294967295;
+  scanning: _3->used = _5;
     Indirect ref write is not const/pure
-  scanning: _5 = desc_1(D)->tab;
+  scanning: _6 = desc_2(D)->tab;
     Indirect ref read is not const
-  scanning: _6 = *_5;
+  scanning: _7 = *_6;
     Indirect ref read is not const
-  scanning: MEM[(struct memp *)mem_7(D)].next = _6;
+  scanning: MEM[(struct memp *)mem_8(D)].next = _7;
     Indirect ref write is not const/pure
-  scanning: *_5 = mem_7(D);
+  scanning: *_6 = mem_8(D);
     Indirect ref write is not const/pure
+  scanning: sys_arch_unprotect (old_level_1);
   scanning: return;
-
-
- local analysis of do_memp_malloc_pool.part.0
-   scanning: _2 = desc_1(D)->stats;
-    Indirect ref read is not const
-  scanning: _3 = _2->err;
-    Indirect ref read is not const
-  scanning: _4 = _3 + 1;
-  scanning: _2->err = _4;
-    Indirect ref write is not const/pure
-  scanning: return _5;
 
 
  local analysis of memp_free
@@ -89,35 +80,44 @@ Function can locally free.
 
 
  local analysis of do_memp_malloc_pool
-   scanning: _1 = desc_16(D)->tab;
+   scanning: old_level_18 = sys_arch_protect ();
+  scanning: _1 = desc_19(D)->tab;
     Indirect ref read is not const
-  scanning: memp_17 = *_1;
+  scanning: memp_20 = *_1;
     Indirect ref read is not const
-  scanning: if (memp_17 != 0B)
-  scanning: _3 = memp_17->next;
+  scanning: if (memp_20 != 0B)
+  scanning: _2 = memp_20->next;
     Indirect ref read is not const
-  scanning: *_1 = _3;
+  scanning: *_1 = _2;
     Indirect ref write is not const/pure
-  scanning: memp.1_4 = (unsigned int) memp_17;
-  scanning: _5 = memp.1_4 & 15;
-  scanning: if (_5 != 0)
+  scanning: memp.1_3 = (unsigned int) memp_20;
+  scanning: _4 = memp.1_3 & 15;
+  scanning: if (_4 != 0)
   scanning: __asm__ __volatile__("BKPT #0
 	");
     memory asm clobber is not const/pure
     volatile is not const/pure
-  scanning: _6 = desc_16(D)->stats;
+  scanning: _5 = desc_19(D)->stats;
     Indirect ref read is not const
-  scanning: _7 = _6->used;
+  scanning: _6 = _5->used;
     Indirect ref read is not const
-  scanning: _8 = _7 + 1;
-  scanning: _6->used = _8;
+  scanning: _7 = _6 + 1;
+  scanning: _5->used = _7;
     Indirect ref write is not const/pure
-  scanning: _11 = _6->max;
+  scanning: _8 = _5->max;
     Indirect ref read is not const
-  scanning: if (_8 > _11)
-  scanning: _6->max = _8;
+  scanning: if (_7 > _8)
+  scanning: _5->max = _7;
     Indirect ref write is not const/pure
-  scanning: _2 = do_memp_malloc_pool.part.0 (desc_16(D));
+  scanning: sys_arch_unprotect (old_level_18);
+  scanning: _9 = desc_19(D)->stats;
+    Indirect ref read is not const
+  scanning: _10 = _9->err;
+    Indirect ref read is not const
+  scanning: _11 = _10 + 1;
+  scanning: _9->err = _11;
+    Indirect ref write is not const/pure
+  scanning: sys_arch_unprotect (old_level_18);
   scanning: return _12;
 Function is locally looping.
 Function can locally free.
@@ -185,102 +185,123 @@ Function is locally pure.
   scanning: return;
 callgraph:
 
-do_memp_free_pool.part.0/72 (do_memp_free_pool.part.0) @061cf9a0
+do_memp_free_pool/74 (do_memp_free_pool) @06314460
   Type: function definition analyzed
-  Visibility: prevailing_def_ironly artificial
-  Aux: @05ecef68
+  Visibility:
+  next sharing asm name: 67
+  Aux: @060ff220
   References: 
   Referring: 
-  Function do_memp_free_pool.part.0/72 is inline copy in do_memp_free_pool/67
+  Function do_memp_free_pool/74 is inline copy in memp_free/69
+  Clone of do_memp_free_pool/67
   Availability: local
-  Function flags: count:107374 (estimated locally) first_run:1 body local split_part optimize_size
-  Called by: do_memp_free_pool/67 (inlined) (107374 (estimated locally),0.50 per call) 
-  Calls: 
-do_memp_malloc_pool.part.0/71 (do_memp_malloc_pool.part.0) @05f0f8c0
+  Function flags: count:489336361 (estimated locally) body local optimize_size
+  Called by: memp_free/69 (inlined) (489336361 (estimated locally),0.46 per call) 
+  Calls: do_memp_free_pool.part.0/73 (161481610 (estimated locally),0.15 per call) 
+do_memp_free_pool.part.0/73 (do_memp_free_pool.part.0) @05f8a8c0
   Type: function definition analyzed
   Visibility: prevailing_def_ironly artificial
-  Aux: @05ecf008
+  Aux: @060ff5a0
   References: 
   Referring: 
-  Function do_memp_malloc_pool.part.0/71 is inline copy in do_memp_malloc_pool/64
   Availability: local
-  Function flags: count:28485 (estimated locally) first_run:1 body local split_part optimize_size
-  Called by: do_memp_malloc_pool/64 (inlined) (28485 (estimated locally),0.15 per call) 
+  Function flags: count:1073741824 (estimated locally) first_run:1 body local split_part optimize_size
+  Called by: do_memp_free_pool/74 (161481610 (estimated locally),0.15 per call) do_memp_free_pool/67 (57089 (estimated locally),0.16 per call) 
+  Calls: sys_arch_protect/71 (1073741824 (estimated locally),1.00 per call) sys_arch_unprotect/72 (1073741824 (estimated locally),1.00 per call) 
+sys_arch_unprotect/72 (sys_arch_unprotect) @06214460
+  Type: function
+  Visibility: external public
+  References: 
+  Referring: 
+  Availability: not_available
+  Function flags: optimize_size
+  Called by: do_memp_free_pool.part.0/73 (1073741824 (estimated locally),1.00 per call) do_memp_malloc_pool/64 (14032 (estimated locally),0.08 per call) do_memp_malloc_pool/64 (55314 (estimated locally),0.31 per call) 
   Calls: 
-memp_free/69 (memp_free) @06195e00
+sys_arch_protect/71 (sys_arch_protect) @06214380
+  Type: function
+  Visibility: external public
+  References: 
+  Referring: 
+  Availability: not_available
+  Function flags: optimize_size
+  Called by: do_memp_free_pool.part.0/73 (1073741824 (estimated locally),1.00 per call) do_memp_malloc_pool/64 (176719 (estimated locally),1.00 per call) 
+  Calls: 
+memp_free/69 (memp_free) @0620d2a0
   Type: function definition analyzed
   Visibility: externally_visible public
-  Aux: @05ecef08
+  Aux: @060ff360
   References: memp_pools/61 (read)
   Referring: 
   Availability: available
   Function flags: count:1073741823 (estimated locally) body optimize_size
   Called by: 
-  Calls: do_memp_free_pool/67 (489336361 (estimated locally),0.46 per call) 
-memp_free_pool/68 (memp_free_pool) @06195a80
+  Calls: do_memp_free_pool/74 (inlined) (489336361 (estimated locally),0.46 per call) 
+memp_free_pool/68 (memp_free_pool) @0620dc40
   Type: function definition analyzed
   Visibility: externally_visible public
-  Aux: @05ecf0e8
+  Aux: @060ff500
   References: 
   Referring: 
   Availability: available
   Function flags: count:357913 (estimated locally) body optimize_size
   Called by: 
-  Calls: do_memp_free_pool/67 (172997 (estimated locally),0.48 per call) 
-do_memp_free_pool/67 (do_memp_free_pool) @061957e0
+  Calls: do_memp_free_pool/67 (inlined) (172997 (estimated locally),0.48 per call) 
+do_memp_free_pool/67 (do_memp_free_pool) @0620d9a0
   Type: function definition analyzed
   Visibility: prevailing_def_ironly
-  Aux: @05ecf048
+  previous sharing asm name: 74
+  Aux: @060ff560
   References: 
   Referring: 
+  Function do_memp_free_pool/67 is inline copy in memp_free_pool/68
   Availability: local
-  Function flags: count:214748 (estimated locally) body local optimize_size
-  Called by: memp_free/69 (489336361 (estimated locally),0.46 per call) memp_free_pool/68 (172997 (estimated locally),0.48 per call) 
-  Calls: do_memp_free_pool.part.0/72 (inlined) (107374 (estimated locally),0.50 per call) 
-memp_malloc/66 (memp_malloc) @06195540
+  Function flags: count:172997 (estimated locally) body local optimize_size
+  Called by: memp_free_pool/68 (inlined) (172997 (estimated locally),0.48 per call) 
+  Calls: do_memp_free_pool.part.0/73 (57089 (estimated locally),0.16 per call) 
+memp_malloc/66 (memp_malloc) @0620d700
   Type: function definition analyzed
   Visibility: externally_visible public
-  Aux: @05ecef48
+  Aux: @060ff5c0
   References: memp_pools/61 (read)
   Referring: 
   Availability: available
   Function flags: count:1073741824 (estimated locally) body optimize_size
   Called by: 
   Calls: do_memp_malloc_pool/64 (752370897 (estimated locally),0.70 per call) 
-memp_malloc_pool/65 (memp_malloc_pool) @061952a0
+memp_malloc_pool/65 (memp_malloc_pool) @0620d460
   Type: function definition analyzed
   Visibility: externally_visible public
-  Aux: @05ecf208
+  Aux: @060ff1e0
   References: 
   Referring: 
   Availability: available
   Function flags: count:230763 (estimated locally) body optimize_size
   Called by: 
   Calls: do_memp_malloc_pool/64 (123389 (estimated locally),0.53 per call) 
-do_memp_malloc_pool/64 (do_memp_malloc_pool) @06195000
+do_memp_malloc_pool/64 (do_memp_malloc_pool) @0620d1c0
   Type: function definition analyzed
   Visibility: prevailing_def_ironly
-  Aux: @05ecefa8
+  Aux: @060ff2a0
   References: 
   Referring: 
   Availability: local
-  Function flags: count:191173 (estimated locally) body local optimize_size
+  Function flags: count:176719 (estimated locally) body local optimize_size
   Called by: memp_malloc/66 (752370897 (estimated locally),0.70 per call) memp_malloc_pool/65 (123389 (estimated locally),0.53 per call) 
-  Calls: do_memp_malloc_pool.part.0/71 (inlined) (28485 (estimated locally),0.15 per call) 
-memp_init/63 (memp_init) @06166ee0
+  Calls: sys_arch_unprotect/72 (14032 (estimated locally),0.08 per call) sys_arch_unprotect/72 (55314 (estimated locally),0.31 per call) sys_arch_protect/71 (176719 (estimated locally),1.00 per call) 
+memp_init/63 (memp_init) @061e1e00
   Type: function definition analyzed
   Visibility: externally_visible public
-  Aux: @05ecef28
+  Aux: @060ff520
   References: memp_pools/61 (read)lwip_stats/70 (write)
   Referring: 
   Availability: available
   Function flags: count:67108864 (estimated locally) body optimize_size
   Called by: 
   Calls: memp_init_pool/62 (1006632961 (estimated locally),15.00 per call) 
-memp_init_pool/62 (memp_init_pool) @06166b60
+memp_init_pool/62 (memp_init_pool) @061e1d20
   Type: function definition analyzed
   Visibility: externally_visible public
-  Aux: @05ecef88
+  Aux: @060ff3e0
   References: 
   Referring: 
   Availability: available
@@ -290,102 +311,105 @@ memp_init_pool/62 (memp_init_pool) @06166b60
 
 
  ordered call graph: reduced for nothrow
-do_memp_free_pool.part.0/72 (do_memp_free_pool.part.0) @061cf9a0
+do_memp_free_pool/74 (do_memp_free_pool) @06314460
   Type: function definition analyzed
-  Visibility: prevailing_def_ironly artificial
-  Aux: @05ecef68
+  Visibility:
+  next sharing asm name: 67
+  Aux: @060ff220
   References: 
   Referring: 
-  Function do_memp_free_pool.part.0/72 is inline copy in do_memp_free_pool/67
+  Function do_memp_free_pool/74 is inline copy in memp_free/69
+  Clone of do_memp_free_pool/67
   Availability: local
-  Function flags: count:107374 (estimated locally) first_run:1 body local split_part optimize_size
-  Called by: do_memp_free_pool/67 (inlined) (107374 (estimated locally),0.50 per call) 
-  Calls: 
-do_memp_malloc_pool.part.0/71 (do_memp_malloc_pool.part.0) @05f0f8c0
+  Function flags: count:489336361 (estimated locally) body local optimize_size
+  Called by: memp_free/69 (inlined) (489336361 (estimated locally),0.46 per call) 
+  Calls: do_memp_free_pool.part.0/73 (161481610 (estimated locally),0.15 per call) 
+do_memp_free_pool.part.0/73 (do_memp_free_pool.part.0) @05f8a8c0
   Type: function definition analyzed
   Visibility: prevailing_def_ironly artificial
-  Aux: @05ecf008
+  Aux: @060ff5a0
   References: 
   Referring: 
-  Function do_memp_malloc_pool.part.0/71 is inline copy in do_memp_malloc_pool/64
   Availability: local
-  Function flags: count:28485 (estimated locally) first_run:1 body local split_part optimize_size
-  Called by: do_memp_malloc_pool/64 (inlined) (28485 (estimated locally),0.15 per call) 
-  Calls: 
-memp_free/69 (memp_free) @06195e00
+  Function flags: count:1073741824 (estimated locally) first_run:1 body local split_part optimize_size
+  Called by: do_memp_free_pool/74 (161481610 (estimated locally),0.15 per call) do_memp_free_pool/67 (57089 (estimated locally),0.16 per call) 
+  Calls: sys_arch_protect/71 (1073741824 (estimated locally),1.00 per call) sys_arch_unprotect/72 (1073741824 (estimated locally),1.00 per call) 
+memp_free/69 (memp_free) @0620d2a0
   Type: function definition analyzed
   Visibility: externally_visible public
-  Aux: @05ecef08
+  Aux: @060ff360
   References: memp_pools/61 (read)
   Referring: 
   Availability: available
   Function flags: count:1073741823 (estimated locally) body optimize_size
   Called by: 
-  Calls: do_memp_free_pool/67 (489336361 (estimated locally),0.46 per call) 
-memp_free_pool/68 (memp_free_pool) @06195a80
+  Calls: do_memp_free_pool/74 (inlined) (489336361 (estimated locally),0.46 per call) 
+memp_free_pool/68 (memp_free_pool) @0620dc40
   Type: function definition analyzed
   Visibility: externally_visible public
-  Aux: @05ecf0e8
+  Aux: @060ff500
   References: 
   Referring: 
   Availability: available
   Function flags: count:357913 (estimated locally) body optimize_size
   Called by: 
-  Calls: do_memp_free_pool/67 (172997 (estimated locally),0.48 per call) 
-do_memp_free_pool/67 (do_memp_free_pool) @061957e0
+  Calls: do_memp_free_pool/67 (inlined) (172997 (estimated locally),0.48 per call) 
+do_memp_free_pool/67 (do_memp_free_pool) @0620d9a0
   Type: function definition analyzed
   Visibility: prevailing_def_ironly
-  Aux: @05ecf048
+  previous sharing asm name: 74
+  Aux: @060ff560
   References: 
   Referring: 
+  Function do_memp_free_pool/67 is inline copy in memp_free_pool/68
   Availability: local
-  Function flags: count:214748 (estimated locally) body local optimize_size
-  Called by: memp_free/69 (489336361 (estimated locally),0.46 per call) memp_free_pool/68 (172997 (estimated locally),0.48 per call) 
-  Calls: do_memp_free_pool.part.0/72 (inlined) (107374 (estimated locally),0.50 per call) 
-memp_malloc/66 (memp_malloc) @06195540
+  Function flags: count:172997 (estimated locally) body local optimize_size
+  Called by: memp_free_pool/68 (inlined) (172997 (estimated locally),0.48 per call) 
+  Calls: do_memp_free_pool.part.0/73 (57089 (estimated locally),0.16 per call) 
+memp_malloc/66 (memp_malloc) @0620d700
   Type: function definition analyzed
   Visibility: externally_visible public
-  Aux: @05ecef48
+  Aux: @060ff5c0
   References: memp_pools/61 (read)
   Referring: 
   Availability: available
   Function flags: count:1073741824 (estimated locally) body optimize_size
   Called by: 
   Calls: do_memp_malloc_pool/64 (752370897 (estimated locally),0.70 per call) 
-memp_malloc_pool/65 (memp_malloc_pool) @061952a0
+memp_malloc_pool/65 (memp_malloc_pool) @0620d460
   Type: function definition analyzed
   Visibility: externally_visible public
-  Aux: @05ecf208
+  Aux: @060ff1e0
   References: 
   Referring: 
   Availability: available
   Function flags: count:230763 (estimated locally) body optimize_size
   Called by: 
   Calls: do_memp_malloc_pool/64 (123389 (estimated locally),0.53 per call) 
-do_memp_malloc_pool/64 (do_memp_malloc_pool) @06195000
+do_memp_malloc_pool/64 (do_memp_malloc_pool) @0620d1c0
   Type: function definition analyzed
   Visibility: prevailing_def_ironly
-  Aux: @05ecefa8
+  Aux: @060ff2a0
   References: 
   Referring: 
   Availability: local
-  Function flags: count:191173 (estimated locally) body local optimize_size
+  Function flags: count:176719 (estimated locally) body local optimize_size
   Called by: memp_malloc/66 (752370897 (estimated locally),0.70 per call) memp_malloc_pool/65 (123389 (estimated locally),0.53 per call) 
-  Calls: do_memp_malloc_pool.part.0/71 (inlined) (28485 (estimated locally),0.15 per call) 
-memp_init/63 (memp_init) @06166ee0
+  Calls: sys_arch_unprotect/72 (14032 (estimated locally),0.08 per call) sys_arch_unprotect/72 (55314 (estimated locally),0.31 per call) sys_arch_protect/71 (176719 (estimated locally),1.00 per call) 
+memp_init/63 (memp_init) @061e1e00
   Type: function definition analyzed
   Visibility: externally_visible public
-  Aux: @05ecef28
+  Aux: @060ff520
   References: memp_pools/61 (read)lwip_stats/70 (write)
   Referring: 
   Availability: available
   Function flags: count:67108864 (estimated locally) body optimize_size
   Called by: 
   Calls: memp_init_pool/62 (1006632961 (estimated locally),15.00 per call) 
-memp_init_pool/62 (memp_init_pool) @06166b60
+memp_init_pool/62 (memp_init_pool) @061e1d20
   Type: function definition analyzed
   Visibility: externally_visible public
-  Aux: @05ecef88
+  Aux: @060ff3e0
   References: 
   Referring: 
   Availability: available
@@ -396,8 +420,8 @@ memp_init_pool/62 (memp_init_pool) @06166b60
 
 
 MALLOC LATTICE Initial:
+do_memp_free_pool: malloc_bottom
 do_memp_free_pool.part.0: malloc_bottom
-do_memp_malloc_pool.part.0: malloc_bottom
 memp_free: malloc_bottom
 memp_free_pool: malloc_bottom
 do_memp_free_pool: malloc_bottom
@@ -409,8 +433,8 @@ memp_init_pool: malloc_bottom
 
 
 MALLOC LATTICE after propagation:
+do_memp_free_pool: malloc_bottom
 do_memp_free_pool.part.0: malloc_bottom
-do_memp_malloc_pool.part.0: malloc_bottom
 memp_free: malloc_bottom
 memp_free_pool: malloc_bottom
 do_memp_free_pool: malloc_bottom
@@ -421,102 +445,123 @@ memp_init: malloc_bottom
 memp_init_pool: malloc_bottom
 callgraph:
 
-do_memp_free_pool.part.0/72 (do_memp_free_pool.part.0) @061cf9a0
+do_memp_free_pool/74 (do_memp_free_pool) @06314460
   Type: function definition analyzed
-  Visibility: prevailing_def_ironly artificial
-  Aux: @05ecf048
+  Visibility:
+  next sharing asm name: 67
+  Aux: @060ff2a0
   References: 
   Referring: 
-  Function do_memp_free_pool.part.0/72 is inline copy in do_memp_free_pool/67
+  Function do_memp_free_pool/74 is inline copy in memp_free/69
+  Clone of do_memp_free_pool/67
   Availability: local
-  Function flags: count:107374 (estimated locally) first_run:1 body local split_part optimize_size
-  Called by: do_memp_free_pool/67 (inlined) (107374 (estimated locally),0.50 per call) 
-  Calls: 
-do_memp_malloc_pool.part.0/71 (do_memp_malloc_pool.part.0) @05f0f8c0
+  Function flags: count:489336361 (estimated locally) body local optimize_size
+  Called by: memp_free/69 (inlined) (489336361 (estimated locally),0.46 per call) 
+  Calls: do_memp_free_pool.part.0/73 (161481610 (estimated locally),0.15 per call) 
+do_memp_free_pool.part.0/73 (do_memp_free_pool.part.0) @05f8a8c0
   Type: function definition analyzed
   Visibility: prevailing_def_ironly artificial
-  Aux: @05ecf068
+  Aux: @060ff380
   References: 
   Referring: 
-  Function do_memp_malloc_pool.part.0/71 is inline copy in do_memp_malloc_pool/64
   Availability: local
-  Function flags: count:28485 (estimated locally) first_run:1 body local split_part optimize_size
-  Called by: do_memp_malloc_pool/64 (inlined) (28485 (estimated locally),0.15 per call) 
+  Function flags: count:1073741824 (estimated locally) first_run:1 body local split_part optimize_size
+  Called by: do_memp_free_pool/74 (161481610 (estimated locally),0.15 per call) do_memp_free_pool/67 (57089 (estimated locally),0.16 per call) 
+  Calls: sys_arch_protect/71 (1073741824 (estimated locally),1.00 per call) sys_arch_unprotect/72 (1073741824 (estimated locally),1.00 per call) 
+sys_arch_unprotect/72 (sys_arch_unprotect) @06214460
+  Type: function
+  Visibility: external public
+  References: 
+  Referring: 
+  Availability: not_available
+  Function flags: optimize_size
+  Called by: do_memp_free_pool.part.0/73 (1073741824 (estimated locally),1.00 per call) do_memp_malloc_pool/64 (14032 (estimated locally),0.08 per call) do_memp_malloc_pool/64 (55314 (estimated locally),0.31 per call) 
   Calls: 
-memp_free/69 (memp_free) @06195e00
+sys_arch_protect/71 (sys_arch_protect) @06214380
+  Type: function
+  Visibility: external public
+  References: 
+  Referring: 
+  Availability: not_available
+  Function flags: optimize_size
+  Called by: do_memp_free_pool.part.0/73 (1073741824 (estimated locally),1.00 per call) do_memp_malloc_pool/64 (176719 (estimated locally),1.00 per call) 
+  Calls: 
+memp_free/69 (memp_free) @0620d2a0
   Type: function definition analyzed
   Visibility: externally_visible public
-  Aux: @05ecf1c8
+  Aux: @060ff520
   References: memp_pools/61 (read)
   Referring: 
   Availability: available
   Function flags: count:1073741823 (estimated locally) body optimize_size
   Called by: 
-  Calls: do_memp_free_pool/67 (489336361 (estimated locally),0.46 per call) 
-memp_free_pool/68 (memp_free_pool) @06195a80
+  Calls: do_memp_free_pool/74 (inlined) (489336361 (estimated locally),0.46 per call) 
+memp_free_pool/68 (memp_free_pool) @0620dc40
   Type: function definition analyzed
   Visibility: externally_visible public
-  Aux: @05ecef08
+  Aux: @060ff3a0
   References: 
   Referring: 
   Availability: available
   Function flags: count:357913 (estimated locally) body optimize_size
   Called by: 
-  Calls: do_memp_free_pool/67 (172997 (estimated locally),0.48 per call) 
-do_memp_free_pool/67 (do_memp_free_pool) @061957e0
+  Calls: do_memp_free_pool/67 (inlined) (172997 (estimated locally),0.48 per call) 
+do_memp_free_pool/67 (do_memp_free_pool) @0620d9a0
   Type: function definition analyzed
   Visibility: prevailing_def_ironly
-  Aux: @05ecf008
+  previous sharing asm name: 74
+  Aux: @060ff3c0
   References: 
   Referring: 
+  Function do_memp_free_pool/67 is inline copy in memp_free_pool/68
   Availability: local
-  Function flags: count:214748 (estimated locally) body local optimize_size
-  Called by: memp_free/69 (489336361 (estimated locally),0.46 per call) memp_free_pool/68 (172997 (estimated locally),0.48 per call) 
-  Calls: do_memp_free_pool.part.0/72 (inlined) (107374 (estimated locally),0.50 per call) 
-memp_malloc/66 (memp_malloc) @06195540
+  Function flags: count:172997 (estimated locally) body local optimize_size
+  Called by: memp_free_pool/68 (inlined) (172997 (estimated locally),0.48 per call) 
+  Calls: do_memp_free_pool.part.0/73 (57089 (estimated locally),0.16 per call) 
+memp_malloc/66 (memp_malloc) @0620d700
   Type: function definition analyzed
   Visibility: externally_visible public
-  Aux: @05ecef28
+  Aux: @060ff500
   References: memp_pools/61 (read)
   Referring: 
   Availability: available
   Function flags: count:1073741824 (estimated locally) body optimize_size
   Called by: 
   Calls: do_memp_malloc_pool/64 (752370897 (estimated locally),0.70 per call) 
-memp_malloc_pool/65 (memp_malloc_pool) @061952a0
+memp_malloc_pool/65 (memp_malloc_pool) @0620d460
   Type: function definition analyzed
   Visibility: externally_visible public
-  Aux: @05ecf088
+  Aux: @060ff460
   References: 
   Referring: 
   Availability: available
   Function flags: count:230763 (estimated locally) body optimize_size
   Called by: 
   Calls: do_memp_malloc_pool/64 (123389 (estimated locally),0.53 per call) 
-do_memp_malloc_pool/64 (do_memp_malloc_pool) @06195000
+do_memp_malloc_pool/64 (do_memp_malloc_pool) @0620d1c0
   Type: function definition analyzed
   Visibility: prevailing_def_ironly
-  Aux: @05ecf128
+  Aux: @060ff560
   References: 
   Referring: 
   Availability: local
-  Function flags: count:191173 (estimated locally) body local optimize_size
+  Function flags: count:176719 (estimated locally) body local optimize_size
   Called by: memp_malloc/66 (752370897 (estimated locally),0.70 per call) memp_malloc_pool/65 (123389 (estimated locally),0.53 per call) 
-  Calls: do_memp_malloc_pool.part.0/71 (inlined) (28485 (estimated locally),0.15 per call) 
-memp_init/63 (memp_init) @06166ee0
+  Calls: sys_arch_unprotect/72 (14032 (estimated locally),0.08 per call) sys_arch_unprotect/72 (55314 (estimated locally),0.31 per call) sys_arch_protect/71 (176719 (estimated locally),1.00 per call) 
+memp_init/63 (memp_init) @061e1e00
   Type: function definition analyzed
   Visibility: externally_visible public
-  Aux: @05ecf0a8
+  Aux: @060ff3e0
   References: memp_pools/61 (read)lwip_stats/70 (write)
   Referring: 
   Availability: available
   Function flags: count:67108864 (estimated locally) body optimize_size
   Called by: 
   Calls: memp_init_pool/62 (1006632961 (estimated locally),15.00 per call) 
-memp_init_pool/62 (memp_init_pool) @06166b60
+memp_init_pool/62 (memp_init_pool) @061e1d20
   Type: function definition analyzed
   Visibility: externally_visible public
-  Aux: @05ecf268
+  Aux: @060ff2c0
   References: 
   Referring: 
   Availability: available
@@ -526,102 +571,105 @@ memp_init_pool/62 (memp_init_pool) @06166b60
 
 
  ordered call graph: reduced
-memp_free/69 (memp_free) @06195e00
+memp_free/69 (memp_free) @0620d2a0
   Type: function definition analyzed
   Visibility: externally_visible public
-  Aux: @05ecf1c8
+  Aux: @060ff520
   References: memp_pools/61 (read)
   Referring: 
   Availability: available
   Function flags: count:1073741823 (estimated locally) body optimize_size
   Called by: 
-  Calls: do_memp_free_pool/67 (489336361 (estimated locally),0.46 per call) 
-memp_free_pool/68 (memp_free_pool) @06195a80
+  Calls: do_memp_free_pool/74 (inlined) (489336361 (estimated locally),0.46 per call) 
+do_memp_free_pool/74 (do_memp_free_pool) @06314460
+  Type: function definition analyzed
+  Visibility:
+  next sharing asm name: 67
+  Aux: @060ff2a0
+  References: 
+  Referring: 
+  Function do_memp_free_pool/74 is inline copy in memp_free/69
+  Clone of do_memp_free_pool/67
+  Availability: local
+  Function flags: count:489336361 (estimated locally) body local optimize_size
+  Called by: memp_free/69 (inlined) (489336361 (estimated locally),0.46 per call) 
+  Calls: do_memp_free_pool.part.0/73 (161481610 (estimated locally),0.15 per call) 
+memp_free_pool/68 (memp_free_pool) @0620dc40
   Type: function definition analyzed
   Visibility: externally_visible public
-  Aux: @05ecef08
+  Aux: @060ff3a0
   References: 
   Referring: 
   Availability: available
   Function flags: count:357913 (estimated locally) body optimize_size
   Called by: 
-  Calls: do_memp_free_pool/67 (172997 (estimated locally),0.48 per call) 
-do_memp_free_pool/67 (do_memp_free_pool) @061957e0
+  Calls: do_memp_free_pool/67 (inlined) (172997 (estimated locally),0.48 per call) 
+do_memp_free_pool/67 (do_memp_free_pool) @0620d9a0
   Type: function definition analyzed
   Visibility: prevailing_def_ironly
-  Aux: @05ecf008
+  previous sharing asm name: 74
+  Aux: @060ff3c0
   References: 
   Referring: 
+  Function do_memp_free_pool/67 is inline copy in memp_free_pool/68
   Availability: local
-  Function flags: count:214748 (estimated locally) body local optimize_size
-  Called by: memp_free/69 (489336361 (estimated locally),0.46 per call) memp_free_pool/68 (172997 (estimated locally),0.48 per call) 
-  Calls: do_memp_free_pool.part.0/72 (inlined) (107374 (estimated locally),0.50 per call) 
-do_memp_free_pool.part.0/72 (do_memp_free_pool.part.0) @061cf9a0
+  Function flags: count:172997 (estimated locally) body local optimize_size
+  Called by: memp_free_pool/68 (inlined) (172997 (estimated locally),0.48 per call) 
+  Calls: do_memp_free_pool.part.0/73 (57089 (estimated locally),0.16 per call) 
+do_memp_free_pool.part.0/73 (do_memp_free_pool.part.0) @05f8a8c0
   Type: function definition analyzed
   Visibility: prevailing_def_ironly artificial
-  Aux: @05ecf048
+  Aux: @060ff380
   References: 
   Referring: 
-  Function do_memp_free_pool.part.0/72 is inline copy in do_memp_free_pool/67
   Availability: local
-  Function flags: count:107374 (estimated locally) first_run:1 body local split_part optimize_size
-  Called by: do_memp_free_pool/67 (inlined) (107374 (estimated locally),0.50 per call) 
-  Calls: 
-memp_malloc/66 (memp_malloc) @06195540
+  Function flags: count:1073741824 (estimated locally) first_run:1 body local split_part optimize_size
+  Called by: do_memp_free_pool/74 (161481610 (estimated locally),0.15 per call) do_memp_free_pool/67 (57089 (estimated locally),0.16 per call) 
+  Calls: sys_arch_protect/71 (1073741824 (estimated locally),1.00 per call) sys_arch_unprotect/72 (1073741824 (estimated locally),1.00 per call) 
+memp_malloc/66 (memp_malloc) @0620d700
   Type: function definition analyzed
   Visibility: externally_visible public
-  Aux: @05ecef28
+  Aux: @060ff500
   References: memp_pools/61 (read)
   Referring: 
   Availability: available
   Function flags: count:1073741824 (estimated locally) body optimize_size
   Called by: 
   Calls: do_memp_malloc_pool/64 (752370897 (estimated locally),0.70 per call) 
-memp_malloc_pool/65 (memp_malloc_pool) @061952a0
+memp_malloc_pool/65 (memp_malloc_pool) @0620d460
   Type: function definition analyzed
   Visibility: externally_visible public
-  Aux: @05ecf088
+  Aux: @060ff460
   References: 
   Referring: 
   Availability: available
   Function flags: count:230763 (estimated locally) body optimize_size
   Called by: 
   Calls: do_memp_malloc_pool/64 (123389 (estimated locally),0.53 per call) 
-do_memp_malloc_pool/64 (do_memp_malloc_pool) @06195000
+do_memp_malloc_pool/64 (do_memp_malloc_pool) @0620d1c0
   Type: function definition analyzed
   Visibility: prevailing_def_ironly
-  Aux: @05ecf128
+  Aux: @060ff560
   References: 
   Referring: 
   Availability: local
-  Function flags: count:191173 (estimated locally) body local optimize_size
+  Function flags: count:176719 (estimated locally) body local optimize_size
   Called by: memp_malloc/66 (752370897 (estimated locally),0.70 per call) memp_malloc_pool/65 (123389 (estimated locally),0.53 per call) 
-  Calls: do_memp_malloc_pool.part.0/71 (inlined) (28485 (estimated locally),0.15 per call) 
-do_memp_malloc_pool.part.0/71 (do_memp_malloc_pool.part.0) @05f0f8c0
-  Type: function definition analyzed
-  Visibility: prevailing_def_ironly artificial
-  Aux: @05ecf068
-  References: 
-  Referring: 
-  Function do_memp_malloc_pool.part.0/71 is inline copy in do_memp_malloc_pool/64
-  Availability: local
-  Function flags: count:28485 (estimated locally) first_run:1 body local split_part optimize_size
-  Called by: do_memp_malloc_pool/64 (inlined) (28485 (estimated locally),0.15 per call) 
-  Calls: 
-memp_init/63 (memp_init) @06166ee0
+  Calls: sys_arch_unprotect/72 (14032 (estimated locally),0.08 per call) sys_arch_unprotect/72 (55314 (estimated locally),0.31 per call) sys_arch_protect/71 (176719 (estimated locally),1.00 per call) 
+memp_init/63 (memp_init) @061e1e00
   Type: function definition analyzed
   Visibility: externally_visible public
-  Aux: @05ecf0a8
+  Aux: @060ff3e0
   References: memp_pools/61 (read)lwip_stats/70 (write)
   Referring: 
   Availability: available
   Function flags: count:67108864 (estimated locally) body optimize_size
   Called by: 
   Calls: memp_init_pool/62 (1006632961 (estimated locally),15.00 per call) 
-memp_init_pool/62 (memp_init_pool) @06166b60
+memp_init_pool/62 (memp_init_pool) @061e1d20
   Type: function definition analyzed
   Visibility: externally_visible public
-  Aux: @05ecf268
+  Aux: @060ff2c0
   References: 
   Referring: 
   Availability: available
@@ -631,64 +679,39 @@ memp_init_pool/62 (memp_init_pool) @06166b60
 
 Function found not to call free: memp_init_pool
 Function found not to call free: memp_init
-Function found not to call free: do_memp_malloc_pool.part.0
-Function found not to call free: do_memp_free_pool.part.0
 do_memp_free_pool.part.0 (const struct memp_desc * desc, void * mem)
 {
   struct memp * memp;
-  struct stats_mem * _2;
-  long unsigned int _3;
+  sys_prot_t old_level;
+  struct stats_mem * _3;
   long unsigned int _4;
-  struct memp * * _5;
-  struct memp * _6;
+  long unsigned int _5;
+  struct memp * * _6;
+  struct memp * _7;
 
   <bb 3> [local count: 1073741824]:
 
   <bb 2> [local count: 1073741824]:
   # DEBUG BEGIN_STMT
   # DEBUG BEGIN_STMT
-  # DEBUG memp => mem_7(D)
+  # DEBUG memp => mem_8(D)
   # DEBUG BEGIN_STMT
+  old_level_1 = sys_arch_protect ();
+  # DEBUG old_level => old_level_1
   # DEBUG BEGIN_STMT
-  _2 = desc_1(D)->stats;
-  _3 = _2->used;
-  _4 = _3 + 4294967295;
-  _2->used = _4;
+  _3 = desc_2(D)->stats;
+  _4 = _3->used;
+  _5 = _4 + 4294967295;
+  _3->used = _5;
   # DEBUG BEGIN_STMT
-  _5 = desc_1(D)->tab;
-  _6 = *_5;
-  MEM[(struct memp *)mem_7(D)].next = _6;
+  _6 = desc_2(D)->tab;
+  _7 = *_6;
+  MEM[(struct memp *)mem_8(D)].next = _7;
   # DEBUG BEGIN_STMT
-  *_5 = mem_7(D);
+  *_6 = mem_8(D);
   # DEBUG BEGIN_STMT
+  sys_arch_unprotect (old_level_1);
   return;
-
-}
-
-
-do_memp_malloc_pool.part.0 (const struct memp_desc * desc)
-{
-  struct memp * memp;
-  struct stats_mem * _2;
-  short unsigned int _3;
-  short unsigned int _4;
-  void * _5;
-
-  <bb 4> [local count: 1073741824]:
-
-  <bb 2> [local count: 1073741824]:
-  # DEBUG BEGIN_STMT
-  _2 = desc_1(D)->stats;
-  _3 = _2->err;
-  _4 = _3 + 1;
-  _2->err = _4;
-  # DEBUG BEGIN_STMT
-  # DEBUG BEGIN_STMT
-  # DEBUG BEGIN_STMT
-
-  <bb 3> [local count: 1073741824]:
-  # _5 = PHI <0B(2)>
-  return _5;
 
 }
 
@@ -772,7 +795,7 @@ do_memp_free_pool (const struct memp_desc * desc, void * mem)
   unsigned int mem.2_1;
   unsigned int _2;
 
-  <bb 2> [local count: 214748]:
+  <bb 2> [local count: 160260]:
   # DEBUG BEGIN_STMT
   # DEBUG BEGIN_STMT
   # DEBUG BEGIN_STMT
@@ -780,9 +803,9 @@ do_memp_free_pool (const struct memp_desc * desc, void * mem)
   mem.2_1 = (unsigned int) mem_5(D);
   _2 = mem.2_1 & 15;
   if (_2 != 0)
-    goto <bb 5>; [50.00%]
+    goto <bb 5>; [67.00%]
   else
-    goto <bb 4>; [50.00%]
+    goto <bb 4>; [33.00%]
 
   <bb 5> [local count: 107374]:
 
@@ -796,7 +819,7 @@ do_memp_free_pool (const struct memp_desc * desc, void * mem)
   <bb 6> [local count: 1073741824]:
   goto <bb 3>; [100.00%]
 
-  <bb 4> [local count: 107374]:
+  <bb 4> [local count: 52886]:
   do_memp_free_pool.part.0 (desc_7(D), mem_5(D));
   return;
 
@@ -872,41 +895,46 @@ memp_malloc_pool (const struct memp_desc * desc)
 
 do_memp_malloc_pool (const struct memp_desc * desc)
 {
+  sys_prot_t old_level;
   struct memp * memp;
   struct memp * * _1;
-  void * _2;
-  struct memp * _3;
-  unsigned int memp.1_4;
-  unsigned int _5;
-  struct stats_mem * _6;
+  struct memp * _2;
+  unsigned int memp.1_3;
+  unsigned int _4;
+  struct stats_mem * _5;
+  long unsigned int _6;
   long unsigned int _7;
   long unsigned int _8;
-  long unsigned int _11;
+  struct stats_mem * _9;
+  short unsigned int _10;
+  short unsigned int _11;
   void * _12;
 
-  <bb 2> [local count: 191173]:
+  <bb 2> [local count: 176719]:
   # DEBUG BEGIN_STMT
   # DEBUG BEGIN_STMT
   # DEBUG BEGIN_STMT
+  old_level_18 = sys_arch_protect ();
+  # DEBUG old_level => old_level_18
   # DEBUG BEGIN_STMT
-  _1 = desc_16(D)->tab;
-  memp_17 = *_1;
-  # DEBUG memp => memp_17
+  _1 = desc_19(D)->tab;
+  memp_20 = *_1;
+  # DEBUG memp => memp_20
   # DEBUG BEGIN_STMT
-  if (memp_17 != 0B)
-    goto <bb 3>; [85.10%]
+  if (memp_20 != 0B)
+    goto <bb 3>; [92.06%]
   else
-    goto <bb 8>; [14.90%]
+    goto <bb 8>; [7.94%]
 
   <bb 3> [local count: 162688]:
   # DEBUG BEGIN_STMT
-  _3 = memp_17->next;
-  *_1 = _3;
+  _2 = memp_20->next;
+  *_1 = _2;
   # DEBUG BEGIN_STMT
   # DEBUG BEGIN_STMT
-  memp.1_4 = (unsigned int) memp_17;
-  _5 = memp.1_4 & 15;
-  if (_5 != 0)
+  memp.1_3 = (unsigned int) memp_20;
+  _4 = memp.1_3 & 15;
+  if (_4 != 0)
     goto <bb 10>; [66.00%]
   else
     goto <bb 5>; [34.00%]
@@ -926,31 +954,40 @@ do_memp_malloc_pool (const struct memp_desc * desc)
   <bb 5> [local count: 55314]:
   # DEBUG BEGIN_STMT
   # DEBUG BEGIN_STMT
-  _6 = desc_16(D)->stats;
-  _7 = _6->used;
-  _8 = _7 + 1;
-  _6->used = _8;
+  _5 = desc_19(D)->stats;
+  _6 = _5->used;
+  _7 = _6 + 1;
+  _5->used = _7;
   # DEBUG BEGIN_STMT
-  _11 = _6->max;
-  if (_8 > _11)
+  _8 = _5->max;
+  if (_7 > _8)
     goto <bb 6>; [50.00%]
   else
     goto <bb 7>; [50.00%]
 
   <bb 6> [local count: 27657]:
   # DEBUG BEGIN_STMT
-  _6->max = _8;
+  _5->max = _7;
 
   <bb 7> [local count: 55314]:
   # DEBUG BEGIN_STMT
+  sys_arch_unprotect (old_level_18);
   # DEBUG BEGIN_STMT
   goto <bb 9>; [100.00%]
 
-  <bb 8> [local count: 28485]:
-  _2 = do_memp_malloc_pool.part.0 (desc_16(D));
+  <bb 8> [local count: 14032]:
+  # DEBUG BEGIN_STMT
+  _9 = desc_19(D)->stats;
+  _10 = _9->err;
+  _11 = _10 + 1;
+  _9->err = _11;
+  # DEBUG BEGIN_STMT
+  sys_arch_unprotect (old_level_18);
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
 
-  <bb 9> [local count: 83799]:
-  # _12 = PHI <memp_17(7), _2(8)>
+  <bb 9> [local count: 69345]:
+  # _12 = PHI <memp_20(7), 0B(8)>
   return _12;
 
 }

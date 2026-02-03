@@ -353,7 +353,7 @@ Reclaiming variables:
 Clearing address taken flags:
 Symbol table:
 
-gmacif_low_level_output.part.0/37 (gmacif_low_level_output.part.0) @05f5e000
+gmacif_low_level_output.part.0/37 (gmacif_low_level_output.part.0) @060d8000
   Type: function definition analyzed
   Visibility: prevailing_def_ironly artificial
   References: tx_pbufs/4 (read)netif_cfg/18 (read)tx_pbufs/4 (write)tx_pbufs/4 (write)
@@ -362,7 +362,7 @@ gmacif_low_level_output.part.0/37 (gmacif_low_level_output.part.0) @05f5e000
   Function flags: count:214748 (estimated locally) first_run:1 body local split_part optimize_size
   Called by: gmacif_low_level_output/6 (123389 (estimated locally),0.53 per call) 
   Calls: pbuf_ref/21 (214748 (estimated locally),1.00 per call) pbuf_clen/22 (214748 (estimated locally),1.00 per call) Gmac_Ip_SendMultiBufferFrame/23 (733545 (estimated locally),3.42 per call) pbuf_free/24 (35433 (estimated locally),0.16 per call) 
-Gmac_Ip_GetTransmitStatus/36 (Gmac_Ip_GetTransmitStatus) @065222a0
+Gmac_Ip_GetTransmitStatus/36 (Gmac_Ip_GetTransmitStatus) @06687460
   Type: function
   Visibility: external public
   References: 
@@ -371,7 +371,7 @@ Gmac_Ip_GetTransmitStatus/36 (Gmac_Ip_GetTransmitStatus) @065222a0
   Function flags: optimize_size
   Called by: GmacIf_TxNotification/17 (478422323 (estimated locally),2.67 per call) 
   Calls: 
-pbuf_alloc/35 (pbuf_alloc) @065220e0
+pbuf_alloc/35 (pbuf_alloc) @066872a0
   Type: function
   Visibility: external public
   References: 
@@ -380,7 +380,7 @@ pbuf_alloc/35 (pbuf_alloc) @065220e0
   Function flags: optimize_size
   Called by: gmacif_input/7 (1073741824 (estimated locally),1.00 per call) 
   Calls: 
-Gmac_Ip_ReadFrame/34 (Gmac_Ip_ReadFrame) @064f31c0
+Gmac_Ip_ReadFrame/34 (Gmac_Ip_ReadFrame) @066870e0
   Type: function
   Visibility: external public
   References: 
@@ -389,7 +389,7 @@ Gmac_Ip_ReadFrame/34 (Gmac_Ip_ReadFrame) @064f31c0
   Function flags: optimize_size
   Called by: GmacIf_RxNotification/16 (1073741823 (estimated locally),9.09 per call) 
   Calls: 
-memcpy/33 (memcpy) @064f3e00
+memcpy/33 (memcpy) @0665d380
   Type: function
   Visibility: external public
   References: 
@@ -398,7 +398,7 @@ memcpy/33 (memcpy) @064f3e00
   Function flags: optimize_size
   Called by: memcpy_custom/15 (359703511 (estimated locally),0.33 per call) memcpy_custom/15 (118702159 (estimated locally),0.11 per call) memcpy_custom/15 (359703511 (estimated locally),0.33 per call) memcpy_custom/15 (354334802 (estimated locally),0.33 per call) 
   Calls: 
-Gmac_Ip_RemoveDstAddrFromHashFilter/32 (Gmac_Ip_RemoveDstAddrFromHashFilter) @064f39a0
+Gmac_Ip_RemoveDstAddrFromHashFilter/32 (Gmac_Ip_RemoveDstAddrFromHashFilter) @0665db60
   Type: function
   Visibility: external public
   References: 
@@ -407,7 +407,7 @@ Gmac_Ip_RemoveDstAddrFromHashFilter/32 (Gmac_Ip_RemoveDstAddrFromHashFilter) @06
   Function flags: optimize_size
   Called by: igmp_gmac_filter/12 (536870913 (estimated locally),0.50 per call) mld_gmac_filter/11 (536870913 (estimated locally),0.50 per call) 
   Calls: 
-Gmac_Ip_AddDstAddrToHashFilter/31 (Gmac_Ip_AddDstAddrToHashFilter) @064f38c0
+Gmac_Ip_AddDstAddrToHashFilter/31 (Gmac_Ip_AddDstAddrToHashFilter) @0665da80
   Type: function
   Visibility: external public
   References: 
@@ -416,7 +416,7 @@ Gmac_Ip_AddDstAddrToHashFilter/31 (Gmac_Ip_AddDstAddrToHashFilter) @064f38c0
   Function flags: optimize_size
   Called by: igmp_gmac_filter/12 (536870913 (estimated locally),0.50 per call) mld_gmac_filter/11 (536870913 (estimated locally),0.50 per call) 
   Calls: 
-lwip_htonl/30 (lwip_htonl) @064f37e0
+lwip_htonl/30 (lwip_htonl) @0665d9a0
   Type: function
   Visibility: external public
   References: 
@@ -425,7 +425,7 @@ lwip_htonl/30 (lwip_htonl) @064f37e0
   Function flags: optimize_size
   Called by: mld_gmac_filter/11 (1073741824 (estimated locally),1.00 per call) mld_gmac_filter/11 (1073741824 (estimated locally),1.00 per call) mld_gmac_filter/11 (1073741824 (estimated locally),1.00 per call) mld_gmac_filter/11 (1073741824 (estimated locally),1.00 per call) 
   Calls: 
-Gmac_Ip_Deinit/29 (Gmac_Ip_Deinit) @064f3620
+Gmac_Ip_Deinit/29 (Gmac_Ip_Deinit) @0665d7e0
   Type: function
   Visibility: external public
   References: 
@@ -434,7 +434,7 @@ Gmac_Ip_Deinit/29 (Gmac_Ip_Deinit) @064f3620
   Function flags: optimize_size
   Called by: gmac_ethernetif_shutdown/10 (1073741824 (estimated locally),1.00 per call) 
   Calls: 
-netif_set_link_up/28 (netif_set_link_up) @064f3460
+netif_set_link_up/28 (netif_set_link_up) @0665d620
   Type: function
   Visibility: external public
   References: 
@@ -443,7 +443,7 @@ netif_set_link_up/28 (netif_set_link_up) @064f3460
   Function flags: optimize_size
   Called by: gmacif_low_level_init/8 (153437707 (estimated locally),1.00 per call) 
   Calls: 
-Gmac_Ip_SetMulticastHashFilter/27 (Gmac_Ip_SetMulticastHashFilter) @064f3380
+Gmac_Ip_SetMulticastHashFilter/27 (Gmac_Ip_SetMulticastHashFilter) @0665d540
   Type: function
   Visibility: external public
   References: 
@@ -452,7 +452,7 @@ Gmac_Ip_SetMulticastHashFilter/27 (Gmac_Ip_SetMulticastHashFilter) @064f3380
   Function flags: optimize_size
   Called by: gmacif_low_level_init/8 (153437707 (estimated locally),1.00 per call) 
   Calls: 
-Gmac_Ip_EnableController/26 (Gmac_Ip_EnableController) @064f32a0
+Gmac_Ip_EnableController/26 (Gmac_Ip_EnableController) @0665d460
   Type: function
   Visibility: external public
   References: 
@@ -461,7 +461,7 @@ Gmac_Ip_EnableController/26 (Gmac_Ip_EnableController) @064f32a0
   Function flags: optimize_size
   Called by: gmacif_low_level_init/8 (153437707 (estimated locally),1.00 per call) 
   Calls: 
-Gmac_Ip_ProvideRxBuff/25 (Gmac_Ip_ProvideRxBuff) @064f30e0
+Gmac_Ip_ProvideRxBuff/25 (Gmac_Ip_ProvideRxBuff) @0665d2a0
   Type: function
   Visibility: external public
   References: 
@@ -470,7 +470,7 @@ Gmac_Ip_ProvideRxBuff/25 (Gmac_Ip_ProvideRxBuff) @064f30e0
   Function flags: optimize_size
   Called by: GmacIf_RxNotification/16 (536870913 (estimated locally),4.55 per call) GmacIf_RxNotification/16 (131211251 (estimated locally),1.11 per call) gmacif_low_level_init/8 (767004445 (estimated locally),5.00 per call) 
   Calls: 
-pbuf_free/24 (pbuf_free) @064e6380
+pbuf_free/24 (pbuf_free) @0665d0e0
   Type: function
   Visibility: external public
   References: 
@@ -479,7 +479,7 @@ pbuf_free/24 (pbuf_free) @064e6380
   Function flags: optimize_size
   Called by: GmacIf_TxNotification/17 (233852832 (estimated locally),1.31 per call) gmacif_input/7 (351252089 (estimated locally),0.33 per call) gmacif_low_level_output.part.0/37 (35433 (estimated locally),0.16 per call) 
   Calls: 
-Gmac_Ip_SendMultiBufferFrame/23 (Gmac_Ip_SendMultiBufferFrame) @064e60e0
+Gmac_Ip_SendMultiBufferFrame/23 (Gmac_Ip_SendMultiBufferFrame) @0665d000
   Type: function
   Visibility: external public
   References: 
@@ -488,7 +488,7 @@ Gmac_Ip_SendMultiBufferFrame/23 (Gmac_Ip_SendMultiBufferFrame) @064e60e0
   Function flags: optimize_size
   Called by: gmacif_low_level_output.part.0/37 (733545 (estimated locally),3.42 per call) 
   Calls: 
-pbuf_clen/22 (pbuf_clen) @064e6ee0
+pbuf_clen/22 (pbuf_clen) @0664e620
   Type: function
   Visibility: external public
   References: 
@@ -497,7 +497,7 @@ pbuf_clen/22 (pbuf_clen) @064e6ee0
   Function flags: optimize_size
   Called by: gmacif_low_level_output.part.0/37 (214748 (estimated locally),1.00 per call) 
   Calls: 
-pbuf_ref/21 (pbuf_ref) @064e6e00
+pbuf_ref/21 (pbuf_ref) @0664e380
   Type: function
   Visibility: external public
   References: 
@@ -506,7 +506,7 @@ pbuf_ref/21 (pbuf_ref) @064e6e00
   Function flags: optimize_size
   Called by: gmacif_low_level_output.part.0/37 (214748 (estimated locally),1.00 per call) 
   Calls: 
-ethip6_output/20 (ethip6_output) @064e6a80
+ethip6_output/20 (ethip6_output) @0664ed20
   Type: function
   Visibility: external public
   Address is taken.
@@ -516,7 +516,7 @@ ethip6_output/20 (ethip6_output) @064e6a80
   Function flags: optimize_size
   Called by: 
   Calls: 
-etharp_output/19 (etharp_output) @064e69a0
+etharp_output/19 (etharp_output) @0664ec40
   Type: function
   Visibility: external public
   Address is taken.
@@ -526,7 +526,7 @@ etharp_output/19 (etharp_output) @064e69a0
   Function flags: optimize_size
   Called by: 
   Calls: 
-netif_cfg/18 (netif_cfg) @064ed090
+netif_cfg/18 (netif_cfg) @06657090
   Type: variable
   Body removed by symtab_remove_unreachable_nodes
   Visibility: external public
@@ -534,7 +534,7 @@ netif_cfg/18 (netif_cfg) @064ed090
   Referring: gmacif_low_level_init/8 (read)gmacif_low_level_init/8 (read)gmacif_low_level_init/8 (read)mld_gmac_filter/11 (read)mld_gmac_filter/11 (read)gmac_ethernetif_init/9 (read)igmp_gmac_filter/12 (read)gmacif_low_level_output.part.0/37 (read)gmacif_low_level_init/8 (read)gmacif_low_level_init/8 (read)gmac_ethernetif_shutdown/10 (read)igmp_gmac_filter/12 (read)GmacIf_RxNotification/16 (read)
   Availability: not_available
   Varpool flags:
-GmacIf_TxNotification/17 (GmacIf_TxNotification) @064e6540
+GmacIf_TxNotification/17 (GmacIf_TxNotification) @0664e7e0
   Type: function definition analyzed
   Visibility: externally_visible public
   References: tx_pbufs/4 (read)tx_pbufs/4 (read)tx_pbufs/4 (read)tx_pbufs/4 (write)
@@ -543,7 +543,7 @@ GmacIf_TxNotification/17 (GmacIf_TxNotification) @064e6540
   Function flags: count:178992764 (estimated locally) body optimize_size
   Called by: 
   Calls: pbuf_free/24 (233852832 (estimated locally),1.31 per call) Gmac_Ip_GetTransmitStatus/36 (478422323 (estimated locally),2.67 per call) 
-GmacIf_RxNotification/16 (GmacIf_RxNotification) @064e62a0
+GmacIf_RxNotification/16 (GmacIf_RxNotification) @0664e540
   Type: function definition analyzed
   Visibility: externally_visible public
   References: rx_buff_process_handler/2 (read)netif_cfg/18 (read)g_netif/1 (read)
@@ -553,7 +553,7 @@ GmacIf_RxNotification/16 (GmacIf_RxNotification) @064e62a0
   Called by: 
   Calls: Gmac_Ip_ProvideRxBuff/25 (536870913 (estimated locally),4.55 per call) gmacif_input/7 (39832748 (estimated locally),0.34 per call) Gmac_Ip_ProvideRxBuff/25 (131211251 (estimated locally),1.11 per call) Gmac_Ip_ReadFrame/34 (1073741823 (estimated locally),9.09 per call) 
    Indirect call(231713485 (estimated locally),1.96 per call) 
-memcpy_custom/15 (memcpy_custom) @064e6000
+memcpy_custom/15 (memcpy_custom) @0664e2a0
   Type: function definition analyzed
   Visibility: externally_visible public
   References: 
@@ -562,7 +562,7 @@ memcpy_custom/15 (memcpy_custom) @064e6000
   Function flags: count:1073741824 (estimated locally) body optimize_size
   Called by: 
   Calls: memcpy/33 (359703511 (estimated locally),0.33 per call) memcpy/33 (118702159 (estimated locally),0.11 per call) memcpy_64/14 (359703511 (estimated locally),0.33 per call) memcpy/33 (359703511 (estimated locally),0.33 per call) memcpy/33 (354334802 (estimated locally),0.33 per call) 
-memcpy_64/14 (memcpy_64) @064dd8c0
+memcpy_64/14 (memcpy_64) @0664e000
   Type: function definition analyzed
   Visibility: externally_visible public
   References: 
@@ -571,7 +571,7 @@ memcpy_64/14 (memcpy_64) @064dd8c0
   Function flags: count:118111600 (estimated locally) body optimize_size
   Called by: memcpy_custom/15 (359703511 (estimated locally),0.33 per call) 
   Calls: 
-gmacif_register_rx_buff_process_condition_handler/13 (gmacif_register_rx_buff_process_condition_handler) @064dd000
+gmacif_register_rx_buff_process_condition_handler/13 (gmacif_register_rx_buff_process_condition_handler) @06634540
   Type: function definition analyzed
   Visibility: externally_visible public
   References: rx_buff_process_handler/2 (write)
@@ -580,7 +580,7 @@ gmacif_register_rx_buff_process_condition_handler/13 (gmacif_register_rx_buff_pr
   Function flags: count:1073741824 (estimated locally) body optimize_size
   Called by: 
   Calls: 
-igmp_gmac_filter/12 (igmp_gmac_filter) @064ddd20
+igmp_gmac_filter/12 (igmp_gmac_filter) @06634000
   Type: function definition analyzed
   Visibility: externally_visible public
   Address is taken.
@@ -590,7 +590,7 @@ igmp_gmac_filter/12 (igmp_gmac_filter) @064ddd20
   Function flags: count:1073741824 (estimated locally) body optimize_size
   Called by: 
   Calls: Gmac_Ip_RemoveDstAddrFromHashFilter/32 (536870913 (estimated locally),0.50 per call) Gmac_Ip_AddDstAddrToHashFilter/31 (536870913 (estimated locally),0.50 per call) 
-mld_gmac_filter/11 (mld_gmac_filter) @064dd7e0
+mld_gmac_filter/11 (mld_gmac_filter) @06634a80
   Type: function definition analyzed
   Visibility: externally_visible public
   Address is taken.
@@ -600,7 +600,7 @@ mld_gmac_filter/11 (mld_gmac_filter) @064dd7e0
   Function flags: count:1073741824 (estimated locally) body optimize_size
   Called by: gmacif_low_level_init/8 (50634443 (estimated locally),0.33 per call) 
   Calls: Gmac_Ip_RemoveDstAddrFromHashFilter/32 (536870913 (estimated locally),0.50 per call) Gmac_Ip_AddDstAddrToHashFilter/31 (536870913 (estimated locally),0.50 per call) lwip_htonl/30 (1073741824 (estimated locally),1.00 per call) lwip_htonl/30 (1073741824 (estimated locally),1.00 per call) lwip_htonl/30 (1073741824 (estimated locally),1.00 per call) lwip_htonl/30 (1073741824 (estimated locally),1.00 per call) 
-gmac_ethernetif_shutdown/10 (gmac_ethernetif_shutdown) @064dd1c0
+gmac_ethernetif_shutdown/10 (gmac_ethernetif_shutdown) @06634460
   Type: function definition analyzed
   Visibility: externally_visible public
   References: netif_cfg/18 (read)
@@ -609,7 +609,7 @@ gmac_ethernetif_shutdown/10 (gmac_ethernetif_shutdown) @064dd1c0
   Function flags: count:1073741824 (estimated locally) body optimize_size
   Called by: 
   Calls: Gmac_Ip_Deinit/29 (1073741824 (estimated locally),1.00 per call) 
-gmac_ethernetif_init/9 (gmac_ethernetif_init) @06457e00
+gmac_ethernetif_init/9 (gmac_ethernetif_init) @066341c0
   Type: function definition analyzed
   Visibility: externally_visible public
   References: tx_pbufs/4 (write)netif_cfg/18 (read)etharp_output/19 (addr)ethip6_output/20 (addr)gmacif_low_level_output/6 (addr)
@@ -618,7 +618,7 @@ gmac_ethernetif_init/9 (gmac_ethernetif_init) @06457e00
   Function flags: count:357913 (estimated locally) body optimize_size
   Called by: 
   Calls: gmacif_low_level_init/8 (250539 (estimated locally),0.70 per call) 
-gmacif_low_level_init/8 (gmacif_low_level_init) @06457d20
+gmacif_low_level_init/8 (gmacif_low_level_init) @065c1ee0
   Type: function definition analyzed
   Visibility: prevailing_def_ironly
   References: netif_cfg/18 (read)igmp_gmac_filter/12 (addr)g_netif/1 (write)gmacif_DataBuffer/3 (addr)netif_cfg/18 (read)rx_bufs/5 (write)netif_cfg/18 (read)netif_cfg/18 (read)netif_cfg/18 (read)mld_gmac_filter/11 (addr)
@@ -627,7 +627,7 @@ gmacif_low_level_init/8 (gmacif_low_level_init) @06457d20
   Function flags: count:153437706 (estimated locally) body local optimize_size
   Called by: gmac_ethernetif_init/9 (250539 (estimated locally),0.70 per call) 
   Calls: netif_set_link_up/28 (153437707 (estimated locally),1.00 per call) mld_gmac_filter/11 (50634443 (estimated locally),0.33 per call) Gmac_Ip_SetMulticastHashFilter/27 (153437707 (estimated locally),1.00 per call) Gmac_Ip_EnableController/26 (153437707 (estimated locally),1.00 per call) Gmac_Ip_ProvideRxBuff/25 (767004445 (estimated locally),5.00 per call) 
-gmacif_input/7 (gmacif_input) @06457a80
+gmacif_input/7 (gmacif_input) @065c1c40
   Type: function definition analyzed
   Visibility: prevailing_def_ironly
   References: 
@@ -637,7 +637,7 @@ gmacif_input/7 (gmacif_input) @06457a80
   Called by: GmacIf_RxNotification/16 (39832748 (estimated locally),0.34 per call) 
   Calls: pbuf_free/24 (351252089 (estimated locally),0.33 per call) pbuf_alloc/35 (1073741824 (estimated locally),1.00 per call) 
    Indirect call(1064400271 (estimated locally),0.99 per call)  of param:0 loaded from aggregate passed by reference at offset 1408 (vptr maybe changed)
-gmacif_low_level_output/6 (gmacif_low_level_output) @064577e0
+gmacif_low_level_output/6 (gmacif_low_level_output) @065c19a0
   Type: function definition analyzed
   Visibility: prevailing_def_ironly
   Address is taken.
@@ -647,35 +647,35 @@ gmacif_low_level_output/6 (gmacif_low_level_output) @064577e0
   Function flags: count:230763 (estimated locally) body optimize_size
   Called by: 
   Calls: gmacif_low_level_output.part.0/37 (123389 (estimated locally),0.53 per call) 
-rx_bufs/5 (rx_bufs) @06453a68
+rx_bufs/5 (rx_bufs) @065bda68
   Type: variable definition analyzed
   Visibility: externally_visible public
   References: 
   Referring: gmacif_low_level_init/8 (write)
   Availability: available
   Varpool flags:
-tx_pbufs/4 (tx_pbufs) @064539d8
+tx_pbufs/4 (tx_pbufs) @065bd9d8
   Type: variable definition analyzed
   Visibility: force_output externally_visible public
   References: 
   Referring: gmac_ethernetif_init/9 (write)gmacif_low_level_output.part.0/37 (read)gmacif_low_level_output.part.0/37 (write)gmacif_low_level_output.part.0/37 (write)GmacIf_TxNotification/17 (read)GmacIf_TxNotification/17 (read)GmacIf_TxNotification/17 (read)GmacIf_TxNotification/17 (write)
   Availability: available
   Varpool flags:
-gmacif_DataBuffer/3 (gmacif_DataBuffer) @06453948
+gmacif_DataBuffer/3 (gmacif_DataBuffer) @065bd948
   Type: variable definition analyzed
   Visibility: externally_visible public
   References: 
   Referring: gmacif_low_level_init/8 (addr)
   Availability: available
   Varpool flags:
-rx_buff_process_handler/2 (rx_buff_process_handler) @064538b8
+rx_buff_process_handler/2 (rx_buff_process_handler) @065bd8b8
   Type: variable definition analyzed
   Visibility: prevailing_def_ironly
   References: 
   Referring: gmacif_register_rx_buff_process_condition_handler/13 (write)GmacIf_RxNotification/16 (read)
   Availability: available
   Varpool flags: initialized
-g_netif/1 (g_netif) @064537e0
+g_netif/1 (g_netif) @065bd7e0
   Type: variable definition analyzed
   Visibility: externally_visible public
   References: 
@@ -683,7 +683,7 @@ g_netif/1 (g_netif) @064537e0
   Availability: available
   Varpool flags: initialized
 
-;; Function mld_gmac_filter (mld_gmac_filter, funcdef_no=6, decl_uid=8212, cgraph_uid=7, symbol_order=11)
+;; Function mld_gmac_filter (mld_gmac_filter, funcdef_no=6, decl_uid=8216, cgraph_uid=7, symbol_order=11)
 
 Modification phase of node mld_gmac_filter/11
 mld_gmac_filter (struct netif * netif, const struct ip6_addr_t * group, netif_mac_filter_action action)
@@ -780,7 +780,7 @@ mld_gmac_filter (struct netif * netif, const struct ip6_addr_t * group, netif_ma
 
 
 
-;; Function igmp_gmac_filter (igmp_gmac_filter, funcdef_no=7, decl_uid=8216, cgraph_uid=8, symbol_order=12)
+;; Function igmp_gmac_filter (igmp_gmac_filter, funcdef_no=7, decl_uid=8220, cgraph_uid=8, symbol_order=12)
 
 Modification phase of node igmp_gmac_filter/12
 igmp_gmac_filter (struct netif * netif, const struct ip4_addr_t * group, netif_mac_filter_action action)
@@ -849,7 +849,7 @@ igmp_gmac_filter (struct netif * netif, const struct ip4_addr_t * group, netif_m
 
 
 
-;; Function gmacif_low_level_output (gmacif_low_level_output, funcdef_no=1, decl_uid=8232, cgraph_uid=2, symbol_order=6)
+;; Function gmacif_low_level_output (gmacif_low_level_output, funcdef_no=1, decl_uid=8236, cgraph_uid=2, symbol_order=6)
 
 Modification phase of node gmacif_low_level_output/6
 gmacif_low_level_output (struct netif * netif, struct pbuf * p)
@@ -896,7 +896,7 @@ gmacif_low_level_output (struct netif * netif, struct pbuf * p)
 
 
 
-;; Function gmac_ethernetif_init (gmac_ethernetif_init, funcdef_no=4, decl_uid=8206, cgraph_uid=5, symbol_order=9)
+;; Function gmac_ethernetif_init (gmac_ethernetif_init, funcdef_no=4, decl_uid=8210, cgraph_uid=5, symbol_order=9)
 
 Modification phase of node gmac_ethernetif_init/9
 gmac_ethernetif_init (struct netif * netif)
@@ -1031,7 +1031,7 @@ gmac_ethernetif_init (struct netif * netif)
 
 
 
-;; Function gmac_ethernetif_shutdown (gmac_ethernetif_shutdown, funcdef_no=5, decl_uid=8208, cgraph_uid=6, symbol_order=10)
+;; Function gmac_ethernetif_shutdown (gmac_ethernetif_shutdown, funcdef_no=5, decl_uid=8212, cgraph_uid=6, symbol_order=10)
 
 Modification phase of node gmac_ethernetif_shutdown/10
 gmac_ethernetif_shutdown (struct netif * netif)
@@ -1054,7 +1054,7 @@ gmac_ethernetif_shutdown (struct netif * netif)
 
 
 
-;; Function gmacif_register_rx_buff_process_condition_handler (gmacif_register_rx_buff_process_condition_handler, funcdef_no=8, decl_uid=8218, cgraph_uid=9, symbol_order=13)
+;; Function gmacif_register_rx_buff_process_condition_handler (gmacif_register_rx_buff_process_condition_handler, funcdef_no=8, decl_uid=8222, cgraph_uid=9, symbol_order=13)
 
 Modification phase of node gmacif_register_rx_buff_process_condition_handler/13
 gmacif_register_rx_buff_process_condition_handler (unsigned int (*rx_buff_process_condition_handler_t) (uint8_t, struct Gmac_Ip_BufferType *) handler)
@@ -1211,7 +1211,7 @@ memcpy_custom (void * dst, const void * src, unsigned int len)
 
 
 
-;; Function GmacIf_RxNotification (GmacIf_RxNotification, funcdef_no=11, decl_uid=8226, cgraph_uid=12, symbol_order=16)
+;; Function GmacIf_RxNotification (GmacIf_RxNotification, funcdef_no=11, decl_uid=8230, cgraph_uid=12, symbol_order=16)
 
 Modification phase of node GmacIf_RxNotification/16
 GmacIf_RxNotification (uint8 instance, uint8 channel)
@@ -1222,7 +1222,7 @@ GmacIf_RxNotification (uint8 instance, uint8 channel)
   struct Gmac_Ip_BufferType bd;
   long unsigned int _1;
   long unsigned int _2;
-  unsigned int (*<T8b8>) (uint8_t, struct Gmac_Ip_BufferType *) rx_buff_process_handler.8_3;
+  unsigned int (*<T8ba>) (uint8_t, struct Gmac_Ip_BufferType *) rx_buff_process_handler.8_3;
   unsigned int _4;
   struct netif_custom_t * _5;
   unsigned char _6;
@@ -1347,7 +1347,7 @@ GmacIf_RxNotification (uint8 instance, uint8 channel)
 
 
 
-;; Function GmacIf_TxNotification (GmacIf_TxNotification, funcdef_no=12, decl_uid=8229, cgraph_uid=13, symbol_order=17)
+;; Function GmacIf_TxNotification (GmacIf_TxNotification, funcdef_no=12, decl_uid=8233, cgraph_uid=13, symbol_order=17)
 
 Modification phase of node GmacIf_TxNotification/17
 GmacIf_TxNotification (uint8 instance, uint8 channel)

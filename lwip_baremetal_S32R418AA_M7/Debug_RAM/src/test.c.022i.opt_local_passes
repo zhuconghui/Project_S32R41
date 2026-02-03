@@ -29,19 +29,21 @@ mainLoopTask (void * pvParameters)
   # DEBUG BEGIN_STMT
   sys_check_timeouts ();
   # DEBUG BEGIN_STMT
+  process_udp_send ();
   # DEBUG BEGIN_STMT
-  i_11 = 0;
-  # DEBUG i => i_11
+  # DEBUG BEGIN_STMT
+  i_12 = 0;
+  # DEBUG i => i_12
   goto <bb 5>; [INV]
 
   <bb 4> :
   # DEBUG BEGIN_STMT
   # DEBUG BEGIN_STMT
-  i_18 = i_2 + 1;
-  # DEBUG i => i_18
+  i_19 = i_2 + 1;
+  # DEBUG i => i_19
 
   <bb 5> :
-  # i_2 = PHI <i_11(3), i_18(4)>
+  # i_2 = PHI <i_12(3), i_19(4)>
   # DEBUG i => i_2
   # DEBUG BEGIN_STMT
   if (i_2 <= 0)
@@ -51,10 +53,10 @@ mainLoopTask (void * pvParameters)
 
   <bb 6> :
   # DEBUG BEGIN_STMT
-  time_now_13 = OsIf_GetMilliseconds ();
-  # DEBUG time_now => time_now_13
+  time_now_14 = OsIf_GetMilliseconds ();
+  # DEBUG time_now => time_now_14
   # DEBUG BEGIN_STMT
-  if (time_now_13 > 1199999)
+  if (time_now_14 > 1199999)
     goto <bb 7>; [INV]
   else
     goto <bb 3>; [INV]
@@ -62,8 +64,8 @@ mainLoopTask (void * pvParameters)
   <bb 7> :
   # DEBUG BEGIN_STMT
   # DEBUG BEGIN_STMT
-  i_14 = 0;
-  # DEBUG i => i_14
+  i_15 = 0;
+  # DEBUG i => i_15
   goto <bb 9>; [INV]
 
   <bb 8> :
@@ -71,11 +73,11 @@ mainLoopTask (void * pvParameters)
   _1 = &network_interfaces[i_3];
   gmac_ethernetif_shutdown (_1);
   # DEBUG BEGIN_STMT
-  i_17 = i_3 + 1;
-  # DEBUG i => i_17
+  i_18 = i_3 + 1;
+  # DEBUG i => i_18
 
   <bb 9> :
-  # i_3 = PHI <i_14(7), i_17(8)>
+  # i_3 = PHI <i_15(7), i_18(8)>
   # DEBUG i => i_3
   # DEBUG BEGIN_STMT
   if (i_3 <= 0)
@@ -106,121 +108,22 @@ test_init (void * arg)
 
 apps_init ()
 {
-  struct netif * netif_default.0_1;
-  struct netif * netif_default.1_2;
+  struct netif * netif_default.2_1;
+  struct netif * netif_default.3_2;
   const char * _3;
 
   <bb 2> :
   # DEBUG BEGIN_STMT
   mdns_resp_init ();
   # DEBUG BEGIN_STMT
-  netif_default.0_1 = netif_default;
-  netif_default.1_2 = netif_default;
-  _3 = netif_default.1_2->hostname;
-  mdns_resp_add_netif (netif_default.0_1, _3, 3600);
+  netif_default.2_1 = netif_default;
+  netif_default.3_2 = netif_default;
+  _3 = netif_default.3_2->hostname;
+  mdns_resp_add_netif (netif_default.2_1, _3, 3600);
   # DEBUG BEGIN_STMT
   lwiperf_start_tcp_server_default (lwiperf_report, 0B);
   # DEBUG BEGIN_STMT
   my_udp_init ();
-  # DEBUG BEGIN_STMT
-  udp_perf_init ();
-  return;
-
-}
-
-
-udp_perf_init ()
-{
-  struct udp_pcb * _1;
-  struct udp_pcb * udp_perf_pcb.5_2;
-  struct udp_pcb * udp_perf_pcb.6_3;
-  signed char _4;
-  struct udp_pcb * udp_perf_pcb.7_5;
-
-  <bb 2> :
-  # DEBUG BEGIN_STMT
-  _1 = udp_new ();
-  udp_perf_pcb = _1;
-  # DEBUG BEGIN_STMT
-  udp_perf_pcb.5_2 = udp_perf_pcb;
-  if (udp_perf_pcb.5_2 != 0B)
-    goto <bb 3>; [INV]
-  else
-    goto <bb 5>; [INV]
-
-  <bb 3> :
-  # DEBUG BEGIN_STMT
-  udp_perf_pcb.6_3 = udp_perf_pcb;
-  _4 = udp_bind (udp_perf_pcb.6_3, &ip_addr_any, 5001);
-  if (_4 == 0)
-    goto <bb 4>; [INV]
-  else
-    goto <bb 5>; [INV]
-
-  <bb 4> :
-  # DEBUG BEGIN_STMT
-  udp_perf_pcb.7_5 = udp_perf_pcb;
-  udp_recv (udp_perf_pcb.7_5, udp_perf_recv, 0B);
-  # DEBUG BEGIN_STMT
-  sys_timeout (1000, udp_perf_report, 0B);
-
-  <bb 5> :
-  return;
-
-}
-
-
-udp_perf_report (void * arg)
-{
-  u32_t kbit_s;
-  long unsigned int udp_perf_rx_bytes.8_1;
-  long unsigned int _2;
-
-  <bb 2> :
-  # DEBUG BEGIN_STMT
-  # DEBUG BEGIN_STMT
-  udp_perf_rx_bytes.8_1 ={v} udp_perf_rx_bytes;
-  _2 = udp_perf_rx_bytes.8_1 * 8;
-  kbit_s_4 = _2 / 1000;
-  # DEBUG kbit_s => kbit_s_4
-  # DEBUG BEGIN_STMT
-  udp_perf_rx_bytes ={v} 0;
-  # DEBUG BEGIN_STMT
-  sys_timeout (1000, udp_perf_report, 0B);
-  return;
-
-}
-
-
-udp_perf_recv (void * arg, struct udp_pcb * pcb, struct pbuf * p, const struct ip_addr_t * addr, u16_t port)
-{
-  short unsigned int _1;
-  long unsigned int _2;
-  long unsigned int udp_perf_rx_bytes.9_3;
-  long unsigned int _4;
-
-  <bb 2> :
-  # DEBUG BEGIN_STMT
-  # DEBUG BEGIN_STMT
-  # DEBUG BEGIN_STMT
-  # DEBUG BEGIN_STMT
-  # DEBUG BEGIN_STMT
-  if (p_6(D) != 0B)
-    goto <bb 3>; [INV]
-  else
-    goto <bb 4>; [INV]
-
-  <bb 3> :
-  # DEBUG BEGIN_STMT
-  _1 = p_6(D)->tot_len;
-  _2 = (long unsigned int) _1;
-  udp_perf_rx_bytes.9_3 ={v} udp_perf_rx_bytes;
-  _4 = _2 + udp_perf_rx_bytes.9_3;
-  udp_perf_rx_bytes ={v} _4;
-  # DEBUG BEGIN_STMT
-  pbuf_free (p_6(D));
-
-  <bb 4> :
   return;
 
 }
@@ -228,79 +131,98 @@ udp_perf_recv (void * arg, struct udp_pcb * pcb, struct pbuf * p, const struct i
 
 my_udp_init ()
 {
+  const struct Stm_Ip_InstanceConfigType STM_0_InitConfig_PB;
   struct udp_pcb * _1;
-  struct udp_pcb * my_udp_pcb.2_2;
-  struct udp_pcb * my_udp_pcb.3_3;
+  struct udp_pcb * my_udp_pcb.4_2;
+  struct udp_pcb * my_udp_pcb.5_3;
 
   <bb 2> :
   # DEBUG BEGIN_STMT
   _1 = udp_new ();
   my_udp_pcb = _1;
   # DEBUG BEGIN_STMT
-  my_udp_pcb.2_2 = my_udp_pcb;
-  if (my_udp_pcb.2_2 != 0B)
+  my_udp_pcb.4_2 = my_udp_pcb;
+  if (my_udp_pcb.4_2 != 0B)
     goto <bb 3>; [INV]
   else
     goto <bb 4>; [INV]
 
   <bb 3> :
   # DEBUG BEGIN_STMT
-  my_udp_pcb.3_3 = my_udp_pcb;
-  udp_bind (my_udp_pcb.3_3, &ip_addr_any, 0);
-  # DEBUG BEGIN_STMT
-  sys_timeout (1000, my_udp_send_callback, 0B);
+  my_udp_pcb.5_3 = my_udp_pcb;
+  udp_bind (my_udp_pcb.5_3, &ip_addr_any, 0);
 
   <bb 4> :
+  # DEBUG BEGIN_STMT
+  memset (&my_udp_buffer, 65, 1024);
+  # DEBUG BEGIN_STMT
+  ipaddr_aton ("192.168.0.8", &g_dest_addr);
+  # DEBUG BEGIN_STMT
+  IntCtrl_Ip_Init (&IntCtrlConfig_0);
+  # DEBUG BEGIN_STMT
+  STM_0_InitConfig_PB.stopInDebugMode = 0;
+  STM_0_InitConfig_PB.clockPrescaler = 0;
+  # DEBUG BEGIN_STMT
+  Stm_Ip_Init (0, &STM_0_InitConfig_PB);
+  # DEBUG BEGIN_STMT
+  Stm_Ip_InitChannel (0, &STM_0_ChannelConfig_PB_BOARD_InitPeripherals[0]);
+  # DEBUG BEGIN_STMT
+  Stm_Ip_EnableChannel (0, 0);
+  # DEBUG BEGIN_STMT
+  Stm_Ip_StartCounting (0, 0, 24000);
+  STM_0_InitConfig_PB ={v} {CLOBBER};
   return;
 
 }
 
 
-my_udp_send_callback (void * arg)
+process_udp_send ()
 {
-  struct ip_addr_t dest_addr;
   struct pbuf * p;
-  int _1;
-  struct udp_pcb * my_udp_pcb.4_2;
+  unsigned char udp_send_flag.0_1;
+  struct udp_pcb * my_udp_pcb.1_2;
 
   <bb 2> :
   # DEBUG BEGIN_STMT
   # DEBUG BEGIN_STMT
-  # DEBUG BEGIN_STMT
-  # DEBUG BEGIN_STMT
-  memset (&my_udp_buffer, 65, 1024);
-  # DEBUG BEGIN_STMT
-  p_8 = pbuf_alloc (74, 1024, 640);
-  # DEBUG p => p_8
-  # DEBUG BEGIN_STMT
-  if (p_8 != 0B)
+  udp_send_flag.0_1 ={v} udp_send_flag;
+  if (udp_send_flag.0_1 != 0)
     goto <bb 3>; [INV]
   else
-    goto <bb 6>; [INV]
+    goto <bb 5>; [INV]
 
   <bb 3> :
   # DEBUG BEGIN_STMT
-  pbuf_take (p_8, &my_udp_buffer, 1024);
+  udp_send_flag ={v} 0;
   # DEBUG BEGIN_STMT
-  _1 = ipaddr_aton ("192.168.0.8", &dest_addr);
-  if (_1 != 0)
+  p_7 = pbuf_alloc (74, 1024, 1);
+  # DEBUG p => p_7
+  # DEBUG BEGIN_STMT
+  if (p_7 != 0B)
     goto <bb 4>; [INV]
   else
     goto <bb 5>; [INV]
 
   <bb 4> :
   # DEBUG BEGIN_STMT
-  my_udp_pcb.4_2 = my_udp_pcb;
-  udp_sendto (my_udp_pcb.4_2, p_8, &dest_addr, 5000);
+  p_7->payload = &my_udp_buffer;
+  # DEBUG BEGIN_STMT
+  my_udp_pcb.1_2 = my_udp_pcb;
+  udp_sendto (my_udp_pcb.1_2, p_7, &g_dest_addr, 5000);
+  # DEBUG BEGIN_STMT
+  pbuf_free (p_7);
 
   <bb 5> :
-  # DEBUG BEGIN_STMT
-  pbuf_free (p_8);
+  return;
 
-  <bb 6> :
+}
+
+
+StmNotification ()
+{
+  <bb 2> :
   # DEBUG BEGIN_STMT
-  sys_timeout (1000, my_udp_send_callback, 0B);
-  dest_addr ={v} {CLOBBER};
+  udp_send_flag ={v} 1;
   return;
 
 }

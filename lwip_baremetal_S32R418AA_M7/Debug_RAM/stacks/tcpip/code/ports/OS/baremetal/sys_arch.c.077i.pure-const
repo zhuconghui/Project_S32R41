@@ -1,5 +1,24 @@
 
 
+ local analysis of sys_arch_unprotect
+   scanning: __asm__ __volatile__("msr primask, %0" :  : "r" pval_1(D));
+    volatile is not const/pure
+  scanning: return;
+Function is locally looping.
+Function can locally free.
+
+
+ local analysis of sys_arch_protect
+   scanning: __asm__ __volatile__("mrs %0, primask" : "=r" pval_1);
+    volatile is not const/pure
+  scanning: __asm__ __volatile__("cpsid i");
+    memory asm clobber is not const/pure
+    volatile is not const/pure
+  scanning: return pval_1;
+Function is locally looping.
+Function can locally free.
+
+
  local analysis of sys_now
    scanning: _2 = OsIf_GetMilliseconds ();
   scanning: return _2;
@@ -18,29 +37,29 @@ Function is locally const.
 Function is locally const.
 callgraph:
 
-sys_jiffies/7 (sys_jiffies) @05fd2c40
+sys_jiffies/9 (sys_jiffies) @06c47c40
   Type: function definition analyzed
   Visibility: public
   next sharing asm name: 2
-  Aux: @05bd4850
+  Aux: @04f44848
   References: 
   Referring: 
-  Function sys_jiffies/7 is inline copy in sys_now/3
+  Function sys_jiffies/9 is inline copy in sys_now/3
   Clone of sys_jiffies/2
   Availability: local
   Function flags: count:1073741824 (estimated locally) body local icf_merged optimize_size
   Called by: sys_now/3 (inlined) (1073741824 (estimated locally),1.00 per call) 
-  Calls: OsIf_GetMilliseconds/5 (1073741824 (estimated locally),1.00 per call) 
-OsIf_GetMilliseconds/5 (OsIf_GetMilliseconds) @060c02a0
+  Calls: OsIf_GetMilliseconds/7 (1073741824 (estimated locally),1.00 per call) 
+OsIf_GetMilliseconds/7 (OsIf_GetMilliseconds) @06d8a2a0
   Type: function
   Visibility: external public
   References: 
   Referring: 
   Availability: not_available
   Function flags: optimize_size
-  Called by: sys_jiffies/7 (1073741824 (estimated locally),1.00 per call) sys_jiffies/2 (1073741824 (estimated locally),1.00 per call) 
+  Called by: sys_jiffies/9 (1073741824 (estimated locally),1.00 per call) sys_jiffies/2 (1073741824 (estimated locally),1.00 per call) 
   Calls: 
-OsIf_Init/4 (OsIf_Init) @060c0e00
+OsIf_Init/6 (OsIf_Init) @06d8a0e0
   Type: function
   Visibility: external public
   References: 
@@ -49,89 +68,131 @@ OsIf_Init/4 (OsIf_Init) @060c0e00
   Function flags: optimize_size
   Called by: sys_init/1 (1073741824 (estimated locally),1.00 per call) 
   Calls: 
-sys_now/3 (sys_now) @060c09a0
+sys_arch_unprotect/5 (sys_arch_unprotect) @06d2f700
   Type: function definition analyzed
   Visibility: externally_visible public
-  Aux: @05bd48f0
-  References: 
-  Referring: 
-  Availability: available
-  Function flags: count:1073741824 (estimated locally) body icf_merged optimize_size
-  Called by: 
-  Calls: sys_jiffies/7 (inlined) (1073741824 (estimated locally),1.00 per call) 
-sys_jiffies/2 (sys_jiffies) @060c0700
-  Type: function definition analyzed
-  Visibility: externally_visible public
-  previous sharing asm name: 7
-  Aux: @05bd4930
-  References: 
-  Referring: 
-  Availability: available
-  Function flags: count:1073741824 (estimated locally) body icf_merged optimize_size
-  Called by: 
-  Calls: OsIf_GetMilliseconds/5 (1073741824 (estimated locally),1.00 per call) 
-sys_init/1 (sys_init) @060c0460
-  Type: function definition analyzed
-  Visibility: externally_visible public
-  Aux: @05bd4970
+  Aux: @04f44968
   References: 
   Referring: 
   Availability: available
   Function flags: count:1073741824 (estimated locally) body optimize_size
   Called by: 
-  Calls: OsIf_Init/4 (1073741824 (estimated locally),1.00 per call) 
+  Calls: 
+sys_arch_protect/4 (sys_arch_protect) @06d2fe00
+  Type: function definition analyzed
+  Visibility: externally_visible public
+  Aux: @04f44988
+  References: 
+  Referring: 
+  Availability: available
+  Function flags: count:1073741824 (estimated locally) body optimize_size
+  Called by: 
+  Calls: 
+sys_now/3 (sys_now) @06d2fb60
+  Type: function definition analyzed
+  Visibility: externally_visible public
+  Aux: @04f44a28
+  References: 
+  Referring: 
+  Availability: available
+  Function flags: count:1073741824 (estimated locally) body icf_merged optimize_size
+  Called by: 
+  Calls: sys_jiffies/9 (inlined) (1073741824 (estimated locally),1.00 per call) 
+sys_jiffies/2 (sys_jiffies) @06d2f8c0
+  Type: function definition analyzed
+  Visibility: externally_visible public
+  previous sharing asm name: 9
+  Aux: @04f44ac8
+  References: 
+  Referring: 
+  Availability: available
+  Function flags: count:1073741824 (estimated locally) body icf_merged optimize_size
+  Called by: 
+  Calls: OsIf_GetMilliseconds/7 (1073741824 (estimated locally),1.00 per call) 
+sys_init/1 (sys_init) @06d2f620
+  Type: function definition analyzed
+  Visibility: externally_visible public
+  Aux: @04f44b88
+  References: 
+  Referring: 
+  Availability: available
+  Function flags: count:1073741824 (estimated locally) body optimize_size
+  Called by: 
+  Calls: OsIf_Init/6 (1073741824 (estimated locally),1.00 per call) 
 
 
  ordered call graph: reduced for nothrow
-sys_jiffies/7 (sys_jiffies) @05fd2c40
+sys_jiffies/9 (sys_jiffies) @06c47c40
   Type: function definition analyzed
   Visibility: public
   next sharing asm name: 2
-  Aux: @05bd4850
+  Aux: @04f44848
   References: 
   Referring: 
-  Function sys_jiffies/7 is inline copy in sys_now/3
+  Function sys_jiffies/9 is inline copy in sys_now/3
   Clone of sys_jiffies/2
   Availability: local
   Function flags: count:1073741824 (estimated locally) body local icf_merged optimize_size
   Called by: sys_now/3 (inlined) (1073741824 (estimated locally),1.00 per call) 
-  Calls: OsIf_GetMilliseconds/5 (1073741824 (estimated locally),1.00 per call) 
-sys_now/3 (sys_now) @060c09a0
+  Calls: OsIf_GetMilliseconds/7 (1073741824 (estimated locally),1.00 per call) 
+sys_arch_unprotect/5 (sys_arch_unprotect) @06d2f700
   Type: function definition analyzed
   Visibility: externally_visible public
-  Aux: @05bd48f0
-  References: 
-  Referring: 
-  Availability: available
-  Function flags: count:1073741824 (estimated locally) body icf_merged optimize_size
-  Called by: 
-  Calls: sys_jiffies/7 (inlined) (1073741824 (estimated locally),1.00 per call) 
-sys_jiffies/2 (sys_jiffies) @060c0700
-  Type: function definition analyzed
-  Visibility: externally_visible public
-  previous sharing asm name: 7
-  Aux: @05bd4930
-  References: 
-  Referring: 
-  Availability: available
-  Function flags: count:1073741824 (estimated locally) body icf_merged optimize_size
-  Called by: 
-  Calls: OsIf_GetMilliseconds/5 (1073741824 (estimated locally),1.00 per call) 
-sys_init/1 (sys_init) @060c0460
-  Type: function definition analyzed
-  Visibility: externally_visible public
-  Aux: @05bd4970
+  Aux: @04f44968
   References: 
   Referring: 
   Availability: available
   Function flags: count:1073741824 (estimated locally) body optimize_size
   Called by: 
-  Calls: OsIf_Init/4 (1073741824 (estimated locally),1.00 per call) 
+  Calls: 
+sys_arch_protect/4 (sys_arch_protect) @06d2fe00
+  Type: function definition analyzed
+  Visibility: externally_visible public
+  Aux: @04f44988
+  References: 
+  Referring: 
+  Availability: available
+  Function flags: count:1073741824 (estimated locally) body optimize_size
+  Called by: 
+  Calls: 
+sys_now/3 (sys_now) @06d2fb60
+  Type: function definition analyzed
+  Visibility: externally_visible public
+  Aux: @04f44a28
+  References: 
+  Referring: 
+  Availability: available
+  Function flags: count:1073741824 (estimated locally) body icf_merged optimize_size
+  Called by: 
+  Calls: sys_jiffies/9 (inlined) (1073741824 (estimated locally),1.00 per call) 
+sys_jiffies/2 (sys_jiffies) @06d2f8c0
+  Type: function definition analyzed
+  Visibility: externally_visible public
+  previous sharing asm name: 9
+  Aux: @04f44ac8
+  References: 
+  Referring: 
+  Availability: available
+  Function flags: count:1073741824 (estimated locally) body icf_merged optimize_size
+  Called by: 
+  Calls: OsIf_GetMilliseconds/7 (1073741824 (estimated locally),1.00 per call) 
+sys_init/1 (sys_init) @06d2f620
+  Type: function definition analyzed
+  Visibility: externally_visible public
+  Aux: @04f44b88
+  References: 
+  Referring: 
+  Availability: available
+  Function flags: count:1073741824 (estimated locally) body optimize_size
+  Called by: 
+  Calls: OsIf_Init/6 (1073741824 (estimated locally),1.00 per call) 
 
 
 
 MALLOC LATTICE Initial:
 sys_jiffies: malloc_bottom
+sys_arch_unprotect: malloc_bottom
+sys_arch_protect: malloc_bottom
 sys_now: malloc_bottom
 sys_jiffies: malloc_bottom
 sys_init: malloc_bottom
@@ -139,34 +200,36 @@ sys_init: malloc_bottom
 
 MALLOC LATTICE after propagation:
 sys_jiffies: malloc_bottom
+sys_arch_unprotect: malloc_bottom
+sys_arch_protect: malloc_bottom
 sys_now: malloc_bottom
 sys_jiffies: malloc_bottom
 sys_init: malloc_bottom
 callgraph:
 
-sys_jiffies/7 (sys_jiffies) @05fd2c40
+sys_jiffies/9 (sys_jiffies) @06c47c40
   Type: function definition analyzed
   Visibility: public
   next sharing asm name: 2
-  Aux: @05bd4850
+  Aux: @04f44ac8
   References: 
   Referring: 
-  Function sys_jiffies/7 is inline copy in sys_now/3
+  Function sys_jiffies/9 is inline copy in sys_now/3
   Clone of sys_jiffies/2
   Availability: local
   Function flags: count:1073741824 (estimated locally) body local icf_merged optimize_size
   Called by: sys_now/3 (inlined) (1073741824 (estimated locally),1.00 per call) 
-  Calls: OsIf_GetMilliseconds/5 (1073741824 (estimated locally),1.00 per call) 
-OsIf_GetMilliseconds/5 (OsIf_GetMilliseconds) @060c02a0
+  Calls: OsIf_GetMilliseconds/7 (1073741824 (estimated locally),1.00 per call) 
+OsIf_GetMilliseconds/7 (OsIf_GetMilliseconds) @06d8a2a0
   Type: function
   Visibility: external public
   References: 
   Referring: 
   Availability: not_available
   Function flags: optimize_size
-  Called by: sys_jiffies/7 (1073741824 (estimated locally),1.00 per call) sys_jiffies/2 (1073741824 (estimated locally),1.00 per call) 
+  Called by: sys_jiffies/9 (1073741824 (estimated locally),1.00 per call) sys_jiffies/2 (1073741824 (estimated locally),1.00 per call) 
   Calls: 
-OsIf_Init/4 (OsIf_Init) @060c0e00
+OsIf_Init/6 (OsIf_Init) @06d8a0e0
   Type: function
   Visibility: external public
   References: 
@@ -175,92 +238,159 @@ OsIf_Init/4 (OsIf_Init) @060c0e00
   Function flags: optimize_size
   Called by: sys_init/1 (1073741824 (estimated locally),1.00 per call) 
   Calls: 
-sys_now/3 (sys_now) @060c09a0
+sys_arch_unprotect/5 (sys_arch_unprotect) @06d2f700
   Type: function definition analyzed
   Visibility: externally_visible public
-  Aux: @05bd48f0
-  References: 
-  Referring: 
-  Availability: available
-  Function flags: count:1073741824 (estimated locally) body icf_merged optimize_size
-  Called by: 
-  Calls: sys_jiffies/7 (inlined) (1073741824 (estimated locally),1.00 per call) 
-sys_jiffies/2 (sys_jiffies) @060c0700
-  Type: function definition analyzed
-  Visibility: externally_visible public
-  previous sharing asm name: 7
-  Aux: @05bd4930
-  References: 
-  Referring: 
-  Availability: available
-  Function flags: count:1073741824 (estimated locally) body icf_merged optimize_size
-  Called by: 
-  Calls: OsIf_GetMilliseconds/5 (1073741824 (estimated locally),1.00 per call) 
-sys_init/1 (sys_init) @060c0460
-  Type: function definition analyzed
-  Visibility: externally_visible public
-  Aux: @05bd4970
+  Aux: @04f449c8
   References: 
   Referring: 
   Availability: available
   Function flags: count:1073741824 (estimated locally) body optimize_size
   Called by: 
-  Calls: OsIf_Init/4 (1073741824 (estimated locally),1.00 per call) 
-
-
- ordered call graph: reduced
-sys_now/3 (sys_now) @060c09a0
+  Calls: 
+sys_arch_protect/4 (sys_arch_protect) @06d2fe00
   Type: function definition analyzed
   Visibility: externally_visible public
-  Aux: @05bd48f0
+  Aux: @04f44848
+  References: 
+  Referring: 
+  Availability: available
+  Function flags: count:1073741824 (estimated locally) body optimize_size
+  Called by: 
+  Calls: 
+sys_now/3 (sys_now) @06d2fb60
+  Type: function definition analyzed
+  Visibility: externally_visible public
+  Aux: @04f44b88
   References: 
   Referring: 
   Availability: available
   Function flags: count:1073741824 (estimated locally) body icf_merged optimize_size
   Called by: 
-  Calls: sys_jiffies/7 (inlined) (1073741824 (estimated locally),1.00 per call) 
-sys_jiffies/7 (sys_jiffies) @05fd2c40
+  Calls: sys_jiffies/9 (inlined) (1073741824 (estimated locally),1.00 per call) 
+sys_jiffies/2 (sys_jiffies) @06d2f8c0
+  Type: function definition analyzed
+  Visibility: externally_visible public
+  previous sharing asm name: 9
+  Aux: @04f44ba8
+  References: 
+  Referring: 
+  Availability: available
+  Function flags: count:1073741824 (estimated locally) body icf_merged optimize_size
+  Called by: 
+  Calls: OsIf_GetMilliseconds/7 (1073741824 (estimated locally),1.00 per call) 
+sys_init/1 (sys_init) @06d2f620
+  Type: function definition analyzed
+  Visibility: externally_visible public
+  Aux: @04f44968
+  References: 
+  Referring: 
+  Availability: available
+  Function flags: count:1073741824 (estimated locally) body optimize_size
+  Called by: 
+  Calls: OsIf_Init/6 (1073741824 (estimated locally),1.00 per call) 
+
+
+ ordered call graph: reduced
+sys_arch_unprotect/5 (sys_arch_unprotect) @06d2f700
+  Type: function definition analyzed
+  Visibility: externally_visible public
+  Aux: @04f449c8
+  References: 
+  Referring: 
+  Availability: available
+  Function flags: count:1073741824 (estimated locally) body optimize_size
+  Called by: 
+  Calls: 
+sys_arch_protect/4 (sys_arch_protect) @06d2fe00
+  Type: function definition analyzed
+  Visibility: externally_visible public
+  Aux: @04f44848
+  References: 
+  Referring: 
+  Availability: available
+  Function flags: count:1073741824 (estimated locally) body optimize_size
+  Called by: 
+  Calls: 
+sys_now/3 (sys_now) @06d2fb60
+  Type: function definition analyzed
+  Visibility: externally_visible public
+  Aux: @04f44b88
+  References: 
+  Referring: 
+  Availability: available
+  Function flags: count:1073741824 (estimated locally) body icf_merged optimize_size
+  Called by: 
+  Calls: sys_jiffies/9 (inlined) (1073741824 (estimated locally),1.00 per call) 
+sys_jiffies/9 (sys_jiffies) @06c47c40
   Type: function definition analyzed
   Visibility: public
   next sharing asm name: 2
-  Aux: @05bd4850
+  Aux: @04f44ac8
   References: 
   Referring: 
-  Function sys_jiffies/7 is inline copy in sys_now/3
+  Function sys_jiffies/9 is inline copy in sys_now/3
   Clone of sys_jiffies/2
   Availability: local
   Function flags: count:1073741824 (estimated locally) body local icf_merged optimize_size
   Called by: sys_now/3 (inlined) (1073741824 (estimated locally),1.00 per call) 
-  Calls: OsIf_GetMilliseconds/5 (1073741824 (estimated locally),1.00 per call) 
-sys_jiffies/2 (sys_jiffies) @060c0700
+  Calls: OsIf_GetMilliseconds/7 (1073741824 (estimated locally),1.00 per call) 
+sys_jiffies/2 (sys_jiffies) @06d2f8c0
   Type: function definition analyzed
   Visibility: externally_visible public
-  previous sharing asm name: 7
-  Aux: @05bd4930
+  previous sharing asm name: 9
+  Aux: @04f44ba8
   References: 
   Referring: 
   Availability: available
   Function flags: count:1073741824 (estimated locally) body icf_merged optimize_size
   Called by: 
-  Calls: OsIf_GetMilliseconds/5 (1073741824 (estimated locally),1.00 per call) 
-sys_init/1 (sys_init) @060c0460
+  Calls: OsIf_GetMilliseconds/7 (1073741824 (estimated locally),1.00 per call) 
+sys_init/1 (sys_init) @06d2f620
   Type: function definition analyzed
   Visibility: externally_visible public
-  Aux: @05bd4970
+  Aux: @04f44968
   References: 
   Referring: 
   Availability: available
   Function flags: count:1073741824 (estimated locally) body optimize_size
   Called by: 
-  Calls: OsIf_Init/4 (1073741824 (estimated locally),1.00 per call) 
+  Calls: OsIf_Init/6 (1073741824 (estimated locally),1.00 per call) 
+
+sys_arch_unprotect (sys_prot_t pval)
+{
+  <bb 2> [local count: 1073741824]:
+  # DEBUG BEGIN_STMT
+  __asm__ __volatile__("msr primask, %0" :  : "r" pval_1(D));
+  return;
+
+}
+
+
+sys_arch_protect ()
+{
+  sys_prot_t pval;
+
+  <bb 2> [local count: 1073741824]:
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  __asm__ __volatile__("mrs %0, primask" : "=r" pval_1);
+  # DEBUG pval => pval_1
+  # DEBUG BEGIN_STMT
+  __asm__ __volatile__("cpsid i");
+  # DEBUG BEGIN_STMT
+  return pval_1;
+
+}
+
 
 sys_now ()
 {
-  u32_t retval.3;
+  u32_t retval.5;
 
   <bb 2> [local count: 1073741824]:
-  retval.3_3 = sys_jiffies (); [tail call]
-  return retval.3_3;
+  retval.5_3 = sys_jiffies (); [tail call]
+  return retval.5_3;
 
 }
 

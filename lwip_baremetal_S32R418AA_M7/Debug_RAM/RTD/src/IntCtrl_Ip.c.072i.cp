@@ -502,7 +502,7 @@ Reclaiming variables:
 Clearing address taken flags:
 Symbol table:
 
-__RAM_INTERRUPT_START/26 (__RAM_INTERRUPT_START) @074aaab0
+__RAM_INTERRUPT_START/26 (__RAM_INTERRUPT_START) @07519b40
   Type: variable
   Body removed by symtab_remove_unreachable_nodes
   Visibility: external public
@@ -510,7 +510,7 @@ __RAM_INTERRUPT_START/26 (__RAM_INTERRUPT_START) @074aaab0
   Referring: IntCtrl_Ip_InstallHandlerPrivileged/1 (addr)
   Availability: not_available
   Varpool flags:
-IntCtrl_Ip_GenerateDirectedCpuInterrupt/25 (IntCtrl_Ip_GenerateDirectedCpuInterrupt) @074b7b60
+IntCtrl_Ip_GenerateDirectedCpuInterrupt/25 (IntCtrl_Ip_GenerateDirectedCpuInterrupt) @0752b000
   Type: function definition analyzed
   Visibility: externally_visible public
   References: 
@@ -519,7 +519,7 @@ IntCtrl_Ip_GenerateDirectedCpuInterrupt/25 (IntCtrl_Ip_GenerateDirectedCpuInterr
   Function flags: count:1073741824 (estimated locally) body optimize_size
   Called by: 
   Calls: IntCtrl_Ip_GenerateDirectedCpuInterruptPrivileged/12 (1073741824 (estimated locally),1.00 per call) 
-IntCtrl_Ip_GetDirectedCpuInterrupt/24 (IntCtrl_Ip_GetDirectedCpuInterrupt) @074b7620
+IntCtrl_Ip_GetDirectedCpuInterrupt/24 (IntCtrl_Ip_GetDirectedCpuInterrupt) @07528b60
   Type: function definition analyzed
   Visibility: externally_visible public
   References: 
@@ -528,7 +528,7 @@ IntCtrl_Ip_GetDirectedCpuInterrupt/24 (IntCtrl_Ip_GetDirectedCpuInterrupt) @074b
   Function flags: count:1073741824 (estimated locally) body optimize_size
   Called by: 
   Calls: IntCtrl_Ip_GetDirectedCpuInterruptPrivileged/11 (1073741824 (estimated locally),1.00 per call) 
-IntCtrl_Ip_ClearDirectedCpuInterrupt/23 (IntCtrl_Ip_ClearDirectedCpuInterrupt) @074b70e0
+IntCtrl_Ip_ClearDirectedCpuInterrupt/23 (IntCtrl_Ip_ClearDirectedCpuInterrupt) @07528620
   Type: function definition analyzed
   Visibility: externally_visible public
   References: 
@@ -537,7 +537,7 @@ IntCtrl_Ip_ClearDirectedCpuInterrupt/23 (IntCtrl_Ip_ClearDirectedCpuInterrupt) @
   Function flags: count:1073741824 (estimated locally) body optimize_size
   Called by: 
   Calls: IntCtrl_Ip_ClearDirectedCpuInterruptPrivileged/10 (1073741824 (estimated locally),1.00 per call) 
-IntCtrl_Ip_GetActive/22 (IntCtrl_Ip_GetActive) @074b7d20
+IntCtrl_Ip_GetActive/22 (IntCtrl_Ip_GetActive) @075280e0
   Type: function definition analyzed
   Visibility: externally_visible public
   References: 
@@ -546,7 +546,7 @@ IntCtrl_Ip_GetActive/22 (IntCtrl_Ip_GetActive) @074b7d20
   Function flags: count:1073741824 (estimated locally) body optimize_size
   Called by: 
   Calls: IntCtrl_Ip_GetActivePrivileged/9 (1073741824 (estimated locally),1.00 per call) 
-IntCtrl_Ip_GetPending/21 (IntCtrl_Ip_GetPending) @074b7a80
+IntCtrl_Ip_GetPending/21 (IntCtrl_Ip_GetPending) @07528d20
   Type: function definition analyzed
   Visibility: externally_visible public
   References: 
@@ -555,7 +555,7 @@ IntCtrl_Ip_GetPending/21 (IntCtrl_Ip_GetPending) @074b7a80
   Function flags: count:1073741824 (estimated locally) body optimize_size
   Called by: 
   Calls: IntCtrl_Ip_GetPendingPrivileged/8 (1073741824 (estimated locally),1.00 per call) 
-IntCtrl_Ip_SetPending/20 (IntCtrl_Ip_SetPending) @074b77e0
+IntCtrl_Ip_SetPending/20 (IntCtrl_Ip_SetPending) @07528a80
   Type: function definition analyzed
   Visibility: externally_visible public
   References: 
@@ -564,7 +564,7 @@ IntCtrl_Ip_SetPending/20 (IntCtrl_Ip_SetPending) @074b77e0
   Function flags: count:1073741824 (estimated locally) body optimize_size
   Called by: 
   Calls: IntCtrl_Ip_SetPendingPrivileged/7 (1073741824 (estimated locally),1.00 per call) 
-IntCtrl_Ip_ClearPending/19 (IntCtrl_Ip_ClearPending) @074b7540
+IntCtrl_Ip_ClearPending/19 (IntCtrl_Ip_ClearPending) @075287e0
   Type: function definition analyzed
   Visibility: externally_visible public
   References: 
@@ -573,7 +573,7 @@ IntCtrl_Ip_ClearPending/19 (IntCtrl_Ip_ClearPending) @074b7540
   Function flags: count:1073741824 (estimated locally) body optimize_size
   Called by: 
   Calls: IntCtrl_Ip_ClearPendingPrivileged/6 (1073741824 (estimated locally),1.00 per call) 
-IntCtrl_Ip_GetPriority/18 (IntCtrl_Ip_GetPriority) @074b72a0
+IntCtrl_Ip_GetPriority/18 (IntCtrl_Ip_GetPriority) @07528540
   Type: function definition analyzed
   Visibility: externally_visible public
   References: 
@@ -582,7 +582,7 @@ IntCtrl_Ip_GetPriority/18 (IntCtrl_Ip_GetPriority) @074b72a0
   Function flags: count:1073741824 (estimated locally) body optimize_size
   Called by: 
   Calls: IntCtrl_Ip_GetPriorityPrivileged/5 (1073741824 (estimated locally),1.00 per call) 
-IntCtrl_Ip_SetPriority/17 (IntCtrl_Ip_SetPriority) @074b7000
+IntCtrl_Ip_SetPriority/17 (IntCtrl_Ip_SetPriority) @075282a0
   Type: function definition analyzed
   Visibility: externally_visible public
   References: 
@@ -591,7 +591,7 @@ IntCtrl_Ip_SetPriority/17 (IntCtrl_Ip_SetPriority) @074b7000
   Function flags: count:1073741824 (estimated locally) body optimize_size
   Called by: 
   Calls: IntCtrl_Ip_SetPriorityPrivileged/4 (1073741824 (estimated locally),1.00 per call) 
-IntCtrl_Ip_DisableIrq/16 (IntCtrl_Ip_DisableIrq) @074aba80
+IntCtrl_Ip_DisableIrq/16 (IntCtrl_Ip_DisableIrq) @07528000
   Type: function definition analyzed
   Visibility: externally_visible public
   References: 
@@ -600,7 +600,7 @@ IntCtrl_Ip_DisableIrq/16 (IntCtrl_Ip_DisableIrq) @074aba80
   Function flags: count:1073741824 (estimated locally) body optimize_size
   Called by: 
   Calls: IntCtrl_Ip_DisableIrqPrivileged/3 (1073741824 (estimated locally),1.00 per call) 
-IntCtrl_Ip_EnableIrq/15 (IntCtrl_Ip_EnableIrq) @074ab540
+IntCtrl_Ip_EnableIrq/15 (IntCtrl_Ip_EnableIrq) @0751aa80
   Type: function definition analyzed
   Visibility: externally_visible public
   References: 
@@ -609,7 +609,7 @@ IntCtrl_Ip_EnableIrq/15 (IntCtrl_Ip_EnableIrq) @074ab540
   Function flags: count:1073741824 (estimated locally) body optimize_size
   Called by: 
   Calls: IntCtrl_Ip_EnableIrqPrivileged/2 (1073741824 (estimated locally),1.00 per call) 
-IntCtrl_Ip_InstallHandler/14 (IntCtrl_Ip_InstallHandler) @074ab000
+IntCtrl_Ip_InstallHandler/14 (IntCtrl_Ip_InstallHandler) @0751a540
   Type: function definition analyzed
   Visibility: externally_visible public
   References: 
@@ -618,7 +618,7 @@ IntCtrl_Ip_InstallHandler/14 (IntCtrl_Ip_InstallHandler) @074ab000
   Function flags: count:1073741824 (estimated locally) body optimize_size
   Called by: 
   Calls: IntCtrl_Ip_InstallHandlerPrivileged/1 (1073741824 (estimated locally),1.00 per call) 
-IntCtrl_Ip_Init/13 (IntCtrl_Ip_Init) @074abc40
+IntCtrl_Ip_Init/13 (IntCtrl_Ip_Init) @0751aee0
   Type: function definition analyzed
   Visibility: externally_visible public
   References: 
@@ -627,7 +627,7 @@ IntCtrl_Ip_Init/13 (IntCtrl_Ip_Init) @074abc40
   Function flags: count:118111600 (estimated locally) body optimize_size
   Called by: 
   Calls: IntCtrl_Ip_DisableIrqPrivileged/3 (477815111 (estimated locally),4.05 per call) IntCtrl_Ip_EnableIrqPrivileged/2 (477815111 (estimated locally),4.05 per call) IntCtrl_Ip_InstallHandlerPrivileged/1 (955630223 (estimated locally),8.09 per call) IntCtrl_Ip_SetPriorityPrivileged/4 (955630223 (estimated locally),8.09 per call) IntCtrl_Ip_ClearPendingPrivileged/6 (955630223 (estimated locally),8.09 per call) DevAssert/0 (118111600 (estimated locally),1.00 per call) DevAssert/0 (118111600 (estimated locally),1.00 per call) 
-IntCtrl_Ip_GenerateDirectedCpuInterruptPrivileged/12 (IntCtrl_Ip_GenerateDirectedCpuInterruptPrivileged) @074ab9a0
+IntCtrl_Ip_GenerateDirectedCpuInterruptPrivileged/12 (IntCtrl_Ip_GenerateDirectedCpuInterruptPrivileged) @0751ac40
   Type: function definition analyzed
   Visibility: externally_visible public
   References: 
@@ -636,7 +636,7 @@ IntCtrl_Ip_GenerateDirectedCpuInterruptPrivileged/12 (IntCtrl_Ip_GenerateDirecte
   Function flags: count:789516048 (estimated locally) body optimize_size
   Called by: IntCtrl_Ip_GenerateDirectedCpuInterrupt/25 (1073741824 (estimated locally),1.00 per call) 
   Calls: DevAssert/0 (789516048 (estimated locally),1.00 per call) DevAssert/0 (789516048 (estimated locally),1.00 per call) 
-IntCtrl_Ip_GetDirectedCpuInterruptPrivileged/11 (IntCtrl_Ip_GetDirectedCpuInterruptPrivileged) @074ab700
+IntCtrl_Ip_GetDirectedCpuInterruptPrivileged/11 (IntCtrl_Ip_GetDirectedCpuInterruptPrivileged) @0751a9a0
   Type: function definition analyzed
   Visibility: externally_visible public
   References: 
@@ -645,7 +645,7 @@ IntCtrl_Ip_GetDirectedCpuInterruptPrivileged/11 (IntCtrl_Ip_GetDirectedCpuInterr
   Function flags: count:1073741824 (estimated locally) body optimize_size
   Called by: IntCtrl_Ip_GetDirectedCpuInterrupt/24 (1073741824 (estimated locally),1.00 per call) 
   Calls: DevAssert/0 (1073741824 (estimated locally),1.00 per call) DevAssert/0 (1073741824 (estimated locally),1.00 per call) 
-IntCtrl_Ip_ClearDirectedCpuInterruptPrivileged/10 (IntCtrl_Ip_ClearDirectedCpuInterruptPrivileged) @074ab460
+IntCtrl_Ip_ClearDirectedCpuInterruptPrivileged/10 (IntCtrl_Ip_ClearDirectedCpuInterruptPrivileged) @0751a700
   Type: function definition analyzed
   Visibility: externally_visible public
   References: 
@@ -654,7 +654,7 @@ IntCtrl_Ip_ClearDirectedCpuInterruptPrivileged/10 (IntCtrl_Ip_ClearDirectedCpuIn
   Function flags: count:1073741824 (estimated locally) body optimize_size
   Called by: IntCtrl_Ip_ClearDirectedCpuInterrupt/23 (1073741824 (estimated locally),1.00 per call) 
   Calls: DevAssert/0 (1073741824 (estimated locally),1.00 per call) DevAssert/0 (1073741824 (estimated locally),1.00 per call) 
-IntCtrl_Ip_GetActivePrivileged/9 (IntCtrl_Ip_GetActivePrivileged) @074ab1c0
+IntCtrl_Ip_GetActivePrivileged/9 (IntCtrl_Ip_GetActivePrivileged) @0751a460
   Type: function definition analyzed
   Visibility: externally_visible public
   References: 
@@ -663,7 +663,7 @@ IntCtrl_Ip_GetActivePrivileged/9 (IntCtrl_Ip_GetActivePrivileged) @074ab1c0
   Function flags: count:1073741824 (estimated locally) body optimize_size
   Called by: IntCtrl_Ip_GetActive/22 (1073741824 (estimated locally),1.00 per call) 
   Calls: DevAssert/0 (1073741824 (estimated locally),1.00 per call) DevAssert/0 (1073741824 (estimated locally),1.00 per call) 
-IntCtrl_Ip_GetPendingPrivileged/8 (IntCtrl_Ip_GetPendingPrivileged) @074a3ee0
+IntCtrl_Ip_GetPendingPrivileged/8 (IntCtrl_Ip_GetPendingPrivileged) @0751a1c0
   Type: function definition analyzed
   Visibility: externally_visible public
   References: 
@@ -672,7 +672,7 @@ IntCtrl_Ip_GetPendingPrivileged/8 (IntCtrl_Ip_GetPendingPrivileged) @074a3ee0
   Function flags: count:1073741824 (estimated locally) body optimize_size
   Called by: IntCtrl_Ip_GetPending/21 (1073741824 (estimated locally),1.00 per call) 
   Calls: DevAssert/0 (1073741824 (estimated locally),1.00 per call) DevAssert/0 (1073741824 (estimated locally),1.00 per call) 
-IntCtrl_Ip_SetPendingPrivileged/7 (IntCtrl_Ip_SetPendingPrivileged) @074a39a0
+IntCtrl_Ip_SetPendingPrivileged/7 (IntCtrl_Ip_SetPendingPrivileged) @07513e00
   Type: function definition analyzed
   Visibility: externally_visible public
   References: 
@@ -681,7 +681,7 @@ IntCtrl_Ip_SetPendingPrivileged/7 (IntCtrl_Ip_SetPendingPrivileged) @074a39a0
   Function flags: count:1073741824 (estimated locally) body optimize_size
   Called by: IntCtrl_Ip_SetPending/20 (1073741824 (estimated locally),1.00 per call) 
   Calls: DevAssert/0 (1073741824 (estimated locally),1.00 per call) DevAssert/0 (1073741824 (estimated locally),1.00 per call) 
-IntCtrl_Ip_ClearPendingPrivileged/6 (IntCtrl_Ip_ClearPendingPrivileged) @074a3460
+IntCtrl_Ip_ClearPendingPrivileged/6 (IntCtrl_Ip_ClearPendingPrivileged) @075138c0
   Type: function definition analyzed
   Visibility: externally_visible public
   References: 
@@ -690,7 +690,7 @@ IntCtrl_Ip_ClearPendingPrivileged/6 (IntCtrl_Ip_ClearPendingPrivileged) @074a346
   Function flags: count:1073741824 (estimated locally) body optimize_size
   Called by: IntCtrl_Ip_Init/13 (955630223 (estimated locally),8.09 per call) IntCtrl_Ip_ClearPending/19 (1073741824 (estimated locally),1.00 per call) 
   Calls: DevAssert/0 (1073741824 (estimated locally),1.00 per call) DevAssert/0 (1073741824 (estimated locally),1.00 per call) 
-IntCtrl_Ip_GetPriorityPrivileged/5 (IntCtrl_Ip_GetPriorityPrivileged) @074a3e00
+IntCtrl_Ip_GetPriorityPrivileged/5 (IntCtrl_Ip_GetPriorityPrivileged) @07513380
   Type: function definition analyzed
   Visibility: externally_visible public
   References: 
@@ -699,7 +699,7 @@ IntCtrl_Ip_GetPriorityPrivileged/5 (IntCtrl_Ip_GetPriorityPrivileged) @074a3e00
   Function flags: count:1073741824 (estimated locally) body optimize_size
   Called by: IntCtrl_Ip_GetPriority/18 (1073741824 (estimated locally),1.00 per call) 
   Calls: DevAssert/0 (1073741824 (estimated locally),1.00 per call) DevAssert/0 (1073741824 (estimated locally),1.00 per call) 
-IntCtrl_Ip_SetPriorityPrivileged/4 (IntCtrl_Ip_SetPriorityPrivileged) @074a3b60
+IntCtrl_Ip_SetPriorityPrivileged/4 (IntCtrl_Ip_SetPriorityPrivileged) @07513d20
   Type: function definition analyzed
   Visibility: externally_visible public
   References: 
@@ -708,7 +708,7 @@ IntCtrl_Ip_SetPriorityPrivileged/4 (IntCtrl_Ip_SetPriorityPrivileged) @074a3b60
   Function flags: count:1073741824 (estimated locally) body optimize_size
   Called by: IntCtrl_Ip_Init/13 (955630223 (estimated locally),8.09 per call) IntCtrl_Ip_SetPriority/17 (1073741824 (estimated locally),1.00 per call) 
   Calls: DevAssert/0 (1073741824 (estimated locally),1.00 per call) DevAssert/0 (1073741824 (estimated locally),1.00 per call) DevAssert/0 (1073741824 (estimated locally),1.00 per call) 
-IntCtrl_Ip_DisableIrqPrivileged/3 (IntCtrl_Ip_DisableIrqPrivileged) @074a38c0
+IntCtrl_Ip_DisableIrqPrivileged/3 (IntCtrl_Ip_DisableIrqPrivileged) @07513a80
   Type: function definition analyzed
   Visibility: externally_visible public
   References: 
@@ -717,7 +717,7 @@ IntCtrl_Ip_DisableIrqPrivileged/3 (IntCtrl_Ip_DisableIrqPrivileged) @074a38c0
   Function flags: count:1073741824 (estimated locally) body optimize_size
   Called by: IntCtrl_Ip_Init/13 (477815111 (estimated locally),4.05 per call) IntCtrl_Ip_DisableIrq/16 (1073741824 (estimated locally),1.00 per call) 
   Calls: DevAssert/0 (1073741824 (estimated locally),1.00 per call) DevAssert/0 (1073741824 (estimated locally),1.00 per call) 
-IntCtrl_Ip_EnableIrqPrivileged/2 (IntCtrl_Ip_EnableIrqPrivileged) @074a3620
+IntCtrl_Ip_EnableIrqPrivileged/2 (IntCtrl_Ip_EnableIrqPrivileged) @075137e0
   Type: function definition analyzed
   Visibility: externally_visible public
   References: 
@@ -726,7 +726,7 @@ IntCtrl_Ip_EnableIrqPrivileged/2 (IntCtrl_Ip_EnableIrqPrivileged) @074a3620
   Function flags: count:1073741824 (estimated locally) body optimize_size
   Called by: IntCtrl_Ip_Init/13 (477815111 (estimated locally),4.05 per call) IntCtrl_Ip_EnableIrq/15 (1073741824 (estimated locally),1.00 per call) 
   Calls: DevAssert/0 (1073741824 (estimated locally),1.00 per call) DevAssert/0 (1073741824 (estimated locally),1.00 per call) 
-IntCtrl_Ip_InstallHandlerPrivileged/1 (IntCtrl_Ip_InstallHandlerPrivileged) @074a3380
+IntCtrl_Ip_InstallHandlerPrivileged/1 (IntCtrl_Ip_InstallHandlerPrivileged) @07513540
   Type: function definition analyzed
   Visibility: externally_visible public
   References: __RAM_INTERRUPT_START/26 (addr)
@@ -735,7 +735,7 @@ IntCtrl_Ip_InstallHandlerPrivileged/1 (IntCtrl_Ip_InstallHandlerPrivileged) @074
   Function flags: count:1073741824 (estimated locally) body optimize_size
   Called by: IntCtrl_Ip_Init/13 (955630223 (estimated locally),8.09 per call) IntCtrl_Ip_InstallHandler/14 (1073741824 (estimated locally),1.00 per call) 
   Calls: DevAssert/0 (1073741824 (estimated locally),1.00 per call) DevAssert/0 (1073741824 (estimated locally),1.00 per call) DevAssert/0 (1073741824 (estimated locally),1.00 per call) 
-DevAssert/0 (DevAssert) @06a0d540
+DevAssert/0 (DevAssert) @06a66700
   Type: function definition analyzed
   Visibility: prevailing_def_ironly
   References: 
@@ -745,7 +745,7 @@ DevAssert/0 (DevAssert) @06a0d540
   Called by: IntCtrl_Ip_Init/13 (118111600 (estimated locally),1.00 per call) IntCtrl_Ip_Init/13 (118111600 (estimated locally),1.00 per call) IntCtrl_Ip_GenerateDirectedCpuInterruptPrivileged/12 (789516048 (estimated locally),1.00 per call) IntCtrl_Ip_GenerateDirectedCpuInterruptPrivileged/12 (789516048 (estimated locally),1.00 per call) IntCtrl_Ip_GetDirectedCpuInterruptPrivileged/11 (1073741824 (estimated locally),1.00 per call) IntCtrl_Ip_GetDirectedCpuInterruptPrivileged/11 (1073741824 (estimated locally),1.00 per call) IntCtrl_Ip_ClearDirectedCpuInterruptPrivileged/10 (1073741824 (estimated locally),1.00 per call) IntCtrl_Ip_ClearDirectedCpuInterruptPrivileged/10 (1073741824 (estimated locally),1.00 per call) IntCtrl_Ip_GetActivePrivileged/9 (1073741824 (estimated locally),1.00 per call) IntCtrl_Ip_GetActivePrivileged/9 (1073741824 (estimated locally),1.00 per call) IntCtrl_Ip_GetPendingPrivileged/8 (1073741824 (estimated locally),1.00 per call) IntCtrl_Ip_GetPendingPrivileged/8 (1073741824 (estimated locally),1.00 per call) IntCtrl_Ip_SetPendingPrivileged/7 (1073741824 (estimated locally),1.00 per call) IntCtrl_Ip_SetPendingPrivileged/7 (1073741824 (estimated locally),1.00 per call) IntCtrl_Ip_ClearPendingPrivileged/6 (1073741824 (estimated locally),1.00 per call) IntCtrl_Ip_ClearPendingPrivileged/6 (1073741824 (estimated locally),1.00 per call) IntCtrl_Ip_GetPriorityPrivileged/5 (1073741824 (estimated locally),1.00 per call) IntCtrl_Ip_GetPriorityPrivileged/5 (1073741824 (estimated locally),1.00 per call) IntCtrl_Ip_SetPriorityPrivileged/4 (1073741824 (estimated locally),1.00 per call) IntCtrl_Ip_SetPriorityPrivileged/4 (1073741824 (estimated locally),1.00 per call) IntCtrl_Ip_SetPriorityPrivileged/4 (1073741824 (estimated locally),1.00 per call) IntCtrl_Ip_DisableIrqPrivileged/3 (1073741824 (estimated locally),1.00 per call) IntCtrl_Ip_DisableIrqPrivileged/3 (1073741824 (estimated locally),1.00 per call) IntCtrl_Ip_EnableIrqPrivileged/2 (1073741824 (estimated locally),1.00 per call) IntCtrl_Ip_EnableIrqPrivileged/2 (1073741824 (estimated locally),1.00 per call) IntCtrl_Ip_InstallHandlerPrivileged/1 (1073741824 (estimated locally),1.00 per call) IntCtrl_Ip_InstallHandlerPrivileged/1 (1073741824 (estimated locally),1.00 per call) IntCtrl_Ip_InstallHandlerPrivileged/1 (1073741824 (estimated locally),1.00 per call) 
   Calls: 
 
-;; Function DevAssert (DevAssert, funcdef_no=0, decl_uid=9215, cgraph_uid=1, symbol_order=0)
+;; Function DevAssert (DevAssert, funcdef_no=0, decl_uid=9218, cgraph_uid=1, symbol_order=0)
 
 Modification phase of node DevAssert/0
 DevAssert (volatile boolean x)
@@ -779,7 +779,7 @@ DevAssert (volatile boolean x)
 
 
 
-;; Function IntCtrl_Ip_InstallHandlerPrivileged (IntCtrl_Ip_InstallHandlerPrivileged, funcdef_no=1, decl_uid=9252, cgraph_uid=2, symbol_order=1)
+;; Function IntCtrl_Ip_InstallHandlerPrivileged (IntCtrl_Ip_InstallHandlerPrivileged, funcdef_no=1, decl_uid=9255, cgraph_uid=2, symbol_order=1)
 
 Modification phase of node IntCtrl_Ip_InstallHandlerPrivileged/1
 IntCtrl_Ip_InstallHandlerPrivileged (IRQn_Type eIrqNumber, void (*IntCtrl_Ip_IrqHandlerType) (void) pfNewHandler, void (*IntCtrl_Ip_IrqHandlerType) (void) * const pfOldHandler)
@@ -853,7 +853,7 @@ IntCtrl_Ip_InstallHandlerPrivileged (IRQn_Type eIrqNumber, void (*IntCtrl_Ip_Irq
 
 
 
-;; Function IntCtrl_Ip_EnableIrqPrivileged (IntCtrl_Ip_EnableIrqPrivileged, funcdef_no=2, decl_uid=9254, cgraph_uid=3, symbol_order=2)
+;; Function IntCtrl_Ip_EnableIrqPrivileged (IntCtrl_Ip_EnableIrqPrivileged, funcdef_no=2, decl_uid=9257, cgraph_uid=3, symbol_order=2)
 
 Modification phase of node IntCtrl_Ip_EnableIrqPrivileged/2
 IntCtrl_Ip_EnableIrqPrivileged (IRQn_Type eIrqNumber)
@@ -888,7 +888,7 @@ IntCtrl_Ip_EnableIrqPrivileged (IRQn_Type eIrqNumber)
 
 
 
-;; Function IntCtrl_Ip_DisableIrqPrivileged (IntCtrl_Ip_DisableIrqPrivileged, funcdef_no=3, decl_uid=9256, cgraph_uid=4, symbol_order=3)
+;; Function IntCtrl_Ip_DisableIrqPrivileged (IntCtrl_Ip_DisableIrqPrivileged, funcdef_no=3, decl_uid=9259, cgraph_uid=4, symbol_order=3)
 
 Modification phase of node IntCtrl_Ip_DisableIrqPrivileged/3
 IntCtrl_Ip_DisableIrqPrivileged (IRQn_Type eIrqNumber)
@@ -923,7 +923,7 @@ IntCtrl_Ip_DisableIrqPrivileged (IRQn_Type eIrqNumber)
 
 
 
-;; Function IntCtrl_Ip_SetPriorityPrivileged (IntCtrl_Ip_SetPriorityPrivileged, funcdef_no=4, decl_uid=9259, cgraph_uid=5, symbol_order=4)
+;; Function IntCtrl_Ip_SetPriorityPrivileged (IntCtrl_Ip_SetPriorityPrivileged, funcdef_no=4, decl_uid=9262, cgraph_uid=5, symbol_order=4)
 
 Modification phase of node IntCtrl_Ip_SetPriorityPrivileged/4
 IntCtrl_Ip_SetPriorityPrivileged (IRQn_Type eIrqNumber, uint8 u8Priority)
@@ -960,7 +960,7 @@ IntCtrl_Ip_SetPriorityPrivileged (IRQn_Type eIrqNumber, uint8 u8Priority)
 
 
 
-;; Function IntCtrl_Ip_GetPriorityPrivileged (IntCtrl_Ip_GetPriorityPrivileged, funcdef_no=5, decl_uid=9261, cgraph_uid=6, symbol_order=5)
+;; Function IntCtrl_Ip_GetPriorityPrivileged (IntCtrl_Ip_GetPriorityPrivileged, funcdef_no=5, decl_uid=9264, cgraph_uid=6, symbol_order=5)
 
 Modification phase of node IntCtrl_Ip_GetPriorityPrivileged/5
 IntCtrl_Ip_GetPriorityPrivileged (IRQn_Type eIrqNumber)
@@ -998,7 +998,7 @@ IntCtrl_Ip_GetPriorityPrivileged (IRQn_Type eIrqNumber)
 
 
 
-;; Function IntCtrl_Ip_ClearPendingPrivileged (IntCtrl_Ip_ClearPendingPrivileged, funcdef_no=6, decl_uid=9263, cgraph_uid=7, symbol_order=6)
+;; Function IntCtrl_Ip_ClearPendingPrivileged (IntCtrl_Ip_ClearPendingPrivileged, funcdef_no=6, decl_uid=9266, cgraph_uid=7, symbol_order=6)
 
 Modification phase of node IntCtrl_Ip_ClearPendingPrivileged/6
 IntCtrl_Ip_ClearPendingPrivileged (IRQn_Type eIrqNumber)
@@ -1033,7 +1033,7 @@ IntCtrl_Ip_ClearPendingPrivileged (IRQn_Type eIrqNumber)
 
 
 
-;; Function IntCtrl_Ip_SetPendingPrivileged (IntCtrl_Ip_SetPendingPrivileged, funcdef_no=7, decl_uid=9265, cgraph_uid=8, symbol_order=7)
+;; Function IntCtrl_Ip_SetPendingPrivileged (IntCtrl_Ip_SetPendingPrivileged, funcdef_no=7, decl_uid=9268, cgraph_uid=8, symbol_order=7)
 
 Modification phase of node IntCtrl_Ip_SetPendingPrivileged/7
 IntCtrl_Ip_SetPendingPrivileged (IRQn_Type eIrqNumber)
@@ -1068,7 +1068,7 @@ IntCtrl_Ip_SetPendingPrivileged (IRQn_Type eIrqNumber)
 
 
 
-;; Function IntCtrl_Ip_GetPendingPrivileged (IntCtrl_Ip_GetPendingPrivileged, funcdef_no=8, decl_uid=9267, cgraph_uid=9, symbol_order=8)
+;; Function IntCtrl_Ip_GetPendingPrivileged (IntCtrl_Ip_GetPendingPrivileged, funcdef_no=8, decl_uid=9270, cgraph_uid=9, symbol_order=8)
 
 Modification phase of node IntCtrl_Ip_GetPendingPrivileged/8
 IntCtrl_Ip_GetPendingPrivileged (IRQn_Type eIrqNumber)
@@ -1108,7 +1108,7 @@ IntCtrl_Ip_GetPendingPrivileged (IRQn_Type eIrqNumber)
 
 
 
-;; Function IntCtrl_Ip_GetActivePrivileged (IntCtrl_Ip_GetActivePrivileged, funcdef_no=9, decl_uid=9269, cgraph_uid=10, symbol_order=9)
+;; Function IntCtrl_Ip_GetActivePrivileged (IntCtrl_Ip_GetActivePrivileged, funcdef_no=9, decl_uid=9272, cgraph_uid=10, symbol_order=9)
 
 Modification phase of node IntCtrl_Ip_GetActivePrivileged/9
 IntCtrl_Ip_GetActivePrivileged (IRQn_Type eIrqNumber)
@@ -1148,7 +1148,7 @@ IntCtrl_Ip_GetActivePrivileged (IRQn_Type eIrqNumber)
 
 
 
-;; Function IntCtrl_Ip_ClearDirectedCpuInterruptPrivileged (IntCtrl_Ip_ClearDirectedCpuInterruptPrivileged, funcdef_no=10, decl_uid=9274, cgraph_uid=11, symbol_order=10)
+;; Function IntCtrl_Ip_ClearDirectedCpuInterruptPrivileged (IntCtrl_Ip_ClearDirectedCpuInterruptPrivileged, funcdef_no=10, decl_uid=9277, cgraph_uid=11, symbol_order=10)
 
 Modification phase of node IntCtrl_Ip_ClearDirectedCpuInterruptPrivileged/10
 IntCtrl_Ip_ClearDirectedCpuInterruptPrivileged (IRQn_Type eIrqNumber)
@@ -1185,7 +1185,7 @@ IntCtrl_Ip_ClearDirectedCpuInterruptPrivileged (IRQn_Type eIrqNumber)
 
 
 
-;; Function IntCtrl_Ip_GetDirectedCpuInterruptPrivileged (IntCtrl_Ip_GetDirectedCpuInterruptPrivileged, funcdef_no=11, decl_uid=9276, cgraph_uid=12, symbol_order=11)
+;; Function IntCtrl_Ip_GetDirectedCpuInterruptPrivileged (IntCtrl_Ip_GetDirectedCpuInterruptPrivileged, funcdef_no=11, decl_uid=9279, cgraph_uid=12, symbol_order=11)
 
 Modification phase of node IntCtrl_Ip_GetDirectedCpuInterruptPrivileged/11
 IntCtrl_Ip_GetDirectedCpuInterruptPrivileged (IRQn_Type eIrqNumber)
@@ -1227,7 +1227,7 @@ IntCtrl_Ip_GetDirectedCpuInterruptPrivileged (IRQn_Type eIrqNumber)
 
 
 
-;; Function IntCtrl_Ip_GenerateDirectedCpuInterruptPrivileged (IntCtrl_Ip_GenerateDirectedCpuInterruptPrivileged, funcdef_no=12, decl_uid=9272, cgraph_uid=13, symbol_order=12)
+;; Function IntCtrl_Ip_GenerateDirectedCpuInterruptPrivileged (IntCtrl_Ip_GenerateDirectedCpuInterruptPrivileged, funcdef_no=12, decl_uid=9275, cgraph_uid=13, symbol_order=12)
 
 Modification phase of node IntCtrl_Ip_GenerateDirectedCpuInterruptPrivileged/12
 IntCtrl_Ip_GenerateDirectedCpuInterruptPrivileged (IRQn_Type eIrqNumber, IntCtrl_Ip_IrqTargetType eCpuTarget)
@@ -1323,7 +1323,7 @@ IntCtrl_Ip_GenerateDirectedCpuInterruptPrivileged (IRQn_Type eIrqNumber, IntCtrl
 
 
 
-;; Function IntCtrl_Ip_Init (IntCtrl_Ip_Init, funcdef_no=13, decl_uid=9219, cgraph_uid=14, symbol_order=13)
+;; Function IntCtrl_Ip_Init (IntCtrl_Ip_Init, funcdef_no=13, decl_uid=9222, cgraph_uid=14, symbol_order=13)
 
 Modification phase of node IntCtrl_Ip_Init/13
 IntCtrl_Ip_Init (const struct IntCtrl_Ip_CtrlConfigType * pIntCtrlCtrlConfig)
@@ -1452,7 +1452,7 @@ IntCtrl_Ip_Init (const struct IntCtrl_Ip_CtrlConfigType * pIntCtrlCtrlConfig)
 
 
 
-;; Function IntCtrl_Ip_InstallHandler (IntCtrl_Ip_InstallHandler, funcdef_no=14, decl_uid=9223, cgraph_uid=15, symbol_order=14)
+;; Function IntCtrl_Ip_InstallHandler (IntCtrl_Ip_InstallHandler, funcdef_no=14, decl_uid=9226, cgraph_uid=15, symbol_order=14)
 
 Modification phase of node IntCtrl_Ip_InstallHandler/14
 IntCtrl_Ip_InstallHandler (IRQn_Type eIrqNumber, void (*IntCtrl_Ip_IrqHandlerType) (void) pfNewHandler, void (*IntCtrl_Ip_IrqHandlerType) (void) * const pfOldHandler)
@@ -1466,7 +1466,7 @@ IntCtrl_Ip_InstallHandler (IRQn_Type eIrqNumber, void (*IntCtrl_Ip_IrqHandlerTyp
 
 
 
-;; Function IntCtrl_Ip_EnableIrq (IntCtrl_Ip_EnableIrq, funcdef_no=15, decl_uid=9225, cgraph_uid=16, symbol_order=15)
+;; Function IntCtrl_Ip_EnableIrq (IntCtrl_Ip_EnableIrq, funcdef_no=15, decl_uid=9228, cgraph_uid=16, symbol_order=15)
 
 Modification phase of node IntCtrl_Ip_EnableIrq/15
 IntCtrl_Ip_EnableIrq (IRQn_Type eIrqNumber)
@@ -1480,7 +1480,7 @@ IntCtrl_Ip_EnableIrq (IRQn_Type eIrqNumber)
 
 
 
-;; Function IntCtrl_Ip_DisableIrq (IntCtrl_Ip_DisableIrq, funcdef_no=16, decl_uid=9227, cgraph_uid=17, symbol_order=16)
+;; Function IntCtrl_Ip_DisableIrq (IntCtrl_Ip_DisableIrq, funcdef_no=16, decl_uid=9230, cgraph_uid=17, symbol_order=16)
 
 Modification phase of node IntCtrl_Ip_DisableIrq/16
 IntCtrl_Ip_DisableIrq (IRQn_Type eIrqNumber)
@@ -1494,7 +1494,7 @@ IntCtrl_Ip_DisableIrq (IRQn_Type eIrqNumber)
 
 
 
-;; Function IntCtrl_Ip_SetPriority (IntCtrl_Ip_SetPriority, funcdef_no=17, decl_uid=9230, cgraph_uid=18, symbol_order=17)
+;; Function IntCtrl_Ip_SetPriority (IntCtrl_Ip_SetPriority, funcdef_no=17, decl_uid=9233, cgraph_uid=18, symbol_order=17)
 
 Modification phase of node IntCtrl_Ip_SetPriority/17
 IntCtrl_Ip_SetPriority (IRQn_Type eIrqNumber, uint8 u8Priority)
@@ -1508,7 +1508,7 @@ IntCtrl_Ip_SetPriority (IRQn_Type eIrqNumber, uint8 u8Priority)
 
 
 
-;; Function IntCtrl_Ip_GetPriority (IntCtrl_Ip_GetPriority, funcdef_no=18, decl_uid=9232, cgraph_uid=19, symbol_order=18)
+;; Function IntCtrl_Ip_GetPriority (IntCtrl_Ip_GetPriority, funcdef_no=18, decl_uid=9235, cgraph_uid=19, symbol_order=18)
 
 Modification phase of node IntCtrl_Ip_GetPriority/18
 IntCtrl_Ip_GetPriority (IRQn_Type eIrqNumber)
@@ -1524,7 +1524,7 @@ IntCtrl_Ip_GetPriority (IRQn_Type eIrqNumber)
 
 
 
-;; Function IntCtrl_Ip_ClearPending (IntCtrl_Ip_ClearPending, funcdef_no=19, decl_uid=9234, cgraph_uid=20, symbol_order=19)
+;; Function IntCtrl_Ip_ClearPending (IntCtrl_Ip_ClearPending, funcdef_no=19, decl_uid=9237, cgraph_uid=20, symbol_order=19)
 
 Modification phase of node IntCtrl_Ip_ClearPending/19
 IntCtrl_Ip_ClearPending (IRQn_Type eIrqNumber)
@@ -1538,7 +1538,7 @@ IntCtrl_Ip_ClearPending (IRQn_Type eIrqNumber)
 
 
 
-;; Function IntCtrl_Ip_SetPending (IntCtrl_Ip_SetPending, funcdef_no=20, decl_uid=9236, cgraph_uid=21, symbol_order=20)
+;; Function IntCtrl_Ip_SetPending (IntCtrl_Ip_SetPending, funcdef_no=20, decl_uid=9239, cgraph_uid=21, symbol_order=20)
 
 Modification phase of node IntCtrl_Ip_SetPending/20
 IntCtrl_Ip_SetPending (IRQn_Type eIrqNumber)
@@ -1552,7 +1552,7 @@ IntCtrl_Ip_SetPending (IRQn_Type eIrqNumber)
 
 
 
-;; Function IntCtrl_Ip_GetPending (IntCtrl_Ip_GetPending, funcdef_no=21, decl_uid=9238, cgraph_uid=22, symbol_order=21)
+;; Function IntCtrl_Ip_GetPending (IntCtrl_Ip_GetPending, funcdef_no=21, decl_uid=9241, cgraph_uid=22, symbol_order=21)
 
 Modification phase of node IntCtrl_Ip_GetPending/21
 IntCtrl_Ip_GetPending (IRQn_Type eIrqNumber)
@@ -1570,7 +1570,7 @@ IntCtrl_Ip_GetPending (IRQn_Type eIrqNumber)
 
 
 
-;; Function IntCtrl_Ip_GetActive (IntCtrl_Ip_GetActive, funcdef_no=22, decl_uid=9240, cgraph_uid=23, symbol_order=22)
+;; Function IntCtrl_Ip_GetActive (IntCtrl_Ip_GetActive, funcdef_no=22, decl_uid=9243, cgraph_uid=23, symbol_order=22)
 
 Modification phase of node IntCtrl_Ip_GetActive/22
 IntCtrl_Ip_GetActive (IRQn_Type eIrqNumber)
@@ -1588,7 +1588,7 @@ IntCtrl_Ip_GetActive (IRQn_Type eIrqNumber)
 
 
 
-;; Function IntCtrl_Ip_ClearDirectedCpuInterrupt (IntCtrl_Ip_ClearDirectedCpuInterrupt, funcdef_no=23, decl_uid=9242, cgraph_uid=24, symbol_order=23)
+;; Function IntCtrl_Ip_ClearDirectedCpuInterrupt (IntCtrl_Ip_ClearDirectedCpuInterrupt, funcdef_no=23, decl_uid=9245, cgraph_uid=24, symbol_order=23)
 
 Modification phase of node IntCtrl_Ip_ClearDirectedCpuInterrupt/23
 IntCtrl_Ip_ClearDirectedCpuInterrupt (IRQn_Type eIrqNumber)
@@ -1602,7 +1602,7 @@ IntCtrl_Ip_ClearDirectedCpuInterrupt (IRQn_Type eIrqNumber)
 
 
 
-;; Function IntCtrl_Ip_GetDirectedCpuInterrupt (IntCtrl_Ip_GetDirectedCpuInterrupt, funcdef_no=24, decl_uid=9244, cgraph_uid=25, symbol_order=24)
+;; Function IntCtrl_Ip_GetDirectedCpuInterrupt (IntCtrl_Ip_GetDirectedCpuInterrupt, funcdef_no=24, decl_uid=9247, cgraph_uid=25, symbol_order=24)
 
 Modification phase of node IntCtrl_Ip_GetDirectedCpuInterrupt/24
 IntCtrl_Ip_GetDirectedCpuInterrupt (IRQn_Type eIrqNumber)
@@ -1620,7 +1620,7 @@ IntCtrl_Ip_GetDirectedCpuInterrupt (IRQn_Type eIrqNumber)
 
 
 
-;; Function IntCtrl_Ip_GenerateDirectedCpuInterrupt (IntCtrl_Ip_GenerateDirectedCpuInterrupt, funcdef_no=25, decl_uid=9247, cgraph_uid=26, symbol_order=25)
+;; Function IntCtrl_Ip_GenerateDirectedCpuInterrupt (IntCtrl_Ip_GenerateDirectedCpuInterrupt, funcdef_no=25, decl_uid=9250, cgraph_uid=26, symbol_order=25)
 
 Modification phase of node IntCtrl_Ip_GenerateDirectedCpuInterrupt/25
 IntCtrl_Ip_GenerateDirectedCpuInterrupt (IRQn_Type eIrqNumber, IntCtrl_Ip_IrqTargetType eCpuTarget)

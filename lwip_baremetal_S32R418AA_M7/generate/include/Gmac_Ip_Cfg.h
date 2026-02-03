@@ -145,13 +145,13 @@ extern "C"{
 /*! @brief Enables / Disables the feature of using Rx sporadic big frames */
 #define GMAC_RX_SPORADIC_BIG_BUFFERS (STD_OFF)
 /*! @brief Length of tx sporadic big frames */
-#define GMAC_0_TX_SPORADIC_BIG_BUFFERS_LENGTH  (0U)
+#define GMAC_1_TX_SPORADIC_BIG_BUFFERS_LENGTH  (0U)
 /*! @brief Count of tx sporadic big frames */
-#define GMAC_0_TX_SPORADIC_BIG_BUFFERS_COUNT (0U)
+#define GMAC_1_TX_SPORADIC_BIG_BUFFERS_COUNT (0U)
 /*! @brief Length of RX sporadic big frames */
-#define GMAC_0_RX_SPORADIC_BIG_BUFFERS_LENGTH  (0U)
+#define GMAC_1_RX_SPORADIC_BIG_BUFFERS_LENGTH  (0U)
 /*! @brief Count of RX sporadic big frames */
-#define GMAC_0_RX_SPORADIC_BIG_BUFFERS_COUNT  (0U)
+#define GMAC_1_RX_SPORADIC_BIG_BUFFERS_COUNT  (0U)
 /*! @brief Enables/Disables receive split header feature. */
 #define GMAC_IP_RX_HEADER_SPLIT                 (STD_OFF)
 /*! @brief Enables / Disables the feature of configuring the dma priorities for GMAC */

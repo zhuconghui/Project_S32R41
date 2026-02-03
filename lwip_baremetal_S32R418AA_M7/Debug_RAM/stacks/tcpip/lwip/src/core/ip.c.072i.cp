@@ -84,7 +84,7 @@ Reclaiming variables:
 Clearing address taken flags:
 Symbol table:
 
-ip4_input/14 (ip4_input) @060bae00
+ip4_input/14 (ip4_input) @06129e00
   Type: function
   Visibility: external public
   References: 
@@ -93,7 +93,7 @@ ip4_input/14 (ip4_input) @060bae00
   Function flags: optimize_size
   Called by: ip_input/6 (702504179 (estimated locally),0.65 per call) 
   Calls: 
-ip6_input/13 (ip6_input) @060bad20
+ip6_input/13 (ip6_input) @06129d20
   Type: function
   Visibility: external public
   References: 
@@ -102,7 +102,7 @@ ip6_input/13 (ip6_input) @060bad20
   Function flags: optimize_size
   Called by: ip_input/6 (361896092 (estimated locally),0.34 per call) 
   Calls: 
-ip4addr_aton/12 (ip4addr_aton) @060bab60
+ip4addr_aton/12 (ip4addr_aton) @06129b60
   Type: function
   Visibility: external public
   References: 
@@ -111,7 +111,7 @@ ip4addr_aton/12 (ip4addr_aton) @060bab60
   Function flags: optimize_size
   Called by: ipaddr_aton/5 (75773862 (estimated locally),0.47 per call) 
   Calls: 
-ip6addr_aton/11 (ip6addr_aton) @060baa80
+ip6addr_aton/11 (ip6addr_aton) @06129a80
   Type: function
   Visibility: external public
   References: 
@@ -120,7 +120,7 @@ ip6addr_aton/11 (ip6addr_aton) @060baa80
   Function flags: optimize_size
   Called by: ipaddr_aton/5 (37860609 (estimated locally),0.23 per call) 
   Calls: 
-ip4addr_ntoa_r/10 (ip4addr_ntoa_r) @060ba8c0
+ip4addr_ntoa_r/10 (ip4addr_ntoa_r) @061298c0
   Type: function
   Visibility: external public
   References: 
@@ -129,7 +129,7 @@ ip4addr_ntoa_r/10 (ip4addr_ntoa_r) @060ba8c0
   Function flags: optimize_size
   Called by: ipaddr_ntoa_r/4 (650062628 (estimated locally),0.61 per call) 
   Calls: 
-ip6addr_ntoa_r/9 (ip6addr_ntoa_r) @060ba7e0
+ip6addr_ntoa_r/9 (ip6addr_ntoa_r) @061297e0
   Type: function
   Visibility: external public
   References: 
@@ -138,7 +138,7 @@ ip6addr_ntoa_r/9 (ip6addr_ntoa_r) @060ba7e0
   Function flags: optimize_size
   Called by: ipaddr_ntoa_r/4 (334880748 (estimated locally),0.31 per call) 
   Calls: 
-ip4addr_ntoa/8 (ip4addr_ntoa) @060ba620
+ip4addr_ntoa/8 (ip4addr_ntoa) @06129620
   Type: function
   Visibility: external public
   References: 
@@ -147,7 +147,7 @@ ip4addr_ntoa/8 (ip4addr_ntoa) @060ba620
   Function flags: optimize_size
   Called by: ipaddr_ntoa/3 (650062628 (estimated locally),0.61 per call) 
   Calls: 
-ip6addr_ntoa/7 (ip6addr_ntoa) @060ba540
+ip6addr_ntoa/7 (ip6addr_ntoa) @06129540
   Type: function
   Visibility: external public
   References: 
@@ -156,7 +156,7 @@ ip6addr_ntoa/7 (ip6addr_ntoa) @060ba540
   Function flags: optimize_size
   Called by: ipaddr_ntoa/3 (334880748 (estimated locally),0.31 per call) 
   Calls: 
-ip_input/6 (ip_input) @060ba0e0
+ip_input/6 (ip_input) @061290e0
   Type: function definition analyzed
   Visibility: externally_visible public
   References: 
@@ -165,7 +165,7 @@ ip_input/6 (ip_input) @060ba0e0
   Function flags: count:1073741824 (estimated locally) body optimize_size
   Called by: 
   Calls: ip4_input/14 (702504179 (estimated locally),0.65 per call) ip6_input/13 (361896092 (estimated locally),0.34 per call) 
-ipaddr_aton/5 (ipaddr_aton) @060b29a0
+ipaddr_aton/5 (ipaddr_aton) @061219a0
   Type: function definition analyzed
   Visibility: externally_visible public
   References: 
@@ -174,7 +174,7 @@ ipaddr_aton/5 (ipaddr_aton) @060b29a0
   Function flags: count:162334957 (estimated locally) body optimize_size
   Called by: 
   Calls: ip4addr_aton/12 (75773862 (estimated locally),0.47 per call) ip6addr_aton/11 (37860609 (estimated locally),0.23 per call) 
-ipaddr_ntoa_r/4 (ipaddr_ntoa_r) @060b2c40
+ipaddr_ntoa_r/4 (ipaddr_ntoa_r) @06121c40
   Type: function definition analyzed
   Visibility: externally_visible public
   References: 
@@ -183,7 +183,7 @@ ipaddr_ntoa_r/4 (ipaddr_ntoa_r) @060b2c40
   Function flags: count:1073741824 (estimated locally) body optimize_size
   Called by: 
   Calls: ip4addr_ntoa_r/10 (650062628 (estimated locally),0.61 per call) ip6addr_ntoa_r/9 (334880748 (estimated locally),0.31 per call) 
-ipaddr_ntoa/3 (ipaddr_ntoa) @060b28c0
+ipaddr_ntoa/3 (ipaddr_ntoa) @061218c0
   Type: function definition analyzed
   Visibility: externally_visible public
   References: 
@@ -192,14 +192,14 @@ ipaddr_ntoa/3 (ipaddr_ntoa) @060b28c0
   Function flags: count:1073741824 (estimated locally) body optimize_size
   Called by: 
   Calls: ip4addr_ntoa/8 (650062628 (estimated locally),0.61 per call) ip6addr_ntoa/7 (334880748 (estimated locally),0.31 per call) 
-ip_addr_any_type/2 (ip_addr_any_type) @060af9d8
+ip_addr_any_type/2 (ip_addr_any_type) @0611e9d8
   Type: variable definition analyzed
   Visibility: externally_visible public
   References: 
   Referring: 
   Availability: available
   Varpool flags: initialized read-only const-value-known
-ip_data/1 (ip_data) @060af990
+ip_data/1 (ip_data) @0611e990
   Type: variable definition analyzed
   Visibility: externally_visible public
   References: 

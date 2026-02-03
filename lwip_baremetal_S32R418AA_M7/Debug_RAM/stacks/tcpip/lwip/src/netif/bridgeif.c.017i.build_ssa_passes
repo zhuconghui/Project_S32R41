@@ -2,7 +2,7 @@ bridgeif_add_port (struct netif * bridgeif, struct netif * portif)
 {
   struct bridgeif_port_t * port;
   struct bridgeif_private_t * br;
-  err_t D.7415;
+  err_t D.7424;
 
   <bb 2> :
   # DEBUG BEGIN_STMT
@@ -70,7 +70,7 @@ bridgeif_add_port (struct netif * bridgeif, struct netif * portif)
 
   <bb 9> :
   # DEBUG BEGIN_STMT
-  D.7415 = -6;
+  D.7424 = -6;
   // predicted unlikely by early return (on trees) predictor.
   goto <bb 13>; [INV]
 
@@ -87,7 +87,7 @@ bridgeif_add_port (struct netif * bridgeif, struct netif * portif)
 
   <bb 11> :
   # DEBUG BEGIN_STMT
-  D.7415 = -6;
+  D.7424 = -6;
   // predicted unlikely by early return (on trees) predictor.
   goto <bb 13>; [INV]
 
@@ -123,10 +123,10 @@ bridgeif_add_port (struct netif * bridgeif, struct netif * portif)
   portif->flags = _18;
   # DEBUG BEGIN_STMT
   # DEBUG BEGIN_STMT
-  D.7415 = 0;
+  D.7424 = 0;
 
   <bb 13> :
-  return D.7415;
+  return D.7424;
 
 }
 
@@ -138,7 +138,7 @@ bridgeif_init (struct netif * netif)
   size_t alloc_len_sizet;
   struct bridgeif_private_t * br;
   struct bridgeif_initdata_t * init_data;
-  err_t D.7365;
+  err_t D.7374;
 
   <bb 2> :
   # DEBUG BEGIN_STMT
@@ -270,7 +270,7 @@ bridgeif_init (struct netif * netif)
   <bb 15> :
   # DEBUG BEGIN_STMT
   # DEBUG BEGIN_STMT
-  D.7365 = -1;
+  D.7374 = -1;
   // predicted unlikely by early return (on trees) predictor.
   goto <bb 21>; [INV]
 
@@ -316,7 +316,7 @@ bridgeif_init (struct netif * netif)
   # DEBUG BEGIN_STMT
   mem_free (br);
   # DEBUG BEGIN_STMT
-  D.7365 = -1;
+  D.7374 = -1;
   // predicted unlikely by early return (on trees) predictor.
   goto <bb 21>; [INV]
 
@@ -403,10 +403,10 @@ bridgeif_init (struct netif * netif)
 
   <bb 20> :
   # DEBUG BEGIN_STMT
-  D.7365 = 0;
+  D.7374 = 0;
 
   <bb 21> :
-  return D.7365;
+  return D.7374;
 
 }
 
@@ -419,7 +419,7 @@ bridgeif_input (struct pbuf * p, struct netif * netif)
   struct eth_addr * src;
   bridgeif_portmask_t dstports;
   u8_t rx_idx;
-  err_t D.7422;
+  err_t D.7431;
 
   <bb 2> :
   # DEBUG BEGIN_STMT
@@ -441,7 +441,7 @@ bridgeif_input (struct pbuf * p, struct netif * netif)
 
   <bb 4> :
   # DEBUG BEGIN_STMT
-  D.7422 = -6;
+  D.7431 = -6;
   // predicted unlikely by early return (on trees) predictor.
   goto <bb 21>; [INV]
 
@@ -482,7 +482,7 @@ bridgeif_input (struct pbuf * p, struct netif * netif)
 
   <bb 9> :
   # DEBUG BEGIN_STMT
-  D.7422 = -6;
+  D.7431 = -6;
   // predicted unlikely by early return (on trees) predictor.
   goto <bb 21>; [INV]
 
@@ -559,7 +559,7 @@ bridgeif_input (struct pbuf * p, struct netif * netif)
 
   <bb 17> :
   # DEBUG BEGIN_STMT
-  D.7422 = 0;
+  D.7431 = 0;
   // predicted unlikely by early return (on trees) predictor.
   goto <bb 21>; [INV]
 
@@ -577,7 +577,7 @@ bridgeif_input (struct pbuf * p, struct netif * netif)
   _20 = br->netif;
   _21 = _20->input;
   _22 = br->netif;
-  D.7422 = _21 (p, _22);
+  D.7431 = _21 (p, _22);
   // predicted unlikely by early return (on trees) predictor.
   goto <bb 21>; [INV]
 
@@ -589,11 +589,11 @@ bridgeif_input (struct pbuf * p, struct netif * netif)
   # DEBUG BEGIN_STMT
   pbuf_free (p);
   # DEBUG BEGIN_STMT
-  D.7422 = 0;
+  D.7431 = 0;
   // predicted unlikely by early return (on trees) predictor.
 
   <bb 21> :
-  return D.7422;
+  return D.7431;
 
 }
 
@@ -604,7 +604,7 @@ bridgeif_output (struct netif * netif, struct pbuf * p)
   struct eth_addr * dst;
   struct bridgeif_private_t * br;
   err_t err;
-  err_t D.7374;
+  err_t D.7383;
 
   <bb 2> :
   # DEBUG BEGIN_STMT
@@ -657,19 +657,20 @@ bridgeif_output (struct netif * netif, struct pbuf * p)
   _14 = _13 + 1;
   lwip_stats.link.xmit = _14;
   # DEBUG BEGIN_STMT
-  D.7374 = err;
-  return D.7374;
+  D.7383 = err;
+  return D.7383;
 
 }
 
 
 bridgeif_send_to_ports (struct bridgeif_private_t * br, struct pbuf * p, bridgeif_portmask_t dstports)
 {
+  sys_prot_t lev;
   bridgeif_portmask_t mask;
   u8_t i;
   err_t ret_err;
   err_t err;
-  err_t D.7388;
+  err_t D.7397;
 
   <bb 2> :
   # DEBUG BEGIN_STMT
@@ -679,6 +680,7 @@ bridgeif_send_to_ports (struct bridgeif_private_t * br, struct pbuf * p, bridgei
   mask = 1;
   # DEBUG BEGIN_STMT
   # DEBUG BEGIN_STMT
+  lev = sys_arch_protect ();
   # DEBUG BEGIN_STMT
   i = 0;
   goto <bb 7>; [INV]
@@ -719,9 +721,10 @@ bridgeif_send_to_ports (struct bridgeif_private_t * br, struct pbuf * p, bridgei
 
   <bb 8> :
   # DEBUG BEGIN_STMT
+  sys_arch_unprotect (lev);
   # DEBUG BEGIN_STMT
-  D.7388 = ret_err;
-  return D.7388;
+  D.7397 = ret_err;
+  return D.7397;
 
 }
 
@@ -729,7 +732,7 @@ bridgeif_send_to_ports (struct bridgeif_private_t * br, struct pbuf * p, bridgei
 bridgeif_send_to_port (struct bridgeif_private_t * br, struct pbuf * p, u8_t dstport_idx)
 {
   struct netif * portif;
-  err_t D.7402;
+  err_t D.7411;
 
   <bb 2> :
   # DEBUG BEGIN_STMT
@@ -791,7 +794,7 @@ bridgeif_send_to_port (struct bridgeif_private_t * br, struct pbuf * p, u8_t dst
   # DEBUG BEGIN_STMT
   # DEBUG BEGIN_STMT
   _14 = portif->linkoutput;
-  D.7402 = _14 (portif, p);
+  D.7411 = _14 (portif, p);
   // predicted unlikely by early return (on trees) predictor.
   goto <bb 12>; [INV]
 
@@ -814,10 +817,10 @@ bridgeif_send_to_port (struct bridgeif_private_t * br, struct pbuf * p, u8_t dst
   <bb 11> :
   # DEBUG BEGIN_STMT
   # DEBUG BEGIN_STMT
-  D.7402 = 0;
+  D.7411 = 0;
 
   <bb 12> :
-  return D.7402;
+  return D.7411;
 
 }
 
@@ -825,8 +828,9 @@ bridgeif_send_to_port (struct bridgeif_private_t * br, struct pbuf * p, u8_t dst
 bridgeif_is_local_mac (struct bridgeif_private_t * br, struct eth_addr * addr)
 {
   struct netif * portif;
+  sys_prot_t lev;
   int i;
-  int D.7442;
+  int D.7451;
 
   <bb 2> :
   # DEBUG BEGIN_STMT
@@ -842,12 +846,13 @@ bridgeif_is_local_mac (struct bridgeif_private_t * br, struct eth_addr * addr)
 
   <bb 3> :
   # DEBUG BEGIN_STMT
-  D.7442 = 1;
+  D.7451 = 1;
   // predicted unlikely by early return (on trees) predictor.
   goto <bb 11>; [INV]
 
   <bb 4> :
   # DEBUG BEGIN_STMT
+  lev = sys_arch_protect ();
   # DEBUG BEGIN_STMT
   i = 0;
   goto <bb 9>; [INV]
@@ -876,8 +881,9 @@ bridgeif_is_local_mac (struct bridgeif_private_t * br, struct eth_addr * addr)
 
   <bb 7> :
   # DEBUG BEGIN_STMT
+  sys_arch_unprotect (lev);
   # DEBUG BEGIN_STMT
-  D.7442 = 1;
+  D.7451 = 1;
   // predicted unlikely by early return (on trees) predictor.
   goto <bb 11>; [INV]
 
@@ -896,11 +902,12 @@ bridgeif_is_local_mac (struct bridgeif_private_t * br, struct eth_addr * addr)
 
   <bb 10> :
   # DEBUG BEGIN_STMT
+  sys_arch_unprotect (lev);
   # DEBUG BEGIN_STMT
-  D.7442 = 0;
+  D.7451 = 0;
 
   <bb 11> :
-  return D.7442;
+  return D.7451;
 
 }
 
@@ -908,13 +915,15 @@ bridgeif_is_local_mac (struct bridgeif_private_t * br, struct eth_addr * addr)
 bridgeif_find_dst_ports (struct bridgeif_private_t * br, struct eth_addr * dst_addr)
 {
   bridgeif_portmask_t ret;
+  sys_prot_t lev;
   int i;
-  bridgeif_portmask_t D.7380;
+  bridgeif_portmask_t D.7389;
 
   <bb 2> :
   # DEBUG BEGIN_STMT
   # DEBUG BEGIN_STMT
   # DEBUG BEGIN_STMT
+  lev = sys_arch_protect ();
   # DEBUG BEGIN_STMT
   i = 0;
   goto <bb 7>; [INV]
@@ -952,8 +961,9 @@ bridgeif_find_dst_ports (struct bridgeif_private_t * br, struct eth_addr * dst_a
   _15 = _12 + _14;
   ret = _15->dst_ports;
   # DEBUG BEGIN_STMT
+  sys_arch_unprotect (lev);
   # DEBUG BEGIN_STMT
-  D.7380 = ret;
+  D.7389 = ret;
   // predicted unlikely by early return (on trees) predictor.
   goto <bb 11>; [INV]
 
@@ -982,28 +992,31 @@ bridgeif_find_dst_ports (struct bridgeif_private_t * br, struct eth_addr * dst_a
 
   <bb 9> :
   # DEBUG BEGIN_STMT
+  sys_arch_unprotect (lev);
   # DEBUG BEGIN_STMT
-  D.7380 = 255;
+  D.7389 = 255;
   // predicted unlikely by early return (on trees) predictor.
   goto <bb 11>; [INV]
 
   <bb 10> :
   # DEBUG BEGIN_STMT
+  sys_arch_unprotect (lev);
   # DEBUG BEGIN_STMT
   _21 = br->fdbd;
-  D.7380 = bridgeif_fdb_get_dst_ports (_21, dst_addr);
+  D.7389 = bridgeif_fdb_get_dst_ports (_21, dst_addr);
 
   <bb 11> :
-  return D.7380;
+  return D.7389;
 
 }
 
 
 bridgeif_fdb_remove (struct netif * bridgeif, const struct eth_addr * addr)
 {
+  sys_prot_t lev;
   struct bridgeif_private_t * br;
   int i;
-  err_t D.7349;
+  err_t D.7358;
 
   <bb 2> :
   # DEBUG BEGIN_STMT
@@ -1046,6 +1059,7 @@ bridgeif_fdb_remove (struct netif * bridgeif, const struct eth_addr * addr)
   <bb 6> :
   # DEBUG BEGIN_STMT
   # DEBUG BEGIN_STMT
+  lev = sys_arch_protect ();
   # DEBUG BEGIN_STMT
   i = 0;
   goto <bb 13>; [INV]
@@ -1108,8 +1122,9 @@ bridgeif_fdb_remove (struct netif * bridgeif, const struct eth_addr * addr)
   memset (_26, 0, 8);
   # DEBUG BEGIN_STMT
   # DEBUG BEGIN_STMT
+  sys_arch_unprotect (lev);
   # DEBUG BEGIN_STMT
-  D.7349 = 0;
+  D.7358 = 0;
   // predicted unlikely by early return (on trees) predictor.
   goto <bb 15>; [INV]
 
@@ -1129,20 +1144,22 @@ bridgeif_fdb_remove (struct netif * bridgeif, const struct eth_addr * addr)
 
   <bb 14> :
   # DEBUG BEGIN_STMT
+  sys_arch_unprotect (lev);
   # DEBUG BEGIN_STMT
-  D.7349 = -6;
+  D.7358 = -6;
 
   <bb 15> :
-  return D.7349;
+  return D.7358;
 
 }
 
 
 bridgeif_fdb_add (struct netif * bridgeif, const struct eth_addr * addr, bridgeif_portmask_t ports)
 {
+  sys_prot_t lev;
   struct bridgeif_private_t * br;
   int i;
-  err_t D.7335;
+  err_t D.7344;
 
   <bb 2> :
   # DEBUG BEGIN_STMT
@@ -1185,6 +1202,7 @@ bridgeif_fdb_add (struct netif * bridgeif, const struct eth_addr * addr, bridgei
   <bb 6> :
   # DEBUG BEGIN_STMT
   # DEBUG BEGIN_STMT
+  lev = sys_arch_protect ();
   # DEBUG BEGIN_STMT
   i = 0;
   goto <bb 11>; [INV]
@@ -1236,8 +1254,9 @@ bridgeif_fdb_add (struct netif * bridgeif, const struct eth_addr * addr, bridgei
   memcpy (_23, addr, 6);
   # DEBUG BEGIN_STMT
   # DEBUG BEGIN_STMT
+  sys_arch_unprotect (lev);
   # DEBUG BEGIN_STMT
-  D.7335 = 0;
+  D.7344 = 0;
   // predicted unlikely by early return (on trees) predictor.
   goto <bb 13>; [INV]
 
@@ -1257,11 +1276,12 @@ bridgeif_fdb_add (struct netif * bridgeif, const struct eth_addr * addr, bridgei
 
   <bb 12> :
   # DEBUG BEGIN_STMT
+  sys_arch_unprotect (lev);
   # DEBUG BEGIN_STMT
-  D.7335 = -1;
+  D.7344 = -1;
 
   <bb 13> :
-  return D.7335;
+  return D.7344;
 
 }
 

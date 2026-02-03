@@ -83,7 +83,7 @@ Reclaiming variables:
 Clearing address taken flags:
 Symbol table:
 
-NVIC_SetPriorityGrouping/17 (NVIC_SetPriorityGrouping) @061037e0
+NVIC_SetPriorityGrouping/17 (NVIC_SetPriorityGrouping) @060757e0
   Type: function
   Visibility: external public
   References: 
@@ -92,7 +92,7 @@ NVIC_SetPriorityGrouping/17 (NVIC_SetPriorityGrouping) @061037e0
   Function flags: optimize_size
   Called by: Core_IC_Init/7 (1073741824 (estimated locally),1.00 per call) 
   Calls: 
-NVIC_EnableIRQ/16 (NVIC_EnableIRQ) @06103460
+NVIC_EnableIRQ/16 (NVIC_EnableIRQ) @06075460
   Type: function
   Visibility: external public
   References: 
@@ -101,7 +101,7 @@ NVIC_EnableIRQ/16 (NVIC_EnableIRQ) @06103460
   Function flags: optimize_size
   Called by: Core_enableIsrSource/3 (1073741824 (estimated locally),1.00 per call) 
   Calls: 
-NVIC_SetPriority/15 (NVIC_SetPriority) @06103380
+NVIC_SetPriority/15 (NVIC_SetPriority) @06075380
   Type: function
   Visibility: external public
   References: 
@@ -110,7 +110,7 @@ NVIC_SetPriority/15 (NVIC_SetPriority) @06103380
   Function flags: optimize_size
   Called by: Core_enableIsrSource/3 (1073741824 (estimated locally),1.00 per call) 
   Calls: 
-NVIC_DisableIRQ/14 (NVIC_DisableIRQ) @060fcb60
+NVIC_DisableIRQ/14 (NVIC_DisableIRQ) @0606eb60
   Type: function
   Visibility: external public
   References: 
@@ -119,7 +119,7 @@ NVIC_DisableIRQ/14 (NVIC_DisableIRQ) @060fcb60
   Function flags: optimize_size
   Called by: Core_disableIsrSource/2 (1073741824 (estimated locally),1.00 per call) 
   Calls: 
-Core_Cache_Init/13 (Core_Cache_Init) @060fca80
+Core_Cache_Init/13 (Core_Cache_Init) @0606ea80
   Type: function definition analyzed
   Visibility: externally_visible public section:.systeminit
   References: 
@@ -128,7 +128,7 @@ Core_Cache_Init/13 (Core_Cache_Init) @060fca80
   Function flags: count:12992276 (estimated locally) body optimize_size
   Called by: 
   Calls: 
-Core_MPU_Init/11 (Core_MPU_Init) @060fc540
+Core_MPU_Init/11 (Core_MPU_Init) @0606e540
   Type: function definition analyzed
   Visibility: externally_visible public section:.systeminit
   References: rbar/0 (read)rasr/1 (read)
@@ -137,7 +137,7 @@ Core_MPU_Init/11 (Core_MPU_Init) @060fc540
   Function flags: count:97603132 (estimated locally) body optimize_size
   Called by: 
   Calls: 
-Core_FPU_Init/9 (Core_FPU_Init) @060fcee0
+Core_FPU_Init/9 (Core_FPU_Init) @0606eee0
   Type: function definition analyzed
   Visibility: externally_visible public section:.systeminit
   References: 
@@ -146,7 +146,7 @@ Core_FPU_Init/9 (Core_FPU_Init) @060fcee0
   Function flags: count:1073741824 (estimated locally) body optimize_size
   Called by: 
   Calls: 
-Core_IC_Init/7 (Core_IC_Init) @060fcc40
+Core_IC_Init/7 (Core_IC_Init) @0606ec40
   Type: function definition analyzed
   Visibility: externally_visible public section:.systeminit
   References: 
@@ -155,7 +155,7 @@ Core_IC_Init/7 (Core_IC_Init) @060fcc40
   Function flags: count:1073741824 (estimated locally) body optimize_size
   Called by: 
   Calls: NVIC_SetPriorityGrouping/17 (1073741824 (estimated locally),1.00 per call) 
-Core_registerIsrHandler/5 (Core_registerIsrHandler) @060fc9a0
+Core_registerIsrHandler/5 (Core_registerIsrHandler) @0606e9a0
   Type: function definition analyzed
   Visibility: externally_visible public
   References: 
@@ -164,7 +164,7 @@ Core_registerIsrHandler/5 (Core_registerIsrHandler) @060fc9a0
   Function flags: count:1073741824 (estimated locally) body optimize_size
   Called by: 
   Calls: 
-Core_clearPendingIsrSource/4 (Core_clearPendingIsrSource) @060fc700
+Core_clearPendingIsrSource/4 (Core_clearPendingIsrSource) @0606e700
   Type: function definition analyzed
   Visibility: externally_visible public
   References: 
@@ -173,7 +173,7 @@ Core_clearPendingIsrSource/4 (Core_clearPendingIsrSource) @060fc700
   Function flags: count:1073741824 (estimated locally) body optimize_size
   Called by: 
   Calls: 
-Core_enableIsrSource/3 (Core_enableIsrSource) @060fc460
+Core_enableIsrSource/3 (Core_enableIsrSource) @0606e460
   Type: function definition analyzed
   Visibility: externally_visible public
   References: 
@@ -182,7 +182,7 @@ Core_enableIsrSource/3 (Core_enableIsrSource) @060fc460
   Function flags: count:1073741824 (estimated locally) body optimize_size
   Called by: 
   Calls: NVIC_EnableIRQ/16 (1073741824 (estimated locally),1.00 per call) NVIC_SetPriority/15 (1073741824 (estimated locally),1.00 per call) 
-Core_disableIsrSource/2 (Core_disableIsrSource) @060fc1c0
+Core_disableIsrSource/2 (Core_disableIsrSource) @0606e1c0
   Type: function definition analyzed
   Visibility: externally_visible public
   References: 
@@ -191,14 +191,14 @@ Core_disableIsrSource/2 (Core_disableIsrSource) @060fc1c0
   Function flags: count:1073741824 (estimated locally) body optimize_size
   Called by: 
   Calls: NVIC_DisableIRQ/14 (1073741824 (estimated locally),1.00 per call) 
-rasr/1 (rasr) @060d83a8
+rasr/1 (rasr) @060493a8
   Type: variable definition analyzed
   Visibility: prevailing_def_ironly
   References: 
   Referring: Core_MPU_Init/11 (read)
   Availability: available
   Varpool flags: initialized read-only const-value-known
-rbar/0 (rbar) @060d8318
+rbar/0 (rbar) @06049318
   Type: variable definition analyzed
   Visibility: prevailing_def_ironly
   References: 

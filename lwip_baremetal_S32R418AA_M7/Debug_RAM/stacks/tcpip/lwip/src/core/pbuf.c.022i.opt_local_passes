@@ -1968,6 +1968,7 @@ pbuf_cat (struct pbuf * h, struct pbuf * t)
 
 pbuf_ref (struct pbuf * p)
 {
+  sys_prot_t old_level;
   unsigned char _1;
   unsigned char _2;
   unsigned char _3;
@@ -1983,11 +1984,14 @@ pbuf_ref (struct pbuf * p)
   # DEBUG BEGIN_STMT
   # DEBUG BEGIN_STMT
   # DEBUG BEGIN_STMT
+  old_level_9 = sys_arch_protect ();
+  # DEBUG old_level => old_level_9
   # DEBUG BEGIN_STMT
   _1 = p_6(D)->ref;
   _2 = _1 + 1;
   p_6(D)->ref = _2;
   # DEBUG BEGIN_STMT
+  sys_arch_unprotect (old_level_9);
   # DEBUG BEGIN_STMT
   # DEBUG BEGIN_STMT
   # DEBUG BEGIN_STMT
@@ -2055,6 +2059,7 @@ pbuf_clen (const struct pbuf * p)
 pbuf_free (struct pbuf * p)
 {
   struct pbuf_custom * pc;
+  sys_prot_t old_level;
   u8_t ref;
   u8_t count;
   struct pbuf * q;
@@ -2071,7 +2076,7 @@ pbuf_free (struct pbuf * p)
   unsigned char count.0_10;
   u8_t _13;
   u8_t _24;
-  u8_t _40;
+  u8_t _43;
 
   <bb 2> :
   # DEBUG BEGIN_STMT
@@ -2103,7 +2108,7 @@ pbuf_free (struct pbuf * p)
   # DEBUG BEGIN_STMT
   # DEBUG BEGIN_STMT
   # DEBUG BEGIN_STMT
-  _40 = 0;
+  _43 = 0;
   // predicted unlikely by early return (on trees) predictor.
   goto <bb 25>; [INV]
 
@@ -2120,6 +2125,8 @@ pbuf_free (struct pbuf * p)
   # DEBUG BEGIN_STMT
   # DEBUG BEGIN_STMT
   # DEBUG BEGIN_STMT
+  old_level_26 = sys_arch_protect ();
+  # DEBUG old_level => old_level_26
   # DEBUG BEGIN_STMT
   # DEBUG BEGIN_STMT
   _1 = p_11->ref;
@@ -2142,24 +2149,25 @@ pbuf_free (struct pbuf * p)
   _2 = p_11->ref;
   _3 = _2 + 255;
   p_11->ref = _3;
-  ref_26 = p_11->ref;
-  # DEBUG ref => ref_26
+  ref_28 = p_11->ref;
+  # DEBUG ref => ref_28
   # DEBUG BEGIN_STMT
+  sys_arch_unprotect (old_level_26);
   # DEBUG BEGIN_STMT
-  if (ref_26 == 0)
+  if (ref_28 == 0)
     goto <bb 10>; [INV]
   else
     goto <bb 22>; [INV]
 
   <bb 10> :
   # DEBUG BEGIN_STMT
-  q_28 = p_11->next;
-  # DEBUG q => q_28
+  q_31 = p_11->next;
+  # DEBUG q => q_31
   # DEBUG BEGIN_STMT
   # DEBUG BEGIN_STMT
   _4 = p_11->type_internal;
-  alloc_src_29 = _4 & 15;
-  # DEBUG alloc_src => alloc_src_29
+  alloc_src_32 = _4 & 15;
+  # DEBUG alloc_src => alloc_src_32
   # DEBUG BEGIN_STMT
   _5 = p_11->flags;
   _6 = (unsigned int) _5;
@@ -2171,11 +2179,11 @@ pbuf_free (struct pbuf * p)
 
   <bb 11> :
   # DEBUG BEGIN_STMT
-  pc_34 = p_11;
-  # DEBUG pc => pc_34
+  pc_37 = p_11;
+  # DEBUG pc => pc_37
   # DEBUG BEGIN_STMT
   # DEBUG BEGIN_STMT
-  _8 = pc_34->custom_free_function;
+  _8 = pc_37->custom_free_function;
   if (_8 == 0B)
     goto <bb 12>; [INV]
   else
@@ -2192,13 +2200,13 @@ pbuf_free (struct pbuf * p)
   <bb 13> :
   # DEBUG BEGIN_STMT
   # DEBUG BEGIN_STMT
-  _9 = pc_34->custom_free_function;
+  _9 = pc_37->custom_free_function;
   _9 (p_11);
   goto <bb 21>; [INV]
 
   <bb 14> :
   # DEBUG BEGIN_STMT
-  if (alloc_src_29 == 2)
+  if (alloc_src_32 == 2)
     goto <bb 15>; [INV]
   else
     goto <bb 16>; [INV]
@@ -2210,7 +2218,7 @@ pbuf_free (struct pbuf * p)
 
   <bb 16> :
   # DEBUG BEGIN_STMT
-  if (alloc_src_29 == 1)
+  if (alloc_src_32 == 1)
     goto <bb 17>; [INV]
   else
     goto <bb 18>; [INV]
@@ -2222,7 +2230,7 @@ pbuf_free (struct pbuf * p)
 
   <bb 18> :
   # DEBUG BEGIN_STMT
-  if (alloc_src_29 == 0)
+  if (alloc_src_32 == 0)
     goto <bb 19>; [INV]
   else
     goto <bb 20>; [INV]
@@ -2244,22 +2252,22 @@ pbuf_free (struct pbuf * p)
   # DEBUG BEGIN_STMT
   # DEBUG BEGIN_STMT
   count.0_10 = count_12;
-  count_37 = count.0_10 + 1;
-  # DEBUG count => count_37
+  count_40 = count.0_10 + 1;
+  # DEBUG count => count_40
   # DEBUG BEGIN_STMT
-  p_38 = q_28;
-  # DEBUG p => p_38
+  p_41 = q_31;
+  # DEBUG p => p_41
   goto <bb 23>; [INV]
 
   <bb 22> :
   # DEBUG BEGIN_STMT
   # DEBUG BEGIN_STMT
-  p_27 = 0B;
-  # DEBUG p => p_27
+  p_30 = 0B;
+  # DEBUG p => p_30
 
   <bb 23> :
-  # p_11 = PHI <p_21(D)(6), p_38(21), p_27(22)>
-  # count_12 = PHI <count_22(6), count_37(21), count_12(22)>
+  # p_11 = PHI <p_21(D)(6), p_41(21), p_30(22)>
+  # count_12 = PHI <count_22(6), count_40(21), count_12(22)>
   # DEBUG count => count_12
   # DEBUG p => p_11
   # DEBUG BEGIN_STMT
@@ -2274,7 +2282,7 @@ pbuf_free (struct pbuf * p)
   _24 = count_12;
 
   <bb 25> :
-  # _13 = PHI <_40(5), _24(24)>
+  # _13 = PHI <_43(5), _24(24)>
   return _13;
 
 }

@@ -4,13 +4,17 @@ Determining dynamic type for call: a_10 = pbuf_get_at (q_9, _8);
   Starting walk at: a_10 = pbuf_get_at (q_9, _8);
   instance pointer: q_9  Outer instance pointer: q_9 offset: 0 (bits) vtbl reference: 
   Function call may change dynamic type:a_10 = pbuf_get_at (q_9, _8);
-Determining dynamic type for call: _9 (p_1);
-  Starting walk at: _9 (p_1);
-  instance pointer: p_1  Outer instance pointer: p_1 offset: 0 (bits) vtbl reference: 
-  Function call may change dynamic type:_9 (p_1);
-  Function call may change dynamic type:memp_free (14, p_1);
-  Function call may change dynamic type:memp_free (13, p_1);
-  Function call may change dynamic type:mem_free (p_1);
+Determining dynamic type for call: _10 (p_2);
+  Starting walk at: _10 (p_2);
+  instance pointer: p_2  Outer instance pointer: p_2 offset: 0 (bits) vtbl reference: 
+  Function call may change dynamic type:sys_arch_unprotect (old_level_1);
+  Function call may change dynamic type:old_level_1 = sys_arch_protect ();
+  Function call may change dynamic type:_10 (p_2);
+  Function call may change dynamic type:sys_arch_unprotect (old_level_1);
+  Function call may change dynamic type:old_level_1 = sys_arch_protect ();
+  Function call may change dynamic type:memp_free (14, p_2);
+  Function call may change dynamic type:memp_free (13, p_2);
+  Function call may change dynamic type:mem_free (p_2);
 Determining dynamic type for call: _6 = pbuf_remove_header (p_5(D), _4);
   Starting walk at: _6 = pbuf_remove_header (p_5(D), _4);
   instance pointer: p_5(D)  Outer instance pointer: p_5(D) offset: 0 (bits) vtbl reference: 
@@ -131,6 +135,9 @@ Determining dynamic type for call: pbuf_cat.part.0 (h_4(D), t_5(D));
 Determining dynamic type for call: pbuf_cat.part.0 (h_4(D), t_5(D));
   Starting walk at: pbuf_cat.part.0 (h_4(D), t_5(D));
   instance pointer: t_5(D)  Outer instance pointer: t_5(D) offset: 0 (bits) vtbl reference: 
+Determining dynamic type for call: pbuf_ref.part.0 (p_1(D));
+  Starting walk at: pbuf_ref.part.0 (p_1(D));
+  instance pointer: p_1(D)  Outer instance pointer: p_1(D) offset: 0 (bits) vtbl reference: 
 Determining dynamic type for call: count_1 = pbuf_free.part.0 (p_7(D));
   Starting walk at: count_1 = pbuf_free.part.0 (p_7(D));
   instance pointer: p_7(D)  Outer instance pointer: p_7(D) offset: 0 (bits) vtbl reference: 
@@ -185,36 +192,39 @@ Determining dynamic type for call: p_51 = pbuf_alloc_reference (0B, length_39(D)
 IPA structures before propagation:
 
 Jump functions:
-  Jump functions of caller  pbuf_memcmp.part.0/55:
-    callsite  pbuf_memcmp.part.0/55 -> pbuf_get_at/30 : 
+  Jump functions of caller  pbuf_memcmp.part.0/58:
+    callsite  pbuf_memcmp.part.0/58 -> pbuf_get_at/30 : 
        param 0: UNKNOWN
          value: 0x0, mask: 0xffffffff
          Unknown VR
        param 1: UNKNOWN
          value: 0x0, mask: 0xffff
          Unknown VR
-  Jump functions of caller  pbuf_copy_partial.part.0/52:
-  Jump functions of caller  pbuf_cat.part.0/51:
-  Jump functions of caller  pbuf_free.part.0/49:
-    indirect simple callsite, calling param -1, offset 0, for stmt _9 (p_1);
+  Jump functions of caller  pbuf_copy_partial.part.0/55:
+  Jump functions of caller  pbuf_cat.part.0/54:
+  Jump functions of caller  pbuf_ref.part.0/53:
+  Jump functions of caller  pbuf_free.part.0/51:
+    indirect simple callsite, calling param -1, offset 0, for stmt _10 (p_2);
        param 0: UNKNOWN
          value: 0x0, mask: 0xffffffff
          Unknown VR
-  Jump functions of caller  pbuf_header_impl.part.0/48:
-    callsite  pbuf_header_impl.part.0/48 -> pbuf_remove_header/9 : 
+  Jump functions of caller  pbuf_header_impl.part.0/50:
+    callsite  pbuf_header_impl.part.0/50 -> pbuf_remove_header/9 : 
        param 0: PASS THROUGH: 0, op nop_expr, agg_preserved
          value: 0x0, mask: 0xffffffff
          Unknown VR
        param 1: UNKNOWN
          value: 0x0, mask: 0xffff
          VR  [1, 32768]
-  Jump functions of caller  pbuf_remove_header.part.0/47:
-  Jump functions of caller  pbuf_alloc_reference.part.0/45:
-  Jump functions of caller  pbuf_add_header_impl.part.0/43:
-  Jump functions of caller  strlen/42:
-  Jump functions of caller  memcpy/41:
-  Jump functions of caller  mem_free/40:
-  Jump functions of caller  memp_free/39:
+  Jump functions of caller  pbuf_remove_header.part.0/49:
+  Jump functions of caller  pbuf_alloc_reference.part.0/47:
+  Jump functions of caller  pbuf_add_header_impl.part.0/45:
+  Jump functions of caller  strlen/44:
+  Jump functions of caller  memcpy/43:
+  Jump functions of caller  mem_free/42:
+  Jump functions of caller  memp_free/41:
+  Jump functions of caller  sys_arch_unprotect/40:
+  Jump functions of caller  sys_arch_protect/39:
   Jump functions of caller  mem_trim/38:
   Jump functions of caller  mem_malloc/37:
   Jump functions of caller  memp_malloc/36:
@@ -247,7 +257,7 @@ Jump functions:
          value: 0x0, mask: 0xffff
          Unknown VR
   Jump functions of caller  pbuf_memcmp/33:
-    callsite  pbuf_memcmp/33 -> pbuf_memcmp.part.0/55 : 
+    callsite  pbuf_memcmp/33 -> pbuf_memcmp.part.0/58 : 
        param 0: PASS THROUGH: 0, op nop_expr, agg_preserved
          value: 0x0, mask: 0xffffffff
          Unknown VR
@@ -382,7 +392,7 @@ Jump functions:
          value: 0x0, mask: 0xfffffffe
          VR  ~[0, 0]
   Jump functions of caller  pbuf_copy_partial/22:
-    callsite  pbuf_copy_partial/22 -> pbuf_copy_partial.part.0/52 : 
+    callsite  pbuf_copy_partial/22 -> pbuf_copy_partial.part.0/55 : 
        param 0: PASS THROUGH: 0, op nop_expr, agg_preserved
          value: 0x0, mask: 0xffffffff
          Unknown VR
@@ -428,7 +438,7 @@ Jump functions:
          value: 0x0, mask: 0xffffffff
          Unknown VR
   Jump functions of caller  pbuf_cat/17:
-    callsite  pbuf_cat/17 -> pbuf_cat.part.0/51 : 
+    callsite  pbuf_cat/17 -> pbuf_cat.part.0/54 : 
        param 0: PASS THROUGH: 0, op nop_expr, agg_preserved
          value: 0x0, mask: 0xffffffff
          Unknown VR
@@ -436,9 +446,13 @@ Jump functions:
          value: 0x0, mask: 0xffffffff
          Unknown VR
   Jump functions of caller  pbuf_ref/16:
+    callsite  pbuf_ref/16 -> pbuf_ref.part.0/53 : 
+       param 0: PASS THROUGH: 0, op nop_expr, agg_preserved
+         value: 0x0, mask: 0xffffffff
+         Unknown VR
   Jump functions of caller  pbuf_clen/15:
   Jump functions of caller  pbuf_free/14:
-    callsite  pbuf_free/14 -> pbuf_free.part.0/49 : 
+    callsite  pbuf_free/14 -> pbuf_free.part.0/51 : 
        param 0: PASS THROUGH: 0, op nop_expr, agg_preserved
          value: 0x0, mask: 0xffffffff
          Unknown VR
@@ -489,7 +503,7 @@ Jump functions:
        param 2: PASS THROUGH: 2, op nop_expr
          value: 0x0, mask: 0xff
          Unknown VR
-    callsite  pbuf_header_impl/10 -> pbuf_header_impl.part.0/48 : 
+    callsite  pbuf_header_impl/10 -> pbuf_header_impl.part.0/50 : 
        param 0: PASS THROUGH: 0, op nop_expr, agg_preserved
          value: 0x0, mask: 0xffffffff
          Unknown VR
@@ -497,7 +511,7 @@ Jump functions:
          value: 0x0, mask: 0xffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff
          Unknown VR
   Jump functions of caller  pbuf_remove_header/9:
-    callsite  pbuf_remove_header/9 -> pbuf_remove_header.part.0/47 : 
+    callsite  pbuf_remove_header/9 -> pbuf_remove_header.part.0/49 : 
        param 0: PASS THROUGH: 0, op nop_expr, agg_preserved
          value: 0x0, mask: 0xffffffff
          Unknown VR
@@ -527,7 +541,7 @@ Jump functions:
          value: 0x0, mask: 0x0
          Unknown VR
   Jump functions of caller  pbuf_add_header_impl/6:
-    callsite  pbuf_add_header_impl/6 -> pbuf_add_header_impl.part.0/43 : 
+    callsite  pbuf_add_header_impl/6 -> pbuf_add_header_impl.part.0/45 : 
        param 0: PASS THROUGH: 0, op nop_expr, agg_preserved
          value: 0x0, mask: 0xffffffff
          Unknown VR
@@ -544,7 +558,7 @@ Jump functions:
          Unknown VR
   Jump functions of caller  pbuf_alloced_custom/4:
   Jump functions of caller  pbuf_alloc_reference/3:
-    callsite  pbuf_alloc_reference/3 -> pbuf_alloc_reference.part.0/45 : 
+    callsite  pbuf_alloc_reference/3 -> pbuf_alloc_reference.part.0/47 : 
        param 0: PASS THROUGH: 0, op nop_expr, agg_preserved
          value: 0x0, mask: 0xffffffff
          Unknown VR
@@ -604,12 +618,12 @@ Not considering pbuf_alloced_custom for cloning; -fipa-cp-clone disabled.
 Not considering pbuf_alloc_reference for cloning; -fipa-cp-clone disabled.
 Not considering pbuf_alloc for cloning; -fipa-cp-clone disabled.
 
-overall_size: 869, max_new_size: 11001
+overall_size: 883, max_new_size: 11001
 
 IPA lattices after all propagation:
 
 Lattices:
-  Node: pbuf_memcmp.part.0/55:
+  Node: pbuf_memcmp.part.0/58:
     param [0]: VARIABLE
          ctxs: VARIABLE
          Bits unusable (BOTTOM)
@@ -630,7 +644,7 @@ Lattices:
          Bits unusable (BOTTOM)
          VARYING
         AGGS VARIABLE
-  Node: pbuf_copy_partial.part.0/52:
+  Node: pbuf_copy_partial.part.0/55:
     param [0]: VARIABLE
          ctxs: VARIABLE
          Bits unusable (BOTTOM)
@@ -651,7 +665,7 @@ Lattices:
          Bits unusable (BOTTOM)
          VARYING
         AGGS VARIABLE
-  Node: pbuf_cat.part.0/51:
+  Node: pbuf_cat.part.0/54:
     param [0]: VARIABLE
          ctxs: VARIABLE
          Bits unusable (BOTTOM)
@@ -662,13 +676,19 @@ Lattices:
          Bits unusable (BOTTOM)
          VARYING
         AGGS VARIABLE
-  Node: pbuf_free.part.0/49:
+  Node: pbuf_ref.part.0/53:
     param [0]: VARIABLE
          ctxs: VARIABLE
          Bits unusable (BOTTOM)
          VARYING
         AGGS VARIABLE
-  Node: pbuf_header_impl.part.0/48:
+  Node: pbuf_free.part.0/51:
+    param [0]: VARIABLE
+         ctxs: VARIABLE
+         Bits unusable (BOTTOM)
+         VARYING
+        AGGS VARIABLE
+  Node: pbuf_header_impl.part.0/50:
     param [0]: VARIABLE
          ctxs: VARIABLE
          Bits unusable (BOTTOM)
@@ -679,7 +699,7 @@ Lattices:
          Bits unusable (BOTTOM)
          VARYING
         AGGS VARIABLE
-  Node: pbuf_remove_header.part.0/47:
+  Node: pbuf_remove_header.part.0/49:
     param [0]: VARIABLE
          ctxs: VARIABLE
          Bits unusable (BOTTOM)
@@ -690,7 +710,7 @@ Lattices:
          Bits unusable (BOTTOM)
          VARYING
         AGGS VARIABLE
-  Node: pbuf_alloc_reference.part.0/45:
+  Node: pbuf_alloc_reference.part.0/47:
     param [0]: VARIABLE
          ctxs: VARIABLE
          Bits unusable (BOTTOM)
@@ -706,7 +726,7 @@ Lattices:
          Bits unusable (BOTTOM)
          VARYING
         AGGS VARIABLE
-  Node: pbuf_add_header_impl.part.0/43:
+  Node: pbuf_add_header_impl.part.0/45:
     param [0]: VARIABLE
          ctxs: VARIABLE
          Bits unusable (BOTTOM)
@@ -1212,7 +1232,7 @@ Lattices:
 
 IPA decision stage:
 
-Propagated bits info for function pbuf_add_header_impl.part.0/43:
+Propagated bits info for function pbuf_add_header_impl.part.0/45:
  param 2: value = 0x1, mask = 0x1
 Propagated bits info for function pbuf_header_impl/10:
  param 2: value = 0x1, mask = 0x1
@@ -1226,7 +1246,7 @@ Reclaiming variables:
 Clearing address taken flags:
 Symbol table:
 
-pbuf_memcmp.part.0/55 (pbuf_memcmp.part.0) @063bdc40
+pbuf_memcmp.part.0/58 (pbuf_memcmp.part.0) @062ebb60
   Type: function definition analyzed
   Visibility: prevailing_def_ironly artificial
   References: 
@@ -1235,7 +1255,7 @@ pbuf_memcmp.part.0/55 (pbuf_memcmp.part.0) @063bdc40
   Function flags: count:114863532 (estimated locally) first_run:1 body local split_part optimize_size
   Called by: pbuf_memcmp/33 (114863532 (estimated locally),0.78 per call) 
   Calls: pbuf_get_at/30 (1014686020 (estimated locally),8.83 per call) 
-pbuf_copy_partial.part.0/52 (pbuf_copy_partial.part.0) @061b4000
+pbuf_copy_partial.part.0/55 (pbuf_copy_partial.part.0) @062eb0e0
   Type: function definition analyzed
   Visibility: prevailing_def_ironly artificial
   References: 
@@ -1243,8 +1263,8 @@ pbuf_copy_partial.part.0/52 (pbuf_copy_partial.part.0) @061b4000
   Availability: local
   Function flags: count:114863532 (estimated locally) first_run:1 body local split_part optimize_size
   Called by: pbuf_copy_partial/22 (114863532 (estimated locally),0.67 per call) 
-  Calls: memcpy/41 (637654064 (estimated locally),5.55 per call) 
-pbuf_cat.part.0/51 (pbuf_cat.part.0) @063bd1c0
+  Calls: memcpy/43 (637654064 (estimated locally),5.55 per call) 
+pbuf_cat.part.0/54 (pbuf_cat.part.0) @060bda80
   Type: function definition analyzed
   Visibility: prevailing_def_ironly artificial
   References: 
@@ -1253,7 +1273,16 @@ pbuf_cat.part.0/51 (pbuf_cat.part.0) @063bd1c0
   Function flags: count:162688 (estimated locally) first_run:1 body local split_part optimize_size
   Called by: pbuf_cat/17 (162688 (estimated locally),0.67 per call) 
   Calls: 
-pbuf_free.part.0/49 (pbuf_free.part.0) @063acc40
+pbuf_ref.part.0/53 (pbuf_ref.part.0) @062caa80
+  Type: function definition analyzed
+  Visibility: prevailing_def_ironly artificial
+  References: 
+  Referring: 
+  Availability: local
+  Function flags: count:214748 (estimated locally) first_run:1 body local split_part optimize_size
+  Called by: pbuf_ref/16 (214748 (estimated locally),0.53 per call) 
+  Calls: sys_arch_protect/39 (214748 (estimated locally),1.00 per call) sys_arch_unprotect/40 (214748 (estimated locally),1.00 per call) 
+pbuf_free.part.0/51 (pbuf_free.part.0) @062ca2a0
   Type: function definition analyzed
   Visibility: prevailing_def_ironly artificial
   References: 
@@ -1261,9 +1290,9 @@ pbuf_free.part.0/49 (pbuf_free.part.0) @063acc40
   Availability: local
   Function flags: count:406193 (estimated locally) first_run:1 body local split_part optimize_size
   Called by: pbuf_free/14 (250539 (estimated locally),0.70 per call) 
-  Calls: memp_free/39 (472427 (estimated locally),1.16 per call) memp_free/39 (376808 (estimated locally),0.93 per call) mem_free/40 (1452223 (estimated locally),3.58 per call) 
+  Calls: sys_arch_protect/39 (4880636 (estimated locally),12.02 per call) sys_arch_unprotect/40 (4773262 (estimated locally),11.75 per call) memp_free/41 (472427 (estimated locally),1.16 per call) memp_free/41 (376808 (estimated locally),0.93 per call) mem_free/42 (1452223 (estimated locally),3.58 per call) 
    Indirect call(2282775 (estimated locally),5.62 per call) 
-pbuf_header_impl.part.0/48 (pbuf_header_impl.part.0) @063acee0
+pbuf_header_impl.part.0/50 (pbuf_header_impl.part.0) @061b99a0
   Type: function definition analyzed
   Visibility: prevailing_def_ironly artificial
   References: 
@@ -1272,7 +1301,7 @@ pbuf_header_impl.part.0/48 (pbuf_header_impl.part.0) @063acee0
   Function flags: count:1073741824 (estimated locally) first_run:1 body local split_part optimize_size
   Called by: pbuf_header_impl/10 (440234144 (estimated locally),0.41 per call) 
   Calls: pbuf_remove_header/9 (1073741824 (estimated locally),1.00 per call) 
-pbuf_remove_header.part.0/47 (pbuf_remove_header.part.0) @063ac540
+pbuf_remove_header.part.0/49 (pbuf_remove_header.part.0) @061b90e0
   Type: function definition analyzed
   Visibility: prevailing_def_ironly artificial
   References: 
@@ -1281,7 +1310,7 @@ pbuf_remove_header.part.0/47 (pbuf_remove_header.part.0) @063ac540
   Function flags: count:1073741824 (estimated locally) first_run:1 body local split_part optimize_size
   Called by: pbuf_remove_header/9 (109135 (estimated locally),0.30 per call) 
   Calls: 
-pbuf_alloc_reference.part.0/45 (pbuf_alloc_reference.part.0) @06299e00
+pbuf_alloc_reference.part.0/47 (pbuf_alloc_reference.part.0) @061b98c0
   Type: function definition analyzed
   Visibility: prevailing_def_ironly artificial
   References: 
@@ -1290,7 +1319,7 @@ pbuf_alloc_reference.part.0/45 (pbuf_alloc_reference.part.0) @06299e00
   Function flags: count:1073741824 (estimated locally) first_run:1 body local split_part optimize_size
   Called by: pbuf_alloc_reference/3 (96598 (estimated locally),0.47 per call) 
   Calls: memp_malloc/36 (1073741824 (estimated locally),1.00 per call) 
-pbuf_add_header_impl.part.0/43 (pbuf_add_header_impl.part.0) @0603b8c0
+pbuf_add_header_impl.part.0/45 (pbuf_add_header_impl.part.0) @05f228c0
   Type: function definition analyzed
   Visibility: prevailing_def_ironly artificial
   References: 
@@ -1299,7 +1328,7 @@ pbuf_add_header_impl.part.0/43 (pbuf_add_header_impl.part.0) @0603b8c0
   Function flags: count:1073741823 (estimated locally) first_run:1 body local split_part optimize_size
   Called by: pbuf_add_header_impl/6 (109135 (estimated locally),0.30 per call) 
   Calls: 
-strlen/42 (strlen) @062718c0
+strlen/44 (strlen) @06184c40
   Type: function
   Visibility: external public
   References: 
@@ -1308,34 +1337,52 @@ strlen/42 (strlen) @062718c0
   Function flags: optimize_size
   Called by: pbuf_strstr/35 (657280122 (estimated locally),0.61 per call) 
   Calls: 
-memcpy/41 (memcpy) @06253a80
+memcpy/43 (memcpy) @06168e00
   Type: function
   Visibility: external public
   References: 
   Referring: 
   Availability: not_available
   Function flags: optimize_size
-  Called by: pbuf_take_at/27 (107374 (estimated locally),0.49 per call) pbuf_take/26 (1844881 (estimated locally),8.19 per call) pbuf_copy_partial.part.0/52 (637654064 (estimated locally),5.55 per call) pbuf_copy_partial_pbuf/21 (5368700 (estimated locally),13.40 per call) 
+  Called by: pbuf_take_at/27 (107374 (estimated locally),0.49 per call) pbuf_take/26 (1844881 (estimated locally),8.19 per call) pbuf_copy_partial.part.0/55 (637654064 (estimated locally),5.55 per call) pbuf_copy_partial_pbuf/21 (5368700 (estimated locally),13.40 per call) 
   Calls: 
-mem_free/40 (mem_free) @062531c0
+mem_free/42 (mem_free) @06168540
   Type: function
   Visibility: external public
   References: 
   Referring: 
   Availability: not_available
   Function flags: optimize_size
-  Called by: pbuf_free.part.0/49 (1452223 (estimated locally),3.58 per call) 
+  Called by: pbuf_free.part.0/51 (1452223 (estimated locally),3.58 per call) 
   Calls: 
-memp_free/39 (memp_free) @062530e0
+memp_free/41 (memp_free) @06168460
   Type: function
   Visibility: external public
   References: 
   Referring: 
   Availability: not_available
   Function flags: optimize_size
-  Called by: pbuf_free.part.0/49 (472427 (estimated locally),1.16 per call) pbuf_free.part.0/49 (376808 (estimated locally),0.93 per call) 
+  Called by: pbuf_free.part.0/51 (472427 (estimated locally),1.16 per call) pbuf_free.part.0/51 (376808 (estimated locally),0.93 per call) 
   Calls: 
-mem_trim/38 (mem_trim) @0621c620
+sys_arch_unprotect/40 (sys_arch_unprotect) @06168380
+  Type: function
+  Visibility: external public
+  References: 
+  Referring: 
+  Availability: not_available
+  Function flags: optimize_size
+  Called by: pbuf_ref.part.0/53 (214748 (estimated locally),1.00 per call) pbuf_free.part.0/51 (4773262 (estimated locally),11.75 per call) 
+  Calls: 
+sys_arch_protect/39 (sys_arch_protect) @061682a0
+  Type: function
+  Visibility: external public
+  References: 
+  Referring: 
+  Availability: not_available
+  Function flags: optimize_size
+  Called by: pbuf_ref.part.0/53 (214748 (estimated locally),1.00 per call) pbuf_free.part.0/51 (4880636 (estimated locally),12.02 per call) 
+  Calls: 
+mem_trim/38 (mem_trim) @061337e0
   Type: function
   Visibility: external public
   References: 
@@ -1344,7 +1391,7 @@ mem_trim/38 (mem_trim) @0621c620
   Function flags: optimize_size
   Called by: pbuf_realloc/5 (9258 (estimated locally),0.03 per call) 
   Calls: 
-mem_malloc/37 (mem_malloc) @0621c0e0
+mem_malloc/37 (mem_malloc) @061332a0
   Type: function
   Visibility: external public
   References: 
@@ -1353,16 +1400,16 @@ mem_malloc/37 (mem_malloc) @0621c0e0
   Function flags: optimize_size
   Called by: pbuf_alloc/2 (62161 (estimated locally),0.14 per call) 
   Calls: 
-memp_malloc/36 (memp_malloc) @0621c000
+memp_malloc/36 (memp_malloc) @061331c0
   Type: function
   Visibility: external public
   References: 
   Referring: 
   Availability: not_available
   Function flags: optimize_size
-  Called by: pbuf_alloc/2 (1003730 (estimated locally),2.34 per call) pbuf_alloc_reference.part.0/45 (1073741824 (estimated locally),1.00 per call) 
+  Called by: pbuf_alloc/2 (1003730 (estimated locally),2.34 per call) pbuf_alloc_reference.part.0/47 (1073741824 (estimated locally),1.00 per call) 
   Calls: 
-pbuf_strstr/35 (pbuf_strstr) @061fbee0
+pbuf_strstr/35 (pbuf_strstr) @06110460
   Type: function definition analyzed
   Visibility: externally_visible public
   References: 
@@ -1370,8 +1417,8 @@ pbuf_strstr/35 (pbuf_strstr) @061fbee0
   Availability: available
   Function flags: count:1073741824 (estimated locally) body optimize_size
   Called by: 
-  Calls: pbuf_memfind/34 (420462094 (estimated locally),0.39 per call) strlen/42 (657280122 (estimated locally),0.61 per call) 
-pbuf_memfind/34 (pbuf_memfind) @061fbc40
+  Calls: pbuf_memfind/34 (420462094 (estimated locally),0.39 per call) strlen/44 (657280122 (estimated locally),0.61 per call) 
+pbuf_memfind/34 (pbuf_memfind) @06110e00
   Type: function definition analyzed
   Visibility: externally_visible public
   References: 
@@ -1380,7 +1427,7 @@ pbuf_memfind/34 (pbuf_memfind) @061fbc40
   Function flags: count:176713126 (estimated locally) body optimize_size
   Called by: pbuf_strstr/35 (420462094 (estimated locally),0.39 per call) 
   Calls: pbuf_memcmp/33 (1014686024 (estimated locally),5.74 per call) 
-pbuf_memcmp/33 (pbuf_memcmp) @061fb9a0
+pbuf_memcmp/33 (pbuf_memcmp) @06110b60
   Type: function definition analyzed
   Visibility: externally_visible public
   References: 
@@ -1388,8 +1435,8 @@ pbuf_memcmp/33 (pbuf_memcmp) @061fb9a0
   Availability: available
   Function flags: count:146734200 (estimated locally) body optimize_size
   Called by: pbuf_memfind/34 (1014686024 (estimated locally),5.74 per call) 
-  Calls: pbuf_memcmp.part.0/55 (114863532 (estimated locally),0.78 per call) 
-pbuf_put_at/32 (pbuf_put_at) @061fb700
+  Calls: pbuf_memcmp.part.0/58 (114863532 (estimated locally),0.78 per call) 
+pbuf_put_at/32 (pbuf_put_at) @061108c0
   Type: function definition analyzed
   Visibility: externally_visible public
   References: 
@@ -1398,7 +1445,7 @@ pbuf_put_at/32 (pbuf_put_at) @061fb700
   Function flags: count:1073741823 (estimated locally) body optimize_size
   Called by: 
   Calls: pbuf_skip_const/24 (1073741823 (estimated locally),1.00 per call) 
-pbuf_try_get_at/31 (pbuf_try_get_at) @061fb460
+pbuf_try_get_at/31 (pbuf_try_get_at) @06110620
   Type: function definition analyzed
   Visibility: externally_visible public
   References: 
@@ -1407,16 +1454,16 @@ pbuf_try_get_at/31 (pbuf_try_get_at) @061fb460
   Function flags: count:1073741824 (estimated locally) body optimize_size
   Called by: pbuf_get_at/30 (1073741824 (estimated locally),1.00 per call) 
   Calls: pbuf_skip_const/24 (1073741824 (estimated locally),1.00 per call) 
-pbuf_get_at/30 (pbuf_get_at) @061fb1c0
+pbuf_get_at/30 (pbuf_get_at) @06110380
   Type: function definition analyzed
   Visibility: externally_visible public
   References: 
   Referring: 
   Availability: available
   Function flags: count:1073741824 (estimated locally) body optimize_size
-  Called by: pbuf_memcmp.part.0/55 (1014686020 (estimated locally),8.83 per call) 
+  Called by: pbuf_memcmp.part.0/58 (1014686020 (estimated locally),8.83 per call) 
   Calls: pbuf_try_get_at/31 (1073741824 (estimated locally),1.00 per call) 
-pbuf_clone/29 (pbuf_clone) @061eec40
+pbuf_clone/29 (pbuf_clone) @061100e0
   Type: function definition analyzed
   Visibility: externally_visible public
   References: 
@@ -1425,7 +1472,7 @@ pbuf_clone/29 (pbuf_clone) @061eec40
   Function flags: count:254049 (estimated locally) body optimize_size
   Called by: pbuf_coalesce/28 (741418730 (estimated locally),0.69 per call) 
   Calls: pbuf_copy/20 (214748 (estimated locally),0.85 per call) pbuf_alloc/2 (254049 (estimated locally),1.00 per call) 
-pbuf_coalesce/28 (pbuf_coalesce) @061ee2a0
+pbuf_coalesce/28 (pbuf_coalesce) @06102b60
   Type: function definition analyzed
   Visibility: externally_visible public
   References: 
@@ -1434,7 +1481,7 @@ pbuf_coalesce/28 (pbuf_coalesce) @061ee2a0
   Function flags: count:1073741824 (estimated locally) body optimize_size
   Called by: 
   Calls: pbuf_free/14 (511949632 (estimated locally),0.48 per call) pbuf_clone/29 (741418730 (estimated locally),0.69 per call) 
-pbuf_take_at/27 (pbuf_take_at) @061eeee0
+pbuf_take_at/27 (pbuf_take_at) @06102540
   Type: function definition analyzed
   Visibility: externally_visible public
   References: 
@@ -1442,8 +1489,8 @@ pbuf_take_at/27 (pbuf_take_at) @061eeee0
   Availability: available
   Function flags: count:221054 (estimated locally) body optimize_size
   Called by: 
-  Calls: pbuf_take/26 (35433 (estimated locally),0.16 per call) memcpy/41 (107374 (estimated locally),0.49 per call) pbuf_skip_const/24 (221054 (estimated locally),1.00 per call) 
-pbuf_take/26 (pbuf_take) @061eeb60
+  Calls: pbuf_take/26 (35433 (estimated locally),0.16 per call) memcpy/43 (107374 (estimated locally),0.49 per call) pbuf_skip_const/24 (221054 (estimated locally),1.00 per call) 
+pbuf_take/26 (pbuf_take) @06102e00
   Type: function definition analyzed
   Visibility: externally_visible public
   References: 
@@ -1451,8 +1498,8 @@ pbuf_take/26 (pbuf_take) @061eeb60
   Availability: available
   Function flags: count:225343 (estimated locally) body optimize_size
   Called by: pbuf_take_at/27 (35433 (estimated locally),0.16 per call) 
-  Calls: memcpy/41 (1844881 (estimated locally),8.19 per call) 
-pbuf_skip/25 (pbuf_skip) @061ee7e0
+  Calls: memcpy/43 (1844881 (estimated locally),8.19 per call) 
+pbuf_skip/25 (pbuf_skip) @06102a80
   Type: function definition analyzed
   Visibility: externally_visible public
   References: 
@@ -1461,7 +1508,7 @@ pbuf_skip/25 (pbuf_skip) @061ee7e0
   Function flags: count:1073741824 (estimated locally) body optimize_size
   Called by: 
   Calls: pbuf_skip_const/24 (1073741824 (estimated locally),1.00 per call) 
-pbuf_skip_const/24 (pbuf_skip_const) @061ee460
+pbuf_skip_const/24 (pbuf_skip_const) @06102700
   Type: function definition analyzed
   Visibility: prevailing_def_ironly
   References: 
@@ -1470,7 +1517,7 @@ pbuf_skip_const/24 (pbuf_skip_const) @061ee460
   Function flags: count:114863532 (estimated locally) body local optimize_size
   Called by: pbuf_put_at/32 (1073741823 (estimated locally),1.00 per call) pbuf_try_get_at/31 (1073741824 (estimated locally),1.00 per call) pbuf_take_at/27 (221054 (estimated locally),1.00 per call) pbuf_skip/25 (1073741824 (estimated locally),1.00 per call) pbuf_get_contiguous/23 (633074433 (estimated locally),0.59 per call) 
   Calls: 
-pbuf_get_contiguous/23 (pbuf_get_contiguous) @061ee1c0
+pbuf_get_contiguous/23 (pbuf_get_contiguous) @06102460
   Type: function definition analyzed
   Visibility: externally_visible public
   References: 
@@ -1479,7 +1526,7 @@ pbuf_get_contiguous/23 (pbuf_get_contiguous) @061ee1c0
   Function flags: count:1073741824 (estimated locally) body optimize_size
   Called by: 
   Calls: pbuf_copy_partial/22 (263339212 (estimated locally),0.25 per call) pbuf_skip_const/24 (633074433 (estimated locally),0.59 per call) 
-pbuf_copy_partial/22 (pbuf_copy_partial) @061dce00
+pbuf_copy_partial/22 (pbuf_copy_partial) @061021c0
   Type: function definition analyzed
   Visibility: externally_visible public
   References: 
@@ -1487,8 +1534,8 @@ pbuf_copy_partial/22 (pbuf_copy_partial) @061dce00
   Availability: available
   Function flags: count:171201796 (estimated locally) body optimize_size
   Called by: pbuf_get_contiguous/23 (263339212 (estimated locally),0.25 per call) 
-  Calls: pbuf_copy_partial.part.0/52 (114863532 (estimated locally),0.67 per call) 
-pbuf_copy_partial_pbuf/21 (pbuf_copy_partial_pbuf) @061dc8c0
+  Calls: pbuf_copy_partial.part.0/55 (114863532 (estimated locally),0.67 per call) 
+pbuf_copy_partial_pbuf/21 (pbuf_copy_partial_pbuf) @060e9d20
   Type: function definition analyzed
   Visibility: externally_visible public
   References: 
@@ -1496,8 +1543,8 @@ pbuf_copy_partial_pbuf/21 (pbuf_copy_partial_pbuf) @061dc8c0
   Availability: available
   Function flags: count:400722 (estimated locally) body optimize_size
   Called by: pbuf_copy/20 (1063970774 (estimated locally),0.99 per call) 
-  Calls: memcpy/41 (5368700 (estimated locally),13.40 per call) 
-pbuf_copy/20 (pbuf_copy) @061dc0e0
+  Calls: memcpy/43 (5368700 (estimated locally),13.40 per call) 
+pbuf_copy/20 (pbuf_copy) @060e9540
   Type: function definition analyzed
   Visibility: externally_visible public
   References: 
@@ -1506,7 +1553,7 @@ pbuf_copy/20 (pbuf_copy) @061dc0e0
   Function flags: count:1073741824 (estimated locally) body optimize_size
   Called by: pbuf_clone/29 (214748 (estimated locally),0.85 per call) 
   Calls: pbuf_copy_partial_pbuf/21 (1063970774 (estimated locally),0.99 per call) 
-pbuf_dechain/19 (pbuf_dechain) @061dcd20
+pbuf_dechain/19 (pbuf_dechain) @060e9ee0
   Type: function definition analyzed
   Visibility: externally_visible public
   References: 
@@ -1515,7 +1562,7 @@ pbuf_dechain/19 (pbuf_dechain) @061dcd20
   Function flags: count:192316 (estimated locally) body optimize_size
   Called by: 
   Calls: pbuf_free/14 (27247 (estimated locally),0.14 per call) 
-pbuf_chain/18 (pbuf_chain) @061dca80
+pbuf_chain/18 (pbuf_chain) @060e9c40
   Type: function definition analyzed
   Visibility: externally_visible public
   References: 
@@ -1524,7 +1571,7 @@ pbuf_chain/18 (pbuf_chain) @061dca80
   Function flags: count:1073741824 (estimated locally) body optimize_size
   Called by: 
   Calls: pbuf_ref/16 (1073741824 (estimated locally),1.00 per call) pbuf_cat/17 (1073741824 (estimated locally),1.00 per call) 
-pbuf_cat/17 (pbuf_cat) @061dc7e0
+pbuf_cat/17 (pbuf_cat) @060e99a0
   Type: function definition analyzed
   Visibility: externally_visible public
   References: 
@@ -1532,17 +1579,17 @@ pbuf_cat/17 (pbuf_cat) @061dc7e0
   Availability: available
   Function flags: count:242483 (estimated locally) body optimize_size
   Called by: pbuf_chain/18 (1073741824 (estimated locally),1.00 per call) 
-  Calls: pbuf_cat.part.0/51 (162688 (estimated locally),0.67 per call) 
-pbuf_ref/16 (pbuf_ref) @061dc540
+  Calls: pbuf_cat.part.0/54 (162688 (estimated locally),0.67 per call) 
+pbuf_ref/16 (pbuf_ref) @060e9700
   Type: function definition analyzed
   Visibility: externally_visible public
   References: 
   Referring: 
   Availability: available
-  Function flags: count:306783 (estimated locally) body optimize_size
+  Function flags: count:401623 (estimated locally) body optimize_size
   Called by: pbuf_chain/18 (1073741824 (estimated locally),1.00 per call) 
-  Calls: 
-pbuf_clen/15 (pbuf_clen) @061dc2a0
+  Calls: pbuf_ref.part.0/53 (214748 (estimated locally),0.53 per call) 
+pbuf_clen/15 (pbuf_clen) @060e9460
   Type: function definition analyzed
   Visibility: externally_visible public
   References: 
@@ -1551,7 +1598,7 @@ pbuf_clen/15 (pbuf_clen) @061dc2a0
   Function flags: count:118111600 (estimated locally) body optimize_size
   Called by: 
   Calls: 
-pbuf_free/14 (pbuf_free) @061dc000
+pbuf_free/14 (pbuf_free) @060e91c0
   Type: function definition analyzed
   Visibility: externally_visible public
   References: 
@@ -1559,8 +1606,8 @@ pbuf_free/14 (pbuf_free) @061dc000
   Availability: available
   Function flags: count:357913 (estimated locally) body optimize_size
   Called by: pbuf_coalesce/28 (511949632 (estimated locally),0.48 per call) pbuf_dechain/19 (27247 (estimated locally),0.14 per call) pbuf_free_header/13 (960107354 (estimated locally),8.45 per call) pbuf_realloc/5 (43973 (estimated locally),0.12 per call) pbuf_alloc/2 (29518 (estimated locally),0.07 per call) 
-  Calls: pbuf_free.part.0/49 (250539 (estimated locally),0.70 per call) 
-pbuf_free_header/13 (pbuf_free_header) @061d12a0
+  Calls: pbuf_free.part.0/51 (250539 (estimated locally),0.70 per call) 
+pbuf_free_header/13 (pbuf_free_header) @060dec40
   Type: function definition analyzed
   Visibility: externally_visible public
   References: 
@@ -1569,7 +1616,7 @@ pbuf_free_header/13 (pbuf_free_header) @061d12a0
   Function flags: count:113634470 (estimated locally) body optimize_size
   Called by: 
   Calls: pbuf_remove_header/9 (36474911 (estimated locally),0.32 per call) pbuf_free/14 (960107354 (estimated locally),8.45 per call) 
-pbuf_header_force/12 (pbuf_header_force) @061d1ee0
+pbuf_header_force/12 (pbuf_header_force) @060de460
   Type: function definition analyzed
   Visibility: externally_visible public
   References: 
@@ -1578,7 +1625,7 @@ pbuf_header_force/12 (pbuf_header_force) @061d1ee0
   Function flags: count:1073741824 (estimated locally) body optimize_size
   Called by: 
   Calls: pbuf_header_impl/10 (1073741824 (estimated locally),1.00 per call) 
-pbuf_header/11 (pbuf_header) @061d1c40
+pbuf_header/11 (pbuf_header) @060dee00
   Type: function definition analyzed
   Visibility: externally_visible public
   References: 
@@ -1587,7 +1634,7 @@ pbuf_header/11 (pbuf_header) @061d1c40
   Function flags: count:1073741824 (estimated locally) body optimize_size
   Called by: 
   Calls: pbuf_header_impl/10 (1073741824 (estimated locally),1.00 per call) 
-pbuf_header_impl/10 (pbuf_header_impl) @061d19a0
+pbuf_header_impl/10 (pbuf_header_impl) @060deb60
   Type: function definition analyzed
   Visibility: prevailing_def_ironly
   References: 
@@ -1595,17 +1642,17 @@ pbuf_header_impl/10 (pbuf_header_impl) @061d19a0
   Availability: local
   Function flags: count:1073741824 (estimated locally) body local optimize_size
   Called by: pbuf_header_force/12 (1073741824 (estimated locally),1.00 per call) pbuf_header/11 (1073741824 (estimated locally),1.00 per call) 
-  Calls: pbuf_add_header_impl/6 (633507677 (estimated locally),0.59 per call) pbuf_header_impl.part.0/48 (440234144 (estimated locally),0.41 per call) 
-pbuf_remove_header/9 (pbuf_remove_header) @061d1700
+  Calls: pbuf_add_header_impl/6 (633507677 (estimated locally),0.59 per call) pbuf_header_impl.part.0/50 (440234144 (estimated locally),0.41 per call) 
+pbuf_remove_header/9 (pbuf_remove_header) @060de8c0
   Type: function definition analyzed
   Visibility: externally_visible public
   References: 
   Referring: 
   Availability: available
   Function flags: count:357913 (estimated locally) body optimize_size
-  Called by: pbuf_free_header/13 (36474911 (estimated locally),0.32 per call) pbuf_header_impl.part.0/48 (1073741824 (estimated locally),1.00 per call) 
-  Calls: pbuf_remove_header.part.0/47 (109135 (estimated locally),0.30 per call) 
-pbuf_add_header_force/8 (pbuf_add_header_force) @061d1460
+  Called by: pbuf_free_header/13 (36474911 (estimated locally),0.32 per call) pbuf_header_impl.part.0/50 (1073741824 (estimated locally),1.00 per call) 
+  Calls: pbuf_remove_header.part.0/49 (109135 (estimated locally),0.30 per call) 
+pbuf_add_header_force/8 (pbuf_add_header_force) @060de620
   Type: function definition analyzed
   Visibility: externally_visible public
   References: 
@@ -1614,7 +1661,7 @@ pbuf_add_header_force/8 (pbuf_add_header_force) @061d1460
   Function flags: count:1073741824 (estimated locally) body optimize_size
   Called by: 
   Calls: pbuf_add_header_impl/6 (1073741824 (estimated locally),1.00 per call) 
-pbuf_add_header/7 (pbuf_add_header) @061d11c0
+pbuf_add_header/7 (pbuf_add_header) @060de380
   Type: function definition analyzed
   Visibility: externally_visible public
   References: 
@@ -1623,7 +1670,7 @@ pbuf_add_header/7 (pbuf_add_header) @061d11c0
   Function flags: count:1073741824 (estimated locally) body optimize_size
   Called by: 
   Calls: pbuf_add_header_impl/6 (1073741824 (estimated locally),1.00 per call) 
-pbuf_add_header_impl/6 (pbuf_add_header_impl) @061c1b60
+pbuf_add_header_impl/6 (pbuf_add_header_impl) @060de0e0
   Type: function definition analyzed
   Visibility: prevailing_def_ironly
   References: 
@@ -1631,8 +1678,8 @@ pbuf_add_header_impl/6 (pbuf_add_header_impl) @061c1b60
   Availability: local
   Function flags: count:357913 (estimated locally) body local optimize_size
   Called by: pbuf_header_impl/10 (633507677 (estimated locally),0.59 per call) pbuf_add_header_force/8 (1073741824 (estimated locally),1.00 per call) pbuf_add_header/7 (1073741824 (estimated locally),1.00 per call) 
-  Calls: pbuf_add_header_impl.part.0/43 (109135 (estimated locally),0.30 per call) 
-pbuf_realloc/5 (pbuf_realloc) @061c1e00
+  Calls: pbuf_add_header_impl.part.0/45 (109135 (estimated locally),0.30 per call) 
+pbuf_realloc/5 (pbuf_realloc) @060ce620
   Type: function definition analyzed
   Visibility: externally_visible public
   References: 
@@ -1641,7 +1688,7 @@ pbuf_realloc/5 (pbuf_realloc) @061c1e00
   Function flags: count:357913 (estimated locally) body optimize_size
   Called by: 
   Calls: pbuf_free/14 (43973 (estimated locally),0.12 per call) mem_trim/38 (9258 (estimated locally),0.03 per call) 
-pbuf_alloced_custom/4 (pbuf_alloced_custom) @061c1a80
+pbuf_alloced_custom/4 (pbuf_alloced_custom) @060cec40
   Type: function definition analyzed
   Visibility: externally_visible public
   References: 
@@ -1650,7 +1697,7 @@ pbuf_alloced_custom/4 (pbuf_alloced_custom) @061c1a80
   Function flags: count:1073741824 (estimated locally) body optimize_size
   Called by: 
   Calls: 
-pbuf_alloc_reference/3 (pbuf_alloc_reference) @061c1620
+pbuf_alloc_reference/3 (pbuf_alloc_reference) @060ce7e0
   Type: function definition analyzed
   Visibility: externally_visible public
   References: 
@@ -1658,8 +1705,8 @@ pbuf_alloc_reference/3 (pbuf_alloc_reference) @061c1620
   Availability: available
   Function flags: count:203972 (estimated locally) body optimize_size
   Called by: pbuf_alloc/2 (107374 (estimated locally),0.25 per call) 
-  Calls: pbuf_alloc_reference.part.0/45 (96598 (estimated locally),0.47 per call) 
-pbuf_alloc/2 (pbuf_alloc) @061c1380
+  Calls: pbuf_alloc_reference.part.0/47 (96598 (estimated locally),0.47 per call) 
+pbuf_alloc/2 (pbuf_alloc) @060ce540
   Type: function definition analyzed
   Visibility: externally_visible public
   References: 
@@ -1669,7 +1716,7 @@ pbuf_alloc/2 (pbuf_alloc) @061c1380
   Called by: pbuf_clone/29 (254049 (estimated locally),1.00 per call) 
   Calls: mem_malloc/37 (62161 (estimated locally),0.14 per call) pbuf_free/14 (29518 (estimated locally),0.07 per call) memp_malloc/36 (1003730 (estimated locally),2.34 per call) pbuf_alloc_reference/3 (107374 (estimated locally),0.25 per call) 
 
-;; Function pbuf_skip_const (pbuf_skip_const, funcdef_no=24, decl_uid=6907, cgraph_uid=25, symbol_order=24)
+;; Function pbuf_skip_const (pbuf_skip_const, funcdef_no=24, decl_uid=6911, cgraph_uid=25, symbol_order=24)
 
 Modification phase of node pbuf_skip_const/24
 pbuf_skip_const (const struct pbuf * in, u16_t in_offset, u16_t * out_offset)
@@ -1733,7 +1780,7 @@ pbuf_skip_const (const struct pbuf * in, u16_t in_offset, u16_t * out_offset)
 
 
 
-;; Function pbuf_add_header_impl (pbuf_add_header_impl, funcdef_no=6, decl_uid=6974, cgraph_uid=7, symbol_order=6)
+;; Function pbuf_add_header_impl (pbuf_add_header_impl, funcdef_no=6, decl_uid=6978, cgraph_uid=7, symbol_order=6)
 
 Modification phase of node pbuf_add_header_impl/6
 Adjusting mask for param 2 to 0x1
@@ -2684,46 +2731,17 @@ pbuf_clen (const struct pbuf * p)
 Modification phase of node pbuf_ref/16
 pbuf_ref (struct pbuf * p)
 {
-  unsigned char _1;
-  unsigned char _2;
-
-  <bb 2> [local count: 306783]:
+  <bb 2> [local count: 401623]:
   # DEBUG BEGIN_STMT
-  if (p_5(D) != 0B)
-    goto <bb 3>; [70.00%]
+  if (p_1(D) != 0B)
+    goto <bb 3>; [53.47%]
   else
-    goto <bb 5>; [30.00%]
+    goto <bb 4>; [46.53%]
 
   <bb 3> [local count: 214748]:
-  # DEBUG BEGIN_STMT
-  # DEBUG BEGIN_STMT
-  # DEBUG BEGIN_STMT
-  # DEBUG BEGIN_STMT
-  _1 = p_5(D)->ref;
-  _2 = _1 + 1;
-  p_5(D)->ref = _2;
-  # DEBUG BEGIN_STMT
-  # DEBUG BEGIN_STMT
-  # DEBUG BEGIN_STMT
-  # DEBUG BEGIN_STMT
-  if (_2 == 0)
-    goto <bb 6>; [50.00%]
-  else
-    goto <bb 5>; [50.00%]
+  pbuf_ref.part.0 (p_1(D));
 
-  <bb 6> [local count: 107374]:
-
-  <bb 4> [local count: 1073741823]:
-  # DEBUG BEGIN_STMT
-  # DEBUG BEGIN_STMT
-  __asm__ __volatile__("BKPT #0
-	");
-  # DEBUG BEGIN_STMT
-
-  <bb 7> [local count: 1073741824]:
-  goto <bb 4>; [100.00%]
-
-  <bb 5> [local count: 199409]:
+  <bb 4> [local count: 294249]:
   # DEBUG BEGIN_STMT
   return;
 

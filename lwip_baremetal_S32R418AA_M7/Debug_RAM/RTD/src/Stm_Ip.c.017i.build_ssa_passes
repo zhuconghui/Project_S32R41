@@ -1,0 +1,681 @@
+STM_0_ISR ()
+{
+  uint8 instance;
+  uint8 channel;
+
+  <bb 2> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  instance = 0;
+  # DEBUG BEGIN_STMT
+  channel = 0;
+  goto <bb 4>; [INV]
+
+  <bb 3> :
+  # DEBUG BEGIN_STMT
+  Stm_Ip_ProcessCommonInterrupt (instance, channel);
+  # DEBUG BEGIN_STMT
+  channel = channel + 1;
+
+  <bb 4> :
+  # DEBUG BEGIN_STMT
+  if (channel <= 3)
+    goto <bb 3>; [INV]
+  else
+    goto <bb 5>; [INV]
+
+  <bb 5> :
+  return;
+
+}
+
+
+Stm_Ip_PredefCounting (uint8 instance, uint8 prescaler, boolean freezeEnable)
+{
+  <bb 2> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _1 = Stm_Ip_GetTimerEnableBit (instance);
+  if (_1 != 1)
+    goto <bb 3>; [INV]
+  else
+    goto <bb 7>; [INV]
+
+  <bb 3> :
+  # DEBUG BEGIN_STMT
+  Stm_Ip_SetCntValue (instance, 0);
+  # DEBUG BEGIN_STMT
+  Stm_Ip_SetPrescaler (instance, prescaler);
+  # DEBUG BEGIN_STMT
+  if (freezeEnable != 0)
+    goto <bb 4>; [INV]
+  else
+    goto <bb 5>; [INV]
+
+  <bb 4> :
+  # DEBUG BEGIN_STMT
+  Stm_Ip_SetDebugMode (instance, 1);
+  goto <bb 6>; [INV]
+
+  <bb 5> :
+  # DEBUG BEGIN_STMT
+  Stm_Ip_SetDebugMode (instance, 0);
+
+  <bb 6> :
+  # DEBUG BEGIN_STMT
+  Stm_Ip_TimerEnable (instance, 1);
+
+  <bb 7> :
+  return;
+
+}
+
+
+Stm_Ip_GetCompareValue (uint8 instance, uint8 channel)
+{
+  uint32 currentCompareValue;
+  uint32 D.6075;
+
+  <bb 2> :
+  # DEBUG BEGIN_STMT
+  currentCompareValue = 0;
+  # DEBUG BEGIN_STMT
+  currentCompareValue = Stm_Ip_GetCmpValue (instance, channel);
+  # DEBUG BEGIN_STMT
+  D.6075 = currentCompareValue;
+  return D.6075;
+
+}
+
+
+Stm_Ip_GetCounterValue (uint8 instance)
+{
+  uint32 currentCounterValue;
+  uint32 D.6073;
+
+  <bb 2> :
+  # DEBUG BEGIN_STMT
+  currentCounterValue = 0;
+  # DEBUG BEGIN_STMT
+  currentCounterValue = Stm_Ip_GetCntValue (instance);
+  # DEBUG BEGIN_STMT
+  D.6073 = currentCounterValue;
+  return D.6073;
+
+}
+
+
+Stm_Ip_DisableChannel (uint8 instance, uint8 channel)
+{
+  <bb 2> :
+  # DEBUG BEGIN_STMT
+  Stm_Ip_SetInterruptEnableFlag (instance, channel, 0);
+  # DEBUG BEGIN_STMT
+  Stm_Ip_ClearInterruptStatusFlag (instance, channel);
+  return;
+
+}
+
+
+Stm_Ip_EnableChannel (uint8 instance, uint8 channel)
+{
+  <bb 2> :
+  # DEBUG BEGIN_STMT
+  Stm_Ip_ClearInterruptStatusFlag (instance, channel);
+  # DEBUG BEGIN_STMT
+  Stm_Ip_SetInterruptEnableFlag (instance, channel, 1);
+  return;
+
+}
+
+
+Stm_Ip_StopTimer (uint8 instance)
+{
+  <bb 2> :
+  # DEBUG BEGIN_STMT
+  Stm_Ip_TimerEnable (instance, 0);
+  return;
+
+}
+
+
+Stm_Ip_StartTimer (uint8 instance, uint32 startValue)
+{
+  <bb 2> :
+  # DEBUG BEGIN_STMT
+  Stm_Ip_SetCntValue (instance, startValue);
+  # DEBUG BEGIN_STMT
+  Stm_Ip_TimerEnable (instance, 1);
+  return;
+
+}
+
+
+Stm_Ip_StartCounting (uint8 instance, uint8 channel, uint32 compareValue)
+{
+  uint32 currentCntValue;
+
+  <bb 2> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  SchM_Enter_Gpt_GPT_EXCLUSIVE_AREA_39 ();
+  # DEBUG BEGIN_STMT
+  currentCntValue = Stm_Ip_GetCntValue (instance);
+  # DEBUG BEGIN_STMT
+  _1 = currentCntValue + compareValue;
+  Stm_Ip_SetCmpValue (instance, channel, _1);
+  # DEBUG BEGIN_STMT
+  SchM_Exit_Gpt_GPT_EXCLUSIVE_AREA_39 ();
+  # DEBUG BEGIN_STMT
+  _2 = (int) instance;
+  _3 = (int) channel;
+  Stm_Ip_u32TargetValue[_2][_3] = compareValue;
+  # DEBUG BEGIN_STMT
+  Stm_Ip_SetInterruptEnableFlag (instance, channel, 1);
+  return;
+
+}
+
+
+Stm_Ip_Deinit (uint8 instance)
+{
+  uint8 channelIndex;
+
+  <bb 2> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  channelIndex = 0;
+  goto <bb 4>; [INV]
+
+  <bb 3> :
+  # DEBUG BEGIN_STMT
+  Stm_Ip_SetInterruptEnableFlag (instance, channelIndex, 0);
+  # DEBUG BEGIN_STMT
+  Stm_Ip_ClearInterruptStatusFlag (instance, channelIndex);
+  # DEBUG BEGIN_STMT
+  Stm_Ip_SetCmpValue (instance, channelIndex, 0);
+  # DEBUG BEGIN_STMT
+  channelIndex.0_1 = channelIndex;
+  channelIndex = channelIndex.0_1 + 1;
+
+  <bb 4> :
+  # DEBUG BEGIN_STMT
+  if (channelIndex <= 3)
+    goto <bb 3>; [INV]
+  else
+    goto <bb 5>; [INV]
+
+  <bb 5> :
+  # DEBUG BEGIN_STMT
+  Stm_Ip_SetPrescaler (instance, 0);
+  # DEBUG BEGIN_STMT
+  Stm_Ip_TimerEnable (instance, 0);
+  return;
+
+}
+
+
+Stm_Ip_InitChannel (uint8 instance, const struct Stm_Ip_ChannelConfigType * configPtr)
+{
+  <bb 2> :
+  # DEBUG BEGIN_STMT
+  _1 = configPtr->hwChannel;
+  Stm_Ip_SetInterruptEnableFlag (instance, _1, 0);
+  # DEBUG BEGIN_STMT
+  _2 = configPtr->hwChannel;
+  Stm_Ip_ClearInterruptStatusFlag (instance, _2);
+  # DEBUG BEGIN_STMT
+  _3 = configPtr->hwChannel;
+  Stm_Ip_SetCmpValue (instance, _3, 0);
+  # DEBUG BEGIN_STMT
+  _4 = (int) instance;
+  _5 = configPtr->hwChannel;
+  _6 = (int) _5;
+  Stm_Ip_u32ChState[_4][_6].chInit = 1;
+  # DEBUG BEGIN_STMT
+  _7 = (int) instance;
+  _8 = configPtr->hwChannel;
+  _9 = (int) _8;
+  _10 = configPtr->callback;
+  Stm_Ip_u32ChState[_7][_9].callback = _10;
+  # DEBUG BEGIN_STMT
+  _11 = (int) instance;
+  _12 = configPtr->hwChannel;
+  _13 = (int) _12;
+  _14 = configPtr->callbackParam;
+  Stm_Ip_u32ChState[_11][_13].callbackParam = _14;
+  # DEBUG BEGIN_STMT
+  _15 = (int) instance;
+  _16 = configPtr->hwChannel;
+  _17 = (int) _16;
+  _18 = configPtr->channelMode;
+  Stm_Ip_u32ChState[_15][_17].channelMode = _18;
+  return;
+
+}
+
+
+Stm_Ip_Init (uint8 instance, const struct Stm_Ip_InstanceConfigType * configPtr)
+{
+  <bb 2> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  Stm_Ip_SetCntValue (instance, 0);
+  # DEBUG BEGIN_STMT
+  _1 = configPtr->stopInDebugMode;
+  Stm_Ip_SetDebugMode (instance, _1);
+  # DEBUG BEGIN_STMT
+  _2 = configPtr->clockPrescaler;
+  Stm_Ip_SetPrescaler (instance, _2);
+  # DEBUG BEGIN_STMT
+  Stm_Ip_TimerEnable (instance, 1);
+  return;
+
+}
+
+
+Stm_Ip_ProcessCommonInterrupt (uint8 instance, uint8 channel)
+{
+  Stm_Ip_ChannelModeType channelMode;
+  uint8 callbackParam;
+  void (*Stm_Ip_CallbackType) (uint8) callback;
+  boolean chInit;
+  boolean HasChEvOccurred;
+  boolean IsChEvEnabled;
+  uint32 targetValue;
+  uint32 oldCmpValue;
+
+  <bb 2> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  if (instance <= 2)
+    goto <bb 3>; [INV]
+  else
+    goto <bb 15>; [INV]
+
+  <bb 3> :
+  if (channel <= 3)
+    goto <bb 4>; [INV]
+  else
+    goto <bb 15>; [INV]
+
+  <bb 4> :
+  # DEBUG BEGIN_STMT
+  SchM_Enter_Gpt_GPT_EXCLUSIVE_AREA_11 ();
+  # DEBUG BEGIN_STMT
+  IsChEvEnabled = Stm_Ip_GetInterruptEnableFlag (instance, channel);
+  # DEBUG BEGIN_STMT
+  HasChEvOccurred = Stm_Ip_GetInterruptStatusFlag (instance, channel);
+  # DEBUG BEGIN_STMT
+  if (IsChEvEnabled != 0)
+    goto <bb 5>; [INV]
+  else
+    goto <bb 7>; [INV]
+
+  <bb 5> :
+  if (HasChEvOccurred != 0)
+    goto <bb 6>; [INV]
+  else
+    goto <bb 7>; [INV]
+
+  <bb 6> :
+  # DEBUG BEGIN_STMT
+  Stm_Ip_ClearInterruptStatusFlag (instance, channel);
+
+  <bb 7> :
+  # DEBUG BEGIN_STMT
+  SchM_Exit_Gpt_GPT_EXCLUSIVE_AREA_11 ();
+  # DEBUG BEGIN_STMT
+  if (IsChEvEnabled != 0)
+    goto <bb 8>; [INV]
+  else
+    goto <bb 15>; [INV]
+
+  <bb 8> :
+  if (HasChEvOccurred != 0)
+    goto <bb 9>; [INV]
+  else
+    goto <bb 15>; [INV]
+
+  <bb 9> :
+  # DEBUG BEGIN_STMT
+  _1 = (int) instance;
+  _2 = (int) channel;
+  chInit = Stm_Ip_u32ChState[_1][_2].chInit;
+  # DEBUG BEGIN_STMT
+  _3 = (int) instance;
+  _4 = (int) channel;
+  callback = Stm_Ip_u32ChState[_3][_4].callback;
+  # DEBUG BEGIN_STMT
+  _5 = (int) instance;
+  _6 = (int) channel;
+  channelMode = Stm_Ip_u32ChState[_5][_6].channelMode;
+  # DEBUG BEGIN_STMT
+  _7 = (int) instance;
+  _8 = (int) channel;
+  callbackParam = Stm_Ip_u32ChState[_7][_8].callbackParam;
+  # DEBUG BEGIN_STMT
+  if (channelMode == 1)
+    goto <bb 10>; [INV]
+  else
+    goto <bb 11>; [INV]
+
+  <bb 10> :
+  # DEBUG BEGIN_STMT
+  Stm_Ip_DisableChannel (instance, channel);
+  goto <bb 12>; [INV]
+
+  <bb 11> :
+  # DEBUG BEGIN_STMT
+  oldCmpValue = Stm_Ip_GetCmpValue (instance, channel);
+  # DEBUG BEGIN_STMT
+  _9 = (int) instance;
+  _10 = (int) channel;
+  targetValue = Stm_Ip_u32TargetValue[_9][_10];
+  # DEBUG BEGIN_STMT
+  _11 = oldCmpValue + targetValue;
+  Stm_Ip_SetCmpValue (instance, channel, _11);
+
+  <bb 12> :
+  # DEBUG BEGIN_STMT
+  if (chInit != 0)
+    goto <bb 13>; [INV]
+  else
+    goto <bb 15>; [INV]
+
+  <bb 13> :
+  if (callback != 0B)
+    goto <bb 14>; [INV]
+  else
+    goto <bb 15>; [INV]
+
+  <bb 14> :
+  # DEBUG BEGIN_STMT
+  callback (callbackParam);
+
+  <bb 15> :
+  return;
+
+}
+
+
+Stm_Ip_GetCntValue (uint8 instance)
+{
+  uint32 currentCntValue;
+  uint32 D.6071;
+
+  <bb 2> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _1 = (int) instance;
+  _2 = stmBase[_1];
+  currentCntValue = _2->CNT;
+  # DEBUG BEGIN_STMT
+  D.6071 = currentCntValue;
+  return D.6071;
+
+}
+
+
+Stm_Ip_SetCntValue (uint8 instance, uint32 counterValue)
+{
+  <bb 2> :
+  # DEBUG BEGIN_STMT
+  _1 = (int) instance;
+  _2 = stmBase[_1];
+  _2->CNT = counterValue;
+  return;
+
+}
+
+
+Stm_Ip_GetCmpValue (uint8 instance, uint8 channel)
+{
+  uint32 currentCmpValue;
+  uint32 D.6077;
+
+  <bb 2> :
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _1 = (int) instance;
+  _2 = stmBase[_1];
+  _3 = (int) channel;
+  currentCmpValue = _2->CHANNEL[_3].CMP;
+  # DEBUG BEGIN_STMT
+  D.6077 = currentCmpValue;
+  return D.6077;
+
+}
+
+
+Stm_Ip_SetCmpValue (uint8 instance, uint8 channel, uint32 compareValue)
+{
+  <bb 2> :
+  # DEBUG BEGIN_STMT
+  _1 = (int) instance;
+  _2 = stmBase[_1];
+  _3 = (int) channel;
+  _2->CHANNEL[_3].CMP = compareValue;
+  return;
+
+}
+
+
+Stm_Ip_GetInterruptEnableFlag (uint8 instance, uint8 channel)
+{
+  boolean D.6105;
+
+  <bb 2> :
+  # DEBUG BEGIN_STMT
+  _1 = (int) instance;
+  _2 = stmBase[_1];
+  _3 = (int) channel;
+  _4 = _2->CHANNEL[_3].CCR;
+  _5 = _4 & 1;
+  D.6105 = _5 != 0;
+  return D.6105;
+
+}
+
+
+Stm_Ip_ClearInterruptStatusFlag (uint8 instance, uint8 channel)
+{
+  <bb 2> :
+  # DEBUG BEGIN_STMT
+  _1 = (int) instance;
+  _2 = stmBase[_1];
+  _3 = (int) channel;
+  _2->CHANNEL[_3].CIR = 1;
+  return;
+
+}
+
+
+Stm_Ip_SetInterruptEnableFlag (uint8 instance, uint8 channel, boolean enable)
+{
+  <bb 2> :
+  # DEBUG BEGIN_STMT
+  SchM_Enter_Gpt_GPT_EXCLUSIVE_AREA_31 ();
+  # DEBUG BEGIN_STMT
+  if (enable != 0)
+    goto <bb 3>; [INV]
+  else
+    goto <bb 4>; [INV]
+
+  <bb 3> :
+  # DEBUG BEGIN_STMT
+  _1 = (int) instance;
+  _2 = stmBase[_1];
+  _3 = (int) channel;
+  _4 = _2->CHANNEL[_3].CCR;
+  _5 = (int) instance;
+  _6 = stmBase[_5];
+  _7 = (int) channel;
+  _8 = _4 | 1;
+  _6->CHANNEL[_7].CCR = _8;
+  goto <bb 5>; [INV]
+
+  <bb 4> :
+  # DEBUG BEGIN_STMT
+  _9 = (int) instance;
+  _10 = stmBase[_9];
+  _11 = (int) channel;
+  _12 = _10->CHANNEL[_11].CCR;
+  _13 = (int) instance;
+  _14 = stmBase[_13];
+  _15 = (int) channel;
+  _16 = _12 & 4294967294;
+  _14->CHANNEL[_15].CCR = _16;
+
+  <bb 5> :
+  # DEBUG BEGIN_STMT
+  SchM_Exit_Gpt_GPT_EXCLUSIVE_AREA_31 ();
+  return;
+
+}
+
+
+Stm_Ip_SetPrescaler (uint8 instance, uint8 prescalerValue)
+{
+  <bb 2> :
+  # DEBUG BEGIN_STMT
+  _1 = (int) instance;
+  _2 = stmBase[_1];
+  _3 = _2->CR;
+  _4 = _3 & 4294902015;
+  _5 = (long unsigned int) prescalerValue;
+  _6 = _5 << 8;
+  _7 = _6 & 65535;
+  _8 = (int) instance;
+  _9 = stmBase[_8];
+  _10 = _4 | _7;
+  _9->CR = _10;
+  return;
+
+}
+
+
+Stm_Ip_GetTimerEnableBit (uint8 instance)
+{
+  uint32 flag;
+  uint32 D.6084;
+
+  <bb 2> :
+  # DEBUG BEGIN_STMT
+  flag = 0;
+  # DEBUG BEGIN_STMT
+  _1 = (int) instance;
+  _2 = stmBase[_1];
+  _3 = _2->CR;
+  flag = _3 & 1;
+  # DEBUG BEGIN_STMT
+  D.6084 = flag;
+  return D.6084;
+
+}
+
+
+Stm_Ip_TimerEnable (uint8 instance, boolean enable)
+{
+  <bb 2> :
+  # DEBUG BEGIN_STMT
+  SchM_Enter_Gpt_GPT_EXCLUSIVE_AREA_30 ();
+  # DEBUG BEGIN_STMT
+  if (enable != 0)
+    goto <bb 3>; [INV]
+  else
+    goto <bb 4>; [INV]
+
+  <bb 3> :
+  # DEBUG BEGIN_STMT
+  _1 = (int) instance;
+  _2 = stmBase[_1];
+  _3 = _2->CR;
+  _4 = (int) instance;
+  _5 = stmBase[_4];
+  _6 = _3 | 1;
+  _5->CR = _6;
+  goto <bb 5>; [INV]
+
+  <bb 4> :
+  # DEBUG BEGIN_STMT
+  _7 = (int) instance;
+  _8 = stmBase[_7];
+  _9 = _8->CR;
+  _10 = (int) instance;
+  _11 = stmBase[_10];
+  _12 = _9 & 4294967294;
+  _11->CR = _12;
+
+  <bb 5> :
+  # DEBUG BEGIN_STMT
+  SchM_Exit_Gpt_GPT_EXCLUSIVE_AREA_30 ();
+  return;
+
+}
+
+
+Stm_Ip_SetDebugMode (uint8 instance, boolean stopRun)
+{
+  <bb 2> :
+  # DEBUG BEGIN_STMT
+  SchM_Enter_Gpt_GPT_EXCLUSIVE_AREA_29 ();
+  # DEBUG BEGIN_STMT
+  if (stopRun != 0)
+    goto <bb 3>; [INV]
+  else
+    goto <bb 4>; [INV]
+
+  <bb 3> :
+  # DEBUG BEGIN_STMT
+  _1 = (int) instance;
+  _2 = stmBase[_1];
+  _3 = _2->CR;
+  _4 = (int) instance;
+  _5 = stmBase[_4];
+  _6 = _3 | 2;
+  _5->CR = _6;
+  goto <bb 5>; [INV]
+
+  <bb 4> :
+  # DEBUG BEGIN_STMT
+  _7 = (int) instance;
+  _8 = stmBase[_7];
+  _9 = _8->CR;
+  _10 = (int) instance;
+  _11 = stmBase[_10];
+  _12 = _9 & 4294967293;
+  _11->CR = _12;
+
+  <bb 5> :
+  # DEBUG BEGIN_STMT
+  SchM_Exit_Gpt_GPT_EXCLUSIVE_AREA_29 ();
+  return;
+
+}
+
+
+Stm_Ip_GetInterruptStatusFlag (uint8 instance, uint8 channel)
+{
+  boolean D.6107;
+
+  <bb 2> :
+  # DEBUG BEGIN_STMT
+  _1 = (int) instance;
+  _2 = stmBase[_1];
+  _3 = (int) channel;
+  _4 = _2->CHANNEL[_3].CIR;
+  _5 = _4 & 1;
+  D.6107 = _5 != 0;
+  return D.6107;
+
+}
+
+

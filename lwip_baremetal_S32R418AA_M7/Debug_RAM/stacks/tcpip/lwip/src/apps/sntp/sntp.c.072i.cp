@@ -199,7 +199,7 @@ Reclaiming variables:
 Clearing address taken flags:
 Symbol table:
 
-sntp_request.part.0/35 (sntp_request.part.0) @052fa8c0
+sntp_request.part.0/35 (sntp_request.part.0) @05f218c0
   Type: function definition analyzed
   Visibility: prevailing_def_ironly artificial
   References: sntp_retry/7 (addr)sntp_retry/7 (addr)
@@ -208,7 +208,7 @@ sntp_request.part.0/35 (sntp_request.part.0) @052fa8c0
   Function flags: count:1073741824 (estimated locally) first_run:1 body local split_part optimize_size
   Called by: sntp_request/10 (536870912 (estimated locally),0.50 per call) 
   Calls: sys_untimeout/25 (1073741824 (estimated locally),1.00 per call) sys_timeout/22 (1073741824 (estimated locally),1.00 per call) 
-ip_addr_any/34 (ip_addr_any) @0552e7e0
+ip_addr_any/34 (ip_addr_any) @0612a7e0
   Type: variable
   Body removed by symtab_remove_unreachable_nodes
   Visibility: external public
@@ -216,7 +216,7 @@ ip_addr_any/34 (ip_addr_any) @0552e7e0
   Referring: sntp_getserver/18 (addr)
   Availability: not_available
   Varpool flags: read-only
-udp_remove/33 (udp_remove) @054f68c0
+udp_remove/33 (udp_remove) @060f38c0
   Type: function
   Visibility: external public
   References: 
@@ -225,7 +225,7 @@ udp_remove/33 (udp_remove) @054f68c0
   Function flags: optimize_size
   Called by: sntp_stop/12 (354334802 (estimated locally),0.33 per call) 
   Calls: 
-lwip_htonl/32 (lwip_htonl) @054f6700
+lwip_htonl/32 (lwip_htonl) @060f3700
   Type: function
   Visibility: external public
   References: 
@@ -234,7 +234,7 @@ lwip_htonl/32 (lwip_htonl) @054f6700
   Function flags: optimize_size
   Called by: sntp_process/5 (1073741824 (estimated locally),1.00 per call) sntp_process/5 (1073741824 (estimated locally),1.00 per call) 
   Calls: 
-pbuf_copy_partial/31 (pbuf_copy_partial) @054f6460
+pbuf_copy_partial/31 (pbuf_copy_partial) @060f3460
   Type: function
   Visibility: external public
   References: 
@@ -243,7 +243,7 @@ pbuf_copy_partial/31 (pbuf_copy_partial) @054f6460
   Function flags: optimize_size
   Called by: sntp_recv/8 (19073089 (estimated locally),0.02 per call) 
   Calls: 
-pbuf_get_at/30 (pbuf_get_at) @054f6380
+pbuf_get_at/30 (pbuf_get_at) @060f3380
   Type: function
   Visibility: external public
   References: 
@@ -252,7 +252,7 @@ pbuf_get_at/30 (pbuf_get_at) @054f6380
   Function flags: optimize_size
   Called by: sntp_recv/8 (57797241 (estimated locally),0.05 per call) sntp_recv/8 (217325345 (estimated locally),0.20 per call) 
   Calls: 
-memset/29 (memset) @054f60e0
+memset/29 (memset) @060f30e0
   Type: function
   Visibility: external public
   References: 
@@ -261,7 +261,7 @@ memset/29 (memset) @054f60e0
   Function flags: optimize_size
   Called by: sntp_initialize_request/6 (1073741824 (estimated locally),1.00 per call) 
   Calls: 
-pbuf_free/28 (pbuf_free) @054edee0
+pbuf_free/28 (pbuf_free) @060eaee0
   Type: function
   Visibility: external public
   References: 
@@ -270,7 +270,7 @@ pbuf_free/28 (pbuf_free) @054edee0
   Function flags: optimize_size
   Called by: sntp_recv/8 (1073741824 (estimated locally),1.00 per call) sntp_send_request/9 (86372 (estimated locally),0.37 per call) 
   Calls: 
-udp_sendto/27 (udp_sendto) @054ede00
+udp_sendto/27 (udp_sendto) @060eae00
   Type: function
   Visibility: external public
   References: 
@@ -279,7 +279,7 @@ udp_sendto/27 (udp_sendto) @054ede00
   Function flags: optimize_size
   Called by: sntp_send_request/9 (86372 (estimated locally),0.37 per call) 
   Calls: 
-pbuf_alloc/26 (pbuf_alloc) @054edd20
+pbuf_alloc/26 (pbuf_alloc) @060ead20
   Type: function
   Visibility: external public
   References: 
@@ -288,7 +288,7 @@ pbuf_alloc/26 (pbuf_alloc) @054edd20
   Function flags: optimize_size
   Called by: sntp_send_request/9 (123389 (estimated locally),0.53 per call) 
   Calls: 
-sys_untimeout/25 (sys_untimeout) @054ed9a0
+sys_untimeout/25 (sys_untimeout) @060ea9a0
   Type: function
   Visibility: external public
   References: 
@@ -297,7 +297,7 @@ sys_untimeout/25 (sys_untimeout) @054ed9a0
   Function flags: optimize_size
   Called by: sntp_stop/12 (354334802 (estimated locally),0.33 per call) sntp_stop/12 (354334802 (estimated locally),0.33 per call) sntp_recv/8 (116930484 (estimated locally),0.11 per call) sntp_recv/8 (116930484 (estimated locally),0.11 per call) sntp_request.part.0/35 (1073741824 (estimated locally),1.00 per call) sntp_send_request/9 (37017 (estimated locally),0.16 per call) sntp_send_request/9 (86372 (estimated locally),0.37 per call) sntp_retry/7 (1073741824 (estimated locally),1.00 per call) 
   Calls: 
-ip_addr_any_type/24 (ip_addr_any_type) @054e7d38
+ip_addr_any_type/24 (ip_addr_any_type) @060e4d38
   Type: variable
   Body removed by symtab_remove_unreachable_nodes
   Visibility: external public
@@ -305,7 +305,7 @@ ip_addr_any_type/24 (ip_addr_any_type) @054e7d38
   Referring: sntp_init/11 (addr)
   Availability: not_available
   Varpool flags: read-only
-udp_bind/23 (udp_bind) @054ed7e0
+udp_bind/23 (udp_bind) @060ea7e0
   Type: function
   Visibility: external public
   References: 
@@ -314,7 +314,7 @@ udp_bind/23 (udp_bind) @054ed7e0
   Function flags: optimize_size
   Called by: sntp_init/11 (16733 (estimated locally),0.01 per call) 
   Calls: 
-sys_timeout/22 (sys_timeout) @054ed700
+sys_timeout/22 (sys_timeout) @060ea700
   Type: function
   Visibility: external public
   References: 
@@ -323,7 +323,7 @@ sys_timeout/22 (sys_timeout) @054ed700
   Function flags: optimize_size
   Called by: sntp_init/11 (40718 (estimated locally),0.03 per call) sntp_recv/8 (116930484 (estimated locally),0.11 per call) sntp_request.part.0/35 (1073741824 (estimated locally),1.00 per call) sntp_send_request/9 (37017 (estimated locally),0.16 per call) sntp_send_request/9 (86372 (estimated locally),0.37 per call) sntp_retry/7 (1073741824 (estimated locally),1.00 per call) 
   Calls: 
-rand/21 (rand) @054ed620
+rand/21 (rand) @060ea620
   Type: function
   Visibility: external public
   References: 
@@ -332,7 +332,7 @@ rand/21 (rand) @054ed620
   Function flags: optimize_size
   Called by: sntp_init/11 (40718 (estimated locally),0.03 per call) 
   Calls: 
-udp_recv/20 (udp_recv) @054ed460
+udp_recv/20 (udp_recv) @060ea460
   Type: function
   Visibility: external public
   References: 
@@ -341,7 +341,7 @@ udp_recv/20 (udp_recv) @054ed460
   Function flags: optimize_size
   Called by: sntp_init/11 (123389 (estimated locally),0.09 per call) 
   Calls: 
-udp_new_ip_type/19 (udp_new_ip_type) @054ed380
+udp_new_ip_type/19 (udp_new_ip_type) @060ea380
   Type: function
   Visibility: external public
   References: 
@@ -350,7 +350,7 @@ udp_new_ip_type/19 (udp_new_ip_type) @054ed380
   Function flags: optimize_size
   Called by: sntp_init/11 (230763 (estimated locally),0.17 per call) 
   Calls: 
-sntp_getserver/18 (sntp_getserver) @054e5e00
+sntp_getserver/18 (sntp_getserver) @060e2e00
   Type: function definition analyzed
   Visibility: externally_visible public
   References: sntp_servers/3 (addr)ip_addr_any/34 (addr)
@@ -359,7 +359,7 @@ sntp_getserver/18 (sntp_getserver) @054e5e00
   Function flags: count:1073741824 (estimated locally) body optimize_size
   Called by: 
   Calls: 
-sntp_setserver/17 (sntp_setserver) @054e58c0
+sntp_setserver/17 (sntp_setserver) @060e28c0
   Type: function definition analyzed
   Visibility: externally_visible public
   References: sntp_servers/3 (write)sntp_servers/3 (write)sntp_servers/3 (write)sntp_servers/3 (write)sntp_servers/3 (write)sntp_servers/3 (write)sntp_servers/3 (write)
@@ -368,7 +368,7 @@ sntp_setserver/17 (sntp_setserver) @054e58c0
   Function flags: count:1073741823 (estimated locally) body optimize_size
   Called by: 
   Calls: 
-sntp_getreachability/16 (sntp_getreachability) @054e50e0
+sntp_getreachability/16 (sntp_getreachability) @060e20e0
   Type: function definition analyzed
   Visibility: externally_visible public
   References: sntp_servers/3 (read)
@@ -377,7 +377,7 @@ sntp_getreachability/16 (sntp_getreachability) @054e50e0
   Function flags: count:1073741824 (estimated locally) body optimize_size
   Called by: 
   Calls: 
-sntp_getoperatingmode/15 (sntp_getoperatingmode) @054e5d20
+sntp_getoperatingmode/15 (sntp_getoperatingmode) @060e2d20
   Type: function definition analyzed
   Visibility: externally_visible public
   References: sntp_opmode/1 (read)
@@ -386,7 +386,7 @@ sntp_getoperatingmode/15 (sntp_getoperatingmode) @054e5d20
   Function flags: count:1073741824 (estimated locally) body optimize_size
   Called by: 
   Calls: 
-sntp_setoperatingmode/14 (sntp_setoperatingmode) @054e5a80
+sntp_setoperatingmode/14 (sntp_setoperatingmode) @060e2a80
   Type: function definition analyzed
   Visibility: externally_visible public
   References: sntp_pcb/2 (read)sntp_opmode/1 (write)
@@ -395,7 +395,7 @@ sntp_setoperatingmode/14 (sntp_setoperatingmode) @054e5a80
   Function flags: count:181990 (estimated locally) body optimize_size
   Called by: 
   Calls: 
-sntp_enabled/13 (sntp_enabled) @054e57e0
+sntp_enabled/13 (sntp_enabled) @060e27e0
   Type: function definition analyzed
   Visibility: externally_visible public
   References: sntp_pcb/2 (read)
@@ -404,7 +404,7 @@ sntp_enabled/13 (sntp_enabled) @054e57e0
   Function flags: count:1073741824 (estimated locally) body optimize_size
   Called by: 
   Calls: 
-sntp_stop/12 (sntp_stop) @054e5540
+sntp_stop/12 (sntp_stop) @060e2540
   Type: function definition analyzed
   Visibility: externally_visible public
   References: sntp_pcb/2 (read)sntp_servers/3 (write)sntp_request/10 (addr)sntp_retry/7 (addr)sntp_pcb/2 (read)sntp_pcb/2 (write)
@@ -413,7 +413,7 @@ sntp_stop/12 (sntp_stop) @054e5540
   Function flags: count:1073741824 (estimated locally) body optimize_size
   Called by: 
   Calls: udp_remove/33 (354334802 (estimated locally),0.33 per call) sys_untimeout/25 (354334802 (estimated locally),0.33 per call) sys_untimeout/25 (354334802 (estimated locally),0.33 per call) 
-sntp_init/11 (sntp_init) @054e52a0
+sntp_init/11 (sntp_init) @060e22a0
   Type: function definition analyzed
   Visibility: externally_visible public
   References: sntp_pcb/2 (read)sntp_pcb/2 (write)sntp_recv/8 (addr)sntp_opmode/1 (read)sntp_retry_timeout/4 (write)sntp_request/10 (addr)sntp_pcb/2 (read)ip_addr_any_type/24 (addr)
@@ -422,7 +422,7 @@ sntp_init/11 (sntp_init) @054e52a0
   Function flags: count:1323941 (estimated locally) body optimize_size
   Called by: 
   Calls: udp_bind/23 (16733 (estimated locally),0.01 per call) sys_timeout/22 (40718 (estimated locally),0.03 per call) rand/21 (40718 (estimated locally),0.03 per call) udp_recv/20 (123389 (estimated locally),0.09 per call) udp_new_ip_type/19 (230763 (estimated locally),0.17 per call) 
-sntp_request/10 (sntp_request) @054e5000
+sntp_request/10 (sntp_request) @060e2000
   Type: function definition analyzed
   Visibility: prevailing_def_ironly
   Address is taken.
@@ -432,7 +432,7 @@ sntp_request/10 (sntp_request) @054e5000
   Function flags: count:1073741823 (estimated locally) body optimize_size
   Called by: 
   Calls: sntp_send_request/9 (536870913 (estimated locally),0.50 per call) sntp_request.part.0/35 (536870912 (estimated locally),0.50 per call) 
-sntp_send_request/9 (sntp_send_request) @054d4c40
+sntp_send_request/9 (sntp_send_request) @060d1c40
   Type: function definition analyzed
   Visibility: prevailing_def_ironly
   References: sntp_pcb/2 (read)sntp_servers/3 (read)sntp_servers/3 (write)sntp_retry/7 (addr)sntp_retry/7 (addr)sntp_request/10 (addr)sntp_request/10 (addr)
@@ -441,7 +441,7 @@ sntp_send_request/9 (sntp_send_request) @054d4c40
   Function flags: count:230763 (estimated locally) body local optimize_size
   Called by: sntp_request/10 (536870913 (estimated locally),0.50 per call) 
   Calls: sys_timeout/22 (37017 (estimated locally),0.16 per call) sys_untimeout/25 (37017 (estimated locally),0.16 per call) sys_timeout/22 (86372 (estimated locally),0.37 per call) sys_untimeout/25 (86372 (estimated locally),0.37 per call) pbuf_free/28 (86372 (estimated locally),0.37 per call) udp_sendto/27 (86372 (estimated locally),0.37 per call) sntp_initialize_request/6 (86372 (estimated locally),0.37 per call) pbuf_alloc/26 (123389 (estimated locally),0.53 per call) 
-sntp_recv/8 (sntp_recv) @054d49a0
+sntp_recv/8 (sntp_recv) @060d19a0
   Type: function definition analyzed
   Visibility: prevailing_def_ironly
   Address is taken.
@@ -451,7 +451,7 @@ sntp_recv/8 (sntp_recv) @054d49a0
   Function flags: count:1073741824 (estimated locally) body optimize_size
   Called by: 
   Calls: sntp_retry/7 (80717468 (estimated locally),0.08 per call) sys_timeout/22 (116930484 (estimated locally),0.11 per call) sys_untimeout/25 (116930484 (estimated locally),0.11 per call) sys_untimeout/25 (116930484 (estimated locally),0.11 per call) sntp_process/5 (354334802 (estimated locally),0.33 per call) pbuf_free/28 (1073741824 (estimated locally),1.00 per call) pbuf_copy_partial/31 (19073089 (estimated locally),0.02 per call) pbuf_get_at/30 (57797241 (estimated locally),0.05 per call) pbuf_get_at/30 (217325345 (estimated locally),0.20 per call) 
-sntp_retry/7 (sntp_retry) @054d4700
+sntp_retry/7 (sntp_retry) @060d1700
   Type: function definition analyzed
   Visibility: prevailing_def_ironly
   Address is taken.
@@ -461,7 +461,7 @@ sntp_retry/7 (sntp_retry) @054d4700
   Function flags: count:1073741824 (estimated locally) body optimize_size
   Called by: sntp_recv/8 (80717468 (estimated locally),0.08 per call) 
   Calls: sys_timeout/22 (1073741824 (estimated locally),1.00 per call) sys_untimeout/25 (1073741824 (estimated locally),1.00 per call) 
-sntp_initialize_request/6 (sntp_initialize_request) @054d4460
+sntp_initialize_request/6 (sntp_initialize_request) @060d1460
   Type: function definition analyzed
   Visibility: prevailing_def_ironly
   References: 
@@ -470,7 +470,7 @@ sntp_initialize_request/6 (sntp_initialize_request) @054d4460
   Function flags: count:1073741824 (estimated locally) body local optimize_size
   Called by: sntp_send_request/9 (86372 (estimated locally),0.37 per call) 
   Calls: memset/29 (1073741824 (estimated locally),1.00 per call) 
-sntp_process/5 (sntp_process) @054d41c0
+sntp_process/5 (sntp_process) @060d11c0
   Type: function definition analyzed
   Visibility: prevailing_def_ironly
   References: 
@@ -479,28 +479,28 @@ sntp_process/5 (sntp_process) @054d41c0
   Function flags: count:1073741824 (estimated locally) body local optimize_size
   Called by: sntp_recv/8 (354334802 (estimated locally),0.33 per call) 
   Calls: lwip_htonl/32 (1073741824 (estimated locally),1.00 per call) lwip_htonl/32 (1073741824 (estimated locally),1.00 per call) 
-sntp_retry_timeout/4 (sntp_retry_timeout) @054d1480
+sntp_retry_timeout/4 (sntp_retry_timeout) @060ce480
   Type: variable definition analyzed
   Visibility: prevailing_def_ironly
   References: 
   Referring: sntp_retry/7 (write)sntp_recv/8 (write)sntp_retry/7 (read)sntp_retry/7 (read)sntp_retry/7 (write)sntp_init/11 (write)
   Availability: available
   Varpool flags:
-sntp_servers/3 (sntp_servers) @054d1288
+sntp_servers/3 (sntp_servers) @060ce288
   Type: variable definition analyzed
   Visibility: prevailing_def_ironly
   References: 
   Referring: sntp_setserver/17 (write)sntp_stop/12 (write)sntp_getreachability/16 (read)sntp_recv/8 (read)sntp_send_request/9 (write)sntp_request/10 (read)sntp_recv/8 (write)sntp_send_request/9 (read)sntp_setserver/17 (write)sntp_setserver/17 (write)sntp_setserver/17 (write)sntp_setserver/17 (write)sntp_setserver/17 (write)sntp_setserver/17 (write)sntp_getserver/18 (addr)
   Availability: available
   Varpool flags:
-sntp_pcb/2 (sntp_pcb) @054d1168
+sntp_pcb/2 (sntp_pcb) @060ce168
   Type: variable definition analyzed
   Visibility: prevailing_def_ironly
   References: 
   Referring: sntp_init/11 (read)sntp_enabled/13 (read)sntp_stop/12 (write)sntp_init/11 (read)sntp_init/11 (write)sntp_send_request/9 (read)sntp_stop/12 (read)sntp_stop/12 (read)sntp_setoperatingmode/14 (read)
   Availability: available
   Varpool flags:
-sntp_opmode/1 (sntp_opmode) @054d10d8
+sntp_opmode/1 (sntp_opmode) @060ce0d8
   Type: variable definition analyzed
   Visibility: prevailing_def_ironly
   References: 

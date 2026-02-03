@@ -1,6 +1,6 @@
 Symbol table:
 
-OsIf_GetMilliseconds/5 (OsIf_GetMilliseconds) @060c02a0
+OsIf_GetMilliseconds/7 (OsIf_GetMilliseconds) @06d8a2a0
   Type: function
   Visibility: external public
   References: 
@@ -9,7 +9,7 @@ OsIf_GetMilliseconds/5 (OsIf_GetMilliseconds) @060c02a0
   Function flags: optimize_size
   Called by: sys_jiffies/2 (1073741824 (estimated locally),1.00 per call) 
   Calls: 
-OsIf_Init/4 (OsIf_Init) @060c0e00
+OsIf_Init/6 (OsIf_Init) @06d8a0e0
   Type: function
   Visibility: external public
   References: 
@@ -18,7 +18,25 @@ OsIf_Init/4 (OsIf_Init) @060c0e00
   Function flags: optimize_size
   Called by: sys_init/1 (1073741824 (estimated locally),1.00 per call) 
   Calls: 
-sys_now/3 (sys_now) @060c09a0
+sys_arch_unprotect/5 (sys_arch_unprotect) @06d2f700
+  Type: function definition analyzed
+  Visibility: externally_visible public
+  References: 
+  Referring: 
+  Availability: available
+  Function flags: count:1073741824 (estimated locally) body optimize_size
+  Called by: 
+  Calls: 
+sys_arch_protect/4 (sys_arch_protect) @06d2fe00
+  Type: function definition analyzed
+  Visibility: externally_visible public
+  References: 
+  Referring: 
+  Availability: available
+  Function flags: count:1073741824 (estimated locally) body optimize_size
+  Called by: 
+  Calls: 
+sys_now/3 (sys_now) @06d2fb60
   Type: function definition analyzed
   Visibility: externally_visible public
   References: 
@@ -27,7 +45,7 @@ sys_now/3 (sys_now) @060c09a0
   Function flags: count:1073741824 (estimated locally) body icf_merged optimize_size
   Called by: 
   Calls: sys_jiffies/2 (1073741824 (estimated locally),1.00 per call) 
-sys_jiffies/2 (sys_jiffies) @060c0700
+sys_jiffies/2 (sys_jiffies) @06d2f8c0
   Type: function definition analyzed
   Visibility: externally_visible public
   References: 
@@ -35,8 +53,8 @@ sys_jiffies/2 (sys_jiffies) @060c0700
   Availability: available
   Function flags: count:1073741824 (estimated locally) body icf_merged optimize_size
   Called by: sys_now/3 (1073741824 (estimated locally),1.00 per call) 
-  Calls: OsIf_GetMilliseconds/5 (1073741824 (estimated locally),1.00 per call) 
-sys_init/1 (sys_init) @060c0460
+  Calls: OsIf_GetMilliseconds/7 (1073741824 (estimated locally),1.00 per call) 
+sys_init/1 (sys_init) @06d2f620
   Type: function definition analyzed
   Visibility: externally_visible public
   References: 
@@ -44,14 +62,41 @@ sys_init/1 (sys_init) @060c0460
   Availability: available
   Function flags: count:1073741824 (estimated locally) body optimize_size
   Called by: 
-  Calls: OsIf_Init/4 (1073741824 (estimated locally),1.00 per call) 
-sys_now ()
+  Calls: OsIf_Init/6 (1073741824 (estimated locally),1.00 per call) 
+sys_arch_unprotect (sys_prot_t pval)
 {
-  u32_t retval.3;
+  <bb 2> [local count: 1073741824]:
+  # DEBUG BEGIN_STMT
+  __asm__ __volatile__("msr primask, %0" :  : "r" pval_1(D));
+  return;
+
+}
+
+
+sys_arch_protect ()
+{
+  sys_prot_t pval;
 
   <bb 2> [local count: 1073741824]:
-  retval.3_3 = sys_jiffies (); [tail call]
-  return retval.3_3;
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  __asm__ __volatile__("mrs %0, primask" : "=r" pval_1);
+  # DEBUG pval => pval_1
+  # DEBUG BEGIN_STMT
+  __asm__ __volatile__("cpsid i");
+  # DEBUG BEGIN_STMT
+  return pval_1;
+
+}
+
+
+sys_now ()
+{
+  u32_t retval.5;
+
+  <bb 2> [local count: 1073741824]:
+  retval.5_3 = sys_jiffies (); [tail call]
+  return retval.5_3;
 
 }
 

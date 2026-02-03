@@ -145,11 +145,26 @@ u32_t sys_jiffies(void)
 #endif /* USING_RTD */
 }
 
-/*
-  Returns the current time in milliseconds,
-  may be the same as sys_jiffies or at least based on it.
-*/
+/* 初始化和时间函数 */
+/* ... existing code ... */
 u32_t sys_now(void)
 {
     return sys_jiffies();
+}
+
+/* Add critical section protection for SYS_LIGHTWEIGHT_PROT = 1 */
+sys_prot_t sys_arch_protect(void)
+{
+    sys_prot_t pval;
+    /* Read PRIMASK register */
+    __asm volatile ("mrs %0, primask" : "=r" (pval));
+    /* Disable interrupts (Set PRIMASK to 1) */
+    __asm volatile ("cpsid i");
+    return pval;
+}
+
+void sys_arch_unprotect(sys_prot_t pval)
+{
+    /* Restore PRIMASK register */
+    __asm volatile ("msr primask, %0" : : "r" (pval));
 }

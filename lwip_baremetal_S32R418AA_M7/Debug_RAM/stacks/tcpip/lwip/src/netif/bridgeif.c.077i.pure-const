@@ -1,13 +1,5 @@
 
 
- local analysis of bridgeif_find_dst_ports.part.0
-   scanning: _2 = br_1(D)->fdbd;
-    Indirect ref read is not const
-  scanning: _4 = bridgeif_fdb_get_dst_ports (_2, dst_addr_3(D));
-  scanning: return _5;
-Function is locally pure.
-
-
  local analysis of bridgeif_add_port
    scanning: if (bridgeif_18(D) == 0B)
   scanning: __asm__ __volatile__("BKPT #0
@@ -224,8 +216,8 @@ Function can locally free.
   scanning: src_28 = dst_27 + 6;
   scanning: _5 = MEM[(struct eth_addr *)dst_27 + 6B].addr[0];
     Indirect ref read is not const
-  scanning: _34 = _5 & 1;
-  scanning: if (_34 == 0)
+  scanning: _35 = _5 & 1;
+  scanning: if (_35 == 0)
   scanning: _6 = MEM[(struct bridgeif_private_t *)_3].fdbd;
     Indirect ref read is not const
   scanning: _7 = port_24->port_num;
@@ -233,11 +225,11 @@ Function can locally free.
   scanning: bridgeif_fdb_update_src (_6, src_28, _7);
   scanning: _8 = dst_27->addr[0];
     Indirect ref read is not const
-  scanning: _43 = _8 & 1;
-  scanning: if (_43 != 0)
-  scanning: dstports_38 = bridgeif_find_dst_ports (_3, dst_27);
-  scanning: bridgeif_send_to_ports (_3, p_21(D), dstports_38);
-  scanning: dstports.17_9 = (signed char) dstports_38;
+  scanning: _44 = _8 & 1;
+  scanning: if (_44 != 0)
+  scanning: dstports_39 = bridgeif_find_dst_ports (_3, dst_27);
+  scanning: bridgeif_send_to_ports (_3, p_21(D), dstports_39);
+  scanning: dstports.17_9 = (signed char) dstports_39;
   scanning: if (dstports.17_9 < 0)
   scanning: _10 = MEM[(struct bridgeif_private_t *)_3].netif;
     Indirect ref read is not const
@@ -253,9 +245,9 @@ Function can locally free.
     Indirect ref read is not const
   scanning: _15 = _14->input;
     Indirect ref read is not const
-  scanning: _36 = _15 (p_21(D), _14);
-  scanning: dstports_31 = bridgeif_find_dst_ports (_3, dst_27);
-  scanning: bridgeif_send_to_ports (_3, p_21(D), dstports_31);
+  scanning: _37 = _15 (p_21(D), _14);
+  scanning: dstports_32 = bridgeif_find_dst_ports (_3, dst_27);
+  scanning: bridgeif_send_to_ports (_3, p_21(D), dstports_32);
   scanning: pbuf_free (p_21(D));
   scanning: return _16;
 Function is locally looping.
@@ -300,13 +292,15 @@ Function can locally free.
 
 
  local analysis of bridgeif_send_to_ports
-   scanning: _1 = mask_6 & dstports_10(D);
+   scanning: lev_11 = sys_arch_protect ();
+  scanning: _1 = mask_6 & dstports_13(D);
   scanning: if (_1 != 0)
-  scanning: err_14 = bridgeif_send_to_port (br_11(D), p_12(D), i_5);
-  scanning: if (err_14 != 0)
-  scanning: i_15 = i_5 + 1;
-  scanning: mask_16 = mask_6 << 1;
+  scanning: err_17 = bridgeif_send_to_port (br_14(D), p_15(D), i_5);
+  scanning: if (err_17 != 0)
+  scanning: i_18 = i_5 + 1;
+  scanning: mask_19 = mask_6 << 1;
   scanning: if (i_5 != 7)
+  scanning: sys_arch_unprotect (lev_11);
   scanning: return ret_err_2;
 ;; 2 loops found
 ;;
@@ -369,74 +363,31 @@ Function can locally free.
 
 
  local analysis of bridgeif_is_local_mac
-   scanning: _1 = br_15(D)->netif;
+   scanning: _1 = br_16(D)->netif;
     Indirect ref read is not const
   scanning: _2 = &_1->hwaddr;
-  scanning: _3 = memcmp (_2, addr_16(D), 6);
+  scanning: _3 = memcmp (_2, addr_17(D), 6);
   scanning: if (_3 == 0)
-  scanning: _4 = br_15(D)->ports;
+  scanning: lev_19 = sys_arch_protect ();
+  scanning: _4 = br_16(D)->ports;
     Indirect ref read is not const
   scanning: i.18_5 = (unsigned int) i_12;
   scanning: _6 = i.18_5 * 12;
   scanning: _7 = _4 + _6;
-  scanning: portif_17 = _7->port_netif;
+  scanning: portif_21 = _7->port_netif;
     Indirect ref read is not const
-  scanning: if (portif_17 != 0B)
-  scanning: _8 = &portif_17->hwaddr;
-  scanning: _9 = memcmp (_8, addr_16(D), 6);
+  scanning: if (portif_21 != 0B)
+  scanning: _8 = &portif_21->hwaddr;
+  scanning: _9 = memcmp (_8, addr_17(D), 6);
   scanning: if (_9 == 0)
-  scanning: i_18 = i_12 + 1;
-  scanning: _10 = br_15(D)->num_ports;
+  scanning: sys_arch_unprotect (lev_19);
+  scanning: i_23 = i_12 + 1;
+  scanning: _10 = br_16(D)->num_ports;
     Indirect ref read is not const
   scanning: _11 = (int) _10;
   scanning: if (_11 > i_12)
+  scanning: sys_arch_unprotect (lev_19);
   scanning: return _13;
-;; 2 loops found
-;;
-;; Loop 0
-;;  header 0, latch 1
-;;  depth 0, outer -1
-;;  nodes: 0 1 2 8 3 4 5 6 7
-;;
-;; Loop 1
-;;  header 6, latch 5
-;;  depth 1, outer 0
-;;  nodes: 6 5 3 4
-;; 2 succs { 7 8 }
-;; 8 succs { 6 }
-;; 3 succs { 4 5 }
-;; 4 succs { 7 5 }
-;; 5 succs { 6 }
-;; 6 succs { 3 7 }
-;; 7 succs { 1 }
-Function is locally pure.
-
-
- local analysis of bridgeif_find_dst_ports
-   scanning: _1 = br_19(D)->fdbs;
-    Indirect ref read is not const
-  scanning: i.11_2 = (unsigned int) i_15;
-  scanning: _3 = i.11_2 * 8;
-  scanning: _4 = _1 + _3;
-  scanning: _5 = _4->used;
-    Indirect ref read is not const
-  scanning: if (_5 != 0)
-  scanning: _8 = &_4->addr;
-  scanning: _9 = memcmp (_8, dst_addr_20(D), 6);
-  scanning: if (_9 == 0)
-  scanning: ret_21 = _6->dst_ports;
-    Indirect ref read is not const
-  scanning: i_22 = i_15 + 1;
-  scanning: _10 = br_19(D)->max_fdbs_entries;
-    Indirect ref read is not const
-  scanning: _11 = (int) _10;
-  scanning: if (_11 > i_15)
-  scanning: _12 = dst_addr_20(D)->addr[0];
-    Indirect ref read is not const
-  scanning: _17 = _12 & 1;
-  scanning: if (_17 != 0)
-  scanning: _13 = bridgeif_find_dst_ports.part.0 (br_19(D), dst_addr_20(D));
-  scanning: return _16;
 ;; 2 loops found
 ;;
 ;; Loop 0
@@ -445,18 +396,73 @@ Function is locally pure.
 ;;  nodes: 0 1 2 3 4 5 6 7 8 9 10
 ;;
 ;; Loop 1
+;;  header 8, latch 7
+;;  depth 1, outer 0
+;;  nodes: 8 7 4 5
+;; 2 succs { 10 3 }
+;; 3 succs { 8 }
+;; 4 succs { 5 7 }
+;; 5 succs { 6 7 }
+;; 6 succs { 10 }
+;; 7 succs { 8 }
+;; 8 succs { 4 9 }
+;; 9 succs { 10 }
+;; 10 succs { 1 }
+Function is locally pure.
+
+
+ local analysis of bridgeif_find_dst_ports
+   scanning: lev_18 = sys_arch_protect ();
+  scanning: _1 = br_20(D)->fdbs;
+    Indirect ref read is not const
+  scanning: i.11_2 = (unsigned int) i_13;
+  scanning: _3 = i.11_2 * 8;
+  scanning: _4 = _1 + _3;
+  scanning: _5 = _4->used;
+    Indirect ref read is not const
+  scanning: if (_5 != 0)
+  scanning: _7 = &_4->addr;
+  scanning: _8 = memcmp (_7, dst_addr_21(D), 6);
+  scanning: if (_8 == 0)
+  scanning: ret_26 = _6->dst_ports;
+    Indirect ref read is not const
+  scanning: sys_arch_unprotect (lev_18);
+  scanning: i_28 = i_13 + 1;
+  scanning: _9 = br_20(D)->max_fdbs_entries;
+    Indirect ref read is not const
+  scanning: _10 = (int) _9;
+  scanning: if (_10 > i_13)
+  scanning: _11 = dst_addr_21(D)->addr[0];
+    Indirect ref read is not const
+  scanning: _19 = _11 & 1;
+  scanning: if (_19 != 0)
+  scanning: sys_arch_unprotect (lev_18);
+  scanning: sys_arch_unprotect (lev_18);
+  scanning: _12 = br_20(D)->fdbd;
+    Indirect ref read is not const
+  scanning: _24 = bridgeif_fdb_get_dst_ports (_12, dst_addr_21(D));
+  scanning: return _14;
+;; 2 loops found
+;;
+;; Loop 0
+;;  header 0, latch 1
+;;  depth 0, outer -1
+;;  nodes: 0 1 2 3 4 5 6 7 8 9 10 11
+;;
+;; Loop 1
 ;;  header 7, latch 6
 ;;  depth 1, outer 0
 ;;  nodes: 7 6 3 4
 ;; 2 succs { 7 }
 ;; 3 succs { 4 6 }
 ;; 4 succs { 5 6 }
-;; 5 succs { 10 }
+;; 5 succs { 11 }
 ;; 6 succs { 7 }
 ;; 7 succs { 3 8 }
-;; 8 succs { 10 9 }
-;; 9 succs { 10 }
-;; 10 succs { 1 }
+;; 8 succs { 9 10 }
+;; 9 succs { 11 }
+;; 10 succs { 11 }
+;; 11 succs { 1 }
 Function is locally pure.
 
 
@@ -473,6 +479,7 @@ Function is locally pure.
 	");
     memory asm clobber is not const/pure
     volatile is not const/pure
+  scanning: lev_20 = sys_arch_protect ();
   scanning: _1 = br_18->fdbs;
     Indirect ref read is not const
   scanning: i.5_2 = (unsigned int) i_11;
@@ -482,14 +489,16 @@ Function is locally pure.
     Indirect ref read is not const
   scanning: if (_5 != 0)
   scanning: _7 = &_4->addr;
-  scanning: _8 = memcmp (_7, addr_19(D), 6);
+  scanning: _8 = memcmp (_7, addr_22(D), 6);
   scanning: if (_8 == 0)
   scanning: memset (_6, 0, 8);
-  scanning: i_21 = i_11 + 1;
+  scanning: sys_arch_unprotect (lev_20);
+  scanning: i_25 = i_11 + 1;
   scanning: _9 = br_18->max_fdbs_entries;
     Indirect ref read is not const
   scanning: _10 = (int) _9;
   scanning: if (_10 > i_11)
+  scanning: sys_arch_unprotect (lev_20);
   scanning: return _12;
 Function is locally looping.
 Function can locally free.
@@ -508,6 +517,7 @@ Function can locally free.
 	");
     memory asm clobber is not const/pure
     volatile is not const/pure
+  scanning: lev_19 = sys_arch_protect ();
   scanning: _1 = br_17->fdbs;
     Indirect ref read is not const
   scanning: i.0_2 = (unsigned int) i_10;
@@ -518,41 +528,32 @@ Function can locally free.
   scanning: if (_5 == 0)
   scanning: _6->used = 1;
     Indirect ref write is not const/pure
-  scanning: _6->dst_ports = ports_19(D);
+  scanning: _6->dst_ports = ports_22(D);
     Indirect ref write is not const/pure
   scanning: _7 = &_6->addr;
-  scanning: memcpy (_7, addr_21(D), 6);
-  scanning: i_23 = i_10 + 1;
+  scanning: memcpy (_7, addr_24(D), 6);
+  scanning: sys_arch_unprotect (lev_19);
+  scanning: i_27 = i_10 + 1;
   scanning: _8 = br_17->max_fdbs_entries;
     Indirect ref read is not const
   scanning: _9 = (int) _8;
   scanning: if (_9 > i_10)
+  scanning: sys_arch_unprotect (lev_19);
   scanning: return _11;
 Function is locally looping.
 Function can locally free.
 callgraph:
 
-bridgeif_find_dst_ports.part.0/25 (bridgeif_find_dst_ports.part.0) @06b928c0
-  Type: function definition analyzed
-  Visibility: prevailing_def_ironly artificial
-  Aux: @06b88750
-  References: 
-  Referring: 
-  Function bridgeif_find_dst_ports.part.0/25 is inline copy in bridgeif_find_dst_ports/4
-  Availability: local
-  Function flags: count:37777995 (estimated locally) first_run:1 body local split_part optimize_size
-  Called by: bridgeif_find_dst_ports/4 (inlined) (37777995 (estimated locally),0.43 per call) 
-  Calls: bridgeif_fdb_get_dst_ports/22 (37777995 (estimated locally),0.43 per call) 
-pbuf_free/24 (pbuf_free) @06da6620
+pbuf_free/26 (pbuf_free) @062349a0
   Type: function
   Visibility: external public
   References: 
   Referring: 
   Availability: not_available
   Function flags: optimize_size
-  Called by: bridgeif_input/9 (65647 (estimated locally),0.18 per call) bridgeif_input/9 (20940 (estimated locally),0.06 per call) bridgeif_input/9 (9749 (estimated locally),0.03 per call) 
+  Called by: bridgeif_input/9 (54322 (estimated locally),0.15 per call) bridgeif_input/9 (35175 (estimated locally),0.10 per call) bridgeif_input/9 (16376 (estimated locally),0.05 per call) 
   Calls: 
-bridgeif_fdb_update_src/23 (bridgeif_fdb_update_src) @06da6540
+bridgeif_fdb_update_src/25 (bridgeif_fdb_update_src) @062348c0
   Type: function
   Visibility: external public
   References: 
@@ -561,16 +562,16 @@ bridgeif_fdb_update_src/23 (bridgeif_fdb_update_src) @06da6540
   Function flags: optimize_size
   Called by: bridgeif_input/9 (82306 (estimated locally),0.23 per call) 
   Calls: 
-bridgeif_fdb_get_dst_ports/22 (bridgeif_fdb_get_dst_ports) @06da6000
+bridgeif_fdb_get_dst_ports/24 (bridgeif_fdb_get_dst_ports) @06234380
   Type: function
   Visibility: external public
   References: 
   Referring: 
   Availability: not_available
   Function flags: optimize_size
-  Called by: bridgeif_find_dst_ports.part.0/25 (37777995 (estimated locally),0.43 per call) 
+  Called by: bridgeif_find_dst_ports/4 (46228881 (estimated locally),0.53 per call) 
   Calls: 
-ethip6_output/20 (ethip6_output) @06d5ed20
+ethip6_output/22 (ethip6_output) @062340e0
   Type: function
   Visibility: external public
   Address is taken.
@@ -580,7 +581,7 @@ ethip6_output/20 (ethip6_output) @06d5ed20
   Function flags: optimize_size
   Called by: 
   Calls: 
-etharp_output/19 (etharp_output) @06d5ec40
+etharp_output/21 (etharp_output) @06234000
   Type: function
   Visibility: external public
   Address is taken.
@@ -590,7 +591,7 @@ etharp_output/19 (etharp_output) @06d5ec40
   Function flags: optimize_size
   Called by: 
   Calls: 
-mem_free/18 (mem_free) @06d5eb60
+mem_free/20 (mem_free) @061f0000
   Type: function
   Visibility: external public
   References: 
@@ -599,7 +600,7 @@ mem_free/18 (mem_free) @06d5eb60
   Function flags: optimize_size
   Called by: bridgeif_init/10 (181 (estimated locally),0.00 per call) 
   Calls: 
-bridgeif_fdb_init/17 (bridgeif_fdb_init) @06d5ea80
+bridgeif_fdb_init/19 (bridgeif_fdb_init) @061f0ee0
   Type: function
   Visibility: external public
   References: 
@@ -608,7 +609,7 @@ bridgeif_fdb_init/17 (bridgeif_fdb_init) @06d5ea80
   Function flags: optimize_size
   Called by: bridgeif_init/10 (40144 (estimated locally),0.11 per call) 
   Calls: 
-mem_calloc/16 (mem_calloc) @06d5e9a0
+mem_calloc/18 (mem_calloc) @061f0e00
   Type: function
   Visibility: external public
   References: 
@@ -617,7 +618,7 @@ mem_calloc/16 (mem_calloc) @06d5e9a0
   Function flags: optimize_size
   Called by: bridgeif_init/10 (40512 (estimated locally),0.11 per call) 
   Calls: 
-netif_alloc_client_data_id/15 (netif_alloc_client_data_id) @06d5e8c0
+netif_alloc_client_data_id/17 (netif_alloc_client_data_id) @061f0d20
   Type: function
   Visibility: external public
   References: 
@@ -626,92 +627,110 @@ netif_alloc_client_data_id/15 (netif_alloc_client_data_id) @06d5e8c0
   Function flags: optimize_size
   Called by: bridgeif_init/10 (35496 (estimated locally),0.10 per call) 
   Calls: 
-memset/14 (memset) @06d5e620
+memset/16 (memset) @061f0a80
   Type: function
   Visibility: external public
   References: 
   Referring: 
   Availability: not_available
   Function flags: optimize_size
-  Called by: bridgeif_fdb_remove/3 (56276 (estimated locally),0.16 per call) 
+  Called by: bridgeif_fdb_remove/3 (39593 (estimated locally),0.12 per call) 
   Calls: 
-memcmp/13 (memcmp) @06d5e540
+memcmp/15 (memcmp) @061f09a0
   Type: function
   Visibility: external public
   References: 
   Referring: 
   Availability: not_available
   Function flags: optimize_size
-  Called by: bridgeif_fdb_remove/3 (1023194 (estimated locally),2.86 per call) bridgeif_find_dst_ports/4 (507343012 (estimated locally),5.83 per call) bridgeif_is_local_mac/5 (950415 (estimated locally),2.63 per call) bridgeif_is_local_mac/5 (198931 (estimated locally),0.55 per call) 
+  Called by: bridgeif_fdb_remove/3 (719880 (estimated locally),2.18 per call) bridgeif_find_dst_ports/4 (507343012 (estimated locally),5.83 per call) bridgeif_is_local_mac/5 (582451 (estimated locally),1.61 per call) bridgeif_is_local_mac/5 (164612 (estimated locally),0.46 per call) 
   Calls: 
-memcpy/12 (memcpy) @06d5e380
+sys_arch_unprotect/14 (sys_arch_unprotect) @061f07e0
   Type: function
   Visibility: external public
   References: 
   Referring: 
   Availability: not_available
   Function flags: optimize_size
-  Called by: bridgeif_init/10 (39963 (estimated locally),0.11 per call) bridgeif_init/10 (40144 (estimated locally),0.11 per call) bridgeif_fdb_add/2 (85209 (estimated locally),0.24 per call) 
+  Called by: bridgeif_fdb_remove/3 (83796 (estimated locally),0.25 per call) bridgeif_fdb_remove/3 (39593 (estimated locally),0.12 per call) bridgeif_fdb_add/2 (63439 (estimated locally),0.19 per call) bridgeif_fdb_add/2 (59950 (estimated locally),0.18 per call) bridgeif_find_dst_ports/4 (46228881 (estimated locally),0.53 per call) bridgeif_find_dst_ports/4 (12826920 (estimated locally),0.15 per call) bridgeif_find_dst_ports/4 (27903866 (estimated locally),0.32 per call) bridgeif_is_local_mac/5 (48428 (estimated locally),0.13 per call) bridgeif_is_local_mac/5 (32035 (estimated locally),0.09 per call) bridgeif_send_to_ports/7 (134217728 (estimated locally),1.00 per call) 
   Calls: 
-bridgeif_add_port/11 (bridgeif_add_port) @06d46ee0
+memcpy/13 (memcpy) @061f0700
+  Type: function
+  Visibility: external public
+  References: 
+  Referring: 
+  Availability: not_available
+  Function flags: optimize_size
+  Called by: bridgeif_init/10 (39963 (estimated locally),0.11 per call) bridgeif_init/10 (40144 (estimated locally),0.11 per call) bridgeif_fdb_add/2 (59950 (estimated locally),0.18 per call) 
+  Calls: 
+sys_arch_protect/12 (sys_arch_protect) @061f0620
+  Type: function
+  Visibility: external public
+  References: 
+  Referring: 
+  Availability: not_available
+  Function flags: optimize_size
+  Called by: bridgeif_fdb_remove/3 (123389 (estimated locally),0.37 per call) bridgeif_fdb_add/2 (123389 (estimated locally),0.37 per call) bridgeif_find_dst_ports/4 (86959666 (estimated locally),1.00 per call) bridgeif_is_local_mac/5 (80462 (estimated locally),0.22 per call) bridgeif_send_to_ports/7 (134217728 (estimated locally),1.00 per call) 
+  Calls: 
+bridgeif_add_port/11 (bridgeif_add_port) @061f01c0
   Type: function definition analyzed
   Visibility: externally_visible public
-  Aux: @06b88650
+  Aux: @060f0c70
   References: bridgeif_input/9 (addr)bridgeif_netif_client_id/1 (read)
   Referring: 
   Availability: available
   Function flags: count:357913 (estimated locally) body optimize_size
   Called by: 
   Calls: 
-bridgeif_init/10 (bridgeif_init) @06d46e00
+bridgeif_init/10 (bridgeif_init) @061d8d20
   Type: function definition analyzed
   Visibility: externally_visible public
-  Aux: @06b88550
-  References: bridgeif_netif_client_id/1 (read)bridgeif_netif_client_id/1 (write)etharp_output/19 (addr)ethip6_output/20 (addr)bridgeif_output/8 (addr)
+  Aux: @060f0c90
+  References: bridgeif_netif_client_id/1 (read)bridgeif_netif_client_id/1 (write)etharp_output/21 (addr)ethip6_output/22 (addr)bridgeif_output/8 (addr)
   Referring: 
   Availability: available
   Function flags: count:357913 (estimated locally) body optimize_size
   Called by: 
-  Calls: memcpy/12 (39963 (estimated locally),0.11 per call) mem_free/18 (181 (estimated locally),0.00 per call) bridgeif_fdb_init/17 (40144 (estimated locally),0.11 per call) memcpy/12 (40144 (estimated locally),0.11 per call) mem_calloc/16 (40512 (estimated locally),0.11 per call) netif_alloc_client_data_id/15 (35496 (estimated locally),0.10 per call) 
+  Calls: memcpy/13 (39963 (estimated locally),0.11 per call) mem_free/20 (181 (estimated locally),0.00 per call) bridgeif_fdb_init/19 (40144 (estimated locally),0.11 per call) memcpy/13 (40144 (estimated locally),0.11 per call) mem_calloc/18 (40512 (estimated locally),0.11 per call) netif_alloc_client_data_id/17 (35496 (estimated locally),0.10 per call) 
    Indirect call(27974 (estimated locally),0.08 per call)  of param:0 loaded from aggregate passed by reference at offset 2304 (vptr maybe changed)
-bridgeif_input/9 (bridgeif_input) @06d46a80
+bridgeif_input/9 (bridgeif_input) @061d8c40
   Type: function definition analyzed
   Visibility: prevailing_def_ironly
   Address is taken.
-  Aux: @06b885d0
+  Aux: @060f0cb0
   References: bridgeif_netif_client_id/1 (read)
   Referring: bridgeif_add_port/11 (addr)
   Availability: available
   Function flags: count:361156 (estimated locally) body optimize_size
   Called by: 
-  Calls: pbuf_free/24 (65647 (estimated locally),0.18 per call) bridgeif_send_to_ports/7 (65647 (estimated locally),0.18 per call) bridgeif_find_dst_ports/4 (65647 (estimated locally),0.18 per call) bridgeif_is_local_mac/5 (inlined) (198931 (estimated locally),0.55 per call) pbuf_free/24 (20940 (estimated locally),0.06 per call) pbuf_free/24 (9749 (estimated locally),0.03 per call) bridgeif_send_to_ports/7 (50481 (estimated locally),0.14 per call) bridgeif_find_dst_ports/4 (50481 (estimated locally),0.14 per call) bridgeif_fdb_update_src/23 (82306 (estimated locally),0.23 per call) 
-   Indirect call(133284 (estimated locally),0.37 per call) 
-   Indirect call(29541 (estimated locally),0.08 per call) 
-bridgeif_output/8 (bridgeif_output) @06d467e0
+  Calls: pbuf_free/26 (54322 (estimated locally),0.15 per call) bridgeif_send_to_ports/7 (54322 (estimated locally),0.15 per call) bridgeif_find_dst_ports/4 (54322 (estimated locally),0.15 per call) bridgeif_is_local_mac/5 (inlined) (164612 (estimated locally),0.46 per call) pbuf_free/26 (35175 (estimated locally),0.10 per call) pbuf_free/26 (16376 (estimated locally),0.05 per call) bridgeif_send_to_ports/7 (84800 (estimated locally),0.23 per call) bridgeif_find_dst_ports/4 (84800 (estimated locally),0.23 per call) bridgeif_fdb_update_src/25 (82306 (estimated locally),0.23 per call) 
+   Indirect call(110290 (estimated locally),0.31 per call) 
+   Indirect call(49625 (estimated locally),0.14 per call) 
+bridgeif_output/8 (bridgeif_output) @061d89a0
   Type: function definition analyzed
   Visibility: prevailing_def_ironly
   Address is taken.
-  Aux: @06b885b0
-  References: lwip_stats/21 (read)lwip_stats/21 (write)
+  Aux: @060f0cd0
+  References: lwip_stats/23 (read)lwip_stats/23 (write)
   Referring: bridgeif_init/10 (addr)
   Availability: available
   Function flags: count:1073741824 (estimated locally) body optimize_size
   Called by: 
   Calls: bridgeif_send_to_ports/7 (1073741824 (estimated locally),1.00 per call) bridgeif_find_dst_ports/4 (1073741824 (estimated locally),1.00 per call) 
-bridgeif_send_to_ports/7 (bridgeif_send_to_ports) @06d462a0
+bridgeif_send_to_ports/7 (bridgeif_send_to_ports) @061d8460
   Type: function definition analyzed
   Visibility: prevailing_def_ironly
-  Aux: @06b887b0
+  Aux: @060f10d0
   References: 
   Referring: 
   Availability: local
   Function flags: count:134217728 (estimated locally) body local optimize_size
-  Called by: bridgeif_input/9 (65647 (estimated locally),0.18 per call) bridgeif_input/9 (50481 (estimated locally),0.14 per call) bridgeif_output/8 (1073741824 (estimated locally),1.00 per call) 
-  Calls: bridgeif_send_to_port/6 (inlined) (310042952 (estimated locally),2.31 per call) 
-bridgeif_send_to_port/6 (bridgeif_send_to_port) @06d46000
+  Called by: bridgeif_input/9 (54322 (estimated locally),0.15 per call) bridgeif_input/9 (84800 (estimated locally),0.23 per call) bridgeif_output/8 (1073741824 (estimated locally),1.00 per call) 
+  Calls: sys_arch_unprotect/14 (134217728 (estimated locally),1.00 per call) bridgeif_send_to_port/6 (inlined) (310042952 (estimated locally),2.31 per call) sys_arch_protect/12 (134217728 (estimated locally),1.00 per call) 
+bridgeif_send_to_port/6 (bridgeif_send_to_port) @061d81c0
   Type: function definition analyzed
   Visibility: prevailing_def_ironly
-  Aux: @06b88630
+  Aux: @05c452b8
   References: 
   Referring: 
   Function bridgeif_send_to_port/6 is inline copy in bridgeif_send_to_ports/7
@@ -720,120 +739,109 @@ bridgeif_send_to_port/6 (bridgeif_send_to_port) @06d46000
   Called by: bridgeif_send_to_ports/7 (inlined) (310042952 (estimated locally),2.31 per call) 
   Calls: 
    Indirect call(8522522 (estimated locally),0.06 per call) 
-bridgeif_is_local_mac/5 (bridgeif_is_local_mac) @06d3be00
+bridgeif_is_local_mac/5 (bridgeif_is_local_mac) @061cc620
   Type: function definition analyzed
   Visibility: prevailing_def_ironly
-  Aux: @06b887f0
+  Aux: @05c45278
   References: 
   Referring: 
   Function bridgeif_is_local_mac/5 is inline copy in bridgeif_input/9
   Availability: local
-  Function flags: count:198931 (estimated locally) body local optimize_size
-  Called by: bridgeif_input/9 (inlined) (198931 (estimated locally),0.55 per call) 
-  Calls: memcmp/13 (950415 (estimated locally),2.63 per call) memcmp/13 (198931 (estimated locally),0.55 per call) 
-bridgeif_find_dst_ports/4 (bridgeif_find_dst_ports) @06d3bb60
+  Function flags: count:164612 (estimated locally) body local optimize_size
+  Called by: bridgeif_input/9 (inlined) (164612 (estimated locally),0.46 per call) 
+  Calls: sys_arch_unprotect/14 (48428 (estimated locally),0.13 per call) sys_arch_unprotect/14 (32035 (estimated locally),0.09 per call) memcmp/15 (582451 (estimated locally),1.61 per call) sys_arch_protect/12 (80462 (estimated locally),0.22 per call) memcmp/15 (164612 (estimated locally),0.46 per call) 
+bridgeif_find_dst_ports/4 (bridgeif_find_dst_ports) @061ccd20
   Type: function definition analyzed
   Visibility: prevailing_def_ironly
-  Aux: @06b88610
+  Aux: @05c65f18
   References: 
   Referring: 
   Availability: local
   Function flags: count:86959666 (estimated locally) body local optimize_size
-  Called by: bridgeif_input/9 (65647 (estimated locally),0.18 per call) bridgeif_input/9 (50481 (estimated locally),0.14 per call) bridgeif_output/8 (1073741824 (estimated locally),1.00 per call) 
-  Calls: bridgeif_find_dst_ports.part.0/25 (inlined) (37777995 (estimated locally),0.43 per call) memcmp/13 (507343012 (estimated locally),5.83 per call) 
-bridgeif_fdb_remove/3 (bridgeif_fdb_remove) @06d3b8c0
+  Called by: bridgeif_input/9 (54322 (estimated locally),0.15 per call) bridgeif_input/9 (84800 (estimated locally),0.23 per call) bridgeif_output/8 (1073741824 (estimated locally),1.00 per call) 
+  Calls: bridgeif_fdb_get_dst_ports/24 (46228881 (estimated locally),0.53 per call) sys_arch_unprotect/14 (46228881 (estimated locally),0.53 per call) sys_arch_unprotect/14 (12826920 (estimated locally),0.15 per call) sys_arch_unprotect/14 (27903866 (estimated locally),0.32 per call) memcmp/15 (507343012 (estimated locally),5.83 per call) sys_arch_protect/12 (86959666 (estimated locally),1.00 per call) 
+bridgeif_fdb_remove/3 (bridgeif_fdb_remove) @061cca80
   Type: function definition analyzed
   Visibility: externally_visible public
-  Aux: @06b88450
+  Aux: @05c661d8
   References: 
   Referring: 
   Availability: available
-  Function flags: count:357913 (estimated locally) body optimize_size
+  Function flags: count:329661 (estimated locally) body optimize_size
   Called by: 
-  Calls: memset/14 (56276 (estimated locally),0.16 per call) memcmp/13 (1023194 (estimated locally),2.86 per call) 
-bridgeif_fdb_add/2 (bridgeif_fdb_add) @06d3b620
+  Calls: sys_arch_unprotect/14 (83796 (estimated locally),0.25 per call) sys_arch_unprotect/14 (39593 (estimated locally),0.12 per call) memset/16 (39593 (estimated locally),0.12 per call) memcmp/15 (719880 (estimated locally),2.18 per call) sys_arch_protect/12 (123389 (estimated locally),0.37 per call) 
+bridgeif_fdb_add/2 (bridgeif_fdb_add) @061cc7e0
   Type: function definition analyzed
   Visibility: externally_visible public
-  Aux: @06b88670
+  Aux: @05c65f58
   References: 
   Referring: 
   Availability: available
-  Function flags: count:357913 (estimated locally) body optimize_size
+  Function flags: count:329661 (estimated locally) body optimize_size
   Called by: 
-  Calls: memcpy/12 (85209 (estimated locally),0.24 per call) 
+  Calls: sys_arch_unprotect/14 (63439 (estimated locally),0.19 per call) sys_arch_unprotect/14 (59950 (estimated locally),0.18 per call) memcpy/13 (59950 (estimated locally),0.18 per call) sys_arch_protect/12 (123389 (estimated locally),0.37 per call) 
 
 
  ordered call graph: reduced for nothrow
-bridgeif_find_dst_ports.part.0/25 (bridgeif_find_dst_ports.part.0) @06b928c0
-  Type: function definition analyzed
-  Visibility: prevailing_def_ironly artificial
-  Aux: @06b88750
-  References: 
-  Referring: 
-  Function bridgeif_find_dst_ports.part.0/25 is inline copy in bridgeif_find_dst_ports/4
-  Availability: local
-  Function flags: count:37777995 (estimated locally) first_run:1 body local split_part optimize_size
-  Called by: bridgeif_find_dst_ports/4 (inlined) (37777995 (estimated locally),0.43 per call) 
-  Calls: bridgeif_fdb_get_dst_ports/22 (37777995 (estimated locally),0.43 per call) 
-bridgeif_add_port/11 (bridgeif_add_port) @06d46ee0
+bridgeif_add_port/11 (bridgeif_add_port) @061f01c0
   Type: function definition analyzed
   Visibility: externally_visible public
-  Aux: @06b88650
+  Aux: @060f0c70
   References: bridgeif_input/9 (addr)bridgeif_netif_client_id/1 (read)
   Referring: 
   Availability: available
   Function flags: count:357913 (estimated locally) body optimize_size
   Called by: 
   Calls: 
-bridgeif_init/10 (bridgeif_init) @06d46e00
+bridgeif_init/10 (bridgeif_init) @061d8d20
   Type: function definition analyzed
   Visibility: externally_visible public
-  Aux: @06b88550
-  References: bridgeif_netif_client_id/1 (read)bridgeif_netif_client_id/1 (write)etharp_output/19 (addr)ethip6_output/20 (addr)bridgeif_output/8 (addr)
+  Aux: @060f0c90
+  References: bridgeif_netif_client_id/1 (read)bridgeif_netif_client_id/1 (write)etharp_output/21 (addr)ethip6_output/22 (addr)bridgeif_output/8 (addr)
   Referring: 
   Availability: available
   Function flags: count:357913 (estimated locally) body optimize_size
   Called by: 
-  Calls: memcpy/12 (39963 (estimated locally),0.11 per call) mem_free/18 (181 (estimated locally),0.00 per call) bridgeif_fdb_init/17 (40144 (estimated locally),0.11 per call) memcpy/12 (40144 (estimated locally),0.11 per call) mem_calloc/16 (40512 (estimated locally),0.11 per call) netif_alloc_client_data_id/15 (35496 (estimated locally),0.10 per call) 
+  Calls: memcpy/13 (39963 (estimated locally),0.11 per call) mem_free/20 (181 (estimated locally),0.00 per call) bridgeif_fdb_init/19 (40144 (estimated locally),0.11 per call) memcpy/13 (40144 (estimated locally),0.11 per call) mem_calloc/18 (40512 (estimated locally),0.11 per call) netif_alloc_client_data_id/17 (35496 (estimated locally),0.10 per call) 
    Indirect call(27974 (estimated locally),0.08 per call)  of param:0 loaded from aggregate passed by reference at offset 2304 (vptr maybe changed)
-bridgeif_input/9 (bridgeif_input) @06d46a80
+bridgeif_input/9 (bridgeif_input) @061d8c40
   Type: function definition analyzed
   Visibility: prevailing_def_ironly
   Address is taken.
-  Aux: @06b885d0
+  Aux: @060f0cb0
   References: bridgeif_netif_client_id/1 (read)
   Referring: bridgeif_add_port/11 (addr)
   Availability: available
   Function flags: count:361156 (estimated locally) body optimize_size
   Called by: 
-  Calls: pbuf_free/24 (65647 (estimated locally),0.18 per call) bridgeif_send_to_ports/7 (65647 (estimated locally),0.18 per call) bridgeif_find_dst_ports/4 (65647 (estimated locally),0.18 per call) bridgeif_is_local_mac/5 (inlined) (198931 (estimated locally),0.55 per call) pbuf_free/24 (20940 (estimated locally),0.06 per call) pbuf_free/24 (9749 (estimated locally),0.03 per call) bridgeif_send_to_ports/7 (50481 (estimated locally),0.14 per call) bridgeif_find_dst_ports/4 (50481 (estimated locally),0.14 per call) bridgeif_fdb_update_src/23 (82306 (estimated locally),0.23 per call) 
-   Indirect call(133284 (estimated locally),0.37 per call) 
-   Indirect call(29541 (estimated locally),0.08 per call) 
-bridgeif_output/8 (bridgeif_output) @06d467e0
+  Calls: pbuf_free/26 (54322 (estimated locally),0.15 per call) bridgeif_send_to_ports/7 (54322 (estimated locally),0.15 per call) bridgeif_find_dst_ports/4 (54322 (estimated locally),0.15 per call) bridgeif_is_local_mac/5 (inlined) (164612 (estimated locally),0.46 per call) pbuf_free/26 (35175 (estimated locally),0.10 per call) pbuf_free/26 (16376 (estimated locally),0.05 per call) bridgeif_send_to_ports/7 (84800 (estimated locally),0.23 per call) bridgeif_find_dst_ports/4 (84800 (estimated locally),0.23 per call) bridgeif_fdb_update_src/25 (82306 (estimated locally),0.23 per call) 
+   Indirect call(110290 (estimated locally),0.31 per call) 
+   Indirect call(49625 (estimated locally),0.14 per call) 
+bridgeif_output/8 (bridgeif_output) @061d89a0
   Type: function definition analyzed
   Visibility: prevailing_def_ironly
   Address is taken.
-  Aux: @06b885b0
-  References: lwip_stats/21 (read)lwip_stats/21 (write)
+  Aux: @060f0cd0
+  References: lwip_stats/23 (read)lwip_stats/23 (write)
   Referring: bridgeif_init/10 (addr)
   Availability: available
   Function flags: count:1073741824 (estimated locally) body optimize_size
   Called by: 
   Calls: bridgeif_send_to_ports/7 (1073741824 (estimated locally),1.00 per call) bridgeif_find_dst_ports/4 (1073741824 (estimated locally),1.00 per call) 
-bridgeif_send_to_ports/7 (bridgeif_send_to_ports) @06d462a0
+bridgeif_send_to_ports/7 (bridgeif_send_to_ports) @061d8460
   Type: function definition analyzed
   Visibility: prevailing_def_ironly
-  Aux: @06b887b0
+  Aux: @060f10d0
   References: 
   Referring: 
   Availability: local
   Function flags: count:134217728 (estimated locally) body local optimize_size
-  Called by: bridgeif_input/9 (65647 (estimated locally),0.18 per call) bridgeif_input/9 (50481 (estimated locally),0.14 per call) bridgeif_output/8 (1073741824 (estimated locally),1.00 per call) 
-  Calls: bridgeif_send_to_port/6 (inlined) (310042952 (estimated locally),2.31 per call) 
-bridgeif_send_to_port/6 (bridgeif_send_to_port) @06d46000
+  Called by: bridgeif_input/9 (54322 (estimated locally),0.15 per call) bridgeif_input/9 (84800 (estimated locally),0.23 per call) bridgeif_output/8 (1073741824 (estimated locally),1.00 per call) 
+  Calls: sys_arch_unprotect/14 (134217728 (estimated locally),1.00 per call) bridgeif_send_to_port/6 (inlined) (310042952 (estimated locally),2.31 per call) sys_arch_protect/12 (134217728 (estimated locally),1.00 per call) 
+bridgeif_send_to_port/6 (bridgeif_send_to_port) @061d81c0
   Type: function definition analyzed
   Visibility: prevailing_def_ironly
-  Aux: @06b88630
+  Aux: @05c452b8
   References: 
   Referring: 
   Function bridgeif_send_to_port/6 is inline copy in bridgeif_send_to_ports/7
@@ -842,52 +850,51 @@ bridgeif_send_to_port/6 (bridgeif_send_to_port) @06d46000
   Called by: bridgeif_send_to_ports/7 (inlined) (310042952 (estimated locally),2.31 per call) 
   Calls: 
    Indirect call(8522522 (estimated locally),0.06 per call) 
-bridgeif_is_local_mac/5 (bridgeif_is_local_mac) @06d3be00
+bridgeif_is_local_mac/5 (bridgeif_is_local_mac) @061cc620
   Type: function definition analyzed
   Visibility: prevailing_def_ironly
-  Aux: @06b887f0
+  Aux: @05c45278
   References: 
   Referring: 
   Function bridgeif_is_local_mac/5 is inline copy in bridgeif_input/9
   Availability: local
-  Function flags: count:198931 (estimated locally) body local optimize_size
-  Called by: bridgeif_input/9 (inlined) (198931 (estimated locally),0.55 per call) 
-  Calls: memcmp/13 (950415 (estimated locally),2.63 per call) memcmp/13 (198931 (estimated locally),0.55 per call) 
-bridgeif_find_dst_ports/4 (bridgeif_find_dst_ports) @06d3bb60
+  Function flags: count:164612 (estimated locally) body local optimize_size
+  Called by: bridgeif_input/9 (inlined) (164612 (estimated locally),0.46 per call) 
+  Calls: sys_arch_unprotect/14 (48428 (estimated locally),0.13 per call) sys_arch_unprotect/14 (32035 (estimated locally),0.09 per call) memcmp/15 (582451 (estimated locally),1.61 per call) sys_arch_protect/12 (80462 (estimated locally),0.22 per call) memcmp/15 (164612 (estimated locally),0.46 per call) 
+bridgeif_find_dst_ports/4 (bridgeif_find_dst_ports) @061ccd20
   Type: function definition analyzed
   Visibility: prevailing_def_ironly
-  Aux: @06b88610
+  Aux: @05c65f18
   References: 
   Referring: 
   Availability: local
   Function flags: count:86959666 (estimated locally) body local optimize_size
-  Called by: bridgeif_input/9 (65647 (estimated locally),0.18 per call) bridgeif_input/9 (50481 (estimated locally),0.14 per call) bridgeif_output/8 (1073741824 (estimated locally),1.00 per call) 
-  Calls: bridgeif_find_dst_ports.part.0/25 (inlined) (37777995 (estimated locally),0.43 per call) memcmp/13 (507343012 (estimated locally),5.83 per call) 
-bridgeif_fdb_remove/3 (bridgeif_fdb_remove) @06d3b8c0
+  Called by: bridgeif_input/9 (54322 (estimated locally),0.15 per call) bridgeif_input/9 (84800 (estimated locally),0.23 per call) bridgeif_output/8 (1073741824 (estimated locally),1.00 per call) 
+  Calls: bridgeif_fdb_get_dst_ports/24 (46228881 (estimated locally),0.53 per call) sys_arch_unprotect/14 (46228881 (estimated locally),0.53 per call) sys_arch_unprotect/14 (12826920 (estimated locally),0.15 per call) sys_arch_unprotect/14 (27903866 (estimated locally),0.32 per call) memcmp/15 (507343012 (estimated locally),5.83 per call) sys_arch_protect/12 (86959666 (estimated locally),1.00 per call) 
+bridgeif_fdb_remove/3 (bridgeif_fdb_remove) @061cca80
   Type: function definition analyzed
   Visibility: externally_visible public
-  Aux: @06b88450
+  Aux: @05c661d8
   References: 
   Referring: 
   Availability: available
-  Function flags: count:357913 (estimated locally) body optimize_size
+  Function flags: count:329661 (estimated locally) body optimize_size
   Called by: 
-  Calls: memset/14 (56276 (estimated locally),0.16 per call) memcmp/13 (1023194 (estimated locally),2.86 per call) 
-bridgeif_fdb_add/2 (bridgeif_fdb_add) @06d3b620
+  Calls: sys_arch_unprotect/14 (83796 (estimated locally),0.25 per call) sys_arch_unprotect/14 (39593 (estimated locally),0.12 per call) memset/16 (39593 (estimated locally),0.12 per call) memcmp/15 (719880 (estimated locally),2.18 per call) sys_arch_protect/12 (123389 (estimated locally),0.37 per call) 
+bridgeif_fdb_add/2 (bridgeif_fdb_add) @061cc7e0
   Type: function definition analyzed
   Visibility: externally_visible public
-  Aux: @06b88670
+  Aux: @05c65f58
   References: 
   Referring: 
   Availability: available
-  Function flags: count:357913 (estimated locally) body optimize_size
+  Function flags: count:329661 (estimated locally) body optimize_size
   Called by: 
-  Calls: memcpy/12 (85209 (estimated locally),0.24 per call) 
+  Calls: sys_arch_unprotect/14 (63439 (estimated locally),0.19 per call) sys_arch_unprotect/14 (59950 (estimated locally),0.18 per call) memcpy/13 (59950 (estimated locally),0.18 per call) sys_arch_protect/12 (123389 (estimated locally),0.37 per call) 
 
 
 
 MALLOC LATTICE Initial:
-bridgeif_find_dst_ports.part.0: malloc_bottom
 bridgeif_add_port: malloc_bottom
 bridgeif_init: malloc_bottom
 bridgeif_input: malloc_bottom
@@ -901,7 +908,6 @@ bridgeif_fdb_add: malloc_bottom
 
 
 MALLOC LATTICE after propagation:
-bridgeif_find_dst_ports.part.0: malloc_bottom
 bridgeif_add_port: malloc_bottom
 bridgeif_init: malloc_bottom
 bridgeif_input: malloc_bottom
@@ -914,27 +920,16 @@ bridgeif_fdb_remove: malloc_bottom
 bridgeif_fdb_add: malloc_bottom
 callgraph:
 
-bridgeif_find_dst_ports.part.0/25 (bridgeif_find_dst_ports.part.0) @06b928c0
-  Type: function definition analyzed
-  Visibility: prevailing_def_ironly artificial
-  Aux: @06b885b0
-  References: 
-  Referring: 
-  Function bridgeif_find_dst_ports.part.0/25 is inline copy in bridgeif_find_dst_ports/4
-  Availability: local
-  Function flags: count:37777995 (estimated locally) first_run:1 body local split_part optimize_size
-  Called by: bridgeif_find_dst_ports/4 (inlined) (37777995 (estimated locally),0.43 per call) 
-  Calls: bridgeif_fdb_get_dst_ports/22 (37777995 (estimated locally),0.43 per call) 
-pbuf_free/24 (pbuf_free) @06da6620
+pbuf_free/26 (pbuf_free) @062349a0
   Type: function
   Visibility: external public
   References: 
   Referring: 
   Availability: not_available
   Function flags: optimize_size
-  Called by: bridgeif_input/9 (65647 (estimated locally),0.18 per call) bridgeif_input/9 (20940 (estimated locally),0.06 per call) bridgeif_input/9 (9749 (estimated locally),0.03 per call) 
+  Called by: bridgeif_input/9 (54322 (estimated locally),0.15 per call) bridgeif_input/9 (35175 (estimated locally),0.10 per call) bridgeif_input/9 (16376 (estimated locally),0.05 per call) 
   Calls: 
-bridgeif_fdb_update_src/23 (bridgeif_fdb_update_src) @06da6540
+bridgeif_fdb_update_src/25 (bridgeif_fdb_update_src) @062348c0
   Type: function
   Visibility: external public
   References: 
@@ -943,16 +938,16 @@ bridgeif_fdb_update_src/23 (bridgeif_fdb_update_src) @06da6540
   Function flags: optimize_size
   Called by: bridgeif_input/9 (82306 (estimated locally),0.23 per call) 
   Calls: 
-bridgeif_fdb_get_dst_ports/22 (bridgeif_fdb_get_dst_ports) @06da6000
+bridgeif_fdb_get_dst_ports/24 (bridgeif_fdb_get_dst_ports) @06234380
   Type: function
   Visibility: external public
   References: 
   Referring: 
   Availability: not_available
   Function flags: optimize_size
-  Called by: bridgeif_find_dst_ports.part.0/25 (37777995 (estimated locally),0.43 per call) 
+  Called by: bridgeif_find_dst_ports/4 (46228881 (estimated locally),0.53 per call) 
   Calls: 
-ethip6_output/20 (ethip6_output) @06d5ed20
+ethip6_output/22 (ethip6_output) @062340e0
   Type: function
   Visibility: external public
   Address is taken.
@@ -962,7 +957,7 @@ ethip6_output/20 (ethip6_output) @06d5ed20
   Function flags: optimize_size
   Called by: 
   Calls: 
-etharp_output/19 (etharp_output) @06d5ec40
+etharp_output/21 (etharp_output) @06234000
   Type: function
   Visibility: external public
   Address is taken.
@@ -972,7 +967,7 @@ etharp_output/19 (etharp_output) @06d5ec40
   Function flags: optimize_size
   Called by: 
   Calls: 
-mem_free/18 (mem_free) @06d5eb60
+mem_free/20 (mem_free) @061f0000
   Type: function
   Visibility: external public
   References: 
@@ -981,7 +976,7 @@ mem_free/18 (mem_free) @06d5eb60
   Function flags: optimize_size
   Called by: bridgeif_init/10 (181 (estimated locally),0.00 per call) 
   Calls: 
-bridgeif_fdb_init/17 (bridgeif_fdb_init) @06d5ea80
+bridgeif_fdb_init/19 (bridgeif_fdb_init) @061f0ee0
   Type: function
   Visibility: external public
   References: 
@@ -990,7 +985,7 @@ bridgeif_fdb_init/17 (bridgeif_fdb_init) @06d5ea80
   Function flags: optimize_size
   Called by: bridgeif_init/10 (40144 (estimated locally),0.11 per call) 
   Calls: 
-mem_calloc/16 (mem_calloc) @06d5e9a0
+mem_calloc/18 (mem_calloc) @061f0e00
   Type: function
   Visibility: external public
   References: 
@@ -999,7 +994,7 @@ mem_calloc/16 (mem_calloc) @06d5e9a0
   Function flags: optimize_size
   Called by: bridgeif_init/10 (40512 (estimated locally),0.11 per call) 
   Calls: 
-netif_alloc_client_data_id/15 (netif_alloc_client_data_id) @06d5e8c0
+netif_alloc_client_data_id/17 (netif_alloc_client_data_id) @061f0d20
   Type: function
   Visibility: external public
   References: 
@@ -1008,92 +1003,110 @@ netif_alloc_client_data_id/15 (netif_alloc_client_data_id) @06d5e8c0
   Function flags: optimize_size
   Called by: bridgeif_init/10 (35496 (estimated locally),0.10 per call) 
   Calls: 
-memset/14 (memset) @06d5e620
+memset/16 (memset) @061f0a80
   Type: function
   Visibility: external public
   References: 
   Referring: 
   Availability: not_available
   Function flags: optimize_size
-  Called by: bridgeif_fdb_remove/3 (56276 (estimated locally),0.16 per call) 
+  Called by: bridgeif_fdb_remove/3 (39593 (estimated locally),0.12 per call) 
   Calls: 
-memcmp/13 (memcmp) @06d5e540
+memcmp/15 (memcmp) @061f09a0
   Type: function
   Visibility: external public
   References: 
   Referring: 
   Availability: not_available
   Function flags: optimize_size
-  Called by: bridgeif_fdb_remove/3 (1023194 (estimated locally),2.86 per call) bridgeif_find_dst_ports/4 (507343012 (estimated locally),5.83 per call) bridgeif_is_local_mac/5 (950415 (estimated locally),2.63 per call) bridgeif_is_local_mac/5 (198931 (estimated locally),0.55 per call) 
+  Called by: bridgeif_fdb_remove/3 (719880 (estimated locally),2.18 per call) bridgeif_find_dst_ports/4 (507343012 (estimated locally),5.83 per call) bridgeif_is_local_mac/5 (582451 (estimated locally),1.61 per call) bridgeif_is_local_mac/5 (164612 (estimated locally),0.46 per call) 
   Calls: 
-memcpy/12 (memcpy) @06d5e380
+sys_arch_unprotect/14 (sys_arch_unprotect) @061f07e0
   Type: function
   Visibility: external public
   References: 
   Referring: 
   Availability: not_available
   Function flags: optimize_size
-  Called by: bridgeif_init/10 (39963 (estimated locally),0.11 per call) bridgeif_init/10 (40144 (estimated locally),0.11 per call) bridgeif_fdb_add/2 (85209 (estimated locally),0.24 per call) 
+  Called by: bridgeif_fdb_remove/3 (83796 (estimated locally),0.25 per call) bridgeif_fdb_remove/3 (39593 (estimated locally),0.12 per call) bridgeif_fdb_add/2 (63439 (estimated locally),0.19 per call) bridgeif_fdb_add/2 (59950 (estimated locally),0.18 per call) bridgeif_find_dst_ports/4 (46228881 (estimated locally),0.53 per call) bridgeif_find_dst_ports/4 (12826920 (estimated locally),0.15 per call) bridgeif_find_dst_ports/4 (27903866 (estimated locally),0.32 per call) bridgeif_is_local_mac/5 (48428 (estimated locally),0.13 per call) bridgeif_is_local_mac/5 (32035 (estimated locally),0.09 per call) bridgeif_send_to_ports/7 (134217728 (estimated locally),1.00 per call) 
   Calls: 
-bridgeif_add_port/11 (bridgeif_add_port) @06d46ee0
+memcpy/13 (memcpy) @061f0700
+  Type: function
+  Visibility: external public
+  References: 
+  Referring: 
+  Availability: not_available
+  Function flags: optimize_size
+  Called by: bridgeif_init/10 (39963 (estimated locally),0.11 per call) bridgeif_init/10 (40144 (estimated locally),0.11 per call) bridgeif_fdb_add/2 (59950 (estimated locally),0.18 per call) 
+  Calls: 
+sys_arch_protect/12 (sys_arch_protect) @061f0620
+  Type: function
+  Visibility: external public
+  References: 
+  Referring: 
+  Availability: not_available
+  Function flags: optimize_size
+  Called by: bridgeif_fdb_remove/3 (123389 (estimated locally),0.37 per call) bridgeif_fdb_add/2 (123389 (estimated locally),0.37 per call) bridgeif_find_dst_ports/4 (86959666 (estimated locally),1.00 per call) bridgeif_is_local_mac/5 (80462 (estimated locally),0.22 per call) bridgeif_send_to_ports/7 (134217728 (estimated locally),1.00 per call) 
+  Calls: 
+bridgeif_add_port/11 (bridgeif_add_port) @061f01c0
   Type: function definition analyzed
   Visibility: externally_visible public
-  Aux: @06b88550
+  Aux: @060f10d0
   References: bridgeif_input/9 (addr)bridgeif_netif_client_id/1 (read)
   Referring: 
   Availability: available
   Function flags: count:357913 (estimated locally) body optimize_size
   Called by: 
   Calls: 
-bridgeif_init/10 (bridgeif_init) @06d46e00
+bridgeif_init/10 (bridgeif_init) @061d8d20
   Type: function definition analyzed
   Visibility: externally_visible public
-  Aux: @06b88750
-  References: bridgeif_netif_client_id/1 (read)bridgeif_netif_client_id/1 (write)etharp_output/19 (addr)ethip6_output/20 (addr)bridgeif_output/8 (addr)
+  Aux: @060f0c70
+  References: bridgeif_netif_client_id/1 (read)bridgeif_netif_client_id/1 (write)etharp_output/21 (addr)ethip6_output/22 (addr)bridgeif_output/8 (addr)
   Referring: 
   Availability: available
   Function flags: count:357913 (estimated locally) body optimize_size
   Called by: 
-  Calls: memcpy/12 (39963 (estimated locally),0.11 per call) mem_free/18 (181 (estimated locally),0.00 per call) bridgeif_fdb_init/17 (40144 (estimated locally),0.11 per call) memcpy/12 (40144 (estimated locally),0.11 per call) mem_calloc/16 (40512 (estimated locally),0.11 per call) netif_alloc_client_data_id/15 (35496 (estimated locally),0.10 per call) 
+  Calls: memcpy/13 (39963 (estimated locally),0.11 per call) mem_free/20 (181 (estimated locally),0.00 per call) bridgeif_fdb_init/19 (40144 (estimated locally),0.11 per call) memcpy/13 (40144 (estimated locally),0.11 per call) mem_calloc/18 (40512 (estimated locally),0.11 per call) netif_alloc_client_data_id/17 (35496 (estimated locally),0.10 per call) 
    Indirect call(27974 (estimated locally),0.08 per call)  of param:0 loaded from aggregate passed by reference at offset 2304 (vptr maybe changed)
-bridgeif_input/9 (bridgeif_input) @06d46a80
+bridgeif_input/9 (bridgeif_input) @061d8c40
   Type: function definition analyzed
   Visibility: prevailing_def_ironly
   Address is taken.
-  Aux: @06b88650
+  Aux: @060f0c90
   References: bridgeif_netif_client_id/1 (read)
   Referring: bridgeif_add_port/11 (addr)
   Availability: available
   Function flags: count:361156 (estimated locally) body optimize_size
   Called by: 
-  Calls: pbuf_free/24 (65647 (estimated locally),0.18 per call) bridgeif_send_to_ports/7 (65647 (estimated locally),0.18 per call) bridgeif_find_dst_ports/4 (65647 (estimated locally),0.18 per call) bridgeif_is_local_mac/5 (inlined) (198931 (estimated locally),0.55 per call) pbuf_free/24 (20940 (estimated locally),0.06 per call) pbuf_free/24 (9749 (estimated locally),0.03 per call) bridgeif_send_to_ports/7 (50481 (estimated locally),0.14 per call) bridgeif_find_dst_ports/4 (50481 (estimated locally),0.14 per call) bridgeif_fdb_update_src/23 (82306 (estimated locally),0.23 per call) 
-   Indirect call(133284 (estimated locally),0.37 per call) 
-   Indirect call(29541 (estimated locally),0.08 per call) 
-bridgeif_output/8 (bridgeif_output) @06d467e0
+  Calls: pbuf_free/26 (54322 (estimated locally),0.15 per call) bridgeif_send_to_ports/7 (54322 (estimated locally),0.15 per call) bridgeif_find_dst_ports/4 (54322 (estimated locally),0.15 per call) bridgeif_is_local_mac/5 (inlined) (164612 (estimated locally),0.46 per call) pbuf_free/26 (35175 (estimated locally),0.10 per call) pbuf_free/26 (16376 (estimated locally),0.05 per call) bridgeif_send_to_ports/7 (84800 (estimated locally),0.23 per call) bridgeif_find_dst_ports/4 (84800 (estimated locally),0.23 per call) bridgeif_fdb_update_src/25 (82306 (estimated locally),0.23 per call) 
+   Indirect call(110290 (estimated locally),0.31 per call) 
+   Indirect call(49625 (estimated locally),0.14 per call) 
+bridgeif_output/8 (bridgeif_output) @061d89a0
   Type: function definition analyzed
   Visibility: prevailing_def_ironly
   Address is taken.
-  Aux: @06b887b0
-  References: lwip_stats/21 (read)lwip_stats/21 (write)
+  Aux: @060f0cb0
+  References: lwip_stats/23 (read)lwip_stats/23 (write)
   Referring: bridgeif_init/10 (addr)
   Availability: available
   Function flags: count:1073741824 (estimated locally) body optimize_size
   Called by: 
   Calls: bridgeif_send_to_ports/7 (1073741824 (estimated locally),1.00 per call) bridgeif_find_dst_ports/4 (1073741824 (estimated locally),1.00 per call) 
-bridgeif_send_to_ports/7 (bridgeif_send_to_ports) @06d462a0
+bridgeif_send_to_ports/7 (bridgeif_send_to_ports) @061d8460
   Type: function definition analyzed
   Visibility: prevailing_def_ironly
-  Aux: @06b885d0
+  Aux: @060f0cd0
   References: 
   Referring: 
   Availability: local
   Function flags: count:134217728 (estimated locally) body local optimize_size
-  Called by: bridgeif_input/9 (65647 (estimated locally),0.18 per call) bridgeif_input/9 (50481 (estimated locally),0.14 per call) bridgeif_output/8 (1073741824 (estimated locally),1.00 per call) 
-  Calls: bridgeif_send_to_port/6 (inlined) (310042952 (estimated locally),2.31 per call) 
-bridgeif_send_to_port/6 (bridgeif_send_to_port) @06d46000
+  Called by: bridgeif_input/9 (54322 (estimated locally),0.15 per call) bridgeif_input/9 (84800 (estimated locally),0.23 per call) bridgeif_output/8 (1073741824 (estimated locally),1.00 per call) 
+  Calls: sys_arch_unprotect/14 (134217728 (estimated locally),1.00 per call) bridgeif_send_to_port/6 (inlined) (310042952 (estimated locally),2.31 per call) sys_arch_protect/12 (134217728 (estimated locally),1.00 per call) 
+bridgeif_send_to_port/6 (bridgeif_send_to_port) @061d81c0
   Type: function definition analyzed
   Visibility: prevailing_def_ironly
-  Aux: @06b887f0
+  Aux: @05c452b8
   References: 
   Referring: 
   Function bridgeif_send_to_port/6 is inline copy in bridgeif_send_to_ports/7
@@ -1102,109 +1115,109 @@ bridgeif_send_to_port/6 (bridgeif_send_to_port) @06d46000
   Called by: bridgeif_send_to_ports/7 (inlined) (310042952 (estimated locally),2.31 per call) 
   Calls: 
    Indirect call(8522522 (estimated locally),0.06 per call) 
-bridgeif_is_local_mac/5 (bridgeif_is_local_mac) @06d3be00
+bridgeif_is_local_mac/5 (bridgeif_is_local_mac) @061cc620
   Type: function definition analyzed
   Visibility: prevailing_def_ironly
-  Aux: @06b88610
+  Aux: @05c45278
   References: 
   Referring: 
   Function bridgeif_is_local_mac/5 is inline copy in bridgeif_input/9
   Availability: local
-  Function flags: count:198931 (estimated locally) body local optimize_size
-  Called by: bridgeif_input/9 (inlined) (198931 (estimated locally),0.55 per call) 
-  Calls: memcmp/13 (950415 (estimated locally),2.63 per call) memcmp/13 (198931 (estimated locally),0.55 per call) 
-bridgeif_find_dst_ports/4 (bridgeif_find_dst_ports) @06d3bb60
+  Function flags: count:164612 (estimated locally) body local optimize_size
+  Called by: bridgeif_input/9 (inlined) (164612 (estimated locally),0.46 per call) 
+  Calls: sys_arch_unprotect/14 (48428 (estimated locally),0.13 per call) sys_arch_unprotect/14 (32035 (estimated locally),0.09 per call) memcmp/15 (582451 (estimated locally),1.61 per call) sys_arch_protect/12 (80462 (estimated locally),0.22 per call) memcmp/15 (164612 (estimated locally),0.46 per call) 
+bridgeif_find_dst_ports/4 (bridgeif_find_dst_ports) @061ccd20
   Type: function definition analyzed
   Visibility: prevailing_def_ironly
-  Aux: @06b88630
+  Aux: @05c665f8
   References: 
   Referring: 
   Availability: local
   Function flags: count:86959666 (estimated locally) body local optimize_size
-  Called by: bridgeif_input/9 (65647 (estimated locally),0.18 per call) bridgeif_input/9 (50481 (estimated locally),0.14 per call) bridgeif_output/8 (1073741824 (estimated locally),1.00 per call) 
-  Calls: bridgeif_find_dst_ports.part.0/25 (inlined) (37777995 (estimated locally),0.43 per call) memcmp/13 (507343012 (estimated locally),5.83 per call) 
-bridgeif_fdb_remove/3 (bridgeif_fdb_remove) @06d3b8c0
+  Called by: bridgeif_input/9 (54322 (estimated locally),0.15 per call) bridgeif_input/9 (84800 (estimated locally),0.23 per call) bridgeif_output/8 (1073741824 (estimated locally),1.00 per call) 
+  Calls: bridgeif_fdb_get_dst_ports/24 (46228881 (estimated locally),0.53 per call) sys_arch_unprotect/14 (46228881 (estimated locally),0.53 per call) sys_arch_unprotect/14 (12826920 (estimated locally),0.15 per call) sys_arch_unprotect/14 (27903866 (estimated locally),0.32 per call) memcmp/15 (507343012 (estimated locally),5.83 per call) sys_arch_protect/12 (86959666 (estimated locally),1.00 per call) 
+bridgeif_fdb_remove/3 (bridgeif_fdb_remove) @061cca80
   Type: function definition analyzed
   Visibility: externally_visible public
-  Aux: @06b88670
+  Aux: @05c66298
   References: 
   Referring: 
   Availability: available
-  Function flags: count:357913 (estimated locally) body optimize_size
+  Function flags: count:329661 (estimated locally) body optimize_size
   Called by: 
-  Calls: memset/14 (56276 (estimated locally),0.16 per call) memcmp/13 (1023194 (estimated locally),2.86 per call) 
-bridgeif_fdb_add/2 (bridgeif_fdb_add) @06d3b620
+  Calls: sys_arch_unprotect/14 (83796 (estimated locally),0.25 per call) sys_arch_unprotect/14 (39593 (estimated locally),0.12 per call) memset/16 (39593 (estimated locally),0.12 per call) memcmp/15 (719880 (estimated locally),2.18 per call) sys_arch_protect/12 (123389 (estimated locally),0.37 per call) 
+bridgeif_fdb_add/2 (bridgeif_fdb_add) @061cc7e0
   Type: function definition analyzed
   Visibility: externally_visible public
-  Aux: @06b88690
+  Aux: @05c665d8
   References: 
   Referring: 
   Availability: available
-  Function flags: count:357913 (estimated locally) body optimize_size
+  Function flags: count:329661 (estimated locally) body optimize_size
   Called by: 
-  Calls: memcpy/12 (85209 (estimated locally),0.24 per call) 
+  Calls: sys_arch_unprotect/14 (63439 (estimated locally),0.19 per call) sys_arch_unprotect/14 (59950 (estimated locally),0.18 per call) memcpy/13 (59950 (estimated locally),0.18 per call) sys_arch_protect/12 (123389 (estimated locally),0.37 per call) 
 
 
  ordered call graph: reduced
-bridgeif_add_port/11 (bridgeif_add_port) @06d46ee0
+bridgeif_add_port/11 (bridgeif_add_port) @061f01c0
   Type: function definition analyzed
   Visibility: externally_visible public
-  Aux: @06b88550
+  Aux: @060f10d0
   References: bridgeif_input/9 (addr)bridgeif_netif_client_id/1 (read)
   Referring: 
   Availability: available
   Function flags: count:357913 (estimated locally) body optimize_size
   Called by: 
   Calls: 
-bridgeif_init/10 (bridgeif_init) @06d46e00
+bridgeif_init/10 (bridgeif_init) @061d8d20
   Type: function definition analyzed
   Visibility: externally_visible public
-  Aux: @06b88750
-  References: bridgeif_netif_client_id/1 (read)bridgeif_netif_client_id/1 (write)etharp_output/19 (addr)ethip6_output/20 (addr)bridgeif_output/8 (addr)
+  Aux: @060f0c70
+  References: bridgeif_netif_client_id/1 (read)bridgeif_netif_client_id/1 (write)etharp_output/21 (addr)ethip6_output/22 (addr)bridgeif_output/8 (addr)
   Referring: 
   Availability: available
   Function flags: count:357913 (estimated locally) body optimize_size
   Called by: 
-  Calls: memcpy/12 (39963 (estimated locally),0.11 per call) mem_free/18 (181 (estimated locally),0.00 per call) bridgeif_fdb_init/17 (40144 (estimated locally),0.11 per call) memcpy/12 (40144 (estimated locally),0.11 per call) mem_calloc/16 (40512 (estimated locally),0.11 per call) netif_alloc_client_data_id/15 (35496 (estimated locally),0.10 per call) 
+  Calls: memcpy/13 (39963 (estimated locally),0.11 per call) mem_free/20 (181 (estimated locally),0.00 per call) bridgeif_fdb_init/19 (40144 (estimated locally),0.11 per call) memcpy/13 (40144 (estimated locally),0.11 per call) mem_calloc/18 (40512 (estimated locally),0.11 per call) netif_alloc_client_data_id/17 (35496 (estimated locally),0.10 per call) 
    Indirect call(27974 (estimated locally),0.08 per call)  of param:0 loaded from aggregate passed by reference at offset 2304 (vptr maybe changed)
-bridgeif_input/9 (bridgeif_input) @06d46a80
+bridgeif_input/9 (bridgeif_input) @061d8c40
   Type: function definition analyzed
   Visibility: prevailing_def_ironly
   Address is taken.
-  Aux: @06b88650
+  Aux: @060f0c90
   References: bridgeif_netif_client_id/1 (read)
   Referring: bridgeif_add_port/11 (addr)
   Availability: available
   Function flags: count:361156 (estimated locally) body optimize_size
   Called by: 
-  Calls: pbuf_free/24 (65647 (estimated locally),0.18 per call) bridgeif_send_to_ports/7 (65647 (estimated locally),0.18 per call) bridgeif_find_dst_ports/4 (65647 (estimated locally),0.18 per call) bridgeif_is_local_mac/5 (inlined) (198931 (estimated locally),0.55 per call) pbuf_free/24 (20940 (estimated locally),0.06 per call) pbuf_free/24 (9749 (estimated locally),0.03 per call) bridgeif_send_to_ports/7 (50481 (estimated locally),0.14 per call) bridgeif_find_dst_ports/4 (50481 (estimated locally),0.14 per call) bridgeif_fdb_update_src/23 (82306 (estimated locally),0.23 per call) 
-   Indirect call(133284 (estimated locally),0.37 per call) 
-   Indirect call(29541 (estimated locally),0.08 per call) 
-bridgeif_output/8 (bridgeif_output) @06d467e0
+  Calls: pbuf_free/26 (54322 (estimated locally),0.15 per call) bridgeif_send_to_ports/7 (54322 (estimated locally),0.15 per call) bridgeif_find_dst_ports/4 (54322 (estimated locally),0.15 per call) bridgeif_is_local_mac/5 (inlined) (164612 (estimated locally),0.46 per call) pbuf_free/26 (35175 (estimated locally),0.10 per call) pbuf_free/26 (16376 (estimated locally),0.05 per call) bridgeif_send_to_ports/7 (84800 (estimated locally),0.23 per call) bridgeif_find_dst_ports/4 (84800 (estimated locally),0.23 per call) bridgeif_fdb_update_src/25 (82306 (estimated locally),0.23 per call) 
+   Indirect call(110290 (estimated locally),0.31 per call) 
+   Indirect call(49625 (estimated locally),0.14 per call) 
+bridgeif_output/8 (bridgeif_output) @061d89a0
   Type: function definition analyzed
   Visibility: prevailing_def_ironly
   Address is taken.
-  Aux: @06b887b0
-  References: lwip_stats/21 (read)lwip_stats/21 (write)
+  Aux: @060f0cb0
+  References: lwip_stats/23 (read)lwip_stats/23 (write)
   Referring: bridgeif_init/10 (addr)
   Availability: available
   Function flags: count:1073741824 (estimated locally) body optimize_size
   Called by: 
   Calls: bridgeif_send_to_ports/7 (1073741824 (estimated locally),1.00 per call) bridgeif_find_dst_ports/4 (1073741824 (estimated locally),1.00 per call) 
-bridgeif_send_to_ports/7 (bridgeif_send_to_ports) @06d462a0
+bridgeif_send_to_ports/7 (bridgeif_send_to_ports) @061d8460
   Type: function definition analyzed
   Visibility: prevailing_def_ironly
-  Aux: @06b885d0
+  Aux: @060f0cd0
   References: 
   Referring: 
   Availability: local
   Function flags: count:134217728 (estimated locally) body local optimize_size
-  Called by: bridgeif_input/9 (65647 (estimated locally),0.18 per call) bridgeif_input/9 (50481 (estimated locally),0.14 per call) bridgeif_output/8 (1073741824 (estimated locally),1.00 per call) 
-  Calls: bridgeif_send_to_port/6 (inlined) (310042952 (estimated locally),2.31 per call) 
-bridgeif_send_to_port/6 (bridgeif_send_to_port) @06d46000
+  Called by: bridgeif_input/9 (54322 (estimated locally),0.15 per call) bridgeif_input/9 (84800 (estimated locally),0.23 per call) bridgeif_output/8 (1073741824 (estimated locally),1.00 per call) 
+  Calls: sys_arch_unprotect/14 (134217728 (estimated locally),1.00 per call) bridgeif_send_to_port/6 (inlined) (310042952 (estimated locally),2.31 per call) sys_arch_protect/12 (134217728 (estimated locally),1.00 per call) 
+bridgeif_send_to_port/6 (bridgeif_send_to_port) @061d81c0
   Type: function definition analyzed
   Visibility: prevailing_def_ironly
-  Aux: @06b887f0
+  Aux: @05c452b8
   References: 
   Referring: 
   Function bridgeif_send_to_port/6 is inline copy in bridgeif_send_to_ports/7
@@ -1213,81 +1226,47 @@ bridgeif_send_to_port/6 (bridgeif_send_to_port) @06d46000
   Called by: bridgeif_send_to_ports/7 (inlined) (310042952 (estimated locally),2.31 per call) 
   Calls: 
    Indirect call(8522522 (estimated locally),0.06 per call) 
-bridgeif_is_local_mac/5 (bridgeif_is_local_mac) @06d3be00
+bridgeif_is_local_mac/5 (bridgeif_is_local_mac) @061cc620
   Type: function definition analyzed
   Visibility: prevailing_def_ironly
-  Aux: @06b88610
+  Aux: @05c45278
   References: 
   Referring: 
   Function bridgeif_is_local_mac/5 is inline copy in bridgeif_input/9
   Availability: local
-  Function flags: count:198931 (estimated locally) body local optimize_size
-  Called by: bridgeif_input/9 (inlined) (198931 (estimated locally),0.55 per call) 
-  Calls: memcmp/13 (950415 (estimated locally),2.63 per call) memcmp/13 (198931 (estimated locally),0.55 per call) 
-bridgeif_find_dst_ports/4 (bridgeif_find_dst_ports) @06d3bb60
+  Function flags: count:164612 (estimated locally) body local optimize_size
+  Called by: bridgeif_input/9 (inlined) (164612 (estimated locally),0.46 per call) 
+  Calls: sys_arch_unprotect/14 (48428 (estimated locally),0.13 per call) sys_arch_unprotect/14 (32035 (estimated locally),0.09 per call) memcmp/15 (582451 (estimated locally),1.61 per call) sys_arch_protect/12 (80462 (estimated locally),0.22 per call) memcmp/15 (164612 (estimated locally),0.46 per call) 
+bridgeif_find_dst_ports/4 (bridgeif_find_dst_ports) @061ccd20
   Type: function definition analyzed
   Visibility: prevailing_def_ironly
-  Aux: @06b88630
+  Aux: @05c665f8
   References: 
   Referring: 
   Availability: local
   Function flags: count:86959666 (estimated locally) body local optimize_size
-  Called by: bridgeif_input/9 (65647 (estimated locally),0.18 per call) bridgeif_input/9 (50481 (estimated locally),0.14 per call) bridgeif_output/8 (1073741824 (estimated locally),1.00 per call) 
-  Calls: bridgeif_find_dst_ports.part.0/25 (inlined) (37777995 (estimated locally),0.43 per call) memcmp/13 (507343012 (estimated locally),5.83 per call) 
-bridgeif_find_dst_ports.part.0/25 (bridgeif_find_dst_ports.part.0) @06b928c0
-  Type: function definition analyzed
-  Visibility: prevailing_def_ironly artificial
-  Aux: @06b885b0
-  References: 
-  Referring: 
-  Function bridgeif_find_dst_ports.part.0/25 is inline copy in bridgeif_find_dst_ports/4
-  Availability: local
-  Function flags: count:37777995 (estimated locally) first_run:1 body local split_part optimize_size
-  Called by: bridgeif_find_dst_ports/4 (inlined) (37777995 (estimated locally),0.43 per call) 
-  Calls: bridgeif_fdb_get_dst_ports/22 (37777995 (estimated locally),0.43 per call) 
-bridgeif_fdb_remove/3 (bridgeif_fdb_remove) @06d3b8c0
+  Called by: bridgeif_input/9 (54322 (estimated locally),0.15 per call) bridgeif_input/9 (84800 (estimated locally),0.23 per call) bridgeif_output/8 (1073741824 (estimated locally),1.00 per call) 
+  Calls: bridgeif_fdb_get_dst_ports/24 (46228881 (estimated locally),0.53 per call) sys_arch_unprotect/14 (46228881 (estimated locally),0.53 per call) sys_arch_unprotect/14 (12826920 (estimated locally),0.15 per call) sys_arch_unprotect/14 (27903866 (estimated locally),0.32 per call) memcmp/15 (507343012 (estimated locally),5.83 per call) sys_arch_protect/12 (86959666 (estimated locally),1.00 per call) 
+bridgeif_fdb_remove/3 (bridgeif_fdb_remove) @061cca80
   Type: function definition analyzed
   Visibility: externally_visible public
-  Aux: @06b88670
+  Aux: @05c66298
   References: 
   Referring: 
   Availability: available
-  Function flags: count:357913 (estimated locally) body optimize_size
+  Function flags: count:329661 (estimated locally) body optimize_size
   Called by: 
-  Calls: memset/14 (56276 (estimated locally),0.16 per call) memcmp/13 (1023194 (estimated locally),2.86 per call) 
-bridgeif_fdb_add/2 (bridgeif_fdb_add) @06d3b620
+  Calls: sys_arch_unprotect/14 (83796 (estimated locally),0.25 per call) sys_arch_unprotect/14 (39593 (estimated locally),0.12 per call) memset/16 (39593 (estimated locally),0.12 per call) memcmp/15 (719880 (estimated locally),2.18 per call) sys_arch_protect/12 (123389 (estimated locally),0.37 per call) 
+bridgeif_fdb_add/2 (bridgeif_fdb_add) @061cc7e0
   Type: function definition analyzed
   Visibility: externally_visible public
-  Aux: @06b88690
+  Aux: @05c665d8
   References: 
   Referring: 
   Availability: available
-  Function flags: count:357913 (estimated locally) body optimize_size
+  Function flags: count:329661 (estimated locally) body optimize_size
   Called by: 
-  Calls: memcpy/12 (85209 (estimated locally),0.24 per call) 
-
-bridgeif_find_dst_ports.part.0 (struct bridgeif_private_t * br, struct eth_addr * dst_addr)
-{
-  int i;
-  bridgeif_portmask_t ret;
-  void * _2;
-  unsigned char _4;
-  unsigned char _5;
-
-  <bb 4> [local count: 1073741824]:
-
-  <bb 2> [local count: 1073741824]:
-  # DEBUG BEGIN_STMT
-  # DEBUG BEGIN_STMT
-  _2 = br_1(D)->fdbd;
-  _4 = bridgeif_fdb_get_dst_ports (_2, dst_addr_3(D));
-
-  <bb 3> [local count: 1073741824]:
-  # _5 = PHI <_4(2)>
-  return _5;
-
-}
-
+  Calls: sys_arch_unprotect/14 (63439 (estimated locally),0.19 per call) sys_arch_unprotect/14 (59950 (estimated locally),0.18 per call) memcpy/13 (59950 (estimated locally),0.18 per call) sys_arch_protect/12 (123389 (estimated locally),0.37 per call) 
 
 bridgeif_add_port (struct netif * bridgeif, struct netif * portif)
 {
@@ -1434,7 +1413,7 @@ bridgeif_init (struct netif * netif)
   size_t alloc_len_sizet;
   struct bridgeif_private_t * br;
   struct bridgeif_initdata_t * init_data;
-  err_t (*<T6c7>) (struct pbuf *, struct netif *) _1;
+  err_t (*<T6c9>) (struct pbuf *, struct netif *) _1;
   unsigned char bridgeif_netif_client_id.10_2;
   unsigned char _3;
   unsigned char _4;
@@ -1455,7 +1434,7 @@ bridgeif_init (struct netif * netif)
   short unsigned int _19;
   void * _20;
   u8_t[6] * _21;
-  err_t (*<T6e3>) (struct netif *, const struct ip6_addr_t *, netif_mac_filter_action) _22;
+  err_t (*<T6e5>) (struct netif *, const struct ip6_addr_t *, netif_mac_filter_action) _22;
   err_t _23;
   sizetype _79;
 
@@ -1734,15 +1713,15 @@ bridgeif_input (struct pbuf * p, struct netif * netif)
   unsigned char _8;
   signed char dstports.17_9;
   struct netif * _10;
-  err_t (*<T6c7>) (struct pbuf *, struct netif *) _11;
+  err_t (*<T6c9>) (struct pbuf *, struct netif *) _11;
   signed char _12;
   int _13;
   struct netif * _14;
-  err_t (*<T6c7>) (struct pbuf *, struct netif *) _15;
+  err_t (*<T6c9>) (struct pbuf *, struct netif *) _15;
   err_t _16;
-  unsigned char _34;
-  err_t _36;
-  unsigned char _43;
+  unsigned char _35;
+  err_t _37;
+  unsigned char _44;
 
   <bb 2> [local count: 361156]:
   # DEBUG BEGIN_STMT
@@ -1813,8 +1792,8 @@ bridgeif_input (struct pbuf * p, struct netif * netif)
   # DEBUG src => src_28
   # DEBUG BEGIN_STMT
   _5 = MEM[(struct eth_addr *)dst_27 + 6B].addr[0];
-  _34 = _5 & 1;
-  if (_34 == 0)
+  _35 = _5 & 1;
+  if (_35 == 0)
     goto <bb 8>; [33.00%]
   else
     goto <bb 9>; [67.00%]
@@ -1828,26 +1807,26 @@ bridgeif_input (struct pbuf * p, struct netif * netif)
   <bb 9> [local count: 249412]:
   # DEBUG BEGIN_STMT
   _8 = dst_27->addr[0];
-  _43 = _8 & 1;
-  if (_43 != 0)
-    goto <bb 10>; [20.24%]
+  _44 = _8 & 1;
+  if (_44 != 0)
+    goto <bb 10>; [34.00%]
   else
-    goto <bb 15>; [79.76%]
+    goto <bb 15>; [66.00%]
 
-  <bb 10> [local count: 50481]:
+  <bb 10> [local count: 84800]:
   # DEBUG BEGIN_STMT
-  dstports_38 = bridgeif_find_dst_ports (_3, dst_27);
-  # DEBUG dstports => dstports_38
+  dstports_39 = bridgeif_find_dst_ports (_3, dst_27);
+  # DEBUG dstports => dstports_39
   # DEBUG BEGIN_STMT
-  bridgeif_send_to_ports (_3, p_21(D), dstports_38);
+  bridgeif_send_to_ports (_3, p_21(D), dstports_39);
   # DEBUG BEGIN_STMT
-  dstports.17_9 = (signed char) dstports_38;
+  dstports.17_9 = (signed char) dstports_39;
   if (dstports.17_9 < 0)
     goto <bb 11>; [58.52%]
   else
     goto <bb 13>; [41.48%]
 
-  <bb 11> [local count: 29541]:
+  <bb 11> [local count: 49625]:
   # DEBUG BEGIN_STMT
   # DEBUG BEGIN_STMT
   _10 = MEM[(struct bridgeif_private_t *)_3].netif;
@@ -1858,20 +1837,20 @@ bridgeif_input (struct pbuf * p, struct netif * netif)
   else
     goto <bb 14>; [67.00%]
 
-  <bb 12> [local count: 9749]:
+  <bb 12> [local count: 16376]:
   # DEBUG BEGIN_STMT
   pbuf_free (p_21(D));
   goto <bb 14>; [100.00%]
 
-  <bb 13> [local count: 20940]:
+  <bb 13> [local count: 35175]:
   # DEBUG BEGIN_STMT
   pbuf_free (p_21(D));
 
-  <bb 14> [local count: 50481]:
+  <bb 14> [local count: 84800]:
   # DEBUG BEGIN_STMT
   goto <bb 18>; [100.00%]
 
-  <bb 15> [local count: 198931]:
+  <bb 15> [local count: 164612]:
   # DEBUG BEGIN_STMT
   _13 = bridgeif_is_local_mac (_3, dst_27);
   if (_13 != 0)
@@ -1879,26 +1858,26 @@ bridgeif_input (struct pbuf * p, struct netif * netif)
   else
     goto <bb 17>; [33.00%]
 
-  <bb 16> [local count: 133284]:
+  <bb 16> [local count: 110290]:
   # DEBUG BEGIN_STMT
   # DEBUG BEGIN_STMT
   _14 = MEM[(struct bridgeif_private_t *)_3].netif;
   _15 = _14->input;
-  _36 = _15 (p_21(D), _14);
+  _37 = _15 (p_21(D), _14);
   goto <bb 18>; [100.00%]
 
-  <bb 17> [local count: 65647]:
+  <bb 17> [local count: 54322]:
   # DEBUG BEGIN_STMT
-  dstports_31 = bridgeif_find_dst_ports (_3, dst_27);
-  # DEBUG dstports => dstports_31
+  dstports_32 = bridgeif_find_dst_ports (_3, dst_27);
+  # DEBUG dstports => dstports_32
   # DEBUG BEGIN_STMT
-  bridgeif_send_to_ports (_3, p_21(D), dstports_31);
+  bridgeif_send_to_ports (_3, p_21(D), dstports_32);
   # DEBUG BEGIN_STMT
   pbuf_free (p_21(D));
   # DEBUG BEGIN_STMT
 
   <bb 18> [local count: 253782]:
-  # _16 = PHI <-6(3), -6(6), 0(14), _36(16), 0(17), -6(2)>
+  # _16 = PHI <-6(3), -6(6), 0(14), _37(16), 0(17), -6(2)>
   return _16;
 
 }
@@ -1985,6 +1964,7 @@ bridgeif_output (struct netif * netif, struct pbuf * p)
 
 bridgeif_send_to_ports (struct bridgeif_private_t * br, struct pbuf * p, bridgeif_portmask_t dstports)
 {
+  sys_prot_t lev;
   bridgeif_portmask_t mask;
   u8_t i;
   err_t ret_err;
@@ -1999,13 +1979,15 @@ bridgeif_send_to_ports (struct bridgeif_private_t * br, struct pbuf * p, bridgei
   # DEBUG mask => 1
   # DEBUG BEGIN_STMT
   # DEBUG BEGIN_STMT
+  lev_11 = sys_arch_protect ();
+  # DEBUG lev => lev_11
   # DEBUG BEGIN_STMT
   # DEBUG i => 0
   goto <bb 7>; [100.00%]
 
   <bb 3> [local count: 939524097]:
   # DEBUG BEGIN_STMT
-  _1 = mask_6 & dstports_10(D);
+  _1 = mask_6 & dstports_13(D);
   if (_1 != 0)
     goto <bb 4>; [33.00%]
   else
@@ -2013,31 +1995,31 @@ bridgeif_send_to_ports (struct bridgeif_private_t * br, struct pbuf * p, bridgei
 
   <bb 4> [local count: 310042952]:
   # DEBUG BEGIN_STMT
-  err_14 = bridgeif_send_to_port (br_11(D), p_12(D), i_5);
-  # DEBUG err => err_14
+  err_17 = bridgeif_send_to_port (br_14(D), p_15(D), i_5);
+  # DEBUG err => err_17
   # DEBUG BEGIN_STMT
-  if (err_14 != 0)
+  if (err_17 != 0)
     goto <bb 5>; [50.00%]
   else
     goto <bb 6>; [50.00%]
 
   <bb 5> [local count: 155021476]:
   # DEBUG BEGIN_STMT
-  # DEBUG ret_err => err_14
+  # DEBUG ret_err => err_17
 
   <bb 6> [local count: 939524097]:
-  # ret_err_3 = PHI <ret_err_4(3), ret_err_4(4), err_14(5)>
+  # ret_err_3 = PHI <ret_err_4(3), ret_err_4(4), err_17(5)>
   # DEBUG ret_err => ret_err_3
   # DEBUG BEGIN_STMT
-  i_15 = i_5 + 1;
-  # DEBUG i => i_15
-  mask_16 = mask_6 << 1;
-  # DEBUG mask => mask_16
+  i_18 = i_5 + 1;
+  # DEBUG i => i_18
+  mask_19 = mask_6 << 1;
+  # DEBUG mask => mask_19
 
   <bb 7> [local count: 1073741824]:
   # ret_err_4 = PHI <0(2), ret_err_3(6)>
-  # i_5 = PHI <0(2), i_15(6)>
-  # mask_6 = PHI <1(2), mask_16(6)>
+  # i_5 = PHI <0(2), i_18(6)>
+  # mask_6 = PHI <1(2), mask_19(6)>
   # DEBUG mask => mask_6
   # DEBUG i => i_5
   # DEBUG ret_err => ret_err_4
@@ -2050,6 +2032,7 @@ bridgeif_send_to_ports (struct bridgeif_private_t * br, struct pbuf * p, bridgei
   <bb 8> [local count: 134217728]:
   # ret_err_2 = PHI <ret_err_4(7)>
   # DEBUG BEGIN_STMT
+  sys_arch_unprotect (lev_11);
   # DEBUG BEGIN_STMT
   return ret_err_2;
 
@@ -2064,7 +2047,7 @@ bridgeif_send_to_port (struct bridgeif_private_t * br, struct pbuf * p, u8_t dst
   unsigned int _3;
   unsigned int _4;
   struct bridgeif_port_t * _5;
-  err_t (*<T6d6>) (struct netif *, struct pbuf *) _6;
+  err_t (*<T6d8>) (struct netif *, struct pbuf *) _6;
   unsigned char _7;
   unsigned char _8;
   unsigned char _9;
@@ -2168,6 +2151,7 @@ bridgeif_send_to_port (struct bridgeif_private_t * br, struct pbuf * p, u8_t dst
 bridgeif_is_local_mac (struct bridgeif_private_t * br, struct eth_addr * addr)
 {
   struct netif * portif;
+  sys_prot_t lev;
   int i;
   struct netif * _1;
   u8_t[6] * _2;
@@ -2182,62 +2166,78 @@ bridgeif_is_local_mac (struct bridgeif_private_t * br, struct eth_addr * addr)
   int _11;
   int _13;
 
-  <bb 2> [local count: 148668506]:
+  <bb 2> [local count: 200738981]:
   # DEBUG BEGIN_STMT
   # DEBUG BEGIN_STMT
   # DEBUG BEGIN_STMT
-  _1 = br_15(D)->netif;
+  _1 = br_16(D)->netif;
   _2 = &_1->hwaddr;
-  _3 = memcmp (_2, addr_16(D), 6);
+  _3 = memcmp (_2, addr_17(D), 6);
   if (_3 == 0)
-    goto <bb 7>; [34.00%]
+    goto <bb 10>; [51.12%]
   else
-    goto <bb 8>; [66.00%]
+    goto <bb 3>; [48.88%]
 
-  <bb 8> [local count: 98121213]:
-  goto <bb 6>; [100.00%]
-
-  <bb 3> [local count: 1014686025]:
+  <bb 3> [local count: 98121214]:
   # DEBUG BEGIN_STMT
-  _4 = br_15(D)->ports;
+  lev_19 = sys_arch_protect ();
+  # DEBUG lev => lev_19
+  # DEBUG BEGIN_STMT
+  # DEBUG i => 0
+  goto <bb 8>; [100.00%]
+
+  <bb 4> [local count: 1014686024]:
+  # DEBUG BEGIN_STMT
+  _4 = br_16(D)->ports;
   i.18_5 = (unsigned int) i_12;
   _6 = i.18_5 * 12;
   _7 = _4 + _6;
-  portif_17 = _7->port_netif;
-  # DEBUG portif => portif_17
+  portif_21 = _7->port_netif;
+  # DEBUG portif => portif_21
   # DEBUG BEGIN_STMT
-  if (portif_17 != 0B)
-    goto <bb 4>; [70.00%]
+  if (portif_21 != 0B)
+    goto <bb 5>; [70.00%]
   else
-    goto <bb 5>; [30.00%]
+    goto <bb 7>; [30.00%]
 
-  <bb 4> [local count: 710280218]:
+  <bb 5> [local count: 710280216]:
   # DEBUG BEGIN_STMT
-  _8 = &portif_17->hwaddr;
-  _9 = memcmp (_8, addr_16(D), 6);
+  _8 = &portif_21->hwaddr;
+  _9 = memcmp (_8, addr_17(D), 6);
   if (_9 == 0)
-    goto <bb 7>; [5.50%]
+    goto <bb 6>; [5.50%]
   else
-    goto <bb 5>; [94.50%]
+    goto <bb 7>; [94.50%]
 
-  <bb 5> [local count: 975620613]:
+  <bb 6> [local count: 39065412]:
   # DEBUG BEGIN_STMT
-  i_18 = i_12 + 1;
-  # DEBUG i => i_18
+  sys_arch_unprotect (lev_19);
+  # DEBUG BEGIN_STMT
+  goto <bb 10>; [100.00%]
 
-  <bb 6> [local count: 1073741824]:
-  # i_12 = PHI <i_18(5), 0(8)>
+  <bb 7> [local count: 975620611]:
+  # DEBUG BEGIN_STMT
+  i_23 = i_12 + 1;
+  # DEBUG i => i_23
+
+  <bb 8> [local count: 1073741824]:
+  # i_12 = PHI <0(3), i_23(7)>
   # DEBUG i => i_12
   # DEBUG BEGIN_STMT
-  _10 = br_15(D)->num_ports;
+  _10 = br_16(D)->num_ports;
   _11 = (int) _10;
   if (_11 > i_12)
-    goto <bb 3>; [94.50%]
+    goto <bb 4>; [94.50%]
   else
-    goto <bb 7>; [5.50%]
+    goto <bb 9>; [5.50%]
 
-  <bb 7> [local count: 148668504]:
-  # _13 = PHI <1(2), 1(4), 0(6)>
+  <bb 9> [local count: 59055800]:
+  # DEBUG BEGIN_STMT
+  sys_arch_unprotect (lev_19);
+  # DEBUG BEGIN_STMT
+
+  <bb 10> [local count: 200738979]:
+  # _13 = PHI <1(2), 1(6), 0(9)>
   return _13;
 
 }
@@ -2246,6 +2246,7 @@ bridgeif_is_local_mac (struct bridgeif_private_t * br, struct eth_addr * addr)
 bridgeif_find_dst_ports (struct bridgeif_private_t * br, struct eth_addr * dst_addr)
 {
   bridgeif_portmask_t ret;
+  sys_prot_t lev;
   int i;
   struct bridgeif_fdb_static_entry_t * _1;
   unsigned int i.11_2;
@@ -2253,27 +2254,30 @@ bridgeif_find_dst_ports (struct bridgeif_private_t * br, struct eth_addr * dst_a
   struct bridgeif_fdb_static_entry_t * _4;
   unsigned char _5;
   struct bridgeif_fdb_static_entry_t * _6;
-  struct eth_addr * _8;
-  int _9;
-  short unsigned int _10;
-  int _11;
-  unsigned char _12;
-  unsigned char _13;
-  bridgeif_portmask_t _16;
-  unsigned char _17;
+  struct eth_addr * _7;
+  int _8;
+  short unsigned int _9;
+  int _10;
+  unsigned char _11;
+  void * _12;
+  bridgeif_portmask_t _14;
+  unsigned char _19;
+  bridgeif_portmask_t _24;
 
   <bb 2> [local count: 86959666]:
   # DEBUG BEGIN_STMT
   # DEBUG BEGIN_STMT
   # DEBUG BEGIN_STMT
+  lev_18 = sys_arch_protect ();
+  # DEBUG lev => lev_18
   # DEBUG BEGIN_STMT
   # DEBUG i => 0
   goto <bb 7>; [100.00%]
 
   <bb 3> [local count: 1014686025]:
   # DEBUG BEGIN_STMT
-  _1 = br_19(D)->fdbs;
-  i.11_2 = (unsigned int) i_15;
+  _1 = br_20(D)->fdbs;
+  i.11_2 = (unsigned int) i_13;
   _3 = i.11_2 * 8;
   _4 = _1 + _3;
   _5 = _4->used;
@@ -2284,9 +2288,9 @@ bridgeif_find_dst_ports (struct bridgeif_private_t * br, struct eth_addr * dst_a
 
   <bb 4> [local count: 507343012]:
   # DEBUG BEGIN_STMT
-  _8 = &_4->addr;
-  _9 = memcmp (_8, dst_addr_20(D), 6);
-  if (_9 == 0)
+  _7 = &_4->addr;
+  _8 = memcmp (_7, dst_addr_21(D), 6);
+  if (_8 == 0)
     goto <bb 5>; [5.50%]
   else
     goto <bb 6>; [94.50%]
@@ -2294,49 +2298,61 @@ bridgeif_find_dst_ports (struct bridgeif_private_t * br, struct eth_addr * dst_a
   <bb 5> [local count: 27903866]:
   # _6 = PHI <_4(4)>
   # DEBUG BEGIN_STMT
-  ret_21 = _6->dst_ports;
-  # DEBUG ret => ret_21
+  ret_26 = _6->dst_ports;
+  # DEBUG ret => ret_26
   # DEBUG BEGIN_STMT
+  sys_arch_unprotect (lev_18);
   # DEBUG BEGIN_STMT
-  goto <bb 10>; [100.00%]
+  goto <bb 11>; [100.00%]
 
   <bb 6> [local count: 986782159]:
   # DEBUG BEGIN_STMT
-  i_22 = i_15 + 1;
-  # DEBUG i => i_22
+  i_28 = i_13 + 1;
+  # DEBUG i => i_28
 
   <bb 7> [local count: 1073741824]:
-  # i_15 = PHI <0(2), i_22(6)>
-  # DEBUG i => i_15
+  # i_13 = PHI <0(2), i_28(6)>
+  # DEBUG i => i_13
   # DEBUG BEGIN_STMT
-  _10 = br_19(D)->max_fdbs_entries;
-  _11 = (int) _10;
-  if (_11 > i_15)
+  _9 = br_20(D)->max_fdbs_entries;
+  _10 = (int) _9;
+  if (_10 > i_13)
     goto <bb 3>; [94.50%]
   else
     goto <bb 8>; [5.50%]
 
   <bb 8> [local count: 59055800]:
   # DEBUG BEGIN_STMT
-  _12 = dst_addr_20(D)->addr[0];
-  _17 = _12 & 1;
-  if (_17 != 0)
-    goto <bb 10>; [36.03%]
+  _11 = dst_addr_21(D)->addr[0];
+  _19 = _11 & 1;
+  if (_19 != 0)
+    goto <bb 9>; [21.72%]
   else
-    goto <bb 9>; [63.97%]
+    goto <bb 10>; [78.28%]
 
-  <bb 9> [local count: 37777995]:
-  _13 = bridgeif_find_dst_ports.part.0 (br_19(D), dst_addr_20(D));
+  <bb 9> [local count: 12826920]:
+  # DEBUG BEGIN_STMT
+  sys_arch_unprotect (lev_18);
+  # DEBUG BEGIN_STMT
+  goto <bb 11>; [100.00%]
 
-  <bb 10> [local count: 86959666]:
-  # _16 = PHI <ret_21(5), 255(8), _13(9)>
-  return _16;
+  <bb 10> [local count: 46228881]:
+  # DEBUG BEGIN_STMT
+  sys_arch_unprotect (lev_18);
+  # DEBUG BEGIN_STMT
+  _12 = br_20(D)->fdbd;
+  _24 = bridgeif_fdb_get_dst_ports (_12, dst_addr_21(D));
+
+  <bb 11> [local count: 86959666]:
+  # _14 = PHI <ret_26(5), 255(9), _24(10)>
+  return _14;
 
 }
 
 
 bridgeif_fdb_remove (struct netif * bridgeif, const struct eth_addr * addr)
 {
+  sys_prot_t lev;
   struct bridgeif_private_t * br;
   int i;
   struct bridgeif_fdb_static_entry_t * _1;
@@ -2351,30 +2367,30 @@ bridgeif_fdb_remove (struct netif * bridgeif, const struct eth_addr * addr)
   int _10;
   err_t _12;
 
-  <bb 2> [local count: 357913]:
+  <bb 2> [local count: 329661]:
   # DEBUG BEGIN_STMT
   # DEBUG BEGIN_STMT
   # DEBUG BEGIN_STMT
   # DEBUG BEGIN_STMT
   # DEBUG BEGIN_STMT
   if (bridgeif_16(D) == 0B)
-    goto <bb 12>; [30.00%]
+    goto <bb 14>; [30.00%]
   else
     goto <bb 4>; [70.00%]
 
-  <bb 12> [local count: 107374]:
+  <bb 14> [local count: 98898]:
 
-  <bb 3> [local count: 1073741824]:
+  <bb 3> [local count: 988985746]:
   # DEBUG BEGIN_STMT
   # DEBUG BEGIN_STMT
   __asm__ __volatile__("BKPT #0
 	");
   # DEBUG BEGIN_STMT
 
-  <bb 15> [local count: 1073741824]:
+  <bb 16> [local count: 988985746]:
   goto <bb 3>; [100.00%]
 
-  <bb 4> [local count: 250539]:
+  <bb 4> [local count: 230763]:
   # DEBUG BEGIN_STMT
   # DEBUG BEGIN_STMT
   br_18 = bridgeif_16(D)->state;
@@ -2382,26 +2398,32 @@ bridgeif_fdb_remove (struct netif * bridgeif, const struct eth_addr * addr)
   # DEBUG BEGIN_STMT
   # DEBUG BEGIN_STMT
   if (br_18 == 0B)
-    goto <bb 13>; [30.00%]
+    goto <bb 15>; [46.53%]
   else
-    goto <bb 14>; [70.00%]
+    goto <bb 6>; [53.47%]
 
-  <bb 14> [local count: 175377]:
-  goto <bb 10>; [100.00%]
+  <bb 15> [local count: 107374]:
 
-  <bb 13> [local count: 75162]:
-
-  <bb 5> [local count: 751619279]:
+  <bb 5> [local count: 1073741824]:
   # DEBUG BEGIN_STMT
   # DEBUG BEGIN_STMT
   __asm__ __volatile__("BKPT #0
 	");
   # DEBUG BEGIN_STMT
 
-  <bb 16> [local count: 751619279]:
+  <bb 17> [local count: 1073741824]:
   goto <bb 5>; [100.00%]
 
-  <bb 6> [local count: 2046387]:
+  <bb 6> [local count: 123389]:
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  lev_20 = sys_arch_protect ();
+  # DEBUG lev => lev_20
+  # DEBUG BEGIN_STMT
+  # DEBUG i => 0
+  goto <bb 11>; [100.00%]
+
+  <bb 7> [local count: 1439760]:
   # DEBUG BEGIN_STMT
   _1 = br_18->fdbs;
   i.5_2 = (unsigned int) i_11;
@@ -2409,48 +2431,54 @@ bridgeif_fdb_remove (struct netif * bridgeif, const struct eth_addr * addr)
   _4 = _1 + _3;
   _5 = _4->used;
   if (_5 != 0)
-    goto <bb 7>; [50.00%]
+    goto <bb 8>; [50.00%]
   else
-    goto <bb 9>; [50.00%]
+    goto <bb 10>; [50.00%]
 
-  <bb 7> [local count: 1023194]:
+  <bb 8> [local count: 719880]:
   _7 = &_4->addr;
-  _8 = memcmp (_7, addr_19(D), 6);
+  _8 = memcmp (_7, addr_22(D), 6);
   if (_8 == 0)
-    goto <bb 8>; [5.50%]
+    goto <bb 9>; [5.50%]
   else
-    goto <bb 9>; [94.50%]
+    goto <bb 10>; [94.50%]
 
-  <bb 8> [local count: 56276]:
-  # _6 = PHI <_4(7)>
+  <bb 9> [local count: 39593]:
+  # _6 = PHI <_4(8)>
   # DEBUG BEGIN_STMT
   # DEBUG BEGIN_STMT
   # DEBUG BEGIN_STMT
   memset (_6, 0, 8);
   # DEBUG BEGIN_STMT
   # DEBUG BEGIN_STMT
+  sys_arch_unprotect (lev_20);
   # DEBUG BEGIN_STMT
-  goto <bb 11>; [100.00%]
+  goto <bb 13>; [100.00%]
 
-  <bb 9> [local count: 1990111]:
+  <bb 10> [local count: 1400167]:
   # DEBUG BEGIN_STMT
   # DEBUG BEGIN_STMT
-  i_21 = i_11 + 1;
-  # DEBUG i => i_21
+  i_25 = i_11 + 1;
+  # DEBUG i => i_25
 
-  <bb 10> [local count: 2165489]:
-  # i_11 = PHI <i_21(9), 0(14)>
+  <bb 11> [local count: 1523555]:
+  # i_11 = PHI <0(6), i_25(10)>
   # DEBUG i => i_11
   # DEBUG BEGIN_STMT
   _9 = br_18->max_fdbs_entries;
   _10 = (int) _9;
   if (_10 > i_11)
-    goto <bb 6>; [94.50%]
+    goto <bb 7>; [94.50%]
   else
-    goto <bb 11>; [5.50%]
+    goto <bb 12>; [5.50%]
 
-  <bb 11> [local count: 175378]:
-  # _12 = PHI <0(8), -6(10)>
+  <bb 12> [local count: 83796]:
+  # DEBUG BEGIN_STMT
+  sys_arch_unprotect (lev_20);
+  # DEBUG BEGIN_STMT
+
+  <bb 13> [local count: 123389]:
+  # _12 = PHI <0(9), -6(12)>
   return _12;
 
 }
@@ -2458,6 +2486,7 @@ bridgeif_fdb_remove (struct netif * bridgeif, const struct eth_addr * addr)
 
 bridgeif_fdb_add (struct netif * bridgeif, const struct eth_addr * addr, bridgeif_portmask_t ports)
 {
+  sys_prot_t lev;
   struct bridgeif_private_t * br;
   int i;
   struct bridgeif_fdb_static_entry_t * _1;
@@ -2471,30 +2500,30 @@ bridgeif_fdb_add (struct netif * bridgeif, const struct eth_addr * addr, bridgei
   int _9;
   err_t _11;
 
-  <bb 2> [local count: 357913]:
+  <bb 2> [local count: 329661]:
   # DEBUG BEGIN_STMT
   # DEBUG BEGIN_STMT
   # DEBUG BEGIN_STMT
   # DEBUG BEGIN_STMT
   # DEBUG BEGIN_STMT
   if (bridgeif_15(D) == 0B)
-    goto <bb 11>; [30.00%]
+    goto <bb 13>; [30.00%]
   else
     goto <bb 4>; [70.00%]
 
-  <bb 11> [local count: 107374]:
+  <bb 13> [local count: 98898]:
 
-  <bb 3> [local count: 1073741824]:
+  <bb 3> [local count: 988985746]:
   # DEBUG BEGIN_STMT
   # DEBUG BEGIN_STMT
   __asm__ __volatile__("BKPT #0
 	");
   # DEBUG BEGIN_STMT
 
-  <bb 14> [local count: 1073741824]:
+  <bb 15> [local count: 988985746]:
   goto <bb 3>; [100.00%]
 
-  <bb 4> [local count: 250539]:
+  <bb 4> [local count: 230763]:
   # DEBUG BEGIN_STMT
   # DEBUG BEGIN_STMT
   br_17 = bridgeif_15(D)->state;
@@ -2502,26 +2531,32 @@ bridgeif_fdb_add (struct netif * bridgeif, const struct eth_addr * addr, bridgei
   # DEBUG BEGIN_STMT
   # DEBUG BEGIN_STMT
   if (br_17 == 0B)
-    goto <bb 12>; [30.00%]
+    goto <bb 14>; [46.53%]
   else
-    goto <bb 13>; [70.00%]
+    goto <bb 6>; [53.47%]
 
-  <bb 13> [local count: 175377]:
-  goto <bb 9>; [100.00%]
+  <bb 14> [local count: 107374]:
 
-  <bb 12> [local count: 75162]:
-
-  <bb 5> [local count: 751619279]:
+  <bb 5> [local count: 1073741824]:
   # DEBUG BEGIN_STMT
   # DEBUG BEGIN_STMT
   __asm__ __volatile__("BKPT #0
 	");
   # DEBUG BEGIN_STMT
 
-  <bb 15> [local count: 751619279]:
+  <bb 16> [local count: 1073741824]:
   goto <bb 5>; [100.00%]
 
-  <bb 6> [local count: 1549257]:
+  <bb 6> [local count: 123389]:
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  lev_19 = sys_arch_protect ();
+  # DEBUG lev => lev_19
+  # DEBUG BEGIN_STMT
+  # DEBUG i => 0
+  goto <bb 10>; [100.00%]
+
+  <bb 7> [local count: 1089998]:
   # DEBUG BEGIN_STMT
   _1 = br_17->fdbs;
   i.0_2 = (unsigned int) i_10;
@@ -2529,45 +2564,51 @@ bridgeif_fdb_add (struct netif * bridgeif, const struct eth_addr * addr, bridgei
   _4 = _1 + _3;
   _5 = _4->used;
   if (_5 == 0)
-    goto <bb 7>; [5.50%]
+    goto <bb 8>; [5.50%]
   else
-    goto <bb 8>; [94.50%]
+    goto <bb 9>; [94.50%]
 
-  <bb 7> [local count: 85209]:
-  # _6 = PHI <_4(6)>
+  <bb 8> [local count: 59950]:
+  # _6 = PHI <_4(7)>
   # DEBUG BEGIN_STMT
   # DEBUG BEGIN_STMT
   # DEBUG BEGIN_STMT
   _6->used = 1;
   # DEBUG BEGIN_STMT
-  _6->dst_ports = ports_19(D);
+  _6->dst_ports = ports_22(D);
   # DEBUG BEGIN_STMT
   _7 = &_6->addr;
-  memcpy (_7, addr_21(D), 6);
+  memcpy (_7, addr_24(D), 6);
   # DEBUG BEGIN_STMT
   # DEBUG BEGIN_STMT
+  sys_arch_unprotect (lev_19);
   # DEBUG BEGIN_STMT
-  goto <bb 10>; [100.00%]
+  goto <bb 12>; [100.00%]
 
-  <bb 8> [local count: 1464048]:
+  <bb 9> [local count: 1030048]:
   # DEBUG BEGIN_STMT
   # DEBUG BEGIN_STMT
-  i_23 = i_10 + 1;
-  # DEBUG i => i_23
+  i_27 = i_10 + 1;
+  # DEBUG i => i_27
 
-  <bb 9> [local count: 1639425]:
-  # i_10 = PHI <i_23(8), 0(13)>
+  <bb 10> [local count: 1153437]:
+  # i_10 = PHI <0(6), i_27(9)>
   # DEBUG i => i_10
   # DEBUG BEGIN_STMT
   _8 = br_17->max_fdbs_entries;
   _9 = (int) _8;
   if (_9 > i_10)
-    goto <bb 6>; [94.50%]
+    goto <bb 7>; [94.50%]
   else
-    goto <bb 10>; [5.50%]
+    goto <bb 11>; [5.50%]
 
-  <bb 10> [local count: 175378]:
-  # _11 = PHI <0(7), -1(9)>
+  <bb 11> [local count: 63439]:
+  # DEBUG BEGIN_STMT
+  sys_arch_unprotect (lev_19);
+  # DEBUG BEGIN_STMT
+
+  <bb 12> [local count: 123389]:
+  # _11 = PHI <0(8), -1(11)>
   return _11;
 
 }

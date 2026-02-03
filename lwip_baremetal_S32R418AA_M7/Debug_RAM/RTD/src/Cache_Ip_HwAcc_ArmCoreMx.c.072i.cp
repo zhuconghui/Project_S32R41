@@ -128,7 +128,7 @@ Reclaiming variables:
 Clearing address taken flags:
 Symbol table:
 
-hwAcc_ArmCoreMx_DataCacheDisable/11 (hwAcc_ArmCoreMx_DataCacheDisable) @0600cc40
+hwAcc_ArmCoreMx_DataCacheDisable/11 (hwAcc_ArmCoreMx_DataCacheDisable) @0608bc40
   Type: function definition analyzed
   Visibility: externally_visible public
   References: 
@@ -137,7 +137,7 @@ hwAcc_ArmCoreMx_DataCacheDisable/11 (hwAcc_ArmCoreMx_DataCacheDisable) @0600cc40
   Function flags: count:1073741824 (estimated locally) body optimize_size
   Called by: 
   Calls: 
-hwAcc_ArmCoreMx_InstructionCacheDisable/10 (hwAcc_ArmCoreMx_InstructionCacheDisable) @0600c9a0
+hwAcc_ArmCoreMx_InstructionCacheDisable/10 (hwAcc_ArmCoreMx_InstructionCacheDisable) @0608b9a0
   Type: function definition analyzed
   Visibility: externally_visible public
   References: 
@@ -146,7 +146,7 @@ hwAcc_ArmCoreMx_InstructionCacheDisable/10 (hwAcc_ArmCoreMx_InstructionCacheDisa
   Function flags: count:1073741824 (estimated locally) body optimize_size
   Called by: 
   Calls: 
-hwAcc_ArmCoreMx_DataCacheEnable/9 (hwAcc_ArmCoreMx_DataCacheEnable) @0600c700
+hwAcc_ArmCoreMx_DataCacheEnable/9 (hwAcc_ArmCoreMx_DataCacheEnable) @0608b700
   Type: function definition analyzed
   Visibility: externally_visible public
   References: 
@@ -155,7 +155,7 @@ hwAcc_ArmCoreMx_DataCacheEnable/9 (hwAcc_ArmCoreMx_DataCacheEnable) @0600c700
   Function flags: count:1073741824 (estimated locally) body optimize_size
   Called by: 
   Calls: 
-hwAcc_ArmCoreMx_InstructionCacheEnable/8 (hwAcc_ArmCoreMx_InstructionCacheEnable) @0600c460
+hwAcc_ArmCoreMx_InstructionCacheEnable/8 (hwAcc_ArmCoreMx_InstructionCacheEnable) @0608b460
   Type: function definition analyzed
   Visibility: externally_visible public
   References: 
@@ -164,7 +164,7 @@ hwAcc_ArmCoreMx_InstructionCacheEnable/8 (hwAcc_ArmCoreMx_InstructionCacheEnable
   Function flags: count:1073741824 (estimated locally) body optimize_size
   Called by: 
   Calls: 
-hwAcc_ArmCoreMx_DataCacheCleanByAddr/7 (hwAcc_ArmCoreMx_DataCacheCleanByAddr) @0600c1c0
+hwAcc_ArmCoreMx_DataCacheCleanByAddr/7 (hwAcc_ArmCoreMx_DataCacheCleanByAddr) @0608b1c0
   Type: function definition analyzed
   Visibility: externally_visible public
   References: 
@@ -173,7 +173,7 @@ hwAcc_ArmCoreMx_DataCacheCleanByAddr/7 (hwAcc_ArmCoreMx_DataCacheCleanByAddr) @0
   Function flags: count:236223200 (estimated locally) body optimize_size
   Called by: 
   Calls: 
-hwAcc_ArmCoreMx_InstructionCacheCleanByAddr/6 (hwAcc_ArmCoreMx_InstructionCacheCleanByAddr) @05fc1e00
+hwAcc_ArmCoreMx_InstructionCacheCleanByAddr/6 (hwAcc_ArmCoreMx_InstructionCacheCleanByAddr) @0603ee00
   Type: function definition analyzed
   Visibility: externally_visible public
   References: 
@@ -182,7 +182,7 @@ hwAcc_ArmCoreMx_InstructionCacheCleanByAddr/6 (hwAcc_ArmCoreMx_InstructionCacheC
   Function flags: count:1073741824 (estimated locally) body optimize_size
   Called by: 
   Calls: hwAcc_ArmCoreMx_InstructionCacheInvalidateByAddr/4 (354334802 (estimated locally),0.33 per call) 
-hwAcc_ArmCoreMx_DataCacheInvalidateByAddr/5 (hwAcc_ArmCoreMx_DataCacheInvalidateByAddr) @05fc18c0
+hwAcc_ArmCoreMx_DataCacheInvalidateByAddr/5 (hwAcc_ArmCoreMx_DataCacheInvalidateByAddr) @0603e8c0
   Type: function definition analyzed
   Visibility: externally_visible public
   References: 
@@ -191,7 +191,7 @@ hwAcc_ArmCoreMx_DataCacheInvalidateByAddr/5 (hwAcc_ArmCoreMx_DataCacheInvalidate
   Function flags: count:236223200 (estimated locally) body optimize_size
   Called by: 
   Calls: 
-hwAcc_ArmCoreMx_InstructionCacheInvalidateByAddr/4 (hwAcc_ArmCoreMx_InstructionCacheInvalidateByAddr) @05fc12a0
+hwAcc_ArmCoreMx_InstructionCacheInvalidateByAddr/4 (hwAcc_ArmCoreMx_InstructionCacheInvalidateByAddr) @0603e2a0
   Type: function definition analyzed
   Visibility: externally_visible public
   References: 
@@ -200,7 +200,7 @@ hwAcc_ArmCoreMx_InstructionCacheInvalidateByAddr/4 (hwAcc_ArmCoreMx_InstructionC
   Function flags: count:236223200 (estimated locally) body optimize_size
   Called by: hwAcc_ArmCoreMx_InstructionCacheCleanByAddr/6 (354334802 (estimated locally),0.33 per call) 
   Calls: 
-hwAcc_ArmCoreMx_DataCacheClean/3 (hwAcc_ArmCoreMx_DataCacheClean) @05fc1d20
+hwAcc_ArmCoreMx_DataCacheClean/3 (hwAcc_ArmCoreMx_DataCacheClean) @0603ed20
   Type: function definition analyzed
   Visibility: externally_visible public
   References: 
@@ -209,7 +209,7 @@ hwAcc_ArmCoreMx_DataCacheClean/3 (hwAcc_ArmCoreMx_DataCacheClean) @05fc1d20
   Function flags: count:14598062 (estimated locally) body optimize_size
   Called by: 
   Calls: 
-hwAcc_ArmCoreMx_InstructionCacheClean/2 (hwAcc_ArmCoreMx_InstructionCacheClean) @05fc1a80
+hwAcc_ArmCoreMx_InstructionCacheClean/2 (hwAcc_ArmCoreMx_InstructionCacheClean) @0603ea80
   Type: function definition analyzed
   Visibility: externally_visible public
   References: 
@@ -218,7 +218,7 @@ hwAcc_ArmCoreMx_InstructionCacheClean/2 (hwAcc_ArmCoreMx_InstructionCacheClean) 
   Function flags: count:1073741824 (estimated locally) body optimize_size
   Called by: 
   Calls: hwAcc_ArmCoreMx_InstructionCacheInvalidate/0 (354334802 (estimated locally),0.33 per call) 
-hwAcc_ArmCoreMx_DataCacheInvalidate/1 (hwAcc_ArmCoreMx_DataCacheInvalidate) @05fc17e0
+hwAcc_ArmCoreMx_DataCacheInvalidate/1 (hwAcc_ArmCoreMx_DataCacheInvalidate) @0603e7e0
   Type: function definition analyzed
   Visibility: externally_visible public
   References: 
@@ -227,7 +227,7 @@ hwAcc_ArmCoreMx_DataCacheInvalidate/1 (hwAcc_ArmCoreMx_DataCacheInvalidate) @05f
   Function flags: count:14598062 (estimated locally) body optimize_size
   Called by: 
   Calls: 
-hwAcc_ArmCoreMx_InstructionCacheInvalidate/0 (hwAcc_ArmCoreMx_InstructionCacheInvalidate) @05fc1540
+hwAcc_ArmCoreMx_InstructionCacheInvalidate/0 (hwAcc_ArmCoreMx_InstructionCacheInvalidate) @0603e540
   Type: function definition analyzed
   Visibility: externally_visible public
   References: 

@@ -219,6 +219,10 @@
 #include "enetif.h"
 #endif /* GMACIF_NUMBER */
 
+
+#include "Stm_Ip.h"
+#include "IntCtrl_Ip.h"
+
 #ifndef LWIP_INIT_COMPLETE_CALLBACK
 #define LWIP_INIT_COMPLETE_CALLBACK 0
 #endif /* LWIP_INIT_COMPLETE_CALLBACK */
@@ -486,6 +490,19 @@ static void srv_txt(struct mdns_service *service, void *txt_userdata)
 }
 #endif
 
+/* --- STM Timer related --- */
+/* STM instance used - 0 */
+#define STM_INSTANCE_0 0U
+/* STM channel used - 0 */
+#define CH_0     0U
+/* Clock configuration structure for Init*/
+#define clockConfig &Clock_Ip_aClockConfig[0]
+/* STM timeout period */
+#define TIME_PERIOD_IN_COUNTS 24000 // 120us
+
+
+
+
 /* --- CUSTOM UDP SENDER START --- */
 #define UDP_TARGET_IP   "192.168.0.8"
 #define UDP_TARGET_PORT 5000
@@ -493,97 +510,85 @@ static void srv_txt(struct mdns_service *service, void *txt_userdata)
 
 static struct udp_pcb *my_udp_pcb;
 static uint8_t my_udp_buffer[UDP_DATA_SIZE];
+/* 标志位：用于从中断传递信号到主循环 */
+volatile uint8_t udp_send_flag = 0;
+ip_addr_t g_dest_addr; // 全局保存解析后的地址，避免重复解析
 
-static void my_udp_send_callback(void *arg)
+/* 中断回调：只置标志位，极快退出，绝对安全 */
+void StmNotification(void)
 {
-  struct pbuf *p;
-  ip_addr_t dest_addr;
-
-  LWIP_UNUSED_ARG(arg);
-
-  /* 填充数据 (示例：填充 'A') */
-  memset(my_udp_buffer, 'A', UDP_DATA_SIZE);
-
-  /* 分配 pbuf */
-  p = pbuf_alloc(PBUF_TRANSPORT, UDP_DATA_SIZE, PBUF_RAM);
-  if (p != NULL) {
-    /* 将数据拷贝到 pbuf */
-    pbuf_take(p, my_udp_buffer, UDP_DATA_SIZE);
-
-    /* 解析目标 IP 地址 */
-    if(ipaddr_aton(UDP_TARGET_IP, &dest_addr)) {
-      /* 发送 UDP 包 */
-      udp_sendto(my_udp_pcb, p, &dest_addr, UDP_TARGET_PORT);
-    }
-
-    /* 释放 pbuf */
-    pbuf_free(p);
-  }
-
-  /* 重新注册定时器，实现每秒发送 (1000ms) */
-  sys_timeout(1000, my_udp_send_callback, NULL);
+    udp_send_flag = 1;
 }
+
+/* 实际发送函数：在主循环中调用 */
+void process_udp_send(void)
+{
+    struct pbuf *p;
+    
+    // 检查标志位
+    if (udp_send_flag) {
+        // 如果系统处理不过来，可能会丢失中间的触发，但这比崩溃好
+        // 如果想把所有触发都发出去，可以将 flag 改为计数器
+        udp_send_flag = 0;
+
+        /* 
+         * 优化：使用 PBUF_ROM 实现零拷贝 (Zero-Copy)
+         * LwIP 直接读取 my_udp_buffer 发送，不进行内存拷贝
+         */
+        p = pbuf_alloc(PBUF_TRANSPORT, UDP_DATA_SIZE, PBUF_ROM);
+        
+        if (p != NULL) {
+            p->payload = my_udp_buffer; // 指向静态 buffer
+            
+            /* 发送 */
+            udp_sendto(my_udp_pcb, p, &g_dest_addr, UDP_TARGET_PORT);
+            
+            /* 释放 pbuf 头 (不会释放 payload，因为是 ROM 类型) */
+            pbuf_free(p);
+        }
+    }
+}
+
+// 删除旧的不安全回调
+// static void my_udp_send_callback(void *arg) ...
 
 static void my_udp_init(void)
 {
   my_udp_pcb = udp_new();
   if (my_udp_pcb != NULL) {
-    /* 绑定本地任意端口 */
     udp_bind(my_udp_pcb, IP_ADDR_ANY, 0);
-    
-    /* 启动第一次定时发送 */
-    sys_timeout(1000, my_udp_send_callback, NULL);
   }
+
+  memset(my_udp_buffer, 'A', UDP_DATA_SIZE);
+  // 预先解析 IP，避免每次发送都解析字符串
+  ipaddr_aton(UDP_TARGET_IP, &g_dest_addr);
+
+  // Init STM
+  /* Install ISR*/
+  IntCtrl_Ip_Init(&IntCtrlConfig_0);
+
+  /* Initial STM instance 0 - Channel 0 */
+  const Stm_Ip_InstanceConfigType STM_0_InitConfig_PB =
+  {
+      /** @brief STM Freeze Enable */
+      (boolean)(FALSE),
+  #if(STM_IP_SET_CLOCK_MODE == STD_ON)
+      /** @brief STM Alternate Prescaler Value */
+      0U,
+  #endif
+      /** @brief STM Prescaler Value */
+      0U
+  };
+  Stm_Ip_Init(STM_INSTANCE_0, &STM_0_InitConfig_PB);
+  /* Initial channel 0 */
+  Stm_Ip_InitChannel(STM_INSTANCE_0, STM_0_CH_0);
+
+  /* Enable channel interrupt STM0 - CH_0 */
+  Stm_Ip_EnableChannel(STM_INSTANCE_0, CH_0);
+
+  Stm_Ip_StartCounting(STM_INSTANCE_0, CH_0, TIME_PERIOD_IN_COUNTS);
 }
 /* --- CUSTOM UDP SENDER END --- */
-
-/* --- UDP PERF SERVER START --- */
-static struct udp_pcb *udp_perf_pcb;
-static volatile u32_t udp_perf_rx_bytes = 0;
-
-static void udp_perf_recv(void *arg, struct udp_pcb *pcb, struct pbuf *p,
-                          const ip_addr_t *addr, u16_t port)
-{
-  LWIP_UNUSED_ARG(arg);
-  LWIP_UNUSED_ARG(pcb);
-  LWIP_UNUSED_ARG(addr);
-  LWIP_UNUSED_ARG(port);
-
-  if (p != NULL) {
-    udp_perf_rx_bytes += p->tot_len;
-    pbuf_free(p);
-  }
-}
-
-static void udp_perf_report(void *arg)
-{
-  LWIP_UNUSED_ARG(arg);
-  
-  /* Calculate throughput in kbit/s: bytes * 8 / 1000 ms */
-  u32_t kbit_s = (udp_perf_rx_bytes * 8) / 1000;
-
-#if defined(PRINTF_SUPPORT) && PRINTF_SUPPORT != 0
-  printf("UDP Perf: %lu kbit/s\n", kbit_s);
-#endif
-
-  udp_perf_rx_bytes = 0;
-  sys_timeout(1000, udp_perf_report, NULL);
-}
-
-static void udp_perf_init(void)
-{
-  udp_perf_pcb = udp_new();
-  if (udp_perf_pcb != NULL) {
-    if (udp_bind(udp_perf_pcb, IP_ADDR_ANY, 5001) == ERR_OK) {
-      udp_recv(udp_perf_pcb, udp_perf_recv, NULL);
-      sys_timeout(1000, udp_perf_report, NULL);
-#if defined(PRINTF_SUPPORT) && PRINTF_SUPPORT != 0
-      printf("UDP Perf Server started on port 5001\n");
-#endif
-    }
-  }
-}
-/* --- UDP PERF SERVER END --- */
 
 /* This function initializes applications
  * Implements apps_init_Activity
@@ -691,9 +696,6 @@ apps_init(void)
 
   /* 启动自定义 UDP 发送任务 */
   my_udp_init();
-
-  /* 启动 UDP Perf Server */
-  udp_perf_init();
 }
 
 /* This function initializes this lwIP test. When NO_SYS=1, this is done in
@@ -721,6 +723,9 @@ test_init(void* arg)
   sys_sem_signal(init_sem);
 #endif /* !NO_SYS */
 }
+
+/* 声明外部函数 */
+void process_udp_send(void);
 
 static void mainLoopTask(void* pvParameters)
 {
@@ -769,6 +774,10 @@ static void mainLoopTask(void* pvParameters)
 #if NO_SYS
     /* handle timers (already done in tcpip.c when NO_SYS=0) */
     sys_check_timeouts();
+
+    /* 检查并处理 UDP 发送 (移出中断) */
+    process_udp_send();
+
   for(int i = 0; i < ETHIF_NUMBER ; i++)
   { /* Start polling if Eth Rx / Tx interrupts are not used */
     //(void)ETHIF_POLL_INTERFACE(&network_interfaces[i]);

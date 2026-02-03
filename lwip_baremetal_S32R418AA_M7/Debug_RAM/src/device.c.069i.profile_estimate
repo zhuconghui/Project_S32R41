@@ -1,61 +1,33 @@
 Histogram:
 device_init ()
 {
-  volatile boolean x;
   StatusType err;
   long unsigned int _1;
   long unsigned int _2;
   _Bool _3;
-  unsigned char _4;
+  _Bool _4;
   _Bool _5;
   <unnamed type> _6;
   _Bool _7;
-  _Bool x.0_24;
 
-  <bb 2> [local count: 320519]:
+  <bb 2> [local count: 1073741824]:
   # DEBUG BEGIN_STMT
   # DEBUG BEGIN_STMT
-  _1 ={v} MEM[(struct SRC_Type *)1074627328B].GMAC_0_CTRL_STS;
-  _2 = _1 | 4;
-  MEM[(struct SRC_Type *)1074627328B].GMAC_0_CTRL_STS ={v} _2;
+  _1 ={v} MEM[(struct SRC_Type *)1074627328B].GMAC_1_CTRL_REG;
+  _2 = _1 | 1;
+  MEM[(struct SRC_Type *)1074627328B].GMAC_1_CTRL_REG ={v} _2;
   # DEBUG BEGIN_STMT
-  err_12 = Siul2_Port_Ip_Init (9, &g_pin_mux_InitConfigArr_PortContainer_0_BOARD_InitPeripherals);
-  # DEBUG err => err_12
+  err_11 = Siul2_Port_Ip_Init (14, &g_pin_mux_InitConfigArr_PortContainer_0_BOARD_InitPeripherals);
+  # DEBUG err => err_11
   # DEBUG BEGIN_STMT
-  _3 = err_12 == 0;
+  _3 = err_11 == 0;
   DevAssert (_3);
   # DEBUG BEGIN_STMT
-  _4 = sys_init_clock_full ();
-  if (_4 != 0)
-    goto <bb 3>; [67.00%]
-  else
-    goto <bb 5>; [33.00%]
-
-  <bb 3> [local count: 214748]:
+  err_14 = Clock_Ip_Init (&Clock_Ip_aClockConfig[0]);
+  # DEBUG err => err_14
   # DEBUG BEGIN_STMT
-  x ={v} 0;
-  # DEBUG x => x
-  # DEBUG INLINE_ENTRY DevAssert
-  # DEBUG BEGIN_STMT
-  x.0_24 ={v} x;
-  if (x.0_24 != 0)
-    goto <bb 5>; [50.00%]
-  else
-    goto <bb 6>; [50.00%]
-
-  <bb 6> [local count: 107374]:
-
-  <bb 4> [local count: 1073741824]:
-  # DEBUG BEGIN_STMT
-  # DEBUG BEGIN_STMT
-  __asm__ __volatile__("BKPT #0");
-  # DEBUG BEGIN_STMT
-
-  <bb 7> [local count: 1073741824]:
-  goto <bb 4>; [100.00%]
-
-  <bb 5> [local count: 213145]:
-  # DEBUG x => NULL
+  _4 = err_14 == 0;
+  DevAssert (_4);
   # DEBUG BEGIN_STMT
   IntCtrl_Ip_InstallHandler (53, PIT_0_ISR, 0B);
   # DEBUG BEGIN_STMT
@@ -63,17 +35,17 @@ device_init ()
   # DEBUG BEGIN_STMT
   IntCtrl_Ip_EnableIrq (53);
   # DEBUG BEGIN_STMT
-  IntCtrl_Ip_InstallHandler (58, GMAC0_CH0_TX_IRQHandler, 0B);
+  IntCtrl_Ip_InstallHandler (221, GMAC1_CH0_TX_IRQHandler, 0B);
   # DEBUG BEGIN_STMT
-  IntCtrl_Ip_SetPriority (58, 8);
+  IntCtrl_Ip_SetPriority (221, 8);
   # DEBUG BEGIN_STMT
-  IntCtrl_Ip_EnableIrq (58);
+  IntCtrl_Ip_EnableIrq (221);
   # DEBUG BEGIN_STMT
-  IntCtrl_Ip_InstallHandler (59, GMAC0_CH0_RX_IRQHandler, 0B);
+  IntCtrl_Ip_InstallHandler (222, GMAC1_CH0_RX_IRQHandler, 0B);
   # DEBUG BEGIN_STMT
-  IntCtrl_Ip_SetPriority (59, 7);
+  IntCtrl_Ip_SetPriority (222, 7);
   # DEBUG BEGIN_STMT
-  IntCtrl_Ip_EnableIrq (59);
+  IntCtrl_Ip_EnableIrq (222);
   # DEBUG BEGIN_STMT
   # DEBUG INLINE_ENTRY NULL
   # DEBUG BEGIN_STMT
@@ -97,7 +69,7 @@ device_init ()
   # DEBUG BEGIN_STMT
   OsIf_SetTimerFrequency (400000000, 0);
   # DEBUG BEGIN_STMT
-  _6 = Gmac_Ip_Init (0, &Gmac_0_ConfigPB_BOARD_INITPERIPHERALS);
+  _6 = Gmac_Ip_Init (1, &Gmac_1_ConfigPB_BOARD_INITPERIPHERALS);
   err_34 = (StatusType) _6;
   # DEBUG err => err_34
   # DEBUG BEGIN_STMT

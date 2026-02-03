@@ -2,59 +2,36 @@ Histogram:
 do_memp_free_pool.part.0 (const struct memp_desc * desc, void * mem)
 {
   struct memp * memp;
-  struct stats_mem * _2;
-  long unsigned int _3;
+  sys_prot_t old_level;
+  struct stats_mem * _3;
   long unsigned int _4;
-  struct memp * * _5;
-  struct memp * _6;
+  long unsigned int _5;
+  struct memp * * _6;
+  struct memp * _7;
 
   <bb 3> [local count: 1073741824]:
 
   <bb 2> [local count: 1073741824]:
   # DEBUG BEGIN_STMT
   # DEBUG BEGIN_STMT
-  # DEBUG memp => mem_7(D)
+  # DEBUG memp => mem_8(D)
   # DEBUG BEGIN_STMT
+  old_level_1 = sys_arch_protect ();
+  # DEBUG old_level => old_level_1
   # DEBUG BEGIN_STMT
-  _2 = desc_1(D)->stats;
-  _3 = _2->used;
-  _4 = _3 + 4294967295;
-  _2->used = _4;
+  _3 = desc_2(D)->stats;
+  _4 = _3->used;
+  _5 = _4 + 4294967295;
+  _3->used = _5;
   # DEBUG BEGIN_STMT
-  _5 = desc_1(D)->tab;
-  _6 = *_5;
-  MEM[(struct memp *)mem_7(D)].next = _6;
+  _6 = desc_2(D)->tab;
+  _7 = *_6;
+  MEM[(struct memp *)mem_8(D)].next = _7;
   # DEBUG BEGIN_STMT
-  *_5 = mem_7(D);
+  *_6 = mem_8(D);
   # DEBUG BEGIN_STMT
+  sys_arch_unprotect (old_level_1);
   return;
-
-}
-
-
-do_memp_malloc_pool.part.0 (const struct memp_desc * desc)
-{
-  struct memp * memp;
-  struct stats_mem * _2;
-  short unsigned int _3;
-  short unsigned int _4;
-  void * _5;
-
-  <bb 4> [local count: 1073741824]:
-
-  <bb 2> [local count: 1073741824]:
-  # DEBUG BEGIN_STMT
-  _2 = desc_1(D)->stats;
-  _3 = _2->err;
-  _4 = _3 + 1;
-  _2->err = _4;
-  # DEBUG BEGIN_STMT
-  # DEBUG BEGIN_STMT
-  # DEBUG BEGIN_STMT
-
-  <bb 3> [local count: 1073741824]:
-  # _5 = PHI <0B(2)>
-  return _5;
 
 }
 
@@ -138,7 +115,7 @@ do_memp_free_pool (const struct memp_desc * desc, void * mem)
   unsigned int mem.2_1;
   unsigned int _2;
 
-  <bb 2> [local count: 214748]:
+  <bb 2> [local count: 160260]:
   # DEBUG BEGIN_STMT
   # DEBUG BEGIN_STMT
   # DEBUG BEGIN_STMT
@@ -146,9 +123,9 @@ do_memp_free_pool (const struct memp_desc * desc, void * mem)
   mem.2_1 = (unsigned int) mem_5(D);
   _2 = mem.2_1 & 15;
   if (_2 != 0)
-    goto <bb 5>; [50.00%]
+    goto <bb 5>; [67.00%]
   else
-    goto <bb 4>; [50.00%]
+    goto <bb 4>; [33.00%]
 
   <bb 5> [local count: 107374]:
 
@@ -162,7 +139,7 @@ do_memp_free_pool (const struct memp_desc * desc, void * mem)
   <bb 6> [local count: 1073741824]:
   goto <bb 3>; [100.00%]
 
-  <bb 4> [local count: 107374]:
+  <bb 4> [local count: 52886]:
   do_memp_free_pool.part.0 (desc_7(D), mem_5(D));
   return;
 
@@ -238,41 +215,46 @@ memp_malloc_pool (const struct memp_desc * desc)
 
 do_memp_malloc_pool (const struct memp_desc * desc)
 {
+  sys_prot_t old_level;
   struct memp * memp;
   struct memp * * _1;
-  void * _2;
-  struct memp * _3;
-  unsigned int memp.1_4;
-  unsigned int _5;
-  struct stats_mem * _6;
+  struct memp * _2;
+  unsigned int memp.1_3;
+  unsigned int _4;
+  struct stats_mem * _5;
+  long unsigned int _6;
   long unsigned int _7;
   long unsigned int _8;
-  long unsigned int _11;
+  struct stats_mem * _9;
+  short unsigned int _10;
+  short unsigned int _11;
   void * _12;
 
-  <bb 2> [local count: 191173]:
+  <bb 2> [local count: 176719]:
   # DEBUG BEGIN_STMT
   # DEBUG BEGIN_STMT
   # DEBUG BEGIN_STMT
+  old_level_18 = sys_arch_protect ();
+  # DEBUG old_level => old_level_18
   # DEBUG BEGIN_STMT
-  _1 = desc_16(D)->tab;
-  memp_17 = *_1;
-  # DEBUG memp => memp_17
+  _1 = desc_19(D)->tab;
+  memp_20 = *_1;
+  # DEBUG memp => memp_20
   # DEBUG BEGIN_STMT
-  if (memp_17 != 0B)
-    goto <bb 3>; [85.10%]
+  if (memp_20 != 0B)
+    goto <bb 3>; [92.06%]
   else
-    goto <bb 8>; [14.90%]
+    goto <bb 8>; [7.94%]
 
   <bb 3> [local count: 162688]:
   # DEBUG BEGIN_STMT
-  _3 = memp_17->next;
-  *_1 = _3;
+  _2 = memp_20->next;
+  *_1 = _2;
   # DEBUG BEGIN_STMT
   # DEBUG BEGIN_STMT
-  memp.1_4 = (unsigned int) memp_17;
-  _5 = memp.1_4 & 15;
-  if (_5 != 0)
+  memp.1_3 = (unsigned int) memp_20;
+  _4 = memp.1_3 & 15;
+  if (_4 != 0)
     goto <bb 10>; [66.00%]
   else
     goto <bb 5>; [34.00%]
@@ -292,31 +274,40 @@ do_memp_malloc_pool (const struct memp_desc * desc)
   <bb 5> [local count: 55314]:
   # DEBUG BEGIN_STMT
   # DEBUG BEGIN_STMT
-  _6 = desc_16(D)->stats;
-  _7 = _6->used;
-  _8 = _7 + 1;
-  _6->used = _8;
+  _5 = desc_19(D)->stats;
+  _6 = _5->used;
+  _7 = _6 + 1;
+  _5->used = _7;
   # DEBUG BEGIN_STMT
-  _11 = _6->max;
-  if (_8 > _11)
+  _8 = _5->max;
+  if (_7 > _8)
     goto <bb 6>; [50.00%]
   else
     goto <bb 7>; [50.00%]
 
   <bb 6> [local count: 27657]:
   # DEBUG BEGIN_STMT
-  _6->max = _8;
+  _5->max = _7;
 
   <bb 7> [local count: 55314]:
   # DEBUG BEGIN_STMT
+  sys_arch_unprotect (old_level_18);
   # DEBUG BEGIN_STMT
   goto <bb 9>; [100.00%]
 
-  <bb 8> [local count: 28485]:
-  _2 = do_memp_malloc_pool.part.0 (desc_16(D));
+  <bb 8> [local count: 14032]:
+  # DEBUG BEGIN_STMT
+  _9 = desc_19(D)->stats;
+  _10 = _9->err;
+  _11 = _10 + 1;
+  _9->err = _11;
+  # DEBUG BEGIN_STMT
+  sys_arch_unprotect (old_level_18);
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
 
-  <bb 9> [local count: 83799]:
-  # _12 = PHI <memp_17(7), _2(8)>
+  <bb 9> [local count: 69345]:
+  # _12 = PHI <memp_20(7), 0B(8)>
   return _12;
 
 }

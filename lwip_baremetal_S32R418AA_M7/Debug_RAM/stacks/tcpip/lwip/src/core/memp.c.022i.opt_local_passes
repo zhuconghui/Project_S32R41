@@ -91,6 +91,7 @@ memp_free_pool (const struct memp_desc * desc, void * mem)
 
 do_memp_free_pool (const struct memp_desc * desc, void * mem)
 {
+  sys_prot_t old_level;
   struct memp * memp;
   unsigned int mem.2_1;
   unsigned int _2;
@@ -127,19 +128,22 @@ do_memp_free_pool (const struct memp_desc * desc, void * mem)
   memp_12 = mem_10(D);
   # DEBUG memp => memp_12
   # DEBUG BEGIN_STMT
+  old_level_14 = sys_arch_protect ();
+  # DEBUG old_level => old_level_14
   # DEBUG BEGIN_STMT
-  _3 = desc_13(D)->stats;
+  _3 = desc_15(D)->stats;
   _4 = _3->used;
   _5 = _4 + 4294967295;
   _3->used = _5;
   # DEBUG BEGIN_STMT
-  _6 = desc_13(D)->tab;
+  _6 = desc_15(D)->tab;
   _7 = *_6;
   memp_12->next = _7;
   # DEBUG BEGIN_STMT
-  _8 = desc_13(D)->tab;
+  _8 = desc_15(D)->tab;
   *_8 = memp_12;
   # DEBUG BEGIN_STMT
+  sys_arch_unprotect (old_level_14);
   return;
 
 }
@@ -236,6 +240,7 @@ memp_malloc_pool (const struct memp_desc * desc)
 
 do_memp_malloc_pool (const struct memp_desc * desc)
 {
+  sys_prot_t old_level;
   struct memp * memp;
   struct memp * * _1;
   struct memp * * _2;
@@ -257,31 +262,33 @@ do_memp_malloc_pool (const struct memp_desc * desc)
   short unsigned int _18;
   short unsigned int _19;
   void * _20;
-  void * _28;
-  void * _32;
+  void * _31;
+  void * _36;
 
   <bb 2> :
   # DEBUG BEGIN_STMT
   # DEBUG BEGIN_STMT
   # DEBUG BEGIN_STMT
+  old_level_26 = sys_arch_protect ();
+  # DEBUG old_level => old_level_26
   # DEBUG BEGIN_STMT
-  _1 = desc_25(D)->tab;
-  memp_26 = *_1;
-  # DEBUG memp => memp_26
+  _1 = desc_27(D)->tab;
+  memp_28 = *_1;
+  # DEBUG memp => memp_28
   # DEBUG BEGIN_STMT
-  if (memp_26 != 0B)
+  if (memp_28 != 0B)
     goto <bb 3>; [INV]
   else
     goto <bb 8>; [INV]
 
   <bb 3> :
   # DEBUG BEGIN_STMT
-  _2 = desc_25(D)->tab;
-  _3 = memp_26->next;
+  _2 = desc_27(D)->tab;
+  _3 = memp_28->next;
   *_2 = _3;
   # DEBUG BEGIN_STMT
   # DEBUG BEGIN_STMT
-  memp.1_4 = (unsigned int) memp_26;
+  memp.1_4 = (unsigned int) memp_28;
   _5 = memp.1_4 & 15;
   if (_5 != 0)
     goto <bb 4>; [INV]
@@ -299,14 +306,14 @@ do_memp_malloc_pool (const struct memp_desc * desc)
   <bb 5> :
   # DEBUG BEGIN_STMT
   # DEBUG BEGIN_STMT
-  _6 = desc_25(D)->stats;
+  _6 = desc_27(D)->stats;
   _7 = _6->used;
   _8 = _7 + 1;
   _6->used = _8;
   # DEBUG BEGIN_STMT
-  _9 = desc_25(D)->stats;
+  _9 = desc_27(D)->stats;
   _10 = _9->used;
-  _11 = desc_25(D)->stats;
+  _11 = desc_27(D)->stats;
   _12 = _11->max;
   if (_10 > _12)
     goto <bb 6>; [INV]
@@ -315,32 +322,34 @@ do_memp_malloc_pool (const struct memp_desc * desc)
 
   <bb 6> :
   # DEBUG BEGIN_STMT
-  _13 = desc_25(D)->stats;
-  _14 = desc_25(D)->stats;
+  _13 = desc_27(D)->stats;
+  _14 = desc_27(D)->stats;
   _15 = _13->used;
   _14->max = _15;
 
   <bb 7> :
   # DEBUG BEGIN_STMT
+  sys_arch_unprotect (old_level_26);
   # DEBUG BEGIN_STMT
-  _32 = memp_26;
+  _36 = memp_28;
   // predicted unlikely by early return (on trees) predictor.
   goto <bb 9>; [INV]
 
   <bb 8> :
   # DEBUG BEGIN_STMT
-  _16 = desc_25(D)->stats;
+  _16 = desc_27(D)->stats;
   _17 = _16->err;
   _18 = _17;
   _19 = _18 + 1;
   _16->err = _19;
   # DEBUG BEGIN_STMT
+  sys_arch_unprotect (old_level_26);
   # DEBUG BEGIN_STMT
   # DEBUG BEGIN_STMT
-  _28 = 0B;
+  _31 = 0B;
 
   <bb 9> :
-  # _20 = PHI <_32(7), _28(8)>
+  # _20 = PHI <_36(7), _31(8)>
   return _20;
 
 }

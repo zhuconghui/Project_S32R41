@@ -446,7 +446,7 @@ Reclaiming variables:
 Clearing address taken flags:
 Symbol table:
 
-Gmac_apxState/31 (Gmac_apxState) @0642b678
+Gmac_apxState/31 (Gmac_apxState) @063f9678
   Type: variable
   Body removed by symtab_remove_unreachable_nodes
   Visibility: external public
@@ -454,7 +454,7 @@ Gmac_apxState/31 (Gmac_apxState) @0642b678
   Referring: GMAC_CommonIRQHandler/9 (read)GMAC_RxIRQHandler/10 (read)GMAC_MACIRQHandler/5 (read)GMAC_CommonIRQHandler/9 (read)GMAC_TxIRQHandler/11 (read)
   Availability: not_available
   Varpool flags:
-OsIf_GetElapsed/30 (OsIf_GetElapsed) @06422460
+OsIf_GetElapsed/30 (OsIf_GetElapsed) @063f0460
   Type: function
   Visibility: external public
   References: 
@@ -463,7 +463,7 @@ OsIf_GetElapsed/30 (OsIf_GetElapsed) @06422460
   Function flags: optimize_size
   Called by: GMAC_TimeoutExpired/7 (1073741824 (estimated locally),1.00 per call) 
   Calls: 
-OsIf_MicrosToTicks/29 (OsIf_MicrosToTicks) @064222a0
+OsIf_MicrosToTicks/29 (OsIf_MicrosToTicks) @063f02a0
   Type: function
   Visibility: external public
   References: 
@@ -472,7 +472,7 @@ OsIf_MicrosToTicks/29 (OsIf_MicrosToTicks) @064222a0
   Function flags: optimize_size
   Called by: GMAC_StartTimeOut/6 (1073741824 (estimated locally),1.00 per call) 
   Calls: 
-OsIf_GetCounter/28 (OsIf_GetCounter) @064221c0
+OsIf_GetCounter/28 (OsIf_GetCounter) @063f01c0
   Type: function
   Visibility: external public
   References: 
@@ -481,7 +481,7 @@ OsIf_GetCounter/28 (OsIf_GetCounter) @064221c0
   Function flags: optimize_size
   Called by: GMAC_StartTimeOut/6 (1073741824 (estimated locally),1.00 per call) 
   Calls: 
-GMAC_SetRxQueuesDmaChMap/27 (GMAC_SetRxQueuesDmaChMap) @0641e700
+GMAC_SetRxQueuesDmaChMap/27 (GMAC_SetRxQueuesDmaChMap) @063ec700
   Type: function definition analyzed
   Visibility: externally_visible public
   References: 
@@ -490,7 +490,7 @@ GMAC_SetRxQueuesDmaChMap/27 (GMAC_SetRxQueuesDmaChMap) @0641e700
   Function flags: count:1073741824 (estimated locally) body optimize_size
   Called by: 
   Calls: 
-GMAC_SetRxQueueOperationMode/26 (GMAC_SetRxQueueOperationMode) @0641eb60
+GMAC_SetRxQueueOperationMode/26 (GMAC_SetRxQueueOperationMode) @063ecb60
   Type: function definition analyzed
   Visibility: externally_visible public
   References: 
@@ -499,7 +499,7 @@ GMAC_SetRxQueueOperationMode/26 (GMAC_SetRxQueueOperationMode) @0641eb60
   Function flags: count:1073741824 (estimated locally) body optimize_size
   Called by: 
   Calls: 
-GMAC_EnableRxQueue/25 (GMAC_EnableRxQueue) @0641e8c0
+GMAC_EnableRxQueue/25 (GMAC_EnableRxQueue) @063ec8c0
   Type: function definition analyzed
   Visibility: externally_visible public
   References: 
@@ -508,7 +508,7 @@ GMAC_EnableRxQueue/25 (GMAC_EnableRxQueue) @0641e8c0
   Function flags: count:1073741824 (estimated locally) body optimize_size
   Called by: 
   Calls: 
-GMAC_SetTxThreshold/24 (GMAC_SetTxThreshold) @0641e620
+GMAC_SetTxThreshold/24 (GMAC_SetTxThreshold) @063ec620
   Type: function definition analyzed
   Visibility: externally_visible public
   References: 
@@ -517,7 +517,7 @@ GMAC_SetTxThreshold/24 (GMAC_SetTxThreshold) @0641e620
   Function flags: count:1073741824 (estimated locally) body optimize_size
   Called by: 
   Calls: 
-GMAC_SetTxStoreAndForward/23 (GMAC_SetTxStoreAndForward) @0641e2a0
+GMAC_SetTxStoreAndForward/23 (GMAC_SetTxStoreAndForward) @063ec2a0
   Type: function definition analyzed
   Visibility: externally_visible public
   References: 
@@ -526,7 +526,7 @@ GMAC_SetTxStoreAndForward/23 (GMAC_SetTxStoreAndForward) @0641e2a0
   Function flags: count:1073741824 (estimated locally) body optimize_size
   Called by: 
   Calls: 
-GMAC_SetTxQueueOperationMode/22 (GMAC_SetTxQueueOperationMode) @0641e000
+GMAC_SetTxQueueOperationMode/22 (GMAC_SetTxQueueOperationMode) @063ec000
   Type: function definition analyzed
   Visibility: externally_visible public
   References: 
@@ -535,7 +535,7 @@ GMAC_SetTxQueueOperationMode/22 (GMAC_SetTxQueueOperationMode) @0641e000
   Function flags: count:1073741824 (estimated locally) body optimize_size
   Called by: 
   Calls: 
-GMAC_SetTxQueueCreditBasedShaper/21 (GMAC_SetTxQueueCreditBasedShaper) @064047e0
+GMAC_SetTxQueueCreditBasedShaper/21 (GMAC_SetTxQueueCreditBasedShaper) @063927e0
   Type: function definition analyzed
   Visibility: externally_visible public
   References: 
@@ -544,7 +544,7 @@ GMAC_SetTxQueueCreditBasedShaper/21 (GMAC_SetTxQueueCreditBasedShaper) @064047e0
   Function flags: count:1073741824 (estimated locally) body optimize_size
   Called by: 
   Calls: 
-GMAC_SetTxQueueQuantumWeight/20 (GMAC_SetTxQueueQuantumWeight) @064042a0
+GMAC_SetTxQueueQuantumWeight/20 (GMAC_SetTxQueueQuantumWeight) @063922a0
   Type: function definition analyzed
   Visibility: externally_visible public
   References: 
@@ -553,7 +553,7 @@ GMAC_SetTxQueueQuantumWeight/20 (GMAC_SetTxQueueQuantumWeight) @064042a0
   Function flags: count:1073741824 (estimated locally) body optimize_size
   Called by: 
   Calls: 
-GMAC_SetSchedAlg/19 (GMAC_SetSchedAlg) @06404ee0
+GMAC_SetSchedAlg/19 (GMAC_SetSchedAlg) @06392ee0
   Type: function definition analyzed
   Visibility: externally_visible public
   References: 
@@ -562,7 +562,7 @@ GMAC_SetSchedAlg/19 (GMAC_SetSchedAlg) @06404ee0
   Function flags: count:1073741824 (estimated locally) body optimize_size
   Called by: 
   Calls: 
-GMAC_SetSpeed/18 (GMAC_SetSpeed) @06404c40
+GMAC_SetSpeed/18 (GMAC_SetSpeed) @06392c40
   Type: function definition analyzed
   Visibility: externally_visible public
   References: 
@@ -571,7 +571,7 @@ GMAC_SetSpeed/18 (GMAC_SetSpeed) @06404c40
   Function flags: count:1073741824 (estimated locally) body optimize_size
   Called by: 
   Calls: 
-GMAC_SetPowerState/17 (GMAC_SetPowerState) @064049a0
+GMAC_SetPowerState/17 (GMAC_SetPowerState) @063929a0
   Type: function definition analyzed
   Visibility: externally_visible public
   References: 
@@ -580,7 +580,7 @@ GMAC_SetPowerState/17 (GMAC_SetPowerState) @064049a0
   Function flags: count:1073741823 (estimated locally) body optimize_size
   Called by: 
   Calls: 
-GMAC_GetPowerState/16 (GMAC_GetPowerState) @06404700
+GMAC_GetPowerState/16 (GMAC_GetPowerState) @06392700
   Type: function definition analyzed
   Visibility: externally_visible public
   References: 
@@ -589,7 +589,7 @@ GMAC_GetPowerState/16 (GMAC_GetPowerState) @06404700
   Function flags: count:1073741824 (estimated locally) body optimize_size
   Called by: 
   Calls: 
-GMAC_RemoveVlanFromHashTable/15 (GMAC_RemoveVlanFromHashTable) @06404460
+GMAC_RemoveVlanFromHashTable/15 (GMAC_RemoveVlanFromHashTable) @06392460
   Type: function definition analyzed
   Visibility: externally_visible public
   References: 
@@ -598,7 +598,7 @@ GMAC_RemoveVlanFromHashTable/15 (GMAC_RemoveVlanFromHashTable) @06404460
   Function flags: count:1073741824 (estimated locally) body optimize_size
   Called by: 
   Calls: REV_BITS_32/4 (1073741824 (estimated locally),1.00 per call) 
-GMAC_AddVlanToHashTable/14 (GMAC_AddVlanToHashTable) @064041c0
+GMAC_AddVlanToHashTable/14 (GMAC_AddVlanToHashTable) @063921c0
   Type: function definition analyzed
   Visibility: externally_visible public
   References: 
@@ -607,7 +607,7 @@ GMAC_AddVlanToHashTable/14 (GMAC_AddVlanToHashTable) @064041c0
   Function flags: count:1073741824 (estimated locally) body optimize_size
   Called by: 
   Calls: REV_BITS_32/4 (1073741824 (estimated locally),1.00 per call) 
-GMAC_RemoveFromHashTable/13 (GMAC_RemoveFromHashTable) @06394e00
+GMAC_RemoveFromHashTable/13 (GMAC_RemoveFromHashTable) @05e4ee00
   Type: function definition analyzed
   Visibility: externally_visible public
   References: 
@@ -616,7 +616,7 @@ GMAC_RemoveFromHashTable/13 (GMAC_RemoveFromHashTable) @06394e00
   Function flags: count:1073741824 (estimated locally) body optimize_size
   Called by: 
   Calls: REV_BITS_32/4 (1073741824 (estimated locally),1.00 per call) 
-GMAC_AddToHashTable/12 (GMAC_AddToHashTable) @063948c0
+GMAC_AddToHashTable/12 (GMAC_AddToHashTable) @05e4e8c0
   Type: function definition analyzed
   Visibility: externally_visible public
   References: 
@@ -625,7 +625,7 @@ GMAC_AddToHashTable/12 (GMAC_AddToHashTable) @063948c0
   Function flags: count:1073741824 (estimated locally) body optimize_size
   Called by: 
   Calls: REV_BITS_32/4 (1073741824 (estimated locally),1.00 per call) 
-GMAC_TxIRQHandler/11 (GMAC_TxIRQHandler) @063940e0
+GMAC_TxIRQHandler/11 (GMAC_TxIRQHandler) @05e4e0e0
   Type: function definition analyzed
   Visibility: externally_visible public
   References: Gmac_apxChBases/2 (read)Gmac_apxState/31 (read)
@@ -635,7 +635,7 @@ GMAC_TxIRQHandler/11 (GMAC_TxIRQHandler) @063940e0
   Called by: 
   Calls: 
    Indirect call(131533373 (estimated locally),0.12 per call) 
-GMAC_RxIRQHandler/10 (GMAC_RxIRQHandler) @06394d20
+GMAC_RxIRQHandler/10 (GMAC_RxIRQHandler) @05e4ed20
   Type: function definition analyzed
   Visibility: externally_visible public
   References: Gmac_apxChBases/2 (read)Gmac_apxState/31 (read)
@@ -645,7 +645,7 @@ GMAC_RxIRQHandler/10 (GMAC_RxIRQHandler) @06394d20
   Called by: 
   Calls: 
    Indirect call(131533373 (estimated locally),0.12 per call) 
-GMAC_CommonIRQHandler/9 (GMAC_CommonIRQHandler) @06394a80
+GMAC_CommonIRQHandler/9 (GMAC_CommonIRQHandler) @05e4ea80
   Type: function definition analyzed
   Visibility: externally_visible public
   References: Gmac_apxBases/1 (read)Gmac_apxChBases/2 (read)Gmac_apxState/31 (read)Gmac_apxState/31 (read)
@@ -656,7 +656,7 @@ GMAC_CommonIRQHandler/9 (GMAC_CommonIRQHandler) @06394a80
   Calls: GMAC_MACIRQHandler/5 (118111599 (estimated locally),1.00 per call) 
    Indirect call(334470578 (estimated locally),2.83 per call) 
    Indirect call(334470576 (estimated locally),2.83 per call) 
-GMAC_WriteManagementFrame/8 (GMAC_WriteManagementFrame) @063947e0
+GMAC_WriteManagementFrame/8 (GMAC_WriteManagementFrame) @05e4e7e0
   Type: function definition analyzed
   Visibility: externally_visible public
   References: 
@@ -665,7 +665,7 @@ GMAC_WriteManagementFrame/8 (GMAC_WriteManagementFrame) @063947e0
   Function flags: count:114863532 (estimated locally) body optimize_size
   Called by: 
   Calls: GMAC_TimeoutExpired/7 (1014686025 (estimated locally),8.83 per call) GMAC_StartTimeOut/6 (114863532 (estimated locally),1.00 per call) 
-GMAC_TimeoutExpired/7 (GMAC_TimeoutExpired) @063942a0
+GMAC_TimeoutExpired/7 (GMAC_TimeoutExpired) @05e4e2a0
   Type: function definition analyzed
   Visibility: externally_visible public
   References: 
@@ -674,7 +674,7 @@ GMAC_TimeoutExpired/7 (GMAC_TimeoutExpired) @063942a0
   Function flags: count:1073741824 (estimated locally) body optimize_size
   Called by: GMAC_WriteManagementFrame/8 (1014686025 (estimated locally),8.83 per call) 
   Calls: OsIf_GetElapsed/30 (1073741824 (estimated locally),1.00 per call) 
-GMAC_StartTimeOut/6 (GMAC_StartTimeOut) @06394000
+GMAC_StartTimeOut/6 (GMAC_StartTimeOut) @05e4e000
   Type: function definition analyzed
   Visibility: externally_visible public
   References: 
@@ -683,7 +683,7 @@ GMAC_StartTimeOut/6 (GMAC_StartTimeOut) @06394000
   Function flags: count:1073741824 (estimated locally) body optimize_size
   Called by: GMAC_WriteManagementFrame/8 (114863532 (estimated locally),1.00 per call) 
   Calls: OsIf_MicrosToTicks/29 (1073741824 (estimated locally),1.00 per call) OsIf_GetCounter/28 (1073741824 (estimated locally),1.00 per call) 
-GMAC_MACIRQHandler/5 (GMAC_MACIRQHandler) @062dee00
+GMAC_MACIRQHandler/5 (GMAC_MACIRQHandler) @062bee00
   Type: function definition analyzed
   Visibility: prevailing_def_ironly
   References: Gmac_apxBases/1 (read)Gmac_apxState/31 (read)
@@ -693,7 +693,7 @@ GMAC_MACIRQHandler/5 (GMAC_MACIRQHandler) @062dee00
   Called by: GMAC_CommonIRQHandler/9 (118111599 (estimated locally),1.00 per call) 
   Calls: 
    Indirect call(375809639 (estimated locally),0.35 per call) 
-REV_BITS_32/4 (REV_BITS_32) @062deb60
+REV_BITS_32/4 (REV_BITS_32) @062beb60
   Type: function definition analyzed
   Visibility: prevailing_def_ironly
   References: 
@@ -702,21 +702,21 @@ REV_BITS_32/4 (REV_BITS_32) @062deb60
   Function flags: count:1073741824 (estimated locally) body local optimize_size
   Called by: GMAC_RemoveVlanFromHashTable/15 (1073741824 (estimated locally),1.00 per call) GMAC_AddVlanToHashTable/14 (1073741824 (estimated locally),1.00 per call) GMAC_RemoveFromHashTable/13 (1073741824 (estimated locally),1.00 per call) GMAC_AddToHashTable/12 (1073741824 (estimated locally),1.00 per call) 
   Calls: 
-Gmac_apxQueueBases/3 (Gmac_apxQueueBases) @062dce10
+Gmac_apxQueueBases/3 (Gmac_apxQueueBases) @062bce10
   Type: variable definition analyzed
   Visibility: externally_visible public
   References: 
   Referring: 
   Availability: available
   Varpool flags: initialized read-only const-value-known
-Gmac_apxChBases/2 (Gmac_apxChBases) @062dcdc8
+Gmac_apxChBases/2 (Gmac_apxChBases) @062bcdc8
   Type: variable definition analyzed
   Visibility: externally_visible public
   References: 
   Referring: GMAC_CommonIRQHandler/9 (read)GMAC_RxIRQHandler/10 (read)GMAC_TxIRQHandler/11 (read)
   Availability: available
   Varpool flags: initialized read-only const-value-known
-Gmac_apxBases/1 (Gmac_apxBases) @062dcd80
+Gmac_apxBases/1 (Gmac_apxBases) @062bcd80
   Type: variable definition analyzed
   Visibility: externally_visible public
   References: 

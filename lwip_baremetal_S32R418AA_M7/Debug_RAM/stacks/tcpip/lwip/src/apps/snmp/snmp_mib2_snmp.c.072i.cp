@@ -107,7 +107,7 @@ Reclaiming variables:
 Clearing address taken flags:
 Symbol table:
 
-snmp_set_value.part.0/12 (snmp_set_value.part.0) @061ad0e0
+snmp_set_value.part.0/12 (snmp_set_value.part.0) @06dfb0e0
   Type: function definition analyzed
   Visibility: prevailing_def_ironly artificial
   References: 
@@ -116,7 +116,7 @@ snmp_set_value.part.0/12 (snmp_set_value.part.0) @061ad0e0
   Function flags: count:1073741824 (estimated locally) first_run:1 body local split_part optimize_size
   Called by: snmp_set_value/3 (365072224 (estimated locally),0.34 per call) 
   Calls: snmp_set_auth_traps_enabled/8 (365072220 (estimated locally),0.34 per call) snmp_set_auth_traps_enabled/8 (708669605 (estimated locally),0.66 per call) 
-snmp_set_test.part.0/11 (snmp_set_test.part.0) @05fe08c0
+snmp_set_test.part.0/11 (snmp_set_test.part.0) @06c2b8c0
   Type: function definition analyzed
   Visibility: prevailing_def_ironly artificial
   References: 
@@ -125,7 +125,7 @@ snmp_set_test.part.0/11 (snmp_set_test.part.0) @05fe08c0
   Function flags: count:1073741824 (estimated locally) first_run:1 body local split_part optimize_size
   Called by: snmp_set_test/2 (524952376 (estimated locally),0.49 per call) 
   Calls: 
-snmp_get_auth_traps_enabled/10 (snmp_get_auth_traps_enabled) @06177e00
+snmp_get_auth_traps_enabled/10 (snmp_get_auth_traps_enabled) @06dc4e00
   Type: function
   Visibility: external public
   References: 
@@ -134,7 +134,7 @@ snmp_get_auth_traps_enabled/10 (snmp_get_auth_traps_enabled) @06177e00
   Function flags: optimize_size
   Called by: snmp_get_value/1 (34636833 (estimated locally),0.03 per call) 
   Calls: 
-snmp_stats/9 (snmp_stats) @06178f78
+snmp_stats/9 (snmp_stats) @06dc5f78
   Type: variable
   Body removed by symtab_remove_unreachable_nodes
   Visibility: external public
@@ -142,7 +142,7 @@ snmp_stats/9 (snmp_stats) @06178f78
   Referring: snmp_get_value/1 (read)snmp_get_value/1 (read)snmp_get_value/1 (read)snmp_get_value/1 (read)snmp_get_value/1 (read)snmp_get_value/1 (read)snmp_get_value/1 (read)snmp_get_value/1 (read)snmp_get_value/1 (read)snmp_get_value/1 (read)snmp_get_value/1 (read)snmp_get_value/1 (read)snmp_get_value/1 (read)snmp_get_value/1 (read)snmp_get_value/1 (read)snmp_get_value/1 (read)snmp_get_value/1 (read)snmp_get_value/1 (read)snmp_get_value/1 (read)snmp_get_value/1 (read)snmp_get_value/1 (read)snmp_get_value/1 (read)snmp_get_value/1 (read)snmp_get_value/1 (read)snmp_get_value/1 (read)snmp_get_value/1 (read)snmp_get_value/1 (read)
   Availability: not_available
   Varpool flags:
-snmp_set_auth_traps_enabled/8 (snmp_set_auth_traps_enabled) @06177620
+snmp_set_auth_traps_enabled/8 (snmp_set_auth_traps_enabled) @06dc4620
   Type: function
   Visibility: external public
   References: 
@@ -151,7 +151,7 @@ snmp_set_auth_traps_enabled/8 (snmp_set_auth_traps_enabled) @06177620
   Function flags: optimize_size
   Called by: snmp_set_value.part.0/12 (365072220 (estimated locally),0.34 per call) snmp_set_value.part.0/12 (708669605 (estimated locally),0.66 per call) 
   Calls: 
-snmp_scalar_array_get_next_instance/7 (snmp_scalar_array_get_next_instance) @061770e0
+snmp_scalar_array_get_next_instance/7 (snmp_scalar_array_get_next_instance) @06dc40e0
   Type: function
   Visibility: external public
   Address is taken.
@@ -161,7 +161,7 @@ snmp_scalar_array_get_next_instance/7 (snmp_scalar_array_get_next_instance) @061
   Function flags: optimize_size
   Called by: 
   Calls: 
-snmp_scalar_array_get_instance/6 (snmp_scalar_array_get_instance) @06177000
+snmp_scalar_array_get_instance/6 (snmp_scalar_array_get_instance) @06dc4000
   Type: function
   Visibility: external public
   Address is taken.
@@ -171,21 +171,21 @@ snmp_scalar_array_get_instance/6 (snmp_scalar_array_get_instance) @06177000
   Function flags: optimize_size
   Called by: 
   Calls: 
-snmp_mib2_snmp_root/5 (snmp_mib2_snmp_root) @0611ad80
+snmp_mib2_snmp_root/5 (snmp_mib2_snmp_root) @06d65d80
   Type: variable definition analyzed
   Visibility: externally_visible public
   References: snmp_scalar_array_get_instance/6 (addr)snmp_scalar_array_get_next_instance/7 (addr)snmp_nodes/4 (addr)snmp_get_value/1 (addr)snmp_set_test/2 (addr)snmp_set_value/3 (addr)
   Referring: 
   Availability: available
   Varpool flags: initialized read-only const-value-known
-snmp_nodes/4 (snmp_nodes) @0611aca8
+snmp_nodes/4 (snmp_nodes) @06d65ca8
   Type: variable definition analyzed
   Visibility: prevailing_def_ironly
   References: 
   Referring: snmp_mib2_snmp_root/5 (addr)
   Availability: available
   Varpool flags: initialized read-only const-value-known
-snmp_set_value/3 (snmp_set_value) @061377e0
+snmp_set_value/3 (snmp_set_value) @06d827e0
   Type: function definition analyzed
   Visibility: prevailing_def_ironly
   Address is taken.
@@ -195,7 +195,7 @@ snmp_set_value/3 (snmp_set_value) @061377e0
   Function flags: count:1073741824 (estimated locally) body optimize_size
   Called by: 
   Calls: snmp_set_value.part.0/12 (365072224 (estimated locally),0.34 per call) 
-snmp_set_test/2 (snmp_set_test) @06137540
+snmp_set_test/2 (snmp_set_test) @06d82540
   Type: function definition analyzed
   Visibility: prevailing_def_ironly
   Address is taken.
@@ -205,7 +205,7 @@ snmp_set_test/2 (snmp_set_test) @06137540
   Function flags: count:1073741824 (estimated locally) body optimize_size
   Called by: 
   Calls: snmp_set_test.part.0/11 (524952376 (estimated locally),0.49 per call) 
-snmp_get_value/1 (snmp_get_value) @061372a0
+snmp_get_value/1 (snmp_get_value) @06d822a0
   Type: function definition analyzed
   Visibility: prevailing_def_ironly
   Address is taken.

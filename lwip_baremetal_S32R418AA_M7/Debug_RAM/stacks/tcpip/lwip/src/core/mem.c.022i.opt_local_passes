@@ -456,6 +456,7 @@ mem_malloc (mem_size_t size_in)
 mem_trim (void * rmem, mem_size_t new_size)
 {
   mem_size_t next;
+  sys_prot_t old_level;
   struct mem * mem2;
   struct mem * mem;
   mem_size_t ptr2;
@@ -498,8 +499,8 @@ mem_trim (void * rmem, mem_size_t new_size)
   void * _82;
   void * _83;
   void * _84;
-  void * _87;
-  void * _89;
+  void * _90;
+  void * _92;
 
   <bb 2> :
   # DEBUG BEGIN_STMT
@@ -538,7 +539,7 @@ mem_trim (void * rmem, mem_size_t new_size)
 
   <bb 6> :
   # DEBUG BEGIN_STMT
-  _89 = 0B;
+  _92 = 0B;
   // predicted unlikely by early return (on trees) predictor.
   goto <bb 36>; [INV]
 
@@ -587,14 +588,17 @@ mem_trim (void * rmem, mem_size_t new_size)
   # DEBUG BEGIN_STMT
   # DEBUG BEGIN_STMT
   # DEBUG BEGIN_STMT
+  old_level_87 = sys_arch_protect ();
+  # DEBUG old_level => old_level_87
   # DEBUG BEGIN_STMT
   _6 = lwip_stats.mem.illegal;
   _7 = _6 + 1;
   lwip_stats.mem.illegal = _7;
   # DEBUG BEGIN_STMT
+  sys_arch_unprotect (old_level_87);
   # DEBUG BEGIN_STMT
   # DEBUG BEGIN_STMT
-  _87 = rmem_49(D);
+  _90 = rmem_49(D);
   // predicted unlikely by early return (on trees) predictor.
   goto <bb 36>; [INV]
 
@@ -819,7 +823,7 @@ mem_trim (void * rmem, mem_size_t new_size)
   _82 = rmem_49(D);
 
   <bb 36> :
-  # _34 = PHI <_89(6), _87(12), _84(16), _83(18), _82(35)>
+  # _34 = PHI <_92(6), _90(12), _84(16), _83(18), _82(35)>
   return _34;
 
 }

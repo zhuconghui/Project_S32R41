@@ -1,23 +1,51 @@
-sys_now ()
+sys_arch_unprotect (sys_prot_t pval)
 {
-  u32_t D.6527;
+  <bb 2> :
+  # DEBUG BEGIN_STMT
+  __asm__ __volatile__("msr primask, %0" :  : "r" pval);
+  return;
+
+}
+
+
+sys_arch_protect ()
+{
+  sys_prot_t pval;
+  sys_prot_t D.6540;
 
   <bb 2> :
   # DEBUG BEGIN_STMT
-  D.6527 = sys_jiffies ();
-  return D.6527;
+  # DEBUG BEGIN_STMT
+  __asm__ __volatile__("mrs %0, primask" : "=r" pval);
+  # DEBUG BEGIN_STMT
+  __asm__ __volatile__("cpsid i");
+  # DEBUG BEGIN_STMT
+  D.6540 = pval;
+  return D.6540;
+
+}
+
+
+sys_now ()
+{
+  u32_t D.6538;
+
+  <bb 2> :
+  # DEBUG BEGIN_STMT
+  D.6538 = sys_jiffies ();
+  return D.6538;
 
 }
 
 
 sys_jiffies ()
 {
-  u32_t D.6525;
+  u32_t D.6536;
 
   <bb 2> :
   # DEBUG BEGIN_STMT
-  D.6525 = OsIf_GetMilliseconds ();
-  return D.6525;
+  D.6536 = OsIf_GetMilliseconds ();
+  return D.6536;
 
 }
 

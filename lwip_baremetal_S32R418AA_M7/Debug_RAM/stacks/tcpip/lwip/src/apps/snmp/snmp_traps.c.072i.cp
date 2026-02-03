@@ -392,7 +392,7 @@ Reclaiming variables:
 Clearing address taken flags:
 Symbol table:
 
-snmp_trap_varbind_enc.isra.0/39 (snmp_trap_varbind_enc.isra.0) @06244380
+snmp_trap_varbind_enc.isra.0/39 (snmp_trap_varbind_enc.isra.0) @0620c7e0
   Type: function definition analyzed
   Visibility: prevailing_def_ironly artificial
   References: 
@@ -401,7 +401,7 @@ snmp_trap_varbind_enc.isra.0/39 (snmp_trap_varbind_enc.isra.0) @06244380
   Function flags: count:116070667 (estimated locally) body local optimize_size
   Called by: snmp_send_trap/8 (86338494 (estimated locally),0.16 per call) 
   Calls: snmp_append_outbound_varbind/36 (1014686024 (estimated locally),8.74 per call) snmp_ans1_enc_tlv/32 (116070667 (estimated locally),1.00 per call) 
-snmp_trap_varbind_sum.isra.0/38 (snmp_trap_varbind_sum.isra.0) @05f548c0
+snmp_trap_varbind_sum.isra.0/38 (snmp_trap_varbind_sum.isra.0) @05fb18c0
   Type: function definition analyzed
   Visibility: prevailing_def_ironly artificial
   References: 
@@ -410,14 +410,14 @@ snmp_trap_varbind_sum.isra.0/38 (snmp_trap_varbind_sum.isra.0) @05f548c0
   Function flags: count:118111600 (estimated locally) body local optimize_size
   Called by: snmp_send_trap/8 (161470906 (estimated locally),0.30 per call) 
   Calls: snmp_asn1_enc_length_cnt/26 (118111601 (estimated locally),1.00 per call) snmp_varbind_length/25 (955630223 (estimated locally),8.09 per call) 
-oid.7161/37 (oid) @0616aa20
+oid.7165/37 (oid) @061c2a20
   Type: variable definition analyzed
   Visibility: prevailing_def_ironly
   References: 
   Referring: snmp_send_trap_generic/9 (addr)
   Availability: available
   Varpool flags: initialized read-only const-value-known
-snmp_append_outbound_varbind/36 (snmp_append_outbound_varbind) @06156e00
+snmp_append_outbound_varbind/36 (snmp_append_outbound_varbind) @061af460
   Type: function
   Visibility: external public
   References: 
@@ -426,7 +426,7 @@ snmp_append_outbound_varbind/36 (snmp_append_outbound_varbind) @06156e00
   Function flags: optimize_size
   Called by: snmp_trap_varbind_enc.isra.0/39 (1014686024 (estimated locally),8.74 per call) 
   Calls: 
-snmp_asn1_enc_oid/35 (snmp_asn1_enc_oid) @06156c40
+snmp_asn1_enc_oid/35 (snmp_asn1_enc_oid) @061afe00
   Type: function
   Visibility: external public
   References: 
@@ -435,7 +435,7 @@ snmp_asn1_enc_oid/35 (snmp_asn1_enc_oid) @06156c40
   Function flags: optimize_size
   Called by: snmp_trap_header_enc/16 (926166833 (estimated locally),0.86 per call) 
   Calls: 
-snmp_asn1_enc_raw/34 (snmp_asn1_enc_raw) @06156b60
+snmp_asn1_enc_raw/34 (snmp_asn1_enc_raw) @061afd20
   Type: function
   Visibility: external public
   References: 
@@ -444,7 +444,7 @@ snmp_asn1_enc_raw/34 (snmp_asn1_enc_raw) @06156b60
   Function flags: optimize_size
   Called by: snmp_trap_header_enc/16 (592270221 (estimated locally),0.55 per call) snmp_trap_header_enc/16 (305108901 (estimated locally),0.28 per call) snmp_trap_header_enc/16 (986752130 (estimated locally),0.92 per call) 
   Calls: 
-snmp_asn1_enc_s32t/33 (snmp_asn1_enc_s32t) @06156a80
+snmp_asn1_enc_s32t/33 (snmp_asn1_enc_s32t) @061afc40
   Type: function
   Visibility: external public
   References: 
@@ -453,7 +453,7 @@ snmp_asn1_enc_s32t/33 (snmp_asn1_enc_s32t) @06156a80
   Function flags: optimize_size
   Called by: snmp_trap_header_enc/16 (799044379 (estimated locally),0.74 per call) snmp_trap_header_enc/16 (833521486 (estimated locally),0.78 per call) snmp_trap_header_enc/16 (869486210 (estimated locally),0.81 per call) snmp_trap_header_enc/16 (1029328438 (estimated locally),0.96 per call) 
   Calls: 
-snmp_ans1_enc_tlv/32 (snmp_ans1_enc_tlv) @061569a0
+snmp_ans1_enc_tlv/32 (snmp_ans1_enc_tlv) @061afb60
   Type: function
   Visibility: external public
   References: 
@@ -462,7 +462,7 @@ snmp_ans1_enc_tlv/32 (snmp_ans1_enc_tlv) @061569a0
   Function flags: optimize_size
   Called by: snmp_trap_varbind_enc.isra.0/39 (116070667 (estimated locally),1.00 per call) snmp_trap_header_enc/16 (816100887 (estimated locally),0.76 per call) snmp_trap_header_enc/16 (851313948 (estimated locally),0.79 per call) snmp_trap_header_enc/16 (888046380 (estimated locally),0.83 per call) snmp_trap_header_enc/16 (604912901 (estimated locally),0.56 per call) snmp_trap_header_enc/16 (311621797 (estimated locally),0.29 per call) snmp_trap_header_enc/16 (945936914 (estimated locally),0.88 per call) snmp_trap_header_enc/16 (966129011 (estimated locally),0.90 per call) snmp_trap_header_enc/16 (1007815473 (estimated locally),0.94 per call) snmp_trap_header_enc/16 (1051300621 (estimated locally),0.98 per call) snmp_trap_header_enc/16 (1073741824 (estimated locally),1.00 per call) 
   Calls: 
-strlen/31 (strlen) @06156620
+strlen/31 (strlen) @061af7e0
   Type: function
   Visibility: external public
   References: 
@@ -471,7 +471,7 @@ strlen/31 (strlen) @06156620
   Function flags: optimize_size
   Called by: snmp_trap_header_sum/14 (1073741824 (estimated locally),1.00 per call) 
   Calls: 
-snmp_community_trap/30 (snmp_community_trap) @06157f78
+snmp_community_trap/30 (snmp_community_trap) @061b0f78
   Type: variable
   Body removed by symtab_remove_unreachable_nodes
   Visibility: external public
@@ -479,7 +479,7 @@ snmp_community_trap/30 (snmp_community_trap) @06157f78
   Referring: snmp_trap_header_sum/14 (read)snmp_trap_header_enc/16 (read)
   Availability: not_available
   Varpool flags:
-snmp_asn1_enc_oid_cnt/29 (snmp_asn1_enc_oid_cnt) @06156540
+snmp_asn1_enc_oid_cnt/29 (snmp_asn1_enc_oid_cnt) @061af700
   Type: function
   Visibility: external public
   References: 
@@ -488,7 +488,7 @@ snmp_asn1_enc_oid_cnt/29 (snmp_asn1_enc_oid_cnt) @06156540
   Function flags: optimize_size
   Called by: snmp_trap_header_enc/16 (945936914 (estimated locally),0.88 per call) snmp_trap_header_sum/14 (1073741824 (estimated locally),1.00 per call) 
   Calls: 
-snmp_asn1_enc_s32t_cnt/28 (snmp_asn1_enc_s32t_cnt) @06156460
+snmp_asn1_enc_s32t_cnt/28 (snmp_asn1_enc_s32t_cnt) @061af620
   Type: function
   Visibility: external public
   References: 
@@ -497,7 +497,7 @@ snmp_asn1_enc_s32t_cnt/28 (snmp_asn1_enc_s32t_cnt) @06156460
   Function flags: optimize_size
   Called by: snmp_trap_header_enc/16 (816100887 (estimated locally),0.76 per call) snmp_trap_header_enc/16 (851313948 (estimated locally),0.79 per call) snmp_trap_header_enc/16 (888046380 (estimated locally),0.83 per call) snmp_trap_header_enc/16 (1051300621 (estimated locally),0.98 per call) snmp_trap_header_sum/14 (1073741824 (estimated locally),1.00 per call) snmp_trap_header_sum/14 (1073741824 (estimated locally),1.00 per call) snmp_trap_header_sum/14 (1073741824 (estimated locally),1.00 per call) 
   Calls: 
-snmp_asn1_enc_u32t_cnt/27 (snmp_asn1_enc_u32t_cnt) @06156380
+snmp_asn1_enc_u32t_cnt/27 (snmp_asn1_enc_u32t_cnt) @061af540
   Type: function
   Visibility: external public
   References: 
@@ -506,7 +506,7 @@ snmp_asn1_enc_u32t_cnt/27 (snmp_asn1_enc_u32t_cnt) @06156380
   Function flags: optimize_size
   Called by: snmp_trap_header_sum/14 (1073741824 (estimated locally),1.00 per call) 
   Calls: 
-snmp_asn1_enc_length_cnt/26 (snmp_asn1_enc_length_cnt) @061561c0
+snmp_asn1_enc_length_cnt/26 (snmp_asn1_enc_length_cnt) @061af380
   Type: function
   Visibility: external public
   References: 
@@ -515,7 +515,7 @@ snmp_asn1_enc_length_cnt/26 (snmp_asn1_enc_length_cnt) @061561c0
   Function flags: optimize_size
   Called by: snmp_trap_header_sum/14 (1073741824 (estimated locally),1.00 per call) snmp_trap_header_sum/14 (1073741824 (estimated locally),1.00 per call) snmp_trap_header_sum/14 (1073741824 (estimated locally),1.00 per call) snmp_trap_header_sum/14 (1073741824 (estimated locally),1.00 per call) snmp_trap_header_sum/14 (1073741824 (estimated locally),1.00 per call) snmp_trap_header_sum/14 (1073741824 (estimated locally),1.00 per call) snmp_trap_header_sum/14 (1073741824 (estimated locally),1.00 per call) snmp_trap_header_sum/14 (1073741824 (estimated locally),1.00 per call) snmp_trap_header_sum/14 (1073741824 (estimated locally),1.00 per call) snmp_trap_varbind_sum.isra.0/38 (118111601 (estimated locally),1.00 per call) 
   Calls: 
-snmp_varbind_length/25 (snmp_varbind_length) @061560e0
+snmp_varbind_length/25 (snmp_varbind_length) @061af2a0
   Type: function
   Visibility: external public
   References: 
@@ -524,7 +524,7 @@ snmp_varbind_length/25 (snmp_varbind_length) @061560e0
   Function flags: optimize_size
   Called by: snmp_trap_varbind_sum.isra.0/38 (955630223 (estimated locally),8.09 per call) 
   Calls: 
-pbuf_free/24 (pbuf_free) @06130460
+pbuf_free/24 (pbuf_free) @061af0e0
   Type: function
   Visibility: external public
   References: 
@@ -533,7 +533,7 @@ pbuf_free/24 (pbuf_free) @06130460
   Function flags: optimize_size
   Called by: snmp_send_trap/8 (86338494 (estimated locally),0.16 per call) 
   Calls: 
-snmp_sendto/23 (snmp_sendto) @06130ee0
+snmp_sendto/23 (snmp_sendto) @061af000
   Type: function
   Visibility: external public
   References: 
@@ -542,7 +542,7 @@ snmp_sendto/23 (snmp_sendto) @06130ee0
   Function flags: optimize_size
   Called by: snmp_send_trap/8 (86338494 (estimated locally),0.16 per call) 
   Calls: 
-snmp_stats/22 (snmp_stats) @06142e10
+snmp_stats/22 (snmp_stats) @0619be10
   Type: variable
   Body removed by symtab_remove_unreachable_nodes
   Visibility: external public
@@ -550,7 +550,7 @@ snmp_stats/22 (snmp_stats) @06142e10
   Referring: snmp_send_trap/8 (read)snmp_send_trap/8 (write)snmp_send_trap/8 (read)snmp_send_trap/8 (write)
   Availability: not_available
   Varpool flags:
-snmp_pbuf_stream_init/21 (snmp_pbuf_stream_init) @06130d20
+snmp_pbuf_stream_init/21 (snmp_pbuf_stream_init) @06188ee0
   Type: function
   Visibility: external public
   References: 
@@ -559,7 +559,7 @@ snmp_pbuf_stream_init/21 (snmp_pbuf_stream_init) @06130d20
   Function flags: optimize_size
   Called by: snmp_send_trap/8 (86338494 (estimated locally),0.16 per call) 
   Calls: 
-pbuf_alloc/20 (pbuf_alloc) @06130c40
+pbuf_alloc/20 (pbuf_alloc) @06188e00
   Type: function
   Visibility: external public
   References: 
@@ -568,7 +568,7 @@ pbuf_alloc/20 (pbuf_alloc) @06130c40
   Function flags: optimize_size
   Called by: snmp_send_trap/8 (161470906 (estimated locally),0.30 per call) 
   Calls: 
-sys_now/19 (sys_now) @06130b60
+sys_now/19 (sys_now) @06188d20
   Type: function
   Visibility: external public
   References: 
@@ -577,7 +577,7 @@ sys_now/19 (sys_now) @06130b60
   Function flags: optimize_size
   Called by: snmp_send_trap/8 (161470906 (estimated locally),0.30 per call) 
   Calls: 
-snmp_get_device_enterprise_oid/18 (snmp_get_device_enterprise_oid) @06130a80
+snmp_get_device_enterprise_oid/18 (snmp_get_device_enterprise_oid) @06188c40
   Type: function
   Visibility: external public
   References: 
@@ -586,7 +586,7 @@ snmp_get_device_enterprise_oid/18 (snmp_get_device_enterprise_oid) @06130a80
   Function flags: optimize_size
   Called by: snmp_send_trap/8 (28144379 (estimated locally),0.05 per call) 
   Calls: 
-snmp_get_local_ip_for_dst/17 (snmp_get_local_ip_for_dst) @061309a0
+snmp_get_local_ip_for_dst/17 (snmp_get_local_ip_for_dst) @06188b60
   Type: function
   Visibility: external public
   References: 
@@ -595,7 +595,7 @@ snmp_get_local_ip_for_dst/17 (snmp_get_local_ip_for_dst) @061309a0
   Function flags: optimize_size
   Called by: snmp_send_trap/8 (241001352 (estimated locally),0.45 per call) 
   Calls: 
-snmp_trap_header_enc/16 (snmp_trap_header_enc) @060fc2a0
+snmp_trap_header_enc/16 (snmp_trap_header_enc) @06154c40
   Type: function definition analyzed
   Visibility: prevailing_def_ironly
   References: snmp_community_trap/30 (read)
@@ -604,7 +604,7 @@ snmp_trap_header_enc/16 (snmp_trap_header_enc) @060fc2a0
   Function flags: count:1073741824 (estimated locally) body local optimize_size
   Called by: snmp_send_trap/8 (86338494 (estimated locally),0.16 per call) 
   Calls: snmp_asn1_enc_s32t/33 (799044379 (estimated locally),0.74 per call) snmp_ans1_enc_tlv/32 (816100887 (estimated locally),0.76 per call) snmp_asn1_enc_s32t_cnt/28 (816100887 (estimated locally),0.76 per call) snmp_asn1_enc_s32t/33 (833521486 (estimated locally),0.78 per call) snmp_ans1_enc_tlv/32 (851313948 (estimated locally),0.79 per call) snmp_asn1_enc_s32t_cnt/28 (851313948 (estimated locally),0.79 per call) snmp_asn1_enc_s32t/33 (869486210 (estimated locally),0.81 per call) snmp_ans1_enc_tlv/32 (888046380 (estimated locally),0.83 per call) snmp_asn1_enc_s32t_cnt/28 (888046380 (estimated locally),0.83 per call) snmp_asn1_enc_raw/34 (592270221 (estimated locally),0.55 per call) snmp_ans1_enc_tlv/32 (604912901 (estimated locally),0.56 per call) snmp_asn1_enc_raw/34 (305108901 (estimated locally),0.28 per call) snmp_ans1_enc_tlv/32 (311621797 (estimated locally),0.29 per call) snmp_asn1_enc_oid/35 (926166833 (estimated locally),0.86 per call) snmp_ans1_enc_tlv/32 (945936914 (estimated locally),0.88 per call) snmp_asn1_enc_oid_cnt/29 (945936914 (estimated locally),0.88 per call) snmp_ans1_enc_tlv/32 (966129011 (estimated locally),0.90 per call) snmp_asn1_enc_raw/34 (986752130 (estimated locally),0.92 per call) snmp_ans1_enc_tlv/32 (1007815473 (estimated locally),0.94 per call) snmp_asn1_enc_s32t/33 (1029328438 (estimated locally),0.96 per call) snmp_ans1_enc_tlv/32 (1051300621 (estimated locally),0.98 per call) snmp_asn1_enc_s32t_cnt/28 (1051300621 (estimated locally),0.98 per call) snmp_ans1_enc_tlv/32 (1073741824 (estimated locally),1.00 per call) 
-snmp_trap_header_sum/14 (snmp_trap_header_sum) @060fc620
+snmp_trap_header_sum/14 (snmp_trap_header_sum) @061548c0
   Type: function definition analyzed
   Visibility: prevailing_def_ironly
   References: snmp_community_trap/30 (read)
@@ -613,7 +613,7 @@ snmp_trap_header_sum/14 (snmp_trap_header_sum) @060fc620
   Function flags: count:1073741824 (estimated locally) body local optimize_size
   Called by: snmp_send_trap/8 (161470906 (estimated locally),0.30 per call) 
   Calls: snmp_asn1_enc_length_cnt/26 (1073741824 (estimated locally),1.00 per call) snmp_asn1_enc_length_cnt/26 (1073741824 (estimated locally),1.00 per call) snmp_asn1_enc_s32t_cnt/28 (1073741824 (estimated locally),1.00 per call) snmp_asn1_enc_length_cnt/26 (1073741824 (estimated locally),1.00 per call) strlen/31 (1073741824 (estimated locally),1.00 per call) snmp_asn1_enc_length_cnt/26 (1073741824 (estimated locally),1.00 per call) snmp_asn1_enc_length_cnt/26 (1073741824 (estimated locally),1.00 per call) snmp_asn1_enc_oid_cnt/29 (1073741824 (estimated locally),1.00 per call) snmp_asn1_enc_length_cnt/26 (1073741824 (estimated locally),1.00 per call) snmp_asn1_enc_length_cnt/26 (1073741824 (estimated locally),1.00 per call) snmp_asn1_enc_s32t_cnt/28 (1073741824 (estimated locally),1.00 per call) snmp_asn1_enc_length_cnt/26 (1073741824 (estimated locally),1.00 per call) snmp_asn1_enc_s32t_cnt/28 (1073741824 (estimated locally),1.00 per call) snmp_asn1_enc_length_cnt/26 (1073741824 (estimated locally),1.00 per call) snmp_asn1_enc_u32t_cnt/27 (1073741824 (estimated locally),1.00 per call) 
-snmp_authfail_trap/12 (snmp_authfail_trap) @060e9d20
+snmp_authfail_trap/12 (snmp_authfail_trap) @061541c0
   Type: function definition analyzed
   Visibility: externally_visible public
   References: snmp_auth_traps_enabled/3 (read)
@@ -622,7 +622,7 @@ snmp_authfail_trap/12 (snmp_authfail_trap) @060e9d20
   Function flags: count:1073741824 (estimated locally) body optimize_size
   Called by: 
   Calls: snmp_send_trap_generic/9 (354334802 (estimated locally),0.33 per call) 
-snmp_coldstart_trap/11 (snmp_coldstart_trap) @060e92a0
+snmp_coldstart_trap/11 (snmp_coldstart_trap) @06143d20
   Type: function definition analyzed
   Visibility: externally_visible public
   References: 
@@ -631,7 +631,7 @@ snmp_coldstart_trap/11 (snmp_coldstart_trap) @060e92a0
   Function flags: count:1073741824 (estimated locally) body optimize_size
   Called by: 
   Calls: snmp_send_trap_generic/9 (1073741824 (estimated locally),1.00 per call) 
-snmp_send_trap_specific/10 (snmp_send_trap_specific) @060e9ee0
+snmp_send_trap_specific/10 (snmp_send_trap_specific) @061432a0
   Type: function definition analyzed
   Visibility: externally_visible public
   References: 
@@ -640,16 +640,16 @@ snmp_send_trap_specific/10 (snmp_send_trap_specific) @060e9ee0
   Function flags: count:1073741824 (estimated locally) body optimize_size
   Called by: 
   Calls: snmp_send_trap/8 (1073741824 (estimated locally),1.00 per call) 
-snmp_send_trap_generic/9 (snmp_send_trap_generic) @060e9c40
+snmp_send_trap_generic/9 (snmp_send_trap_generic) @06143ee0
   Type: function definition analyzed
   Visibility: externally_visible public
-  References: oid.7161/37 (addr)
+  References: oid.7165/37 (addr)
   Referring: 
   Availability: available
   Function flags: count:1073741824 (estimated locally) body optimize_size
   Called by: snmp_authfail_trap/12 (354334802 (estimated locally),0.33 per call) snmp_coldstart_trap/11 (1073741824 (estimated locally),1.00 per call) 
   Calls: snmp_send_trap/8 (1073741824 (estimated locally),1.00 per call) 
-snmp_send_trap/8 (snmp_send_trap) @060e99a0
+snmp_send_trap/8 (snmp_send_trap) @06143c40
   Type: function definition analyzed
   Visibility: externally_visible public
   References: snmp_traps_handle/1 (read)snmp_stats/22 (read)snmp_stats/22 (write)snmp_stats/22 (read)snmp_stats/22 (write)snmp_traps_handle/1 (read)trap_dst/2 (addr)
@@ -658,7 +658,7 @@ snmp_send_trap/8 (snmp_send_trap) @060e99a0
   Function flags: count:536870910 (estimated locally) body optimize_size
   Called by: snmp_send_trap_specific/10 (1073741824 (estimated locally),1.00 per call) snmp_send_trap_generic/9 (1073741824 (estimated locally),1.00 per call) 
   Calls: pbuf_free/24 (86338494 (estimated locally),0.16 per call) snmp_sendto/23 (86338494 (estimated locally),0.16 per call) snmp_trap_varbind_enc.isra.0/39 (86338494 (estimated locally),0.16 per call) snmp_trap_header_enc/16 (86338494 (estimated locally),0.16 per call) snmp_pbuf_stream_init/21 (86338494 (estimated locally),0.16 per call) pbuf_alloc/20 (161470906 (estimated locally),0.30 per call) snmp_trap_header_sum/14 (161470906 (estimated locally),0.30 per call) snmp_trap_varbind_sum.isra.0/38 (161470906 (estimated locally),0.30 per call) sys_now/19 (161470906 (estimated locally),0.30 per call) snmp_get_device_enterprise_oid/18 (28144379 (estimated locally),0.05 per call) snmp_get_local_ip_for_dst/17 (241001352 (estimated locally),0.45 per call) 
-snmp_get_auth_traps_enabled/7 (snmp_get_auth_traps_enabled) @060e91c0
+snmp_get_auth_traps_enabled/7 (snmp_get_auth_traps_enabled) @06143460
   Type: function definition analyzed
   Visibility: externally_visible public
   References: snmp_auth_traps_enabled/3 (read)
@@ -667,7 +667,7 @@ snmp_get_auth_traps_enabled/7 (snmp_get_auth_traps_enabled) @060e91c0
   Function flags: count:1073741824 (estimated locally) body optimize_size
   Called by: 
   Calls: 
-snmp_set_auth_traps_enabled/6 (snmp_set_auth_traps_enabled) @060df620
+snmp_set_auth_traps_enabled/6 (snmp_set_auth_traps_enabled) @061431c0
   Type: function definition analyzed
   Visibility: externally_visible public
   References: snmp_auth_traps_enabled/3 (write)
@@ -676,7 +676,7 @@ snmp_set_auth_traps_enabled/6 (snmp_set_auth_traps_enabled) @060df620
   Function flags: count:1073741824 (estimated locally) body optimize_size
   Called by: 
   Calls: 
-snmp_trap_dst_ip_set/5 (snmp_trap_dst_ip_set) @060dfee0
+snmp_trap_dst_ip_set/5 (snmp_trap_dst_ip_set) @061397e0
   Type: function definition analyzed
   Visibility: externally_visible public
   References: trap_dst/2 (write)trap_dst/2 (write)trap_dst/2 (write)trap_dst/2 (write)trap_dst/2 (write)trap_dst/2 (write)trap_dst/2 (write)trap_dst/2 (write)trap_dst/2 (write)trap_dst/2 (write)trap_dst/2 (write)
@@ -685,7 +685,7 @@ snmp_trap_dst_ip_set/5 (snmp_trap_dst_ip_set) @060dfee0
   Function flags: count:1073741824 (estimated locally) body optimize_size
   Called by: 
   Calls: 
-snmp_trap_dst_enable/4 (snmp_trap_dst_enable) @060df540
+snmp_trap_dst_enable/4 (snmp_trap_dst_enable) @06139700
   Type: function definition analyzed
   Visibility: externally_visible public
   References: trap_dst/2 (write)
@@ -694,21 +694,21 @@ snmp_trap_dst_enable/4 (snmp_trap_dst_enable) @060df540
   Function flags: count:1073741824 (estimated locally) body optimize_size
   Called by: 
   Calls: 
-snmp_auth_traps_enabled/3 (snmp_auth_traps_enabled) @060d9708
+snmp_auth_traps_enabled/3 (snmp_auth_traps_enabled) @06131708
   Type: variable definition analyzed
   Visibility: prevailing_def_ironly
   References: 
   Referring: snmp_set_auth_traps_enabled/6 (write)snmp_get_auth_traps_enabled/7 (read)snmp_authfail_trap/12 (read)
   Availability: available
   Varpool flags: initialized
-trap_dst/2 (trap_dst) @060d9678
+trap_dst/2 (trap_dst) @06131678
   Type: variable definition analyzed
   Visibility: prevailing_def_ironly
   References: 
   Referring: snmp_trap_dst_enable/4 (write)snmp_trap_dst_ip_set/5 (write)snmp_trap_dst_ip_set/5 (write)snmp_trap_dst_ip_set/5 (write)snmp_trap_dst_ip_set/5 (write)snmp_trap_dst_ip_set/5 (write)snmp_trap_dst_ip_set/5 (write)snmp_trap_dst_ip_set/5 (write)snmp_trap_dst_ip_set/5 (write)snmp_trap_dst_ip_set/5 (write)snmp_trap_dst_ip_set/5 (write)snmp_trap_dst_ip_set/5 (write)snmp_send_trap/8 (addr)
   Availability: available
   Varpool flags:
-snmp_traps_handle/1 (snmp_traps_handle) @060d9558
+snmp_traps_handle/1 (snmp_traps_handle) @06131558
   Type: variable definition analyzed
   Visibility: externally_visible public
   References: 
@@ -716,7 +716,7 @@ snmp_traps_handle/1 (snmp_traps_handle) @060d9558
   Availability: available
   Varpool flags:
 
-;; Function snmp_trap_dst_enable (snmp_trap_dst_enable, funcdef_no=1, decl_uid=6687, cgraph_uid=2, symbol_order=4)
+;; Function snmp_trap_dst_enable (snmp_trap_dst_enable, funcdef_no=1, decl_uid=6691, cgraph_uid=2, symbol_order=4)
 
 Modification phase of node snmp_trap_dst_enable/4
 snmp_trap_dst_enable (u8_t dst_idx, u8_t enable)
@@ -740,7 +740,7 @@ snmp_trap_dst_enable (u8_t dst_idx, u8_t enable)
 
 
 
-;; Function snmp_trap_dst_ip_set (snmp_trap_dst_ip_set, funcdef_no=2, decl_uid=6690, cgraph_uid=3, symbol_order=5)
+;; Function snmp_trap_dst_ip_set (snmp_trap_dst_ip_set, funcdef_no=2, decl_uid=6694, cgraph_uid=3, symbol_order=5)
 
 Modification phase of node snmp_trap_dst_ip_set/5
 snmp_trap_dst_ip_set (u8_t dst_idx, const struct ip_addr_t * dst)
@@ -818,7 +818,7 @@ snmp_trap_dst_ip_set (u8_t dst_idx, const struct ip_addr_t * dst)
 
 
 
-;; Function snmp_set_auth_traps_enabled (snmp_set_auth_traps_enabled, funcdef_no=3, decl_uid=6702, cgraph_uid=4, symbol_order=6)
+;; Function snmp_set_auth_traps_enabled (snmp_set_auth_traps_enabled, funcdef_no=3, decl_uid=6706, cgraph_uid=4, symbol_order=6)
 
 Modification phase of node snmp_set_auth_traps_enabled/6
 snmp_set_auth_traps_enabled (u8_t enable)
@@ -832,7 +832,7 @@ snmp_set_auth_traps_enabled (u8_t enable)
 
 
 
-;; Function snmp_get_auth_traps_enabled (snmp_get_auth_traps_enabled, funcdef_no=4, decl_uid=6704, cgraph_uid=5, symbol_order=7)
+;; Function snmp_get_auth_traps_enabled (snmp_get_auth_traps_enabled, funcdef_no=4, decl_uid=6708, cgraph_uid=5, symbol_order=7)
 
 Modification phase of node snmp_get_auth_traps_enabled/7
 snmp_get_auth_traps_enabled ()
@@ -848,7 +848,7 @@ snmp_get_auth_traps_enabled ()
 
 
 
-;; Function snmp_send_trap (snmp_send_trap, funcdef_no=5, decl_uid=6700, cgraph_uid=6, symbol_order=8)
+;; Function snmp_send_trap (snmp_send_trap, funcdef_no=5, decl_uid=6704, cgraph_uid=6, symbol_order=8)
 
 Modification phase of node snmp_send_trap/8
 snmp_send_trap (const struct snmp_obj_id * eoid, s32_t generic_trap, s32_t specific_trap, struct snmp_varbind * varbinds)
@@ -1096,7 +1096,7 @@ snmp_send_trap (const struct snmp_obj_id * eoid, s32_t generic_trap, s32_t speci
 
 
 
-;; Function snmp_send_trap_generic (snmp_send_trap_generic, funcdef_no=6, decl_uid=6692, cgraph_uid=7, symbol_order=9)
+;; Function snmp_send_trap_generic (snmp_send_trap_generic, funcdef_no=6, decl_uid=6696, cgraph_uid=7, symbol_order=9)
 
 Modification phase of node snmp_send_trap_generic/9
 snmp_send_trap_generic (s32_t generic_trap)
@@ -1114,7 +1114,7 @@ snmp_send_trap_generic (s32_t generic_trap)
 
 
 
-;; Function snmp_send_trap_specific (snmp_send_trap_specific, funcdef_no=7, decl_uid=6695, cgraph_uid=8, symbol_order=10)
+;; Function snmp_send_trap_specific (snmp_send_trap_specific, funcdef_no=7, decl_uid=6699, cgraph_uid=8, symbol_order=10)
 
 Modification phase of node snmp_send_trap_specific/10
 snmp_send_trap_specific (s32_t specific_trap, struct snmp_varbind * varbinds)
@@ -1130,7 +1130,7 @@ snmp_send_trap_specific (s32_t specific_trap, struct snmp_varbind * varbinds)
 
 
 
-;; Function snmp_coldstart_trap (snmp_coldstart_trap, funcdef_no=8, decl_uid=6730, cgraph_uid=9, symbol_order=11)
+;; Function snmp_coldstart_trap (snmp_coldstart_trap, funcdef_no=8, decl_uid=6734, cgraph_uid=9, symbol_order=11)
 
 Modification phase of node snmp_coldstart_trap/11
 snmp_coldstart_trap ()
@@ -1144,7 +1144,7 @@ snmp_coldstart_trap ()
 
 
 
-;; Function snmp_authfail_trap (snmp_authfail_trap, funcdef_no=9, decl_uid=6732, cgraph_uid=10, symbol_order=12)
+;; Function snmp_authfail_trap (snmp_authfail_trap, funcdef_no=9, decl_uid=6736, cgraph_uid=10, symbol_order=12)
 
 Modification phase of node snmp_authfail_trap/12
 snmp_authfail_trap ()

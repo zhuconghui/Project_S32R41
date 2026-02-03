@@ -10,6 +10,7 @@ C_SRCS += \
 ../generate/src/IntCtrl_Ip_Cfg.c \
 ../generate/src/OsIf_Cfg.c \
 ../generate/src/Pit_Ip_BOARD_InitPeripherals_PBcfg.c \
+../generate/src/Stm_Ip_BOARD_InitPeripherals_PBcfg.c \
 ../generate/src/netifcfg.c 
 
 OBJS += \
@@ -19,6 +20,7 @@ OBJS += \
 ./generate/src/IntCtrl_Ip_Cfg.o \
 ./generate/src/OsIf_Cfg.o \
 ./generate/src/Pit_Ip_BOARD_InitPeripherals_PBcfg.o \
+./generate/src/Stm_Ip_BOARD_InitPeripherals_PBcfg.o \
 ./generate/src/netifcfg.o 
 
 C_DEPS += \
@@ -28,6 +30,7 @@ C_DEPS += \
 ./generate/src/IntCtrl_Ip_Cfg.d \
 ./generate/src/OsIf_Cfg.d \
 ./generate/src/Pit_Ip_BOARD_InitPeripherals_PBcfg.d \
+./generate/src/Stm_Ip_BOARD_InitPeripherals_PBcfg.d \
 ./generate/src/netifcfg.d 
 
 

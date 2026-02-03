@@ -135,7 +135,7 @@ Reclaiming variables:
 Clearing address taken flags:
 Symbol table:
 
-Clock_Ip_SetCmuFcFceRefCntLfrefHfref.part.0/22 (Clock_Ip_SetCmuFcFceRefCntLfrefHfref.part.0) @064082a0
+Clock_Ip_SetCmuFcFceRefCntLfrefHfref.part.0/22 (Clock_Ip_SetCmuFcFceRefCntLfrefHfref.part.0) @0707c000
   Type: function definition analyzed
   Visibility: prevailing_def_ironly artificial
   References: Clock_Ip_au8ClockFeatures/15 (read)Clock_Ip_axCmuInfo/16 (read)HashCmu/0 (read)HashCmu/0 (write)Clock_Ip_pxConfig/12 (read)Clock_Ip_axCmuInfo/16 (read)Clock_Ip_FreqIds/21 (read)Clock_Ip_axCmuInfo/16 (read)Clock_Ip_FreqIds/21 (read)
@@ -144,7 +144,7 @@ Clock_Ip_SetCmuFcFceRefCntLfrefHfref.part.0/22 (Clock_Ip_SetCmuFcFceRefCntLfrefH
   Function flags: count:1073741823 (estimated locally) first_run:1 body local split_part optimize_size
   Called by: Clock_Ip_SetCmuFcFceRefCntLfrefHfref/6 (375809639 (estimated locally),0.35 per call) 
   Calls: 
-Clock_Ip_FreqIds/21 (Clock_Ip_FreqIds) @063ff0d8
+Clock_Ip_FreqIds/21 (Clock_Ip_FreqIds) @06f2b0d8
   Type: variable
   Body removed by symtab_remove_unreachable_nodes
   Visibility: external public
@@ -152,7 +152,7 @@ Clock_Ip_FreqIds/21 (Clock_Ip_FreqIds) @063ff0d8
   Referring: Clock_Ip_SetCmuFcFceRefCntLfrefHfref.part.0/22 (read)Clock_Ip_SetCmuFcFceRefCntLfrefHfref.part.0/22 (read)
   Availability: not_available
   Varpool flags:
-SchM_Exit_Mcu_MCU_EXCLUSIVE_AREA_01/20 (SchM_Exit_Mcu_MCU_EXCLUSIVE_AREA_01) @06375460
+SchM_Exit_Mcu_MCU_EXCLUSIVE_AREA_01/20 (SchM_Exit_Mcu_MCU_EXCLUSIVE_AREA_01) @06f271c0
   Type: function
   Visibility: external public
   References: 
@@ -161,7 +161,7 @@ SchM_Exit_Mcu_MCU_EXCLUSIVE_AREA_01/20 (SchM_Exit_Mcu_MCU_EXCLUSIVE_AREA_01) @06
   Function flags: optimize_size
   Called by: Clock_Ip_DisableCmuFcFceRefCntLfrefHfref/4 (348071309 (estimated locally),1.00 per call) 
   Calls: 
-Clock_Ip_TimeoutExpired/19 (Clock_Ip_TimeoutExpired) @06375380
+Clock_Ip_TimeoutExpired/19 (Clock_Ip_TimeoutExpired) @06f270e0
   Type: function
   Visibility: external public
   References: 
@@ -170,7 +170,7 @@ Clock_Ip_TimeoutExpired/19 (Clock_Ip_TimeoutExpired) @06375380
   Function flags: optimize_size
   Called by: Clock_Ip_DisableCmuFcFceRefCntLfrefHfref/4 (1073741824 (estimated locally),3.08 per call) 
   Calls: 
-Clock_Ip_StartTimeout/18 (Clock_Ip_StartTimeout) @063752a0
+Clock_Ip_StartTimeout/18 (Clock_Ip_StartTimeout) @06f27000
   Type: function
   Visibility: external public
   References: 
@@ -179,7 +179,7 @@ Clock_Ip_StartTimeout/18 (Clock_Ip_StartTimeout) @063752a0
   Function flags: optimize_size
   Called by: Clock_Ip_DisableCmuFcFceRefCntLfrefHfref/4 (114863532 (estimated locally),0.33 per call) 
   Calls: 
-SchM_Enter_Mcu_MCU_EXCLUSIVE_AREA_01/17 (SchM_Enter_Mcu_MCU_EXCLUSIVE_AREA_01) @063751c0
+SchM_Enter_Mcu_MCU_EXCLUSIVE_AREA_01/17 (SchM_Enter_Mcu_MCU_EXCLUSIVE_AREA_01) @06f1b540
   Type: function
   Visibility: external public
   References: 
@@ -188,7 +188,7 @@ SchM_Enter_Mcu_MCU_EXCLUSIVE_AREA_01/17 (SchM_Enter_Mcu_MCU_EXCLUSIVE_AREA_01) @
   Function flags: optimize_size
   Called by: Clock_Ip_DisableCmuFcFceRefCntLfrefHfref/4 (348071309 (estimated locally),1.00 per call) 
   Calls: 
-Clock_Ip_axCmuInfo/16 (Clock_Ip_axCmuInfo) @06372750
+Clock_Ip_axCmuInfo/16 (Clock_Ip_axCmuInfo) @06f21750
   Type: variable
   Body removed by symtab_remove_unreachable_nodes
   Visibility: external public
@@ -196,7 +196,7 @@ Clock_Ip_axCmuInfo/16 (Clock_Ip_axCmuInfo) @06372750
   Referring: Clock_Ip_EnableCmuFcFceRefCntLfrefHfref/7 (read)Clock_Ip_SetCmuFcFceRefCntLfrefHfref.part.0/22 (read)Clock_Ip_SetCmuFcFceRefCntLfrefHfref.part.0/22 (read)Clock_Ip_SetCmuFcFceRefCntLfrefHfref.part.0/22 (read)Clock_Ip_DisableCmuFcFceRefCntLfrefHfref/4 (read)
   Availability: not_available
   Varpool flags: read-only
-Clock_Ip_au8ClockFeatures/15 (Clock_Ip_au8ClockFeatures) @06372708
+Clock_Ip_au8ClockFeatures/15 (Clock_Ip_au8ClockFeatures) @06f21708
   Type: variable
   Body removed by symtab_remove_unreachable_nodes
   Visibility: external public
@@ -204,7 +204,7 @@ Clock_Ip_au8ClockFeatures/15 (Clock_Ip_au8ClockFeatures) @06372708
   Referring: Clock_Ip_EnableCmuFcFceRefCntLfrefHfref/7 (read)Clock_Ip_SetCmuFcFceRefCntLfrefHfref.part.0/22 (read)Clock_Ip_DisableCmuFcFceRefCntLfrefHfref/4 (read)
   Availability: not_available
   Varpool flags: read-only
-Clock_Ip_ReportClockErrors/14 (Clock_Ip_ReportClockErrors) @06357380
+Clock_Ip_ReportClockErrors/14 (Clock_Ip_ReportClockErrors) @06f1bd20
   Type: function
   Visibility: external public
   References: 
@@ -213,7 +213,7 @@ Clock_Ip_ReportClockErrors/14 (Clock_Ip_ReportClockErrors) @06357380
   Function flags: optimize_size
   Called by: Clock_Ip_CMU_ClockFailInt/9 (238857090 (estimated locally),6.01 per call) Clock_Ip_DisableCmuFcFceRefCntLfrefHfref/4 (37904965 (estimated locally),0.11 per call) 
   Calls: 
-Clock_Ip_aeCmuNames/13 (Clock_Ip_aeCmuNames) @06372438
+Clock_Ip_aeCmuNames/13 (Clock_Ip_aeCmuNames) @06f21438
   Type: variable
   Body removed by symtab_remove_unreachable_nodes
   Visibility: external public
@@ -221,7 +221,7 @@ Clock_Ip_aeCmuNames/13 (Clock_Ip_aeCmuNames) @06372438
   Referring: Clock_Ip_CMU_ClockFailInt/9 (read)
   Availability: not_available
   Varpool flags: read-only
-Clock_Ip_pxConfig/12 (Clock_Ip_pxConfig) @063723f0
+Clock_Ip_pxConfig/12 (Clock_Ip_pxConfig) @06f213f0
   Type: variable
   Body removed by symtab_remove_unreachable_nodes
   Visibility: external public
@@ -229,7 +229,7 @@ Clock_Ip_pxConfig/12 (Clock_Ip_pxConfig) @063723f0
   Referring: Clock_Ip_SetCmuFcFceRefCntLfrefHfref.part.0/22 (read)Clock_Ip_CMU_ClockFailInt/9 (read)
   Availability: not_available
   Varpool flags:
-Clock_Ip_apxCmu/11 (Clock_Ip_apxCmu) @06372048
+Clock_Ip_apxCmu/11 (Clock_Ip_apxCmu) @06f21048
   Type: variable
   Body removed by symtab_remove_unreachable_nodes
   Visibility: external public
@@ -237,14 +237,14 @@ Clock_Ip_apxCmu/11 (Clock_Ip_apxCmu) @06372048
   Referring: Clock_Ip_CMU_GetInterruptStatus/8 (read)Clock_Ip_CMU_ClockFailInt/9 (read)
   Availability: not_available
   Varpool flags: read-only
-Clock_Ip_axCmuCallbacks/10 (Clock_Ip_axCmuCallbacks) @0634fcf0
+Clock_Ip_axCmuCallbacks/10 (Clock_Ip_axCmuCallbacks) @06f0ecf0
   Type: variable definition analyzed
   Visibility: externally_visible public
   References: Clock_Ip_ClockMonitorEmpty/1 (addr)Clock_Ip_ClockMonitorEmpty_Set/2 (addr)Clock_Ip_ClockMonitorEmpty_Disable/3 (addr)Clock_Ip_ClockMonitorEmpty/1 (addr)Clock_Ip_ResetCmuFcFceRefCntLfrefHfref/5 (addr)Clock_Ip_SetCmuFcFceRefCntLfrefHfref/6 (addr)Clock_Ip_DisableCmuFcFceRefCntLfrefHfref/4 (addr)Clock_Ip_EnableCmuFcFceRefCntLfrefHfref/7 (addr)
   Referring: 
   Availability: available
   Varpool flags: initialized read-only const-value-known
-Clock_Ip_CMU_ClockFailInt/9 (Clock_Ip_CMU_ClockFailInt) @06357a80
+Clock_Ip_CMU_ClockFailInt/9 (Clock_Ip_CMU_ClockFailInt) @06f1b700
   Type: function definition analyzed
   Visibility: externally_visible public
   References: Clock_Ip_apxCmu/11 (read)Clock_Ip_pxConfig/12 (read)Clock_Ip_aeCmuNames/13 (read)
@@ -253,7 +253,7 @@ Clock_Ip_CMU_ClockFailInt/9 (Clock_Ip_CMU_ClockFailInt) @06357a80
   Function flags: count:39728448 (estimated locally) body optimize_size
   Called by: 
   Calls: Clock_Ip_ReportClockErrors/14 (238857090 (estimated locally),6.01 per call) 
-Clock_Ip_CMU_GetInterruptStatus/8 (Clock_Ip_CMU_GetInterruptStatus) @063577e0
+Clock_Ip_CMU_GetInterruptStatus/8 (Clock_Ip_CMU_GetInterruptStatus) @06f1b460
   Type: function definition analyzed
   Visibility: externally_visible public
   References: Clock_Ip_apxCmu/11 (read)
@@ -262,7 +262,7 @@ Clock_Ip_CMU_GetInterruptStatus/8 (Clock_Ip_CMU_GetInterruptStatus) @063577e0
   Function flags: count:1073741824 (estimated locally) body optimize_size
   Called by: 
   Calls: 
-Clock_Ip_EnableCmuFcFceRefCntLfrefHfref/7 (Clock_Ip_EnableCmuFcFceRefCntLfrefHfref) @06357540
+Clock_Ip_EnableCmuFcFceRefCntLfrefHfref/7 (Clock_Ip_EnableCmuFcFceRefCntLfrefHfref) @06f1b1c0
   Type: function definition analyzed
   Visibility: prevailing_def_ironly
   Address is taken.
@@ -272,7 +272,7 @@ Clock_Ip_EnableCmuFcFceRefCntLfrefHfref/7 (Clock_Ip_EnableCmuFcFceRefCntLfrefHfr
   Function flags: count:1073741823 (estimated locally) body optimize_size
   Called by: 
   Calls: 
-Clock_Ip_SetCmuFcFceRefCntLfrefHfref/6 (Clock_Ip_SetCmuFcFceRefCntLfrefHfref) @063572a0
+Clock_Ip_SetCmuFcFceRefCntLfrefHfref/6 (Clock_Ip_SetCmuFcFceRefCntLfrefHfref) @06f0fd20
   Type: function definition analyzed
   Visibility: prevailing_def_ironly
   Address is taken.
@@ -282,7 +282,7 @@ Clock_Ip_SetCmuFcFceRefCntLfrefHfref/6 (Clock_Ip_SetCmuFcFceRefCntLfrefHfref) @0
   Function flags: count:1073741824 (estimated locally) body optimize_size
   Called by: 
   Calls: Clock_Ip_SetCmuFcFceRefCntLfrefHfref.part.0/22 (375809639 (estimated locally),0.35 per call) 
-Clock_Ip_ResetCmuFcFceRefCntLfrefHfref/5 (Clock_Ip_ResetCmuFcFceRefCntLfrefHfref) @06357000
+Clock_Ip_ResetCmuFcFceRefCntLfrefHfref/5 (Clock_Ip_ResetCmuFcFceRefCntLfrefHfref) @06f0f7e0
   Type: function definition analyzed
   Visibility: prevailing_def_ironly
   Address is taken.
@@ -292,7 +292,7 @@ Clock_Ip_ResetCmuFcFceRefCntLfrefHfref/5 (Clock_Ip_ResetCmuFcFceRefCntLfrefHfref
   Function flags: count:1073741824 (estimated locally) body optimize_size
   Called by: 
   Calls: Clock_Ip_DisableCmuFcFceRefCntLfrefHfref/4 (574129754 (estimated locally),0.53 per call) 
-Clock_Ip_DisableCmuFcFceRefCntLfrefHfref/4 (Clock_Ip_DisableCmuFcFceRefCntLfrefHfref) @06350a80
+Clock_Ip_DisableCmuFcFceRefCntLfrefHfref/4 (Clock_Ip_DisableCmuFcFceRefCntLfrefHfref) @06f0fee0
   Type: function definition analyzed
   Visibility: prevailing_def_ironly
   Address is taken.
@@ -302,7 +302,7 @@ Clock_Ip_DisableCmuFcFceRefCntLfrefHfref/4 (Clock_Ip_DisableCmuFcFceRefCntLfrefH
   Function flags: count:348071309 (estimated locally) body optimize_size
   Called by: Clock_Ip_ResetCmuFcFceRefCntLfrefHfref/5 (574129754 (estimated locally),0.53 per call) 
   Calls: SchM_Exit_Mcu_MCU_EXCLUSIVE_AREA_01/20 (348071309 (estimated locally),1.00 per call) Clock_Ip_ReportClockErrors/14 (37904965 (estimated locally),0.11 per call) Clock_Ip_TimeoutExpired/19 (1073741824 (estimated locally),3.08 per call) Clock_Ip_StartTimeout/18 (114863532 (estimated locally),0.33 per call) SchM_Enter_Mcu_MCU_EXCLUSIVE_AREA_01/17 (348071309 (estimated locally),1.00 per call) 
-Clock_Ip_ClockMonitorEmpty_Disable/3 (Clock_Ip_ClockMonitorEmpty_Disable) @06350ee0
+Clock_Ip_ClockMonitorEmpty_Disable/3 (Clock_Ip_ClockMonitorEmpty_Disable) @06f0fc40
   Type: function definition analyzed
   Visibility: prevailing_def_ironly
   Address is taken.
@@ -312,7 +312,7 @@ Clock_Ip_ClockMonitorEmpty_Disable/3 (Clock_Ip_ClockMonitorEmpty_Disable) @06350
   Function flags: count:1073741824 (estimated locally) body optimize_size
   Called by: 
   Calls: 
-Clock_Ip_ClockMonitorEmpty_Set/2 (Clock_Ip_ClockMonitorEmpty_Set) @06350c40
+Clock_Ip_ClockMonitorEmpty_Set/2 (Clock_Ip_ClockMonitorEmpty_Set) @06f0f9a0
   Type: function definition analyzed
   Visibility: prevailing_def_ironly
   Address is taken.
@@ -322,7 +322,7 @@ Clock_Ip_ClockMonitorEmpty_Set/2 (Clock_Ip_ClockMonitorEmpty_Set) @06350c40
   Function flags: count:1073741824 (estimated locally) body optimize_size
   Called by: 
   Calls: 
-Clock_Ip_ClockMonitorEmpty/1 (Clock_Ip_ClockMonitorEmpty) @063509a0
+Clock_Ip_ClockMonitorEmpty/1 (Clock_Ip_ClockMonitorEmpty) @06f0f700
   Type: function definition analyzed
   Visibility: prevailing_def_ironly
   Address is taken.
@@ -332,7 +332,7 @@ Clock_Ip_ClockMonitorEmpty/1 (Clock_Ip_ClockMonitorEmpty) @063509a0
   Function flags: count:1073741824 (estimated locally) body optimize_size
   Called by: 
   Calls: 
-HashCmu/0 (HashCmu) @0634f1f8
+HashCmu/0 (HashCmu) @06f0e1f8
   Type: variable definition analyzed
   Visibility: prevailing_def_ironly
   References: 
@@ -340,7 +340,7 @@ HashCmu/0 (HashCmu) @0634f1f8
   Availability: available
   Varpool flags:
 
-;; Function Clock_Ip_ClockMonitorEmpty (Clock_Ip_ClockMonitorEmpty, funcdef_no=0, decl_uid=6388, cgraph_uid=1, symbol_order=1)
+;; Function Clock_Ip_ClockMonitorEmpty (Clock_Ip_ClockMonitorEmpty, funcdef_no=0, decl_uid=6381, cgraph_uid=1, symbol_order=1)
 
 Modification phase of node Clock_Ip_ClockMonitorEmpty/1
 Clock_Ip_ClockMonitorEmpty (const struct Clock_Ip_CmuConfigType * Config)
@@ -353,7 +353,7 @@ Clock_Ip_ClockMonitorEmpty (const struct Clock_Ip_CmuConfigType * Config)
 
 
 
-;; Function Clock_Ip_ClockMonitorEmpty_Set (Clock_Ip_ClockMonitorEmpty_Set, funcdef_no=1, decl_uid=6391, cgraph_uid=2, symbol_order=2)
+;; Function Clock_Ip_ClockMonitorEmpty_Set (Clock_Ip_ClockMonitorEmpty_Set, funcdef_no=1, decl_uid=6384, cgraph_uid=2, symbol_order=2)
 
 Modification phase of node Clock_Ip_ClockMonitorEmpty_Set/2
 Clock_Ip_ClockMonitorEmpty_Set (const struct Clock_Ip_CmuConfigType * Config, uint32 Index)
@@ -367,7 +367,7 @@ Clock_Ip_ClockMonitorEmpty_Set (const struct Clock_Ip_CmuConfigType * Config, ui
 
 
 
-;; Function Clock_Ip_ClockMonitorEmpty_Disable (Clock_Ip_ClockMonitorEmpty_Disable, funcdef_no=2, decl_uid=6393, cgraph_uid=3, symbol_order=3)
+;; Function Clock_Ip_ClockMonitorEmpty_Disable (Clock_Ip_ClockMonitorEmpty_Disable, funcdef_no=2, decl_uid=6386, cgraph_uid=3, symbol_order=3)
 
 Modification phase of node Clock_Ip_ClockMonitorEmpty_Disable/3
 Clock_Ip_ClockMonitorEmpty_Disable (Clock_Ip_NameType Name)
@@ -380,7 +380,7 @@ Clock_Ip_ClockMonitorEmpty_Disable (Clock_Ip_NameType Name)
 
 
 
-;; Function Clock_Ip_EnableCmuFcFceRefCntLfrefHfref (Clock_Ip_EnableCmuFcFceRefCntLfrefHfref, funcdef_no=6, decl_uid=6402, cgraph_uid=7, symbol_order=7)
+;; Function Clock_Ip_EnableCmuFcFceRefCntLfrefHfref (Clock_Ip_EnableCmuFcFceRefCntLfrefHfref, funcdef_no=6, decl_uid=6395, cgraph_uid=7, symbol_order=7)
 
 Modification phase of node Clock_Ip_EnableCmuFcFceRefCntLfrefHfref/7
 Clock_Ip_EnableCmuFcFceRefCntLfrefHfref (const struct Clock_Ip_CmuConfigType * Config)
@@ -445,7 +445,7 @@ Clock_Ip_EnableCmuFcFceRefCntLfrefHfref (const struct Clock_Ip_CmuConfigType * C
 
 
 
-;; Function Clock_Ip_DisableCmuFcFceRefCntLfrefHfref (Clock_Ip_DisableCmuFcFceRefCntLfrefHfref, funcdef_no=3, decl_uid=6400, cgraph_uid=4, symbol_order=4)
+;; Function Clock_Ip_DisableCmuFcFceRefCntLfrefHfref (Clock_Ip_DisableCmuFcFceRefCntLfrefHfref, funcdef_no=3, decl_uid=6393, cgraph_uid=4, symbol_order=4)
 
 Modification phase of node Clock_Ip_DisableCmuFcFceRefCntLfrefHfref/4
 Clock_Ip_DisableCmuFcFceRefCntLfrefHfref (Clock_Ip_NameType Name)
@@ -563,7 +563,7 @@ Clock_Ip_DisableCmuFcFceRefCntLfrefHfref (Clock_Ip_NameType Name)
 
 
 
-;; Function Clock_Ip_ResetCmuFcFceRefCntLfrefHfref (Clock_Ip_ResetCmuFcFceRefCntLfrefHfref, funcdef_no=4, decl_uid=6395, cgraph_uid=5, symbol_order=5)
+;; Function Clock_Ip_ResetCmuFcFceRefCntLfrefHfref (Clock_Ip_ResetCmuFcFceRefCntLfrefHfref, funcdef_no=4, decl_uid=6388, cgraph_uid=5, symbol_order=5)
 
 Modification phase of node Clock_Ip_ResetCmuFcFceRefCntLfrefHfref/5
 Clock_Ip_ResetCmuFcFceRefCntLfrefHfref (const struct Clock_Ip_CmuConfigType * Config)
@@ -589,7 +589,7 @@ Clock_Ip_ResetCmuFcFceRefCntLfrefHfref (const struct Clock_Ip_CmuConfigType * Co
 
 
 
-;; Function Clock_Ip_SetCmuFcFceRefCntLfrefHfref (Clock_Ip_SetCmuFcFceRefCntLfrefHfref, funcdef_no=5, decl_uid=6398, cgraph_uid=6, symbol_order=6)
+;; Function Clock_Ip_SetCmuFcFceRefCntLfrefHfref (Clock_Ip_SetCmuFcFceRefCntLfrefHfref, funcdef_no=5, decl_uid=6391, cgraph_uid=6, symbol_order=6)
 
 Modification phase of node Clock_Ip_SetCmuFcFceRefCntLfrefHfref/6
 Clock_Ip_SetCmuFcFceRefCntLfrefHfref (const struct Clock_Ip_CmuConfigType * Config, uint32 Index)
@@ -653,7 +653,7 @@ Clock_Ip_SetCmuFcFceRefCntLfrefHfref (const struct Clock_Ip_CmuConfigType * Conf
 
 
 
-;; Function Clock_Ip_CMU_GetInterruptStatus (Clock_Ip_CMU_GetInterruptStatus, funcdef_no=7, decl_uid=6357, cgraph_uid=8, symbol_order=8)
+;; Function Clock_Ip_CMU_GetInterruptStatus (Clock_Ip_CMU_GetInterruptStatus, funcdef_no=7, decl_uid=6350, cgraph_uid=8, symbol_order=8)
 
 Modification phase of node Clock_Ip_CMU_GetInterruptStatus/8
 Clock_Ip_CMU_GetInterruptStatus (uint8 IndexCmu)
@@ -678,7 +678,7 @@ Clock_Ip_CMU_GetInterruptStatus (uint8 IndexCmu)
 
 
 
-;; Function Clock_Ip_CMU_ClockFailInt (Clock_Ip_CMU_ClockFailInt, funcdef_no=8, decl_uid=6359, cgraph_uid=9, symbol_order=9)
+;; Function Clock_Ip_CMU_ClockFailInt (Clock_Ip_CMU_ClockFailInt, funcdef_no=8, decl_uid=6352, cgraph_uid=9, symbol_order=9)
 
 Modification phase of node Clock_Ip_CMU_ClockFailInt/9
 Clock_Ip_CMU_ClockFailInt ()

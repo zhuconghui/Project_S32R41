@@ -1,6 +1,7 @@
 Parsed function:pbuf_memcmp.part.0
 Parsed function:pbuf_copy_partial.part.0
 Parsed function:pbuf_cat.part.0
+Parsed function:pbuf_ref.part.0
 Parsed function:pbuf_free.part.0
 Parsed function:pbuf_header_impl.part.0
 Parsed function:pbuf_remove_header.part.0
@@ -41,42 +42,42 @@ Parsed function:pbuf_alloced_custom
 Parsed function:pbuf_alloc_reference
 Parsed function:pbuf_alloc
 Dump after hash based groups
-Congruence classes: 42 (unique hash values: 42), with total: 42 items
+Congruence classes: 43 (unique hash values: 43), with total: 43 items
 Class size histogram [num of members]: number of classe number of classess
-[1]: 42 classes
+[1]: 43 classes
 
 
 Dump after WPA based types groups
-Congruence classes: 42 (unique hash values: 42), with total: 42 items
+Congruence classes: 43 (unique hash values: 43), with total: 43 items
 Class size histogram [num of members]: number of classe number of classess
-[1]: 42 classes
+[1]: 43 classes
 
 
-Worklist has been filled with: 26
+Worklist has been filled with: 27
 Address reference subdivision created: 0 new classes.
 Dump after callgraph-based congruence reduction
-Congruence classes: 42 (unique hash values: 42), with total: 42 items
+Congruence classes: 43 (unique hash values: 43), with total: 43 items
 Class size histogram [num of members]: number of classe number of classess
-[1]: 42 classes
+[1]: 43 classes
 
 
 Init called for 0 items (0.00%).
 Dump after full equality comparison of groups
-Congruence classes: 42 (unique hash values: 42), with total: 42 items
+Congruence classes: 43 (unique hash values: 43), with total: 43 items
 Class size histogram [num of members]: number of classe number of classess
-[1]: 42 classes
+[1]: 43 classes
 
 
-Worklist has been filled with: 26
+Worklist has been filled with: 27
 Address reference subdivision created: 0 new classes.
-Congruence classes: 42 (unique hash values: 42), with total: 42 items
+Congruence classes: 43 (unique hash values: 43), with total: 43 items
 Class size histogram [num of members]: number of classe number of classess
-[1]: 42 classes
+[1]: 43 classes
 
 
 
-Item count: 42
-Congruent classes before: 42, after: 42
+Item count: 43
+Congruent classes before: 43, after: 43
 Average class size before: 1.00, after: 1.00
 Average non-singular class size: 0.00, count: 0
 Equal symbols: 0
@@ -358,19 +359,69 @@ pbuf_cat.part.0 (struct pbuf * h, struct pbuf * t)
 }
 
 
+pbuf_ref.part.0 (struct pbuf * p)
+{
+  sys_prot_t old_level;
+  unsigned char _3;
+  unsigned char _4;
+  unsigned char _5;
+
+  <bb 7> [local count: 214748]:
+
+  <bb 2> [local count: 214748]:
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  old_level_1 = sys_arch_protect ();
+  # DEBUG old_level => old_level_1
+  # DEBUG BEGIN_STMT
+  _3 = p_2(D)->ref;
+  _4 = _3 + 1;
+  p_2(D)->ref = _4;
+  # DEBUG BEGIN_STMT
+  sys_arch_unprotect (old_level_1);
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  _5 = p_2(D)->ref;
+  if (_5 == 0)
+    goto <bb 3>; [50.00%]
+  else
+    goto <bb 6>; [50.00%]
+
+  <bb 3> [local count: 107374]:
+
+  <bb 4> [local count: 1073741824]:
+  # DEBUG BEGIN_STMT
+  # DEBUG BEGIN_STMT
+  __asm__ __volatile__("BKPT #0
+	");
+  # DEBUG BEGIN_STMT
+
+  <bb 5> [local count: 1073741824]:
+  goto <bb 4>; [100.00%]
+
+  <bb 6> [local count: 107374]:
+  # DEBUG BEGIN_STMT
+  return;
+
+}
+
+
 pbuf_free.part.0 (struct pbuf * p)
 {
   u8_t alloc_src;
   struct pbuf * q;
   u8_t count;
   u8_t ref;
+  sys_prot_t old_level;
   struct pbuf_custom * pc;
-  unsigned char _2;
   unsigned char _3;
-  unsigned char _5;
-  unsigned char _7;
+  unsigned char _4;
+  unsigned char _6;
   unsigned char _8;
-  void (*<T602>) (struct pbuf *) _9;
+  unsigned char _9;
+  void (*<T602>) (struct pbuf *) _10;
 
   <bb 25> [local count: 406193]:
   goto <bb 23>; [100.00%]
@@ -379,10 +430,12 @@ pbuf_free.part.0 (struct pbuf * p)
   # DEBUG BEGIN_STMT
   # DEBUG BEGIN_STMT
   # DEBUG BEGIN_STMT
+  old_level_1 = sys_arch_protect ();
+  # DEBUG old_level => old_level_1
   # DEBUG BEGIN_STMT
   # DEBUG BEGIN_STMT
-  _2 = p_1->ref;
-  if (_2 == 0)
+  _3 = p_2->ref;
+  if (_3 == 0)
     goto <bb 3>; [2.20%]
   else
     goto <bb 6>; [97.80%]
@@ -402,40 +455,41 @@ pbuf_free.part.0 (struct pbuf * p)
   <bb 6> [local count: 4773262]:
   # DEBUG BEGIN_STMT
   # DEBUG BEGIN_STMT
-  _3 = _2 + 255;
-  p_1->ref = _3;
-  # DEBUG ref => _3
+  _4 = _3 + 255;
+  p_2->ref = _4;
+  # DEBUG ref => _4
   # DEBUG BEGIN_STMT
+  sys_arch_unprotect (old_level_1);
   # DEBUG BEGIN_STMT
-  if (_3 == 0)
+  if (_4 == 0)
     goto <bb 7>; [97.80%]
   else
     goto <bb 24>; [2.20%]
 
   <bb 7> [local count: 4668251]:
   # DEBUG BEGIN_STMT
-  q_4 = p_1->next;
-  # DEBUG q => q_4
+  q_5 = p_2->next;
+  # DEBUG q => q_5
   # DEBUG BEGIN_STMT
   # DEBUG BEGIN_STMT
-  _5 = p_1->type_internal;
-  alloc_src_6 = _5 & 15;
-  # DEBUG alloc_src => alloc_src_6
+  _6 = p_2->type_internal;
+  alloc_src_7 = _6 & 15;
+  # DEBUG alloc_src => alloc_src_7
   # DEBUG BEGIN_STMT
-  _7 = p_1->flags;
-  _8 = _7 & 2;
-  if (_8 != 0)
+  _8 = p_2->flags;
+  _9 = _8 & 2;
+  if (_9 != 0)
     goto <bb 8>; [50.00%]
   else
     goto <bb 13>; [50.00%]
 
   <bb 8> [local count: 2334125]:
   # DEBUG BEGIN_STMT
-  # DEBUG pc => p_1
+  # DEBUG pc => p_2
   # DEBUG BEGIN_STMT
   # DEBUG BEGIN_STMT
-  _9 = MEM[(struct pbuf_custom *)p_1].custom_free_function;
-  if (_9 == 0B)
+  _10 = MEM[(struct pbuf_custom *)p_2].custom_free_function;
+  if (_10 == 0B)
     goto <bb 9>; [2.20%]
   else
     goto <bb 12>; [97.80%]
@@ -455,36 +509,36 @@ pbuf_free.part.0 (struct pbuf * p)
   <bb 12> [local count: 2282775]:
   # DEBUG BEGIN_STMT
   # DEBUG BEGIN_STMT
-  _9 (p_1);
+  _10 (p_2);
   goto <bb 22>; [100.00%]
 
   <bb 13> [local count: 2334125]:
   # DEBUG BEGIN_STMT
-  if (alloc_src_6 == 2)
+  if (alloc_src_7 == 2)
     goto <bb 14>; [20.24%]
   else
     goto <bb 15>; [79.76%]
 
   <bb 14> [local count: 472427]:
   # DEBUG BEGIN_STMT
-  memp_free (14, p_1);
+  memp_free (14, p_2);
   goto <bb 22>; [100.00%]
 
   <bb 15> [local count: 1861698]:
   # DEBUG BEGIN_STMT
-  if (alloc_src_6 == 1)
+  if (alloc_src_7 == 1)
     goto <bb 16>; [20.24%]
   else
     goto <bb 17>; [79.76%]
 
   <bb 16> [local count: 376808]:
   # DEBUG BEGIN_STMT
-  memp_free (13, p_1);
+  memp_free (13, p_2);
   goto <bb 22>; [100.00%]
 
   <bb 17> [local count: 1484891]:
   # DEBUG BEGIN_STMT
-  if (alloc_src_6 == 0)
+  if (alloc_src_7 == 0)
     goto <bb 19>; [97.80%]
   else
     goto <bb 18>; [2.20%]
@@ -494,7 +548,7 @@ pbuf_free.part.0 (struct pbuf * p)
 
   <bb 19> [local count: 1452223]:
   # DEBUG BEGIN_STMT
-  mem_free (p_1);
+  mem_free (p_2);
   goto <bb 22>; [100.00%]
 
   <bb 20> [local count: 326676484]:
@@ -510,29 +564,29 @@ pbuf_free.part.0 (struct pbuf * p)
   <bb 22> [local count: 4584232]:
   # DEBUG BEGIN_STMT
   # DEBUG BEGIN_STMT
-  count_11 = count_10 + 1;
-  # DEBUG count => count_11
+  count_12 = count_11 + 1;
+  # DEBUG count => count_12
   # DEBUG BEGIN_STMT
-  # DEBUG p => q_4
+  # DEBUG p => q_5
 
   <bb 23> [local count: 4990426]:
-  # p_1 = PHI <q_4(22), p_13(D)(25)>
-  # count_10 = PHI <count_11(22), 0(25)>
-  # DEBUG count => count_10
-  # DEBUG p => p_1
+  # p_2 = PHI <q_5(22), p_14(D)(25)>
+  # count_11 = PHI <count_12(22), 0(25)>
+  # DEBUG count => count_11
+  # DEBUG p => p_2
   # DEBUG BEGIN_STMT
-  if (p_1 != 0B)
+  if (p_2 != 0B)
     goto <bb 2>; [97.80%]
   else
     goto <bb 24>; [2.20%]
 
   <bb 24> [local count: 214801]:
-  # count_12 = PHI <count_10(6), count_10(23)>
+  # count_13 = PHI <count_11(6), count_11(23)>
   # DEBUG count => NULL
   # DEBUG p => NULL
   # DEBUG BEGIN_STMT
   # DEBUG BEGIN_STMT
-  return count_12;
+  return count_13;
 
 }
 
@@ -2148,46 +2202,17 @@ pbuf_cat (struct pbuf * h, struct pbuf * t)
 
 pbuf_ref (struct pbuf * p)
 {
-  unsigned char _1;
-  unsigned char _2;
-
-  <bb 2> [local count: 306783]:
+  <bb 2> [local count: 401623]:
   # DEBUG BEGIN_STMT
-  if (p_5(D) != 0B)
-    goto <bb 3>; [70.00%]
+  if (p_1(D) != 0B)
+    goto <bb 3>; [53.47%]
   else
-    goto <bb 5>; [30.00%]
+    goto <bb 4>; [46.53%]
 
   <bb 3> [local count: 214748]:
-  # DEBUG BEGIN_STMT
-  # DEBUG BEGIN_STMT
-  # DEBUG BEGIN_STMT
-  # DEBUG BEGIN_STMT
-  _1 = p_5(D)->ref;
-  _2 = _1 + 1;
-  p_5(D)->ref = _2;
-  # DEBUG BEGIN_STMT
-  # DEBUG BEGIN_STMT
-  # DEBUG BEGIN_STMT
-  # DEBUG BEGIN_STMT
-  if (_2 == 0)
-    goto <bb 6>; [50.00%]
-  else
-    goto <bb 5>; [50.00%]
+  pbuf_ref.part.0 (p_1(D));
 
-  <bb 6> [local count: 107374]:
-
-  <bb 4> [local count: 1073741823]:
-  # DEBUG BEGIN_STMT
-  # DEBUG BEGIN_STMT
-  __asm__ __volatile__("BKPT #0
-	");
-  # DEBUG BEGIN_STMT
-
-  <bb 7> [local count: 1073741824]:
-  goto <bb 4>; [100.00%]
-
-  <bb 5> [local count: 199409]:
+  <bb 4> [local count: 294249]:
   # DEBUG BEGIN_STMT
   return;
 

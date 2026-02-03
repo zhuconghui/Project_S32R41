@@ -204,7 +204,7 @@ a lot of data that needs to be copied, this should be set high. */
 * define SYS_LIGHTWEIGHT_PROT in lwipopts.h if you want inter-task protection
 * for certain critical regions during buffer allocation, deallocation and memory
 * allocation and deallocation. */
-#define SYS_LIGHTWEIGHT_PROT        (NO_SYS==0)
+#define SYS_LIGHTWEIGHT_PROT        1
 
 /* ---------- Software checksum options ---------- */
 #define LWIP_CHECKSUM_CTRL_PER_NETIF    0

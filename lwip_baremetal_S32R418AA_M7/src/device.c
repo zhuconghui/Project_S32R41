@@ -40,8 +40,6 @@
  */
 
 #include "S32R41.h"
-#include "sys_init.h"
-
 #include "Pit_Ip.h"
 #include "OsIf.h"
 #if defined USING_OS_BAREMETAL
@@ -55,14 +53,10 @@
 #include "Gmac_Ip_Irq.h"
 #include "Osif_rtd_port.h"
 
-extern Std_ReturnType sys_init_clock_full(void);
-
 #ifndef USING_OS_AUTOSAROS
 extern void PIT_0_ISR(void);
-//extern void GMAC1_CH0_TX_IRQHandler(void);
-//extern void GMAC1_CH0_RX_IRQHandler(void);
-extern void GMAC0_CH0_TX_IRQHandler(void);
-extern void GMAC0_CH0_RX_IRQHandler(void);
+extern void GMAC1_CH0_TX_IRQHandler(void);
+extern void GMAC1_CH0_RX_IRQHandler(void);
 #endif /* USING_OS_AUTOSAROS */
 
 /* PIT channel used - 0 */
@@ -219,19 +213,15 @@ void device_init(void)
     StatusType err;
 
     /* Init mode for PHY node and PHY interface with RGMII mode, speed 1G */
-    // IP_SRC->GMAC_1_CTRL_REG |= (SRC_GMAC_1_CTRL_REG_PHY_INTF_SEL(0U) | SRC_GMAC_1_CTRL_REG_PHY_INTF_SEL(1U));
-    IP_SRC->GMAC_0_CTRL_STS |= 0x04; // set PHY_INTF_SEL to RGMII mode? need to verify
+    IP_SRC->GMAC_1_CTRL_REG |= (SRC_GMAC_1_CTRL_REG_PHY_INTF_SEL(0U) | SRC_GMAC_1_CTRL_REG_PHY_INTF_SEL(1U));
 
     /* Initialize all pins using the Port driver */
     err = Siul2_Port_Ip_Init(NUM_OF_CONFIGURED_PINS_PortContainer_0_BOARD_InitPeripherals, g_pin_mux_InitConfigArr_PortContainer_0_BOARD_InitPeripherals);
     DevAssert((StatusType)E_OK == err);
 
-    /* Initialize clocks using full sys_init flow */
-    if (sys_init_clock_full() != E_OK)
-    {
-        DevAssert(FALSE);
-    }
-
+    /* Initialize Clocks */
+    err = Clock_Ip_Init(&Clock_Ip_aClockConfig[0U]);
+    DevAssert((StatusType)E_OK == err);
 
 #ifndef USING_OS_AUTOSAROS
     /* Install interrupt handlers for PIT and EMAC */
@@ -239,21 +229,13 @@ void device_init(void)
     IntCtrl_Ip_SetPriority(PIT0_IRQn, 9);
     IntCtrl_Ip_EnableIrq(PIT0_IRQn);
 
-//    IntCtrl_Ip_InstallHandler(GMAC1_CH0_TX_IRQn, GMAC1_CH0_TX_IRQHandler, NULL_PTR);
-//    IntCtrl_Ip_SetPriority(GMAC1_CH0_TX_IRQn, 8);
-//    IntCtrl_Ip_EnableIrq(GMAC1_CH0_TX_IRQn);
-//
-//    IntCtrl_Ip_InstallHandler(GMAC1_CH0_RX_IRQn, GMAC1_CH0_RX_IRQHandler, NULL_PTR);
-//    IntCtrl_Ip_SetPriority(GMAC1_CH0_RX_IRQn, 7);
-//    IntCtrl_Ip_EnableIrq(GMAC1_CH0_RX_IRQn);
+    IntCtrl_Ip_InstallHandler(GMAC1_CH0_TX_IRQn, GMAC1_CH0_TX_IRQHandler, NULL_PTR);
+    IntCtrl_Ip_SetPriority(GMAC1_CH0_TX_IRQn, 8);
+    IntCtrl_Ip_EnableIrq(GMAC1_CH0_TX_IRQn);
 
-	IntCtrl_Ip_InstallHandler(GMAC0_CH0_TX_IRQn, GMAC0_CH0_TX_IRQHandler, NULL_PTR);
-	IntCtrl_Ip_SetPriority(GMAC0_CH0_TX_IRQn, 8);
-	IntCtrl_Ip_EnableIrq(GMAC0_CH0_TX_IRQn);
-
-	IntCtrl_Ip_InstallHandler(GMAC0_CH0_RX_IRQn, GMAC0_CH0_RX_IRQHandler, NULL_PTR);
-	IntCtrl_Ip_SetPriority(GMAC0_CH0_RX_IRQn, 7);
-	IntCtrl_Ip_EnableIrq(GMAC0_CH0_RX_IRQn);
+    IntCtrl_Ip_InstallHandler(GMAC1_CH0_RX_IRQn, GMAC1_CH0_RX_IRQHandler, NULL_PTR);
+    IntCtrl_Ip_SetPriority(GMAC1_CH0_RX_IRQn, 7);
+    IntCtrl_Ip_EnableIrq(GMAC1_CH0_RX_IRQn);
 #endif /* USING_OS_AUTOSAROS */
 
     Eth_T_EnableIRQs();
@@ -273,8 +255,7 @@ void device_init(void)
 #endif /* USING_OS_FREERTOS */
 
     /* Initialize and enable the GMAC module */
-//    err = Gmac_Ip_Init(INST_GMAC_1, &Gmac_1_ConfigPB_BOARD_INITPERIPHERALS);
-    err = Gmac_Ip_Init(INST_GMAC_0, &Gmac_0_ConfigPB_BOARD_INITPERIPHERALS);
+    err = Gmac_Ip_Init(INST_GMAC_1, &Gmac_1_ConfigPB_BOARD_INITPERIPHERALS);
     DevAssert((StatusType)E_OK == err);
 
     /*TO DO: check if phy has link and if it finished the initialization */

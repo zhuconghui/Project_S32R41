@@ -37,7 +37,8 @@ C_SRCS += \
 ../RTD/src/SchM_Mcl.c \
 ../RTD/src/SchM_Mcu.c \
 ../RTD/src/SchM_Port.c \
-../RTD/src/Siul2_Port_Ip.c 
+../RTD/src/Siul2_Port_Ip.c \
+../RTD/src/Stm_Ip.c 
 
 OBJS += \
 ./RTD/src/Cache_Ip.o \
@@ -73,7 +74,8 @@ OBJS += \
 ./RTD/src/SchM_Mcl.o \
 ./RTD/src/SchM_Mcu.o \
 ./RTD/src/SchM_Port.o \
-./RTD/src/Siul2_Port_Ip.o 
+./RTD/src/Siul2_Port_Ip.o \
+./RTD/src/Stm_Ip.o 
 
 C_DEPS += \
 ./RTD/src/Cache_Ip.d \
@@ -109,7 +111,8 @@ C_DEPS += \
 ./RTD/src/SchM_Mcl.d \
 ./RTD/src/SchM_Mcu.d \
 ./RTD/src/SchM_Port.d \
-./RTD/src/Siul2_Port_Ip.d 
+./RTD/src/Siul2_Port_Ip.d \
+./RTD/src/Stm_Ip.d 
 
 
 # Each subdirectory must supply rules for building sources it contributes

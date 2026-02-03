@@ -410,7 +410,7 @@ Reclaiming variables:
 Clearing address taken flags:
 Symbol table:
 
-rfc7668_set_addr.part.0/24 (rfc7668_set_addr.part.0) @05f228c0
+rfc7668_set_addr.part.0/24 (rfc7668_set_addr.part.0) @05f108c0
   Type: function definition analyzed
   Visibility: prevailing_def_ironly artificial
   References: 
@@ -419,7 +419,7 @@ rfc7668_set_addr.part.0/24 (rfc7668_set_addr.part.0) @05f228c0
   Function flags: count:1073741824 (estimated locally) first_run:1 body local split_part optimize_size
   Called by: rfc7668_set_addr/6 (510874356 (estimated locally),0.48 per call) 
   Calls: memcpy/16 (1073741824 (estimated locally),1.00 per call) 
-ip6_input/23 (ip6_input) @0611e7e0
+ip6_input/23 (ip6_input) @0610f7e0
   Type: function
   Visibility: external public
   References: 
@@ -428,7 +428,7 @@ ip6_input/23 (ip6_input) @0611e7e0
   Function flags: optimize_size
   Called by: rfc7668_input/14 (568070715 (estimated locally),0.53 per call) 
   Calls: 
-lowpan6_decompress/22 (lowpan6_decompress) @0611e700
+lowpan6_decompress/22 (lowpan6_decompress) @0610f700
   Type: function
   Visibility: external public
   References: 
@@ -437,7 +437,7 @@ lowpan6_decompress/22 (lowpan6_decompress) @0611e700
   Function flags: optimize_size
   Called by: rfc7668_input/14 (428208240 (estimated locally),0.40 per call) 
   Calls: 
-pbuf_copy_partial/21 (pbuf_copy_partial) @0611e540
+pbuf_copy_partial/21 (pbuf_copy_partial) @0610f540
   Type: function
   Visibility: external public
   References: 
@@ -446,7 +446,7 @@ pbuf_copy_partial/21 (pbuf_copy_partial) @0611e540
   Function flags: optimize_size
   Called by: rfc7668_compress/11 (16409 (estimated locally),0.07 per call) 
   Calls: 
-pbuf_remove_header/20 (pbuf_remove_header) @0611e460
+pbuf_remove_header/20 (pbuf_remove_header) @0610f460
   Type: function
   Visibility: external public
   References: 
@@ -455,7 +455,7 @@ pbuf_remove_header/20 (pbuf_remove_header) @0611e460
   Function flags: optimize_size
   Called by: rfc7668_input/14 (217325345 (estimated locally),0.20 per call) rfc7668_compress/11 (16409 (estimated locally),0.07 per call) 
   Calls: 
-pbuf_free/19 (pbuf_free) @0611e380
+pbuf_free/19 (pbuf_free) @0610f380
   Type: function
   Visibility: external public
   References: 
@@ -464,7 +464,7 @@ pbuf_free/19 (pbuf_free) @0611e380
   Function flags: optimize_size
   Called by: rfc7668_input/14 (428208240 (estimated locally),0.40 per call) rfc7668_compress/11 (16409 (estimated locally),0.07 per call) rfc7668_compress/11 (8453 (estimated locally),0.04 per call) 
   Calls: 
-lowpan6_compress_headers/18 (lowpan6_compress_headers) @0611e2a0
+lowpan6_compress_headers/18 (lowpan6_compress_headers) @0610f2a0
   Type: function
   Visibility: external public
   References: 
@@ -473,7 +473,7 @@ lowpan6_compress_headers/18 (lowpan6_compress_headers) @0611e2a0
   Function flags: optimize_size
   Called by: rfc7668_compress/11 (24862 (estimated locally),0.11 per call) 
   Calls: 
-pbuf_alloc/17 (pbuf_alloc) @0611e1c0
+pbuf_alloc/17 (pbuf_alloc) @0610f1c0
   Type: function
   Visibility: external public
   References: 
@@ -482,7 +482,7 @@ pbuf_alloc/17 (pbuf_alloc) @0611e1c0
   Function flags: optimize_size
   Called by: rfc7668_compress/11 (123389 (estimated locally),0.53 per call) 
   Calls: 
-memcpy/16 (memcpy) @060df9a0
+memcpy/16 (memcpy) @060d09a0
   Type: function
   Visibility: external public
   References: 
@@ -491,7 +491,7 @@ memcpy/16 (memcpy) @060df9a0
   Function flags: optimize_size
   Called by: eui64_to_ble_addr/5 (1073741824 (estimated locally),1.00 per call) eui64_to_ble_addr/5 (1073741824 (estimated locally),1.00 per call) rfc7668_set_addr.part.0/24 (1073741824 (estimated locally),1.00 per call) ble_addr_to_eui64/4 (1073741824 (estimated locally),1.00 per call) ble_addr_to_eui64/4 (1073741824 (estimated locally),1.00 per call) 
   Calls: 
-rfc7668_if_init/15 (rfc7668_if_init) @060df540
+rfc7668_if_init/15 (rfc7668_if_init) @060d0540
   Type: function definition analyzed
   Visibility: externally_visible public
   References: rfc7668_output/13 (addr)
@@ -500,7 +500,7 @@ rfc7668_if_init/15 (rfc7668_if_init) @060df540
   Function flags: count:1073741824 (estimated locally) body optimize_size
   Called by: 
   Calls: 
-rfc7668_input/14 (rfc7668_input) @060df2a0
+rfc7668_input/14 (rfc7668_input) @060d02a0
   Type: function definition analyzed
   Visibility: externally_visible public
   References: rfc7668_context/1 (addr)rfc7668_peer_addr/3 (addr)rfc7668_local_addr/2 (addr)
@@ -509,7 +509,7 @@ rfc7668_input/14 (rfc7668_input) @060df2a0
   Function flags: count:1073741824 (estimated locally) body optimize_size
   Called by: 
   Calls: ip6_input/23 (568070715 (estimated locally),0.53 per call) pbuf_free/19 (428208240 (estimated locally),0.40 per call) lowpan6_decompress/22 (428208240 (estimated locally),0.40 per call) pbuf_remove_header/20 (217325345 (estimated locally),0.20 per call) 
-rfc7668_output/13 (rfc7668_output) @060d02a0
+rfc7668_output/13 (rfc7668_output) @060c12a0
   Type: function definition analyzed
   Visibility: externally_visible public
   Address is taken.
@@ -519,7 +519,7 @@ rfc7668_output/13 (rfc7668_output) @060d02a0
   Function flags: count:1073741824 (estimated locally) body optimize_size
   Called by: 
   Calls: rfc7668_compress/11 (1073741824 (estimated locally),1.00 per call) 
-rfc7668_set_context/12 (rfc7668_set_context) @060d0ee0
+rfc7668_set_context/12 (rfc7668_set_context) @060c1ee0
   Type: function definition analyzed
   Visibility: externally_visible public
   References: rfc7668_context/1 (write)rfc7668_context/1 (write)rfc7668_context/1 (write)rfc7668_context/1 (write)rfc7668_context/1 (write)
@@ -528,7 +528,7 @@ rfc7668_set_context/12 (rfc7668_set_context) @060d0ee0
   Function flags: count:1073741824 (estimated locally) body optimize_size
   Called by: 
   Calls: 
-rfc7668_compress/11 (rfc7668_compress) @060d0c40
+rfc7668_compress/11 (rfc7668_compress) @060c1c40
   Type: function definition analyzed
   Visibility: prevailing_def_ironly
   References: rfc7668_context/1 (addr)rfc7668_local_addr/2 (addr)rfc7668_peer_addr/3 (addr)
@@ -538,7 +538,7 @@ rfc7668_compress/11 (rfc7668_compress) @060d0c40
   Called by: rfc7668_output/13 (1073741824 (estimated locally),1.00 per call) 
   Calls: pbuf_free/19 (16409 (estimated locally),0.07 per call) pbuf_copy_partial/21 (16409 (estimated locally),0.07 per call) pbuf_remove_header/20 (16409 (estimated locally),0.07 per call) pbuf_free/19 (8453 (estimated locally),0.04 per call) lowpan6_compress_headers/18 (24862 (estimated locally),0.11 per call) pbuf_alloc/17 (123389 (estimated locally),0.53 per call) 
    Indirect call(16409 (estimated locally),0.07 per call)  of param:0 loaded from aggregate passed by reference at offset 1472 (vptr maybe changed)
-rfc7668_set_peer_addr_mac48/10 (rfc7668_set_peer_addr_mac48) @060d0700
+rfc7668_set_peer_addr_mac48/10 (rfc7668_set_peer_addr_mac48) @060c1700
   Type: function definition analyzed
   Visibility: externally_visible public
   References: rfc7668_peer_addr/3 (addr)
@@ -547,7 +547,7 @@ rfc7668_set_peer_addr_mac48/10 (rfc7668_set_peer_addr_mac48) @060d0700
   Function flags: count:1073741824 (estimated locally) body optimize_size
   Called by: 
   Calls: rfc7668_set_addr/6 (1073741824 (estimated locally),1.00 per call) 
-rfc7668_set_peer_addr_eui64/9 (rfc7668_set_peer_addr_eui64) @060d0460
+rfc7668_set_peer_addr_eui64/9 (rfc7668_set_peer_addr_eui64) @060c1460
   Type: function definition analyzed
   Visibility: externally_visible public
   References: rfc7668_peer_addr/3 (addr)
@@ -556,7 +556,7 @@ rfc7668_set_peer_addr_eui64/9 (rfc7668_set_peer_addr_eui64) @060d0460
   Function flags: count:1073741824 (estimated locally) body optimize_size
   Called by: 
   Calls: rfc7668_set_addr/6 (1073741824 (estimated locally),1.00 per call) 
-rfc7668_set_local_addr_mac48/8 (rfc7668_set_local_addr_mac48) @060d01c0
+rfc7668_set_local_addr_mac48/8 (rfc7668_set_local_addr_mac48) @060c11c0
   Type: function definition analyzed
   Visibility: externally_visible public
   References: rfc7668_local_addr/2 (addr)
@@ -565,7 +565,7 @@ rfc7668_set_local_addr_mac48/8 (rfc7668_set_local_addr_mac48) @060d01c0
   Function flags: count:1073741824 (estimated locally) body optimize_size
   Called by: 
   Calls: rfc7668_set_addr/6 (1073741824 (estimated locally),1.00 per call) 
-rfc7668_set_local_addr_eui64/7 (rfc7668_set_local_addr_eui64) @060cba80
+rfc7668_set_local_addr_eui64/7 (rfc7668_set_local_addr_eui64) @060bca80
   Type: function definition analyzed
   Visibility: externally_visible public
   References: rfc7668_local_addr/2 (addr)
@@ -574,7 +574,7 @@ rfc7668_set_local_addr_eui64/7 (rfc7668_set_local_addr_eui64) @060cba80
   Function flags: count:1073741824 (estimated locally) body optimize_size
   Called by: 
   Calls: rfc7668_set_addr/6 (1073741824 (estimated locally),1.00 per call) 
-rfc7668_set_addr/6 (rfc7668_set_addr) @060cbee0
+rfc7668_set_addr/6 (rfc7668_set_addr) @060bcee0
   Type: function definition analyzed
   Visibility: prevailing_def_ironly
   References: 
@@ -583,7 +583,7 @@ rfc7668_set_addr/6 (rfc7668_set_addr) @060cbee0
   Function flags: count:1073741823 (estimated locally) body local optimize_size
   Called by: rfc7668_set_peer_addr_mac48/10 (1073741824 (estimated locally),1.00 per call) rfc7668_set_peer_addr_eui64/9 (1073741824 (estimated locally),1.00 per call) rfc7668_set_local_addr_mac48/8 (1073741824 (estimated locally),1.00 per call) rfc7668_set_local_addr_eui64/7 (1073741824 (estimated locally),1.00 per call) 
   Calls: rfc7668_set_addr.part.0/24 (510874356 (estimated locally),0.48 per call) ble_addr_to_eui64/4 (510874357 (estimated locally),0.48 per call) 
-eui64_to_ble_addr/5 (eui64_to_ble_addr) @060cbc40
+eui64_to_ble_addr/5 (eui64_to_ble_addr) @060bcc40
   Type: function definition analyzed
   Visibility: externally_visible public
   References: 
@@ -592,7 +592,7 @@ eui64_to_ble_addr/5 (eui64_to_ble_addr) @060cbc40
   Function flags: count:1073741824 (estimated locally) body optimize_size
   Called by: 
   Calls: memcpy/16 (1073741824 (estimated locally),1.00 per call) memcpy/16 (1073741824 (estimated locally),1.00 per call) 
-ble_addr_to_eui64/4 (ble_addr_to_eui64) @060cb9a0
+ble_addr_to_eui64/4 (ble_addr_to_eui64) @060bc9a0
   Type: function definition analyzed
   Visibility: externally_visible public
   References: 
@@ -601,21 +601,21 @@ ble_addr_to_eui64/4 (ble_addr_to_eui64) @060cb9a0
   Function flags: count:1073741824 (estimated locally) body optimize_size
   Called by: rfc7668_set_addr/6 (510874357 (estimated locally),0.48 per call) 
   Calls: memcpy/16 (1073741824 (estimated locally),1.00 per call) memcpy/16 (1073741824 (estimated locally),1.00 per call) 
-rfc7668_peer_addr/3 (rfc7668_peer_addr) @060cc708
+rfc7668_peer_addr/3 (rfc7668_peer_addr) @060bd708
   Type: variable definition analyzed
   Visibility: prevailing_def_ironly
   References: 
   Referring: rfc7668_set_peer_addr_mac48/10 (addr)rfc7668_compress/11 (addr)rfc7668_set_peer_addr_eui64/9 (addr)rfc7668_input/14 (addr)
   Availability: available
   Varpool flags:
-rfc7668_local_addr/2 (rfc7668_local_addr) @060cc678
+rfc7668_local_addr/2 (rfc7668_local_addr) @060bd678
   Type: variable definition analyzed
   Visibility: prevailing_def_ironly
   References: 
   Referring: rfc7668_set_local_addr_mac48/8 (addr)rfc7668_compress/11 (addr)rfc7668_set_local_addr_eui64/7 (addr)rfc7668_input/14 (addr)
   Availability: available
   Varpool flags:
-rfc7668_context/1 (rfc7668_context) @060cc5e8
+rfc7668_context/1 (rfc7668_context) @060bd5e8
   Type: variable definition analyzed
   Visibility: prevailing_def_ironly
   References: 

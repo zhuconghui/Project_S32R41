@@ -115,8 +115,8 @@ extern void GmacIf_TxNotification(const uint8 CtrlIdx, const uint8 DMAChannel);
 #define ETH_START_SEC_VAR_CLEARED_UNSPECIFIED_NO_CACHEABLE
 #include "Eth_MemMap.h"
 
-extern Gmac_Ip_BufferDescriptorType GMAC_0_RxRing_0_DescBuffer[];
-extern Gmac_Ip_BufferDescriptorType GMAC_0_TxRing_0_DescBuffer[];
+extern Gmac_Ip_BufferDescriptorType GMAC_1_RxRing_0_DescBuffer[];
+extern Gmac_Ip_BufferDescriptorType GMAC_1_TxRing_0_DescBuffer[];
 
 #define ETH_STOP_SEC_VAR_CLEARED_UNSPECIFIED_NO_CACHEABLE
 #include "Eth_MemMap.h"
@@ -127,8 +127,8 @@ extern Gmac_Ip_BufferDescriptorType GMAC_0_TxRing_0_DescBuffer[];
 #define ETH_START_SEC_VAR_CLEARED_UNSPECIFIED
 #include "Eth_MemMap.h"
 
-extern Gmac_Ip_StateType GMAC_0_StateStructure;
-static Gmac_Ip_TxGateControl GMAC_0_GateControlListPB_BOARD_INITPERIPHERALS[1U]  =
+extern Gmac_Ip_StateType GMAC_1_StateStructure;
+static Gmac_Ip_TxGateControl GMAC_1_GateControlListPB_BOARD_INITPERIPHERALS[1U]  =
 {
     {
         /*.timeInterval = */0U,
@@ -147,14 +147,14 @@ static Gmac_Ip_TxGateControl GMAC_0_GateControlListPB_BOARD_INITPERIPHERALS[1U] 
 
 
 /*! @brief The MAC address(es) of the configured controller(s) */
-static const uint8 GMAC_0_au8MacAddrPB_BOARD_INITPERIPHERALS[GMAC_MAC_ADDR_LENGTH] = { 0x10U, 0x11U, 0x12U, 0x99U, 0x99U, 0x99U };
+static const uint8 GMAC_1_au8MacAddrPB_BOARD_INITPERIPHERALS[GMAC_MAC_ADDR_LENGTH] = { 0x10U, 0x11U, 0x12U, 0x99U, 0x99U, 0x99U };
 
 /*! @brief Reception ring configuration structures */
-static const Gmac_Ip_RxRingConfigType GMAC_0_aRxRingConfigPB_BOARD_INITPERIPHERALS[1U] =
+static const Gmac_Ip_RxRingConfigType GMAC_1_aRxRingConfigPB_BOARD_INITPERIPHERALS[1U] =
 {
     /* The configuration structure for Rx Ring 0 */
     {
-        /*.ringDesc = */GMAC_0_RxRing_0_DescBuffer,
+        /*.ringDesc = */GMAC_1_RxRing_0_DescBuffer,
         /*.callback = */&GmacIf_RxNotification,
         /*.buffer = */NULL_PTR,
         /*.interrupts = */(uint32)GMAC_CH_INTERRUPT_RI,
@@ -166,7 +166,7 @@ static const Gmac_Ip_RxRingConfigType GMAC_0_aRxRingConfigPB_BOARD_INITPERIPHERA
 };
 
 /*! @brief Transmission ring configuration structures */
-static const Gmac_Ip_TxRingConfigType GMAC_0_aTxRingConfigPB_BOARD_INITPERIPHERALS[1U] =
+static const Gmac_Ip_TxRingConfigType GMAC_1_aTxRingConfigPB_BOARD_INITPERIPHERALS[1U] =
 {
     /* The configuration structure for Tx Ring 0 */
     {
@@ -175,7 +175,7 @@ static const Gmac_Ip_TxRingConfigType GMAC_0_aTxRingConfigPB_BOARD_INITPERIPHERA
         /*.sendSlopeCredit = */0U,
         /*.hiCredit = */0U,
         /*.loCredit = */0,
-        /*.ringDesc = */GMAC_0_TxRing_0_DescBuffer,
+        /*.ringDesc = */GMAC_1_TxRing_0_DescBuffer,
         /*.callback = */&GmacIf_TxNotification,
         /*.buffer = */NULL_PTR,
         /*.interrupts = */(uint32)GMAC_CH_INTERRUPT_TI,
@@ -193,7 +193,7 @@ static const Gmac_Ip_TxRingConfigType GMAC_0_aTxRingConfigPB_BOARD_INITPERIPHERA
 };
 
 /*! @brief Module configuration structures */
-static const Gmac_Ip_ConfigType GMAC_0_InitConfigPB_BOARD_INITPERIPHERALS =
+static const Gmac_Ip_ConfigType GMAC_1_InitConfigPB_BOARD_INITPERIPHERALS =
 {
     /*.rxRingCount = */1U,
     /*.txRingCount = */1U,
@@ -206,9 +206,9 @@ static const Gmac_Ip_ConfigType GMAC_0_InitConfigPB_BOARD_INITPERIPHERALS =
 #endif
     /*.interrupts = */0U,
     /*.callback = */NULL_PTR,
-    /*.miiMode = */GMAC_RMII_MODE,
+    /*.miiMode = */GMAC_RGMII_MODE,
     /*.txSchedAlgo = */GMAC_SCHED_ALGO_SP,
-    /*.speed = */GMAC_SPEED_100M,
+    /*.speed = */GMAC_SPEED_1G,
     /*.duplex = */GMAC_FULL_DUPLEX,
     /*.macConfig = */0U | ((uint32)0U << GMAC_MAC_CONFIGURATION_IPG_SHIFT) | ((uint32)GMAC_MAC_CONFIG_CHECKSUM_OFFLOAD),
     /*.extendedMacConfig = */ 0U,
@@ -218,13 +218,13 @@ static const Gmac_Ip_ConfigType GMAC_0_InitConfigPB_BOARD_INITPERIPHERALS =
     /*.macPktFilterConfig = */0U | (uint32)GMAC_PKT_FILTER_RECV_ALL,
     /*.enableCtrl = */TRUE
 #if (GMAC_TX_SPORADIC_BIG_BUFFERS == STD_ON)
-    ,/*.TxBigBufferCount = */ GMAC_0_TX_SPORADIC_BIG_BUFFERS_COUNT
-    ,/*.TxBigBufferLength = */ GMAC_0_TX_SPORADIC_BIG_BUFFERS_LENGTH
+    ,/*.TxBigBufferCount = */ GMAC_1_TX_SPORADIC_BIG_BUFFERS_COUNT
+    ,/*.TxBigBufferLength = */ GMAC_1_TX_SPORADIC_BIG_BUFFERS_LENGTH
     ,/*.TxBigBuffer = */ NULL_PTR
 #endif
 #if (GMAC_RX_SPORADIC_BIG_BUFFERS == STD_ON)
-    ,/*.RxBigBufferCount = */ GMAC_0_RX_SPORADIC_BIG_BUFFERS_COUNT
-    ,/*.RxBigBufferLength = */ GMAC_0_RX_SPORADIC_BIG_BUFFERS_LENGTH
+    ,/*.RxBigBufferCount = */ GMAC_1_RX_SPORADIC_BIG_BUFFERS_COUNT
+    ,/*.RxBigBufferLength = */ GMAC_1_RX_SPORADIC_BIG_BUFFERS_LENGTH
     ,/*.RxBigBuffer = */ NULL_PTR
 #endif
 #ifdef GMAC_IP_DMA_PRIORITY_CONFIGURATION_ENABLE
@@ -249,7 +249,7 @@ static const Gmac_Ip_ConfigType GMAC_0_InitConfigPB_BOARD_INITPERIPHERALS =
 #endif
 };
 
-static const Gmac_Ip_TxTimeAwareShaper GMAC_0_pTxTimeShaperPB_BOARD_INITPERIPHERALS =
+static const Gmac_Ip_TxTimeAwareShaper GMAC_1_pTxTimeShaperPB_BOARD_INITPERIPHERALS =
 {
     /*.baseTimeSecond = */0U,
     /*.baseTimenanoSecond = */0U,
@@ -260,11 +260,11 @@ static const Gmac_Ip_TxTimeAwareShaper GMAC_0_pTxTimeShaperPB_BOARD_INITPERIPHER
     /*.releaseAdvanceTime = */0U,
     /*.holdAdvanceTime = */0U,
     /*.preemptionClassification = */0U,
-    /*.GateControlList = */GMAC_0_GateControlListPB_BOARD_INITPERIPHERALS
+    /*.GateControlList = */GMAC_1_GateControlListPB_BOARD_INITPERIPHERALS
 };
 
 #if (STD_ON == GMAC_IP_HAS_RX_L3_L4_FILTERS)
-static const Gmac_Ip_RxL3L4FilterConfigType GMAC_0_aRxL3L4FilterConfigPB_BOARD_INITPERIPHERALS[0]  =
+static const Gmac_Ip_RxL3L4FilterConfigType GMAC_1_aRxL3L4FilterConfigPB_BOARD_INITPERIPHERALS[0]  =
 {
     {
         /*.DMAChannel = */0U,
@@ -283,7 +283,7 @@ static const Gmac_Ip_RxL3L4FilterConfigType GMAC_0_aRxL3L4FilterConfigPB_BOARD_I
 #endif
 
 #if (STD_ON == GMAC_IP_PPS_OUTPUT_SUPPORT)
-static const Gmac_Ip_FlexiblePPSOutput GMAC_0_paCtrlFlexiblePPSOutputPB_BOARD_INITPERIPHERALS[0]  =
+static const Gmac_Ip_FlexiblePPSOutput GMAC_1_paCtrlFlexiblePPSOutputPB_BOARD_INITPERIPHERALS[0]  =
 {
     {
         /*.PPSDutyCycle = */0U,
@@ -305,19 +305,19 @@ static const Gmac_Ip_FlexiblePPSOutput GMAC_0_paCtrlFlexiblePPSOutputPB_BOARD_IN
 #define ETH_START_SEC_CONFIG_DATA_UNSPECIFIED
 #include "Eth_MemMap.h"
 
-const Gmac_CtrlConfigType Gmac_0_ConfigPB_BOARD_INITPERIPHERALS =
+const Gmac_CtrlConfigType Gmac_1_ConfigPB_BOARD_INITPERIPHERALS =
 {
-    &GMAC_0_StateStructure,
-    &GMAC_0_InitConfigPB_BOARD_INITPERIPHERALS,
-    &GMAC_0_aRxRingConfigPB_BOARD_INITPERIPHERALS[0U],
-    &GMAC_0_aTxRingConfigPB_BOARD_INITPERIPHERALS[0U],
-    &GMAC_0_au8MacAddrPB_BOARD_INITPERIPHERALS[0U],
-    &GMAC_0_pTxTimeShaperPB_BOARD_INITPERIPHERALS,
+    &GMAC_1_StateStructure,
+    &GMAC_1_InitConfigPB_BOARD_INITPERIPHERALS,
+    &GMAC_1_aRxRingConfigPB_BOARD_INITPERIPHERALS[0U],
+    &GMAC_1_aTxRingConfigPB_BOARD_INITPERIPHERALS[0U],
+    &GMAC_1_au8MacAddrPB_BOARD_INITPERIPHERALS[0U],
+    &GMAC_1_pTxTimeShaperPB_BOARD_INITPERIPHERALS,
 #if (STD_ON == GMAC_IP_PPS_OUTPUT_SUPPORT)
-    &GMAC_0_paCtrlFlexiblePPSOutputPB_BOARD_INITPERIPHERALS[0U],
+    &GMAC_1_paCtrlFlexiblePPSOutputPB_BOARD_INITPERIPHERALS[0U],
 #endif
 #if (STD_ON == GMAC_IP_HAS_RX_L3_L4_FILTERS)
-    &GMAC_0_aRxL3L4FilterConfigPB_BOARD_INITPERIPHERALS[0U]
+    &GMAC_1_aRxL3L4FilterConfigPB_BOARD_INITPERIPHERALS[0U]
 #endif
 };
 

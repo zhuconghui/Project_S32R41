@@ -162,7 +162,7 @@ bridgeif_init (struct netif * netif)
   size_t alloc_len_sizet;
   struct bridgeif_private_t * br;
   struct bridgeif_initdata_t * init_data;
-  err_t (*<T6c7>) (struct pbuf *, struct netif *) _1;
+  err_t (*<T6c9>) (struct pbuf *, struct netif *) _1;
   unsigned char bridgeif_netif_client_id.10_2;
   unsigned char _3;
   unsigned char _4;
@@ -189,8 +189,8 @@ bridgeif_init (struct netif * netif)
   void * _25;
   u8_t[6] * _26;
   struct eth_addr * _27;
-  err_t (*<T6e3>) (struct netif *, const struct ip6_addr_t *, netif_mac_filter_action) _28;
-  err_t (*<T6e3>) (struct netif *, const struct ip6_addr_t *, netif_mac_filter_action) _29;
+  err_t (*<T6e5>) (struct netif *, const struct ip6_addr_t *, netif_mac_filter_action) _28;
+  err_t (*<T6e5>) (struct netif *, const struct ip6_addr_t *, netif_mac_filter_action) _29;
   err_t _30;
   err_t _89;
   err_t _91;
@@ -495,12 +495,12 @@ bridgeif_input (struct pbuf * p, struct netif * netif)
   int _13;
   signed char dstports.17_14;
   struct netif * _15;
-  err_t (*<T6c7>) (struct pbuf *, struct netif *) _16;
+  err_t (*<T6c9>) (struct pbuf *, struct netif *) _16;
   struct netif * _17;
   signed char _18;
   int _19;
   struct netif * _20;
-  err_t (*<T6c7>) (struct pbuf *, struct netif *) _21;
+  err_t (*<T6c9>) (struct pbuf *, struct netif *) _21;
   struct netif * _22;
   err_t _23;
   err_t _43;
@@ -779,13 +779,14 @@ bridgeif_output (struct netif * netif, struct pbuf * p)
 
 bridgeif_send_to_ports (struct bridgeif_private_t * br, struct pbuf * p, bridgeif_portmask_t dstports)
 {
+  sys_prot_t lev;
   bridgeif_portmask_t mask;
   u8_t i;
   err_t ret_err;
   err_t err;
   unsigned char _1;
   unsigned char i.14_2;
-  err_t _13;
+  err_t _16;
 
   <bb 2> :
   # DEBUG BEGIN_STMT
@@ -797,14 +798,16 @@ bridgeif_send_to_ports (struct bridgeif_private_t * br, struct pbuf * p, bridgei
   # DEBUG mask => mask_10
   # DEBUG BEGIN_STMT
   # DEBUG BEGIN_STMT
+  lev_13 = sys_arch_protect ();
+  # DEBUG lev => lev_13
   # DEBUG BEGIN_STMT
-  i_11 = 0;
-  # DEBUG i => i_11
+  i_14 = 0;
+  # DEBUG i => i_14
   goto <bb 7>; [INV]
 
   <bb 3> :
   # DEBUG BEGIN_STMT
-  _1 = dstports_14(D) & mask_6;
+  _1 = dstports_17(D) & mask_6;
   if (_1 != 0)
     goto <bb 4>; [INV]
   else
@@ -812,33 +815,33 @@ bridgeif_send_to_ports (struct bridgeif_private_t * br, struct pbuf * p, bridgei
 
   <bb 4> :
   # DEBUG BEGIN_STMT
-  err_18 = bridgeif_send_to_port (br_15(D), p_16(D), i_5);
-  # DEBUG err => err_18
+  err_21 = bridgeif_send_to_port (br_18(D), p_19(D), i_5);
+  # DEBUG err => err_21
   # DEBUG BEGIN_STMT
-  if (err_18 != 0)
+  if (err_21 != 0)
     goto <bb 5>; [INV]
   else
     goto <bb 6>; [INV]
 
   <bb 5> :
   # DEBUG BEGIN_STMT
-  ret_err_19 = err_18;
-  # DEBUG ret_err => ret_err_19
+  ret_err_22 = err_21;
+  # DEBUG ret_err => ret_err_22
 
   <bb 6> :
-  # ret_err_3 = PHI <ret_err_4(3), ret_err_4(4), ret_err_19(5)>
+  # ret_err_3 = PHI <ret_err_4(3), ret_err_4(4), ret_err_22(5)>
   # DEBUG ret_err => ret_err_3
   # DEBUG BEGIN_STMT
   i.14_2 = i_5;
-  i_20 = i.14_2 + 1;
-  # DEBUG i => i_20
-  mask_21 = mask_6 << 1;
-  # DEBUG mask => mask_21
+  i_23 = i.14_2 + 1;
+  # DEBUG i => i_23
+  mask_24 = mask_6 << 1;
+  # DEBUG mask => mask_24
 
   <bb 7> :
   # ret_err_4 = PHI <ret_err_9(2), ret_err_3(6)>
-  # i_5 = PHI <i_11(2), i_20(6)>
-  # mask_6 = PHI <mask_10(2), mask_21(6)>
+  # i_5 = PHI <i_14(2), i_23(6)>
+  # mask_6 = PHI <mask_10(2), mask_24(6)>
   # DEBUG mask => mask_6
   # DEBUG i => i_5
   # DEBUG ret_err => ret_err_4
@@ -850,9 +853,10 @@ bridgeif_send_to_ports (struct bridgeif_private_t * br, struct pbuf * p, bridgei
 
   <bb 8> :
   # DEBUG BEGIN_STMT
+  sys_arch_unprotect (lev_13);
   # DEBUG BEGIN_STMT
-  _13 = ret_err_4;
-  return _13;
+  _16 = ret_err_4;
+  return _16;
 
 }
 
@@ -865,7 +869,7 @@ bridgeif_send_to_port (struct bridgeif_private_t * br, struct pbuf * p, u8_t dst
   unsigned int _3;
   unsigned int _4;
   struct bridgeif_port_t * _5;
-  err_t (*<T6d6>) (struct netif *, struct pbuf *) _6;
+  err_t (*<T6d8>) (struct netif *, struct pbuf *) _6;
   unsigned char _7;
   unsigned char _8;
   unsigned char _9;
@@ -873,7 +877,7 @@ bridgeif_send_to_port (struct bridgeif_private_t * br, struct pbuf * p, u8_t dst
   unsigned int _11;
   unsigned int _12;
   _Bool _13;
-  err_t (*<T6d6>) (struct netif *, struct pbuf *) _14;
+  err_t (*<T6d8>) (struct netif *, struct pbuf *) _14;
   err_t _15;
   err_t _25;
   err_t _26;
@@ -974,6 +978,7 @@ bridgeif_send_to_port (struct bridgeif_private_t * br, struct pbuf * p, u8_t dst
 bridgeif_is_local_mac (struct bridgeif_private_t * br, struct eth_addr * addr)
 {
   struct netif * portif;
+  sys_prot_t lev;
   int i;
   struct netif * _1;
   u8_t[6] * _2;
@@ -987,17 +992,17 @@ bridgeif_is_local_mac (struct bridgeif_private_t * br, struct eth_addr * addr)
   unsigned char _10;
   int _11;
   int _13;
-  int _18;
-  int _20;
   int _22;
+  int _25;
+  int _27;
 
   <bb 2> :
   # DEBUG BEGIN_STMT
   # DEBUG BEGIN_STMT
   # DEBUG BEGIN_STMT
-  _1 = br_15(D)->netif;
+  _1 = br_16(D)->netif;
   _2 = &_1->hwaddr;
-  _3 = memcmp (_2, addr_16(D), 6);
+  _3 = memcmp (_2, addr_17(D), 6);
   if (_3 == 0)
     goto <bb 3>; [INV]
   else
@@ -1005,35 +1010,37 @@ bridgeif_is_local_mac (struct bridgeif_private_t * br, struct eth_addr * addr)
 
   <bb 3> :
   # DEBUG BEGIN_STMT
-  _22 = 1;
+  _27 = 1;
   // predicted unlikely by early return (on trees) predictor.
   goto <bb 11>; [INV]
 
   <bb 4> :
   # DEBUG BEGIN_STMT
+  lev_19 = sys_arch_protect ();
+  # DEBUG lev => lev_19
   # DEBUG BEGIN_STMT
-  i_17 = 0;
-  # DEBUG i => i_17
+  i_20 = 0;
+  # DEBUG i => i_20
   goto <bb 9>; [INV]
 
   <bb 5> :
   # DEBUG BEGIN_STMT
-  _4 = br_15(D)->ports;
+  _4 = br_16(D)->ports;
   i.18_5 = (unsigned int) i_12;
   _6 = i.18_5 * 12;
   _7 = _4 + _6;
-  portif_19 = _7->port_netif;
-  # DEBUG portif => portif_19
+  portif_23 = _7->port_netif;
+  # DEBUG portif => portif_23
   # DEBUG BEGIN_STMT
-  if (portif_19 != 0B)
+  if (portif_23 != 0B)
     goto <bb 6>; [INV]
   else
     goto <bb 8>; [INV]
 
   <bb 6> :
   # DEBUG BEGIN_STMT
-  _8 = &portif_19->hwaddr;
-  _9 = memcmp (_8, addr_16(D), 6);
+  _8 = &portif_23->hwaddr;
+  _9 = memcmp (_8, addr_17(D), 6);
   if (_9 == 0)
     goto <bb 7>; [INV]
   else
@@ -1041,21 +1048,22 @@ bridgeif_is_local_mac (struct bridgeif_private_t * br, struct eth_addr * addr)
 
   <bb 7> :
   # DEBUG BEGIN_STMT
+  sys_arch_unprotect (lev_19);
   # DEBUG BEGIN_STMT
-  _20 = 1;
+  _25 = 1;
   // predicted unlikely by early return (on trees) predictor.
   goto <bb 11>; [INV]
 
   <bb 8> :
   # DEBUG BEGIN_STMT
-  i_21 = i_12 + 1;
-  # DEBUG i => i_21
+  i_26 = i_12 + 1;
+  # DEBUG i => i_26
 
   <bb 9> :
-  # i_12 = PHI <i_17(4), i_21(8)>
+  # i_12 = PHI <i_20(4), i_26(8)>
   # DEBUG i => i_12
   # DEBUG BEGIN_STMT
-  _10 = br_15(D)->num_ports;
+  _10 = br_16(D)->num_ports;
   _11 = (int) _10;
   if (i_12 < _11)
     goto <bb 5>; [INV]
@@ -1064,11 +1072,12 @@ bridgeif_is_local_mac (struct bridgeif_private_t * br, struct eth_addr * addr)
 
   <bb 10> :
   # DEBUG BEGIN_STMT
+  sys_arch_unprotect (lev_19);
   # DEBUG BEGIN_STMT
-  _18 = 0;
+  _22 = 0;
 
   <bb 11> :
-  # _13 = PHI <_22(3), _20(7), _18(10)>
+  # _13 = PHI <_27(3), _25(7), _22(10)>
   return _13;
 
 }
@@ -1077,6 +1086,7 @@ bridgeif_is_local_mac (struct bridgeif_private_t * br, struct eth_addr * addr)
 bridgeif_find_dst_ports (struct bridgeif_private_t * br, struct eth_addr * dst_addr)
 {
   bridgeif_portmask_t ret;
+  sys_prot_t lev;
   int i;
   struct bridgeif_fdb_static_entry_t * _1;
   unsigned int i.11_2;
@@ -1100,22 +1110,24 @@ bridgeif_find_dst_ports (struct bridgeif_private_t * br, struct eth_addr * dst_a
   int _20;
   void * _21;
   bridgeif_portmask_t _23;
-  bridgeif_portmask_t _30;
-  bridgeif_portmask_t _31;
   bridgeif_portmask_t _33;
+  bridgeif_portmask_t _35;
+  bridgeif_portmask_t _38;
 
   <bb 2> :
   # DEBUG BEGIN_STMT
   # DEBUG BEGIN_STMT
   # DEBUG BEGIN_STMT
+  lev_27 = sys_arch_protect ();
+  # DEBUG lev => lev_27
   # DEBUG BEGIN_STMT
-  i_25 = 0;
-  # DEBUG i => i_25
+  i_28 = 0;
+  # DEBUG i => i_28
   goto <bb 7>; [INV]
 
   <bb 3> :
   # DEBUG BEGIN_STMT
-  _1 = br_27(D)->fdbs;
+  _1 = br_29(D)->fdbs;
   i.11_2 = (unsigned int) i_22;
   _3 = i.11_2 * 8;
   _4 = _1 + _3;
@@ -1127,12 +1139,12 @@ bridgeif_find_dst_ports (struct bridgeif_private_t * br, struct eth_addr * dst_a
 
   <bb 4> :
   # DEBUG BEGIN_STMT
-  _6 = br_27(D)->fdbs;
+  _6 = br_29(D)->fdbs;
   i.12_7 = (unsigned int) i_22;
   _8 = i.12_7 * 8;
   _9 = _6 + _8;
   _10 = &_9->addr;
-  _11 = memcmp (_10, dst_addr_28(D), 6);
+  _11 = memcmp (_10, dst_addr_30(D), 6);
   if (_11 == 0)
     goto <bb 5>; [INV]
   else
@@ -1140,28 +1152,29 @@ bridgeif_find_dst_ports (struct bridgeif_private_t * br, struct eth_addr * dst_a
 
   <bb 5> :
   # DEBUG BEGIN_STMT
-  _12 = br_27(D)->fdbs;
+  _12 = br_29(D)->fdbs;
   i.13_13 = (unsigned int) i_22;
   _14 = i.13_13 * 8;
   _15 = _12 + _14;
-  ret_32 = _15->dst_ports;
-  # DEBUG ret => ret_32
+  ret_36 = _15->dst_ports;
+  # DEBUG ret => ret_36
   # DEBUG BEGIN_STMT
+  sys_arch_unprotect (lev_27);
   # DEBUG BEGIN_STMT
-  _33 = ret_32;
+  _38 = ret_36;
   // predicted unlikely by early return (on trees) predictor.
   goto <bb 11>; [INV]
 
   <bb 6> :
   # DEBUG BEGIN_STMT
-  i_34 = i_22 + 1;
-  # DEBUG i => i_34
+  i_39 = i_22 + 1;
+  # DEBUG i => i_39
 
   <bb 7> :
-  # i_22 = PHI <i_25(2), i_34(6)>
+  # i_22 = PHI <i_28(2), i_39(6)>
   # DEBUG i => i_22
   # DEBUG BEGIN_STMT
-  _16 = br_27(D)->max_fdbs_entries;
+  _16 = br_29(D)->max_fdbs_entries;
   _17 = (int) _16;
   if (i_22 < _17)
     goto <bb 3>; [INV]
@@ -1170,7 +1183,7 @@ bridgeif_find_dst_ports (struct bridgeif_private_t * br, struct eth_addr * dst_a
 
   <bb 8> :
   # DEBUG BEGIN_STMT
-  _18 = dst_addr_28(D)->addr[0];
+  _18 = dst_addr_30(D)->addr[0];
   _19 = (int) _18;
   _20 = _19 & 1;
   if (_20 != 0)
@@ -1180,19 +1193,21 @@ bridgeif_find_dst_ports (struct bridgeif_private_t * br, struct eth_addr * dst_a
 
   <bb 9> :
   # DEBUG BEGIN_STMT
+  sys_arch_unprotect (lev_27);
   # DEBUG BEGIN_STMT
-  _31 = 255;
+  _35 = 255;
   // predicted unlikely by early return (on trees) predictor.
   goto <bb 11>; [INV]
 
   <bb 10> :
   # DEBUG BEGIN_STMT
+  sys_arch_unprotect (lev_27);
   # DEBUG BEGIN_STMT
-  _21 = br_27(D)->fdbd;
-  _30 = bridgeif_fdb_get_dst_ports (_21, dst_addr_28(D));
+  _21 = br_29(D)->fdbd;
+  _33 = bridgeif_fdb_get_dst_ports (_21, dst_addr_30(D));
 
   <bb 11> :
-  # _23 = PHI <_33(5), _31(9), _30(10)>
+  # _23 = PHI <_38(5), _35(9), _33(10)>
   return _23;
 
 }
@@ -1200,6 +1215,7 @@ bridgeif_find_dst_ports (struct bridgeif_private_t * br, struct eth_addr * dst_a
 
 bridgeif_fdb_remove (struct netif * bridgeif, const struct eth_addr * addr)
 {
+  sys_prot_t lev;
   struct bridgeif_private_t * br;
   int i;
   struct bridgeif_fdb_static_entry_t * _1;
@@ -1231,8 +1247,8 @@ bridgeif_fdb_remove (struct netif * bridgeif, const struct eth_addr * addr)
   short unsigned int _27;
   int _28;
   err_t _30;
-  err_t _38;
   err_t _41;
+  err_t _45;
 
   <bb 2> :
   # DEBUG BEGIN_STMT
@@ -1276,9 +1292,11 @@ bridgeif_fdb_remove (struct netif * bridgeif, const struct eth_addr * addr)
   <bb 6> :
   # DEBUG BEGIN_STMT
   # DEBUG BEGIN_STMT
+  lev_38 = sys_arch_protect ();
+  # DEBUG lev => lev_38
   # DEBUG BEGIN_STMT
-  i_37 = 0;
-  # DEBUG i => i_37
+  i_39 = 0;
+  # DEBUG i => i_39
   goto <bb 13>; [INV]
 
   <bb 7> :
@@ -1299,7 +1317,7 @@ bridgeif_fdb_remove (struct netif * bridgeif, const struct eth_addr * addr)
   _8 = i.6_7 * 8;
   _9 = _6 + _8;
   _10 = &_9->addr;
-  _11 = memcmp (_10, addr_39(D), 6);
+  _11 = memcmp (_10, addr_42(D), 6);
   if (_11 == 0)
     goto <bb 9>; [INV]
   else
@@ -1324,7 +1342,7 @@ bridgeif_fdb_remove (struct netif * bridgeif, const struct eth_addr * addr)
   _19 = i.8_18 * 8;
   _20 = _17 + _19;
   _21 = &_20->addr;
-  _22 = memcmp (_21, addr_39(D), 6);
+  _22 = memcmp (_21, addr_42(D), 6);
   if (_22 == 0)
     goto <bb 11>; [INV]
   else
@@ -1339,19 +1357,20 @@ bridgeif_fdb_remove (struct netif * bridgeif, const struct eth_addr * addr)
   memset (_26, 0, 8);
   # DEBUG BEGIN_STMT
   # DEBUG BEGIN_STMT
+  sys_arch_unprotect (lev_38);
   # DEBUG BEGIN_STMT
-  _41 = 0;
+  _45 = 0;
   // predicted unlikely by early return (on trees) predictor.
   goto <bb 15>; [INV]
 
   <bb 12> :
   # DEBUG BEGIN_STMT
   # DEBUG BEGIN_STMT
-  i_42 = i_29 + 1;
-  # DEBUG i => i_42
+  i_46 = i_29 + 1;
+  # DEBUG i => i_46
 
   <bb 13> :
-  # i_29 = PHI <i_37(6), i_42(12)>
+  # i_29 = PHI <i_39(6), i_46(12)>
   # DEBUG i => i_29
   # DEBUG BEGIN_STMT
   _27 = br_36->max_fdbs_entries;
@@ -1363,11 +1382,12 @@ bridgeif_fdb_remove (struct netif * bridgeif, const struct eth_addr * addr)
 
   <bb 14> :
   # DEBUG BEGIN_STMT
+  sys_arch_unprotect (lev_38);
   # DEBUG BEGIN_STMT
-  _38 = -6;
+  _41 = -6;
 
   <bb 15> :
-  # _30 = PHI <_41(11), _38(14)>
+  # _30 = PHI <_45(11), _41(14)>
   return _30;
 
 }
@@ -1375,6 +1395,7 @@ bridgeif_fdb_remove (struct netif * bridgeif, const struct eth_addr * addr)
 
 bridgeif_fdb_add (struct netif * bridgeif, const struct eth_addr * addr, bridgeif_portmask_t ports)
 {
+  sys_prot_t lev;
   struct bridgeif_private_t * br;
   int i;
   struct bridgeif_fdb_static_entry_t * _1;
@@ -1403,8 +1424,8 @@ bridgeif_fdb_add (struct netif * bridgeif, const struct eth_addr * addr, bridgei
   short unsigned int _24;
   int _25;
   err_t _27;
-  err_t _35;
-  err_t _41;
+  err_t _38;
+  err_t _45;
 
   <bb 2> :
   # DEBUG BEGIN_STMT
@@ -1448,9 +1469,11 @@ bridgeif_fdb_add (struct netif * bridgeif, const struct eth_addr * addr, bridgei
   <bb 6> :
   # DEBUG BEGIN_STMT
   # DEBUG BEGIN_STMT
+  lev_35 = sys_arch_protect ();
+  # DEBUG lev => lev_35
   # DEBUG BEGIN_STMT
-  i_34 = 0;
-  # DEBUG i => i_34
+  i_36 = 0;
+  # DEBUG i => i_36
   goto <bb 11>; [INV]
 
   <bb 7> :
@@ -1490,29 +1513,30 @@ bridgeif_fdb_add (struct netif * bridgeif, const struct eth_addr * addr, bridgei
   i.3_16 = (unsigned int) i_26;
   _17 = i.3_16 * 8;
   _18 = _15 + _17;
-  _18->dst_ports = ports_37(D);
+  _18->dst_ports = ports_40(D);
   # DEBUG BEGIN_STMT
   _19 = br_33->fdbs;
   i.4_20 = (unsigned int) i_26;
   _21 = i.4_20 * 8;
   _22 = _19 + _21;
   _23 = &_22->addr;
-  memcpy (_23, addr_39(D), 6);
+  memcpy (_23, addr_42(D), 6);
   # DEBUG BEGIN_STMT
   # DEBUG BEGIN_STMT
+  sys_arch_unprotect (lev_35);
   # DEBUG BEGIN_STMT
-  _41 = 0;
+  _45 = 0;
   // predicted unlikely by early return (on trees) predictor.
   goto <bb 13>; [INV]
 
   <bb 10> :
   # DEBUG BEGIN_STMT
   # DEBUG BEGIN_STMT
-  i_42 = i_26 + 1;
-  # DEBUG i => i_42
+  i_46 = i_26 + 1;
+  # DEBUG i => i_46
 
   <bb 11> :
-  # i_26 = PHI <i_34(6), i_42(10)>
+  # i_26 = PHI <i_36(6), i_46(10)>
   # DEBUG i => i_26
   # DEBUG BEGIN_STMT
   _24 = br_33->max_fdbs_entries;
@@ -1524,11 +1548,12 @@ bridgeif_fdb_add (struct netif * bridgeif, const struct eth_addr * addr, bridgei
 
   <bb 12> :
   # DEBUG BEGIN_STMT
+  sys_arch_unprotect (lev_35);
   # DEBUG BEGIN_STMT
-  _35 = -1;
+  _38 = -1;
 
   <bb 13> :
-  # _27 = PHI <_41(9), _35(12)>
+  # _27 = PHI <_45(9), _38(12)>
   return _27;
 
 }
