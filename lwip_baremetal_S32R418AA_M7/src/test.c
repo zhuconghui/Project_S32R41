@@ -267,6 +267,9 @@ static void test_init(void* arg);
 
 void start_example(void);
 
+/* UDP send processing function - called from main loop */
+void process_udp_send(void);
+
 #if LWIP_INIT_COMPLETE_CALLBACK
 /*
  * Callback invoked when the TCP/IP initialization is complete.
@@ -491,48 +494,57 @@ static void srv_txt(struct mdns_service *service, void *txt_userdata)
 #define UDP_TARGET_PORT 5000
 #define UDP_DATA_SIZE   1024
 
+/* Global UDP send flag - set by timer interrupt (in OsIf_Millisecond), cleared by process_udp_send */
+volatile uint8_t g_udp_send_flag = 0U;
+
 static struct udp_pcb *my_udp_pcb;
 static uint8_t my_udp_buffer[UDP_DATA_SIZE];
+static ip_addr_t my_udp_dest_addr;
 
-static void my_udp_send_callback(void *arg)
+/**
+ * @brief Process UDP send - called from main loop
+ * @details Checks send_flag, if set sends UDP data using PBUF_ROM (zero-copy)
+ *          The flag is set by PIT timer interrupt every 1000ms
+ */
+void process_udp_send(void)
 {
   struct pbuf *p;
-  ip_addr_t dest_addr;
 
-  LWIP_UNUSED_ARG(arg);
+  /* Check if send flag is set by interrupt */
+  if (g_udp_send_flag != (uint8_t)0U) {
+    /* Clear flag first */
+    g_udp_send_flag = (uint8_t)0U;
+    
+    /* Fill data buffer (example: fill with 'A') */
+    memset(my_udp_buffer, 'A', UDP_DATA_SIZE);
 
-  /* 填充数据 (示例：填充 'A') */
-  memset(my_udp_buffer, 'A', UDP_DATA_SIZE);
+    /* Allocate pbuf with PBUF_ROM - zero copy, reference to existing buffer */
+    p = pbuf_alloc(PBUF_TRANSPORT, UDP_DATA_SIZE, PBUF_ROM);
+    if (p != NULL) {
+      /* Set pbuf payload to point to our buffer directly (no copy) */
+      p->payload = my_udp_buffer;
 
-  /* 分配 pbuf */
-  p = pbuf_alloc(PBUF_TRANSPORT, UDP_DATA_SIZE, PBUF_RAM);
-  if (p != NULL) {
-    /* 将数据拷贝到 pbuf */
-    pbuf_take(p, my_udp_buffer, UDP_DATA_SIZE);
+      /* Send UDP packet */
+      if (my_udp_pcb != NULL) {
+        udp_sendto(my_udp_pcb, p, &my_udp_dest_addr, UDP_TARGET_PORT);
+      }
 
-    /* 解析目标 IP 地址 */
-    if(ipaddr_aton(UDP_TARGET_IP, &dest_addr)) {
-      /* 发送 UDP 包 */
-      udp_sendto(my_udp_pcb, p, &dest_addr, UDP_TARGET_PORT);
+      /* Free pbuf */
+      pbuf_free(p);
     }
-
-    /* 释放 pbuf */
-    pbuf_free(p);
   }
-
-  /* 重新注册定时器，实现每秒发送 (1000ms) */
-  sys_timeout(1000, my_udp_send_callback, NULL);
 }
 
 static void my_udp_init(void)
 {
+  /* Parse target IP address once during init */
+  ipaddr_aton(UDP_TARGET_IP, &my_udp_dest_addr);
+  
   my_udp_pcb = udp_new();
   if (my_udp_pcb != NULL) {
-    /* 绑定本地任意端口 */
+    /* Bind to any local port */
     udp_bind(my_udp_pcb, IP_ADDR_ANY, 0);
-    
-    /* 启动第一次定时发送 */
-    sys_timeout(1000, my_udp_send_callback, NULL);
+    /* No need for sys_timeout - flag is set by PIT interrupt */
   }
 }
 /* --- CUSTOM UDP SENDER END --- */
@@ -769,6 +781,10 @@ static void mainLoopTask(void* pvParameters)
 #if NO_SYS
     /* handle timers (already done in tcpip.c when NO_SYS=0) */
     sys_check_timeouts();
+    
+    /* Process UDP send - check flag set by PIT interrupt and send if needed */
+    process_udp_send();
+    
   for(int i = 0; i < ETHIF_NUMBER ; i++)
   { /* Start polling if Eth Rx / Tx interrupts are not used */
     //(void)ETHIF_POLL_INTERFACE(&network_interfaces[i]);
