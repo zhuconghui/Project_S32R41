@@ -494,7 +494,44 @@ static void srv_txt(struct mdns_service *service, void *txt_userdata)
 #define UDP_TARGET_PORT 5000
 #define UDP_DATA_SIZE   1024
 
-/* Global UDP send flag - set by timer interrupt (in OsIf_Millisecond), cleared by process_udp_send */
+/*==================================================================================================
+ * STM (System Timer Module) Register Definitions for S32R41
+ * STM0 base address: 0x4022C000, clock: 200MHz (from STM0_CLK)
+ *==================================================================================================*/
+#define STM0_BASE_ADDR      0x4022C000UL
+
+/* STM Register offsets */
+#define STM_CR_OFFSET       0x00U   /* Control Register */
+#define STM_CNT_OFFSET      0x04U   /* Counter Register */
+#define STM_CCR0_OFFSET     0x10U   /* Channel 0 Control Register */
+#define STM_CIR0_OFFSET     0x14U   /* Channel 0 Interrupt Register */
+#define STM_CMP0_OFFSET     0x18U   /* Channel 0 Compare Register */
+
+/* STM Register access macros */
+#define STM0_CR             (*(volatile uint32_t *)(STM0_BASE_ADDR + STM_CR_OFFSET))
+#define STM0_CNT            (*(volatile uint32_t *)(STM0_BASE_ADDR + STM_CNT_OFFSET))
+#define STM0_CCR0           (*(volatile uint32_t *)(STM0_BASE_ADDR + STM_CCR0_OFFSET))
+#define STM0_CIR0           (*(volatile uint32_t *)(STM0_BASE_ADDR + STM_CIR0_OFFSET))
+#define STM0_CMP0           (*(volatile uint32_t *)(STM0_BASE_ADDR + STM_CMP0_OFFSET))
+
+/* STM Control Register bits */
+#define STM_CR_TEN          (1UL << 0)   /* Timer Enable */
+#define STM_CR_FRZ          (1UL << 1)   /* Freeze control */
+
+/* STM Channel Control Register bits */
+#define STM_CCR_CEN         (1UL << 0)   /* Channel Enable */
+
+/* STM Channel Interrupt Register bits */
+#define STM_CIR_CIF         (1UL << 0)   /* Channel Interrupt Flag */
+
+/* STM0 clock frequency: 200 MHz */
+#define STM0_CLK_FREQ       200000000UL
+/* Timer period: 50us = 50 * 10^-6 s */
+#define STM_PERIOD_US       50U
+/* Compare value for 50us at 200MHz: 200MHz * 50us = 10000 ticks */
+#define STM_CMP_VALUE       ((STM0_CLK_FREQ / 1000000UL) * STM_PERIOD_US)
+
+/* Global UDP send flag - set by STM interrupt, cleared by process_udp_send */
 volatile uint8_t g_udp_send_flag = 0U;
 
 static struct udp_pcb *my_udp_pcb;
@@ -502,18 +539,58 @@ static uint8_t my_udp_buffer[UDP_DATA_SIZE];
 static ip_addr_t my_udp_dest_addr;
 
 /**
+ * @brief STM0 Channel 0 Interrupt Service Routine
+ * @details Called every 50us, sets the UDP send flag
+ */
+void STM0_Ch0_IRQHandler(void)
+{
+  /* Clear interrupt flag by writing 1 */
+  STM0_CIR0 = STM_CIR_CIF;
+  
+  /* Update compare value for next interrupt (add period to current compare) */
+  STM0_CMP0 = STM0_CMP0 + STM_CMP_VALUE;
+  
+  /* Set UDP send flag */
+  g_udp_send_flag = 1U;
+}
+
+/**
+ * @brief Initialize STM0 timer for 50us period
+ */
+static void stm0_init(void)
+{
+  /* Disable STM timer first */
+  STM0_CR = 0U;
+  
+  /* Reset counter */
+  STM0_CNT = 0U;
+  
+  /* Set compare value for first interrupt */
+  STM0_CMP0 = STM_CMP_VALUE;
+  
+  /* Clear any pending interrupt */
+  STM0_CIR0 = STM_CIR_CIF;
+  
+  /* Enable channel 0 */
+  STM0_CCR0 = STM_CCR_CEN;
+  
+  /* Enable STM timer with freeze in debug mode */
+  STM0_CR = STM_CR_TEN | STM_CR_FRZ;
+}
+
+/**
  * @brief Process UDP send - called from main loop
  * @details Checks send_flag, if set sends UDP data using PBUF_ROM (zero-copy)
- *          The flag is set by PIT timer interrupt every 1000ms
+ *          The flag is set by STM interrupt every 50us
  */
 void process_udp_send(void)
 {
   struct pbuf *p;
 
   /* Check if send flag is set by interrupt */
-  if (g_udp_send_flag != (uint8_t)0U) {
+  if (g_udp_send_flag != 0U) {
     /* Clear flag first */
-    g_udp_send_flag = (uint8_t)0U;
+    g_udp_send_flag = 0U;
     
     /* Fill data buffer (example: fill with 'A') */
     memset(my_udp_buffer, 'A', UDP_DATA_SIZE);
@@ -544,8 +621,10 @@ static void my_udp_init(void)
   if (my_udp_pcb != NULL) {
     /* Bind to any local port */
     udp_bind(my_udp_pcb, IP_ADDR_ANY, 0);
-    /* No need for sys_timeout - flag is set by PIT interrupt */
   }
+  
+  /* Initialize STM0 timer for 50us period */
+  stm0_init();
 }
 /* --- CUSTOM UDP SENDER END --- */
 

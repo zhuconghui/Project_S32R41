@@ -63,6 +63,7 @@ extern void PIT_0_ISR(void);
 //extern void GMAC1_CH0_RX_IRQHandler(void);
 extern void GMAC0_CH0_TX_IRQHandler(void);
 extern void GMAC0_CH0_RX_IRQHandler(void);
+extern void STM0_Ch0_IRQHandler(void);
 #endif /* USING_OS_AUTOSAROS */
 
 /* PIT channel used - 0 */
@@ -254,6 +255,11 @@ void device_init(void)
 	IntCtrl_Ip_InstallHandler(GMAC0_CH0_RX_IRQn, GMAC0_CH0_RX_IRQHandler, NULL_PTR);
 	IntCtrl_Ip_SetPriority(GMAC0_CH0_RX_IRQn, 7);
 	IntCtrl_Ip_EnableIrq(GMAC0_CH0_RX_IRQn);
+
+    /* Install STM0 Channel 0 interrupt handler for 50us UDP send timing */
+    IntCtrl_Ip_InstallHandler(STM0_0_IRQn, STM0_Ch0_IRQHandler, NULL_PTR);
+    IntCtrl_Ip_SetPriority(STM0_0_IRQn, 6);
+    IntCtrl_Ip_EnableIrq(STM0_0_IRQn);
 #endif /* USING_OS_AUTOSAROS */
 
     Eth_T_EnableIRQs();

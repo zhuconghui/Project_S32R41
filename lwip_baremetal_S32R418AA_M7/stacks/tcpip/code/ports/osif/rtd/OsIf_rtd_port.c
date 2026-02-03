@@ -75,7 +75,6 @@
 * 2) needed interfaces from external units
 * 3) internal and external interfaces from this unit
 ==================================================================================================*/
-#include <stdint.h>
 #include "Devassert.h"
 #include "OsIf_rtd_port.h"
 #if defined(USING_OS_FREERTOS)
@@ -159,15 +158,6 @@
 *                                      LOCAL VARIABLES
 ==================================================================================================*/
 static volatile uint32 u32OsIf_Milliseconds = 0U;
-static volatile uint32 u32OsIf_UdpSendCounter = 0U;
-
-/*==================================================================================================
-*                                      EXTERNAL VARIABLES
-==================================================================================================*/
-/* UDP send flag - set by timer interrupt, cleared by main loop */
-extern volatile uint8_t g_udp_send_flag;
-/* UDP send interval in milliseconds */
-#define UDP_SEND_INTERVAL_MS  1000U
 
 /*==================================================================================================
 *                                       LOCAL FUNCTIONS
@@ -213,14 +203,6 @@ static inline boolean OsIf_IsIsrContext(void)
 void OsIf_Millisecond(void)
 {
     u32OsIf_Milliseconds++;
-    
-    /* Increment UDP send counter and set flag when interval reached */
-    u32OsIf_UdpSendCounter++;
-    if (u32OsIf_UdpSendCounter >= UDP_SEND_INTERVAL_MS)
-    {
-        u32OsIf_UdpSendCounter = 0U;
-        g_udp_send_flag = (uint8_t)1U;
-    }
 }
 
 /*FUNCTION**********************************************************************
