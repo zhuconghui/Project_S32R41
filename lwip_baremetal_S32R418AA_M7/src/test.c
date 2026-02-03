@@ -535,8 +535,14 @@ static void srv_txt(struct mdns_service *service, void *txt_userdata)
 volatile uint8_t g_udp_send_flag = 0U;
 
 static struct udp_pcb *my_udp_pcb;
-static uint8_t my_udp_buffer[UDP_DATA_SIZE];
 static ip_addr_t my_udp_dest_addr;
+
+/* 
+ * Double buffer for UDP data to avoid conflicts when TX interrupt fires
+ * while preparing next packet
+ */
+static uint8_t my_udp_buffer[2][UDP_DATA_SIZE];
+static volatile uint8_t current_buffer = 0U;
 
 /**
  * @brief STM0 Channel 0 Interrupt Service Routine
@@ -581,33 +587,47 @@ static void stm0_init(void)
 /**
  * @brief Process UDP send - called from main loop
  * @details Checks send_flag, if set sends UDP data using PBUF_ROM (zero-copy)
- *          The flag is set by STM interrupt every 50us
+ *          The flag is set by STM interrupt.
+ *          
+ *          IMPORTANT: Uses double buffering and does NOT call pbuf_free.
+ *          The GMAC TX complete interrupt will handle pbuf release.
  */
 void process_udp_send(void)
 {
   struct pbuf *p;
+  uint8_t buf_idx;
 
   /* Check if send flag is set by interrupt */
   if (g_udp_send_flag != 0U) {
     /* Clear flag first */
     g_udp_send_flag = 0U;
     
+    /* Get current buffer index and switch for next time */
+    buf_idx = current_buffer;
+    current_buffer = (current_buffer + 1U) & 0x01U;
+    
     /* Fill data buffer (example: fill with 'A') */
-    memset(my_udp_buffer, 'A', UDP_DATA_SIZE);
+    memset(my_udp_buffer[buf_idx], 'A', UDP_DATA_SIZE);
 
     /* Allocate pbuf with PBUF_ROM - zero copy, reference to existing buffer */
     p = pbuf_alloc(PBUF_TRANSPORT, UDP_DATA_SIZE, PBUF_ROM);
     if (p != NULL) {
       /* Set pbuf payload to point to our buffer directly (no copy) */
-      p->payload = my_udp_buffer;
+      p->payload = my_udp_buffer[buf_idx];
 
       /* Send UDP packet */
       if (my_udp_pcb != NULL) {
         udp_sendto(my_udp_pcb, p, &my_udp_dest_addr, UDP_TARGET_PORT);
       }
-
-      /* Free pbuf */
-      pbuf_free(p);
+      
+      /* 
+       * DO NOT call pbuf_free here!
+       * The GMAC TX complete interrupt (txNotification) will handle pbuf release.
+       * Calling pbuf_free here causes double-free when TX interrupt fires.
+       * 
+       * The pbuf structure will be freed by GMAC driver after TX completes.
+       * The data buffer (my_udp_buffer) is static and won't be freed.
+       */
     }
   }
 }
@@ -616,6 +636,10 @@ static void my_udp_init(void)
 {
   /* Parse target IP address once during init */
   ipaddr_aton(UDP_TARGET_IP, &my_udp_dest_addr);
+  
+  /* Initialize double buffers */
+  memset(my_udp_buffer, 0, sizeof(my_udp_buffer));
+  current_buffer = 0U;
   
   my_udp_pcb = udp_new();
   if (my_udp_pcb != NULL) {
