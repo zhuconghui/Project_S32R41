@@ -1,0 +1,328 @@
+Symbol table:
+
+__atomic_store_4/29 (__atomic_store_4) @060e81c0
+  Type: function
+  Visibility: external public
+  References: 
+  Referring: 
+  Availability: not_available
+  Function flags:
+  Called by: TraceAtomicValueSet/14 
+  Calls: 
+__atomic_fetch_add_4/28 (__atomic_fetch_add_4) @060e3000
+  Type: function
+  Visibility: external public
+  References: 
+  Referring: 
+  Availability: not_available
+  Function flags:
+  Called by: IndexReadIncrement/22 
+  Calls: 
+__atomic_load_4/27 (__atomic_load_4) @060e3e00
+  Type: function
+  Visibility: external public
+  References: 
+  Referring: 
+  Availability: not_available
+  Function flags:
+  Called by: TraceAtomicValueGet/15 
+  Calls: 
+OSGetLogicalCoreID/26 (OSGetLogicalCoreID) @060e3b60
+  Type: function
+  Visibility: external public
+  References: 
+  Referring: 
+  Availability: not_available
+  Function flags:
+  Called by: CoreIdRead/20 
+  Calls: 
+STM_GetValue/25 (STM_GetValue) @060e38c0
+  Type: function
+  Visibility: external public
+  References: 
+  Referring: 
+  Availability: not_available
+  Function flags:
+  Called by: TimerRead/18 
+  Calls: 
+STM_Init/24 (STM_Init) @060e3700
+  Type: function
+  Visibility: external public
+  References: 
+  Referring: 
+  Availability: not_available
+  Function flags:
+  Called by: TimerInit/17 
+  Calls: 
+IndexWrite/23 (IndexWrite) @060e31c0
+  Type: function definition analyzed
+  Visibility: force_output externally_visible no_reorder public
+  References: 
+  Referring: 
+  Availability: available
+  Function flags: body
+  Called by: 
+  Calls: TraceAtomicValueSet/14 
+IndexReadIncrement/22 (IndexReadIncrement) @060dbd20
+  Type: function definition analyzed
+  Visibility: force_output externally_visible no_reorder public
+  References: 
+  Referring: 
+  Availability: available
+  Function flags: body
+  Called by: 
+  Calls: __atomic_fetch_add_4/28 
+IndexRead/21 (IndexRead) @060db7e0
+  Type: function definition analyzed
+  Visibility: force_output externally_visible no_reorder public
+  References: 
+  Referring: 
+  Availability: available
+  Function flags: body
+  Called by: 
+  Calls: TraceAtomicValueGet/15 
+CoreIdRead/20 (CoreIdRead) @060dbee0
+  Type: function definition analyzed
+  Visibility: force_output externally_visible no_reorder public
+  References: 
+  Referring: 
+  Availability: available
+  Function flags: body
+  Called by: 
+  Calls: OSGetLogicalCoreID/26 
+TimerEnd/19 (TimerEnd) @060dbc40
+  Type: function definition analyzed
+  Visibility: force_output externally_visible no_reorder public
+  References: 
+  Referring: 
+  Availability: available
+  Function flags: body
+  Called by: 
+  Calls: 
+TimerRead/18 (TimerRead) @060db9a0
+  Type: function definition analyzed
+  Visibility: force_output externally_visible no_reorder public
+  References: 
+  Referring: 
+  Availability: available
+  Function flags: body
+  Called by: 
+  Calls: STM_GetValue/25 
+TimerInit/17 (TimerInit) @060db700
+  Type: function definition analyzed
+  Visibility: force_output externally_visible no_reorder public
+  References: 
+  Referring: 
+  Availability: available
+  Function flags: body
+  Called by: 
+  Calls: STM_Init/24 
+rsdk_test_not_null_lnk_sym/16 (rsdk_test_not_null_lnk_sym) @060db460
+  Type: function definition analyzed
+  Visibility: force_output no_reorder prevailing_def_ironly
+  References: 
+  Referring: 
+  Availability: available
+  Function flags: body
+  Called by: 
+  Calls: 
+TraceAtomicValueGet/15 (TraceAtomicValueGet) @060d78c0
+  Type: function definition analyzed
+  Visibility: no_reorder prevailing_def_ironly
+  References: 
+  Referring: 
+  Availability: local
+  Function flags: body local
+  Called by: IndexRead/21 
+  Calls: __atomic_load_4/27 
+TraceAtomicValueSet/14 (TraceAtomicValueSet) @060d7620
+  Type: function definition analyzed
+  Visibility: no_reorder prevailing_def_ironly
+  References: 
+  Referring: 
+  Availability: local
+  Function flags: body local
+  Called by: IndexWrite/23 
+  Calls: __atomic_store_4/29 
+IndexWrite (atomic traceAtomic_t * pTraceBufferIndex, int value)
+{
+  <bb 2> :
+  TraceAtomicValueSet (pTraceBufferIndex_2(D), value_3(D));
+  return;
+
+}
+
+
+IndexReadIncrement (atomic traceAtomic_t * pTraceBufferIndex, uint16_t traceBufferSize)
+{
+  int index;
+  int D.5883;
+  unsigned int _1;
+  int _2;
+  int _9;
+
+  <bb 2> :
+  _1 = __atomic_fetch_add_4 (pTraceBufferIndex_4(D), 1, 5);
+  index_6 = (int) _1;
+  _2 = (int) traceBufferSize_7(D);
+  index_8 = index_6 % _2;
+  _9 = index_8;
+
+  <bb 3> :
+<L0>:
+  return _9;
+
+}
+
+
+IndexRead (atomic traceAtomic_t * pTraceBufferIndex, uint16_t traceBufferSize)
+{
+  int index;
+  int D.5879;
+  int _1;
+  int _7;
+
+  <bb 2> :
+  index_5 = TraceAtomicValueGet (pTraceBufferIndex_3(D));
+  _1 = (int) traceBufferSize_6(D);
+  _7 = index_5 % _1;
+
+  <bb 3> :
+<L0>:
+  return _7;
+
+}
+
+
+CoreIdRead ()
+{
+  uint8_t D.5877;
+  short unsigned int _1;
+  uint8_t _4;
+
+  <bb 2> :
+  _1 = OSGetLogicalCoreID ();
+  _4 = (uint8_t) _1;
+
+  <bb 3> :
+<L0>:
+  return _4;
+
+}
+
+
+TimerEnd (void * pArg)
+{
+  <bb 2> :
+  return;
+
+}
+
+
+TimerRead ()
+{
+  uint32_t D.5875;
+  uint32_t _3;
+
+  <bb 2> :
+  _3 = STM_GetValue ();
+
+  <bb 3> :
+<L0>:
+  return _3;
+
+}
+
+
+TimerInit ()
+{
+  <bb 2> :
+  STM_Init (1);
+  return;
+
+}
+
+
+__attribute__((unused))
+rsdk_test_not_null_lnk_sym (uintptr_t symName)
+{
+  volatile uintptr_t dummy_volatile;
+  uint8 retVal;
+  uint8 D.5873;
+  unsigned int dummy_volatile.0_1;
+  uint8 _8;
+
+  <bb 2> :
+  dummy_volatile ={v} symName_4(D);
+  dummy_volatile.0_1 ={v} dummy_volatile;
+  if (dummy_volatile.0_1 != 0)
+    goto <bb 3>; [INV]
+  else
+    goto <bb 4>; [INV]
+
+  <bb 3> :
+  retVal_7 = 1;
+  goto <bb 5>; [INV]
+
+  <bb 4> :
+  retVal_6 = 0;
+
+  <bb 5> :
+  # retVal_2 = PHI <retVal_7(3), retVal_6(4)>
+  _8 = retVal_2;
+
+  <bb 6> :
+<L3>:
+  return _8;
+
+}
+
+
+TraceAtomicValueGet (atomic traceAtomic_t * pAddr)
+{
+  traceAtomic_t __atomic_load_tmp;
+  atomic traceAtomic_t * __atomic_load_ptr;
+  int value;
+  int D.5881;
+  traceAtomic_t D.5825;
+  unsigned int _1;
+  int _2;
+  traceAtomic_t _8;
+  int _11;
+
+  <bb 2> :
+  __atomic_load_ptr_4 = pAddr_3(D);
+  _1 = __atomic_load_4 (__atomic_load_ptr_4, 5);
+  _2 = (int) _1;
+  __atomic_load_tmp = _2;
+  _8 = __atomic_load_tmp;
+  __atomic_load_tmp ={v} {CLOBBER};
+  value_10 = _8;
+  _11 = value_10;
+
+  <bb 3> :
+<L0>:
+  return _11;
+
+}
+
+
+TraceAtomicValueSet (atomic traceAtomic_t * pAddr, int value)
+{
+  traceAtomic_t __atomic_store_tmp;
+  atomic traceAtomic_t * __atomic_store_ptr;
+  int __atomic_store_tmp.1_1;
+  unsigned int __atomic_store_tmp.2_2;
+
+  <bb 2> :
+  __atomic_store_ptr_4 = pAddr_3(D);
+  __atomic_store_tmp = value_6(D);
+  __atomic_store_tmp.1_1 = __atomic_store_tmp;
+  __atomic_store_tmp.2_2 = (unsigned int) __atomic_store_tmp.1_1;
+  __atomic_store_4 (__atomic_store_ptr_4, __atomic_store_tmp.2_2, 5);
+  __atomic_store_tmp ={v} {CLOBBER};
+  return;
+
+}
+
+

@@ -1,0 +1,131 @@
+__attribute__((section (".systeminit")))
+Core_Cache_Init ()
+{
+  <bb 2> :
+  return;
+
+}
+
+
+__attribute__((section (".systeminit")))
+Core_MPU_Init ()
+{
+  uint32 regionNum;
+
+  <bb 2> :
+  __asm__ __volatile__("dsb");
+  __asm__ __volatile__("isb");
+  regionNum = 0;
+  goto <bb 4>; [INV]
+
+  <bb 3> :
+  _1 = 3758153728B;
+  _1->RNR = regionNum;
+  _2 = 3758153728B;
+  _3 = rbar[regionNum];
+  _2->RBAR = _3;
+  _4 = 3758153728B;
+  _5 = rasr[regionNum];
+  _4->RASR = _5;
+  regionNum = regionNum + 1;
+
+  <bb 4> :
+  if (regionNum <= 9)
+    goto <bb 3>; [INV]
+  else
+    goto <bb 5>; [INV]
+
+  <bb 5> :
+  _6 = 3758153728B;
+  _7 = _6->CTRL;
+  _8 = 3758153728B;
+  _9 = _7 | 1;
+  _8->CTRL = _9;
+  __asm__ __volatile__("dsb");
+  __asm__ __volatile__("isb");
+  return;
+
+}
+
+
+__attribute__((section (".systeminit")))
+Core_FPU_Init ()
+{
+  <bb 2> :
+  _1 = 3758153728B;
+  _2 = _1->CPACR;
+  _3 = 3758153728B;
+  _4 = _2 | 15728640;
+  _3->CPACR = _4;
+  __asm__ __volatile__("dsb");
+  __asm__ __volatile__("isb");
+  return;
+
+}
+
+
+__attribute__((section (".systeminit")))
+Core_IC_Init ()
+{
+  <bb 2> :
+  NVIC_SetPriorityGrouping (0);
+  _1 = 3758153728B;
+  _2 = _1->CCR;
+  _3 = 3758153728B;
+  _4 = _2 | 1;
+  _3->CCR = _4;
+  _5 = 3758153728B;
+  _5->SHPR3 = 0;
+  return;
+
+}
+
+
+Core_registerIsrHandler (uint16 irq_id, void (*<T4a3>) (void) isr_handler)
+{
+  <bb 2> :
+  _1 = 3758157064B;
+  _2 = *_1;
+  _3 = (int) irq_id;
+  _4 = _3 + 16;
+  _5 = _4 << 2;
+  _6 = (long unsigned int) _5;
+  _7 = _2 + _6;
+  _8 = (volatile uint32 *) _7;
+  isr_handler.0_9 = (long unsigned int) isr_handler;
+  *_8 = isr_handler.0_9;
+  return;
+
+}
+
+
+Core_clearPendingIsrSource (uint16 id)
+{
+  <bb 2> :
+  return;
+
+}
+
+
+Core_enableIsrSource (uint16 id, uint8 prio)
+{
+  <bb 2> :
+  _1 = (unsigned char) id;
+  NVIC_SetPriority (_1, prio);
+  _2 = (unsigned char) id;
+  NVIC_EnableIRQ (_2);
+  return;
+
+}
+
+
+Core_disableIsrSource (uint16 id)
+{
+  <bb 2> :
+  _1 = (unsigned char) id;
+  NVIC_DisableIRQ (_1);
+  return;
+
+}
+
+

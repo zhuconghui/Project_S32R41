@@ -1,0 +1,94 @@
+/**************************************************************************************************
+ *
+ *
+ * Copyright 2021 NXP
+ *
+ *****************************************************************************
+ *
+ * NXP Confidential and Proprietary. This software is owned or controlled by NXP and
+ * may only be used strictly in accordance with the applicable license terms.  By
+ * expressly accepting such terms or by downloading, installing, activating and/or
+ * otherwise using the software, you are agreeing that you have read, and that you
+ * agree to comply with and are bound by, such license terms.  If you do not agree to
+ * be bound by the applicable license terms, then you may not retain, install, activate or
+ * otherwise use the software.
+ *
+ **************************************************************************************************/
+
+/** @cond */
+/*==================================================================================================
+ *                                        INCLUDE FILES
+ *==================================================================================================*/
+ .include "oram.inc"                    /* include ORAM header file */
+ .include "wr.inc"                      /* include WR header file */
+ .include "spt_kernel_internals.inc"    /* include local defines */
+
+/*==================================================================================================
+ *                                          SECTION
+ *==================================================================================================*/
+ .section .RsdkSpt3 , "ax"   /* memory section where to store SPT code */
+
+/*==================================================================================================
+ *                                      LOCAL CONSTANTS
+ *==================================================================================================*/
+
+/*==================================================================================================
+ *                                      GLOBAL REFERENCES
+ *==================================================================================================*/
+
+/** @endcond */
+/*==================================================================================================
+ *                                      GLOBAL FUNCTIONS
+ *==================================================================================================*/
+/*================================================================================================*/
+/**
+* @addtogroup spt_kernels_api_func
+* @{
+*
+* @fn             void *RsdkSptMemRwErrInject();
+* @brief          This kernel does a useless read-after-write on one OPRAM bank, to generate
+*				  parity errors, then trigger a memory error interrupt on the SPT ECS
+*                 interrupt line, when MEM_ERR_INJECT_CTRL register is set.
+* @param[in]      none
+*
+* @return         WR_0: Will return the 'RSDK' kernel watermarking pattern.
+*
+* @post           If MEM_ERR_INJECT_CTRL register is set, then parity bits for opram bank
+*				  OR_0_0_0 will be corrupted. Otherwise OR_0_0_0 and OR_1_0_0 get cleared
+* 				  with no other side-effects
+*
+* @}*/
+/*================================================================================================*/
+/** @cond */
+ .global RsdkSptMemRwErrInject
+ .global RsdkSptMemRwErrInject_size
+
+RsdkSptMemRwErrInject:
+
+    /*=========================================================================
+     * Kernel watermarking instruction without side-effects. WR_0 can be ovewritten
+     * with the kernel's output parameter, according to the SPT calling convention
+     *=========================================================================*/
+    set #RSDK_SPT_KERNEL_WATERMARK, WR_0
+
+    /*=========================================================================
+     * clear one OPRAM bank, to generate some parity errors when MEM_ERR_INJECT_CTRL is set
+     *=========================================================================*/
+    copy.clear OPRAM_BANK_SIZE, OR_0_0_0, 0x1, 0xFFFF
+
+    /*=========================================================================
+     * read from the previously written memory bank, to trigger
+     * a memory error interrupt on the SPT ECS interrupt line
+     *=========================================================================*/
+    copy.simple OPRAM_BANK_SIZE, OR_0_0_0, OR_1_0_0, 0x1, 0x1
+
+    /*=========================================================================
+     * STOP cmd
+     *=========================================================================*/
+    stop
+
+ .set RsdkSptMemRwErrInject_size, .-RsdkSptMemRwErrInject
+/*******************************************************************************
+ * EOF
+ ******************************************************************************/
+/** @endcond */

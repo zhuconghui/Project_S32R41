@@ -1,0 +1,291 @@
+OS_Schedule ()
+{
+  StatusType retStatus;
+  StatusType D.5803;
+  unsigned int OsSchedulerVector1_.19_1;
+  unsigned int _2;
+  struct OSTSKCB * _3;
+  struct OSTSKCB * OsRunning_.20_4;
+  StatusType _10;
+
+  <bb 2> :
+  retStatus_6 = 0;
+  OsSchedulerVector1_.19_1 = OsSchedulerVector1_;
+  _2 = OSCNTLZW (OsSchedulerVector1_.19_1);
+  _3 = OsPrioLink[_2];
+  OsRunning_.20_4 = OsRunning_;
+  if (_3 != OsRunning_.20_4)
+    goto <bb 3>; [INV]
+  else
+    goto <bb 4>; [INV]
+
+  <bb 3> :
+  OSTaskForceDispatch ();
+
+  <bb 4> :
+  _10 = retStatus_6;
+
+  <bb 5> :
+<L2>:
+  return _10;
+
+}
+
+
+OSTaskTerminateDispatch ()
+{
+  struct OSTSKCB * OsRunning_.11_1;
+  unsigned char _2;
+  unsigned int _3;
+  unsigned int _4;
+  struct OSTSKCB * OsRunning_.12_5;
+  unsigned char _6;
+  struct OSTSKCB * OsRunning_.13_7;
+  unsigned char _8;
+  struct OSTSKCB * OsRunning_.14_9;
+  unsigned char _10;
+  struct OSTSKCB * OsRunning_.15_11;
+  unsigned char _12;
+  struct OSTSKCB * OsRunning_.16_13;
+  short unsigned int _14;
+  unsigned int _15;
+  long unsigned int _16;
+  long unsigned int _17;
+  unsigned int OsSchedulerVector1_.17_18;
+  unsigned int _19;
+  unsigned int OsSchedulerVector1_.18_20;
+  unsigned int _21;
+  struct OSTSKCB * _22;
+
+  <bb 2> :
+  OSCheckStack ();
+  OsRunning_.11_1 = OsRunning_;
+  _2 = OsRunning_.11_1->status;
+  _3 = (unsigned int) _2;
+  _4 = _3 & 2;
+  if (_4 == 0)
+    goto <bb 3>; [INV]
+  else
+    goto <bb 4>; [INV]
+
+  <bb 3> :
+  OsRunning_.12_5 = OsRunning_;
+  _6 = OsRunning_.12_5->status;
+  OsRunning_.13_7 = OsRunning_;
+  _8 = _6 & 239;
+  OsRunning_.13_7->status = _8;
+  OsRunning_.14_9 = OsRunning_;
+  _10 = OsRunning_.14_9->status;
+  OsRunning_.15_11 = OsRunning_;
+  _12 = _10 | 2;
+  OsRunning_.15_11->status = _12;
+  OsRunning_.16_13 = OsRunning_;
+  _14 = OsRunning_.16_13->taskId;
+  _15 = (unsigned int) _14;
+  _16 = 2147483648 >> _15;
+  _17 = ~_16;
+  OsSchedulerVector1_.17_18 = OsSchedulerVector1_;
+  _19 = _17 & OsSchedulerVector1_.17_18;
+  OsSchedulerVector1_ = _19;
+
+  <bb 4> :
+  OsSchedulerVector1_.18_20 = OsSchedulerVector1_;
+  _21 = OSCNTLZW (OsSchedulerVector1_.18_20);
+  _22 = OsPrioLink[_21];
+  OsRunning_ = _22;
+  OSTaskInternalDispatch ();
+  return;
+
+}
+
+
+OSTaskForceDispatch ()
+{
+  OSDWORD context[16];
+  struct OSTSKCB * osOldRunning;
+  unsigned int OsSchedulerVector1_.10_1;
+  unsigned int _2;
+  struct OSTSKCB * _3;
+  int _4;
+  struct OSTSKCB * _5;
+
+  <bb 2> :
+  OSCheckStack ();
+  osOldRunning_9 = OsRunning_;
+  OsSchedulerVector1_.10_1 = OsSchedulerVector1_;
+  _2 = OSCNTLZW (OsSchedulerVector1_.10_1);
+  _3 = OsPrioLink[_2];
+  OsRunning_ = _3;
+  osOldRunning_9->pcontext = &context;
+  _4 = OSSetJmp (&context);
+  if (_4 != 0)
+    goto <bb 4>; [INV]
+  else
+    goto <bb 3>; [INV]
+
+  <bb 3> :
+  _5 = OSGetTaskListHead ();
+  osOldRunning_9->prev = _5;
+  OSSetTaskListHead (osOldRunning_9);
+  OSTaskInternalDispatch ();
+
+  <bb 4> :
+  context ={v} {CLOBBER};
+  return;
+
+}
+
+
+__attribute__((optimize ("O1")))
+OSTaskInternalDispatch ()
+{
+  register struct OSTSKCB * task;
+  OSBOOL exitFlag;
+  struct OSTSKCB * OsRunning_.0_1;
+  unsigned char _2;
+  unsigned int _3;
+  unsigned int _4;
+  struct OSTSKCB * OsRunning_.1_5;
+  unsigned char _6;
+  struct OSTSKCB * OsRunning_.2_7;
+  unsigned char _8;
+  OSDWORD * _9;
+  unsigned int _10;
+  sizetype _11;
+  struct OSTSKCB * OsRunning_.3_12;
+  OSDWORD * _13;
+  struct OSTSKCB * OsRunning_.4_14;
+  OSDWORD * _15;
+  struct OSTSKCB * OsRunning_.5_16;
+  OSDWORD * _17;
+  OSDWORD * _18;
+  struct OSTSKCB * OsRunning_.6_19;
+  OSDWORD * _20;
+  struct OSTSKCB * OsRunning_.7_21;
+  void (*<T4d0>) (void) _22;
+  struct OSTSKCB * OsRunning_.8_23;
+  struct OSTSKCB * _24;
+  struct OSTSKCB * OsRunning_.9_25;
+  OSDWORD * _26;
+
+  <bb 2> :
+  exitFlag_30 = 0;
+
+  <bb 3> :
+  OsRunning_.0_1 = OsRunning_;
+  _2 = OsRunning_.0_1->status;
+  _3 = (unsigned int) _2;
+  _4 = _3 & 2;
+  if (_4 != 0)
+    goto <bb 4>; [INV]
+  else
+    goto <bb 5>; [INV]
+
+  <bb 4> :
+  exitFlag_33 = 0;
+  OsRunning_.1_5 = OsRunning_;
+  _6 = OsRunning_.1_5->status;
+  OsRunning_.2_7 = OsRunning_;
+  _8 = _6 & 253;
+  OsRunning_.2_7->status = _8;
+  __asm__ __volatile__("dsb");
+  task_37 = OSGetTaskListHead ();
+  _9 = task_37->pcontext;
+  _10 = *_9;
+  _11 = _10 + 4294967288;
+  OsRunning_.3_12 = OsRunning_;
+  _13 = (OSDWORD *) _11;
+  OsRunning_.3_12->tos = _13;
+  OsRunning_.4_14 = OsRunning_;
+  _15 = OsRunning_.4_14->tos;
+  *_15 = 1431655765;
+  OsRunning_.5_16 = OsRunning_;
+  _17 = OsRunning_.5_16->tos;
+  _18 = _17 + 4;
+  *_18 = 1431655765;
+  OsRunning_.6_19 = OsRunning_;
+  _20 = OsRunning_.6_19->tos;
+  OSLOADSP (_20);
+  OsRunning_.7_21 = OsRunning_;
+  _22 = OsRunning_.7_21->entry;
+  _22 ();
+  OSShutdownOS (12);
+  goto <bb 6>; [INV]
+
+  <bb 5> :
+  exitFlag_32 = 1;
+
+  <bb 6> :
+  # exitFlag_27 = PHI <exitFlag_33(4), exitFlag_32(5)>
+  if (exitFlag_27 == 0)
+    goto <bb 3>; [INV]
+  else
+    goto <bb 7>; [INV]
+
+  <bb 7> :
+  OsRunning_.8_23 = OsRunning_;
+  _24 = OsRunning_.8_23->prev;
+  OSSetTaskListHead (_24);
+  OsRunning_.9_25 = OsRunning_;
+  _26 = OsRunning_.9_25->pcontext;
+  OSLongJmp (_26);
+  return;
+
+}
+
+
+__attribute__((always_inline))
+OSSetTaskListHead (struct OSTSKCB * ptr)
+{
+  <bb 2> :
+  OS_TaskListHead_ = ptr_2(D);
+  return;
+
+}
+
+
+__attribute__((always_inline))
+OSGetTaskListHead ()
+{
+  struct OSTSKCB * D.5792;
+  struct OSTSKCB * _2;
+
+  <bb 2> :
+  _2 = OS_TaskListHead_;
+
+  <bb 3> :
+<L0>:
+  return _2;
+
+}
+
+
+__attribute__((always_inline))
+OSLOADSP (const OSDWORD * loadsp)
+{
+  <bb 2> :
+  __asm__ __volatile__(" dsb
+ mov r13, %0" :  : "r" loadsp_1(D));
+  return;
+
+}
+
+
+__attribute__((always_inline))
+OSCNTLZW (OSDWORD regx)
+{
+  register OSDWORD resultReg;
+  OSDWORD D.5797;
+  OSDWORD _3;
+
+  <bb 2> :
+  __asm__ __volatile__("clz %0, %1" : "=r" resultReg_2 : "r" regx_1(D));
+  _3 = resultReg_2;
+
+  <bb 3> :
+<L0>:
+  return _3;
+
+}
+
+

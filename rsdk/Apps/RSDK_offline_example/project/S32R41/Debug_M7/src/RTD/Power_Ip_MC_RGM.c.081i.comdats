@@ -1,0 +1,1288 @@
+Power_Ip_MC_RGM_GetResetRawValue ()
+{
+  uint32 ResetMask;
+  uint32 Position;
+  uint32 DynamicMask;
+  uint32 Index;
+  uint32 ActiveValue;
+  uint32 RegValue;
+  uint32 RawReset;
+  Power_Ip_RawResetType D.6511;
+  struct Power_Ip_MC_RGM_Type * Power_Ip_pxMC_RGM.36_1;
+  long unsigned int _2;
+  long unsigned int _3;
+  long unsigned int _4;
+  long unsigned int _5;
+  struct Power_Ip_MC_RGM_Type * Power_Ip_pxMC_RGM.37_6;
+  long unsigned int _7;
+  long unsigned int _8;
+  long unsigned int _9;
+  long unsigned int _10;
+  Power_Ip_RawResetType _53;
+
+  <bb 2> :
+  RawReset_29 = 0;
+  Power_Ip_pxMC_RGM.36_1 = Power_Ip_pxMC_RGM;
+  _2 ={v} Power_Ip_pxMC_RGM.36_1->FES;
+  RegValue_31 = _2 & 3225157721;
+  if (RegValue_31 != 0)
+    goto <bb 3>; [INV]
+  else
+    goto <bb 4>; [INV]
+
+  <bb 3> :
+  FesResetStatus = RegValue_31;
+
+  <bb 4> :
+  ResetMask_33 = 3225157721;
+  ActiveValue_34 = FesResetStatus;
+  if (ActiveValue_34 != 0)
+    goto <bb 5>; [INV]
+  else
+    goto <bb 13>; [INV]
+
+  <bb 5> :
+  Position_35 = 18;
+  Index_36 = 0;
+  goto <bb 11>; [INV]
+
+  <bb 6> :
+  DynamicMask_38 = 1 << Index_19;
+  _3 = DynamicMask_38 & ResetMask_33;
+  if (_3 != 0)
+    goto <bb 7>; [INV]
+  else
+    goto <bb 10>; [INV]
+
+  <bb 7> :
+  _4 = DynamicMask_38 & ActiveValue_34;
+  if (_4 != 0)
+    goto <bb 8>; [INV]
+  else
+    goto <bb 9>; [INV]
+
+  <bb 8> :
+  _5 = 1 << Position_22;
+  RawReset_39 = RawReset_13 | _5;
+
+  <bb 9> :
+  # RawReset_11 = PHI <RawReset_13(7), RawReset_39(8)>
+  Position_40 = Position_22 + 1;
+
+  <bb 10> :
+  # RawReset_12 = PHI <RawReset_13(6), RawReset_11(9)>
+  # Position_21 = PHI <Position_22(6), Position_40(9)>
+  Index_41 = Index_19 + 1;
+
+  <bb 11> :
+  # RawReset_13 = PHI <RawReset_29(5), RawReset_12(10)>
+  # Index_19 = PHI <Index_36(5), Index_41(10)>
+  # Position_22 = PHI <Position_35(5), Position_21(10)>
+  if (Index_19 <= 31)
+    goto <bb 6>; [INV]
+  else
+    goto <bb 12>; [INV]
+
+  <bb 12> :
+  Power_Ip_MC_RGM_ClearFesResetFlags (RegValue_31);
+
+  <bb 13> :
+  # RawReset_14 = PHI <RawReset_29(4), RawReset_13(12)>
+  ResetMask_42 = 3227463515;
+  Power_Ip_pxMC_RGM.37_6 = Power_Ip_pxMC_RGM;
+  _7 ={v} Power_Ip_pxMC_RGM.37_6->DES;
+  RegValue_43 = _7 & 3227463515;
+  if (RegValue_43 != 0)
+    goto <bb 14>; [INV]
+  else
+    goto <bb 15>; [INV]
+
+  <bb 14> :
+  DesResetStatus = RegValue_43;
+
+  <bb 15> :
+  ActiveValue_45 = DesResetStatus;
+  if (ActiveValue_45 != 0)
+    goto <bb 16>; [INV]
+  else
+    goto <bb 24>; [INV]
+
+  <bb 16> :
+  Position_46 = 0;
+  Index_47 = 0;
+  goto <bb 22>; [INV]
+
+  <bb 17> :
+  DynamicMask_49 = 1 << Index_20;
+  _8 = DynamicMask_49 & ResetMask_42;
+  if (_8 != 0)
+    goto <bb 18>; [INV]
+  else
+    goto <bb 21>; [INV]
+
+  <bb 18> :
+  _9 = DynamicMask_49 & ActiveValue_45;
+  if (_9 != 0)
+    goto <bb 19>; [INV]
+  else
+    goto <bb 20>; [INV]
+
+  <bb 19> :
+  _10 = 1 << Position_24;
+  RawReset_50 = RawReset_17 | _10;
+
+  <bb 20> :
+  # RawReset_15 = PHI <RawReset_17(18), RawReset_50(19)>
+  Position_51 = Position_24 + 1;
+
+  <bb 21> :
+  # RawReset_16 = PHI <RawReset_17(17), RawReset_15(20)>
+  # Position_23 = PHI <Position_24(17), Position_51(20)>
+  Index_52 = Index_20 + 1;
+
+  <bb 22> :
+  # RawReset_17 = PHI <RawReset_14(16), RawReset_16(21)>
+  # Index_20 = PHI <Index_47(16), Index_52(21)>
+  # Position_24 = PHI <Position_46(16), Position_23(21)>
+  if (Index_20 <= 31)
+    goto <bb 17>; [INV]
+  else
+    goto <bb 23>; [INV]
+
+  <bb 23> :
+  Power_Ip_MC_RGM_ClearDesResetFlags (RegValue_43);
+
+  <bb 24> :
+  # RawReset_18 = PHI <RawReset_14(15), RawReset_17(23)>
+  _53 = RawReset_18;
+
+  <bb 25> :
+<L22>:
+  return _53;
+
+}
+
+
+Power_Ip_MC_RGM_GetResetReason ()
+{
+  uint32 Position;
+  uint32 ActiveValue;
+  uint32 RegValue;
+  Power_Ip_ResetType ResetReason;
+  Power_Ip_ResetType D.6492;
+  struct Power_Ip_MC_RGM_Type * Power_Ip_pxMC_RGM.34_1;
+  long unsigned int _2;
+  struct Power_Ip_MC_RGM_Type * Power_Ip_pxMC_RGM.35_3;
+  long unsigned int _4;
+  Power_Ip_ResetType _27;
+
+  <bb 2> :
+  RegValue_11 = 0;
+  Position = 0;
+  Power_Ip_pxMC_RGM.34_1 = Power_Ip_pxMC_RGM;
+  _2 ={v} Power_Ip_pxMC_RGM.34_1->DES;
+  RegValue_14 = _2 & 3227463515;
+  if (RegValue_14 != 0)
+    goto <bb 3>; [INV]
+  else
+    goto <bb 4>; [INV]
+
+  <bb 3> :
+  DesResetStatus = RegValue_14;
+
+  <bb 4> :
+  ActiveValue_16 = DesResetStatus;
+  ResetReason_18 = Power_Ip_MC_RGM_CheckResetReason (ActiveValue_16, 0, &Position);
+  Power_Ip_MC_RGM_ClearDesResetFlags (RegValue_14);
+  if (ActiveValue_16 == 0)
+    goto <bb 6>; [INV]
+  else
+    goto <bb 5>; [INV]
+
+  <bb 5> :
+  if (ResetReason_18 == 0)
+    goto <bb 6>; [INV]
+  else
+    goto <bb 13>; [INV]
+
+  <bb 6> :
+  Power_Ip_pxMC_RGM.35_3 = Power_Ip_pxMC_RGM;
+  _4 ={v} Power_Ip_pxMC_RGM.35_3->FES;
+  RegValue_20 = _4 & 3225157721;
+  if (RegValue_20 != 0)
+    goto <bb 7>; [INV]
+  else
+    goto <bb 8>; [INV]
+
+  <bb 7> :
+  FesResetStatus = RegValue_20;
+
+  <bb 8> :
+  ActiveValue_22 = FesResetStatus;
+  if (ActiveValue_22 != 0)
+    goto <bb 9>; [INV]
+  else
+    goto <bb 12>; [INV]
+
+  <bb 9> :
+  if (ResetReason_18 == 0)
+    goto <bb 10>; [INV]
+  else
+    goto <bb 11>; [INV]
+
+  <bb 10> :
+  ResetReason_25 = 30;
+  goto <bb 12>; [INV]
+
+  <bb 11> :
+  ResetReason_24 = Power_Ip_MC_RGM_CheckResetReason (ActiveValue_22, 1, &Position);
+
+  <bb 12> :
+  # ResetReason_5 = PHI <ResetReason_18(8), ResetReason_25(10), ResetReason_24(11)>
+  Power_Ip_MC_RGM_ClearFesResetFlags (RegValue_20);
+
+  <bb 13> :
+  # ResetReason_6 = PHI <ResetReason_18(5), ResetReason_5(12)>
+  _27 = ResetReason_6;
+  Position ={v} {CLOBBER};
+
+  <bb 14> :
+<L13>:
+  return _27;
+
+}
+
+
+Power_Ip_MC_RGM_CheckResetReason (uint32 ActiveValue, uint8 ResetMode, uint32 * PositionPtr)
+{
+  uint32 Position;
+  uint32 DynamicMask;
+  uint32 Index;
+  uint32 NumberOfFlags;
+  uint32 ResetMask;
+  Power_Ip_ResetType ResetReason;
+  Power_Ip_ResetType D.6478;
+  long unsigned int _1;
+  long unsigned int _2;
+  Power_Ip_ResetType _31;
+
+  <bb 2> :
+  ResetReason_14 = 29;
+  NumberOfFlags_15 = 0;
+  Position_18 = *PositionPtr_17(D);
+  if (ResetMode_19(D) == 0)
+    goto <bb 3>; [INV]
+  else
+    goto <bb 4>; [INV]
+
+  <bb 3> :
+  ResetMask_21 = 3227463515;
+  goto <bb 5>; [INV]
+
+  <bb 4> :
+  ResetMask_20 = 3225157721;
+
+  <bb 5> :
+  # ResetMask_7 = PHI <ResetMask_21(3), ResetMask_20(4)>
+  Index_22 = 0;
+  goto <bb 12>; [INV]
+
+  <bb 6> :
+  DynamicMask_23 = 1 << Index_11;
+  _1 = DynamicMask_23 & ResetMask_7;
+  if (_1 != 0)
+    goto <bb 7>; [INV]
+  else
+    goto <bb 11>; [INV]
+
+  <bb 7> :
+  _2 = DynamicMask_23 & ActiveValue_24(D);
+  if (_2 != 0)
+    goto <bb 8>; [INV]
+  else
+    goto <bb 10>; [INV]
+
+  <bb 8> :
+  ResetReason_25 = (Power_Ip_ResetType) Position_13;
+  NumberOfFlags_26 = NumberOfFlags_10 + 1;
+  if (NumberOfFlags_26 > 1)
+    goto <bb 9>; [INV]
+  else
+    goto <bb 10>; [INV]
+
+  <bb 9> :
+  ResetReason_27 = 30;
+  goto <bb 13>; [INV]
+
+  <bb 10> :
+  # ResetReason_3 = PHI <ResetReason_5(7), ResetReason_25(8)>
+  # NumberOfFlags_8 = PHI <NumberOfFlags_10(7), NumberOfFlags_26(8)>
+  Position_28 = Position_13 + 1;
+
+  <bb 11> :
+  # ResetReason_4 = PHI <ResetReason_5(6), ResetReason_3(10)>
+  # NumberOfFlags_9 = PHI <NumberOfFlags_10(6), NumberOfFlags_8(10)>
+  # Position_12 = PHI <Position_13(6), Position_28(10)>
+  Index_29 = Index_11 + 1;
+
+  <bb 12> :
+  # ResetReason_5 = PHI <ResetReason_14(5), ResetReason_4(11)>
+  # NumberOfFlags_10 = PHI <NumberOfFlags_15(5), NumberOfFlags_9(11)>
+  # Index_11 = PHI <Index_22(5), Index_29(11)>
+  # Position_13 = PHI <Position_18(5), Position_12(11)>
+  if (Index_11 <= 31)
+    goto <bb 6>; [INV]
+  else
+    goto <bb 13>; [INV]
+
+  <bb 13> :
+  # ResetReason_6 = PHI <ResetReason_27(9), ResetReason_5(12)>
+  *PositionPtr_17(D) = Position_13;
+  _31 = ResetReason_6;
+
+  <bb 14> :
+<L12>:
+  return _31;
+
+}
+
+
+Power_Ip_MC_RGM_DisableResetDomain (const struct Power_Ip_MC_RGM_ModeConfigType * ModeConfigPtr)
+{
+  uint8 DomainIndex;
+  const struct Power_Ip_MC_RGM_DomainConfigType * TempDomainConfigPtr;
+  const struct Power_Ip_MC_RGM_DomainConfigType[2] * _1;
+  int _2;
+  _Bool _3;
+  unsigned char _4;
+  _Bool _5;
+  long unsigned int _6;
+  long unsigned int _7;
+  unsigned char _8;
+
+  <bb 2> :
+  TempDomainConfigPtr_12 = 0B;
+  DomainIndex_13 = 0;
+  goto <bb 9>; [INV]
+
+  <bb 3> :
+  _1 = ModeConfigPtr_15(D)->ArrayDomainConfigPtr;
+  _2 = (int) DomainIndex_9;
+  TempDomainConfigPtr_16 = &*_1[_2];
+  _3 = TempDomainConfigPtr_16->DomainUnderMcuControl;
+  if (_3 != 0)
+    goto <bb 4>; [INV]
+  else
+    goto <bb 8>; [INV]
+
+  <bb 4> :
+  _4 = TempDomainConfigPtr_16->DomainIndex;
+  if (_4 != 0)
+    goto <bb 5>; [INV]
+  else
+    goto <bb 8>; [INV]
+
+  <bb 5> :
+  _5 = TempDomainConfigPtr_16->DomainPowerUnderMcuControl;
+  if (_5 != 0)
+    goto <bb 6>; [INV]
+  else
+    goto <bb 8>; [INV]
+
+  <bb 6> :
+  _6 = TempDomainConfigPtr_16->DomainRdcRegValue;
+  _7 = _6 & 8;
+  if (_7 != 0)
+    goto <bb 7>; [INV]
+  else
+    goto <bb 8>; [INV]
+
+  <bb 7> :
+  _8 = TempDomainConfigPtr_16->DomainIndex;
+  Power_Ip_MC_RGM_AssertDomainReset (_8);
+  Power_Ip_MC_RGM_ConfigureResetDomainController (TempDomainConfigPtr_16);
+
+  <bb 8> :
+  DomainIndex_19 = DomainIndex_9 + 1;
+
+  <bb 9> :
+  # DomainIndex_9 = PHI <DomainIndex_13(2), DomainIndex_19(8)>
+  if (DomainIndex_9 <= 1)
+    goto <bb 3>; [INV]
+  else
+    goto <bb 10>; [INV]
+
+  <bb 10> :
+  return;
+
+}
+
+
+Power_Ip_MC_RGM_EnableResetDomain (const struct Power_Ip_MC_RGM_ModeConfigType * ModeConfigPtr)
+{
+  uint8 DomainIndex;
+  const struct Power_Ip_MC_RGM_DomainConfigType * TempDomainConfigPtr;
+  const struct Power_Ip_MC_RGM_DomainConfigType[2] * _1;
+  int _2;
+  _Bool _3;
+  unsigned char _4;
+  _Bool _5;
+  long unsigned int _6;
+  long unsigned int _7;
+  unsigned char _8;
+
+  <bb 2> :
+  TempDomainConfigPtr_12 = 0B;
+  DomainIndex_13 = 0;
+  goto <bb 9>; [INV]
+
+  <bb 3> :
+  _1 = ModeConfigPtr_15(D)->ArrayDomainConfigPtr;
+  _2 = (int) DomainIndex_9;
+  TempDomainConfigPtr_16 = &*_1[_2];
+  _3 = TempDomainConfigPtr_16->DomainUnderMcuControl;
+  if (_3 != 0)
+    goto <bb 4>; [INV]
+  else
+    goto <bb 8>; [INV]
+
+  <bb 4> :
+  _4 = TempDomainConfigPtr_16->DomainIndex;
+  if (_4 != 0)
+    goto <bb 5>; [INV]
+  else
+    goto <bb 8>; [INV]
+
+  <bb 5> :
+  _5 = TempDomainConfigPtr_16->DomainPowerUnderMcuControl;
+  if (_5 != 0)
+    goto <bb 6>; [INV]
+  else
+    goto <bb 8>; [INV]
+
+  <bb 6> :
+  _6 = TempDomainConfigPtr_16->DomainRdcRegValue;
+  _7 = _6 & 8;
+  if (_7 == 0)
+    goto <bb 7>; [INV]
+  else
+    goto <bb 8>; [INV]
+
+  <bb 7> :
+  Power_Ip_MC_RGM_ConfigureResetDomainController (TempDomainConfigPtr_16);
+  _8 = TempDomainConfigPtr_16->DomainIndex;
+  Power_Ip_MC_RGM_ReleaseDomainReset (_8);
+
+  <bb 8> :
+  DomainIndex_19 = DomainIndex_9 + 1;
+
+  <bb 9> :
+  # DomainIndex_9 = PHI <DomainIndex_13(2), DomainIndex_19(8)>
+  if (DomainIndex_9 <= 1)
+    goto <bb 3>; [INV]
+  else
+    goto <bb 10>; [INV]
+
+  <bb 10> :
+  return;
+
+}
+
+
+Power_Ip_MC_RGM_CheckModeConfig (const struct Power_Ip_MC_RGM_ModeConfigType * ModeConfigPtr)
+{
+  uint8 CoreIndex;
+  uint8 CofbIndex;
+  uint8 DomainIndex;
+  const struct Power_Ip_MC_RGM_DomainConfigType * TempDomainConfigPtr;
+  const struct Power_Ip_MC_RGM_DomainConfigType[2] * _1;
+  int _2;
+  _Bool _3;
+  const struct Power_Ip_MC_RGM_CofbConfigType[<unknown>] * _4;
+  int _5;
+  _Bool _6;
+  const struct Power_Ip_MC_RGM_CofbConfigType[<unknown>] * _7;
+  int _8;
+  const struct Power_Ip_MC_RGM_CofbConfigType * _9;
+  unsigned char _10;
+  unsigned char _11;
+  const struct Power_Ip_MC_RGM_CoreConfigType[<unknown>] * _12;
+  int _13;
+  _Bool _14;
+  const struct Power_Ip_MC_RGM_CoreConfigType[<unknown>] * _15;
+  int _16;
+  const struct Power_Ip_MC_RGM_CoreConfigType * _17;
+  unsigned char _18;
+  unsigned char _19;
+
+  <bb 2> :
+  TempDomainConfigPtr_29 = 0B;
+  DomainIndex_30 = 0;
+  goto <bb 15>; [INV]
+
+  <bb 3> :
+  _1 = ModeConfigPtr_32(D)->ArrayDomainConfigPtr;
+  _2 = (int) DomainIndex_20;
+  TempDomainConfigPtr_33 = &*_1[_2];
+  _3 = TempDomainConfigPtr_33->DomainUnderMcuControl;
+  if (_3 != 0)
+    goto <bb 4>; [INV]
+  else
+    goto <bb 14>; [INV]
+
+  <bb 4> :
+  CofbIndex_34 = 0;
+  goto <bb 8>; [INV]
+
+  <bb 5> :
+  _4 = TempDomainConfigPtr_33->ArrayDomainCofbConfigPtr;
+  _5 = (int) CofbIndex_21;
+  _6 = *_4[_5].CofbUnderMcuControl;
+  if (_6 != 0)
+    goto <bb 6>; [INV]
+  else
+    goto <bb 7>; [INV]
+
+  <bb 6> :
+  _7 = TempDomainConfigPtr_33->ArrayDomainCofbConfigPtr;
+  _8 = (int) CofbIndex_21;
+  _9 = &*_7[_8];
+  _10 = TempDomainConfigPtr_33->DomainIndex;
+  Power_Ip_MC_RGM_CheckConfigureCOFB (_9, _10);
+
+  <bb 7> :
+  CofbIndex_39 = CofbIndex_21 + 1;
+
+  <bb 8> :
+  # CofbIndex_21 = PHI <CofbIndex_34(4), CofbIndex_39(7)>
+  _11 = TempDomainConfigPtr_33->NumberOfCofbs;
+  if (CofbIndex_21 < _11)
+    goto <bb 5>; [INV]
+  else
+    goto <bb 9>; [INV]
+
+  <bb 9> :
+  CoreIndex_35 = 0;
+  goto <bb 13>; [INV]
+
+  <bb 10> :
+  _12 = TempDomainConfigPtr_33->ArrayDomainCoreConfigPtr;
+  _13 = (int) CoreIndex_22;
+  _14 = *_12[_13].CoreUnderMcuControl;
+  if (_14 != 0)
+    goto <bb 11>; [INV]
+  else
+    goto <bb 12>; [INV]
+
+  <bb 11> :
+  _15 = TempDomainConfigPtr_33->ArrayDomainCoreConfigPtr;
+  _16 = (int) CoreIndex_22;
+  _17 = &*_15[_16];
+  _18 = TempDomainConfigPtr_33->DomainIndex;
+  Power_Ip_MC_RGM_CheckConfigureCore (_17, _18);
+
+  <bb 12> :
+  CoreIndex_37 = CoreIndex_22 + 1;
+
+  <bb 13> :
+  # CoreIndex_22 = PHI <CoreIndex_35(9), CoreIndex_37(12)>
+  _19 = TempDomainConfigPtr_33->NumberOfCores;
+  if (CoreIndex_22 < _19)
+    goto <bb 10>; [INV]
+  else
+    goto <bb 14>; [INV]
+
+  <bb 14> :
+  DomainIndex_40 = DomainIndex_20 + 1;
+
+  <bb 15> :
+  # DomainIndex_20 = PHI <DomainIndex_30(2), DomainIndex_40(14)>
+  if (DomainIndex_20 <= 1)
+    goto <bb 3>; [INV]
+  else
+    goto <bb 16>; [INV]
+
+  <bb 16> :
+  return;
+
+}
+
+
+Power_Ip_MC_RGM_ModeConfig (const struct Power_Ip_MC_RGM_ModeConfigType * ModeConfigPtr)
+{
+  uint8 CoreIndex;
+  uint8 CofbIndex;
+  uint8 DomainIndex;
+  const struct Power_Ip_MC_RGM_DomainConfigType * TempDomainConfigPtr;
+  const struct Power_Ip_MC_RGM_DomainConfigType[2] * _1;
+  int _2;
+  _Bool _3;
+  const struct Power_Ip_MC_RGM_CofbConfigType[<unknown>] * _4;
+  int _5;
+  _Bool _6;
+  const struct Power_Ip_MC_RGM_CofbConfigType[<unknown>] * _7;
+  int _8;
+  const struct Power_Ip_MC_RGM_CofbConfigType * _9;
+  unsigned char _10;
+  unsigned char _11;
+  const struct Power_Ip_MC_RGM_CoreConfigType[<unknown>] * _12;
+  int _13;
+  _Bool _14;
+  const struct Power_Ip_MC_RGM_CoreConfigType[<unknown>] * _15;
+  int _16;
+  const struct Power_Ip_MC_RGM_CoreConfigType * _17;
+  unsigned char _18;
+  unsigned char _19;
+
+  <bb 2> :
+  TempDomainConfigPtr_29 = 0B;
+  DomainIndex_30 = 0;
+  goto <bb 15>; [INV]
+
+  <bb 3> :
+  _1 = ModeConfigPtr_32(D)->ArrayDomainConfigPtr;
+  _2 = (int) DomainIndex_20;
+  TempDomainConfigPtr_33 = &*_1[_2];
+  _3 = TempDomainConfigPtr_33->DomainUnderMcuControl;
+  if (_3 != 0)
+    goto <bb 4>; [INV]
+  else
+    goto <bb 14>; [INV]
+
+  <bb 4> :
+  CofbIndex_34 = 0;
+  goto <bb 8>; [INV]
+
+  <bb 5> :
+  _4 = TempDomainConfigPtr_33->ArrayDomainCofbConfigPtr;
+  _5 = (int) CofbIndex_21;
+  _6 = *_4[_5].CofbUnderMcuControl;
+  if (_6 != 0)
+    goto <bb 6>; [INV]
+  else
+    goto <bb 7>; [INV]
+
+  <bb 6> :
+  _7 = TempDomainConfigPtr_33->ArrayDomainCofbConfigPtr;
+  _8 = (int) CofbIndex_21;
+  _9 = &*_7[_8];
+  _10 = TempDomainConfigPtr_33->DomainIndex;
+  Power_Ip_MC_RGM_ConfigureCOFB (_9, _10);
+
+  <bb 7> :
+  CofbIndex_39 = CofbIndex_21 + 1;
+
+  <bb 8> :
+  # CofbIndex_21 = PHI <CofbIndex_34(4), CofbIndex_39(7)>
+  _11 = TempDomainConfigPtr_33->NumberOfCofbs;
+  if (CofbIndex_21 < _11)
+    goto <bb 5>; [INV]
+  else
+    goto <bb 9>; [INV]
+
+  <bb 9> :
+  CoreIndex_35 = 0;
+  goto <bb 13>; [INV]
+
+  <bb 10> :
+  _12 = TempDomainConfigPtr_33->ArrayDomainCoreConfigPtr;
+  _13 = (int) CoreIndex_22;
+  _14 = *_12[_13].CoreUnderMcuControl;
+  if (_14 != 0)
+    goto <bb 11>; [INV]
+  else
+    goto <bb 12>; [INV]
+
+  <bb 11> :
+  _15 = TempDomainConfigPtr_33->ArrayDomainCoreConfigPtr;
+  _16 = (int) CoreIndex_22;
+  _17 = &*_15[_16];
+  _18 = TempDomainConfigPtr_33->DomainIndex;
+  Power_Ip_MC_RGM_ConfigureCore (_17, _18);
+
+  <bb 12> :
+  CoreIndex_37 = CoreIndex_22 + 1;
+
+  <bb 13> :
+  # CoreIndex_22 = PHI <CoreIndex_35(9), CoreIndex_37(12)>
+  _19 = TempDomainConfigPtr_33->NumberOfCores;
+  if (CoreIndex_22 < _19)
+    goto <bb 10>; [INV]
+  else
+    goto <bb 14>; [INV]
+
+  <bb 14> :
+  DomainIndex_40 = DomainIndex_20 + 1;
+
+  <bb 15> :
+  # DomainIndex_20 = PHI <DomainIndex_30(2), DomainIndex_40(14)>
+  if (DomainIndex_20 <= 1)
+    goto <bb 3>; [INV]
+  else
+    goto <bb 16>; [INV]
+
+  <bb 16> :
+  return;
+
+}
+
+
+Power_Ip_MC_RGM_ResetInit (const struct Power_Ip_MC_RGM_ConfigType * ConfigPtr)
+{
+  uint32 DesResetReason;
+  uint32 FesResetReason;
+  struct Power_Ip_MC_RGM_Type * Power_Ip_pxMC_RGM.26_1;
+  struct Power_Ip_MC_RGM_Type * Power_Ip_pxMC_RGM.27_2;
+  long unsigned int _3;
+  struct Power_Ip_MC_RGM_Type * Power_Ip_pxMC_RGM.28_4;
+  long unsigned int _5;
+  struct Power_Ip_MC_RGM_Type * Power_Ip_pxMC_RGM.29_6;
+  long unsigned int _7;
+  struct Power_Ip_MC_RGM_Type * Power_Ip_pxMC_RGM.30_8;
+  long unsigned int _9;
+  long unsigned int _10;
+  struct Power_Ip_MC_RGM_Type * Power_Ip_pxMC_RGM.31_11;
+  long unsigned int _12;
+  struct Power_Ip_MC_RGM_Type * Power_Ip_pxMC_RGM.32_13;
+  struct Power_Ip_MC_RGM_Type * Power_Ip_pxMC_RGM.33_14;
+  long unsigned int _15;
+
+  <bb 2> :
+  FesResetReason_19 = 0;
+  DesResetReason_20 = 0;
+  Power_Ip_pxMC_RGM.26_1 = Power_Ip_pxMC_RGM;
+  FesResetReason_22 ={v} Power_Ip_pxMC_RGM.26_1->FES;
+  if (FesResetReason_22 != 0)
+    goto <bb 3>; [INV]
+  else
+    goto <bb 4>; [INV]
+
+  <bb 3> :
+  FesResetStatus = FesResetReason_22;
+  Power_Ip_MC_RGM_ClearFesResetFlags (FesResetReason_22);
+
+  <bb 4> :
+  Power_Ip_pxMC_RGM.27_2 = Power_Ip_pxMC_RGM;
+  _3 = ConfigPtr_25(D)->FuncResetOpt;
+  Power_Ip_pxMC_RGM.27_2->FERD ={v} _3;
+  Power_Ip_pxMC_RGM.28_4 = Power_Ip_pxMC_RGM;
+  DesResetReason_27 ={v} Power_Ip_pxMC_RGM.28_4->DES;
+  _5 = ConfigPtr_25(D)->FesThresholdReset;
+  if (_5 != 0)
+    goto <bb 5>; [INV]
+  else
+    goto <bb 7>; [INV]
+
+  <bb 5> :
+  if (DesResetReason_27 != 0)
+    goto <bb 6>; [INV]
+  else
+    goto <bb 8>; [INV]
+
+  <bb 6> :
+  Power_Ip_pxMC_RGM.29_6 = Power_Ip_pxMC_RGM;
+  _7 = ConfigPtr_25(D)->FesThresholdReset;
+  Power_Ip_pxMC_RGM.29_6->FRET ={v} _7;
+  goto <bb 8>; [INV]
+
+  <bb 7> :
+  Power_Ip_pxMC_RGM.30_8 = Power_Ip_pxMC_RGM;
+  Power_Ip_pxMC_RGM.30_8->FRET ={v} 0;
+
+  <bb 8> :
+  _9 = ConfigPtr_25(D)->DesThresholdReset;
+  if (_9 != 0)
+    goto <bb 9>; [INV]
+  else
+    goto <bb 11>; [INV]
+
+  <bb 9> :
+  _10 = DesResetReason_27 & 1;
+  if (_10 != 0)
+    goto <bb 10>; [INV]
+  else
+    goto <bb 12>; [INV]
+
+  <bb 10> :
+  Power_Ip_pxMC_RGM.31_11 = Power_Ip_pxMC_RGM;
+  _12 = ConfigPtr_25(D)->DesThresholdReset;
+  Power_Ip_pxMC_RGM.31_11->DRET ={v} _12;
+  goto <bb 12>; [INV]
+
+  <bb 11> :
+  Power_Ip_pxMC_RGM.32_13 = Power_Ip_pxMC_RGM;
+  Power_Ip_pxMC_RGM.32_13->DRET ={v} 0;
+
+  <bb 12> :
+  Power_Ip_pxMC_RGM.33_14 = Power_Ip_pxMC_RGM;
+  _15 = ConfigPtr_25(D)->ResetEntryTimeout;
+  Power_Ip_pxMC_RGM.33_14->FRENTC ={v} _15;
+  return;
+
+}
+
+
+Power_Ip_MC_RGM_CheckConfigureCore (const struct Power_Ip_MC_RGM_CoreConfigType * CoreConfigPtr, uint8 DomainIndex)
+{
+  boolean TimeoutOccurred;
+  uint32 TimeoutTicks;
+  uint32 ElapsedTime;
+  uint32 StartTime;
+  uint32 CoreStatus;
+  uint32 CoreToUpdate;
+  uint32 CoreConfig;
+  long unsigned int TimeoutTicks.24_1;
+  struct Power_Ip_MC_RGM_Type * Power_Ip_pxMC_RGM.25_2;
+  int _3;
+  long unsigned int _4;
+  long unsigned int _5;
+  _Bool _6;
+
+  <bb 2> :
+  CoreConfig_11 = CoreConfigPtr_10(D)->CorePrstRegValue;
+  CoreToUpdate_12 = CoreConfigPtr_10(D)->CoreBlocksToUpdateMask;
+  TimeoutOccurred_13 = 0;
+  Power_Ip_StartTimeout (&StartTime, &ElapsedTime, &TimeoutTicks, 50000);
+
+  <bb 3> :
+  TimeoutTicks.24_1 = TimeoutTicks;
+  TimeoutOccurred_16 = Power_Ip_TimeoutExpired (&StartTime, &ElapsedTime, TimeoutTicks.24_1);
+  Power_Ip_pxMC_RGM.25_2 = Power_Ip_pxMC_RGM;
+  _3 = (int) DomainIndex_17(D);
+  CoreStatus_18 ={v} Power_Ip_pxMC_RGM.25_2->PSTAT[_3].PSTAT_COFB[0];
+  _4 = CoreStatus_18 ^ CoreConfig_11;
+  _5 = CoreToUpdate_12 & _4;
+  if (_5 != 0)
+    goto <bb 4>; [INV]
+  else
+    goto <bb 5>; [INV]
+
+  <bb 4> :
+  _6 = ~TimeoutOccurred_16;
+  if (_6 != 0)
+    goto <bb 3>; [INV]
+  else
+    goto <bb 5>; [INV]
+
+  <bb 5> :
+  if (TimeoutOccurred_16 != 0)
+    goto <bb 6>; [INV]
+  else
+    goto <bb 7>; [INV]
+
+  <bb 6> :
+  Power_Ip_ReportPowerErrors (0, 255);
+
+  <bb 7> :
+  StartTime ={v} {CLOBBER};
+  ElapsedTime ={v} {CLOBBER};
+  TimeoutTicks ={v} {CLOBBER};
+  return;
+
+}
+
+
+Power_Ip_MC_RGM_ConfigureCore (const struct Power_Ip_MC_RGM_CoreConfigType * CoreConfigPtr, uint8 DomainIndex)
+{
+  uint32 TempValue;
+  uint32 CoreToUpdate;
+  uint32 CoreConfig;
+  struct Power_Ip_MC_RGM_Type * Power_Ip_pxMC_RGM.22_1;
+  int _2;
+  long unsigned int _3;
+  long unsigned int _4;
+  struct Power_Ip_MC_RGM_Type * Power_Ip_pxMC_RGM.23_5;
+  int _6;
+
+  <bb 2> :
+  CoreConfig_9 = CoreConfigPtr_8(D)->CorePrstRegValue;
+  CoreToUpdate_10 = CoreConfigPtr_8(D)->CoreBlocksToUpdateMask;
+  TempValue_11 = 0;
+  Power_Ip_pxMC_RGM.22_1 = Power_Ip_pxMC_RGM;
+  _2 = (int) DomainIndex_12(D);
+  TempValue_13 ={v} Power_Ip_pxMC_RGM.22_1->PRST[_2].PRST_COFB[0];
+  _3 = ~CoreToUpdate_10;
+  TempValue_14 = TempValue_13 & _3;
+  _4 = CoreConfig_9 & CoreToUpdate_10;
+  TempValue_15 = TempValue_14 | _4;
+  Power_Ip_pxMC_RGM.23_5 = Power_Ip_pxMC_RGM;
+  _6 = (int) DomainIndex_12(D);
+  Power_Ip_pxMC_RGM.23_5->PRST[_6].PRST_COFB[0] ={v} TempValue_15;
+  return;
+
+}
+
+
+Power_Ip_MC_RGM_CheckConfigureCOFB (const struct Power_Ip_MC_RGM_CofbConfigType * CofbConfigPtr, uint8 DomainIndex)
+{
+  boolean TimeoutOccurred;
+  uint32 TimeoutTicks;
+  uint32 ElapsedTime;
+  uint32 StartTime;
+  uint32 PeripheralsRstStatus;
+  uint8 CofbIndex;
+  uint32 PeripheralsRstToUpdate;
+  uint32 PeripheralsRstConfig;
+  long unsigned int TimeoutTicks.20_1;
+  struct Power_Ip_MC_RGM_Type * Power_Ip_pxMC_RGM.21_2;
+  int _3;
+  int _4;
+  long unsigned int _5;
+  long unsigned int _6;
+  _Bool _7;
+
+  <bb 2> :
+  PeripheralsRstConfig_12 = CofbConfigPtr_11(D)->CofbRstRegValue;
+  PeripheralsRstToUpdate_13 = CofbConfigPtr_11(D)->CofbBlocksToUpdateMask;
+  CofbIndex_14 = CofbConfigPtr_11(D)->CofbIndex;
+  TimeoutOccurred_15 = 0;
+  Power_Ip_StartTimeout (&StartTime, &ElapsedTime, &TimeoutTicks, 50000);
+
+  <bb 3> :
+  TimeoutTicks.20_1 = TimeoutTicks;
+  TimeoutOccurred_18 = Power_Ip_TimeoutExpired (&StartTime, &ElapsedTime, TimeoutTicks.20_1);
+  Power_Ip_pxMC_RGM.21_2 = Power_Ip_pxMC_RGM;
+  _3 = (int) DomainIndex_19(D);
+  _4 = (int) CofbIndex_14;
+  PeripheralsRstStatus_20 ={v} Power_Ip_pxMC_RGM.21_2->PRST[_3].PRST_COFB[_4];
+  _5 = PeripheralsRstConfig_12 ^ PeripheralsRstStatus_20;
+  _6 = PeripheralsRstToUpdate_13 & _5;
+  if (_6 != 0)
+    goto <bb 4>; [INV]
+  else
+    goto <bb 5>; [INV]
+
+  <bb 4> :
+  _7 = ~TimeoutOccurred_18;
+  if (_7 != 0)
+    goto <bb 3>; [INV]
+  else
+    goto <bb 5>; [INV]
+
+  <bb 5> :
+  if (TimeoutOccurred_18 != 0)
+    goto <bb 6>; [INV]
+  else
+    goto <bb 7>; [INV]
+
+  <bb 6> :
+  Power_Ip_ReportPowerErrors (0, 255);
+
+  <bb 7> :
+  StartTime ={v} {CLOBBER};
+  ElapsedTime ={v} {CLOBBER};
+  TimeoutTicks ={v} {CLOBBER};
+  return;
+
+}
+
+
+Power_Ip_MC_RGM_ConfigureCOFB (const struct Power_Ip_MC_RGM_CofbConfigType * CofbConfigPtr, uint8 DomainIndex)
+{
+  uint32 TempValue;
+  uint8 CofbIndex;
+  uint32 PeripheralsRstToUpdate;
+  uint32 PeripheralsRstConfig;
+  struct Power_Ip_MC_RGM_Type * Power_Ip_pxMC_RGM.18_1;
+  int _2;
+  int _3;
+  long unsigned int _4;
+  long unsigned int _5;
+  struct Power_Ip_MC_RGM_Type * Power_Ip_pxMC_RGM.19_6;
+  int _7;
+  int _8;
+
+  <bb 2> :
+  PeripheralsRstConfig_11 = CofbConfigPtr_10(D)->CofbRstRegValue;
+  PeripheralsRstToUpdate_12 = CofbConfigPtr_10(D)->CofbBlocksToUpdateMask;
+  CofbIndex_13 = CofbConfigPtr_10(D)->CofbIndex;
+  TempValue_14 = 0;
+  Power_Ip_pxMC_RGM.18_1 = Power_Ip_pxMC_RGM;
+  _2 = (int) DomainIndex_15(D);
+  _3 = (int) CofbIndex_13;
+  TempValue_16 ={v} Power_Ip_pxMC_RGM.18_1->PRST[_2].PRST_COFB[_3];
+  _4 = ~PeripheralsRstToUpdate_12;
+  TempValue_17 = TempValue_16 & _4;
+  _5 = PeripheralsRstConfig_11 & PeripheralsRstToUpdate_12;
+  TempValue_18 = TempValue_17 | _5;
+  Power_Ip_pxMC_RGM.19_6 = Power_Ip_pxMC_RGM;
+  _7 = (int) DomainIndex_15(D);
+  _8 = (int) CofbIndex_13;
+  Power_Ip_pxMC_RGM.19_6->PRST[_7].PRST_COFB[_8] ={v} TempValue_18;
+  return;
+
+}
+
+
+Power_Ip_MC_RGM_ConfigureResetDomainController (const struct Power_Ip_MC_RGM_DomainConfigType * ResetDomainConfigPtr)
+{
+  uint8 DomainIndex;
+  boolean TimeoutOccurred;
+  uint32 TimeoutTicks;
+  uint32 ElapsedTime;
+  uint32 StartTime;
+  uint32 ResetDomainStatus;
+  uint32 ResetDomainConfig;
+  uint32 TempValue;
+  struct Power_Ip_RDC_Type * Power_Ip_pxRdc.10_1;
+  int _2;
+  struct Power_Ip_RDC_Type * Power_Ip_pxRdc.11_3;
+  int _4;
+  struct Power_Ip_RDC_Type * Power_Ip_pxRdc.12_5;
+  int _6;
+  struct Power_Ip_RDC_Type * Power_Ip_pxRdc.13_7;
+  int _8;
+  long unsigned int TimeoutTicks.14_9;
+  struct Power_Ip_RDC_Type * Power_Ip_pxRdc.15_10;
+  int _11;
+  long unsigned int _12;
+  long unsigned int _13;
+  long unsigned int _14;
+  long unsigned int _15;
+  _Bool _16;
+  struct Power_Ip_RDC_Type * Power_Ip_pxRdc.16_17;
+  int _18;
+  struct Power_Ip_RDC_Type * Power_Ip_pxRdc.17_19;
+  int _20;
+
+  <bb 2> :
+  TempValue_23 = 0;
+  ResetDomainConfig_26 = ResetDomainConfigPtr_25(D)->DomainRdcRegValue;
+  TimeoutOccurred_27 = 0;
+  DomainIndex_28 = ResetDomainConfigPtr_25(D)->DomainIndex;
+  Power_Ip_pxRdc.10_1 = Power_Ip_pxRdc;
+  _2 = (int) DomainIndex_28;
+  TempValue_29 ={v} Power_Ip_pxRdc.10_1->RDC_CTRL_REG[_2];
+  TempValue_30 = TempValue_29 & 2147483647;
+  TempValue_31 = TempValue_30 | 2147483648;
+  Power_Ip_pxRdc.11_3 = Power_Ip_pxRdc;
+  _4 = (int) DomainIndex_28;
+  Power_Ip_pxRdc.11_3->RDC_CTRL_REG[_4] ={v} TempValue_31;
+  Power_Ip_pxRdc.12_5 = Power_Ip_pxRdc;
+  _6 = (int) DomainIndex_28;
+  TempValue_33 ={v} Power_Ip_pxRdc.12_5->RDC_CTRL_REG[_6];
+  TempValue_34 = TempValue_33 & 4294967287;
+  TempValue_35 = TempValue_34 | ResetDomainConfig_26;
+  Power_Ip_pxRdc.13_7 = Power_Ip_pxRdc;
+  _8 = (int) DomainIndex_28;
+  Power_Ip_pxRdc.13_7->RDC_CTRL_REG[_8] ={v} TempValue_35;
+  Power_Ip_StartTimeout (&StartTime, &ElapsedTime, &TimeoutTicks, 50000);
+
+  <bb 3> :
+  TimeoutTicks.14_9 = TimeoutTicks;
+  TimeoutOccurred_39 = Power_Ip_TimeoutExpired (&StartTime, &ElapsedTime, TimeoutTicks.14_9);
+  Power_Ip_pxRdc.15_10 = Power_Ip_pxRdc;
+  _11 = (int) DomainIndex_28;
+  ResetDomainStatus_40 ={v} Power_Ip_pxRdc.15_10->RDC_STAT_REG[_11];
+  _12 = ResetDomainStatus_40 >> 4;
+  _13 = ResetDomainConfig_26 >> 3;
+  _14 = _12 ^ _13;
+  _15 = _14 & 1;
+  if (_15 != 0)
+    goto <bb 4>; [INV]
+  else
+    goto <bb 5>; [INV]
+
+  <bb 4> :
+  _16 = ~TimeoutOccurred_39;
+  if (_16 != 0)
+    goto <bb 3>; [INV]
+  else
+    goto <bb 5>; [INV]
+
+  <bb 5> :
+  if (TimeoutOccurred_39 != 0)
+    goto <bb 6>; [INV]
+  else
+    goto <bb 7>; [INV]
+
+  <bb 6> :
+  Power_Ip_ReportPowerErrors (0, 255);
+
+  <bb 7> :
+  Power_Ip_pxRdc.16_17 = Power_Ip_pxRdc;
+  _18 = (int) DomainIndex_28;
+  TempValue_42 ={v} Power_Ip_pxRdc.16_17->RDC_CTRL_REG[_18];
+  TempValue_43 = TempValue_42 & 2147483647;
+  TempValue_44 = TempValue_43;
+  Power_Ip_pxRdc.17_19 = Power_Ip_pxRdc;
+  _20 = (int) DomainIndex_28;
+  Power_Ip_pxRdc.17_19->RDC_CTRL_REG[_20] ={v} TempValue_44;
+  StartTime ={v} {CLOBBER};
+  ElapsedTime ={v} {CLOBBER};
+  TimeoutTicks ={v} {CLOBBER};
+  return;
+
+}
+
+
+Power_Ip_MC_RGM_AssertDomainReset (uint8 DomainIndex)
+{
+  struct Power_Ip_MC_RGM_Type * Power_Ip_pxMC_RGM.8_1;
+  int _2;
+  long unsigned int _3;
+  struct Power_Ip_MC_RGM_Type * Power_Ip_pxMC_RGM.9_4;
+  int _5;
+  long unsigned int _6;
+
+  <bb 2> :
+  Power_Ip_pxMC_RGM.8_1 = Power_Ip_pxMC_RGM;
+  _2 = (int) DomainIndex_8(D);
+  _3 ={v} Power_Ip_pxMC_RGM.8_1->PRST[_2].PRST_COFB[0];
+  Power_Ip_pxMC_RGM.9_4 = Power_Ip_pxMC_RGM;
+  _5 = (int) DomainIndex_8(D);
+  _6 = _3 | 1;
+  Power_Ip_pxMC_RGM.9_4->PRST[_5].PRST_COFB[0] ={v} _6;
+  return;
+
+}
+
+
+Power_Ip_MC_RGM_ReleaseDomainReset (uint8 DomainIndex)
+{
+  struct Power_Ip_MC_RGM_Type * Power_Ip_pxMC_RGM.6_1;
+  int _2;
+  long unsigned int _3;
+  struct Power_Ip_MC_RGM_Type * Power_Ip_pxMC_RGM.7_4;
+  int _5;
+  long unsigned int _6;
+
+  <bb 2> :
+  Power_Ip_pxMC_RGM.6_1 = Power_Ip_pxMC_RGM;
+  _2 = (int) DomainIndex_8(D);
+  _3 ={v} Power_Ip_pxMC_RGM.6_1->PRST[_2].PRST_COFB[0];
+  Power_Ip_pxMC_RGM.7_4 = Power_Ip_pxMC_RGM;
+  _5 = (int) DomainIndex_8(D);
+  _6 = _3 & 4294967294;
+  Power_Ip_pxMC_RGM.7_4->PRST[_5].PRST_COFB[0] ={v} _6;
+  return;
+
+}
+
+
+Power_Ip_MC_RGM_ClearDesResetFlags (uint32 RegValue)
+{
+  uint32 RegValueTemp;
+  boolean TimeoutOccurred;
+  uint32 TimeoutTicks;
+  uint32 ElapsedTime;
+  uint32 StartTime;
+  long unsigned int TimeoutTicks.3_1;
+  struct Power_Ip_MC_RGM_Type * Power_Ip_pxMC_RGM.4_2;
+  struct Power_Ip_MC_RGM_Type * Power_Ip_pxMC_RGM.5_3;
+  long unsigned int _4;
+  _Bool _5;
+
+  <bb 2> :
+  TimeoutOccurred_9 = 0;
+  RegValueTemp_11 = RegValue_10(D);
+  if (RegValueTemp_11 != 0)
+    goto <bb 3>; [INV]
+  else
+    goto <bb 8>; [INV]
+
+  <bb 3> :
+  Power_Ip_StartTimeout (&StartTime, &ElapsedTime, &TimeoutTicks, 50000);
+
+  <bb 4> :
+  # RegValueTemp_6 = PHI <RegValueTemp_11(3), RegValueTemp_17(5)>
+  TimeoutTicks.3_1 = TimeoutTicks;
+  TimeoutOccurred_15 = Power_Ip_TimeoutExpired (&StartTime, &ElapsedTime, TimeoutTicks.3_1);
+  Power_Ip_pxMC_RGM.4_2 = Power_Ip_pxMC_RGM;
+  Power_Ip_pxMC_RGM.4_2->DES ={v} RegValueTemp_6;
+  Power_Ip_pxMC_RGM.5_3 = Power_Ip_pxMC_RGM;
+  _4 ={v} Power_Ip_pxMC_RGM.5_3->DES;
+  RegValueTemp_17 = _4 & 3227463515;
+  if (RegValueTemp_17 != 0)
+    goto <bb 5>; [INV]
+  else
+    goto <bb 6>; [INV]
+
+  <bb 5> :
+  _5 = ~TimeoutOccurred_15;
+  if (_5 != 0)
+    goto <bb 4>; [INV]
+  else
+    goto <bb 6>; [INV]
+
+  <bb 6> :
+  if (TimeoutOccurred_15 != 0)
+    goto <bb 7>; [INV]
+  else
+    goto <bb 8>; [INV]
+
+  <bb 7> :
+  Power_Ip_ReportPowerErrors (0, 255);
+
+  <bb 8> :
+  StartTime ={v} {CLOBBER};
+  ElapsedTime ={v} {CLOBBER};
+  TimeoutTicks ={v} {CLOBBER};
+  return;
+
+}
+
+
+Power_Ip_MC_RGM_ClearFesResetFlags (uint32 RegValue)
+{
+  uint32 RegValueTemp;
+  boolean TimeoutOccurred;
+  uint32 TimeoutTicks;
+  uint32 ElapsedTime;
+  uint32 StartTime;
+  long unsigned int TimeoutTicks.0_1;
+  struct Power_Ip_MC_RGM_Type * Power_Ip_pxMC_RGM.1_2;
+  struct Power_Ip_MC_RGM_Type * Power_Ip_pxMC_RGM.2_3;
+  long unsigned int _4;
+  _Bool _5;
+
+  <bb 2> :
+  TimeoutOccurred_9 = 0;
+  RegValueTemp_11 = RegValue_10(D);
+  if (RegValueTemp_11 != 0)
+    goto <bb 3>; [INV]
+  else
+    goto <bb 8>; [INV]
+
+  <bb 3> :
+  Power_Ip_StartTimeout (&StartTime, &ElapsedTime, &TimeoutTicks, 50000);
+
+  <bb 4> :
+  # RegValueTemp_6 = PHI <RegValueTemp_11(3), RegValueTemp_17(5)>
+  TimeoutTicks.0_1 = TimeoutTicks;
+  TimeoutOccurred_15 = Power_Ip_TimeoutExpired (&StartTime, &ElapsedTime, TimeoutTicks.0_1);
+  Power_Ip_pxMC_RGM.1_2 = Power_Ip_pxMC_RGM;
+  Power_Ip_pxMC_RGM.1_2->FES ={v} RegValueTemp_6;
+  Power_Ip_pxMC_RGM.2_3 = Power_Ip_pxMC_RGM;
+  _4 ={v} Power_Ip_pxMC_RGM.2_3->FES;
+  RegValueTemp_17 = _4 & 3225157721;
+  if (RegValueTemp_17 != 0)
+    goto <bb 5>; [INV]
+  else
+    goto <bb 6>; [INV]
+
+  <bb 5> :
+  _5 = ~TimeoutOccurred_15;
+  if (_5 != 0)
+    goto <bb 4>; [INV]
+  else
+    goto <bb 6>; [INV]
+
+  <bb 6> :
+  if (TimeoutOccurred_15 != 0)
+    goto <bb 7>; [INV]
+  else
+    goto <bb 8>; [INV]
+
+  <bb 7> :
+  Power_Ip_ReportPowerErrors (0, 255);
+
+  <bb 8> :
+  StartTime ={v} {CLOBBER};
+  ElapsedTime ={v} {CLOBBER};
+  TimeoutTicks ={v} {CLOBBER};
+  return;
+
+}
+
+

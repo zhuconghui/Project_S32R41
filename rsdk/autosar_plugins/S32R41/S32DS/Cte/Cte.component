@@ -1,0 +1,1475 @@
+<?xml version="1.0" encoding= "UTF-8" ?>
+<component:config_component id="Cte" label="Cte" global_only="false" xsi:schemaLocation="http://swtools.freescale.net/XSD/component/1.0 http://swtools.freescale.net/XSD/component/1.0/component-8.0.xsd" xmlns:component="http://swtools.freescale.net/XSD/component/1.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" category="driver" max_instances="1" >
+
+<sw_comp_ref name="platform.driver.cte" version="0.8.10"/>
+
+    <description>Cte Driver Configuration</description>
+    <mode id="ip" label="CTE Module" available="true">
+        <description>Cte Driver Module Name, not used</description>
+        <config_set_refs>
+            <config_set_ref>Cte</config_set_ref>
+        </config_set_refs>
+    </mode>
+
+
+    <config_set id="Cte" label="CTE" public="true" options="ShowContentAs=Tabs;UI_LABEL_HIDDEN;UI_BORDER_HIDDEN">
+        <description>Configuration of the Cte module.</description>
+        <quick_selections>
+            <quick_selection id="CteDefault" label="Default Values" available="true">
+                <set id="Name">Cte</set>
+                <set id="CteDriverCodeParameters.CteGeneralConfiguration.CteDevErrorDetect">false</set>
+                <set id="CteDriverCodeParameters.CteGeneralConfiguration.CteCallbackName">Cte_IsrCallback</set>
+             </quick_selection>
+            <default>Default</default>
+        </quick_selections>
+
+        <settings>
+            <!-- *** DO NOT DELETE *** -->
+            <!-- Required for file generation. -->
+            <variable value="`../Cte/cte_codegenerator.js`" id="codegen_file"></variable>
+            <variable value="`Cte_CodeGenerator`" id="codegen_class"></variable>
+            <variable value="`true`" id="generate_templates"></variable>
+            <variable value="toArray(`CTE`)" id="used_peripherals" />
+            <!-- *** DO NOT DELETE *** -->
+            <variable value="$this.execScriptFunction(`../Cte/cte_utils.js`, `CteGetPlatform`, getPartNumber())" id="PlatformName"></variable>
+            <variable value="$this.execScriptFunction(`../Cte/cte_utils.js`, `CteIsPlatformMatch`, getPartNumber(), `S32R41`)" id="Is_R41"></variable>
+
+            <struct id="CteDriverCodeParameters" label="CTE Code Parameters">
+                <description>
+                    This container configures the variants aspects of the CTE driver.
+                </description>
+
+                <bool id="CtePostBuildVariantUsed" label="Post Build Variant Used" available="false">
+                    <description>
+                        <![CDATA[<html>Indicates whether a module implementation has or plans to have (i.e., introduced at link or post-build time) new post-build variation points. </html> ]]>
+                    </description>
+                    <options_expr>
+                        <option id="UUID" expr="`ECUC:e03507f1-4e98-4e85-a93e-5555b9dd1234`"/>
+                        <option id="postBuildVariantValue" expr="false"/>
+                        <option id="SYNC_VALUE"/>
+                        <option id="origin" expr="`NXP`"/>
+                        <option id="symbolicNameValue" expr="false"/>
+                        <option id="defaultValue" expr="`true`"/>
+                        <option id="scope" expr="`LOCAL`"/>
+                        <option id="valueConfigClass" expr="`PRE-COMPILE=VARIANT-POST-BUILD;PRE-COMPILE=VARIANT-PRE-COMPILE`"/>
+                        <option id="multiplicityConfigClass" expr="`PRE-COMPILE=VARIANT-POST-BUILD;PRE-COMPILE=VARIANT-PRE-COMPILE`"/>
+                    </options_expr>
+                </bool>
+
+                <dynamic_enum id="CteConfigVariant" label="Config Variant" items="toArray(`VariantPostBuild`,
+                                                                                          `VariantPreCompile`)" available="false">
+                    <description><![CDATA[<html> Selects the variant option. </html>]]>
+                    </description>
+                    <options_expr>
+                        <option id="type" expr="`ENUMERATION`"/>
+                        <option id="UUID" expr="`ECUC:daca2411-31e0-493f-8e05-3716f0461239`"/>
+                        <option id="postBuildVariantValue" expr="true"/>
+                        <option id="origin" expr="`NXP`"/>
+                        <option id="symbolicNameValue" expr="false"/>
+                        <option id="defaultValue" expr="`VariantPostBuild`"/>
+                        <option id="scope" expr="`LOCAL`"/>
+                        <option id="valueConfigClass" expr="`POST-BUILD=VARIANT-POST-BUILD;PRE-COMPILE=VARIANT-PRE-COMPILE`"/>
+                    </options_expr>
+                </dynamic_enum>
+
+                <struct id="CteGeneralConfiguration" label="CTE Parameters">
+                    <description>
+                        This container contains the global configuration parameters of the RadarSDK CTE driver.
+                    </description>
+
+                    <bool id="CteDevErrorDetect" label="Detect Development Errors" available="system::hasExclusiveOwnership(`CTE`, $group)">
+                        <description>
+                            <![CDATA[<html>Enables development error detection for this module.
+                            This reffers mainly to the input parameters check.
+                            <b>TRUE</b> = Development error detection enabled
+                            <b>FALSE</b> = Development error detection disabled </html> ]]>
+                        </description>
+                        <options_expr>
+                            <option id="UUID" expr="`ECUC:e03507f1-4e98-4e85-a93e-5555b9dd9999`"/>
+                            <option id="postBuildVariantValue" expr="false"/>
+                            <option id="SYNC_VALUE"/>
+                            <option id="origin" expr="`NXP`"/>
+                            <option id="symbolicNameValue" expr="false"/>
+                            <option id="defaultValue" expr="`true`"/>
+                            <option id="scope" expr="`LOCAL`"/>
+                            <option id="valueConfigClass" expr="`PRE-COMPILE=VARIANT-POST-BUILD;PRE-COMPILE=VARIANT-PRE-COMPILE`"/>
+                            <option id="multiplicityConfigClass" expr="`PRE-COMPILE=VARIANT-POST-BUILD;PRE-COMPILE=VARIANT-PRE-COMPILE`"/>
+                        </options_expr>
+                    </bool>
+
+                    <bool id="CteErrorHalt" label="Stop Execution after Error Detection" available="system::hasExclusiveOwnership(`CTE`, $group)">
+                        <description>
+                            <![CDATA[<html>Stops execution after the error report.
+                            Intended only for debugging.
+                            <b>TRUE</b> = Development error detection enabled.
+                            <b>FALSE</b> = Development error detection disabled. </html> ]]>
+                        </description>
+                        <options_expr>
+                            <option id="UUID" expr="`ECUC:e03507f1-4e98-4e85-a93e-5555b9dd9998`"/>
+                            <option id="postBuildVariantValue" expr="false"/>
+                            <option id="SYNC_VALUE"/>
+                            <option id="origin" expr="`NXP`"/>
+                            <option id="symbolicNameValue" expr="false"/>
+                            <option id="defaultValue" expr="`true`"/>
+                            <option id="scope" expr="`LOCAL`"/>
+                            <option id="valueConfigClass" expr="`PRE-COMPILE=VARIANT-POST-BUILD;PRE-COMPILE=VARIANT-PRE-COMPILE`"/>
+                            <option id="multiplicityConfigClass" expr="`PRE-COMPILE=VARIANT-POST-BUILD;PRE-COMPILE=VARIANT-PRE-COMPILE`"/>
+                        </options_expr>
+                    </bool>
+
+                    <bool id="CteSingleThread" label="Use Single Thread" available="system::hasExclusiveOwnership(`CTE`, $group)">
+                        <description>
+                            <![CDATA[<html>Specifies if the driver should be single or multi threaded.
+                            In single threaded mode, exclusive areas are not needed.
+                            <b>TRUE</b> = Single threaded.
+                            <b>FALSE</b> = Multi threaded. </html> ]]>
+                        </description>
+                        <options_expr>
+                            <option id="UUID" expr="`ECUC:e03507f1-4e98-4e85-a93e-5555b9dd9997`"/>
+                            <option id="postBuildVariantValue" expr="false"/>
+                            <option id="SYNC_VALUE"/>
+                            <option id="origin" expr="`NXP`"/>
+                            <option id="symbolicNameValue" expr="false"/>
+                            <option id="defaultValue" expr="`true`"/>
+                            <option id="scope" expr="`LOCAL`"/>
+                            <option id="valueConfigClass" expr="`PRE-COMPILE=VARIANT-POST-BUILD;PRE-COMPILE=VARIANT-PRE-COMPILE`"/>
+                            <option id="multiplicityConfigClass" expr="`PRE-COMPILE=VARIANT-POST-BUILD;PRE-COMPILE=VARIANT-PRE-COMPILE`"/>
+                        </options_expr>
+                    </bool>
+
+                    <bool id="CteVersionInfo" label="Driver Version info" available="system::hasExclusiveOwnership(`CTE`, $group)">
+                        <description>
+                            <![CDATA[<html>Exposes the VersionInfo function.
+                            <b>TRUE</b> = VersionInfo available
+                            <b>FALSE</b> = VersionInfo not available </html> ]]>
+                        </description>
+                        <options_expr>
+                            <option id="UUID" expr="`ECUC:e03507f1-4e98-4e85-a93e-5555b9dd9996`"/>
+                            <option id="postBuildVariantValue" expr="false"/>
+                            <option id="SYNC_VALUE"/>
+                            <option id="origin" expr="`NXP`"/>
+                            <option id="symbolicNameValue" expr="false"/>
+                            <option id="defaultValue" expr="`true`"/>
+                            <option id="scope" expr="`LOCAL`"/>
+                            <option id="valueConfigClass" expr="`PRE-COMPILE=VARIANT-POST-BUILD;PRE-COMPILE=VARIANT-PRE-COMPILE`"/>
+                            <option id="multiplicityConfigClass" expr="`PRE-COMPILE=VARIANT-POST-BUILD;PRE-COMPILE=VARIANT-PRE-COMPILE`"/>
+                        </options_expr>
+                    </bool>
+
+                    <bool id="CteStartStop" label="Expose Start/Stop" available="system::hasExclusiveOwnership(`CTE`, $group)">
+                        <description>
+                            <![CDATA[<html>Exposes the Start/Stop functions.
+                            These functions can be used only in Master mode, when the CTE signals are not used.
+                            if the CTE execution is managed only by the CTE interface, these two functions are not necessary.
+                            <b>TRUE</b> = Start/Stop available.
+                            <b>FALSE</b> = Start/Stop not available. </html> ]]>
+                        </description>
+                        <options_expr>
+                            <option id="UUID" expr="`ECUC:e03507f1-4e98-4e85-a93e-5555b9dd9995`"/>
+                            <option id="postBuildVariantValue" expr="false"/>
+                            <option id="SYNC_VALUE"/>
+                            <option id="origin" expr="`NXP`"/>
+                            <option id="symbolicNameValue" expr="false"/>
+                            <option id="defaultValue" expr="`true`"/>
+                            <option id="scope" expr="`LOCAL`"/>
+                            <option id="valueConfigClass" expr="`PRE-COMPILE=VARIANT-POST-BUILD;PRE-COMPILE=VARIANT-PRE-COMPILE`"/>
+                            <option id="multiplicityConfigClass" expr="`PRE-COMPILE=VARIANT-POST-BUILD;PRE-COMPILE=VARIANT-PRE-COMPILE`"/>
+                        </options_expr>
+                    </bool>
+
+                    <string id="CteCallbackName" label="Callback Name" available="system::hasExclusiveOwnership(`CTE`, $group)">
+                        <description>This is the name of the driver callback.
+                        It is used for events reporting. The call is done from the CTE events interrupt handler.
+                        To avoid any issues, this callback must be implemented.
+                        </description>
+                        <validation>
+                            <constraint cond_expr="(($this.getValue() != ``) &amp;&amp; isCIdentifier($this.getValue()))" level="error" description="Name must be a valid C identifier!"/>
+                        </validation>
+                        <options_expr>
+                            <option id="type" expr="`STRING`"/>
+                            <option id="UUID" expr="`ECUC:2beea917-2bcd-497c-a2ed-c82855599994`"/>
+                            <option id="origin" expr="`NXP`"/>
+                            <option id="SYNC_VALUE"/>
+                            <option id="postBuildVariantValue" expr="true"/>
+                            <option id="symbolicNameValue" expr="false"/>
+                            <option id="defaultValue" expr="`Cte_IsrCallback`"/>
+                            <option id="valueConfigClass" expr="`PRE-COMPILE=VARIANT-POST-BUILD;PRE-COMPILE=VARIANT-PRE-COMPILE`"/>
+                            <option id="multiplicityConfigClass" expr="`PRE-COMPILE=VARIANT-POST-BUILD;PRE-COMPILE=VARIANT-PRE-COMPILE`"/>
+                        </options_expr>
+                    </string>
+
+                </struct>
+            </struct>
+
+            <struct id="CteOutputConfigurationList" label="Output Configuration">
+                <description>
+                    <![CDATA[<html>
+                                            This container contains a list of the necessary setup structures for the Cte driver.
+                                            The lists are necessary, to define the working mode for the CTE controlled outputs.
+                                            Is necessary to define at least one output list. It is possible to define more output lists,
+                                            if many time tables are used, in different contexts. For each working mode it is necessary to define
+                                            how the outputs are used.
+                                            At least one output must be used for a correct Output Configuration.
+                                        </html>]]>
+                </description>
+
+                <array id="CteDriverMainContainer" type="CteDriverParamsType" label="Output Configuration List" options="ShowContentAs=MasterDetail;UI_BORDER_HIDDEN" min_expr="1"
+                            key_selector_expr="x -> x.getID()">
+                    <description><![CDATA[<html>
+                                            List containing all the configurations.
+                                        </html>]]>
+                    </description>
+                    <item_defaults>
+                        <set_default id="CteOutputConfigName" value_expr="x -> `outputDefTable_` + x.getID()"/>
+                    </item_defaults>
+                    <options_expr>
+                        <option id="type" expr="`CONTAINER`"/>
+                        <option id="UUID" expr="`ECUC:66380587-564d-45f3-bada-0475671e1231`"/>
+                        <option id="lowerMultiplicity" expr="1"/>
+                        <option id="upperMultiplicityInfinite" expr="1"/>
+                        <option id="postBuildVariantMultiplicity" expr="false"/>
+                        <option id="multiplicityConfigClass" expr="`PRE-COMPILE=VARIANT-POST-BUILD;PRE-COMPILE=VARIANT-PRE-COMPILE`"/>
+                    </options_expr>
+                </array>
+
+            </struct>
+
+            <struct id="CteFinalConfig" label="CTE Configuration List">
+                <description>
+                    <![CDATA[<html>
+                                This container contains a list of the necessary parameters for CTE setup :<br>
+                                - working mode<br>
+                                - necessary hardware parameters<br>
+                                - pairing between the defined Output Configurations and defined Timing Tables<br>
+                                - etc.
+                            </html>]]>
+                </description>
+
+                <array id="CteDriverFinalConfigContainer" type="CteFinalConfigParamsType" label="Config List" options="ShowContentAs=MasterDetail;UI_BORDER_HIDDEN" min_expr="1"
+                            key_selector_expr="x -> x.getID()">
+                    <description>List of configurations.</description>
+                    <item_defaults>
+                        <set_default id="CteConfigName" value_expr="x -> `cteSetupParam_` + x.getID()"/>
+                        <set_default id="CteConfigClockFreq" value_expr="40000000"/>
+                    </item_defaults>
+                    <options_expr>
+                        <option id="type" expr="`CONTAINER`"/>
+                        <option id="UUID" expr="`ECUC:66380587-564d-45f3-bada-0475671e1231`"/>
+                        <option id="lowerMultiplicity" expr="1"/>
+                        <option id="upperMultiplicityInfinite" expr="1"/>
+                        <option id="postBuildVariantMultiplicity" expr="false"/>
+                        <option id="multiplicityConfigClass" expr="`PRE-COMPILE=VARIANT-POST-BUILD;PRE-COMPILE=VARIANT-PRE-COMPILE`"/>
+                    </options_expr>
+                </array>
+
+            </struct>
+
+
+        </settings>
+
+        <user_types>
+
+            <struct id="CteFinalConfigParamsType">
+                <integer id="test" label="Support Variable" type="uint32_t" value="$this.execScriptFunction(`../Cte/cte_utils.js`, `getIndex`, get(system::getParent($this,1),4).getValue()).toInt()" available="false">
+                    <description><![CDATA[<html> Support variable for TimeTablePtr0 [Hz] </html>]]>
+                    </description>
+                    <options_expr>
+                        <option id="type" expr="`INTEGER`"/>
+                        <option id="UUID" expr="`ECUC:89dc979d-14a5-4550-b3a3-ee44752d6845`"/>
+                        <option id="postBuildVariantValue" expr="false"/>
+                        <option id="SYNC_VALUE"/>
+                        <option id="scope" expr="`LOCAL`"/>
+                        <option id="valueConfigClass" expr="`PRE-COMPILE=VARIANT-POST-BUILD;PRE-COMPILE=VARIANT-PRE-COMPILE`"/>
+                    </options_expr>
+                </integer>
+
+                <string id="CteConfigName" label="Config Name">
+                    <description>The name of the configuration structure to be used in the generated .c file.</description>
+                    <validation>
+                        <constraint cond_expr="(($this.getValue() != ``) &amp;&amp; isCIdentifier($this.getValue())) &amp;&amp; $this.execScriptFunction(`../Cte/cte_utils.js`, `CteIsPlatformMatch`, $this.getValue(), `cteSetupParam_`)"
+                        level="error" description="Name must be a valid C identifier and must start with 'cteSetupParam_' !"/>
+                        <constraint cond_expr="countOccurrences(($parent.getParent()), x -> (x.getSetting(`CteConfigName`).getValue() == $this.value())) == 1" level="error" description="Duplicated value&#44; Config Name must be unique across all CTE configurations."/>
+                    </validation>
+                </string>
+
+                <integer id="CteConfigClockFreq" label="CTE input clock [Hz]" type="uint32_t" >
+                    <description><![CDATA[<html> The value for the CTE_clock/CTE_CLK [Hz] </html>]]>
+                    </description>
+                    <options_expr>
+                        <option id="type" expr="`INTEGER`"/>
+                        <option id="UUID" expr="`ECUC:89dc979d-14a5-4550-b3a3-ee44747d6845`"/>
+                        <option id="postBuildVariantValue" expr="false"/>
+                        <option id="SYNC_VALUE"/>
+                        <option id="origin" expr="`AUTOSAR_ECUC`"/>
+                        <option id="symbolicNameValue" expr="true"/>
+                        <option id="defaultValue" expr="`40000000`"/>
+                        <option id="min" expr="40000000"/>
+                        <option id="max" expr="1000000000"/>
+                        <option id="scope" expr="`LOCAL`"/>
+                        <option id="valueConfigClass" expr="`PRE-COMPILE=VARIANT-POST-BUILD;PRE-COMPILE=VARIANT-PRE-COMPILE`"/>
+                    </options_expr>
+                    <validation>
+                        <constraint cond_expr="($this.getValue() != ``) &amp;&amp; ($this.getValue() &gt;= 40000000) &amp;&amp; ($this.getValue() &lt;= 1000000000)"
+                        level="error" description="Value must be between 40000000 and 1000000000."/>
+                    </validation>
+                </integer>
+
+                <integer id="CteRepeatCount" label="Tables Repeat Counter" type="uint32_t" >
+                    <description><![CDATA[<html>The number of times the table execution will be repeated until
+                                                    going to HALT state. 0 (zero) means "forever". If two alternative
+                                                    tables used, each table execution will decrease the counter.</html>]]>
+                    </description>
+                    <options_expr>
+                        <option id="type" expr="`INTEGER`"/>
+                        <option id="UUID" expr="`ECUC:89dc979d-14a5-4550-b3a3-ee44747d6845`"/>
+                        <option id="postBuildVariantValue" expr="false"/>
+                        <option id="SYNC_VALUE"/>
+                        <option id="origin" expr="`AUTOSAR_ECUC`"/>
+                        <option id="symbolicNameValue" expr="true"/>
+                        <option id="defaultValue" expr="`40000000`"/>
+                        <option id="min" expr="40000000"/>
+                        <option id="max" expr="1000000000"/>
+                        <option id="scope" expr="`LOCAL`"/>
+                        <option id="valueConfigClass" expr="`PRE-COMPILE=VARIANT-POST-BUILD;PRE-COMPILE=VARIANT-PRE-COMPILE`"/>
+                    </options_expr>
+                    <validation>
+                        <constraint cond_expr="($this.getValue() != ``) &amp;&amp; ($this.getValue() &gt;= 0) &amp;&amp; ($this.getValue() &lt;= 65535)"
+                        level="error" description="Value must be between 0 and 65535."/>
+                    </validation>
+                </integer>
+
+                <dynamic_enum id="CteSignalDefPtr0" label="Output Selection 0" items="$this.execScriptFunction(`../Cte/cte_utils.js`, `CteGetSignalDefs`, get(get(system::getParent($this,4),7),0).getSize(), false)">
+                    <description><![CDATA[<html>
+                                    Select which Output Configuration to be used in this configuration.
+                                    </html>]]>
+                    </description>
+                    <options_expr>
+                        <option id="type" expr="`ENUMERATION`"/>
+                        <option id="UUID" expr="`ECUC:daca2411-1234-493f-8e05-3716f0466543`"/>
+                        <option id="postBuildVariantValue" expr="true"/>
+                        <option id="origin" expr="`NXP`"/>
+                        <option id="symbolicNameValue" expr="false"/>
+                        <option id="defaultValue" expr="`VariantPostBuild`"/>
+                        <option id="scope" expr="`LOCAL`"/>
+                        <option id="valueConfigClass" expr="`POST-BUILD=VARIANT-POST-BUILD;PRE-COMPILE=VARIANT-PRE-COMPILE`"/>
+                    </options_expr>
+                </dynamic_enum>
+
+                <dynamic_enum id="CteTimeTablePtr0" label="Time Table Selection 0" items="$this.execScriptFunction(`../Cte/cte_utils.js`, `CteGetTimeTables`, get(get(get(get(get(system::getParent($this,4),7),0),$this.execScriptFunction(`../Cte/cte_utils.js`, `getIndex`, get(system::getParent($this,1),4).getValue()).toInt()),1),21).getFirst().getLabel().toInt(), get(get(get(get(get(system::getParent($this,4),7),0),$this.execScriptFunction(`../Cte/cte_utils.js`, `getIndex`, get(system::getParent($this,1),4).getValue()).toInt()),1),21).getSize())">
+                    <description><![CDATA[<html>
+                                    Select which Time Table to be used in this configuration.
+                                    </html>]]>
+                    </description>
+                    <options_expr>
+                        <option id="type" expr="`ENUMERATION`"/>
+                        <option id="UUID" expr="`ECUC:daca2411-1234-493f-8e05-3716f0466543`"/>
+                        <option id="postBuildVariantValue" expr="true"/>
+                        <option id="origin" expr="`NXP`"/>
+                        <option id="symbolicNameValue" expr="false"/>
+                        <option id="defaultValue" expr="`VariantPostBuild`"/>
+                        <option id="scope" expr="`LOCAL`"/>
+                        <option id="valueConfigClass" expr="`POST-BUILD=VARIANT-POST-BUILD;PRE-COMPILE=VARIANT-PRE-COMPILE`"/>
+                    </options_expr>
+                </dynamic_enum>
+
+                <dynamic_enum id="CteSignalDefPtr1" label="Output Selection 1" items="$this.execScriptFunction(`../Cte/cte_utils.js`, `CteGetSignalDefs`, get(get(system::getParent($this,4),7),0).getSize(), true)">
+                    <description><![CDATA[<html>
+                                    Select which Output Configuration to be used in this configuration.
+                                    </html>]]>
+                    </description>
+                    <options_expr>
+                        <option id="type" expr="`ENUMERATION`"/>
+                        <option id="UUID" expr="`ECUC:daca2411-1234-493f-8e05-3716f0466543`"/>
+                        <option id="postBuildVariantValue" expr="true"/>
+                        <option id="origin" expr="`NXP`"/>
+                        <option id="symbolicNameValue" expr="false"/>
+                        <option id="defaultValue" expr="`VariantPostBuild`"/>
+                        <option id="scope" expr="`LOCAL`"/>
+                        <option id="valueConfigClass" expr="`POST-BUILD=VARIANT-POST-BUILD;PRE-COMPILE=VARIANT-PRE-COMPILE`"/>
+                    </options_expr>
+                    <validation>
+                        <constraint cond_expr="get(system::getParent($this,1),4).getValue() != $this.getValue()"
+                        level="error" description="Value already used! Select a different one."/>
+                    </validation>
+                </dynamic_enum>
+
+                <dynamic_enum id="CteTimeTablePtr1" label="Time Table Selection 1" items="$this.execScriptFunction(`../Cte/cte_utils.js`, `CteGetTimeTables`, get(get(get(get(get(system::getParent($this,4),7),0),$this.execScriptFunction(`../Cte/cte_utils.js`, `getIndex`, get(system::getParent($this,1),6).getValue()).toInt()),1),21).getFirst().getLabel().toInt(), get(get(get(get(get(system::getParent($this,4),7),0),$this.execScriptFunction(`../Cte/cte_utils.js`, `getIndex`, get(system::getParent($this,1),6).getValue()).toInt()),1),21).getSize())" available="get(system::getParent($this,1),6).getValue()!=`NULL_PTR`">
+                    <description><![CDATA[<html>
+                                    Select which Time Table to be used in this configuration.
+                                    </html>]]>
+                    </description>
+                    <options_expr>
+                        <option id="type" expr="`ENUMERATION`"/>
+                        <option id="UUID" expr="`ECUC:daca2411-1234-493f-8e05-3716f0466543`"/>
+                        <option id="postBuildVariantValue" expr="true"/>
+                        <option id="origin" expr="`NXP`"/>
+                        <option id="symbolicNameValue" expr="false"/>
+                        <option id="defaultValue" expr="`VariantPostBuild`"/>
+                        <option id="scope" expr="`LOCAL`"/>
+                        <option id="valueConfigClass" expr="`POST-BUILD=VARIANT-POST-BUILD;PRE-COMPILE=VARIANT-PRE-COMPILE`"/>
+                    </options_expr>
+                </dynamic_enum>
+
+                <dynamic_enum id="CteWorkingSetup" label="CTE Working Mode Setup" items="toArray(`CTE_MASTER`,
+                                                                                                 `CTE_SLAVE_EXTERNAL`,
+                                                                                                 `CTE_SLAVE_CSI2`)">
+                    <description><![CDATA[<html>
+                                    The usage for the CTE module :<br>
+                                    - <b>MASTER</b>         - the CTE is started by the software<br>
+                                    - <b>SLAVE_EXTERNAL</b> - the CTE is started by the external RFS/RCS signals<br>
+                                    - <b>SLAVE_CSI2</b>     - the CTE is started by the CSI2 reception<br>
+                                    </html>]]>
+                    </description>
+                    <options_expr>
+                        <option id="type" expr="`ENUMERATION`"/>
+                        <option id="UUID" expr="`ECUC:daca2411-31e0-493f-8e05-3716f0466543`"/>
+                        <option id="postBuildVariantValue" expr="true"/>
+                        <option id="origin" expr="`NXP`"/>
+                        <option id="symbolicNameValue" expr="false"/>
+                        <option id="defaultValue" expr="`VariantPostBuild`"/>
+                        <option id="scope" expr="`LOCAL`"/>
+                        <option id="valueConfigClass" expr="`POST-BUILD=VARIANT-POST-BUILD;PRE-COMPILE=VARIANT-PRE-COMPILE`"/>
+                    </options_expr>
+                </dynamic_enum>
+
+                <dynamic_enum id="CteWorkingSlaveCsi2Unit" label="CSI2 unit to be used for start signals" items="toArray(`CTE_CSI2_UNIT_0`,
+                                                                                                                         `CTE_CSI2_UNIT_1`)" available="get(system::getParent($this,1),8).getValue()==`CTE_SLAVE_CSI2`" >
+                    <description><![CDATA[<html>
+                                    The CSI2 unit which provide the CTE start signals.
+                                    </html>]]>
+                    </description>
+                    <options_expr>
+                        <option id="type" expr="`ENUMERATION`"/>
+                        <option id="UUID" expr="`ECUC:daca2411-31e0-493f-8e05-3716f0466543`"/>
+                        <option id="postBuildVariantValue" expr="true"/>
+                        <option id="origin" expr="`NXP`"/>
+                        <option id="symbolicNameValue" expr="false"/>
+                        <option id="defaultValue" expr="`VariantPostBuild`"/>
+                        <option id="scope" expr="`LOCAL`"/>
+                        <option id="valueConfigClass" expr="`POST-BUILD=VARIANT-POST-BUILD;PRE-COMPILE=VARIANT-PRE-COMPILE`"/>
+                    </options_expr>
+                </dynamic_enum>
+
+                <dynamic_enum id="CteWorkingSlaveCsi2UnitVc" label="Virtual Channel to be used for start signals" items="toArray(`CTE_CSI2_VC_0`,
+                                                                                                                                 `CTE_CSI2_VC_1`,
+                                                                                                                                 `CTE_CSI2_VC_2`,
+                                                                                                                                 `CTE_CSI2_VC_3`)" available="get(system::getParent($this,1),8).getValue()==`CTE_SLAVE_CSI2`">
+                    <description><![CDATA[<html>
+                                    The Virtual Channel which provide the CTE start signals.
+                                    </html>]]>
+                    </description>
+                    <options_expr>
+                        <option id="type" expr="`ENUMERATION`"/>
+                        <option id="UUID" expr="`ECUC:daca2411-31e0-493f-8e05-3716f0466543`"/>
+                        <option id="postBuildVariantValue" expr="true"/>
+                        <option id="origin" expr="`NXP`"/>
+                        <option id="symbolicNameValue" expr="false"/>
+                        <option id="defaultValue" expr="`VariantPostBuild`"/>
+                        <option id="scope" expr="`LOCAL`"/>
+                        <option id="valueConfigClass" expr="`POST-BUILD=VARIANT-POST-BUILD;PRE-COMPILE=VARIANT-PRE-COMPILE`"/>
+                    </options_expr>
+                </dynamic_enum>
+
+                <integer id="CteInternalRfsDelay" label="Internal delay after external RFS received" type="uint32_t" available="get(system::getParent($this,1),8).getValue()!=`CTE_SLAVE_CSI2`">
+                    <description><![CDATA[<html>Internal delay after external RFS received. The value is in clock cycles.
+                                                The timing values are counted after this delay pass.</html>]]>
+                    </description>
+                    <options_expr>
+                        <option id="type" expr="`INTEGER`"/>
+                        <option id="UUID" expr="`ECUC:89dc979d-14a5-4550-b3a3-ee44747d6845`"/>
+                        <option id="postBuildVariantValue" expr="false"/>
+                        <option id="SYNC_VALUE"/>
+                        <option id="origin" expr="`AUTOSAR_ECUC`"/>
+                        <option id="symbolicNameValue" expr="true"/>
+                        <option id="defaultValue" expr="`40000000`"/>
+                        <option id="min" expr="40000000"/>
+                        <option id="max" expr="1000000000"/>
+                        <option id="scope" expr="`LOCAL`"/>
+                        <option id="valueConfigClass" expr="`PRE-COMPILE=VARIANT-POST-BUILD;PRE-COMPILE=VARIANT-PRE-COMPILE`"/>
+                    </options_expr>
+                    <validation>
+                        <constraint cond_expr="($this.getValue() != ``) &amp;&amp; ($this.getValue() &gt;= 0) &amp;&amp; ($this.getValue() &lt;= 15)"
+                        level="error" description="Value must be between 0 and 15."/>
+                    </validation>
+                </integer>
+
+                <integer id="CteInternalRcsDelay" label="Internal delay after external RCS received" type="uint32_t" available="get(system::getParent($this,1),8).getValue()!=`CTE_SLAVE_CSI2`">
+                    <description><![CDATA[<html>Internal delay after external RCS received. The value is in clock cycles.
+                                                The timing values are counted after this delay pass.</html>]]>
+                    </description>
+                    <options_expr>
+                        <option id="type" expr="`INTEGER`"/>
+                        <option id="UUID" expr="`ECUC:89dc979d-14a5-4550-b3a3-ee44747d6845`"/>
+                        <option id="postBuildVariantValue" expr="false"/>
+                        <option id="SYNC_VALUE"/>
+                        <option id="origin" expr="`AUTOSAR_ECUC`"/>
+                        <option id="symbolicNameValue" expr="true"/>
+                        <option id="defaultValue" expr="`40000000`"/>
+                        <option id="min" expr="40000000"/>
+                        <option id="max" expr="1000000000"/>
+                        <option id="scope" expr="`LOCAL`"/>
+                        <option id="valueConfigClass" expr="`PRE-COMPILE=VARIANT-POST-BUILD;PRE-COMPILE=VARIANT-PRE-COMPILE`"/>
+                    </options_expr>
+                    <validation>
+                        <constraint cond_expr="($this.getValue() != ``) &amp;&amp; ($this.getValue() &gt;= 0) &amp;&amp; ($this.getValue() &lt;= 15)"
+                        level="error" description="Value must be between 0 and 15."/>
+                    </validation>
+                </integer>
+
+                <bool id="CteEventTT0Start" label="TimeTable 0 Start" available="system::hasExclusiveOwnership(`CTE`, $group)">
+                    <description><![CDATA[<html>
+                        Application callback for TimeTable_0 start. </html> ]]>
+                    </description>
+                    <options_expr>
+                        <option id="UUID" expr="`ECUC:e03507f1-4e98-4e85-a93e-5555b9dd1234`"/>
+                        <option id="postBuildVariantValue" expr="false"/>
+                        <option id="SYNC_VALUE"/>
+                        <option id="origin" expr="`NXP`"/>
+                        <option id="symbolicNameValue" expr="false"/>
+                        <option id="defaultValue" expr="`true`"/>
+                        <option id="scope" expr="`LOCAL`"/>
+                        <option id="valueConfigClass" expr="`PRE-COMPILE=VARIANT-POST-BUILD;PRE-COMPILE=VARIANT-PRE-COMPILE`"/>
+                        <option id="multiplicityConfigClass" expr="`PRE-COMPILE=VARIANT-POST-BUILD;PRE-COMPILE=VARIANT-PRE-COMPILE`"/>
+                    </options_expr>
+                </bool>
+
+                <bool id="CteEventTT0Stop" label="TimeTable 0 Stop" available="system::hasExclusiveOwnership(`CTE`, $group)">
+                    <description>
+                        <![CDATA[<html>Application callback for TimeTable_0 stop. </html> ]]>
+                    </description>
+                    <options_expr>
+                        <option id="UUID" expr="`ECUC:e03507f1-4e98-4e85-a93e-5555b9dd1234`"/>
+                        <option id="postBuildVariantValue" expr="false"/>
+                        <option id="SYNC_VALUE"/>
+                        <option id="origin" expr="`NXP`"/>
+                        <option id="symbolicNameValue" expr="false"/>
+                        <option id="defaultValue" expr="`true`"/>
+                        <option id="scope" expr="`LOCAL`"/>
+                        <option id="valueConfigClass" expr="`PRE-COMPILE=VARIANT-POST-BUILD;PRE-COMPILE=VARIANT-PRE-COMPILE`"/>
+                        <option id="multiplicityConfigClass" expr="`PRE-COMPILE=VARIANT-POST-BUILD;PRE-COMPILE=VARIANT-PRE-COMPILE`"/>
+                    </options_expr>
+                </bool>
+
+                <bool id="CteEventTT1Start" label="TimeTable 1 Start" available="system::hasExclusiveOwnership(`CTE`, $group)">
+                    <description>
+                    <![CDATA[<html> Application callback for TimeTable_1 start. </html> ]]>
+                    </description>
+                    <options_expr>
+                        <option id="UUID" expr="`ECUC:e03507f1-4e98-4e85-a93e-5555b9dd1234`"/>
+                        <option id="postBuildVariantValue" expr="false"/>
+                        <option id="SYNC_VALUE"/>
+                        <option id="origin" expr="`NXP`"/>
+                        <option id="symbolicNameValue" expr="false"/>
+                        <option id="defaultValue" expr="`true`"/>
+                        <option id="scope" expr="`LOCAL`"/>
+                        <option id="valueConfigClass" expr="`PRE-COMPILE=VARIANT-POST-BUILD;PRE-COMPILE=VARIANT-PRE-COMPILE`"/>
+                        <option id="multiplicityConfigClass" expr="`PRE-COMPILE=VARIANT-POST-BUILD;PRE-COMPILE=VARIANT-PRE-COMPILE`"/>
+                    </options_expr>
+                </bool>
+
+                <bool id="CteEventTT1Stop" label="TimeTable 1 Stop" available="system::hasExclusiveOwnership(`CTE`, $group)">
+                    <description>
+                        <![CDATA[<html> Application callback for TimeTable_1 stop. </html> ]]>
+                    </description>
+                    <options_expr>
+                        <option id="UUID" expr="`ECUC:e03507f1-4e98-4e85-a93e-5555b9dd1234`"/>
+                        <option id="postBuildVariantValue" expr="false"/>
+                        <option id="SYNC_VALUE"/>
+                        <option id="origin" expr="`NXP`"/>
+                        <option id="symbolicNameValue" expr="false"/>
+                        <option id="defaultValue" expr="`true`"/>
+                        <option id="scope" expr="`LOCAL`"/>
+                        <option id="valueConfigClass" expr="`PRE-COMPILE=VARIANT-POST-BUILD;PRE-COMPILE=VARIANT-PRE-COMPILE`"/>
+                        <option id="multiplicityConfigClass" expr="`PRE-COMPILE=VARIANT-POST-BUILD;PRE-COMPILE=VARIANT-PRE-COMPILE`"/>
+                    </options_expr>
+                </bool>
+
+                <bool id="CteEventRFS" label="Radar Frame Start" available="system::hasExclusiveOwnership(`CTE`, $group)">
+                    <description>
+                    <![CDATA[<html> Application callback for Radar Frame Start signal received. </html> ]]>
+                    </description>
+                    <options_expr>
+                        <option id="UUID" expr="`ECUC:e03507f1-4e98-4e85-a93e-5555b9dd1234`"/>
+                        <option id="postBuildVariantValue" expr="false"/>
+                        <option id="SYNC_VALUE"/>
+                        <option id="origin" expr="`NXP`"/>
+                        <option id="symbolicNameValue" expr="false"/>
+                        <option id="defaultValue" expr="`true`"/>
+                        <option id="scope" expr="`LOCAL`"/>
+                        <option id="valueConfigClass" expr="`PRE-COMPILE=VARIANT-POST-BUILD;PRE-COMPILE=VARIANT-PRE-COMPILE`"/>
+                        <option id="multiplicityConfigClass" expr="`PRE-COMPILE=VARIANT-POST-BUILD;PRE-COMPILE=VARIANT-PRE-COMPILE`"/>
+                    </options_expr>
+                </bool>
+
+                <bool id="CteEventRCS" label="Radar Chirp Start" available="system::hasExclusiveOwnership(`CTE`, $group)">
+                    <description>
+                        <![CDATA[<html> Application callback for Radar Chirp Start signal received. </html> ]]>
+                    </description>
+                    <options_expr>
+                        <option id="UUID" expr="`ECUC:e03507f1-4e98-4e85-a93e-5555b9dd1234`"/>
+                        <option id="postBuildVariantValue" expr="false"/>
+                        <option id="SYNC_VALUE"/>
+                        <option id="origin" expr="`NXP`"/>
+                        <option id="symbolicNameValue" expr="false"/>
+                        <option id="defaultValue" expr="`true`"/>
+                        <option id="scope" expr="`LOCAL`"/>
+                        <option id="valueConfigClass" expr="`PRE-COMPILE=VARIANT-POST-BUILD;PRE-COMPILE=VARIANT-PRE-COMPILE`"/>
+                        <option id="multiplicityConfigClass" expr="`PRE-COMPILE=VARIANT-POST-BUILD;PRE-COMPILE=VARIANT-PRE-COMPILE`"/>
+                    </options_expr>
+                </bool>
+
+                <bool id="CteEventEnd" label="Table Execution End" available="system::hasExclusiveOwnership(`CTE`, $group)">
+                    <description>
+                        <![CDATA[<html> Application callback for Table Execution End. </html> ]]>
+                    </description>
+                    <options_expr>
+                        <option id="UUID" expr="`ECUC:e03507f1-4e98-4e85-a93e-5555b9dd1234`"/>
+                        <option id="postBuildVariantValue" expr="false"/>
+                        <option id="SYNC_VALUE"/>
+                        <option id="origin" expr="`NXP`"/>
+                        <option id="symbolicNameValue" expr="false"/>
+                        <option id="defaultValue" expr="`true`"/>
+                        <option id="scope" expr="`LOCAL`"/>
+                        <option id="valueConfigClass" expr="`PRE-COMPILE=VARIANT-POST-BUILD;PRE-COMPILE=VARIANT-PRE-COMPILE`"/>
+                        <option id="multiplicityConfigClass" expr="`PRE-COMPILE=VARIANT-POST-BUILD;PRE-COMPILE=VARIANT-PRE-COMPILE`"/>
+                    </options_expr>
+                </bool>
+
+            </struct>
+
+
+            <struct id="CteTimeTableParamsType">
+                <variable value="$this.execScriptFunction(`../Cte/cte_utils.js`, `CteGetSetupParamsName`, system::getParent($this,1).getID())" id="ParamsName"></variable>
+
+                <string id="CteTimeTableConfigName" label="Time Table Name">
+                    <description>The name of the configuration structure to be used in the generated .c file.</description>
+                    <validation>
+                        <constraint cond_expr="(($this.getValue() != ``) &amp;&amp; isCIdentifier($this.getValue())) &amp;&amp; $this.execScriptFunction(`../Cte/cte_utils.js`, `CteIsPlatformMatch`, $this.getValue(), `timeTable_`)"
+                        level="error" description="Name must be a valid C identifier and must start with 'timeTable_' !"/>
+                        <constraint cond_expr="countOccurrences(($parent.getParent()), x -> (x.getSetting(`CteTimeTableConfigName`).getValue() == $this.value())) == 1" level="error" description="Duplicated value&#44; `Time Table Name` must be unique across all CTE configurations."/>
+                    </validation>
+                </string>
+
+                <integer id="CteTimeTableMaxExecTime" label="Max Table Execution Time [ns from START]" type="uint32_t" >
+                    <description><![CDATA[<html>
+                                                The absolute time from START when the table execution finishes.
+                                                The time values is defined in ns (nanoseconds).
+                                                The real execution time for a table is the smalles time between this value and the last defined event in the events list.
+                                            </html>]]>
+                    </description>
+                    <options_expr>
+                        <option id="type" expr="`INTEGER`"/>
+                        <option id="UUID" expr="`ECUC:89dc979d-14a5-4550-b3a3-ee44747d6f11`"/>
+                        <option id="postBuildVariantValue" expr="false"/>
+                        <option id="SYNC_VALUE"/>
+                        <option id="origin" expr="`AUTOSAR_ECUC`"/>
+                        <option id="symbolicNameValue" expr="true"/>
+                        <option id="defaultValue" expr="`10000000`"/>
+                        <option id="min" expr="1"/>
+                        <option id="max" expr="181"/>
+                        <option id="scope" expr="`LOCAL`"/>
+                        <option id="valueConfigClass" expr="`PRE-COMPILE=VARIANT-POST-BUILD;PRE-COMPILE=VARIANT-PRE-COMPILE`"/>
+                    </options_expr>
+                    <validation>
+                        <constraint cond_expr="($this.getValue() != ``) &amp;&amp; ($this.getValue() &gt;= 1) &amp;&amp; ($this.getValue() &lt;= 4000000000)"
+                        level="error" description="Value must be between 1 and 4000000000."/>
+                    </validation>
+                </integer>
+
+                <array id="CteDriverEventsContainer" type="CteEventsTableType" label="Event List" options="ShowContentAs=MasterDetail;UI_BORDER_HIDDEN" min_expr="1" max_expr="64"
+                            key_selector_expr="x -> x.getID()">
+                    <description>
+                        This list defines at which time will the Actions be executed.
+                        This means that all defined outputs from Action List will be changed to their configured setting, at the time defined in Action Exec Time.
+                    </description>
+                    <item_defaults>
+                        <set_default id="CteActionsConfigName" value_expr="x -> `table_` + system::getParent($this,1).getLabel() + `_Action_` + x.getID()"/>
+                        <set_default id="CteActionExecTime" value_expr="x -> $this.execScriptFunction(`../Cte/cte_utils.js`, `CteIncrementByOne`, x.getID()) + `0000`"/>
+                    </item_defaults>
+                    <options_expr>
+                        <option id="type" expr="`CONTAINER`"/>
+                        <option id="UUID" expr="`ECUC:66380587-564d-45f3-bada-0475671e1231`"/>
+                        <option id="lowerMultiplicity" expr="1"/>
+                        <option id="upperMultiplicityInfinite" expr="1"/>
+                        <option id="postBuildVariantMultiplicity" expr="false"/>
+                        <option id="multiplicityConfigClass" expr="`PRE-COMPILE=VARIANT-POST-BUILD;PRE-COMPILE=VARIANT-PRE-COMPILE`"/>
+                    </options_expr>
+                </array>
+
+            </struct>
+
+            <struct id="CteEventsTableType">
+                <variable value="x -> x.getID()" id="ID"></variable>
+
+                <string id="CteActionsConfigName" label="Event Name" available="true">
+                    <description>The name of the configuration structure to be used in the generated .c file.</description>
+                    <validation>
+                        <constraint cond_expr="(($this.getValue() != ``) &amp;&amp; isCIdentifier($this.getValue())) &amp;&amp; $this.execScriptFunction(`../Cte/cte_utils.js`, `CteIsPlatformMatch`, $this.getValue(), `table_` + system::getParent($this,3).getLabel() + `_Action_` + system::getParent($this,1).getID())"
+                        level="error" description="Name must be a valid C identifier and must have the format 'table_X_Action_', where X = Event Number !"/>
+                    </validation>
+                </string>
+
+                <integer id="CteActionExecTime" label="Action Exec Time" type="uint32_t" >
+                    <description><![CDATA[<html>The time in [ns from START] when the Action should be performed.</html>]]>
+                    </description>
+                    <options_expr>
+                        <option id="type" expr="`INTEGER`"/>
+                        <option id="UUID" expr="`ECUC:89dc979d-14a5-4550-6123-ee44747d6123`"/>
+                        <option id="postBuildVariantValue" expr="false"/>
+                        <option id="SYNC_VALUE"/>
+                        <option id="origin" expr="`AUTOSAR_ECUC`"/>
+                        <option id="symbolicNameValue" expr="true"/>
+                        <option id="defaultValue" expr="`10000`"/>
+                        <option id="min" expr="1"/>
+                        <option id="max" expr="181"/>
+                        <option id="scope" expr="`LOCAL`"/>
+                        <option id="valueConfigClass" expr="`PRE-COMPILE=VARIANT-POST-BUILD;PRE-COMPILE=VARIANT-PRE-COMPILE`"/>
+                    </options_expr>
+                    <validation>
+                        <constraint cond_expr="($this.getValue() != ``) &amp;&amp; ($this.getValue() &gt;= 1) &amp;&amp; ($this.getValue() &lt;= 4000000000)"
+                        level="error" description="Value must be between 1 and 4000000000."/>
+                    </validation>
+                </integer>
+
+                <array id="CteDriverActionsContainer" type="CteActionsType" label="Action List" options="ShowContentAs=MasterDetail;UI_BORDER_HIDDEN" min_expr="1" max_expr="64"
+                            key_selector_expr="x -> x.getID()">
+                    <description>This list defines which outputs to be changed, and to which setting.</description>
+                    <validation>
+                        <constraint cond_expr="($this.findDuplicates(item -&gt; item.getSetting(`CteActionsOutputType`).value()).length() == 0) ||
+                                               ( ($this.findDuplicates(item -&gt; item.getSetting(`CteOutputSignalToggleType`).value()).length() == 0) ||
+                                                 ($this.findDuplicates(item -&gt; item.getSetting(`CteOutputSignalLogicType`).value()).length() == 0) ||
+                                                 ($this.findDuplicates(item -&gt; item.getSetting(`CteOutputSignalClockType`).value()).length() == 0) ||
+                                                 ($this.findDuplicates(item -&gt; item.getSetting(`CteOutputSignalHIZType`).value()).length() == 0) )" level="error" description="Duplicated Values! An identical Action is already defined in this Event List."/>
+                    </validation>
+                    <item_defaults>
+                        <set_default id="CteActionExecTime" value_expr="x -> $this.execScriptFunction(`../Cte/cte_utils.js`, `CteIncrementByOne`, x.getID()) + `0000`"/>
+                    </item_defaults>
+                    <options_expr>
+                        <option id="type" expr="`CONTAINER`"/>
+                        <option id="UUID" expr="`ECUC:66380587-564d-45f3-bada-0475671e1231`"/>
+                        <option id="lowerMultiplicity" expr="1"/>
+                        <option id="upperMultiplicityInfinite" expr="1"/>
+                        <option id="postBuildVariantMultiplicity" expr="false"/>
+                        <option id="multiplicityConfigClass" expr="`PRE-COMPILE=VARIANT-POST-BUILD;PRE-COMPILE=VARIANT-PRE-COMPILE`"/>
+                    </options_expr>
+
+                </array>
+
+            </struct>
+
+            <struct id="CteActionsType">
+                <variable value="x -> x.getID()" id="ID"></variable>
+
+                <dynamic_enum id="CteActionsOutputType" label="Output Type" items="toArray(`CTE_OUTPUT_SPT_0`,
+                                                                                           `CTE_OUTPUT_SPT_1`,
+                                                                                           `CTE_OUTPUT_SPT_2`,
+                                                                                           `CTE_OUTPUT_SPT_3`,
+                                                                                           `CTE_OUTPUT_CTEP_0`,
+                                                                                           `CTE_OUTPUT_CTEP_1`,
+                                                                                           `CTE_OUTPUT_CTEP_2`,
+                                                                                           `CTE_OUTPUT_CTEP_3`,
+                                                                                           `CTE_OUTPUT_CTEP_4`,
+                                                                                           `CTE_OUTPUT_CTEP_5`,
+                                                                                           `CTE_OUTPUT_CTEP_6`,
+                                                                                           `CTE_OUTPUT_CTEP_7`,
+                                                                                           `CTE_OUTPUT_SPT_RCS`,
+                                                                                           `CTE_OUTPUT_SPT_RFS`,
+                                                                                           `CTE_OUTPUT_FLEX_0`,
+                                                                                           `CTE_OUTPUT_FLEX_1`)">
+                    <description><![CDATA[<html> The output that should be affected for this event.
+                                                Must be one of the selected outputs from Output Configuration.
+                                        </html>]]>
+                    </description>
+                    <options_expr>
+                        <option id="type" expr="`ENUMERATION`"/>
+                        <option id="UUID" expr="`ECUC:daca2411-31e0-493f-8e05-3716f0466543`"/>
+                        <option id="postBuildVariantValue" expr="true"/>
+                        <option id="origin" expr="`NXP`"/>
+                        <option id="symbolicNameValue" expr="false"/>
+                        <option id="defaultValue" expr="`VariantPostBuild`"/>
+                        <option id="scope" expr="`LOCAL`"/>
+                        <option id="valueConfigClass" expr="`POST-BUILD=VARIANT-POST-BUILD;PRE-COMPILE=VARIANT-PRE-COMPILE`"/>
+                    </options_expr>
+                    <validation>
+                        <constraint cond_expr="(
+
+                        ($this.getValue() != ``) &amp;&amp;
+                        ( (( $this.getValue() == `CTE_OUTPUT_SPT_0`|| $this.getValue() == `CTE_OUTPUT_SPT_1`|| $this.getValue() == `CTE_OUTPUT_SPT_2`|| $this.getValue() == `CTE_OUTPUT_SPT_3`) &amp;&amp; get(get(system::getParent($this,8),1),0).getValue() != `SPT_SIGNALS_NOT_USED`) || ( $this.getValue() != `CTE_OUTPUT_SPT_0` &amp;&amp; $this.getValue() != `CTE_OUTPUT_SPT_1` &amp;&amp; $this.getValue() != `CTE_OUTPUT_SPT_2` &amp;&amp; $this.getValue() != `CTE_OUTPUT_SPT_3`) ) &amp;&amp;
+                        (( $this.getValue() == `CTE_OUTPUT_CTEP_0` &amp;&amp; get(get(system::getParent($this,8),1),1).getValue() != `CTEP0_NOT_USED`) || $this.getValue() != `CTE_OUTPUT_CTEP_0` ) &amp;&amp;
+                        (( $this.getValue() == `CTE_OUTPUT_CTEP_1` &amp;&amp; get(get(system::getParent($this,8),1),3).getValue() != `CTEP1_NOT_USED`) || $this.getValue() != `CTE_OUTPUT_CTEP_1` ) &amp;&amp;
+                        (( $this.getValue() == `CTE_OUTPUT_CTEP_2` &amp;&amp; get(get(system::getParent($this,8),1),5).getValue() != `CTEP2_NOT_USED`) || $this.getValue() != `CTE_OUTPUT_CTEP_2` ) &amp;&amp;
+                        (( $this.getValue() == `CTE_OUTPUT_CTEP_3` &amp;&amp; get(get(system::getParent($this,8),1),7).getValue() != `CTEP3_NOT_USED`) || $this.getValue() != `CTE_OUTPUT_CTEP_3` ) &amp;&amp;
+                        (( $this.getValue() == `CTE_OUTPUT_CTEP_4` &amp;&amp; get(get(system::getParent($this,8),1),9).getValue() != `CTEP4_NOT_USED`) || $this.getValue() != `CTE_OUTPUT_CTEP_4` ) &amp;&amp;
+                        (( $this.getValue() == `CTE_OUTPUT_CTEP_5` &amp;&amp; get(get(system::getParent($this,8),1),11).getValue() != `CTEP5_NOT_USED`) || $this.getValue() != `CTE_OUTPUT_CTEP_5` ) &amp;&amp;
+                        (( $this.getValue() == `CTE_OUTPUT_CTEP_6` &amp;&amp; get(get(system::getParent($this,8),1),13).getValue() != `CTEP6_NOT_USED`) || $this.getValue() != `CTE_OUTPUT_CTEP_6` ) &amp;&amp;
+                        (( $this.getValue() == `CTE_OUTPUT_CTEP_7` &amp;&amp; get(get(system::getParent($this,8),1),15).getValue() != `CTEP7_NOT_USED`) || $this.getValue() != `CTE_OUTPUT_CTEP_7` ) &amp;&amp;
+                        (( $this.getValue() == `CTE_OUTPUT_SPT_RCS` &amp;&amp; get(get(system::getParent($this,8),1),17).getValue() != `SPTRCS_NOT_USED`) || $this.getValue() != `CTE_OUTPUT_SPT_RCS` ) &amp;&amp;
+                        (( $this.getValue() == `CTE_OUTPUT_SPT_RFS` &amp;&amp; get(get(system::getParent($this,8),1),18).getValue() != `SPTRFS_NOT_USED`) || $this.getValue() != `CTE_OUTPUT_SPT_RFS` ) &amp;&amp;
+                        (( $this.getValue() == `CTE_OUTPUT_FLEX_0` &amp;&amp; get(get(system::getParent($this,8),1),19).getValue() != `FLEX0_NOT_USED`) || $this.getValue() != `CTE_OUTPUT_FLEX_0` ) &amp;&amp;
+                        (( $this.getValue() == `CTE_OUTPUT_FLEX_1` &amp;&amp; get(get(system::getParent($this,8),1),20).getValue() != `FLEX1_NOT_USED`) || $this.getValue() != `CTE_OUTPUT_FLEX_1` )
+
+                        )"
+                        level="error" description="Output Type must be an output selected from the Output Signal Usage list above!"/>
+                    </validation>
+                </dynamic_enum>
+
+                <dynamic_enum id="CteOutputSignalToggleType" label="Toggle State" items="toArray(`CTE_TOGGLE_SET_TO_LOW`,
+                                                                                                 `CTE_TOGGLE_SET_TO_HIGH`,
+                                                                                                 `CTE_TOGGLE_FLIP`,
+                                                                                                 `CTE_TOGGLE_DONT_CARE`)"
+                              available="( ((get(system::getParent($this,1),1).getValue()==`CTE_OUTPUT_SPT_0`) &amp;&amp; (get(get(system::getParent($this,8),1),0).getValue() == `CTE_OUT_PULSE`)) ||
+                                           ((get(system::getParent($this,1),1).getValue()==`CTE_OUTPUT_SPT_1`) &amp;&amp; (get(get(system::getParent($this,8),1),0).getValue() == `CTE_OUT_PULSE`)) ||
+                                           ((get(system::getParent($this,1),1).getValue()==`CTE_OUTPUT_SPT_2`) &amp;&amp; (get(get(system::getParent($this,8),1),0).getValue() == `CTE_OUT_PULSE`)) ||
+                                           ((get(system::getParent($this,1),1).getValue()==`CTE_OUTPUT_SPT_3`) &amp;&amp; (get(get(system::getParent($this,8),1),0).getValue() == `CTE_OUT_PULSE`)) ||
+                                           ((get(system::getParent($this,1),1).getValue()==`CTE_OUTPUT_CTEP_0`) &amp;&amp; (get(get(system::getParent($this,8),1),1).getValue() == `CTE_OUT_TOGGLE`)) ||
+                                           ((get(system::getParent($this,1),1).getValue()==`CTE_OUTPUT_CTEP_1`) &amp;&amp; (get(get(system::getParent($this,8),1),3).getValue() == `CTE_OUT_TOGGLE`)) ||
+                                           ((get(system::getParent($this,1),1).getValue()==`CTE_OUTPUT_CTEP_2`) &amp;&amp; (get(get(system::getParent($this,8),1),5).getValue() == `CTE_OUT_TOGGLE`)) ||
+                                           ((get(system::getParent($this,1),1).getValue()==`CTE_OUTPUT_CTEP_3`) &amp;&amp; (get(get(system::getParent($this,8),1),7).getValue() == `CTE_OUT_TOGGLE`)) ||
+                                           ((get(system::getParent($this,1),1).getValue()==`CTE_OUTPUT_CTEP_4`) &amp;&amp; (get(get(system::getParent($this,8),1),9).getValue() == `CTE_OUT_TOGGLE`)) ||
+                                           ((get(system::getParent($this,1),1).getValue()==`CTE_OUTPUT_CTEP_5`) &amp;&amp; (get(get(system::getParent($this,8),1),11).getValue() == `CTE_OUT_TOGGLE`)) ||
+                                           ((get(system::getParent($this,1),1).getValue()==`CTE_OUTPUT_CTEP_6`) &amp;&amp; (get(get(system::getParent($this,8),1),13).getValue() == `CTE_OUT_TOGGLE`)) ||
+                                           ((get(system::getParent($this,1),1).getValue()==`CTE_OUTPUT_CTEP_7`) &amp;&amp; (get(get(system::getParent($this,8),1),15).getValue() == `CTE_OUT_TOGGLE`)) ) ">
+                    <description><![CDATA[<html> State selections for Toggle Type. </html>]]>
+                    </description>
+                    <options_expr>
+                        <option id="type" expr="`ENUMERATION`"/>
+                        <option id="UUID" expr="`ECUC:daca2411-31e0-493f-8e05-3716f0466543`"/>
+                        <option id="postBuildVariantValue" expr="true"/>
+                        <option id="origin" expr="`NXP`"/>
+                        <option id="symbolicNameValue" expr="false"/>
+                        <option id="defaultValue" expr="`CTE_TOGGLE_SET_TO_LOW`"/>
+                        <option id="scope" expr="`LOCAL`"/>
+                        <option id="valueConfigClass" expr="`POST-BUILD=VARIANT-POST-BUILD;PRE-COMPILE=VARIANT-PRE-COMPILE`"/>
+                    </options_expr>
+                </dynamic_enum>
+
+                <dynamic_enum id="CteOutputSignalLogicType" label="Logic State" items="toArray(`CTE_LOGIC_SET_TO_LOW`,
+                                                                                               `CTE_LOGIC_SET_TO_HIGH`,
+                                                                                               `CTE_LOGIC_SET_TO_HIGH_Z`,
+                                                                                               `CTE_LOGIC_UNCHANGED`)"
+                              available="( ((get(system::getParent($this,1),1).getValue()==`CTE_OUTPUT_CTEP_0`) &amp;&amp; (get(get(system::getParent($this,8),1),1).getValue() == `CTE_OUT_LOGIC`)) ||
+                                           ((get(system::getParent($this,1),1).getValue()==`CTE_OUTPUT_CTEP_1`) &amp;&amp; (get(get(system::getParent($this,8),1),3).getValue() == `CTE_OUT_LOGIC`)) ||
+                                           ((get(system::getParent($this,1),1).getValue()==`CTE_OUTPUT_CTEP_2`) &amp;&amp; (get(get(system::getParent($this,8),1),5).getValue() == `CTE_OUT_LOGIC`)) ||
+                                           ((get(system::getParent($this,1),1).getValue()==`CTE_OUTPUT_CTEP_3`) &amp;&amp; (get(get(system::getParent($this,8),1),7).getValue() == `CTE_OUT_LOGIC`)) ||
+                                           ((get(system::getParent($this,1),1).getValue()==`CTE_OUTPUT_CTEP_4`) &amp;&amp; (get(get(system::getParent($this,8),1),9).getValue() == `CTE_OUT_LOGIC`)) ||
+                                           ((get(system::getParent($this,1),1).getValue()==`CTE_OUTPUT_CTEP_5`) &amp;&amp; (get(get(system::getParent($this,8),1),11).getValue() == `CTE_OUT_LOGIC`)) ||
+                                           ((get(system::getParent($this,1),1).getValue()==`CTE_OUTPUT_CTEP_6`) &amp;&amp; (get(get(system::getParent($this,8),1),13).getValue() == `CTE_OUT_LOGIC`)) ||
+                                           ((get(system::getParent($this,1),1).getValue()==`CTE_OUTPUT_CTEP_7`) &amp;&amp; (get(get(system::getParent($this,8),1),13).getValue() == `CTE_OUT_LOGIC`)) ||
+                                           ((get(system::getParent($this,1),1).getValue()==`CTE_OUTPUT_SPT_0`) &amp;&amp; (get(get(system::getParent($this,8),1),0).getValue() == `CTE_OUT_LOGIC`)) ||
+                                           ((get(system::getParent($this,1),1).getValue()==`CTE_OUTPUT_SPT_1`) &amp;&amp; (get(get(system::getParent($this,8),1),0).getValue() == `CTE_OUT_LOGIC`)) ||
+                                           ((get(system::getParent($this,1),1).getValue()==`CTE_OUTPUT_SPT_2`) &amp;&amp; (get(get(system::getParent($this,8),1),0).getValue() == `CTE_OUT_LOGIC`)) ||
+                                           ((get(system::getParent($this,1),1).getValue()==`CTE_OUTPUT_SPT_3`) &amp;&amp; (get(get(system::getParent($this,8),1),0).getValue() == `CTE_OUT_LOGIC`)) ||
+                                           ((get(system::getParent($this,1),1).getValue()==`CTE_OUTPUT_SPT_RCS`) &amp;&amp; (get(get(system::getParent($this,8),1),17).getValue() == `CTE_OUT_LOGIC`)) ||
+                                           ((get(system::getParent($this,1),1).getValue()==`CTE_OUTPUT_SPT_RFS`) &amp;&amp; (get(get(system::getParent($this,8),1),18).getValue() == `CTE_OUT_LOGIC`)) ||
+                                           ((get(system::getParent($this,1),1).getValue()==`CTE_OUTPUT_FLEX_0`) &amp;&amp; (get(get(system::getParent($this,8),1),19).getValue() == `CTE_OUT_LOGIC`)) ||
+                                           ((get(system::getParent($this,1),1).getValue()==`CTE_OUTPUT_FLEX_0`) &amp;&amp; (get(get(system::getParent($this,8),1),20).getValue() == `CTE_OUT_LOGIC`)) ) ">
+                    <description><![CDATA[<html> State selections for Logic Type. </html>]]>
+                    </description>
+                    <options_expr>
+                        <option id="type" expr="`ENUMERATION`"/>
+                        <option id="UUID" expr="`ECUC:daca2411-31e0-493f-8e05-3716f0466543`"/>
+                        <option id="postBuildVariantValue" expr="true"/>
+                        <option id="origin" expr="`NXP`"/>
+                        <option id="symbolicNameValue" expr="false"/>
+                        <option id="defaultValue" expr="`CTE_LOGIC_SET_TO_LOW`"/>
+                        <option id="scope" expr="`LOCAL`"/>
+                        <option id="valueConfigClass" expr="`POST-BUILD=VARIANT-POST-BUILD;PRE-COMPILE=VARIANT-PRE-COMPILE`"/>
+                    </options_expr>
+                </dynamic_enum>
+
+                <dynamic_enum id="CteOutputSignalClockType" label="Clock State" items="toArray(`CTE_CLOCK_SET_TO_LOW`,
+                                                                                               `CTE_CLOCK_ACTIVE_SYNC`,
+                                                                                               `CTE_CLOCK_ACTIVE`,
+                                                                                               `CTE_CLOCK_SET_TO_HIGH`)"
+                              available="( ((get(system::getParent($this,1),1).getValue()==`CTE_OUTPUT_CTEP_0`) &amp;&amp; (get(get(system::getParent($this,8),1),1).getValue() == `CTE_OUT_CLOCK`)) ||
+                                           ((get(system::getParent($this,1),1).getValue()==`CTE_OUTPUT_CTEP_1`) &amp;&amp; (get(get(system::getParent($this,8),1),3).getValue() == `CTE_OUT_CLOCK`)) ||
+                                           ((get(system::getParent($this,1),1).getValue()==`CTE_OUTPUT_CTEP_2`) &amp;&amp; (get(get(system::getParent($this,8),1),5).getValue() == `CTE_OUT_CLOCK`)) ||
+                                           ((get(system::getParent($this,1),1).getValue()==`CTE_OUTPUT_CTEP_3`) &amp;&amp; (get(get(system::getParent($this,8),1),7).getValue() == `CTE_OUT_CLOCK`)) ||
+                                           ((get(system::getParent($this,1),1).getValue()==`CTE_OUTPUT_CTEP_4`) &amp;&amp; (get(get(system::getParent($this,8),1),9).getValue() == `CTE_OUT_CLOCK`)) ||
+                                           ((get(system::getParent($this,1),1).getValue()==`CTE_OUTPUT_CTEP_5`) &amp;&amp; (get(get(system::getParent($this,8),1),11).getValue() == `CTE_OUT_CLOCK`)) ||
+                                           ((get(system::getParent($this,1),1).getValue()==`CTE_OUTPUT_CTEP_6`) &amp;&amp; (get(get(system::getParent($this,8),1),13).getValue() == `CTE_OUT_CLOCK`)) ||
+                                           ((get(system::getParent($this,1),1).getValue()==`CTE_OUTPUT_CTEP_7`) &amp;&amp; (get(get(system::getParent($this,8),1),15).getValue() == `CTE_OUT_CLOCK`)) ) ">
+                    <description><![CDATA[<html> State selections for Clock Type. </html>]]>
+                    </description>
+                    <options_expr>
+                        <option id="type" expr="`ENUMERATION`"/>
+                        <option id="UUID" expr="`ECUC:daca2411-31e0-493f-8e05-3716f0466543`"/>
+                        <option id="postBuildVariantValue" expr="true"/>
+                        <option id="origin" expr="`NXP`"/>
+                        <option id="symbolicNameValue" expr="false"/>
+                        <option id="defaultValue" expr="`CTE_CLOCK_SET_TO_LOW`"/>
+                        <option id="scope" expr="`LOCAL`"/>
+                        <option id="valueConfigClass" expr="`POST-BUILD=VARIANT-POST-BUILD;PRE-COMPILE=VARIANT-PRE-COMPILE`"/>
+                    </options_expr>
+                </dynamic_enum>
+
+                <dynamic_enum id="CteOutputSignalHIZType" label="Clock State" items="toArray(`CTE_LOGIC_SET_TO_HIGH_Z`)"
+                              available="( ((get(system::getParent($this,1),1).getValue()==`CTE_OUTPUT_CTEP_0`) &amp;&amp; (get(get(system::getParent($this,8),1),1).getValue() == `CTE_OUT_HIZ`)) ||
+                                           ((get(system::getParent($this,1),1).getValue()==`CTE_OUTPUT_CTEP_1`) &amp;&amp; (get(get(system::getParent($this,8),1),3).getValue() == `CTE_OUT_HIZ`)) ||
+                                           ((get(system::getParent($this,1),1).getValue()==`CTE_OUTPUT_CTEP_2`) &amp;&amp; (get(get(system::getParent($this,8),1),5).getValue() == `CTE_OUT_HIZ`)) ||
+                                           ((get(system::getParent($this,1),1).getValue()==`CTE_OUTPUT_CTEP_3`) &amp;&amp; (get(get(system::getParent($this,8),1),7).getValue() == `CTE_OUT_HIZ`)) ||
+                                           ((get(system::getParent($this,1),1).getValue()==`CTE_OUTPUT_CTEP_4`) &amp;&amp; (get(get(system::getParent($this,8),1),9).getValue() == `CTE_OUT_HIZ`)) ||
+                                           ((get(system::getParent($this,1),1).getValue()==`CTE_OUTPUT_CTEP_5`) &amp;&amp; (get(get(system::getParent($this,8),1),11).getValue() == `CTE_OUT_HIZ`)) ||
+                                           ((get(system::getParent($this,1),1).getValue()==`CTE_OUTPUT_CTEP_6`) &amp;&amp; (get(get(system::getParent($this,8),1),13).getValue() == `CTE_OUT_HIZ`)) ||
+                                           ((get(system::getParent($this,1),1).getValue()==`CTE_OUTPUT_CTEP_7`) &amp;&amp; (get(get(system::getParent($this,8),1),15).getValue() == `CTE_OUT_HIZ`)) ) ">
+                    <description><![CDATA[<html> State selections for Clock Type. </html>]]>
+                    </description>
+                    <options_expr>
+                        <option id="type" expr="`ENUMERATION`"/>
+                        <option id="UUID" expr="`ECUC:daca2411-31e0-493f-8e05-3716f0466543`"/>
+                        <option id="postBuildVariantValue" expr="true"/>
+                        <option id="origin" expr="`NXP`"/>
+                        <option id="symbolicNameValue" expr="false"/>
+                        <option id="defaultValue" expr="`CTE_CLOCK_SET_TO_LOW`"/>
+                        <option id="scope" expr="`LOCAL`"/>
+                        <option id="valueConfigClass" expr="`POST-BUILD=VARIANT-POST-BUILD;PRE-COMPILE=VARIANT-PRE-COMPILE`"/>
+                    </options_expr>
+                </dynamic_enum>
+
+            </struct>
+
+            <struct id="CteDriverParamsType">
+                <quick_selections>
+                    <quick_selection id="CteDriverParamsTypeDefault" label="Default Output Values" available="true">
+                        <set id="CteOutputConfigName">outputDefTable_</set>
+                        <set id="CteOutputSignalUsage">SPT_SIGNALS_NOT_USED</set>
+                        <set id="Csi2NumLanesRx">Two___lanes</set>
+                        <set id="Csi2UnitInitOptions">CSI2_DPHY_INIT_SHORT_CALIB</set>
+                    </quick_selection>
+                </quick_selections>
+
+                <string id="CteOutputConfigName" label="Config Name">
+                    <description>The name of the configuration structure to be used in the generated .c file.</description>
+                    <validation>
+                        <constraint cond_expr="(($this.getValue() != ``) &amp;&amp; isCIdentifier($this.getValue())) &amp;&amp; $this.execScriptFunction(`../Cte/cte_utils.js`, `Csi2IsPlatformMatch`, $this.getValue(), `outputDefTable_`)"
+                        level="error" description="Name must be a valid C identifier and must start with 'outputDefTable_' !"/>
+                        <constraint cond_expr="countOccurrences(($parent.getParent()), x -> (x.getSetting(`CteOutputConfigName`).getValue() == $this.value())) == 1" level="error" description="Duplicated value. Config Name must be unique across all Configurations."/>
+                    </validation>
+                </string>
+
+                <struct id="CteOutputSignalUsage" label="CTE Output Signal Usage">
+                    <description>
+                        This container configures the Output Signals of the CTE driver.
+                    </description>
+
+                    <dynamic_enum id="CteSptSignalUsage" label="SPT_x" items="toArray(`SPT_SIGNALS_NOT_USED`,
+                                                                                      `CTE_OUT_LOGIC`,
+                                                                                      `CTE_OUT_PULSE`)">
+                        <description><![CDATA[<html>
+                                                    How the SPT_x signals are used:
+                                                    <br><b>SPT_SIGNALS_NOT_USED</b> = None the SPT_x signals are used
+                                                    <b>CTE_OUT_PULSE</b>            = Output type is pulse, a short signal toggle
+                                                    <b>CTE_OUT_LOGIC</b>            = Output type is logic, low/high/Hi-Z levels
+                                                </html>]]>
+                        </description>
+                        <options_expr>
+                            <option id="type" expr="`ENUMERATION`"/>
+                            <option id="UUID" expr="`ECUC:daca2411-31e0-493f-8e05-3716f0466543`"/>
+                            <option id="postBuildVariantValue" expr="true"/>
+                            <option id="origin" expr="`NXP`"/>
+                            <option id="symbolicNameValue" expr="false"/>
+                            <option id="defaultValue" expr="`SPT_SIGNALS_NOT_USED`"/>
+                            <option id="scope" expr="`LOCAL`"/>
+                            <option id="valueConfigClass" expr="`POST-BUILD=VARIANT-POST-BUILD;PRE-COMPILE=VARIANT-PRE-COMPILE`"/>
+                        </options_expr>
+                    </dynamic_enum>
+
+                    <dynamic_enum id="CteOutputSignalCtep0Usage" label="CTE_0 Pad" items="toArray(`CTEP0_NOT_USED`,
+                                                                                                  `CTE_OUT_HIZ`,
+                                                                                                  `CTE_OUT_TOGGLE`,
+                                                                                                  `CTE_OUT_CLOCK`,
+                                                                                                  `CTE_OUT_LOGIC`)">
+                        <description><![CDATA[<html>
+                                                    How the external CTE_0 pad signal is used:
+                                                    <br><b>CTEP1_NOT_USED</b>  = The signal CTEP_0 is not used
+                                                    <b>CTE_OUT_HIZ</b>         = Output type is only High-Z
+                                                    <b>CTE_OUT_TOGGLE</b>      = Output type is toggle, low/hi/toggle
+                                                    <b>CTE_OUT_CLOCK</b>       = Output type is clock, low/hi/toggle with[out] sync
+                                                    <b>CTE_OUT_LOGIC</b>       = Output type is logic, low/high/Hi-Z levels
+                                                </html>]]>
+                        </description>
+                        <options_expr>
+                            <option id="type" expr="`ENUMERATION`"/>
+                            <option id="UUID" expr="`ECUC:daca2411-31e0-493f-8e05-3716f0466541`"/>
+                            <option id="postBuildVariantValue" expr="true"/>
+                            <option id="origin" expr="`NXP`"/>
+                            <option id="symbolicNameValue" expr="false"/>
+                            <option id="defaultValue" expr="`VariantPostBuild`"/>
+                            <option id="scope" expr="`LOCAL`"/>
+                            <option id="valueConfigClass" expr="`POST-BUILD=VARIANT-POST-BUILD;PRE-COMPILE=VARIANT-PRE-COMPILE`"/>
+                        </options_expr>
+                    </dynamic_enum>
+
+                    <integer id="CteOutputSignalCtep0Clock" label="CTEP_0 Clock Period [ns]" type="uint32_t" available="get(system::getParent($this,1),1).getValue()==`CTE_OUT_CLOCK`">
+                        <description><![CDATA[<html> The period of the CTEP0 signal, used as CLOCK type. The clock period in ns. </html>]]>
+                        </description>
+                        <options_expr>
+                            <option id="type" expr="`INTEGER`"/>
+                            <option id="UUID" expr="`ECUC:89dc979d-14a5-4550-b3a3-ee44747d5555`"/>
+                            <option id="postBuildVariantValue" expr="false"/>
+                            <option id="SYNC_VALUE"/>
+                            <option id="origin" expr="`AUTOSAR_ECUC`"/>
+                            <option id="symbolicNameValue" expr="true"/>
+                            <option id="defaultValue" expr="`10000000`"/>
+                            <option id="min" expr="1"/>
+                            <option id="max" expr="181"/>
+                            <option id="scope" expr="`LOCAL`"/>
+                            <option id="valueConfigClass" expr="`PRE-COMPILE=VARIANT-POST-BUILD;PRE-COMPILE=VARIANT-PRE-COMPILE`"/>
+                        </options_expr>
+                        <validation>
+                            <constraint cond_expr="($this.getValue() > 0)" level="error" description="Value must be bigger than 0."/>
+                        </validation>
+                    </integer>
+
+                    <dynamic_enum id="CteOutputSignalCtep1Usage" label="CTE_1 Pad" items="toArray(`CTEP1_NOT_USED`,
+                                                                                                  `CTE_OUT_HIZ`,
+                                                                                                  `CTE_OUT_TOGGLE`,
+                                                                                                  `CTE_OUT_CLOCK`,
+                                                                                                  `CTE_OUT_LOGIC`)">
+                        <description><![CDATA[<html>
+                                                    How the external CTE_1 pad signal is used:
+                                                    <br><b>CTEP1_NOT_USED</b>  = The signal CTEP_1 is not used
+                                                    <b>CTE_OUT_HIZ</b>         = Output type is only High-Z
+                                                    <b>CTE_OUT_TOGGLE</b>      = Output type is toggle, low/hi/toggle
+                                                    <b>CTE_OUT_CLOCK</b>       = Output type is clock, low/hi/toggle with[out] sync
+                                                    <b>CTE_OUT_LOGIC</b>       = Output type is logic, low/high/Hi-Z levels
+                                                </html>]]>
+                        </description>
+                        <options_expr>
+                            <option id="type" expr="`ENUMERATION`"/>
+                            <option id="UUID" expr="`ECUC:daca2411-31e0-493f-8e05-3716f0466541`"/>
+                            <option id="postBuildVariantValue" expr="true"/>
+                            <option id="origin" expr="`NXP`"/>
+                            <option id="symbolicNameValue" expr="false"/>
+                            <option id="defaultValue" expr="`VariantPostBuild`"/>
+                            <option id="scope" expr="`LOCAL`"/>
+                            <option id="valueConfigClass" expr="`POST-BUILD=VARIANT-POST-BUILD;PRE-COMPILE=VARIANT-PRE-COMPILE`"/>
+                        </options_expr>
+                    </dynamic_enum>
+
+                    <integer id="CteOutputSignalCtep1Clock" label="CTEP_1 Clock Period [ns]" type="uint32_t" available="get(system::getParent($this,1),3).getValue()==`CTE_OUT_CLOCK`">
+                        <description><![CDATA[<html> The period of the CTEP1 signal, used as CLOCK type. The clock period in ns. </html>]]>
+                        </description>
+                        <options_expr>
+                            <option id="type" expr="`INTEGER`"/>
+                            <option id="UUID" expr="`ECUC:89dc979d-14a5-4550-b3a3-ee44747d6f11`"/>
+                            <option id="postBuildVariantValue" expr="false"/>
+                            <option id="SYNC_VALUE"/>
+                            <option id="origin" expr="`AUTOSAR_ECUC`"/>
+                            <option id="symbolicNameValue" expr="true"/>
+                            <option id="defaultValue" expr="`10000000`"/>
+                            <option id="min" expr="1"/>
+                            <option id="max" expr="181"/>
+                            <option id="scope" expr="`LOCAL`"/>
+                            <option id="valueConfigClass" expr="`PRE-COMPILE=VARIANT-POST-BUILD;PRE-COMPILE=VARIANT-PRE-COMPILE`"/>
+                        </options_expr>
+                        <validation>
+                            <constraint cond_expr="($this.getValue() > 0)" level="error" description="Value must be bigger than 0."/>
+                        </validation>
+                    </integer>
+
+                    <dynamic_enum id="CteOutputSignalCtep2Usage" label="CTE_2 Pad" items="toArray(`CTEP2_NOT_USED`,
+                                                                                                  `CTE_OUT_HIZ`,
+                                                                                                  `CTE_OUT_TOGGLE`,
+                                                                                                  `CTE_OUT_CLOCK`,
+                                                                                                  `CTE_OUT_LOGIC`)">
+                        <description><![CDATA[<html>
+                                                    How the external CTE_2 pad signal is used:
+                                                    <br><b>CTEP2_NOT_USED</b>  = The signal CTEP_2 is not used
+                                                    <b>CTE_OUT_HIZ</b>         = Output type is only High-Z
+                                                    <b>CTE_OUT_TOGGLE</b>      = Output type is toggle, low/hi/toggle
+                                                    <b>CTE_OUT_CLOCK</b>       = Output type is clock, low/hi/toggle with[out] sync
+                                                    <b>CTE_OUT_LOGIC</b>       = Output type is logic, low/high/Hi-Z levels
+                                                </html>]]>
+                        </description>
+                        <options_expr>
+                            <option id="type" expr="`ENUMERATION`"/>
+                            <option id="UUID" expr="`ECUC:daca2411-31e0-493f-8e05-3716f0466541`"/>
+                            <option id="postBuildVariantValue" expr="true"/>
+                            <option id="origin" expr="`NXP`"/>
+                            <option id="symbolicNameValue" expr="false"/>
+                            <option id="defaultValue" expr="`VariantPostBuild`"/>
+                            <option id="scope" expr="`LOCAL`"/>
+                            <option id="valueConfigClass" expr="`POST-BUILD=VARIANT-POST-BUILD;PRE-COMPILE=VARIANT-PRE-COMPILE`"/>
+                        </options_expr>
+                    </dynamic_enum>
+
+                    <integer id="CteOutputSignalCtep2Clock" label="CTEP_2 Clock Period [ns]" type="uint32_t" available="get(system::getParent($this,1),5).getValue()==`CTE_OUT_CLOCK`">
+                        <description><![CDATA[<html> The period of the CTEP2 signal, used as CLOCK type. The clock period in ns. </html>]]>
+                        </description>
+                        <options_expr>
+                            <option id="type" expr="`INTEGER`"/>
+                            <option id="UUID" expr="`ECUC:89dc979d-14a5-4550-b3a3-ee44747d6f11`"/>
+                            <option id="postBuildVariantValue" expr="false"/>
+                            <option id="SYNC_VALUE"/>
+                            <option id="origin" expr="`AUTOSAR_ECUC`"/>
+                            <option id="symbolicNameValue" expr="true"/>
+                            <option id="defaultValue" expr="`10000000`"/>
+                            <option id="min" expr="1"/>
+                            <option id="max" expr="181"/>
+                            <option id="scope" expr="`LOCAL`"/>
+                            <option id="valueConfigClass" expr="`PRE-COMPILE=VARIANT-POST-BUILD;PRE-COMPILE=VARIANT-PRE-COMPILE`"/>
+                        </options_expr>
+                        <validation>
+                            <constraint cond_expr="($this.getValue() > 0)" level="error" description="Value must be bigger than 0."/>
+                        </validation>
+                    </integer>
+
+                    <dynamic_enum id="CteOutputSignalCtep3Usage" label="CTE_3 Pad" items="toArray(`CTEP3_NOT_USED`,
+                                                                                                  `CTE_OUT_HIZ`,
+                                                                                                  `CTE_OUT_TOGGLE`,
+                                                                                                  `CTE_OUT_CLOCK`,
+                                                                                                  `CTE_OUT_LOGIC`)">
+                        <description><![CDATA[<html>
+                                                    How the external CTE_3 pad signal is used:
+                                                    <br><b>CTEP3_NOT_USED</b>  = The signal CTEP_3 is not used
+                                                    <b>CTE_OUT_HIZ</b>         = Output type is only High-Z
+                                                    <b>CTE_OUT_TOGGLE</b>      = Output type is toggle, low/hi/toggle
+                                                    <b>CTE_OUT_CLOCK</b>       = Output type is clock, low/hi/toggle with[out] sync
+                                                    <b>CTE_OUT_LOGIC</b>       = Output type is logic, low/high/Hi-Z levels
+                                                </html>]]>
+                        </description>
+                        <options_expr>
+                            <option id="type" expr="`ENUMERATION`"/>
+                            <option id="UUID" expr="`ECUC:daca2411-31e0-493f-8e05-3716f0466541`"/>
+                            <option id="postBuildVariantValue" expr="true"/>
+                            <option id="origin" expr="`NXP`"/>
+                            <option id="symbolicNameValue" expr="false"/>
+                            <option id="defaultValue" expr="`VariantPostBuild`"/>
+                            <option id="scope" expr="`LOCAL`"/>
+                            <option id="valueConfigClass" expr="`POST-BUILD=VARIANT-POST-BUILD;PRE-COMPILE=VARIANT-PRE-COMPILE`"/>
+                        </options_expr>
+                    </dynamic_enum>
+
+                    <integer id="CteOutputSignalCtep3Clock" label="CTEP_3 Clock Period [ns]" type="uint32_t" available="get(system::getParent($this,1),7).getValue()==`CTE_OUT_CLOCK`">
+                        <description><![CDATA[<html> The period of the CTEP3 signal, used as CLOCK type. The clock period in ns. </html>]]>
+                        </description>
+                        <options_expr>
+                            <option id="type" expr="`INTEGER`"/>
+                            <option id="UUID" expr="`ECUC:89dc979d-14a5-4550-b3a3-ee44747d6f11`"/>
+                            <option id="postBuildVariantValue" expr="false"/>
+                            <option id="SYNC_VALUE"/>
+                            <option id="origin" expr="`AUTOSAR_ECUC`"/>
+                            <option id="symbolicNameValue" expr="true"/>
+                            <option id="defaultValue" expr="`10000000`"/>
+                            <option id="min" expr="1"/>
+                            <option id="max" expr="181"/>
+                            <option id="scope" expr="`LOCAL`"/>
+                            <option id="valueConfigClass" expr="`PRE-COMPILE=VARIANT-POST-BUILD;PRE-COMPILE=VARIANT-PRE-COMPILE`"/>
+                        </options_expr>
+                        <validation>
+                            <constraint cond_expr="($this.getValue() > 0)" level="error" description="Value must be bigger than 0."/>
+                        </validation>
+                    </integer>
+
+                    <dynamic_enum id="CteOutputSignalCtep4Usage" label="CTE_4 Pad" items="toArray(`CTEP4_NOT_USED`,
+                                                                                                  `CTE_OUT_HIZ`,
+                                                                                                  `CTE_OUT_TOGGLE`,
+                                                                                                  `CTE_OUT_CLOCK`,
+                                                                                                  `CTE_OUT_LOGIC`)">
+                        <description><![CDATA[<html>
+                                                    How the external CTE_4 pad signal is used:
+                                                    <br><b>CTEP4_NOT_USED</b>  = The signal CTEP_4 is not used
+                                                    <b>CTE_OUT_HIZ</b>         = Output type is only High-Z
+                                                    <b>CTE_OUT_TOGGLE</b>      = Output type is toggle, low/hi/toggle
+                                                    <b>CTE_OUT_CLOCK</b>       = Output type is clock, low/hi/toggle with[out] sync
+                                                    <b>CTE_OUT_LOGIC</b>       = Output type is logic, low/high/Hi-Z levels
+                                                </html>]]>
+                        </description>
+                        <options_expr>
+                            <option id="type" expr="`ENUMERATION`"/>
+                            <option id="UUID" expr="`ECUC:daca2411-31e0-493f-8e05-3716f0466541`"/>
+                            <option id="postBuildVariantValue" expr="true"/>
+                            <option id="origin" expr="`NXP`"/>
+                            <option id="symbolicNameValue" expr="false"/>
+                            <option id="defaultValue" expr="`VariantPostBuild`"/>
+                            <option id="scope" expr="`LOCAL`"/>
+                            <option id="valueConfigClass" expr="`POST-BUILD=VARIANT-POST-BUILD;PRE-COMPILE=VARIANT-PRE-COMPILE`"/>
+                        </options_expr>
+                    </dynamic_enum>
+
+                    <integer id="CteOutputSignalCtep4Clock" label="CTEP_4 Clock Period [ns]" type="uint32_t" available="get(system::getParent($this,1),9).getValue()==`CTE_OUT_CLOCK`">
+                        <description><![CDATA[<html> The period of the CTEP4 signal, used as CLOCK type. The clock period in ns. </html>]]>
+                        </description>
+                        <options_expr>
+                            <option id="type" expr="`INTEGER`"/>
+                            <option id="UUID" expr="`ECUC:89dc979d-14a5-4550-b3a3-ee44747d6f11`"/>
+                            <option id="postBuildVariantValue" expr="false"/>
+                            <option id="SYNC_VALUE"/>
+                            <option id="origin" expr="`AUTOSAR_ECUC`"/>
+                            <option id="symbolicNameValue" expr="true"/>
+                            <option id="defaultValue" expr="`10000000`"/>
+                            <option id="min" expr="1"/>
+                            <option id="max" expr="181"/>
+                            <option id="scope" expr="`LOCAL`"/>
+                            <option id="valueConfigClass" expr="`PRE-COMPILE=VARIANT-POST-BUILD;PRE-COMPILE=VARIANT-PRE-COMPILE`"/>
+                        </options_expr>
+                        <validation>
+                            <constraint cond_expr="($this.getValue() > 0)" level="error" description="Value must be bigger than 0."/>
+                        </validation>
+                    </integer>
+
+                    <dynamic_enum id="CteOutputSignalCtep5Usage" label="CTE_5 Pad" items="toArray(`CTEP5_NOT_USED`,
+                                                                                                  `CTE_OUT_HIZ`,
+                                                                                                  `CTE_OUT_TOGGLE`,
+                                                                                                  `CTE_OUT_CLOCK`,
+                                                                                                  `CTE_OUT_LOGIC`)">
+                        <description><![CDATA[<html>
+                                                    How the external CTE_5 pad signal is used:
+                                                    <br><b>CTEP5_NOT_USED</b>  = The signal CTEP_5 is not used
+                                                    <b>CTE_OUT_HIZ</b>         = Output type is only High-Z
+                                                    <b>CTE_OUT_TOGGLE</b>      = Output type is toggle, low/hi/toggle
+                                                    <b>CTE_OUT_CLOCK</b>       = Output type is clock, low/hi/toggle with[out] sync
+                                                    <b>CTE_OUT_LOGIC</b>       = Output type is logic, low/high/Hi-Z levels
+                                                </html>]]>
+                        </description>
+                        <options_expr>
+                            <option id="type" expr="`ENUMERATION`"/>
+                            <option id="UUID" expr="`ECUC:daca2411-31e0-493f-8e05-3716f0466541`"/>
+                            <option id="postBuildVariantValue" expr="true"/>
+                            <option id="origin" expr="`NXP`"/>
+                            <option id="symbolicNameValue" expr="false"/>
+                            <option id="defaultValue" expr="`VariantPostBuild`"/>
+                            <option id="scope" expr="`LOCAL`"/>
+                            <option id="valueConfigClass" expr="`POST-BUILD=VARIANT-POST-BUILD;PRE-COMPILE=VARIANT-PRE-COMPILE`"/>
+                        </options_expr>
+                    </dynamic_enum>
+
+                    <integer id="CteOutputSignalCtep5Clock" label="CTEP_5 Clock Period [ns]" type="uint32_t" available="get(system::getParent($this,1),11).getValue()==`CTE_OUT_CLOCK`">
+                        <description><![CDATA[<html> The period of the CTEP5 signal, used as CLOCK type. The clock period in ns. </html>]]>
+                        </description>
+                        <options_expr>
+                            <option id="type" expr="`INTEGER`"/>
+                            <option id="UUID" expr="`ECUC:89dc979d-14a5-4550-b3a3-ee44747d6f11`"/>
+                            <option id="postBuildVariantValue" expr="false"/>
+                            <option id="SYNC_VALUE"/>
+                            <option id="origin" expr="`AUTOSAR_ECUC`"/>
+                            <option id="symbolicNameValue" expr="true"/>
+                            <option id="defaultValue" expr="`10000000`"/>
+                            <option id="min" expr="1"/>
+                            <option id="max" expr="181"/>
+                            <option id="scope" expr="`LOCAL`"/>
+                            <option id="valueConfigClass" expr="`PRE-COMPILE=VARIANT-POST-BUILD;PRE-COMPILE=VARIANT-PRE-COMPILE`"/>
+                        </options_expr>
+                        <validation>
+                            <constraint cond_expr="($this.getValue() > 0)" level="error" description="Value must be bigger than 0."/>
+                        </validation>
+                    </integer>
+
+                    <dynamic_enum id="CteOutputSignalCtep6Usage" label="CTE_6 Pad" items="toArray(`CTEP6_NOT_USED`,
+                                                                                                  `CTE_OUT_HIZ`,
+                                                                                                  `CTE_OUT_TOGGLE`,
+                                                                                                  `CTE_OUT_CLOCK`,
+                                                                                                  `CTE_OUT_LOGIC`)">
+                        <description><![CDATA[<html>
+                                                    How the external CTE_6 pad signal is used:
+                                                    <br><b>CTEP6_NOT_USED</b>  = The signal CTEP_6 is not used
+                                                    <b>CTE_OUT_HIZ</b>         = Output type is only High-Z
+                                                    <b>CTE_OUT_TOGGLE</b>      = Output type is toggle, low/hi/toggle
+                                                    <b>CTE_OUT_CLOCK</b>       = Output type is clock, low/hi/toggle with[out] sync
+                                                    <b>CTE_OUT_LOGIC</b>       = Output type is logic, low/high/Hi-Z levels
+                                                </html>]]>
+                        </description>
+                        <options_expr>
+                            <option id="type" expr="`ENUMERATION`"/>
+                            <option id="UUID" expr="`ECUC:daca2411-31e0-493f-8e05-3716f0466541`"/>
+                            <option id="postBuildVariantValue" expr="true"/>
+                            <option id="origin" expr="`NXP`"/>
+                            <option id="symbolicNameValue" expr="false"/>
+                            <option id="defaultValue" expr="`VariantPostBuild`"/>
+                            <option id="scope" expr="`LOCAL`"/>
+                            <option id="valueConfigClass" expr="`POST-BUILD=VARIANT-POST-BUILD;PRE-COMPILE=VARIANT-PRE-COMPILE`"/>
+                        </options_expr>
+                    </dynamic_enum>
+
+                    <integer id="CteOutputSignalCtep6Clock" label="CTEP_6 Clock Period [ns]" type="uint32_t" available="get(system::getParent($this,1),13).getValue()==`CTE_OUT_CLOCK`">
+                        <description><![CDATA[<html> The period of the CTEP6 signal, used as CLOCK type. The clock period in ns. </html>]]>
+                        </description>
+                        <options_expr>
+                            <option id="type" expr="`INTEGER`"/>
+                            <option id="UUID" expr="`ECUC:89dc979d-14a5-4550-b3a3-ee44747d6f11`"/>
+                            <option id="postBuildVariantValue" expr="false"/>
+                            <option id="SYNC_VALUE"/>
+                            <option id="origin" expr="`AUTOSAR_ECUC`"/>
+                            <option id="symbolicNameValue" expr="true"/>
+                            <option id="defaultValue" expr="`10000000`"/>
+                            <option id="min" expr="1"/>
+                            <option id="max" expr="181"/>
+                            <option id="scope" expr="`LOCAL`"/>
+                            <option id="valueConfigClass" expr="`PRE-COMPILE=VARIANT-POST-BUILD;PRE-COMPILE=VARIANT-PRE-COMPILE`"/>
+                        </options_expr>
+                        <validation>
+                            <constraint cond_expr="($this.getValue() > 0)" level="error" description="Value must be bigger than 0."/>
+                        </validation>
+                    </integer>
+
+                    <dynamic_enum id="CteOutputSignalCtep7Usage" label="CTE_7 Pad" items="toArray(`CTEP7_NOT_USED`,
+                                                                                                  `CTE_OUT_HIZ`,
+                                                                                                  `CTE_OUT_TOGGLE`,
+                                                                                                  `CTE_OUT_CLOCK`,
+                                                                                                  `CTE_OUT_LOGIC`)">
+                        <description><![CDATA[<html>
+                                                    How the external CTE_7 pad signal is used:
+                                                    <br><b>CTEP7_NOT_USED</b>  = The signal CTEP_7 is not used
+                                                    <b>CTE_OUT_HIZ</b>         = Output type is only High-Z
+                                                    <b>CTE_OUT_TOGGLE</b>      = Output type is toggle, low/hi/toggle
+                                                    <b>CTE_OUT_CLOCK</b>       = Output type is clock, low/hi/toggle with[out] sync
+                                                    <b>CTE_OUT_LOGIC</b>       = Output type is logic, low/high/Hi-Z levels
+                                                </html>]]>
+                        </description>
+                        <options_expr>
+                            <option id="type" expr="`ENUMERATION`"/>
+                            <option id="UUID" expr="`ECUC:daca2411-31e0-493f-8e05-3716f0466541`"/>
+                            <option id="postBuildVariantValue" expr="true"/>
+                            <option id="origin" expr="`NXP`"/>
+                            <option id="symbolicNameValue" expr="false"/>
+                            <option id="defaultValue" expr="`VariantPostBuild`"/>
+                            <option id="scope" expr="`LOCAL`"/>
+                            <option id="valueConfigClass" expr="`POST-BUILD=VARIANT-POST-BUILD;PRE-COMPILE=VARIANT-PRE-COMPILE`"/>
+                        </options_expr>
+                    </dynamic_enum>
+
+                    <integer id="CteOutputSignalCtep7Clock" label="CTEP_7 Clock Period [ns]" type="uint32_t" available="get(system::getParent($this,1),15).getValue()==`CTE_OUT_CLOCK`">
+                        <description><![CDATA[<html> The period of the CTEP7 signal, used as CLOCK type. The clock period in ns. </html>]]>
+                        </description>
+                        <options_expr>
+                            <option id="type" expr="`INTEGER`"/>
+                            <option id="UUID" expr="`ECUC:89dc979d-14a5-4550-b3a3-ee44747d6f11`"/>
+                            <option id="postBuildVariantValue" expr="false"/>
+                            <option id="SYNC_VALUE"/>
+                            <option id="origin" expr="`AUTOSAR_ECUC`"/>
+                            <option id="symbolicNameValue" expr="true"/>
+                            <option id="defaultValue" expr="`10000000`"/>
+                            <option id="min" expr="1"/>
+                            <option id="max" expr="181"/>
+                            <option id="scope" expr="`LOCAL`"/>
+                            <option id="valueConfigClass" expr="`PRE-COMPILE=VARIANT-POST-BUILD;PRE-COMPILE=VARIANT-PRE-COMPILE`"/>
+                        </options_expr>
+                        <validation>
+                            <constraint cond_expr="($this.getValue() > 0)" level="error" description="Value must be bigger than 0."/>
+                        </validation>
+                    </integer>
+
+                    <dynamic_enum id="CteOutputSignalSptRcsUsage" label="SPT RCS" items="toArray(`SPTRCS_NOT_USED`,
+                                                                                                 `CTE_OUT_LOGIC`)">
+                        <description><![CDATA[<html>
+                                                    How generated SptRcs (Radar Chirp Start) signal is used:
+                                                    <br><b>SPTRCS_NOT_USED</b>  = The signal SptRcs is not used
+                                                    <br><b>CTE_OUT_LOGIC</b>  = Output type is logic, low/high/Hi-Z levels
+                                                </html>]]>
+                        </description>
+                        <options_expr>
+                            <option id="type" expr="`ENUMERATION`"/>
+                            <option id="UUID" expr="`ECUC:daca2411-31e0-493f-8e05-3716f0466541`"/>
+                            <option id="postBuildVariantValue" expr="true"/>
+                            <option id="origin" expr="`NXP`"/>
+                            <option id="symbolicNameValue" expr="false"/>
+                            <option id="defaultValue" expr="`VariantPostBuild`"/>
+                            <option id="scope" expr="`LOCAL`"/>
+                            <option id="valueConfigClass" expr="`POST-BUILD=VARIANT-POST-BUILD;PRE-COMPILE=VARIANT-PRE-COMPILE`"/>
+                        </options_expr>
+                    </dynamic_enum>
+
+                    <dynamic_enum id="CteOutputSignalSptRfsUsage" label="SPT RFS" items="toArray(`SPTRFS_NOT_USED`,
+                                                                                                 `CTE_OUT_LOGIC`)">
+                        <description><![CDATA[<html>
+                                                    How generated SptRfs (Radar Frame Start) signal is used:
+                                                    <br><b>SPTRFS_NOT_USED</b>  = The signal SptRfs is not used
+                                                    <br><b>CTE_OUT_LOGIC</b>  = Output type is logic, low/high/Hi-Z levels
+                                                </html>]]>
+                        </description>
+                        <options_expr>
+                            <option id="type" expr="`ENUMERATION`"/>
+                            <option id="UUID" expr="`ECUC:daca2411-31e0-493f-8e05-3716f0466541`"/>
+                            <option id="postBuildVariantValue" expr="true"/>
+                            <option id="origin" expr="`NXP`"/>
+                            <option id="symbolicNameValue" expr="false"/>
+                            <option id="defaultValue" expr="`VariantPostBuild`"/>
+                            <option id="scope" expr="`LOCAL`"/>
+                            <option id="valueConfigClass" expr="`POST-BUILD=VARIANT-POST-BUILD;PRE-COMPILE=VARIANT-PRE-COMPILE`"/>
+                        </options_expr>
+                    </dynamic_enum>
+
+                    <dynamic_enum id="CteOutputSignalFlex0Usage" label="FLEX0" items="toArray(`FLEX0_NOT_USED`,
+                                                                                              `CTE_OUT_LOGIC`)">
+                        <description><![CDATA[<html>
+                                                    How generated Flex_0 (Flextimer) signal is used:
+                                                    <br><b>FLEX0_NOT_USED</b>  = The signal Flex_0 is not used
+                                                    <br><b>CTE_OUT_LOGIC</b>  = Output type is logic, low/high/Hi-Z levels
+                                                </html>]]>
+                        </description>
+                        <options_expr>
+                            <option id="type" expr="`ENUMERATION`"/>
+                            <option id="UUID" expr="`ECUC:daca2411-31e0-493f-8e05-3716f0466541`"/>
+                            <option id="postBuildVariantValue" expr="true"/>
+                            <option id="origin" expr="`NXP`"/>
+                            <option id="symbolicNameValue" expr="false"/>
+                            <option id="defaultValue" expr="`VariantPostBuild`"/>
+                            <option id="scope" expr="`LOCAL`"/>
+                            <option id="valueConfigClass" expr="`POST-BUILD=VARIANT-POST-BUILD;PRE-COMPILE=VARIANT-PRE-COMPILE`"/>
+                        </options_expr>
+                    </dynamic_enum>
+
+                    <dynamic_enum id="CteOutputSignalFlex1Usage" label="FLEX1" items="toArray(`FLEX1_NOT_USED`,
+                                                                                              `CTE_OUT_LOGIC`)">
+                        <description><![CDATA[<html>
+                                                    How generated Flex_1 (Flextimer) signal is used:
+                                                    <br><b>FLEX0_NOT_USED</b>  = The signal Flex_1 is not used
+                                                    <br><b>CTE_OUT_LOGIC</b>  = Output type is logic, low/high/Hi-Z levels
+                                                </html>]]>
+                        </description>
+                        <options_expr>
+                            <option id="type" expr="`ENUMERATION`"/>
+                            <option id="UUID" expr="`ECUC:daca2411-31e0-493f-8e05-3716f0466541`"/>
+                            <option id="postBuildVariantValue" expr="true"/>
+                            <option id="origin" expr="`NXP`"/>
+                            <option id="symbolicNameValue" expr="false"/>
+                            <option id="defaultValue" expr="`VariantPostBuild`"/>
+                            <option id="scope" expr="`LOCAL`"/>
+                            <option id="valueConfigClass" expr="`POST-BUILD=VARIANT-POST-BUILD;PRE-COMPILE=VARIANT-PRE-COMPILE`"/>
+                        </options_expr>
+                    </dynamic_enum>
+
+                    <array id="CteDriverTimeTableContainer" type="CteTimeTableParamsType" label="Time Table List" options="ShowContentAs=MasterDetail;UI_BORDER_HIDDEN" min_expr="1"
+                                    key_selector_expr="system::getParent($this,2).getID() == 0 ? x -> x.getID() : x -> x.getID().toInt() + getLast(get(get(get(system::getParent($this,4),system::getParent($this,3).getID().toInt()-1),1),21)).getLabel().toInt() + 1">
+                        <description><![CDATA[<html>
+                                                List containing all the configurations.
+                                            </html>]]></description>
+                        <item_defaults>
+                            <set_default id="CteTimeTableConfigName" value_expr="x -> `timeTable_` + x.getID()"/>
+                            <set_default id="CteTimeTableMaxExecTime" value_expr="x -> $this.execScriptFunction(`../Cte/cte_utils.js`, `CteIncrementByOne`, x.getID()) + `0000`"/>
+                        </item_defaults>
+                        <options_expr>
+                            <option id="type" expr="`CONTAINER`"/>
+                            <option id="UUID" expr="`ECUC:66380587-564d-45f3-bada-0475671e1231`"/>
+                            <option id="lowerMultiplicity" expr="1"/>
+                            <option id="upperMultiplicityInfinite" expr="1"/>
+                            <option id="postBuildVariantMultiplicity" expr="false"/>
+                            <option id="multiplicityConfigClass" expr="`PRE-COMPILE=VARIANT-POST-BUILD;PRE-COMPILE=VARIANT-PRE-COMPILE`"/>
+                        </options_expr>
+                    </array>
+
+                </struct>
+
+            </struct>
+
+        </user_types>
+
+        <options_expr>
+            <option id="type" expr="`MODULE-DEF`"/>
+            <option id="path" expr="`/TS_T40D47M10I0R0/Spt`"/>
+            <option id="UUID" expr="`ECUC:d2790718-f3a7-4a5a-8173-6fc2c5cf9999`"/>
+            <option id="adminData" expr="`4.7.0;AUTOSAR;2014-10-31`"/>
+            <option id="lowerMultiplicity" expr="0"/>
+            <option id="upperMultiplicity" expr="1"/>
+            <option id="postBuildVariantSupport" expr="true"/>
+            <option id="supportedConfigVariants" expr="`VARIANT-POST-BUILD;VARIANT-PRE-COMPILE`"/>
+        </options_expr>
+    </config_set>
+    <options_expr>
+        <option id="type" expr="`AR-PACKAGE`"/>
+        <option id="path" expr="`TS_T40D47M10I0R0`"/>
+        <option id="UUID" expr="`ECUC:f994e63e-acdb-42bf-b2d9-97105aa89999`"/>
+        <option id="ecucDefinitionCollection" expr="`ECUC:44434fef-d13c-4905-b4fd-3bc2d0889642;Cte_EcuParameterDefinition`"/>
+    </options_expr>
+</component:config_component>

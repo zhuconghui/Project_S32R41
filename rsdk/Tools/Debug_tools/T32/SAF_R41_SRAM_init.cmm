@@ -1,0 +1,596 @@
+
+;  NXP Confidential. This software is owned or controlled by NXP and may only be used strictly
+;  in accordance with the applicable license terms.  By expressly accepting
+;  such terms or by downloading, installing, activating and/or otherwise using
+;  the software, you are agreeing that you have read, and that you agree to
+;  comply with and are bound by, such license terms.  If you do not agree to
+;  be bound by the applicable license terms, then you may not retain,
+;  install, activate or otherwise use the software.
+;
+;  This file contains sample code only. It is not part of the production code deliverables.
+;========================================================================
+
+PARAMETERS &plat
+GLOBAL &platform
+
+&platform="&plat"
+
+if (STRing.ComPare(STRing.LoWeR("&platform"),"saf85xx")==TRUE())
+(
+	SYStem.CPU SAF8544-M7-0
+)
+else if (STRing.ComPare(STRing.LoWeR("&platform"),"saf86xx")==TRUE())
+(
+	SYStem.CPU SAF8644-M7-0
+)
+else
+(
+	SYStem.CPU S32R41-M7-0
+)
+SYStem.Config.debugporttype JTAG
+SYStem.Option DisMode AUTO
+SYStem.JtagClock 40MHz
+SYStem.MemAccess DAP
+
+Break.CONFIG.METHOD Program Onchip
+Break.CONFIG.METHOD Read Onchip
+Break.CONFIG.METHOD Write Onchip
+Trace.DISABLE
+ETM.OFF
+;Initialize debugger interface workaround for somecase prepare cannot access using axi bus
+system.resettarget
+sys.a
+
+GLOBAL &Floater_Memory_Reg &Floater_SW_Bit
+GLOBAL &Size_256Kb &Size_512Kb &Size_768Kb
+&Size_256Kb=0x40000
+&Size_512Kb=0x80000
+&Size_768Kb=0xC0000
+
+IF (STRing.ComPare(STRing.LoWeR("&platform"),"saf85xx")==TRUE())
+(
+	; Configure the Floater memory
+	; SW_BIT    APP (MB)      RT (MB)
+	; 000       1.5           0
+	; 001       1.25          0.25
+	; 010       1             0.5
+	; 011       0.75          0.75
+	; 100       0.5           1
+	; 101       0.25          1.25
+	; 110       0             1.5
+	; 111       1.5           0
+
+	&Floater_Memory_Reg=0x400D839C
+	&Floater_SW_Bit=0x1 ; assign 1.25MB Floater memory for APP SRAM
+
+	Data.Set eaxi:0x400D839C %Long &Floater_SW_Bit
+)
+ELSE IF (STRing.ComPare(STRing.LoWeR("&platform"),"saf86xx")==TRUE())
+(
+	// Configure the floater memory
+	// SW_BIT	APP (MB)	    RT (MB)
+	// 000		0                   1
+	// 001		0.25                0.75
+	// 010		0.5	            0.5
+	// 011		0.75                0.25
+	// 100		1                   0
+	// 101		0                   1
+	// 110		0                   1
+	// 111		0                   1
+	&Floater_Memory_Reg=0x400D839C
+	&Floater_SW_Bit=0x4 // Assign 1 MB to APP and 0 MB to RT
+	Data.Set EAXI:&Floater_Memory_Reg %Long &Floater_SW_Bit
+)
+
+
+GOSUB InitApplicationSram
+GOSUB InitRealTimeSram
+GOSUB InitRetentionSram
+
+SYStem.Attach
+Break
+
+SYStem.MemAccess DAP
+
+List.auto
+
+SETUP.Var.%SpotLight
+
+ENDDO
+
+InitApplicationSram:
+(
+  PRINT "Initialising Application SRAM..."
+IF (STRing.ComPare(STRing.LoWeR("&platform"),"saf85xx")==TRUE())
+(
+	  ; Initialize the application RAM using the application SRAM controller
+	  ; 2 MB (SRAM_FUSE=0)
+	  ; SRAMC_3: 768KB (0x33E00000 - 0x33EBFFFF)
+	  PER.Set.Simple eaxi:0x4400830C %Long 0xFFFFFFFF     ; Clear the status register
+	  PER.Set.Simple eaxi:0x44008304 %Long 0x00000000     ; Set the start address
+	  PER.Set.Simple eaxi:0x44008308 %Long &Size_768Kb-1  ; Set the end address
+	  PER.Set.Simple eaxi:0x44008300 %Long 0x00000007   ; Trigger initialization (PRAMCR[IWS] = 3)
+	  WAIT (Data.Long(eaxi:0x4400830C)&0x00000004)==0x0 ; Wait for the initialization to complete (Poll PRAMCR[IPEND])
+	  IF ((Data.Long(eaxi:0x4400830C)&0x00000001)!=0x1) ; Check PRAMCR[IDONE]
+	  (
+		; Initialization failed, report error
+		PRINT %ERROR "Application SRAMC_3 initialization failed"
+	  )
+
+	  ; SRAMC_4: 768KB (0x33EC0000 - 0x33F7FFFF)
+	  PER.Set.Simple eaxi:0x4400840C %Long 0xFFFFFFFF     ; Clear the status register
+	  PER.Set.Simple eaxi:0x44008404 %Long 0x00000000     ; Set the start address
+	  PER.Set.Simple eaxi:0x44008408 %Long &Size_768Kb-1  ; Set the end address
+	  PER.Set.Simple eaxi:0x44008400 %Long 0x00000007   ; Trigger initialization (PRAMCR[IWS] = 3)
+	  WAIT (Data.Long(eaxi:0x4400840C)&0x00000004)==0x0 ; Wait for the initialization to complete (Poll PRAMCR[IPEND])
+	  IF ((Data.Long(eaxi:0x4400840C)&0x00000001)!=0x1) ; Check PRAMCR[IDONE]
+	  (
+		; Initialization failed, report error
+		PRINT %ERROR "Application SRAMC_4 initialization failed"
+	  )
+
+	  ; SRAMC_5: 512KB (0x33F80000 - 0x33FFFFFF)
+	  PER.Set.Simple eaxi:0x4400850C %Long 0xFFFFFFFF     ; Clear the status register
+	  PER.Set.Simple eaxi:0x44008504 %Long 0x00000000     ; Set the start address
+	  PER.Set.Simple eaxi:0x44008508 %Long &Size_512Kb-1  ; Set the end address
+	  PER.Set.Simple eaxi:0x44008500 %Long 0x00000007   ; Trigger initialization (PRAMCR[IWS] = 3)
+	  WAIT (Data.Long(eaxi:0x4400850C)&0x00000004)==0x0 ; Wait for the initialization to complete (Poll PRAMCR[IPEND])
+	  IF ((Data.Long(eaxi:0x4400850C)&0x00000001)!=0x1) ; Check PRAMCR[IDONE]
+	  (
+		; Initialization failed, report error
+		PRINT %ERROR "Application SRAMC_5 initialization failed"
+	  )
+
+	  ; Initialize Floater SRAM
+
+	  PRIVATE &App_Sramc_0_Alloc &App_Sramc_1_Alloc &App_Sramc_2_Alloc
+	  ; By default additional 1.5 MB is assigned to APP SRAM
+	  &App_Sramc_0_Alloc=&Size_512Kb
+	  &App_Sramc_1_Alloc=&Size_512Kb
+	  &App_Sramc_2_Alloc=&Size_512Kb
+
+	  IF ((&Floater_SW_Bit>0x0)&&(&Floater_SW_Bit<0x7))
+	  (
+		IF (&Floater_SW_Bit==0x1)
+		(
+		  &App_Sramc_0_Alloc=&Size_256Kb
+		)
+
+		ELSE
+		(
+		  &App_Sramc_0_Alloc=0x1
+		  IF (&Floater_SW_Bit==0x3)
+		  (
+			&App_Sramc_1_Alloc=&Size_256Kb
+		  )
+
+		  ELSE
+		  (
+			&App_Sramc_1_Alloc=0x1
+			IF (&Floater_SW_Bit==0x5)
+			(
+			  &App_Sramc_2_Alloc=&Size_256Kb
+			)
+
+			ELSE
+			(
+			  &App_Sramc_2_Alloc=0x1
+			)
+		  )
+		)
+	  )
+
+	  ; SRAMC_0
+	  PER.Set.Simple eaxi:0x4400800C %Long 0xFFFFFFFF            ; Clear the status register
+	  PER.Set.Simple eaxi:0x44008004 %Long 0x00000000            ; Set the start address
+	  PER.Set.Simple eaxi:0x44008008 %Long &App_Sramc_0_Alloc-1  ; Set the end address
+	  PER.Set.Simple eaxi:0x44008000 %Long 0x00000007   ; Trigger initialization (PRAMCR[IWS] = 3)
+	  WAIT (Data.Long(eaxi:0x4400800C)&0x00000004)==0x0 ; Wait for the initialization to complete (Poll PRAMCR[IPEND])
+	  IF ((Data.Long(eaxi:0x4400800C)&0x00000001)!=0x1) ; Check PRAMCR[IDONE]
+	  (
+		; Initialization failed, report error
+		PRINT %ERROR "Application SRAMC_0 initialization failed"
+	  )
+
+	  ; SRAMC_1
+	  PER.Set.Simple eaxi:0x4400810C %Long 0xFFFFFFFF            ; Clear the status register
+	  PER.Set.Simple eaxi:0x44008104 %Long 0x00000000            ; Set the start address
+	  PER.Set.Simple eaxi:0x44008108 %Long &App_Sramc_1_Alloc-1  ; Set the end address
+	  PER.Set.Simple eaxi:0x44008100 %Long 0x00000007   ; Trigger initialization (PRAMCR[IWS] = 3)
+	  WAIT (Data.Long(eaxi:0x4400810C)&0x00000004)==0x0 ; Wait for the initialization to complete (Poll PRAMCR[IPEND])
+	  IF ((Data.Long(eaxi:0x4400810C)&0x00000001)!=0x1) ; Check PRAMCR[IDONE]
+	  (
+		; Initialization failed, report error
+		PRINT %ERROR "Application SRAMC_1 initialization failed"
+	  )
+
+	  ; SRAMC_2
+	  PER.Set.Simple eaxi:0x4400820C %Long 0xFFFFFFFF            ; Clear the status register
+	  PER.Set.Simple eaxi:0x44008204 %Long 0x00000000            ; Set the start address
+	  PER.Set.Simple eaxi:0x44008208 %Long &App_Sramc_2_Alloc-1  ; Set the end address
+	  PER.Set.Simple eaxi:0x44008200 %Long 0x00000007   ; Trigger initialization (PRAMCR[IWS] = 3)
+	  WAIT (Data.Long(eaxi:0x4400820C)&0x00000004)==0x0 ; Wait for the initialization to complete (Poll PRAMCR[IPEND])
+	  IF ((Data.Long(eaxi:0x4400820C)&0x00000001)!=0x1) ; Check PRAMCR[IDONE]
+	  (
+		; Initialization failed, report error
+		PRINT %ERROR "Application SRAMC_2 initialization failed"
+	  )
+)
+ELSE IF (STRing.ComPare(STRing.LoWeR("&platform"),"saf86xx")==TRUE())
+(
+	PRINT "Initialising Application SRAM..."
+    
+    PRIVATE &APP_SRAMC_1_REG &APP_SRAMC_2_REG &APP_SRAMC_5_REG
+    &APP_SRAMC_1_REG=0x44008100    // SRAMC_1 base address
+    &APP_SRAMC_2_REG=0x44008200    // SRAMC_2 base address
+    &APP_SRAMC_5_REG=0x44008500    // SRAMC_5 base address
+    
+    PRIVATE &PRAMCR_VAL 
+    &PRAMCR_VAL = 0x1 // INITREQ = 1
+       
+    // Set PRAMIAE (end address) and SRAMC[INITREQ] for each SRAM controller
+    // Then wait until the init done bit is set
+    
+    // Fixed SRAM
+    //=========================================================================
+        
+    // SRAMC_CTRL_5
+    Data.Set EAXI:&APP_SRAMC_5_REG+8 %Long &Size_512Kb-1
+    Data.Set EAXI:&APP_SRAMC_5_REG   %Long &PRAMCR_VAL
+    WAIT ((data.long(EAXI:&APP_SRAMC_5_REG+0xC)&0x00000001)==0x00000001)
+    
+  // Floating SRAM
+  //=========================================================================
+
+  PRIVATE &APP_SRAMC_1_ALLOC &APP_SRAMC_2_ALLOC
+  // By default additional 0 MB is assigned to APP SRAM
+  &APP_SRAMC_1_ALLOC=&Size_512Kb
+  &APP_SRAMC_2_ALLOC=&Size_512Kb
+
+  // Read the floater memory configuration register in SRC
+  PRIVATE &FLOAT_MEM_CFG
+  &FLOAT_MEM_CFG=data.long(EAXI:&Floater_Memory_Reg)
+
+  // Determine the size of floating memory allocated to APP SRAM
+
+  IF ((&FLOAT_MEM_CFG>0x0)&&(&FLOAT_MEM_CFG<0x5))
+  (
+    IF (&FLOAT_MEM_CFG==1)
+    (
+      &APP_SRAMC_1_ALLOC=1
+      &APP_SRAMC_2_ALLOC=&Size_256Kb
+    )
+    IF (&FLOAT_MEM_CFG==2)
+    (
+      &APP_SRAMC_1_ALLOC=1
+      &APP_SRAMC_2_ALLOC=&Size_512Kb
+    )
+
+    IF (&FLOAT_MEM_CFG==3)
+    (
+      &APP_SRAMC_1_ALLOC=&Size_256Kb
+      &APP_SRAMC_2_ALLOC=&Size_512Kb
+    )
+
+    IF (&FLOAT_MEM_CFG==4)
+    (
+      &APP_SRAMC_1_ALLOC=&Size_512Kb
+      &APP_SRAMC_2_ALLOC=&Size_512Kb
+    )
+  )
+
+  IF (&APP_SRAMC_1_ALLOC>1)
+  (
+    // SRAMC_CTRL_1
+    Data.Set EAXI:&APP_SRAMC_1_REG+8 %Long &APP_SRAMC_1_ALLOC-1
+    Data.Set EAXI:&APP_SRAMC_1_REG   %Long &PRAMCR_VAL
+    WAIT ((data.long(EAXI:&APP_SRAMC_1_REG+0xC)&0x00000001)==0x00000001)
+  )
+
+  IF (&APP_SRAMC_2_ALLOC>1)
+  (
+    // SRAMC_CTRL_2
+    Data.Set EAXI:&APP_SRAMC_2_REG+8 %Long &APP_SRAMC_2_ALLOC-1
+    Data.Set EAXI:&APP_SRAMC_2_REG   %Long &PRAMCR_VAL
+    WAIT ((data.long(EAXI:&APP_SRAMC_2_REG+0xC)&0x00000001)==0x00000001)
+  )
+
+  PRINT "Application SRAM initialisation complete"
+
+  RETURN
+)
+ELSE
+(
+    // Initialize all SRAM by hardware - set INIT bit of PRAMCR (no INIT_SYS bit here)
+    Data.Set EAXI:0x44008000 %Long 0x00000001
+
+    // Wait for Application SRAM init done bit to be set
+    WAIT ((data.long(EAXI:0x4400800C)&0x00000001)==0x00000001)
+)
+    PRINT "Application SRAM initialisation complete"
+
+  RETURN
+)
+
+InitRealTimeSram:
+(
+  PRINT "Initialising RealTime SRAM..."
+IF (STRing.ComPare(STRing.LoWeR("&platform"),"saf85xx")==TRUE())
+(
+  PRIVATE &RT_Sramc_1_Base_Addr &RT_Sramc_2_Base_Addr &RT_Sramc_3_Base_Addr &RT_Sramc_4_Base_Addr
+  PRIVATE &RT_Sramc_2_Alloc &RT_Sramc_3_Alloc &RT_Sramc_4_Alloc
+  PRIVATE &Ramcr_Val
+
+  &RT_Sramc_1_Base_Addr=0x34000000
+  &RT_Sramc_1_Alloc=&Size_512Kb
+  &Ramcr_Val=0x107 ; INIT_SYSA = 1, IWS = 3 and INIT = 1
+
+  ; Initialize fixed SRAM region
+  ; SRAMC_1
+  PER.Set.Simple eaxi:0x4001410C %Long 0xFFFFFFFF                                 ; Clear the status register
+  PER.Set.Simple eaxi:0x40014104 %Long &RT_Sramc_1_Base_Addr                      ; Set the start address
+  PER.Set.Simple eaxi:0x40014108 %Long &RT_Sramc_1_Base_Addr+&RT_Sramc_1_Alloc-1  ; Set the end address
+  PER.Set.Simple eaxi:0x40014100 %Long &Ramcr_Val   ; Trigger initialization
+  WAIT (Data.Long(eaxi:0x4001410C)&0x00000004)==0x0 ; Wait for the initialization to complete (Poll PRAMCR[IPEND])
+  IF ((Data.Long(eaxi:0x4001410C)&0x00000001)!=0x1) ; Check PRAMCR[IDONE]
+  (
+    ; Initialization failed, report error
+    PRINT %ERROR "RealTime SRAMC_1 initialization failed"
+  )
+
+  ; Initialize Floater SRAM
+  ; By default additional 0 MB is assigned to APP SRAM
+  &RT_Sramc_2_Base_Addr=0x34080000
+  &RT_Sramc_2_Alloc=1
+  &RT_Sramc_3_Base_Addr=0x34100000
+  &RT_Sramc_3_Alloc=1
+  &RT_Sramc_4_Base_Addr=0x34180000
+  &RT_Sramc_4_Alloc=1
+
+  IF ((&Floater_SW_Bit>0x0)&&(&Floater_SW_Bit<0x7))
+  (
+	IF (&Floater_SW_Bit==0x1)
+	(
+	  &RT_Sramc_2_Alloc=&Size_256Kb
+	)
+
+    ELSE
+    (
+	  &RT_Sramc_2_Alloc=&Size_512Kb
+      IF (&Floater_SW_Bit==0x3)
+      (
+	    &RT_Sramc_3_Alloc=&Size_256Kb
+      )
+
+      ELSE
+      (
+	    &RT_Sramc_3_Alloc=&Size_512Kb
+        IF (&Floater_SW_Bit==0x5)
+        (
+	      &RT_Sramc_4_Alloc=&Size_256Kb
+        )
+
+        ELSE
+        (
+    	  &RT_Sramc_4_Alloc=&Size_512Kb
+        )
+      )
+    )
+  )
+
+  ; SRAMC_2
+  PER.Set.Simple eaxi:0x4001420C %Long 0xFFFFFFFF                                 ; Clear the status register
+  PER.Set.Simple eaxi:0x40014204 %Long &RT_Sramc_2_Base_Addr                      ; Set the start address
+  PER.Set.Simple eaxi:0x40014208 %Long &RT_Sramc_2_Base_Addr+&RT_Sramc_2_Alloc-1  ; Set the end address
+  PER.Set.Simple eaxi:0x40014200 %Long &Ramcr_Val   ; Trigger initialization
+  WAIT (Data.Long(eaxi:0x4001420C)&0x00000004)==0x0 ; Wait for the initialization to complete (Poll PRAMCR[IPEND])
+  IF ((Data.Long(eaxi:0x4001420C)&0x00000001)!=0x1) ; Check PRAMCR[IDONE]
+  (
+    ; Initialization failed, report error
+    PRINT %ERROR "RealTime SRAMC_2 initialization failed"
+  )
+
+  ; SRAMC_3
+  PER.Set.Simple eaxi:0x4001430C %Long 0xFFFFFFFF                                 ; Clear the status register
+  PER.Set.Simple eaxi:0x40014304 %Long &RT_Sramc_3_Base_Addr                      ; Set the start address
+  PER.Set.Simple eaxi:0x40014308 %Long &RT_Sramc_3_Base_Addr+&RT_Sramc_3_Alloc-1  ; Set the end address
+  PER.Set.Simple eaxi:0x40014300 %Long &Ramcr_Val   ; Trigger initialization
+  WAIT (Data.Long(eaxi:0x4001430C)&0x00000004)==0x0 ; Wait for the initialization to complete (Poll PRAMCR[IPEND])
+  IF ((Data.Long(eaxi:0x4001430C)&0x00000001)!=0x1) ; Check PRAMCR[IDONE]
+  (
+    ; Initialization failed, report error
+    PRINT %ERROR "RealTime SRAMC_3 initialization failed"
+  )
+
+  ; SRAMC_4
+  PER.Set.Simple eaxi:0x4001440C %Long 0xFFFFFFFF                                 ; Clear the status register
+  PER.Set.Simple eaxi:0x40014404 %Long &RT_Sramc_4_Base_Addr                      ; Set the start address
+  PER.Set.Simple eaxi:0x40014408 %Long &RT_Sramc_4_Base_Addr+&RT_Sramc_4_Alloc-1  ; Set the end address
+  PER.Set.Simple eaxi:0x40014400 %Long &Ramcr_Val   ; Trigger initialization
+  WAIT (Data.Long(eaxi:0x4001440C)&0x00000004)==0x0 ; Wait for the initialization to complete (Poll PRAMCR[IPEND])
+  IF ((Data.Long(eaxi:0x4001440C)&0x00000001)!=0x1) ; Check PRAMCR[IDONE]
+  (
+    ; Initialization failed, report error
+    PRINT %ERROR "RealTime SRAMC_4 initialization failed"
+  )
+)
+ELSE IF (STRing.ComPare(STRing.LoWeR("&platform"),"saf86xx")==TRUE())
+(    
+    PRIVATE &RT_SRAMC_1_REG &RT_SRAMC_2_REG &RT_SRAMC_3_REG 
+    PRIVATE &RT_SRAM_BASE_ADDR &RT_SRAMC_ARRAY_SIZE
+    PRIVATE &FLOAT_MEM_CFG
+    
+    &RT_SRAMC_1_REG=0x40014100    // SRAM_CTRL_1 base address
+    &RT_SRAMC_2_REG=0x40014200    // SRAM_CTRL_2 base address
+    &RT_SRAMC_3_REG=0x40014300    // SRAM_CTRL_3 base address
+
+    &RT_SRAM_BASE_ADDR=0x34000000       // Base address of RT SRAM region
+    &RT_SRAMC_ARRAY_SIZE=&Size_512Kb    // Number of bytes managed by each controller 
+    
+    // RAMIAS and RAMIAE reset values are documented to be system memory address (0x34xxxxxxx)
+    // Therefore in each RAMCR the INIT_SYSA bit should be set along with the INIT bit
+    PRIVATE &RAMCR_VAL 
+    &RAMCR_VAL=0x00000101 // INIT_SYSA = 1 and INIT = 1
+
+    // Set RAMIAE (end address), RAMCR[INIT_SYSA] and RAMCR[INIT] for each SRAM controller
+    // Then wait until  the init done bit is set
+    
+    // Fixed SRAM
+    //=========================================================================
+    PRIVATE &RT_SRAMC_1_ALLOC
+    &RT_SRAMC_1_ALLOC=&RT_SRAM_BASE_ADDR+&RT_SRAMC_ARRAY_SIZE
+    
+    // SRAM_CTRL_1
+    Data.Set EAXI:&RT_SRAMC_1_REG+8 %Long &RT_SRAMC_1_ALLOC-1
+    Data.Set EAXI:&RT_SRAMC_1_REG   %Long &RAMCR_VAL
+    WAIT ((data.long(EAXI:&RT_SRAMC_1_REG+0xC)&0x00000001)==0x00000001)   
+
+  // Floating SRAM
+  //=========================================================================
+
+  PRIVATE &RT_SRAMC_2_ALLOC &RT_SRAMC_3_ALLOC
+  // By default additional 1 MB is assigned to RT SRAM
+  &RT_SRAMC_2_ALLOC=&Size_512Kb
+  &RT_SRAMC_3_ALLOC=&Size_512Kb
+
+  // Read the floater memory configuration register in SRC
+  &FLOAT_MEM_CFG=data.long(EAXI:&Floater_Memory_Reg)
+
+  IF ((&FLOAT_MEM_CFG>0x0)&&(&FLOAT_MEM_CFG<0x5))
+  (
+    IF (&FLOAT_MEM_CFG==1)
+    (
+      &RT_SRAMC_2_ALLOC=&Size_512Kb
+      &RT_SRAMC_3_ALLOC=&Size_256Kb
+    )
+    IF (&FLOAT_MEM_CFG==2)
+    (
+      &RT_SRAMC_2_ALLOC=&Size_512Kb
+      &RT_SRAMC_3_ALLOC=1
+    )
+
+    IF (&FLOAT_MEM_CFG==3)
+    (
+      &RT_SRAMC_2_ALLOC=&Size_256Kb
+      &RT_SRAMC_3_ALLOC=1
+    )
+
+    IF (&FLOAT_MEM_CFG==4)
+    (
+      &RT_SRAMC_2_ALLOC=1
+      &RT_SRAMC_3_ALLOC=1
+    )
+  )
+
+  IF (&RT_SRAMC_2_ALLOC>1)
+  (
+    // SRAM_CTRL_2
+    Data.Set EAXI:&RT_SRAMC_2_REG+8 %Long &RT_SRAMC_1_ALLOC+&RT_SRAMC_2_ALLOC-1
+    Data.Set EAXI:&RT_SRAMC_2_REG   %Long &RAMCR_VAL
+    WAIT ((data.long(EAXI:&RT_SRAMC_2_REG+0xC)&0x00000001)==0x00000001)
+  )
+  IF (&RT_SRAMC_3_ALLOC>1)
+  (
+    // SRAM_CTRL_3
+    Data.Set EAXI:&RT_SRAMC_3_REG+8 %Long &RT_SRAMC_1_ALLOC+&RT_SRAMC_2_ALLOC+&RT_SRAMC_3_ALLOC-1
+    Data.Set EAXI:&RT_SRAMC_3_REG   %Long &RAMCR_VAL
+    WAIT ((data.long(EAXI:&RT_SRAMC_3_REG+0xC)&0x00000001)==0x00000001)
+  )
+
+  PRINT "Realtime SRAM initialisation complete."
+  RETURN
+)
+ELSE
+(
+    LOCAL &RT_SRAM_BASE_ADDR &RT_SRAM_CTL_SIZE
+    &RT_SRAM_BASE_ADDR=0x34000000
+    &RT_SRAM_CTL_SIZE=0x80000
+
+    // RAMIAS and RAMIAE reset values are documented to be system memory address (0x34xxxxxxx)
+    // Therefore in each RAMCR the INIT_SYSA bit should be set along with the INIT bit
+    local &RAMCR_VAL
+    &RAMCR_VAL = 0x00000101 // INIT_SYSA = 1 and INIT = 1
+
+    // Set RAMIAE (end address), INIT_SYSA and INIT for each SRAM controller
+
+    Data.Set EAXI:0x40014108 %Long &RT_SRAM_BASE_ADDR+&RT_SRAM_CTL_SIZE-1   // SRAM_CTRL_1
+    Data.Set EAXI:0x40014100 %Long &RAMCR_VAL
+    Data.Set EAXI:0x40014208 %Long &RT_SRAM_BASE_ADDR+2*&RT_SRAM_CTL_SIZE-1 // SRAM_CTRL_2
+    Data.Set EAXI:0x40014200 %Long &RAMCR_VAL
+    Data.Set EAXI:0x40014308 %Long &RT_SRAM_BASE_ADDR+3*&RT_SRAM_CTL_SIZE-1 // SRAM_CTRL_3
+    Data.Set EAXI:0x40014300 %Long &RAMCR_VAL
+    Data.Set EAXI:0x40014408 %Long &RT_SRAM_BASE_ADDR+4*&RT_SRAM_CTL_SIZE-1 // SRAM_CTRL_4
+    Data.Set EAXI:0x40014400 %Long &RAMCR_VAL
+    Data.Set EAXI:0x40014508 %Long &RT_SRAM_BASE_ADDR+5*&RT_SRAM_CTL_SIZE-1 // SRAM_CTRL_5
+    Data.Set EAXI:0x40014500 %Long &RAMCR_VAL
+    Data.Set EAXI:0x40014608 %Long &RT_SRAM_BASE_ADDR+6*&RT_SRAM_CTL_SIZE-1 // SRAM_CTRL_6
+    Data.Set EAXI:0x40014600 %Long &RAMCR_VAL
+    Data.Set EAXI:0x40014708 %Long &RT_SRAM_BASE_ADDR+7*&RT_SRAM_CTL_SIZE-1 // SRAM_CTRL_7
+    Data.Set EAXI:0x40014700 %Long &RAMCR_VAL
+    Data.Set EAXI:0x40014808 %Long &RT_SRAM_BASE_ADDR+8*&RT_SRAM_CTL_SIZE-1 // SRAM_CTRL_8
+    Data.Set EAXI:0x40014800 %Long &RAMCR_VAL
+
+    // Wait for each init done (IDONE) bit to be set in corresponding RAM status reg
+    WAIT ((data.long(EAXI:0x4001410C)&0x00000001)==0x00000001)
+    WAIT ((data.long(EAXI:0x4001420C)&0x00000001)==0x00000001)
+    WAIT ((data.long(EAXI:0x4001430C)&0x00000001)==0x00000001)
+    WAIT ((data.long(EAXI:0x4001440C)&0x00000001)==0x00000001)
+    WAIT ((data.long(EAXI:0x4001450C)&0x00000001)==0x00000001)
+    WAIT ((data.long(EAXI:0x4001460C)&0x00000001)==0x00000001)
+    WAIT ((data.long(EAXI:0x4001470C)&0x00000001)==0x00000001)
+    WAIT ((data.long(EAXI:0x4001480C)&0x00000001)==0x00000001)
+)
+    PRINT "Realtime SRAM initialisation complete."
+
+  RETURN
+)
+
+
+InitRetentionSram:
+(
+  PRINT "Initialising Retention SRAM..."
+IF (STRing.ComPare(STRing.LoWeR("&platform"),"saf85xx")==TRUE())
+(
+  PER.Set.Simple eaxi:0x4001400C %Long 0xFFFFFFFF   ; Clear the status register
+  PER.Set.Simple eaxi:0x40014004 %Long 0x34400000   ; Set the start address
+  PER.Set.Simple eaxi:0x40014008 %Long 0x34403FFF   ; Set the end address
+  PER.Set.Simple eaxi:0x40014000 %Long 0x00000107   ; Trigger initialization
+  WAIT (Data.Long(eaxi:0x4001400C)&0x00000004)==0x0 ; Wait for the initialization to complete (Poll PRAMCR[IPEND])
+  IF ((Data.Long(eaxi:0x4001400C)&0x00000001)!=0x1) ; Check PRAMCR[IDONE]
+  (
+    ; Initialization failed, report error
+    PRINT %ERROR "Retention Sram initialization failed"
+  )
+)
+ELSE IF (STRing.ComPare(STRing.LoWeR("&platform"),"saf86xx")==TRUE())
+(
+	LOCAL &RET_RAM_REG &RET_RAM_BASE_ADDR &RET_RAM_ARRAY_SIZE
+    &RET_RAM_REG=0x40014000
+    &RET_RAM_BASE_ADDR=0x34400000
+    &RET_RAM_ARRAY_SIZE=0x40000
+
+    // RETENTION_RAM controller at 0x40014000
+    Data.Set EAXI:&RET_RAM_REG+8 %Long &RET_RAM_BASE_ADDR+&RET_RAM_ARRAY_SIZE
+    Data.Set EAXI:&RET_RAM_REG   %Long 0x00000101 
+
+    WAIT ((data.long(EAXI:&RET_RAM_REG+0xC)&0x00000001)==0x00000001)   
+
+    PRINT "RETENTION RAM initialisation complete"
+    
+    RETURN
+)
+ELSE
+(
+    LOCAL &RET_RAM_BASE_ADDR &RET_RAM_CTL_SIZE
+    &RET_RAM_BASE_ADDR=0x34400000
+    &RET_RAM_CTL_SIZE=0x80000
+
+    // RETENTION_RAM controller at 0x40014000
+    Data.Set EAXI:0x40014008 %Long &RET_RAM_BASE_ADDR+&RET_RAM_CTL_SIZE
+    Data.Set EAXI:0x40014000 %Long 0x00000101
+
+    WAIT ((data.long(EAXI:0x4001400C)&0x00000001)==0x00000001)
+)
+    PRINT "RETENTION RAM initialisation complete"
+  RETURN
+)

@@ -1,0 +1,324 @@
+OS_ReleaseResource (ResourceType resId)
+{
+  struct OSRESCB * volatile resRef;
+  StatusType retStatus;
+  StatusType D.5815;
+  long unsigned int D.5813;
+  int _1;
+  struct OSRESCB * _2;
+  struct OSRESCB * resRef.11_3;
+  struct OSRESCB * resRef.12_4;
+  signed char _5;
+  int _6;
+  struct OSTSKCB * _7;
+  struct OSRESCB * resRef.13_8;
+  signed char _9;
+  int _10;
+  struct OSTSKCB * _11;
+  short unsigned int _12;
+  int _13;
+  unsigned char _14;
+  unsigned int _15;
+  unsigned int _16;
+  struct OSRESCB * resRef.14_17;
+  signed char _18;
+  unsigned int _19;
+  long unsigned int _20;
+  unsigned int OsSchedulerVector1_.15_21;
+  unsigned int _22;
+  struct OSRESCB * resRef.16_23;
+  struct OSTSKCB * OsRunning_.17_24;
+  struct OSREFRESCB * _25;
+  long unsigned int _34;
+  StatusType _38;
+
+  <bb 2> :
+  retStatus_29 = 0;
+  if (retStatus_29 == 0)
+    goto <bb 3>; [INV]
+  else
+    goto <bb 4>; [INV]
+
+  <bb 3> :
+  _1 = (int) resId_31(D);
+  _2 = &OsResources[_1];
+  resRef ={v} _2;
+
+  <bb 4> :
+  if (retStatus_29 == 0)
+    goto <bb 5>; [INV]
+  else
+    goto <bb 8>; [INV]
+
+  <bb 5> :
+  resRef.11_3 ={v} resRef;
+  resRef.12_4 ={v} resRef;
+  _5 = resRef.12_4->resPrio;
+  _6 = (int) _5;
+  _7 = resRef.11_3->prio2task;
+  OsPrioLink[_6] = _7;
+  resRef.13_8 ={v} resRef;
+  _9 = resRef.13_8->resPrio;
+  _10 = (int) _9;
+  _11 = OsPrioLink[_10];
+  _12 = _11->taskId;
+  _13 = (int) _12;
+  _14 = OsTaskTable[_13].status;
+  _15 = (unsigned int) _14;
+  _16 = _15 & 16;
+  if (_16 == 0)
+    goto <bb 6>; [INV]
+  else
+    goto <bb 7>; [INV]
+
+  <bb 6> :
+  resRef.14_17 ={v} resRef;
+  _18 = resRef.14_17->resPrio;
+  _19 = (unsigned int) _18;
+  _20 = 2147483648 >> _19;
+  _34 = ~_20;
+  OsSchedulerVector1_.15_21 = OsSchedulerVector1_;
+  _22 = _34 & OsSchedulerVector1_.15_21;
+  OsSchedulerVector1_ = _22;
+
+  <bb 7> :
+  resRef.16_23 ={v} resRef;
+  OsRunning_.17_24 = OsRunning_;
+  _25 = resRef.16_23->nextRes;
+  OsRunning_.17_24->resources = _25;
+  OSDISPATCH ();
+
+  <bb 8> :
+  _38 = retStatus_29;
+
+  <bb 9> :
+<L9>:
+  return _38;
+
+}
+
+
+OS_GetResource (ResourceType resId)
+{
+  struct OSRESCB * volatile resRef;
+  StatusType retStatus;
+  StatusType D.5803;
+  long unsigned int D.5802;
+  int _1;
+  struct OSRESCB * _2;
+  struct OSRESCB * resRef.1_3;
+  signed char _4;
+  int _5;
+  struct OSRESCB * resRef.2_6;
+  struct OSTSKCB * _7;
+  struct OSRESCB * resRef.3_8;
+  signed char _9;
+  int _10;
+  struct OSTSKCB * OsRunning_.4_11;
+  struct OSRESCB * resRef.5_12;
+  signed char _13;
+  unsigned int _14;
+  unsigned int OsSchedulerVector1_.6_15;
+  unsigned int _16;
+  struct OSTSKCB * OsRunning_.7_17;
+  struct OSRESCB * resRef.8_18;
+  struct OSREFRESCB * _19;
+  struct OSTSKCB * OsRunning_.9_20;
+  struct OSRESCB * resRef.10_21;
+  long unsigned int _30;
+  StatusType _34;
+
+  <bb 2> :
+  retStatus_24 = 0;
+  if (retStatus_24 == 0)
+    goto <bb 3>; [INV]
+  else
+    goto <bb 4>; [INV]
+
+  <bb 3> :
+  _1 = (int) resId_26(D);
+  _2 = &OsResources[_1];
+  resRef ={v} _2;
+
+  <bb 4> :
+  if (retStatus_24 == 0)
+    goto <bb 5>; [INV]
+  else
+    goto <bb 6>; [INV]
+
+  <bb 5> :
+  resRef.1_3 ={v} resRef;
+  _4 = resRef.1_3->resPrio;
+  _5 = (int) _4;
+  resRef.2_6 ={v} resRef;
+  _7 = OsPrioLink[_5];
+  resRef.2_6->prio2task = _7;
+  resRef.3_8 ={v} resRef;
+  _9 = resRef.3_8->resPrio;
+  _10 = (int) _9;
+  OsRunning_.4_11 = OsRunning_;
+  OsPrioLink[_10] = OsRunning_.4_11;
+  resRef.5_12 ={v} resRef;
+  _13 = resRef.5_12->resPrio;
+  _14 = (unsigned int) _13;
+  _30 = 2147483648 >> _14;
+  OsSchedulerVector1_.6_15 = OsSchedulerVector1_;
+  _16 = _30 | OsSchedulerVector1_.6_15;
+  OsSchedulerVector1_ = _16;
+  OsRunning_.7_17 = OsRunning_;
+  resRef.8_18 ={v} resRef;
+  _19 = OsRunning_.7_17->resources;
+  resRef.8_18->nextRes = _19;
+  OsRunning_.9_20 = OsRunning_;
+  resRef.10_21 ={v} resRef;
+  OsRunning_.9_20->resources = resRef.10_21;
+
+  <bb 6> :
+  _34 = retStatus_24;
+
+  <bb 7> :
+<L6>:
+  return _34;
+
+}
+
+
+OSInitResources ()
+{
+  OSCARDINAL i;
+  signed char _1;
+
+  <bb 2> :
+  i_4 = 0;
+  goto <bb 4>; [INV]
+
+  <bb 3> :
+  _1 = OsResCfg[i_2].resPrio;
+  OsResources[i_2].resPrio = _1;
+  OsResources[i_2].prio2task = 0B;
+  OsResources[i_2].nextRes = 0B;
+  i_9 = i_2 + 1;
+
+  <bb 4> :
+  # i_2 = PHI <i_4(2), i_9(3)>
+  if (i_2 == 0)
+    goto <bb 3>; [INV]
+  else
+    goto <bb 5>; [INV]
+
+  <bb 5> :
+  return;
+
+}
+
+
+OSReleaseTaskResource (struct OSTSKCB * const taskPtr)
+{
+  struct OSREFRESCB * resRef;
+  signed char _1;
+  int _2;
+  struct OSTSKCB * _3;
+  signed char _4;
+  int _5;
+  unsigned char _6;
+  unsigned int _7;
+  unsigned int _8;
+  signed char _9;
+  unsigned int _10;
+  long unsigned int _11;
+  long unsigned int _12;
+  unsigned int OsSchedulerVector1_.0_13;
+  unsigned int _14;
+  struct OSREFRESCB * _15;
+  struct OSREFRESCB * _16;
+
+  <bb 2> :
+  goto <bb 6>; [INV]
+
+  <bb 3> :
+  resRef_21 = taskPtr_20(D)->resources;
+  _1 = MEM[(struct OSRESCB *)resRef_21].resPrio;
+  _2 = (int) _1;
+  _3 = MEM[(struct OSRESCB *)resRef_21].prio2task;
+  OsPrioLink[_2] = _3;
+  _4 = MEM[(struct OSRESCB *)resRef_21].resPrio;
+  _5 = (int) _4;
+  _6 = OsTaskTable[_5].status;
+  _7 = (unsigned int) _6;
+  _8 = _7 & 16;
+  if (_8 == 0)
+    goto <bb 4>; [INV]
+  else
+    goto <bb 5>; [INV]
+
+  <bb 4> :
+  _9 = MEM[(struct OSRESCB *)resRef_21].resPrio;
+  _10 = (unsigned int) _9;
+  _11 = 2147483648 >> _10;
+  _12 = ~_11;
+  OsSchedulerVector1_.0_13 = OsSchedulerVector1_;
+  _14 = _12 & OsSchedulerVector1_.0_13;
+  OsSchedulerVector1_ = _14;
+
+  <bb 5> :
+  _15 = resRef_21->nextRes;
+  taskPtr_20(D)->resources = _15;
+
+  <bb 6> :
+  _16 = taskPtr_20(D)->resources;
+  if (_16 != 0B)
+    goto <bb 3>; [INV]
+  else
+    goto <bb 7>; [INV]
+
+  <bb 7> :
+  return;
+
+}
+
+
+__attribute__((always_inline))
+OSDISPATCH ()
+{
+  unsigned int OsSchedulerVector1_.18_1;
+  unsigned int _2;
+  struct OSTSKCB * _3;
+  struct OSTSKCB * OsRunning_.19_4;
+
+  <bb 2> :
+  OsSchedulerVector1_.18_1 = OsSchedulerVector1_;
+  _2 = OSCNTLZW (OsSchedulerVector1_.18_1);
+  _3 = OsPrioLink[_2];
+  OsRunning_.19_4 = OsRunning_;
+  if (_3 != OsRunning_.19_4)
+    goto <bb 3>; [INV]
+  else
+    goto <bb 4>; [INV]
+
+  <bb 3> :
+  OSTaskForceDispatch ();
+
+  <bb 4> :
+  return;
+
+}
+
+
+__attribute__((always_inline))
+OSCNTLZW (OSDWORD regx)
+{
+  register OSDWORD resultReg;
+  OSDWORD D.5819;
+  OSDWORD _3;
+
+  <bb 2> :
+  __asm__ __volatile__("clz %0, %1" : "=r" resultReg_2 : "r" regx_1(D));
+  _3 = resultReg_2;
+
+  <bb 3> :
+<L0>:
+  return _3;
+
+}
+
+

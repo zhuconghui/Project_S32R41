@@ -1,0 +1,112 @@
+Mscm_Ip_InitPrivileged (const struct Mscm_Ip_ConfigType * pMscmConfig)
+{
+  uint16 u16SPINumber;
+  uint16 u16TargetCores;
+  uint16 spiIdx;
+  _Bool _1;
+  long unsigned int _2;
+  _Bool _3;
+  const struct Mscm_Ip_IrqRouteConfigType * _4;
+  unsigned int _5;
+  unsigned int _6;
+  const struct Mscm_Ip_IrqRouteConfigType * _7;
+  const struct Mscm_Ip_IrqRouteConfigType * _8;
+  unsigned int _9;
+  unsigned int _10;
+  const struct Mscm_Ip_IrqRouteConfigType * _11;
+  _Bool _12;
+  struct MSCM_Type * _13;
+  int _14;
+  short unsigned int _15;
+  signed short _16;
+  _Bool _17;
+  _Bool _18;
+  struct MSCM_Type * _19;
+  int _20;
+  short unsigned int _21;
+  short unsigned int spiIdx.0_22;
+  long unsigned int _23;
+  long unsigned int _24;
+
+  <bb 2> :
+  _1 = pMscmConfig_27(D) != 0B;
+  DevAssert (_1);
+  _2 = pMscmConfig_27(D)->u32GlobalRouteConfigCount;
+  _3 = _2 <= 85;
+  DevAssert (_3);
+  spiIdx_31 = 0;
+  goto <bb 4>; [INV]
+
+  <bb 3> :
+  _4 = pMscmConfig_27(D)->aGlobalRouteConfig;
+  _5 = (unsigned int) spiIdx_25;
+  _6 = _5 * 4;
+  _7 = _4 + _6;
+  u16TargetCores_32 = _7->u16TargetCores;
+  _8 = pMscmConfig_27(D)->aGlobalRouteConfig;
+  _9 = (unsigned int) spiIdx_25;
+  _10 = _9 * 4;
+  _11 = _8 + _10;
+  u16SPINumber_33 = _11->u16IrqNumber;
+  _12 = u16SPINumber_33 <= 237;
+  DevAssert (_12);
+  _13 = 1073807360B;
+  _14 = (int) u16SPINumber_33;
+  _15 ={v} _13->IRSPRC[_14];
+  _16 = (signed short) _15;
+  _17 = _16 >= 0;
+  DevAssert (_17);
+  _18 = u16TargetCores_32 <= 15;
+  DevAssert (_18);
+  _19 = 1073807360B;
+  _20 = (int) u16SPINumber_33;
+  _21 = u16TargetCores_32 & 15;
+  _19->IRSPRC[_20] ={v} _21;
+  spiIdx.0_22 = spiIdx_25;
+  spiIdx_38 = spiIdx.0_22 + 1;
+
+  <bb 4> :
+  # spiIdx_25 = PHI <spiIdx_31(2), spiIdx_38(3)>
+  _23 = (long unsigned int) spiIdx_25;
+  _24 = pMscmConfig_27(D)->u32GlobalRouteConfigCount;
+  if (_23 < _24)
+    goto <bb 3>; [INV]
+  else
+    goto <bb 5>; [INV]
+
+  <bb 5> :
+  return;
+
+}
+
+
+Mscm_Ip_Init (const struct Mscm_Ip_ConfigType * pMscmConfig)
+{
+  <bb 2> :
+  Mscm_Ip_InitPrivileged (pMscmConfig_2(D));
+  return;
+
+}
+
+
+DevAssert (volatile boolean x)
+{
+  _Bool x.1_1;
+
+  <bb 2> :
+  x.1_1 ={v} x;
+  if (x.1_1 != 0)
+    goto <bb 4>; [INV]
+  else
+    goto <bb 3>; [INV]
+
+  <bb 3> :
+  __asm__ __volatile__("BKPT #0");
+  goto <bb 3>; [INV]
+
+  <bb 4> :
+  return;
+
+}
+
+

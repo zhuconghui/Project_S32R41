@@ -1,0 +1,19 @@
+var searchData=
+[
+  ['mat_5fchol_5fcplx_5fll_0',['mat_chol_cplx_ll',['../rsdk__cmodel__lib__functions__matrix__cholesky_8c.html#af865103b8e8acb9ea30b1d4934d7cbdc',1,'rsdk_cmodel_lib_functions_matrix_cholesky.c']]],
+  ['mat_5fchol_5fcplx_5fs_1',['mat_chol_cplx_s',['../rsdk__cmodel__lib__functions__matrix__cholesky_8c.html#aee35cd2671eb24f4f37273768004a844',1,'rsdk_cmodel_lib_functions_matrix_cholesky.c']]],
+  ['mat_5fchol_5freal_5fll_2',['mat_chol_real_ll',['../rsdk__cmodel__lib__functions__matrix__cholesky_8c.html#a46cf95701cbbf876f59dd48a0aab05bb',1,'rsdk_cmodel_lib_functions_matrix_cholesky.c']]],
+  ['mat_5fchol_5freal_5fs_3',['mat_chol_real_s',['../rsdk__cmodel__lib__functions__matrix__cholesky_8c.html#a46458fae487ae49ff37bc92379138fc4',1,'rsdk_cmodel_lib_functions_matrix_cholesky.c']]],
+  ['mat_5fdet_5fcplx_5fs_4',['mat_det_cplx_s',['../rsdk__cmodel__lib__functions__matrix__determinant_8c.html#afa48bb535a0953046f1be3e8ea85a9b2',1,'rsdk_cmodel_lib_functions_matrix_determinant.c']]],
+  ['mat_5fdet_5freal_5fs_5',['mat_det_real_s',['../rsdk__cmodel__lib__functions__matrix__determinant_8c.html#a01c21354b622f976cdb0c51fc28a46cb',1,'rsdk_cmodel_lib_functions_matrix_determinant.c']]],
+  ['mat_5finv_5fcplx_5fs_6',['mat_inv_cplx_s',['../rsdk__cmodel__lib__functions__matrix__inverse_8c.html#a4928ecf92352f5fcec3f4452c9d91d75',1,'rsdk_cmodel_lib_functions_matrix_inverse.c']]],
+  ['mat_5finv_5freal_5fs_7',['mat_inv_real_s',['../rsdk__cmodel__lib__functions__matrix__inverse_8c.html#a0b6cbd5e0dff3d327b9fcad2232f3735',1,'rsdk_cmodel_lib_functions_matrix_inverse.c']]],
+  ['mat_5flower_5ftriangular_5finv_5fcplx_5fs_8',['mat_lower_triangular_inv_cplx_s',['../rsdk__cmodel__lib__functions__matrix__triangular__inverse_8c.html#afa9a31d6c79496ec06821d52849afbf9',1,'rsdk_cmodel_lib_functions_matrix_triangular_inverse.c']]],
+  ['mat_5flower_5ftriangular_5finv_5freal_5fs_9',['mat_lower_triangular_inv_real_s',['../rsdk__cmodel__lib__functions__matrix__triangular__inverse_8c.html#a416521cc9ce1d03ac989059869126737',1,'rsdk_cmodel_lib_functions_matrix_triangular_inverse.c']]],
+  ['mat_5fupper_5ftriangular_5finv_5fcplx_5fs_10',['mat_upper_triangular_inv_cplx_s',['../rsdk__cmodel__lib__functions__matrix__triangular__inverse_8c.html#a82d37eedd3a31f00eee42128236cc9bc',1,'rsdk_cmodel_lib_functions_matrix_triangular_inverse.c']]],
+  ['mat_5fupper_5ftriangular_5finv_5freal_5fs_11',['mat_upper_triangular_inv_real_s',['../rsdk__cmodel__lib__functions__matrix__triangular__inverse_8c.html#a81bfb54073d4ee103af46599c5c6eb34',1,'rsdk_cmodel_lib_functions_matrix_triangular_inverse.c']]],
+  ['matnmxmq_5fconj_5fmpy_5fcplx_5fs_12',['matNMxMQ_conj_mpy_cplx_s',['../rsdk__cmodel__lib__functions__matrix__multiplication_8c.html#a55f0475119bd781b3de03a2f0a6283bb',1,'rsdk_cmodel_lib_functions_matrix_multiplication.c']]],
+  ['matnmxmq_5fconjconj_5fmpy_5fcplx_5fs_13',['matNMxMQ_conjconj_mpy_cplx_s',['../rsdk__cmodel__lib__functions__matrix__multiplication_8c.html#ab3964163e625d2e494e71b1b4108116c',1,'rsdk_cmodel_lib_functions_matrix_multiplication.c']]],
+  ['matnmxmq_5fmpy_5fcplx_5fs_14',['matNMxMQ_mpy_cplx_s',['../rsdk__cmodel__lib__functions__matrix__multiplication_8c.html#a983965d499a09f1a3780908e5e63ddcb',1,'rsdk_cmodel_lib_functions_matrix_multiplication.c']]],
+  ['matnmxmq_5fmpy_5freal_5fs_15',['matNMxMQ_mpy_real_s',['../rsdk__cmodel__lib__functions__matrix__multiplication_8c.html#abff06ec8032c298e52b87c12fe4c11d2',1,'rsdk_cmodel_lib_functions_matrix_multiplication.c']]]
+];

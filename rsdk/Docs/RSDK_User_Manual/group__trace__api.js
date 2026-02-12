@@ -1,0 +1,56 @@
+var group__trace__api =
+[
+    [ "RSDK_TRACE_LOG_ENTRY_SIZE", "group__trace__api.html#gad58b68569c0ce7b5c0b3f1c139875e4f", null ],
+    [ "RSDK_TRACE_STRUCT_CORE_LEN", "group__trace__api.html#ga4fd894c72e4a2c5493d2ea9eda351a64", null ],
+    [ "RSDK_TRACE_STRUCT_CORE_OFFSET", "group__trace__api.html#gac678fd89fa7ddf9e3e12c0d7da1d96ac", null ],
+    [ "RSDK_TRACE_STRUCT_CORE_TYPE", "group__trace__api.html#gab586f6c60f767dfebd27f2c0c6ec2eaa", null ],
+    [ "RSDK_TRACE_STRUCT_EXTRA1_LEN", "group__trace__api.html#gaaf1a1ef10c6c90c3d021cc01cd5f2542", null ],
+    [ "RSDK_TRACE_STRUCT_EXTRA1_OFFSET", "group__trace__api.html#ga7db067940f20ec4d12aa851fbdd695c5", null ],
+    [ "RSDK_TRACE_STRUCT_EXTRA1_TYPE", "group__trace__api.html#gadcc31407714d1b79671c566a478e7f3c", null ],
+    [ "RSDK_TRACE_STRUCT_EXTRA2_LEN", "group__trace__api.html#gac8ffeab177cddba9749477774bec35bd", null ],
+    [ "RSDK_TRACE_STRUCT_EXTRA2_OFFSET", "group__trace__api.html#ga46c54c73bfb7ea6f33e5917d4cd3f807", null ],
+    [ "RSDK_TRACE_STRUCT_EXTRA2_TYPE", "group__trace__api.html#ga9cea02ddd669f37f53e6fc60113116a5", null ],
+    [ "RSDK_TRACE_STRUCT_TIMESTAMP_LEN", "group__trace__api.html#gafe805b33de852c7fc52aef0085339529", null ],
+    [ "RSDK_TRACE_STRUCT_TIMESTAMP_OFFSET", "group__trace__api.html#gab6fdd71b3f1691c2863cdfd492307b9c", null ],
+    [ "RSDK_TRACE_STRUCT_TIMESTAMP_TYPE", "group__trace__api.html#ga551d30fd0b1c157a5146571cb393f35e", null ],
+    [ "RSDK_TRACE_STRUCT_TYPE_LEN", "group__trace__api.html#ga0f39f877f4ff61714ce4f46841695380", null ],
+    [ "RSDK_TRACE_STRUCT_TYPE_OFFSET", "group__trace__api.html#gad2695c2b3b74b062198c638849e1eb99", null ],
+    [ "RSDK_TRACE_STRUCT_TYPE_TYPE", "group__trace__api.html#gaa006259b0194304a8dd5e0fae536b98f", null ],
+    [ "traceTransferCb_t", "group__trace__api.html#ga6877280b970caa3ae2a0bde00ba3e8bb", null ],
+    [ "rsdkTraceDbgType_t", "group__trace__api.html#gab39679e83ff99d37816426e492fc08a1", [
+      [ "RSDK_TRACE_DBG_APP_BASE", "group__trace__api.html#ggab39679e83ff99d37816426e492fc08a1ad36321eb698e843b8c7bdaed7393f892", null ],
+      [ "RSDK_TRACE_DBG_SPT_BASE", "group__trace__api.html#ggab39679e83ff99d37816426e492fc08a1ae1898c88265f7989eed8625422f89f3c", null ],
+      [ "RSDK_TRACE_DBG_LAX_BASE", "group__trace__api.html#ggab39679e83ff99d37816426e492fc08a1a5e328ce4a3ffc514e392e837ad81af4a", null ],
+      [ "RSDK_TRACE_DBG_RF_BASE", "group__trace__api.html#ggab39679e83ff99d37816426e492fc08a1aef0393eecde765e6b70bc250ea40f2cd", null ],
+      [ "RSDK_TRACE_DBG_TFTP_CLIENT_BASE", "group__trace__api.html#ggab39679e83ff99d37816426e492fc08a1ad7e108c5f2f857cccd6784341c7af354", null ],
+      [ "RSDK_TRACE_DBG_CSI2_BASE", "group__trace__api.html#ggab39679e83ff99d37816426e492fc08a1af43e78da428eb0be3a162a2e6dce6258", null ],
+      [ "RSDK_TRACE_DBG_DSP_BASE", "group__trace__api.html#ggab39679e83ff99d37816426e492fc08a1adb6486d838f6eca93340907198df7b7b", null ],
+      [ "RSDK_TRACE_DBG_CTE_BASE", "group__trace__api.html#ggab39679e83ff99d37816426e492fc08a1aa0a27509a12ea225b999821c203d53dc", null ],
+      [ "RSDK_TRACE_DBG_ADDYOURSHERE_BASE", "group__trace__api.html#ggab39679e83ff99d37816426e492fc08a1a00da3a1dac2d21d3d8b765e1c3afdf5f", null ],
+      [ "RSDK_TRACE_DBG_LAST", "group__trace__api.html#ggab39679e83ff99d37816426e492fc08a1ab69bc3f1fffa25586332fd80d0cf544a", null ]
+    ] ],
+    [ "rsdkTraceEventType_t", "group__trace__api.html#ga8772d7ba68600d5b75651b4ebe259661", [
+      [ "RSDK_TRACE_EVENT_FUNC_START", "group__trace__api.html#gga8772d7ba68600d5b75651b4ebe259661a2ecae070f967e877a7168b1e7c57a9c1", null ],
+      [ "RSDK_TRACE_EVENT_FUNC_END", "group__trace__api.html#gga8772d7ba68600d5b75651b4ebe259661a1918cd0ccf514830837bdcf4c437747c", null ],
+      [ "RSDK_TRACE_EVENT_DBG_INFO", "group__trace__api.html#gga8772d7ba68600d5b75651b4ebe259661a46e2ef8a600303f8304e37c61f5ec5bd", null ],
+      [ "RSDK_TRACE_EVENT_CHIRP_SYNC", "group__trace__api.html#gga8772d7ba68600d5b75651b4ebe259661abff8c7e882a2d6588098f9a4ad18634b", null ],
+      [ "RSDK_TRACE_EVENT_FRAME_SYNC", "group__trace__api.html#gga8772d7ba68600d5b75651b4ebe259661a6e1891cd243b6adc92071a15e821644d", null ],
+      [ "RSDK_TRACE_EVENT_LAX_TRACE_SYNC", "group__trace__api.html#gga8772d7ba68600d5b75651b4ebe259661afeaad18d2c8e5fc72b99bce7382d173c", null ],
+      [ "RSDK_TRACE_EVENT_LAST", "group__trace__api.html#gga8772d7ba68600d5b75651b4ebe259661a284cbc8eea3e3612772b540e5e4d73c3", null ]
+    ] ],
+    [ "rsdkTraceJobType_t", "group__trace__api.html#ga725bd99383106ba18627cefed877344b", [
+      [ "RSDK_TRACE_JOB_APP_BASE", "group__trace__api.html#gga725bd99383106ba18627cefed877344ba58f74853eab1fb8c5e0d94a9d81fc323", null ],
+      [ "RSDK_TRACE_JOB_SPT_BASE", "group__trace__api.html#gga725bd99383106ba18627cefed877344baee16988a4d403d9833ec126eef2e097a", null ],
+      [ "RSDK_TRACE_JOB_LAX_BASE", "group__trace__api.html#gga725bd99383106ba18627cefed877344ba0b29e4ca93777af23cb149158552e64c", null ],
+      [ "RSDK_TRACE_JOB_RF_BASE", "group__trace__api.html#gga725bd99383106ba18627cefed877344bad0e40a8faf044966ee102293c84749f1", null ],
+      [ "RSDK_TRACE_JOB_TFTP_CLIENT_BASE", "group__trace__api.html#gga725bd99383106ba18627cefed877344baab04b3b63ded404f198c503a5bf8c16c", null ],
+      [ "RSDK_TRACE_JOB_CSI2_BASE", "group__trace__api.html#gga725bd99383106ba18627cefed877344ba4a7a849d0cf24049b25d1944dbd34ab4", null ],
+      [ "RSDK_TRACE_JOB_DSP_BASE", "group__trace__api.html#gga725bd99383106ba18627cefed877344ba709d1dfa615278620146bd760da7cb9d", null ],
+      [ "RSDK_TRACE_JOB_CTE_BASE", "group__trace__api.html#gga725bd99383106ba18627cefed877344ba56b8dc574f6999ca51aee3e227c161bd", null ],
+      [ "RSDK_TRACE_JOB_ADDYOURSHERE_BASE", "group__trace__api.html#gga725bd99383106ba18627cefed877344baa550b783c4c97f3f0099e2479569a2fb", null ],
+      [ "RSDK_TRACE_JOB_LAST", "group__trace__api.html#gga725bd99383106ba18627cefed877344ba73c6f824ae548acc271acbc8e14d2a3c", null ]
+    ] ],
+    [ "RsdkTraceDump", "group__trace__api.html#gae46be0f56d410162223eb40796450faf", null ],
+    [ "RsdkTraceInit", "group__trace__api.html#ga55a3c9de3f81787447e600c43edf7eb2", null ],
+    [ "RsdkTraceLogEvent", "group__trace__api.html#gafd02e8dbcd90db8f58a2ec6a12725463", null ]
+];

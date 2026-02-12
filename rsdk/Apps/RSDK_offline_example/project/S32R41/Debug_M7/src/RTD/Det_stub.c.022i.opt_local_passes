@@ -1,0 +1,305 @@
+Det_TestNoTransientFault ()
+{
+  uint32 u32CoreId;
+  boolean result;
+  boolean D.5929;
+  short unsigned int _1;
+  <unnamed type> _2;
+  long unsigned int _3;
+  struct Det_LinkedListStateType * _4;
+  boolean _18;
+
+  <bb 2> :
+  result_8 = 1;
+  _1 = OSGetLogicalCoreID ();
+  u32CoreId_11 = (uint32) _1;
+  SuspendAllInterrupts ();
+  _2 = Det_ModuleState[u32CoreId_11];
+  if (_2 == 0)
+    goto <bb 3>; [INV]
+  else
+    goto <bb 4>; [INV]
+
+  <bb 3> :
+  Det_Init ();
+  goto <bb 7>; [INV]
+
+  <bb 4> :
+  _3 = Det_numTransientEventErrors[u32CoreId_11];
+  if (_3 != 0)
+    goto <bb 5>; [INV]
+  else
+    goto <bb 6>; [INV]
+
+  <bb 5> :
+  result_13 = 0;
+
+  <bb 6> :
+  # result_5 = PHI <result_8(4), result_13(5)>
+  Det_numTransientEventErrors[u32CoreId_11] = 0;
+  _4 = &Det_aTransientErrorState[u32CoreId_11];
+  Det_FreeNodesInLinkedList (_4);
+
+  <bb 7> :
+  # result_6 = PHI <result_8(3), result_5(6)>
+  ResumeAllInterrupts ();
+  _18 = result_6;
+
+  <bb 8> :
+<L5>:
+  return _18;
+
+}
+
+
+Det_TestNoRuntimeError ()
+{
+  uint32 u32CoreId;
+  boolean result;
+  boolean D.5922;
+  short unsigned int _1;
+  <unnamed type> _2;
+  long unsigned int _3;
+  struct Det_LinkedListStateType * _4;
+  boolean _18;
+
+  <bb 2> :
+  result_8 = 1;
+  _1 = OSGetLogicalCoreID ();
+  u32CoreId_11 = (uint32) _1;
+  SuspendAllInterrupts ();
+  _2 = Det_ModuleState[u32CoreId_11];
+  if (_2 == 0)
+    goto <bb 3>; [INV]
+  else
+    goto <bb 4>; [INV]
+
+  <bb 3> :
+  Det_Init ();
+  goto <bb 7>; [INV]
+
+  <bb 4> :
+  _3 = Det_numRuntimeEventErrors[u32CoreId_11];
+  if (_3 != 0)
+    goto <bb 5>; [INV]
+  else
+    goto <bb 6>; [INV]
+
+  <bb 5> :
+  result_13 = 0;
+
+  <bb 6> :
+  # result_5 = PHI <result_8(4), result_13(5)>
+  Det_numRuntimeEventErrors[u32CoreId_11] = 0;
+  _4 = &Det_aRuntimeErrorState[u32CoreId_11];
+  Det_FreeNodesInLinkedList (_4);
+
+  <bb 7> :
+  # result_6 = PHI <result_8(3), result_5(6)>
+  ResumeAllInterrupts ();
+  _18 = result_6;
+
+  <bb 8> :
+<L5>:
+  return _18;
+
+}
+
+
+Det_TestNoError ()
+{
+  uint32 u32CoreId;
+  boolean result;
+  boolean D.5915;
+  short unsigned int _1;
+  <unnamed type> _2;
+  long unsigned int _3;
+  struct Det_LinkedListStateType * _4;
+  boolean _18;
+
+  <bb 2> :
+  result_8 = 1;
+  _1 = OSGetLogicalCoreID ();
+  u32CoreId_11 = (uint32) _1;
+  SuspendAllInterrupts ();
+  _2 = Det_ModuleState[u32CoreId_11];
+  if (_2 == 0)
+    goto <bb 3>; [INV]
+  else
+    goto <bb 4>; [INV]
+
+  <bb 3> :
+  Det_Init ();
+  goto <bb 7>; [INV]
+
+  <bb 4> :
+  _3 = Det_numEventErrors[u32CoreId_11];
+  if (_3 != 0)
+    goto <bb 5>; [INV]
+  else
+    goto <bb 6>; [INV]
+
+  <bb 5> :
+  result_13 = 0;
+
+  <bb 6> :
+  # result_5 = PHI <result_8(4), result_13(5)>
+  Det_numEventErrors[u32CoreId_11] = 0;
+  _4 = &Det_aErrorState[u32CoreId_11];
+  Det_FreeNodesInLinkedList (_4);
+
+  <bb 7> :
+  # result_6 = PHI <result_8(3), result_5(6)>
+  ResumeAllInterrupts ();
+  _18 = result_6;
+
+  <bb 8> :
+<L5>:
+  return _18;
+
+}
+
+
+Det_TestLastReportTransientFault (uint16 ModuleId, uint8 InstanceId, uint8 ApiId, uint8 FaultId)
+{
+  uint32 u32CoreId;
+  boolean RetVal;
+  boolean D.5908;
+  short unsigned int _1;
+  <unnamed type> _2;
+  struct Det_LinkedListStateType * _3;
+  boolean _19;
+
+  <bb 2> :
+  _1 = OSGetLogicalCoreID ();
+  u32CoreId_8 = (uint32) _1;
+  SuspendAllInterrupts ();
+  _2 = Det_ModuleState[u32CoreId_8];
+  if (_2 == 0)
+    goto <bb 3>; [INV]
+  else
+    goto <bb 4>; [INV]
+
+  <bb 3> :
+  Det_Init ();
+  RetVal_17 = 0;
+  goto <bb 5>; [INV]
+
+  <bb 4> :
+  _3 = &Det_aTransientErrorState[u32CoreId_8];
+  RetVal_15 = Det_DelAllNodesSameId (ModuleId_10(D), InstanceId_11(D), ApiId_12(D), FaultId_13(D), _3);
+
+  <bb 5> :
+  # RetVal_4 = PHI <RetVal_17(3), RetVal_15(4)>
+  ResumeAllInterrupts ();
+  _19 = RetVal_4;
+
+  <bb 6> :
+<L3>:
+  return _19;
+
+}
+
+
+Det_TestLastReportRuntimeError (uint16 ModuleId, uint8 InstanceId, uint8 ApiId, uint8 ErrorId)
+{
+  uint32 u32CoreId;
+  boolean RetVal;
+  boolean D.5903;
+  short unsigned int _1;
+  <unnamed type> _2;
+  struct Det_LinkedListStateType * _3;
+  boolean _19;
+
+  <bb 2> :
+  _1 = OSGetLogicalCoreID ();
+  u32CoreId_8 = (uint32) _1;
+  SuspendAllInterrupts ();
+  _2 = Det_ModuleState[u32CoreId_8];
+  if (_2 == 0)
+    goto <bb 3>; [INV]
+  else
+    goto <bb 4>; [INV]
+
+  <bb 3> :
+  Det_Init ();
+  RetVal_17 = 0;
+  goto <bb 5>; [INV]
+
+  <bb 4> :
+  _3 = &Det_aRuntimeErrorState[u32CoreId_8];
+  RetVal_15 = Det_DelAllNodesSameId (ModuleId_10(D), InstanceId_11(D), ApiId_12(D), ErrorId_13(D), _3);
+
+  <bb 5> :
+  # RetVal_4 = PHI <RetVal_17(3), RetVal_15(4)>
+  ResumeAllInterrupts ();
+  _19 = RetVal_4;
+
+  <bb 6> :
+<L3>:
+  return _19;
+
+}
+
+
+Det_TestLastReportError (uint16 ModuleId, uint8 InstanceId, uint8 ApiId, uint8 ErrorId)
+{
+  uint32 u32CoreId;
+  boolean RetVal;
+  boolean D.5898;
+  short unsigned int _1;
+  <unnamed type> _2;
+  struct Det_LinkedListStateType * _3;
+  boolean _19;
+
+  <bb 2> :
+  _1 = OSGetLogicalCoreID ();
+  u32CoreId_8 = (uint32) _1;
+  SuspendAllInterrupts ();
+  _2 = Det_ModuleState[u32CoreId_8];
+  if (_2 == 0)
+    goto <bb 3>; [INV]
+  else
+    goto <bb 4>; [INV]
+
+  <bb 3> :
+  Det_Init ();
+  RetVal_17 = 0;
+  goto <bb 5>; [INV]
+
+  <bb 4> :
+  _3 = &Det_aErrorState[u32CoreId_8];
+  RetVal_15 = Det_DelAllNodesSameId (ModuleId_10(D), InstanceId_11(D), ApiId_12(D), ErrorId_13(D), _3);
+
+  <bb 5> :
+  # RetVal_4 = PHI <RetVal_17(3), RetVal_15(4)>
+  ResumeAllInterrupts ();
+  _19 = RetVal_4;
+
+  <bb 6> :
+<L3>:
+  return _19;
+
+}
+
+
+__attribute__((always_inline))
+ResumeAllInterrupts ()
+{
+  <bb 2> :
+  OS_ResumeAllInterrupts ();
+  return;
+
+}
+
+
+__attribute__((always_inline))
+SuspendAllInterrupts ()
+{
+  <bb 2> :
+  OS_SuspendAllInterrupts ();
+  return;
+
+}
+
+

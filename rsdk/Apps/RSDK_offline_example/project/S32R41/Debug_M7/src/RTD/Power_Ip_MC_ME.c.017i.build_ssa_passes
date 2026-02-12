@@ -1,0 +1,761 @@
+Power_Ip_MC_ME_SocTriggerResetEvent (Power_Ip_PowerModeType PowerMode)
+{
+  <bb 2> :
+  Power_Ip_pxMC_ME.26_1 = Power_Ip_pxMC_ME;
+  _2 = Power_Ip_pxMC_ME.26_1->MODE_CONF;
+  if (_2 != 3)
+    goto <bb 3>; [INV]
+  else
+    goto <bb 8>; [INV]
+
+  <bb 3> :
+  if (PowerMode == 0)
+    goto <bb 4>; [INV]
+  else
+    goto <bb 5>; [INV]
+
+  <bb 4> :
+  Power_Ip_pxMC_ME.27_3 = Power_Ip_pxMC_ME;
+  Power_Ip_pxMC_ME.27_3->MODE_CONF = 1;
+  goto <bb 7>; [INV]
+
+  <bb 5> :
+  if (PowerMode == 1)
+    goto <bb 6>; [INV]
+  else
+    goto <bb 7>; [INV]
+
+  <bb 6> :
+  Power_Ip_pxMC_ME.28_4 = Power_Ip_pxMC_ME;
+  Power_Ip_pxMC_ME.28_4->MODE_CONF = 2;
+
+  <bb 7> :
+  Power_Ip_MC_ME_TriggerModeUpdate ();
+
+  <bb 8> :
+  return;
+
+}
+
+
+Power_Ip_MC_ME_DisablePartitionOutputSafe (const struct Power_Ip_MC_ME_ModeConfigType * ModeConfigPtr)
+{
+  uint8 PartitionIndex;
+  const struct Power_Ip_MC_ME_PartitionConfigType * TempPartitionConfig;
+
+  <bb 2> :
+  TempPartitionConfig = 0B;
+  PartitionIndex = 0;
+  goto <bb 8>; [INV]
+
+  <bb 3> :
+  _1 = ModeConfigPtr->ArrayPartitionConfigPtr;
+  _2 = (int) PartitionIndex;
+  TempPartitionConfig = &*_1[_2];
+  _3 = TempPartitionConfig->PartitionUnderMcuControl;
+  if (_3 != 0)
+    goto <bb 4>; [INV]
+  else
+    goto <bb 7>; [INV]
+
+  <bb 4> :
+  _4 = TempPartitionConfig->PartitionPowerUnderMcuControl;
+  if (_4 != 0)
+    goto <bb 5>; [INV]
+  else
+    goto <bb 7>; [INV]
+
+  <bb 5> :
+  _5 = TempPartitionConfig->PartitionPconfRegValue;
+  _6 = _5 & 4;
+  if (_6 == 0)
+    goto <bb 6>; [INV]
+  else
+    goto <bb 7>; [INV]
+
+  <bb 6> :
+  Power_Ip_MC_ME_ConfigurePartitionOutputSafe (TempPartitionConfig);
+
+  <bb 7> :
+  PartitionIndex = PartitionIndex + 1;
+
+  <bb 8> :
+  if (PartitionIndex <= 1)
+    goto <bb 3>; [INV]
+  else
+    goto <bb 9>; [INV]
+
+  <bb 9> :
+  return;
+
+}
+
+
+Power_Ip_MC_ME_EnablePartitionOutputSafe (const struct Power_Ip_MC_ME_ModeConfigType * ModeConfigPtr)
+{
+  uint8 PartitionIndex;
+  const struct Power_Ip_MC_ME_PartitionConfigType * TempPartitionConfig;
+
+  <bb 2> :
+  TempPartitionConfig = 0B;
+  PartitionIndex = 0;
+  goto <bb 8>; [INV]
+
+  <bb 3> :
+  _1 = ModeConfigPtr->ArrayPartitionConfigPtr;
+  _2 = (int) PartitionIndex;
+  TempPartitionConfig = &*_1[_2];
+  _3 = TempPartitionConfig->PartitionUnderMcuControl;
+  if (_3 != 0)
+    goto <bb 4>; [INV]
+  else
+    goto <bb 7>; [INV]
+
+  <bb 4> :
+  _4 = TempPartitionConfig->PartitionPowerUnderMcuControl;
+  if (_4 != 0)
+    goto <bb 5>; [INV]
+  else
+    goto <bb 7>; [INV]
+
+  <bb 5> :
+  _5 = TempPartitionConfig->PartitionPconfRegValue;
+  _6 = _5 & 4;
+  if (_6 != 0)
+    goto <bb 6>; [INV]
+  else
+    goto <bb 7>; [INV]
+
+  <bb 6> :
+  Power_Ip_MC_ME_ConfigurePartitionOutputSafe (TempPartitionConfig);
+
+  <bb 7> :
+  PartitionIndex = PartitionIndex + 1;
+
+  <bb 8> :
+  if (PartitionIndex <= 1)
+    goto <bb 3>; [INV]
+  else
+    goto <bb 9>; [INV]
+
+  <bb 9> :
+  return;
+
+}
+
+
+Power_Ip_MC_ME_DisablePartitionClock (const struct Power_Ip_MC_ME_ModeConfigType * ModeConfigPtr)
+{
+  uint8 PartitionIndex;
+  const struct Power_Ip_MC_ME_PartitionConfigType * TempPartitionConfig;
+
+  <bb 2> :
+  TempPartitionConfig = 0B;
+  PartitionIndex = 0;
+  goto <bb 8>; [INV]
+
+  <bb 3> :
+  _1 = ModeConfigPtr->ArrayPartitionConfigPtr;
+  _2 = (int) PartitionIndex;
+  TempPartitionConfig = &*_1[_2];
+  _3 = TempPartitionConfig->PartitionUnderMcuControl;
+  if (_3 != 0)
+    goto <bb 4>; [INV]
+  else
+    goto <bb 7>; [INV]
+
+  <bb 4> :
+  _4 = TempPartitionConfig->PartitionPowerUnderMcuControl;
+  if (_4 != 0)
+    goto <bb 5>; [INV]
+  else
+    goto <bb 7>; [INV]
+
+  <bb 5> :
+  _5 = TempPartitionConfig->PartitionPconfRegValue;
+  _6 = _5 & 1;
+  if (_6 == 0)
+    goto <bb 6>; [INV]
+  else
+    goto <bb 7>; [INV]
+
+  <bb 6> :
+  Power_Ip_MC_ME_ConfigurePartitionClock (TempPartitionConfig);
+
+  <bb 7> :
+  PartitionIndex = PartitionIndex + 1;
+
+  <bb 8> :
+  if (PartitionIndex <= 1)
+    goto <bb 3>; [INV]
+  else
+    goto <bb 9>; [INV]
+
+  <bb 9> :
+  return;
+
+}
+
+
+Power_Ip_MC_ME_EnablePartitionClock (const struct Power_Ip_MC_ME_ModeConfigType * ModeConfigPtr)
+{
+  uint8 PartitionIndex;
+  const struct Power_Ip_MC_ME_PartitionConfigType * TempPartitionConfig;
+
+  <bb 2> :
+  TempPartitionConfig = 0B;
+  PartitionIndex = 0;
+  goto <bb 8>; [INV]
+
+  <bb 3> :
+  _1 = ModeConfigPtr->ArrayPartitionConfigPtr;
+  _2 = (int) PartitionIndex;
+  TempPartitionConfig = &*_1[_2];
+  _3 = TempPartitionConfig->PartitionUnderMcuControl;
+  if (_3 != 0)
+    goto <bb 4>; [INV]
+  else
+    goto <bb 7>; [INV]
+
+  <bb 4> :
+  _4 = TempPartitionConfig->PartitionPowerUnderMcuControl;
+  if (_4 != 0)
+    goto <bb 5>; [INV]
+  else
+    goto <bb 7>; [INV]
+
+  <bb 5> :
+  _5 = TempPartitionConfig->PartitionPconfRegValue;
+  _6 = _5 & 1;
+  if (_6 != 0)
+    goto <bb 6>; [INV]
+  else
+    goto <bb 7>; [INV]
+
+  <bb 6> :
+  Power_Ip_MC_ME_ConfigurePartitionClock (TempPartitionConfig);
+
+  <bb 7> :
+  PartitionIndex = PartitionIndex + 1;
+
+  <bb 8> :
+  if (PartitionIndex <= 1)
+    goto <bb 3>; [INV]
+  else
+    goto <bb 9>; [INV]
+
+  <bb 9> :
+  return;
+
+}
+
+
+Power_Ip_MC_ME_ConfigCoreCOFBClock (const struct Power_Ip_MC_ME_ModeConfigType * ModeConfigPtr)
+{
+  uint8 CoreIndex;
+  uint8 CofbIndex;
+  uint8 PartitionIndex;
+  const struct Power_Ip_MC_ME_PartitionConfigType * TempPartitionConfig;
+
+  <bb 2> :
+  TempPartitionConfig = 0B;
+  PartitionIndex = 0;
+  goto <bb 15>; [INV]
+
+  <bb 3> :
+  _1 = ModeConfigPtr->ArrayPartitionConfigPtr;
+  _2 = (int) PartitionIndex;
+  TempPartitionConfig = &*_1[_2];
+  _3 = TempPartitionConfig->PartitionUnderMcuControl;
+  if (_3 != 0)
+    goto <bb 4>; [INV]
+  else
+    goto <bb 14>; [INV]
+
+  <bb 4> :
+  CofbIndex = 0;
+  goto <bb 8>; [INV]
+
+  <bb 5> :
+  _4 = TempPartitionConfig->ArrayPartitionCofbConfigPtr;
+  _5 = (int) CofbIndex;
+  _6 = *_4[_5].CofbUnderMcuControl;
+  if (_6 != 0)
+    goto <bb 6>; [INV]
+  else
+    goto <bb 7>; [INV]
+
+  <bb 6> :
+  _7 = TempPartitionConfig->ArrayPartitionCofbConfigPtr;
+  _8 = (int) CofbIndex;
+  _9 = &*_7[_8];
+  _10 = TempPartitionConfig->PartitionIndex;
+  Power_Ip_MC_ME_ConfigureCOFB (_9, _10);
+
+  <bb 7> :
+  CofbIndex = CofbIndex + 1;
+
+  <bb 8> :
+  _11 = TempPartitionConfig->NumberOfCofbs;
+  if (CofbIndex < _11)
+    goto <bb 5>; [INV]
+  else
+    goto <bb 9>; [INV]
+
+  <bb 9> :
+  CoreIndex = 0;
+  goto <bb 13>; [INV]
+
+  <bb 10> :
+  _12 = TempPartitionConfig->ArrayPartitionCoreConfigPtr;
+  _13 = (int) CoreIndex;
+  _14 = *_12[_13].CoreUnderMcuControl;
+  if (_14 != 0)
+    goto <bb 11>; [INV]
+  else
+    goto <bb 12>; [INV]
+
+  <bb 11> :
+  _15 = TempPartitionConfig->ArrayPartitionCoreConfigPtr;
+  _16 = (int) CoreIndex;
+  _17 = &*_15[_16];
+  _18 = TempPartitionConfig->PartitionIndex;
+  Power_Ip_MC_ME_ConfigureCore (_17, _18);
+
+  <bb 12> :
+  CoreIndex = CoreIndex + 1;
+
+  <bb 13> :
+  _19 = TempPartitionConfig->NumberOfCores;
+  if (CoreIndex < _19)
+    goto <bb 10>; [INV]
+  else
+    goto <bb 14>; [INV]
+
+  <bb 14> :
+  PartitionIndex = PartitionIndex + 1;
+
+  <bb 15> :
+  if (PartitionIndex <= 1)
+    goto <bb 3>; [INV]
+  else
+    goto <bb 16>; [INV]
+
+  <bb 16> :
+  return;
+
+}
+
+
+Power_Ip_MC_ME_ConfigureCore (const struct Power_Ip_MC_ME_CoreConfigType * CoreConfigPtr, uint8 PartitionIndex)
+{
+  uint8 CoreIndex;
+  boolean TimeoutOccurred;
+  uint32 TimeoutTicks;
+  uint32 ElapsedTime;
+  uint32 StartTime;
+  uint32 CoreStatus;
+  uint32 CoreConfig;
+
+  <bb 2> :
+  CoreConfig = CoreConfigPtr->CorePconfRegValue;
+  TimeoutOccurred = 0;
+  CoreIndex = CoreConfigPtr->CoreIndex;
+  _1 = CoreConfigPtr->CorePconfRegValue;
+  _2 = _1 & 1;
+  if (_2 == 0)
+    goto <bb 3>; [INV]
+  else
+    goto <bb 8>; [INV]
+
+  <bb 3> :
+  Power_Ip_StartTimeout (&StartTime, &ElapsedTime, &TimeoutTicks, 50000);
+
+  <bb 4> :
+  TimeoutTicks.18_3 = TimeoutTicks;
+  TimeoutOccurred = Power_Ip_TimeoutExpired (&StartTime, &ElapsedTime, TimeoutTicks.18_3);
+  Power_Ip_pxMC_ME.19_4 = Power_Ip_pxMC_ME;
+  _5 = (int) PartitionIndex;
+  _6 = (int) CoreIndex;
+  CoreStatus = Power_Ip_pxMC_ME.19_4->McMePrtnArray[_5].McMePrtnCoreArray[_6].PRTN_CORE_STAT;
+  CoreStatus.20_7 = (signed int) CoreStatus;
+  if (CoreStatus.20_7 >= 0)
+    goto <bb 5>; [INV]
+  else
+    goto <bb 6>; [INV]
+
+  <bb 5> :
+  _8 = ~TimeoutOccurred;
+  if (_8 != 0)
+    goto <bb 4>; [INV]
+  else
+    goto <bb 6>; [INV]
+
+  <bb 6> :
+  if (TimeoutOccurred != 0)
+    goto <bb 7>; [INV]
+  else
+    goto <bb 8>; [INV]
+
+  <bb 7> :
+  Power_Ip_ReportPowerErrors (0, 255);
+
+  <bb 8> :
+  _9 = ~TimeoutOccurred;
+  if (_9 != 0)
+    goto <bb 9>; [INV]
+  else
+    goto <bb 14>; [INV]
+
+  <bb 9> :
+  Power_Ip_pxMC_ME.21_10 = Power_Ip_pxMC_ME;
+  _11 = (int) PartitionIndex;
+  _12 = (int) CoreIndex;
+  Power_Ip_pxMC_ME.21_10->McMePrtnArray[_11].McMePrtnCoreArray[_12].PRTN_CORE_PCONF = CoreConfig;
+  Power_Ip_MC_ME_TriggerCoreUpdate (PartitionIndex, CoreIndex);
+  Power_Ip_StartTimeout (&StartTime, &ElapsedTime, &TimeoutTicks, 50000);
+
+  <bb 10> :
+  TimeoutTicks.22_13 = TimeoutTicks;
+  TimeoutOccurred = Power_Ip_TimeoutExpired (&StartTime, &ElapsedTime, TimeoutTicks.22_13);
+  Power_Ip_pxMC_ME.23_14 = Power_Ip_pxMC_ME;
+  _15 = (int) PartitionIndex;
+  _16 = (int) CoreIndex;
+  CoreStatus = Power_Ip_pxMC_ME.23_14->McMePrtnArray[_15].McMePrtnCoreArray[_16].PRTN_CORE_STAT;
+  _17 = CoreStatus ^ CoreConfig;
+  _18 = _17 & 1;
+  if (_18 != 0)
+    goto <bb 11>; [INV]
+  else
+    goto <bb 12>; [INV]
+
+  <bb 11> :
+  _19 = ~TimeoutOccurred;
+  if (_19 != 0)
+    goto <bb 10>; [INV]
+  else
+    goto <bb 12>; [INV]
+
+  <bb 12> :
+  if (TimeoutOccurred != 0)
+    goto <bb 13>; [INV]
+  else
+    goto <bb 14>; [INV]
+
+  <bb 13> :
+  Power_Ip_ReportPowerErrors (0, 255);
+
+  <bb 14> :
+  StartTime = {CLOBBER};
+  ElapsedTime = {CLOBBER};
+  TimeoutTicks = {CLOBBER};
+  return;
+
+}
+
+
+Power_Ip_MC_ME_ConfigureCOFB (const struct Power_Ip_MC_ME_CofbConfigType * CofbConfigPtr, uint8 PartitionIndex)
+{
+  uint32 Regvalue;
+  uint8 CofbIndex;
+  boolean TimeoutOccurred;
+  uint32 TimeoutTicks;
+  uint32 ElapsedTime;
+  uint32 StartTime;
+  uint32 PeripheralsStatus;
+  uint32 PeripheralsToUpdate;
+  uint32 PeripheralsConfig;
+
+  <bb 2> :
+  PeripheralsConfig = CofbConfigPtr->CofbClkenRegValue;
+  PeripheralsToUpdate = CofbConfigPtr->CofbBlocksToUpdateMask;
+  TimeoutOccurred = 0;
+  CofbIndex = CofbConfigPtr->CofbIndex;
+  Power_Ip_pxMC_ME.12_1 = Power_Ip_pxMC_ME;
+  _2 = (int) PartitionIndex;
+  _3 = (int) CofbIndex;
+  Regvalue = Power_Ip_pxMC_ME.12_1->McMePrtnArray[_2].PRTN_COFB_CLKEN[_3];
+  _4 = ~PeripheralsToUpdate;
+  _5 = Regvalue & _4;
+  Regvalue = PeripheralsConfig | _5;
+  Power_Ip_pxMC_ME.13_6 = Power_Ip_pxMC_ME;
+  _7 = (int) PartitionIndex;
+  _8 = (int) CofbIndex;
+  Power_Ip_pxMC_ME.13_6->McMePrtnArray[_7].PRTN_COFB_CLKEN[_8] = Regvalue;
+  Power_Ip_MC_ME_TriggerCofbUpdate (PartitionIndex);
+  Power_Ip_StartTimeout (&StartTime, &ElapsedTime, &TimeoutTicks, 50000);
+
+  <bb 3> :
+  TimeoutTicks.14_9 = TimeoutTicks;
+  TimeoutOccurred = Power_Ip_TimeoutExpired (&StartTime, &ElapsedTime, TimeoutTicks.14_9);
+  Power_Ip_pxMC_ME.15_10 = Power_Ip_pxMC_ME;
+  _11 = (int) PartitionIndex;
+  _12 = (int) CofbIndex;
+  PeripheralsStatus = Power_Ip_pxMC_ME.15_10->McMePrtnArray[_11].PRTN_COFB_STAT[_12];
+  _13 = PeripheralsStatus & PeripheralsToUpdate;
+  if (PeripheralsConfig != _13)
+    goto <bb 4>; [INV]
+  else
+    goto <bb 5>; [INV]
+
+  <bb 4> :
+  _14 = ~TimeoutOccurred;
+  if (_14 != 0)
+    goto <bb 3>; [INV]
+  else
+    goto <bb 5>; [INV]
+
+  <bb 5> :
+  if (TimeoutOccurred != 0)
+    goto <bb 6>; [INV]
+  else
+    goto <bb 7>; [INV]
+
+  <bb 6> :
+  Power_Ip_ReportPowerErrors (0, 255);
+
+  <bb 7> :
+  StartTime = {CLOBBER};
+  ElapsedTime = {CLOBBER};
+  TimeoutTicks = {CLOBBER};
+  return;
+
+}
+
+
+Power_Ip_MC_ME_ConfigurePartitionOutputSafe (const struct Power_Ip_MC_ME_PartitionConfigType * PartitionConfigPtr)
+{
+  uint8 PartitionIndex;
+  boolean TimeoutOccurred;
+  uint32 TimeoutTicks;
+  uint32 ElapsedTime;
+  uint32 StartTime;
+  uint32 PartitionStatus;
+  uint32 PartitionTriggerMask;
+  uint32 PartitionConfig;
+  uint32 TempValue;
+
+  <bb 2> :
+  TempValue = 0;
+  PartitionConfig = PartitionConfigPtr->PartitionPconfRegValue;
+  PartitionTriggerMask = PartitionConfigPtr->PartitionTriggerMask;
+  TimeoutOccurred = 0;
+  PartitionIndex = PartitionConfigPtr->PartitionIndex;
+  _1 = PartitionTriggerMask & 4;
+  if (_1 != 0)
+    goto <bb 3>; [INV]
+  else
+    goto <bb 8>; [INV]
+
+  <bb 3> :
+  Power_Ip_pxMC_ME.8_2 = Power_Ip_pxMC_ME;
+  _3 = (int) PartitionIndex;
+  TempValue = Power_Ip_pxMC_ME.8_2->McMePrtnArray[_3].PRTN_PCONF;
+  TempValue = TempValue & 4294967291;
+  _4 = PartitionConfig & 4;
+  TempValue = TempValue | _4;
+  Power_Ip_pxMC_ME.9_5 = Power_Ip_pxMC_ME;
+  _6 = (int) PartitionIndex;
+  Power_Ip_pxMC_ME.9_5->McMePrtnArray[_6].PRTN_PCONF = TempValue;
+  Power_Ip_MC_ME_TriggerPartitionUpdate (4, PartitionIndex);
+  Power_Ip_StartTimeout (&StartTime, &ElapsedTime, &TimeoutTicks, 50000);
+
+  <bb 4> :
+  TimeoutTicks.10_7 = TimeoutTicks;
+  TimeoutOccurred = Power_Ip_TimeoutExpired (&StartTime, &ElapsedTime, TimeoutTicks.10_7);
+  Power_Ip_pxMC_ME.11_8 = Power_Ip_pxMC_ME;
+  _9 = (int) PartitionIndex;
+  PartitionStatus = Power_Ip_pxMC_ME.11_8->McMePrtnArray[_9].PRTN_STAT;
+  _10 = PartitionStatus ^ PartitionConfig;
+  _11 = _10 & 4;
+  if (_11 != 0)
+    goto <bb 5>; [INV]
+  else
+    goto <bb 6>; [INV]
+
+  <bb 5> :
+  _12 = ~TimeoutOccurred;
+  if (_12 != 0)
+    goto <bb 4>; [INV]
+  else
+    goto <bb 6>; [INV]
+
+  <bb 6> :
+  if (TimeoutOccurred != 0)
+    goto <bb 7>; [INV]
+  else
+    goto <bb 8>; [INV]
+
+  <bb 7> :
+  Power_Ip_ReportPowerErrors (0, 255);
+
+  <bb 8> :
+  StartTime = {CLOBBER};
+  ElapsedTime = {CLOBBER};
+  TimeoutTicks = {CLOBBER};
+  return;
+
+}
+
+
+Power_Ip_MC_ME_ConfigurePartitionClock (const struct Power_Ip_MC_ME_PartitionConfigType * PartitionConfigPtr)
+{
+  uint8 PartitionIndex;
+  boolean TimeoutOccurred;
+  uint32 TimeoutTicks;
+  uint32 ElapsedTime;
+  uint32 StartTime;
+  uint32 PartitionStatus;
+  uint32 PartitionTriggerMask;
+  uint32 PartitionConfig;
+  uint32 TempValue;
+
+  <bb 2> :
+  TempValue = 0;
+  PartitionConfig = PartitionConfigPtr->PartitionPconfRegValue;
+  PartitionTriggerMask = PartitionConfigPtr->PartitionTriggerMask;
+  TimeoutOccurred = 0;
+  PartitionIndex = PartitionConfigPtr->PartitionIndex;
+  _1 = PartitionTriggerMask & 1;
+  if (_1 != 0)
+    goto <bb 3>; [INV]
+  else
+    goto <bb 8>; [INV]
+
+  <bb 3> :
+  Power_Ip_pxMC_ME.0_2 = Power_Ip_pxMC_ME;
+  _3 = (int) PartitionIndex;
+  TempValue = Power_Ip_pxMC_ME.0_2->McMePrtnArray[_3].PRTN_PCONF;
+  TempValue = TempValue & 4294967294;
+  _4 = PartitionConfig & 1;
+  TempValue = TempValue | _4;
+  Power_Ip_pxMC_ME.1_5 = Power_Ip_pxMC_ME;
+  _6 = (int) PartitionIndex;
+  Power_Ip_pxMC_ME.1_5->McMePrtnArray[_6].PRTN_PCONF = TempValue;
+  Power_Ip_MC_ME_TriggerPartitionUpdate (1, PartitionIndex);
+  Power_Ip_StartTimeout (&StartTime, &ElapsedTime, &TimeoutTicks, 50000);
+
+  <bb 4> :
+  TimeoutTicks.2_7 = TimeoutTicks;
+  TimeoutOccurred = Power_Ip_TimeoutExpired (&StartTime, &ElapsedTime, TimeoutTicks.2_7);
+  Power_Ip_pxMC_ME.3_8 = Power_Ip_pxMC_ME;
+  _9 = (int) PartitionIndex;
+  PartitionStatus = Power_Ip_pxMC_ME.3_8->McMePrtnArray[_9].PRTN_STAT;
+  _10 = PartitionStatus ^ PartitionConfig;
+  _11 = _10 & 1;
+  if (_11 != 0)
+    goto <bb 5>; [INV]
+  else
+    goto <bb 6>; [INV]
+
+  <bb 5> :
+  _12 = ~TimeoutOccurred;
+  if (_12 != 0)
+    goto <bb 4>; [INV]
+  else
+    goto <bb 6>; [INV]
+
+  <bb 6> :
+  if (TimeoutOccurred != 0)
+    goto <bb 7>; [INV]
+  else
+    goto <bb 8>; [INV]
+
+  <bb 7> :
+  Power_Ip_ReportPowerErrors (0, 255);
+
+  <bb 8> :
+  StartTime = {CLOBBER};
+  ElapsedTime = {CLOBBER};
+  TimeoutTicks = {CLOBBER};
+  return;
+
+}
+
+
+Power_Ip_MC_ME_TriggerCoreUpdate (uint8 PartitionIndex, uint8 CoreIndex)
+{
+  uint32 TempValue;
+
+  <bb 2> :
+  TempValue = 0;
+  Power_Ip_pxMC_ME.24_1 = Power_Ip_pxMC_ME;
+  _2 = (int) PartitionIndex;
+  _3 = (int) CoreIndex;
+  TempValue = Power_Ip_pxMC_ME.24_1->McMePrtnArray[_2].McMePrtnCoreArray[_3].PRTN_CORE_PUPD;
+  TempValue = TempValue & 4294967294;
+  TempValue = TempValue | 1;
+  Power_Ip_pxMC_ME.25_4 = Power_Ip_pxMC_ME;
+  _5 = (int) PartitionIndex;
+  _6 = (int) CoreIndex;
+  Power_Ip_pxMC_ME.25_4->McMePrtnArray[_5].McMePrtnCoreArray[_6].PRTN_CORE_PUPD = TempValue;
+  Power_Ip_MC_ME_WriteControlKeys ();
+  return;
+
+}
+
+
+Power_Ip_MC_ME_TriggerCofbUpdate (uint8 PartitionIndex)
+{
+  uint32 TempValue;
+
+  <bb 2> :
+  TempValue = 0;
+  Power_Ip_pxMC_ME.16_1 = Power_Ip_pxMC_ME;
+  _2 = (int) PartitionIndex;
+  TempValue = Power_Ip_pxMC_ME.16_1->McMePrtnArray[_2].PRTN_PUPD;
+  TempValue = TempValue & 4294967294;
+  TempValue = TempValue | 1;
+  Power_Ip_pxMC_ME.17_3 = Power_Ip_pxMC_ME;
+  _4 = (int) PartitionIndex;
+  Power_Ip_pxMC_ME.17_3->McMePrtnArray[_4].PRTN_PUPD = TempValue;
+  Power_Ip_MC_ME_WriteControlKeys ();
+  return;
+
+}
+
+
+Power_Ip_MC_ME_TriggerPartitionUpdate (uint32 TriggerMask, uint8 PartitionIndex)
+{
+  uint32 TempValue;
+
+  <bb 2> :
+  TempValue = 0;
+  Power_Ip_pxMC_ME.4_1 = Power_Ip_pxMC_ME;
+  _2 = (int) PartitionIndex;
+  TempValue = Power_Ip_pxMC_ME.4_1->McMePrtnArray[_2].PRTN_PUPD;
+  _3 = ~TriggerMask;
+  TempValue = TempValue & _3;
+  TempValue = TempValue | TriggerMask;
+  Power_Ip_pxMC_ME.5_4 = Power_Ip_pxMC_ME;
+  _5 = (int) PartitionIndex;
+  Power_Ip_pxMC_ME.5_4->McMePrtnArray[_5].PRTN_PUPD = TempValue;
+  Power_Ip_MC_ME_WriteControlKeys ();
+  return;
+
+}
+
+
+Power_Ip_MC_ME_TriggerModeUpdate ()
+{
+  <bb 2> :
+  Power_Ip_pxMC_ME.29_1 = Power_Ip_pxMC_ME;
+  Power_Ip_pxMC_ME.29_1->MODE_UPD = 1;
+  Power_Ip_MC_ME_WriteControlKeys ();
+  return;
+
+}
+
+
+Power_Ip_MC_ME_WriteControlKeys ()
+{
+  <bb 2> :
+  Power_Ip_pxMC_ME.6_1 = Power_Ip_pxMC_ME;
+  Power_Ip_pxMC_ME.6_1->CTL_KEY = 23280;
+  Power_Ip_pxMC_ME.7_2 = Power_Ip_pxMC_ME;
+  Power_Ip_pxMC_ME.7_2->CTL_KEY = 42255;
+  return;
+
+}
+
+

@@ -1,0 +1,731 @@
+DbgAssert (const char * msg, const char * file, uint32_t line)
+{
+  int line.9_1;
+
+  <bb 2> :
+  line.9_1 = (int) line_2(D);
+  sprintf (&gDbgMsg, "Assertion failed: %s at %s, line  %d\n", msg_4(D), file_5(D), line.9_1);
+  DbgPrintMsg (&gDbgMsg);
+  return;
+
+}
+
+
+DbgGetIniline (char * mystr, char * newline)
+{
+  char * nextline;
+  char line_start[2];
+  char * D.7486;
+  char _1;
+  char _2;
+  char * _13;
+
+  <bb 2> :
+  # mystr_3 = PHI <mystr_5(D)(0), mystr_10(4)>
+  nextline_9 = get_newline (mystr_3, newline_7(D));
+  mystr_10 = nextline_9;
+  memset (&line_start, 0, 2);
+  sscanf (newline_7(D), "%1s", &line_start);
+  _1 = line_start[0];
+  if (_1 == 35)
+    goto <bb 4>; [INV]
+  else
+    goto <bb 3>; [INV]
+
+  <bb 3> :
+  _2 = line_start[0];
+  if (_2 == 0)
+    goto <bb 4>; [INV]
+  else
+    goto <bb 5>; [INV]
+
+  <bb 4> :
+  if (nextline_9 != 0B)
+    goto <bb 2>; [INV]
+  else
+    goto <bb 5>; [INV]
+
+  <bb 5> :
+  _13 = mystr_10;
+  line_start ={v} {CLOBBER};
+
+  <bb 6> :
+<L5>:
+  return _13;
+
+}
+
+
+get_newline (char * mystr, char * newline)
+{
+  unsigned int len;
+  char * nextline;
+  char * D.7476;
+  char * _1;
+  int _2;
+  char * _3;
+  char * _4;
+  char * _13;
+  char * _17;
+  char * _20;
+  char * _21;
+
+  <bb 2> :
+  len_6 = 0;
+  *newline_8(D) = 0;
+  if (mystr_10(D) == 0B)
+    goto <bb 3>; [INV]
+  else
+    goto <bb 4>; [INV]
+
+  <bb 3> :
+  _21 = 0B;
+  // predicted unlikely by early return (on trees) predictor.
+  goto <bb 12>; [INV]
+
+  <bb 4> :
+  _1 = strchr (mystr_10(D), 10);
+  nextline_11 = _1 + 1;
+  if (nextline_11 != 0B)
+    goto <bb 5>; [INV]
+  else
+    goto <bb 11>; [INV]
+
+  <bb 5> :
+  if (nextline_11 == 1B)
+    goto <bb 6>; [INV]
+  else
+    goto <bb 7>; [INV]
+
+  <bb 6> :
+  DbgPrintMsg ("End of file reached (no more end of lines)");
+  _20 = 0B;
+  // predicted unlikely by early return (on trees) predictor.
+  goto <bb 12>; [INV]
+
+  <bb 7> :
+  _2 = nextline_11 - mystr_10(D);
+  len_14 = (unsigned int) _2;
+  if (len_14 > 511)
+    goto <bb 8>; [INV]
+  else
+    goto <bb 10>; [INV]
+
+  <bb 8> :
+  DbgPrintMsg ("Line too long");
+
+  <bb 9> :
+  goto <bb 9>; [INV]
+
+  <bb 10> :
+  strncpy (newline_8(D), mystr_10(D), len_14);
+  _3 = newline_8(D) + len_14;
+  memset (_3, 0, 1);
+  _17 = nextline_11;
+  // predicted unlikely by early return (on trees) predictor.
+  goto <bb 12>; [INV]
+
+  <bb 11> :
+  strcpy (newline_8(D), mystr_10(D));
+  _13 = 0B;
+  // predicted unlikely by early return (on trees) predictor.
+
+  <bb 12> :
+  # _4 = PHI <_21(3), _20(6), _17(10), _13(11)>
+<L9>:
+  return _4;
+
+}
+
+
+DbgCompareWithFile (const char * fileName, const char * srcAddr, int numBytes)
+{
+  int D.7472;
+  int _1;
+  int _11;
+
+  <bb 2> :
+  sscanf (fileName_3(D), "%s", &DBG_FileName);
+  DBG_SrcAddr = srcAddr_5(D);
+  DBG_NumBytes ={v} numBytes_7(D);
+  _1 = numBytes_7(D) + 1;
+  DBG_CompareOffset ={v} _1;
+  DBG_POINT (12);
+  _11 ={v} DBG_CompareOffset;
+
+  <bb 3> :
+<L0>:
+  return _11;
+
+}
+
+
+DbgPrintMsg (const char * fmt)
+{
+  struct va_list args;
+
+  <bb 2> :
+  __builtin_va_start (&args, 0);
+  vsprintf (&gDbgMsg, fmt_3(D), args);
+  dbg_print_t32 (&gDbgMsg);
+  __builtin_va_end (&args);
+  args ={v} {CLOBBER};
+  return;
+
+}
+
+
+DbgSendRtp (const char * srcAddr, int numBytes, uint32_t timestamp, uint8_t payload_type, uint32_t ssrc)
+{
+  <bb 2> :
+  DbgRtpSendBackend (srcAddr_2(D), numBytes_3(D), timestamp_4(D), payload_type_5(D), ssrc_6(D));
+  return;
+
+}
+
+
+DbgWriteFileConvert (const char * fileName, const char * srcAddr, int numBytes, const char * memTransformOper, _Bool isSrcCacheable)
+{
+  <bb 2> :
+  DbgPerformMemTransformOper (srcAddr_2(D), numBytes_3(D), memTransformOper_4(D), isSrcCacheable_5(D));
+  DbgWriteFile (fileName_7(D), srcAddr_2(D), numBytes_3(D));
+  DbgPerformMemTransformOper (srcAddr_2(D), numBytes_3(D), memTransformOper_4(D), isSrcCacheable_5(D));
+  return;
+
+}
+
+
+DbgWriteFile (const char * fileName, const char * srcAddr, int numBytes)
+{
+  <bb 2> :
+  DbgWriteFileBackend (fileName_2(D), srcAddr_3(D), numBytes_4(D));
+  return;
+
+}
+
+
+DbgReadFileConvert (const char * fileName, int offsetBytes, char * destAddr, int maxBytes, const char * memTransformOper, _Bool isDestCacheable)
+{
+  <bb 2> :
+  DbgReadFile (fileName_2(D), offsetBytes_3(D), destAddr_4(D), maxBytes_5(D));
+  DbgPerformMemTransformOper (destAddr_4(D), maxBytes_5(D), memTransformOper_7(D), isDestCacheable_8(D));
+  return;
+
+}
+
+
+DbgReadFile (const char * fileName, int offsetBytes, char * destAddr, int maxBytes)
+{
+  int D.7470;
+  int _7;
+
+  <bb 2> :
+  _7 = DbgReadFileBackend (fileName_2(D), offsetBytes_3(D), destAddr_4(D), maxBytes_5(D));
+
+  <bb 3> :
+<L0>:
+  return _7;
+
+}
+
+
+DbgPerformMemTransformOper (char * bufAddr, int32_t bufSize, const char * memTransformOper, _Bool isCacheable)
+{
+  uint64_t * tmp;
+  uint32_t * tmp;
+  uint16_t * tmp;
+  int32_t i;
+  rsdkStatus_t D.7453;
+  int _1;
+  int _2;
+  unsigned int bufSize.3_3;
+  unsigned int _4;
+  sizetype i.4_5;
+  short unsigned int _6;
+  int _7;
+  int _8;
+  signed short _9;
+  short unsigned int _10;
+  short unsigned int _11;
+  signed short _12;
+  signed short _13;
+  short unsigned int _14;
+  int _15;
+  unsigned int bufSize.5_16;
+  unsigned int _17;
+  sizetype i.6_18;
+  long unsigned int _19;
+  long unsigned int _20;
+  long unsigned int _21;
+  long unsigned int _22;
+  long unsigned int _23;
+  long unsigned int _24;
+  long unsigned int _25;
+  long unsigned int _26;
+  long unsigned int _27;
+  long unsigned int _28;
+  long unsigned int _29;
+  long unsigned int _30;
+  long unsigned int _31;
+  int _32;
+  unsigned int bufSize.7_33;
+  unsigned int _34;
+  sizetype i.8_35;
+  long long unsigned int _36;
+  long long unsigned int _37;
+  long long unsigned int _38;
+  long long unsigned int _39;
+  long long unsigned int _40;
+  long long unsigned int _41;
+  long long unsigned int _42;
+  long long unsigned int _43;
+  long long unsigned int _44;
+  long long unsigned int _45;
+  long long unsigned int _46;
+  long long unsigned int _47;
+  long long unsigned int _48;
+  long long unsigned int _49;
+  long long unsigned int _50;
+  long long unsigned int _51;
+  long long unsigned int _52;
+  long long unsigned int _53;
+  long long unsigned int _54;
+  long long unsigned int _55;
+  long long unsigned int _56;
+  long long unsigned int _57;
+  long long unsigned int _58;
+  long long unsigned int _59;
+  long long unsigned int _60;
+  long long unsigned int _61;
+  long long unsigned int _62;
+  long long unsigned int _63;
+  long long unsigned int _64;
+  rsdkStatus_t _68;
+  rsdkStatus_t _82;
+  rsdkStatus_t _87;
+  rsdkStatus_t _92;
+  rsdkStatus_t _97;
+  rsdkStatus_t _99;
+
+  <bb 2> :
+  _1 = strcmp (memTransformOper_77(D), "none");
+  if (_1 == 0)
+    goto <bb 29>; [INV]
+  else
+    goto <bb 3>; [INV]
+
+  <bb 3> :
+  if (isCacheable_78(D) != 0)
+    goto <bb 4>; [INV]
+  else
+    goto <bb 5>; [INV]
+
+  <bb 4> :
+  CacheInvalidate (bufAddr_79(D), bufSize_80(D));
+
+  <bb 5> :
+  _2 = strcmp (memTransformOper_77(D), "word16");
+  if (_2 == 0)
+    goto <bb 6>; [INV]
+  else
+    goto <bb 12>; [INV]
+
+  <bb 6> :
+  if (bufSize_80(D) < 0)
+    goto <bb 8>; [INV]
+  else
+    goto <bb 7>; [INV]
+
+  <bb 7> :
+  bufSize.3_3 = (unsigned int) bufSize_80(D);
+  _4 = bufSize.3_3 & 1;
+  if (_4 != 0)
+    goto <bb 8>; [INV]
+  else
+    goto <bb 9>; [INV]
+
+  <bb 8> :
+  _97 = 1;
+  // predicted unlikely by early return (on trees) predictor.
+  goto <bb 30>; [INV]
+
+  <bb 9> :
+  i_93 = 0;
+  goto <bb 11>; [INV]
+
+  <bb 10> :
+  i.4_5 = (sizetype) i_65;
+  tmp_94 = bufAddr_79(D) + i.4_5;
+  _6 = *tmp_94;
+  _7 = (int) _6;
+  _8 = _7 << 8;
+  _9 = (signed short) _8;
+  _10 = *tmp_94;
+  _11 = _10 >> 8;
+  _12 = (signed short) _11;
+  _13 = _9 | _12;
+  _14 = (short unsigned int) _13;
+  *tmp_94 = _14;
+  i_96 = i_65 + 2;
+
+  <bb 11> :
+  # i_65 = PHI <i_93(9), i_96(10)>
+  if (i_65 < bufSize_80(D))
+    goto <bb 10>; [INV]
+  else
+    goto <bb 27>; [INV]
+
+  <bb 12> :
+  _15 = strcmp (memTransformOper_77(D), "word32");
+  if (_15 == 0)
+    goto <bb 13>; [INV]
+  else
+    goto <bb 19>; [INV]
+
+  <bb 13> :
+  if (bufSize_80(D) < 0)
+    goto <bb 15>; [INV]
+  else
+    goto <bb 14>; [INV]
+
+  <bb 14> :
+  bufSize.5_16 = (unsigned int) bufSize_80(D);
+  _17 = bufSize.5_16 & 3;
+  if (_17 != 0)
+    goto <bb 15>; [INV]
+  else
+    goto <bb 16>; [INV]
+
+  <bb 15> :
+  _92 = 1;
+  // predicted unlikely by early return (on trees) predictor.
+  goto <bb 30>; [INV]
+
+  <bb 16> :
+  i_88 = 0;
+  goto <bb 18>; [INV]
+
+  <bb 17> :
+  i.6_18 = (sizetype) i_66;
+  tmp_89 = bufAddr_79(D) + i.6_18;
+  _19 = *tmp_89;
+  _20 = _19 << 24;
+  _21 = *tmp_89;
+  _22 = _21 << 8;
+  _23 = _22 & 16711680;
+  _24 = _20 | _23;
+  _25 = *tmp_89;
+  _26 = _25 >> 8;
+  _27 = _26 & 65280;
+  _28 = _24 | _27;
+  _29 = *tmp_89;
+  _30 = _29 >> 24;
+  _31 = _28 | _30;
+  *tmp_89 = _31;
+  i_91 = i_66 + 4;
+
+  <bb 18> :
+  # i_66 = PHI <i_88(16), i_91(17)>
+  if (i_66 < bufSize_80(D))
+    goto <bb 17>; [INV]
+  else
+    goto <bb 27>; [INV]
+
+  <bb 19> :
+  _32 = strcmp (memTransformOper_77(D), "word64");
+  if (_32 == 0)
+    goto <bb 20>; [INV]
+  else
+    goto <bb 26>; [INV]
+
+  <bb 20> :
+  if (bufSize_80(D) < 0)
+    goto <bb 22>; [INV]
+  else
+    goto <bb 21>; [INV]
+
+  <bb 21> :
+  bufSize.7_33 = (unsigned int) bufSize_80(D);
+  _34 = bufSize.7_33 & 7;
+  if (_34 != 0)
+    goto <bb 22>; [INV]
+  else
+    goto <bb 23>; [INV]
+
+  <bb 22> :
+  _87 = 1;
+  // predicted unlikely by early return (on trees) predictor.
+  goto <bb 30>; [INV]
+
+  <bb 23> :
+  i_83 = 0;
+  goto <bb 25>; [INV]
+
+  <bb 24> :
+  i.8_35 = (sizetype) i_67;
+  tmp_84 = bufAddr_79(D) + i.8_35;
+  _36 = *tmp_84;
+  _37 = _36 << 56;
+  _38 = *tmp_84;
+  _39 = _38 << 40;
+  _40 = _39 & 71776119061217280;
+  _41 = _37 | _40;
+  _42 = *tmp_84;
+  _43 = _42 << 24;
+  _44 = _43 & 280375465082880;
+  _45 = _41 | _44;
+  _46 = *tmp_84;
+  _47 = _46 << 8;
+  _48 = _47 & 1095216660480;
+  _49 = _45 | _48;
+  _50 = *tmp_84;
+  _51 = _50 >> 8;
+  _52 = _51 & 4278190080;
+  _53 = _49 | _52;
+  _54 = *tmp_84;
+  _55 = _54 >> 24;
+  _56 = _55 & 16711680;
+  _57 = _53 | _56;
+  _58 = *tmp_84;
+  _59 = _58 >> 40;
+  _60 = _59 & 65280;
+  _61 = _57 | _60;
+  _62 = *tmp_84;
+  _63 = _62 >> 56;
+  _64 = _61 | _63;
+  *tmp_84 = _64;
+  i_86 = i_67 + 8;
+
+  <bb 25> :
+  # i_67 = PHI <i_83(23), i_86(24)>
+  if (i_67 < bufSize_80(D))
+    goto <bb 24>; [INV]
+  else
+    goto <bb 27>; [INV]
+
+  <bb 26> :
+  _82 = 1;
+  // predicted unlikely by early return (on trees) predictor.
+  goto <bb 30>; [INV]
+
+  <bb 27> :
+  if (isCacheable_78(D) != 0)
+    goto <bb 28>; [INV]
+  else
+    goto <bb 29>; [INV]
+
+  <bb 28> :
+  CacheFlush (bufAddr_79(D), bufSize_80(D));
+
+  <bb 29> :
+  _99 = 0;
+
+  <bb 30> :
+  # _68 = PHI <_97(8), _92(15), _87(22), _82(26), _99(29)>
+<L34>:
+  return _68;
+
+}
+
+
+DbgInit (const char * iniFile)
+{
+  rsdkStatus_t D.7441;
+  <unnamed type> DBG_InFocus.2_1;
+  rsdkStatus_t _5;
+
+  <bb 2> :
+  DBG_InFocus.2_1 ={v} DBG_InFocus;
+  if (DBG_InFocus.2_1 == 0)
+    goto <bb 3>; [INV]
+  else
+    goto <bb 4>; [INV]
+
+  <bb 3> :
+  DBG_InFocus ={v} 1;
+
+  <bb 4> :
+  _5 = 0;
+
+  <bb 5> :
+<L2>:
+  return _5;
+
+}
+
+
+__attribute__((optimize ("O0")))
+dbg_print_t32 (const char * msg)
+{
+  <unnamed type> _1;
+
+  <bb 2> :
+  _1 = DBG_POINT (13);
+  DBG_ID ={v} _1;
+  return;
+
+}
+
+
+DbgRtpSendBackend (const char * srcAddr, int numBytes, uint32_t timestamp, uint8_t payload_type, uint32_t ssrc)
+{
+  <bb 2> :
+  return;
+
+}
+
+
+DbgWriteFileBackend (const char * fileName, const char * srcAddr, int numBytes)
+{
+  <bb 2> :
+  CacheFlush (srcAddr_2(D), numBytes_3(D));
+  LauterbachWriteFile (fileName_5(D), srcAddr_2(D), numBytes_3(D));
+  return;
+
+}
+
+
+DbgReadFileBackend (const char * fileName, int offsetBytes, char * destAddr, int maxBytes)
+{
+  int readBytes;
+  int D.7437;
+  int _9;
+
+  <bb 2> :
+  readBytes_1 = 0;
+  readBytes_8 = LauterbachReadFile (fileName_3(D), offsetBytes_4(D), destAddr_5(D), maxBytes_6(D));
+  _9 = readBytes_8;
+
+  <bb 3> :
+<L0>:
+  return _9;
+
+}
+
+
+__attribute__((optimize ("O0")))
+LauterbachWriteFile (const char * fileName, const char * srcAddr, int numBytes)
+{
+  <bb 2> :
+  sscanf (fileName_2(D), "%s", &DBG_FileName);
+  DBG_SrcAddr = srcAddr_4(D);
+  DBG_NumBytes ={v} numBytes_6(D);
+  DBG_POINT (11);
+  return;
+
+}
+
+
+__attribute__((optimize ("O0")))
+LauterbachReadFile (const char * fileName, int offsetBytes, char * destAddr, int maxBytes)
+{
+  int D.7435;
+  int _12;
+
+  <bb 2> :
+  sscanf (fileName_2(D), "%s", &DBG_FileName);
+  DBG_DestAddr = destAddr_4(D);
+  DBG_MaxBytes ={v} maxBytes_6(D);
+  DBG_OffsetBytes ={v} offsetBytes_8(D);
+  DBG_POINT (10);
+  CacheInvalidate (destAddr_4(D), maxBytes_6(D));
+  _12 = maxBytes_6(D);
+
+  <bb 3> :
+<L0>:
+  return _12;
+
+}
+
+
+__attribute__((optimize ("O0")))
+DBG_POINT (dbgId_t ID)
+{
+  dbgId_t D.7433;
+  dbgId_t _8;
+
+  <bb 2> :
+  DBG_WaitFocus ();
+  DBG_ID ={v} ID_4(D);
+  if (ID_4(D) > 19)
+    goto <bb 3>; [INV]
+  else
+    goto <bb 5>; [INV]
+
+  <bb 3> :
+  if (ID_4(D) <= 23)
+    goto <bb 4>; [INV]
+  else
+    goto <bb 5>; [INV]
+
+  <bb 4> :
+  __asm__ __volatile__("dbg_point_label_class_profiling: nop");
+  goto <bb 6>; [INV]
+
+  <bb 5> :
+  __asm__ __volatile__("dbg_point_label_class_regular: nop");
+
+  <bb 6> :
+  _8 ={v} DBG_ID;
+
+  <bb 7> :
+<L4>:
+  return _8;
+
+}
+
+
+DBG_WaitFocus ()
+{
+  <unnamed type> DBG_InFocus.1_1;
+
+  <bb 2> :
+
+  <bb 3> :
+  DBG_InFocus.1_1 ={v} DBG_InFocus;
+  if (DBG_InFocus.1_1 <= 1)
+    goto <bb 3>; [INV]
+  else
+    goto <bb 4>; [INV]
+
+  <bb 4> :
+  return;
+
+}
+
+
+__attribute__((unused))
+rsdk_test_not_null_lnk_sym (uintptr_t symName)
+{
+  volatile uintptr_t dummy_volatile;
+  uint8 retVal;
+  uint8 D.7427;
+  unsigned int dummy_volatile.0_1;
+  uint8 _8;
+
+  <bb 2> :
+  dummy_volatile ={v} symName_4(D);
+  dummy_volatile.0_1 ={v} dummy_volatile;
+  if (dummy_volatile.0_1 != 0)
+    goto <bb 3>; [INV]
+  else
+    goto <bb 4>; [INV]
+
+  <bb 3> :
+  retVal_7 = 1;
+  goto <bb 5>; [INV]
+
+  <bb 4> :
+  retVal_6 = 0;
+
+  <bb 5> :
+  # retVal_2 = PHI <retVal_7(3), retVal_6(4)>
+  _8 = retVal_2;
+
+  <bb 6> :
+<L3>:
+  return _8;
+
+}
+
+

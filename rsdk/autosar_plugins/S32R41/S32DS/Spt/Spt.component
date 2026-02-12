@@ -1,0 +1,264 @@
+<?xml version="1.0" encoding= "UTF-8" ?>
+<component:config_component id="Spt" label="Spt" global_only="false" xsi:schemaLocation="http://swtools.freescale.net/XSD/component/1.0 http://swtools.freescale.net/XSD/component/1.0/component-8.0.xsd" xmlns:component="http://swtools.freescale.net/XSD/component/1.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" category="driver" max_instances="1" >
+
+<sw_comp_ref name="platform.driver.spt" version="0.8.10"/>
+
+    <description>Spt Driver Configuration</description>
+    <mode id="ip" label="SPT Module" available="true">
+        <description>Spt Driver Module Name, not used</description>
+        <config_set_refs>
+            <config_set_ref>Spt</config_set_ref>
+        </config_set_refs>
+    </mode>
+
+
+    <config_set id="Spt" label="SPT" public="true" options="ShowContentAs=Tabs;UI_LABEL_HIDDEN;UI_BORDER_HIDDEN">
+        <description>Configuration of the Spt (Signal Processing Toolbox) module.</description>
+        <quick_selections>
+            <quick_selection id="SptDefault" label="Default Values" available="true">
+                <set id="Name">Spt</set>
+                <set id="SptGeneralConfiguration.SptDevErrorDetect">true</set>
+                <set id="SptGeneralConfiguration.SptHaltOnError">false</set>
+                <set id="SptGeneralConfiguration.SptSingleThread">true</set>
+                <set id="SptGeneralConfiguration.SptVersionInfoApi">true</set>
+                <set id="SptGeneralConfiguration.SptDspEnable">true</set>
+                <set id="SptGeneralConfiguration.SptRunPoll">true</set>
+                <set id="SptGeneralConfiguration.SptSetup.SptSetupStructureName">sptInitInfo</set>
+                <set id="SptGeneralConfiguration.SptSetup.SptDspEnable">false</set>
+
+             </quick_selection>
+            <default>Default</default>
+        </quick_selections>
+
+        <settings>
+            <variable value="`../Spt/spt_codegenerator.js`" id="codegen_file"></variable>
+            <variable value="`Spt_CodeGenerator`" id="codegen_class"></variable>
+            <variable value="`true`" id="generate_templates"></variable>
+            <variable value="toArray(`SPT`)" id="used_peripherals" />
+            <variable value="$this.getMode()" id="mode"/>
+            <variable value="$this" id="rootNode"/>
+
+            <struct id="SptGeneralConfiguration" label="SPT Parameters">
+                <description>
+                    This container contains the global configuration parameters of the RadarSDK SPT driver.
+                </description>
+                <quick_selections>
+                    <quick_selection id="SptGeneralConfigDefault" label="Default Values" available="true">
+                        <set id="SptDevErrorDetect">true</set>
+                        <set id="SptHaltOnError">false</set>
+                        <set id="SptSingleThread">true</set>
+                        <set id="SptVersionInfoApi">true</set>
+                        <set id="SptDspEnable">true</set>
+                        <set id="SptRunPoll">true</set>
+                        <set id="SptSetup.SptSetupStructureName">sptInitInfo</set>
+                        <set id="SptSetup.SptDspEnable">false</set>
+
+                    </quick_selection>
+                    <default>Default</default>
+                </quick_selections>
+
+                <!-- object SptDevErrorDetect  -->
+                <bool id="SptDevErrorDetect" label="Detect Development Errors" available="system::hasExclusiveOwnership(`SPT`, $group)">
+                    <description>
+                        <![CDATA[<html>Parameter to enable or disable the errors at development time
+                        <b>TRUE</b> = the development errors will be checked and reported
+                        <b>FALSE</b> = the development errors will not be checked, usually this means the parameters will not be checked for correctness </html> ]]>
+                    </description>
+                    <options_expr>
+                        <!-- option id="type" expr="`BOOL`"/ -->
+                        <option id="UUID" expr="`ECUC:e03507f1-4e98-4e85-a93e-5555b9ddbc8e`"/>
+                        <option id="postBuildVariantValue" expr="false"/>
+                        <option id="SYNC_VALUE"/>
+                        <option id="origin" expr="`NXP`"/>
+                        <option id="symbolicNameValue" expr="false"/>
+                        <option id="defaultValue" expr="`true`"/>
+                        <option id="scope" expr="`LOCAL`"/>
+                        <option id="valueConfigClass" expr="`PRE-COMPILE=VARIANT-POST-BUILD;PRE-COMPILE=VARIANT-PRE-COMPILE`"/>
+                        <option id="multiplicityConfigClass" expr="`PRE-COMPILE=VARIANT-POST-BUILD;PRE-COMPILE=VARIANT-PRE-COMPILE`"/>
+                    </options_expr>
+                </bool>
+
+                <!-- object SptHaltOnError  -->
+                <bool id="SptHaltOnError" label="Stop After Error Report" available="system::hasExclusiveOwnership(`SPT`, $group)">
+                    <description>
+                        <![CDATA[<html>Parameter to define the code execution after an error was reported
+                        <b>TRUE</b> = the execution will stop after error was reported, in an endless loop
+                        <b>FALSE</b> = the execution will continue after error reporting</html>]]>
+                    </description>
+                    <validation>
+						<constraint cond_expr="!((system::getParent($this, 1).getSetting(`SptDevErrorDetect`).getValue() == false) &amp;&amp; ($this.getValue() == `true`))" level="error" description="SPT development errors must be enabled."/>
+                    </validation>
+                    <options_expr>
+                        <option id="type" expr="`BOOLEAN`"/>
+                        <option id="UUID" expr="`ECUC:89463209-7ce8-4e10-b918-12997e2614d5`"/>
+                        <option id="postBuildVariantValue" expr="false"/>
+                        <option id="SYNC_VALUE"/>
+                        <option id="origin" expr="`NXP`"/>
+                        <option id="symbolicNameValue" expr="false"/>
+                        <option id="defaultValue" expr="`false`"/>
+                        <option id="scope" expr="`LOCAL`"/>
+                        <option id="valueConfigClass" expr="`PRE-COMPILE=VARIANT-POST-BUILD;PRE-COMPILE=VARIANT-PRE-COMPILE`"/>
+                        <option id="multiplicityConfigClass" expr="`PRE-COMPILE=VARIANT-POST-BUILD;PRE-COMPILE=VARIANT-PRE-COMPILE`"/>
+                    </options_expr>
+                </bool>
+
+                <!-- object SptSingleThread  -->
+                <bool id="SptSingleThread" label="A Single Thread is Used" available="system::hasExclusiveOwnership(`SPT`, $group)">
+                    <description>
+                        <![CDATA[<html>Parameter to specify if the application is using a single or multiple threads to manage the Spt driver.
+                        <b>TRUE</b> = single thread used, so it's not necessary to use exclusive area functions
+                        <b>FALSE</b> = multiple threads used, so it's necessary to use exclusive area functions</html>]]>
+                    </description>
+                    <options_expr>
+                        <option id="type" expr="`BOOLEAN`"/>
+                        <option id="UUID" expr="`ECUC:160bd5e1-d3cf-4237-9612-fd221b6d13a8`"/>
+                        <option id="postBuildVariantValue" expr="false"/>
+                        <option id="SYNC_VALUE"/>
+                        <option id="origin" expr="`NXP`"/>
+                        <option id="symbolicNameValue" expr="false"/>
+                        <option id="defaultValue" expr="`true`"/>
+                        <option id="scope" expr="`LOCAL`"/>
+                        <option id="valueConfigClass" expr="`PRE-COMPILE=VARIANT-POST-BUILD;PRE-COMPILE=VARIANT-PRE-COMPILE`"/>
+                        <option id="multiplicityConfigClass" expr="`PRE-COMPILE=VARIANT-POST-BUILD;PRE-COMPILE=VARIANT-PRE-COMPILE`"/>
+                    </options_expr>
+                </bool>
+
+                <!-- object SptVersionInfo  -->
+                <bool id="SptVersionInfoApi" label="Provide Version Info" available="system::hasExclusiveOwnership(`SPT`, $group)">
+                    <description>
+                        <![CDATA[<html>Parameter to specify if the Version Info will be available to application.
+                        <b>TRUE</b> = Version Info provided, the function Spt_GetVersionInfo is available
+                        <b>FALSE</b> = Version Info not provided</html>]]>
+                    </description>
+                    <options_expr>
+                        <option id="type" expr="`BOOLEAN`"/>
+                        <option id="UUID" expr="`ECUC:28886a91-4e3e-451b-b0e6-342d84abc21b`"/>
+                        <option id="postBuildVariantValue" expr="false"/>
+                        <option id="SYNC_VALUE"/>
+                        <option id="origin" expr="`NXP`"/>
+                        <option id="symbolicNameValue" expr="false"/>
+                        <option id="defaultValue" expr="`true`"/>
+                        <option id="scope" expr="`LOCAL`"/>
+                        <option id="valueConfigClass" expr="`PRE-COMPILE=VARIANT-POST-BUILD;PRE-COMPILE=VARIANT-PRE-COMPILE`"/>
+                        <option id="multiplicityConfigClass" expr="`PRE-COMPILE=VARIANT-POST-BUILD;PRE-COMPILE=VARIANT-PRE-COMPILE`"/>
+                    </options_expr>
+                </bool>
+
+                <!-- object SptDspEnable  -->
+                <bool id="SptDspEnable" label="DSP Support" available="system::hasExclusiveOwnership(`SPT`, $group)" >
+                    <description>
+                        <![CDATA[<html>Parameter to specify if DSP support needs to be provided.
+                        [Note] available != enabled
+                        <b>TRUE</b> = DSP support available (can enable and configure DSP via Spt_Setup())
+                        <b>FALSE</b> = DSP support unavailable (cannot further enable and configure DSP via Spt_Setup())</html>]]>
+                    </description>
+                    <options_expr>
+                        <option id="type" expr="`BOOLEAN`"/>
+                        <option id="UUID" expr="`ECUC:17fba5a4-ef49-4e79-84b2-68780825bb25`"/>
+                        <option id="postBuildVariantValue" expr="false"/>
+                        <option id="SYNC_VALUE"/>
+                        <option id="origin" expr="`NXP`"/>
+                        <option id="symbolicNameValue" expr="false"/>
+                        <option id="defaultValue" expr="`true`"/>
+                        <option id="scope" expr="`LOCAL`"/>
+                        <option id="valueConfigClass" expr="`PRE-COMPILE=VARIANT-POST-BUILD;PRE-COMPILE=VARIANT-PRE-COMPILE`"/>
+                        <option id="multiplicityConfigClass" expr="`PRE-COMPILE=VARIANT-POST-BUILD;PRE-COMPILE=VARIANT-PRE-COMPILE`"/>
+                    </options_expr>
+                </bool>
+
+                <!-- object SptRunPoll  -->
+                <bool id="SptRunPoll" label="Polling Support" available="system::hasExclusiveOwnership(`SPT`, $group)">
+                    <description>
+                        <![CDATA[<html>Parameter to specify if polling support needs to be provided.
+                        [Note] available != enabled
+                        <b>TRUE</b> = Polling support available (can be configured via Spt_Run)
+                        <b>FALSE</b> = Polling support unavailable (cannot be later configured via Spt_Run)</html>]]>
+                    </description>
+                    <options_expr>
+                        <option id="type" expr="`BOOLEAN`"/>
+                        <option id="UUID" expr="`ECUC:80ac5495-4620-41fb-8fe8-54a0309566ba`"/>
+                        <option id="postBuildVariantValue" expr="false"/>
+                        <option id="SYNC_VALUE"/>
+                        <option id="origin" expr="`NXP`"/>
+                        <option id="symbolicNameValue" expr="false"/>
+                        <option id="defaultValue" expr="`false`"/>
+                        <option id="scope" expr="`LOCAL`"/>
+                        <option id="valueConfigClass" expr="`PRE-COMPILE=VARIANT-POST-BUILD;PRE-COMPILE=VARIANT-PRE-COMPILE`"/>
+                        <option id="multiplicityConfigClass" expr="`PRE-COMPILE=VARIANT-POST-BUILD;PRE-COMPILE=VARIANT-PRE-COMPILE`"/>
+                    </options_expr>
+                </bool>
+
+                <!-- first sub-section : specific SptSetup -->
+                <struct id="SptSetup" label="SPT Setup" available="true">
+                    <description>
+                        <![CDATA[<html>Necessary parameters to setup the SPT driver via the Spt_Setup() API call. <p/>
+                        </html>]]>
+                    </description>
+
+                    <!-- object SptSetupStructureName  -->
+                    <string id="SptSetupStructureName" label="Setup Structure Name" available="system::hasExclusiveOwnership(`SPT`, $group)">
+                        <description>This is the name to be used for the structure parameter needed by the application to run Spt_Setup().</description>
+                        <validation>
+                            <constraint cond_expr="(($this.getValue() != ``) &amp;&amp; isCIdentifier($this.getValue()))" level="error" description="Name must be a valid C identifier!"/>
+                        </validation>
+                        <options_expr>
+                            <option id="type" expr="`STRING`"/>
+                            <option id="UUID" expr="`ECUC:2beea917-2bcd-497c-a2ed-c8285559c370`"/>
+                            <option id="origin" expr="`NXP`"/>
+                            <option id="SYNC_VALUE"/>
+                            <option id="postBuildVariantValue" expr="true"/>
+                            <option id="symbolicNameValue" expr="false"/>
+                            <option id="defaultValue" expr="`sptInitInfo`"/>
+                            <option id="valueConfigClass" expr="`PRE-COMPILE=VARIANT-POST-BUILD;PRE-COMPILE=VARIANT-PRE-COMPILE`"/>
+                            <option id="multiplicityConfigClass" expr="`PRE-COMPILE=VARIANT-POST-BUILD;PRE-COMPILE=VARIANT-PRE-COMPILE`"/>
+                        </options_expr>
+                    </string>
+
+                    <!-- object SptDspEnable  -->
+                    <bool id="SptDspEnable" label="DSP Enable" available="true" enable="system::getParent($this, 2).getSetting(`SptDspEnable`).getValue() == true">
+                        <description>
+                            <![CDATA[<html> Enable the BBE32 DSP to boot-up and start running the DSP Dispatcher.
+                            <b>TRUE</b>: Enable DSP boot
+                            <b>FALSE</b>: DSP boot disabled</html>]]>
+                        </description>
+						<validation>
+							<constraint cond_expr="!((system::getParent($this, 2).getSetting(`SptDspEnable`).getValue() == false) &amp;&amp; ($this.getValue() == `true`))" level="error" description="DSP support must be available in the SPT driver."/>
+						</validation>
+                        <options_expr>
+                            <option id="type" expr="`BOOLEAN`"/>
+                            <option id="UUID" expr="`ECUC:1ab128f3-2855-46dd-a8e2-f8445b527239`"/>
+                            <option id="postBuildVariantValue" expr="false"/>
+                            <option id="SYNC_VALUE"/>
+                            <option id="origin" expr="`NXP`"/>
+                            <option id="symbolicNameValue" expr="false"/>
+                            <option id="defaultValue" expr="`false`"/>
+                            <option id="scope" expr="`LOCAL`"/>
+                            <option id="valueConfigClass" expr="`PRE-COMPILE=VARIANT-POST-BUILD;PRE-COMPILE=VARIANT-PRE-COMPILE`"/>
+                            <option id="multiplicityConfigClass" expr="`PRE-COMPILE=VARIANT-POST-BUILD;PRE-COMPILE=VARIANT-PRE-COMPILE`"/>
+                        </options_expr>
+                    </bool>
+
+                </struct>                 <!-- first sub-section : specific SptSetup -->
+
+            </struct>
+
+        </settings>
+
+        <options_expr>
+            <option id="type" expr="`MODULE-DEF`"/>
+            <option id="path" expr="`/TS_T40D47M10I0R0/Spt`"/>
+            <option id="UUID" expr="`ECUC:d2790718-f3a7-4a5a-8173-6fc2c5cf56b4`"/>
+            <option id="adminData" expr="`4.7.0;AUTOSAR;2014-10-31`"/>
+            <option id="lowerMultiplicity" expr="0"/>
+            <option id="upperMultiplicity" expr="1"/>
+            <option id="postBuildVariantSupport" expr="true"/>
+            <option id="supportedConfigVariants" expr="`VARIANT-POST-BUILD;VARIANT-PRE-COMPILE`"/>
+        </options_expr>
+    </config_set>
+    <options_expr>
+        <option id="type" expr="`AR-PACKAGE`"/>
+        <option id="path" expr="`TS_T40D47M10I0R0`"/>
+        <option id="UUID" expr="`ECUC:f994e63e-acdb-42bf-b2d9-97105aa88bee`"/>
+        <option id="ecucDefinitionCollection" expr="`ECUC:44434fef-d13c-4905-b4fd-3bc2d0889642;Spt_EcuParameterDefinition`"/>
+    </options_expr>
+</component:config_component>

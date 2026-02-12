@@ -1,0 +1,269 @@
+Det_TestNoTransientFault ()
+{
+  uint32 u32CoreId;
+  boolean result;
+  boolean D.5929;
+
+  <bb 2> :
+  result = 1;
+  _1 = OSGetLogicalCoreID ();
+  u32CoreId = (uint32) _1;
+  SuspendAllInterrupts ();
+  _2 = Det_ModuleState[u32CoreId];
+  if (_2 == 0)
+    goto <bb 3>; [INV]
+  else
+    goto <bb 4>; [INV]
+
+  <bb 3> :
+  Det_Init ();
+  goto <bb 7>; [INV]
+
+  <bb 4> :
+  _3 = Det_numTransientEventErrors[u32CoreId];
+  if (_3 != 0)
+    goto <bb 5>; [INV]
+  else
+    goto <bb 6>; [INV]
+
+  <bb 5> :
+  result = 0;
+
+  <bb 6> :
+  Det_numTransientEventErrors[u32CoreId] = 0;
+  _4 = &Det_aTransientErrorState[u32CoreId];
+  Det_FreeNodesInLinkedList (_4);
+
+  <bb 7> :
+  ResumeAllInterrupts ();
+  D.5929 = result;
+
+  <bb 8> :
+<L5>:
+  return D.5929;
+
+}
+
+
+Det_TestNoRuntimeError ()
+{
+  uint32 u32CoreId;
+  boolean result;
+  boolean D.5922;
+
+  <bb 2> :
+  result = 1;
+  _1 = OSGetLogicalCoreID ();
+  u32CoreId = (uint32) _1;
+  SuspendAllInterrupts ();
+  _2 = Det_ModuleState[u32CoreId];
+  if (_2 == 0)
+    goto <bb 3>; [INV]
+  else
+    goto <bb 4>; [INV]
+
+  <bb 3> :
+  Det_Init ();
+  goto <bb 7>; [INV]
+
+  <bb 4> :
+  _3 = Det_numRuntimeEventErrors[u32CoreId];
+  if (_3 != 0)
+    goto <bb 5>; [INV]
+  else
+    goto <bb 6>; [INV]
+
+  <bb 5> :
+  result = 0;
+
+  <bb 6> :
+  Det_numRuntimeEventErrors[u32CoreId] = 0;
+  _4 = &Det_aRuntimeErrorState[u32CoreId];
+  Det_FreeNodesInLinkedList (_4);
+
+  <bb 7> :
+  ResumeAllInterrupts ();
+  D.5922 = result;
+
+  <bb 8> :
+<L5>:
+  return D.5922;
+
+}
+
+
+Det_TestNoError ()
+{
+  uint32 u32CoreId;
+  boolean result;
+  boolean D.5915;
+
+  <bb 2> :
+  result = 1;
+  _1 = OSGetLogicalCoreID ();
+  u32CoreId = (uint32) _1;
+  SuspendAllInterrupts ();
+  _2 = Det_ModuleState[u32CoreId];
+  if (_2 == 0)
+    goto <bb 3>; [INV]
+  else
+    goto <bb 4>; [INV]
+
+  <bb 3> :
+  Det_Init ();
+  goto <bb 7>; [INV]
+
+  <bb 4> :
+  _3 = Det_numEventErrors[u32CoreId];
+  if (_3 != 0)
+    goto <bb 5>; [INV]
+  else
+    goto <bb 6>; [INV]
+
+  <bb 5> :
+  result = 0;
+
+  <bb 6> :
+  Det_numEventErrors[u32CoreId] = 0;
+  _4 = &Det_aErrorState[u32CoreId];
+  Det_FreeNodesInLinkedList (_4);
+
+  <bb 7> :
+  ResumeAllInterrupts ();
+  D.5915 = result;
+
+  <bb 8> :
+<L5>:
+  return D.5915;
+
+}
+
+
+Det_TestLastReportTransientFault (uint16 ModuleId, uint8 InstanceId, uint8 ApiId, uint8 FaultId)
+{
+  uint32 u32CoreId;
+  boolean RetVal;
+  boolean D.5908;
+
+  <bb 2> :
+  _1 = OSGetLogicalCoreID ();
+  u32CoreId = (uint32) _1;
+  SuspendAllInterrupts ();
+  _2 = Det_ModuleState[u32CoreId];
+  if (_2 == 0)
+    goto <bb 3>; [INV]
+  else
+    goto <bb 4>; [INV]
+
+  <bb 3> :
+  Det_Init ();
+  RetVal = 0;
+  goto <bb 5>; [INV]
+
+  <bb 4> :
+  _3 = &Det_aTransientErrorState[u32CoreId];
+  RetVal = Det_DelAllNodesSameId (ModuleId, InstanceId, ApiId, FaultId, _3);
+
+  <bb 5> :
+  ResumeAllInterrupts ();
+  D.5908 = RetVal;
+
+  <bb 6> :
+<L3>:
+  return D.5908;
+
+}
+
+
+Det_TestLastReportRuntimeError (uint16 ModuleId, uint8 InstanceId, uint8 ApiId, uint8 ErrorId)
+{
+  uint32 u32CoreId;
+  boolean RetVal;
+  boolean D.5903;
+
+  <bb 2> :
+  _1 = OSGetLogicalCoreID ();
+  u32CoreId = (uint32) _1;
+  SuspendAllInterrupts ();
+  _2 = Det_ModuleState[u32CoreId];
+  if (_2 == 0)
+    goto <bb 3>; [INV]
+  else
+    goto <bb 4>; [INV]
+
+  <bb 3> :
+  Det_Init ();
+  RetVal = 0;
+  goto <bb 5>; [INV]
+
+  <bb 4> :
+  _3 = &Det_aRuntimeErrorState[u32CoreId];
+  RetVal = Det_DelAllNodesSameId (ModuleId, InstanceId, ApiId, ErrorId, _3);
+
+  <bb 5> :
+  ResumeAllInterrupts ();
+  D.5903 = RetVal;
+
+  <bb 6> :
+<L3>:
+  return D.5903;
+
+}
+
+
+Det_TestLastReportError (uint16 ModuleId, uint8 InstanceId, uint8 ApiId, uint8 ErrorId)
+{
+  uint32 u32CoreId;
+  boolean RetVal;
+  boolean D.5898;
+
+  <bb 2> :
+  _1 = OSGetLogicalCoreID ();
+  u32CoreId = (uint32) _1;
+  SuspendAllInterrupts ();
+  _2 = Det_ModuleState[u32CoreId];
+  if (_2 == 0)
+    goto <bb 3>; [INV]
+  else
+    goto <bb 4>; [INV]
+
+  <bb 3> :
+  Det_Init ();
+  RetVal = 0;
+  goto <bb 5>; [INV]
+
+  <bb 4> :
+  _3 = &Det_aErrorState[u32CoreId];
+  RetVal = Det_DelAllNodesSameId (ModuleId, InstanceId, ApiId, ErrorId, _3);
+
+  <bb 5> :
+  ResumeAllInterrupts ();
+  D.5898 = RetVal;
+
+  <bb 6> :
+<L3>:
+  return D.5898;
+
+}
+
+
+__attribute__((always_inline))
+ResumeAllInterrupts ()
+{
+  <bb 2> :
+  OS_ResumeAllInterrupts ();
+  return;
+
+}
+
+
+__attribute__((always_inline))
+SuspendAllInterrupts ()
+{
+  <bb 2> :
+  OS_SuspendAllInterrupts ();
+  return;
+
+}
+
+

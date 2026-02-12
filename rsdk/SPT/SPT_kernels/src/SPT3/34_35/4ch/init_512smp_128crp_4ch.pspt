@@ -1,0 +1,306 @@
+/**************************************************************************************************
+ *
+ *
+ * Copyright 2021 NXP
+ *
+ *****************************************************************************
+ *
+ * NXP Confidential and Proprietary. This software is owned or controlled by NXP and
+ * may only be used strictly in accordance with the applicable license terms.  By
+ * expressly accepting such terms or by downloading, installing, activating and/or
+ * otherwise using the software, you are agreeing that you have read, and that you
+ * agree to comply with and are bound by, such license terms.  If you do not agree to
+ * be bound by the applicable license terms, then you may not retain, install, activate or
+ * otherwise use the software.
+ *
+ **************************************************************************************************/
+
+/** @cond */
+/*==================================================================================================
+ *                                        INCLUDE FILES
+ *==================================================================================================*/
+ .include "oram.inc"                    /* include ORAM header file */
+ .include "tram.inc"                    /* include TRAM header file */
+ .include "wr.inc"                      /* include WR header file */
+ .include "spt_kernel_internals.inc"    /* include local defines */
+
+/*==================================================================================================
+ *                                          SECTION
+ *==================================================================================================*/
+ .section .RsdkSpt3 , "ax"   /* memory section where to store SPT code */
+
+/*==================================================================================================
+ *                                      LOCAL CONSTANTS
+ *==================================================================================================*/
+ .set TRAM_STEER_VECT_ADDR,     (TR_0_448_0)
+
+ .set TRAM_PARTIAL_COPY_LENGTH, (FFT512_TRAM_TWIDDLE_NO + FFT128_TRAM_TWIDDLE_NO + FFT512_WIN_NO + FFT128_WIN_NO + FFT16_TRAM_TWIDDLE_NO)
+
+/*==================================================================================================
+ *                                      GLOBAL REFERENCES
+ *==================================================================================================*/
+
+/** @endcond */
+/*==================================================================================================
+ *                                      GLOBAL FUNCTIONS
+ *==================================================================================================*/
+/*================================================================================================*/
+/**
+* @addtogroup spt_kernels_api_func
+* @{
+*
+* @fn             void *RsdkSptInit512smp128crp4ch();
+* @brief          Initialization function for 512 samples and 128 chirps, 4 physical channels.
+* @details        Copy twiddles, window, steering vector coefficients from SRAM to TRAM.
+*
+* @param[in]      WR_1: 24bit(RE): 0 \n
+*                       24bit(IM): Offset(restricted to 24bit value!) of the INPUT buffer(FFT512 Twiddle Factors),
+*                       relative to SRAM start address @ref RSDK_SPT_OTHER_BASE_ADDR "RSDK_SPT_OTHER_BASE_ADDR". \n
+*                       For twiddle generation algorithm, see S32R41_RM 68.9.5.3 / SAF85xx_RM 68.9.5.3.
+* @verbatim
+*                 INPUT Memory layout:
+*                 SRAM, 32bit complex(16b_Im + 16b_Re)
+*                 63:48    47:32    31:16    15:0
+*                 tw1_Im   tw1_Re   tw1_Im   tw1_Re
+*                 tw1_Im   tw1_Re   tw1_Im   tw1_Re
+*                 tw1_Im   tw1_Re   tw1_Im   tw1_Re
+*                 tw1_Im   tw1_Re   tw1_Im   tw1_Re
+*                 tw2_Im   tw2_Re   tw2_Im   tw2_Re
+*                 tw2_Im   tw2_Re   tw2_Im   tw2_Re
+*                 tw2_Im   tw2_Re   tw2_Im   tw2_Re
+*                 tw2_Im   tw2_Re   tw2_Im   tw2_Re
+*                 |        |        |        |
+*                 |        |        |        |
+*                 |        |        |        |
+*                 tw64_Im  tw64_Re  tw64_Im  tw64_Re
+*                 tw64_Im  tw64_Re  tw64_Im  tw64_Re
+*                 tw64_Im  tw64_Re  tw64_Im  tw64_Re
+*                 tw64_Im  tw64_Re  tw64_Im  tw64_Re
+* @endverbatim
+*
+* @param[in]      WR_2: 24bit(RE): 0 \n
+*                       24bit(IM): Offset(restricted to 24bit value!) of the INPUT buffer(FFT128 Twiddle Factors),
+*                       relative to SRAM start address @ref RSDK_SPT_OTHER_BASE_ADDR "RSDK_SPT_OTHER_BASE_ADDR". \n
+*                       For twiddle generation algorithm, see S32R41_RM 68.9.5.3 / SAF85xx_RM 68.9.5.3.
+* @verbatim
+*                 INPUT Memory layout:
+*                 SRAM, 32bit complex(16b_Im + 16b_Re)
+*                 63:48    47:32    31:16    15:0
+*                 tw1_Im   tw1_Re   tw1_Im   tw1_Re
+*                 tw1_Im   tw1_Re   tw1_Im   tw1_Re
+*                 tw1_Im   tw1_Re   tw1_Im   tw1_Re
+*                 tw1_Im   tw1_Re   tw1_Im   tw1_Re
+*                 tw2_Im   tw2_Re   tw2_Im   tw2_Re
+*                 tw2_Im   tw2_Re   tw2_Im   tw2_Re
+*                 tw2_Im   tw2_Re   tw2_Im   tw2_Re
+*                 tw2_Im   tw2_Re   tw2_Im   tw2_Re
+*                 |        |        |        |
+*                 |        |        |        |
+*                 |        |        |        |
+*                 tw16_Im  tw16_Re  tw16_Im  tw16_Re
+*                 tw16_Im  tw16_Re  tw16_Im  tw16_Re
+*                 tw16_Im  tw16_Re  tw16_Im  tw16_Re
+*                 tw16_Im  tw16_Re  tw16_Im  tw16_Re
+* @endverbatim
+*
+* @param[in]      WR_3: 24bit(RE): 0 \n
+*                       24bit(IM): Offset(restricted to 24bit value!) of the INPUT buffer(Reordered Window coef for Range FFT512),
+*                       relative to SRAM start address @ref RSDK_SPT_OTHER_BASE_ADDR "RSDK_SPT_OTHER_BASE_ADDR". \n
+*                       For reorder algorithm, see S32R41_RM 68.9.9.7 / SAF85xx_RM 68.9.9.7.
+* @verbatim
+*                 INPUT Memory layout:
+*                 SRAM, 16bit Real Window Coef
+*                 63:48  47:32   31:16    15:0
+*                 win0   win128  win256   win384
+*                 win32  win160  win288   win416
+*                 |      |       |        |
+*                 |      |       |        |
+*                 win31  win159  win287   win415
+*                 win63  win191  win319   win447
+*                 win64  win192  win320   win448
+*                 win96  win224  win352   win480
+*                 |      |       |        |
+*                 |      |       |        |
+*                 win95  win223  win351   win479
+*                 win127 win255  win383   win511
+* @endverbatim
+*
+* @param[in]      WR_4: 24bit(RE): 0 \n
+*                       24bit(IM): Offset(restricted to 24bit value!) of the INPUT buffer(Reordered Window coef for Doppler FFT128),
+*                       relative to SRAM start address @ref RSDK_SPT_OTHER_BASE_ADDR "RSDK_SPT_OTHER_BASE_ADDR". \n
+*                       For reorder algorithm, see S32R41_RM 68.9.9.7 / SAF85xx_RM 68.9.9.7.
+* @verbatim
+*                 INPUT Memory layout:
+*                 SRAM, 16bit Real Window Coef
+*                 63:48  47:32   31:16    15:0
+*                 win0   win32   win64    win96
+*                 win8   win40   win72    win104
+*                 |      |       |        |
+*                 |      |       |        |
+*                 win7   win39   win71    win103
+*                 win15  win47   win79    win111
+*                 win16  win48   win80    win112
+*                 win24  win56   win88    win120
+*                 |      |       |        |
+*                 |      |       |        |
+*                 win23  win55   win87    win119
+*                 win31  win63   win95    win127
+* @endverbatim
+*
+* @param[in]      WR_5: 24bit(RE): 0 \n
+*                       24bit(IM): Offset(restricted to 24bit value!) of the INPUT buffer(FFT16 Twiddle Factors),
+*                       relative to SRAM start address @ref RSDK_SPT_OTHER_BASE_ADDR "RSDK_SPT_OTHER_BASE_ADDR". \n
+*                       For twiddle generation algorithm, see S32R41_RM 68.9.5.3 / SAF85xx_RM 68.9.5.3.
+* @verbatim
+*                 INPUT Memory layout:
+*                 SRAM, 32bit complex(16b_Im + 16b_Re)
+*                 63:48    47:32    31:16    15:0
+*                 tw1_Im   tw1_Re   tw1_Im   tw1_Re
+*                 tw1_Im   tw1_Re   tw1_Im   tw1_Re
+*                 tw1_Im   tw1_Re   tw1_Im   tw1_Re
+*                 tw1_Im   tw1_Re   tw1_Im   tw1_Re
+*                 tw2_Im   tw2_Re   tw2_Im   tw2_Re
+*                 tw2_Im   tw2_Re   tw2_Im   tw2_Re
+*                 tw2_Im   tw2_Re   tw2_Im   tw2_Re
+*                 tw2_Im   tw2_Re   tw2_Im   tw2_Re
+* @endverbatim
+*
+* @param[in]      WR_6: 24bit(RE): 0 \n
+*                       24bit(IM): Offset(restricted to 24bit value!) of the INPUT buffer(Beamforming Steering Vector),
+*                       relative to SRAM start address @ref RSDK_SPT_OTHER_BASE_ADDR "RSDK_SPT_OTHER_BASE_ADDR". \n
+*                       For steering coeficients generation algorithm, see
+*                       <a href="../Apps/rSDK_Auxiliary_vector_generation.docx">rSDK_Auxiliary_vector_generation.docx</a>.
+* @verbatim
+*                 INPUT Memory layout:
+*                 SRAM, 32 bit complex(16b_Im + 16b_Re)
+*                 63:48         47:32           31:16           15:0
+*                 SV0_Im-CH0    SV0_Re-CH0      SV0_Im-CH1      SV0_Re-CH1
+*                 SV0_Im-CH2    SV0_Re-CH2      SV0_Im-CH3      SV0_Re-CH3
+*                 SV1_Im-CH0    SV1_Re-CH0      SV1_Im-CH1      SV1_Re-CH1
+*                 SV1_Im-CH2    SV1_Re-CH2      SV1_Im-CH3      SV1_Re-CH3
+*                 |             |               |               |
+*                 |             |               |               |
+*                 |             |               |               |
+*                 SV63_Im-CH0   SV63_Re-CH0     SV63_Im-CH1     SV63_Re-CH1
+*                 SV63_Im-CH2   SV63_Re-CH2     SV63_Im-CH3     SV63_Re-CH3
+* @endverbatim
+*
+* @return         WR_0: No value returned.
+* @retval         No value returned.
+*
+* @post           Twiddle factors for FFT512 placed in TRAM at TR_0_0_0. \n
+*                 Twiddle factors for FFT128 placed in TRAM at TR_0_64_0. \n
+*                 Window coeficients for Range FFT512 placed in TRAM at TR_0_80_0. \n
+*                 Window coeficients for Doppler FFT128 placed in TRAM at TR_0_144_0. \n
+*                 Twiddle factors for FFT16 placed in TRAM at TR_0_160_0. \n
+*                 Beamforming Steering Vector placed in TRAM at TR_0_448_0. \n
+*                 Free TRAM space TR_0_162_0 to TR_0_448_0.
+*
+* @note           All buffers MUST be 8 bytes aligned.
+*
+* @}*/
+/*================================================================================================*/
+/** @cond */
+ .global RsdkSptInit512smp128crp4ch
+ .global RsdkSptInit512smp128crp4ch_size
+
+RsdkSptInit512smp128crp4ch:
+
+    /*=========================================================================
+     * Kernel watermarking instruction without side-effects. WR_0 can be ovewritten
+     * with the output parameter, according to the SPT calling convention
+     *=========================================================================*/
+    set #RSDK_SPT_KERNEL_WATERMARK, WR_0
+
+/*=========================================================================
+ * API parameter passing
+ *=========================================================================*/
+    /*=========================================================================
+     * INPUT
+     *=========================================================================
+     * WR_11: 24bit(RE): OPRAM address where to put FFT512 twiddle factors
+     *        24bit(IM): SRAM twiddle factors address offset
+     * WR_12: 24bit(RE): OPRAM address where to put FFT128 twiddle factors
+     *        24bit(IM): SRAM twiddle factors address offset
+     * WR_13: 24bit(RE): OPRAM address where to put range FFT512 window coef
+     *        24bit(IM): SRAM window coef address offset
+     * WR_14: 24bit(RE): OPRAM address where to put doppler FFT128 window coef
+     *        24bit(IM): SRAM window coef address offset
+     * WR_15: 24bit(RE): OPRAM address where to put FFT16 twiddle factors
+     *        24bit(IM): SRAM twiddle factors address offset
+     * WR_16: 24bit(RE): OPRAM address where to put DBF steering vectors
+     *        24bit(IM): SRAM steering vector address offset
+     *=========================================================================*/
+    add .noshift .mod24 WR_1, #(OR_0_0_0                                                                                  ), WR_11
+    add .noshift .mod24 WR_2, #(OR_0_0_0 + FFT512_TRAM_TWIDDLE_NO                                                         ), WR_12
+    add .noshift .mod24 WR_3, #(OR_0_0_0 + FFT512_TRAM_TWIDDLE_NO + FFT128_TRAM_TWIDDLE_NO                                ), WR_13
+    add .noshift .mod24 WR_4, #(OR_0_0_0 + FFT512_TRAM_TWIDDLE_NO + FFT128_TRAM_TWIDDLE_NO + FFT512_WIN_NO                ), WR_14
+    add .noshift .mod24 WR_5, #(OR_0_0_0 + FFT512_TRAM_TWIDDLE_NO + FFT128_TRAM_TWIDDLE_NO + FFT512_WIN_NO + FFT128_WIN_NO), WR_15
+    add .noshift .mod24 WR_6, #(OR_1_0_0                                                                                  ), WR_16
+
+/*=========================================================================
+ * START INIT
+ *=========================================================================*/
+    /*=========================================================================
+     * COPY with clear. Reset all the OPRAM banks to zero. Required to ensure non parity
+     * errors when acces half a slice(real or complex) before writing the entire slice
+     *=========================================================================*/
+    copy.clear OPRAM_BANK_SIZE, OR_0_0_0, 0x1, 0xFFFF
+    copy.clear OPRAM_BANK_SIZE, OR_1_0_0, 0x1, 0xFFFF
+    copy.clear OPRAM_BANK_SIZE, OR_2_0_0, 0x1, 0xFFFF
+    copy.clear OPRAM_BANK_SIZE, OR_3_0_0, 0x1, 0xFFFF
+    copy.clear OPRAM_BANK_SIZE, OR_4_0_0, 0x1, 0xFFFF
+    copy.clear OPRAM_BANK_SIZE, OR_5_0_0, 0x1, 0xFFFF
+    copy.clear OPRAM_BANK_SIZE, OR_6_0_0, 0x1, 0xFFFF
+    copy.clear OPRAM_BANK_SIZE, OR_7_0_0, 0x1, 0xFFFF
+
+    /*=========================================================================
+     * COPY with clear. Reset all the TRAM banks to zero. Required to ensure non parity
+     * errors when acces half a slice(real or complex) before writing the entire slice
+     *=========================================================================*/
+    copy.clear TRAM_BANK_SIZE, TR_0_0_0, 0x1, 0xFFFF
+    copy.clear TRAM_BANK_SIZE, TR_1_0_0, 0x1, 0xFFFF
+
+    /*=========================================================================
+     * PDMA: Copy 512 FFT twiddles from SRAM to OPRAM
+     *       Copy 128 FFT twiddles from SRAM to OPRAM
+     *       Copy 512 FFT range window coefficients from SRAM to OPRAM
+     *       Copy 128 FFT doppler window coefficients from SRAM to OPRAM
+     *       Copy 16 FFT twiddles from SRAM to OPRAM
+     *       Copy DBF steering vector from SRAM to OPRAM
+     *=========================================================================*/
+    pdma.ind .signext .16cmplx .sysram2opram .sync .notrace, FFT512_TWIDDLE_SRAM_SLICES, RSDK_SPT_OTHER_BASE_ADDR, WR_11, 0x0, 0x1, 0x0, 0x1
+    pdma.ind .signext .16cmplx .sysram2opram .sync .notrace, FFT128_TWIDDLE_SRAM_SLICES, RSDK_SPT_OTHER_BASE_ADDR, WR_12, 0x0, 0x1, 0x0, 0x1
+    pdma.ind .signext .16real  .sysram2opram .sync .notrace, FFT512_WIN_SRAM_SLICES,     RSDK_SPT_OTHER_BASE_ADDR, WR_13, 0x0, 0x1, 0x0, 0x1
+    pdma.ind .signext .16real  .sysram2opram .sync .notrace, FFT128_WIN_SRAM_SLICES,     RSDK_SPT_OTHER_BASE_ADDR, WR_14, 0x0, 0x1, 0x0, 0x1
+    pdma.ind .signext .16cmplx .sysram2opram .sync .notrace, FFT16_TWIDDLE_SRAM_SLICES,  RSDK_SPT_OTHER_BASE_ADDR, WR_15, 0x0, 0x1, 0x0, 0x1
+    pdma.ind .signext .16cmplx .sysram2opram .sync .notrace, DBF64_4CH_SRAM_SLICES,      RSDK_SPT_OTHER_BASE_ADDR, WR_16, 0x0, 0x1, 0x0, 0x1
+
+    /*=========================================================================
+     * COPY: Copy coeficients into TRAM
+     *=========================================================================*/
+    copy.simple TRAM_PARTIAL_COPY_LENGTH, OR_0_0_0, TR_0_0_0, 0x1, 0x1
+
+    /*=========================================================================
+     * COPY: move 4 channel SV for each beam, on 8 values in OPRAM, 4 ch SV + 4 zeros
+     *=========================================================================*/
+    copy.simple   DBF64_4CH_NO, OR_1_0_0, OR_0_0_0, 0x1, 0x2
+    copy.shift    DBF64_4CH_NO, OR_1_0_0, OR_3_0_4, 0x1, 0x1
+    copy.simple   DBF64_4CH_NO, OR_3_1_0, OR_0_1_0, 0x1, 0x2
+    copy.clear  2*DBF64_4CH_NO, OR_0_0_0, 0x1, 0xFF00
+
+    /*=========================================================================
+     * COPY: copy the steering vector coef into TRAM
+     *=========================================================================*/
+    copy.simple 2*DBF64_4CH_NO, OR_0_0_0, TRAM_STEER_VECT_ADDR, 0x1, 0x1
+
+    /*=========================================================================
+     * STOP cmd
+     *=========================================================================*/
+    stop
+
+ .set RsdkSptInit512smp128crp4ch_size, .-RsdkSptInit512smp128crp4ch
+/*******************************************************************************
+ * EOF
+ ******************************************************************************/
+/** @endcond */

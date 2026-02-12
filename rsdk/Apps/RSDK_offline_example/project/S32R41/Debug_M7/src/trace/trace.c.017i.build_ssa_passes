@@ -1,0 +1,174 @@
+RsdkTraceStart ()
+{
+  <bb 2> :
+  TraceAtomicValueSet (&gTraceRecord.enable, 1);
+  return;
+
+}
+
+
+RsdkTraceStop ()
+{
+  <bb 2> :
+  TraceAtomicValueSet (&gTraceRecord.enable, 0);
+  return;
+
+}
+
+
+RsdkTraceDump (char * fileName, void (*traceTransferCb_t) (const char *, const char *, int) transferCb)
+{
+  int index;
+
+  <bb 2> :
+  RotateBuff (&gTraceRecord);
+  _1 = gTraceRecord.traceBufferSize;
+  _2 = _1 + 1;
+  index = IndexRead (&gTraceRecord.traceBufferIndex, _2);
+  _3 = gTraceRecord.pTraceBuffer;
+  index.0_4 = (unsigned int) index;
+  _5 = index.0_4 * 12;
+  _6 = (int) _5;
+  transferCb (fileName, _3, _6);
+  TimerEnd (fileName);
+  return;
+
+}
+
+
+RsdkTraceLogEvent (rsdkTraceEventType_t eventType, uint16_t extra1, uint32_t extra2)
+{
+  struct logRecord_t * buffer;
+  uint16_t index;
+  uint32_t timestamp;
+  int enable;
+
+  <bb 2> :
+  enable = TraceAtomicValueGet (&gTraceRecord.enable);
+  if (enable == 1)
+    goto <bb 3>; [INV]
+  else
+    goto <bb 5>; [INV]
+
+  <bb 3> :
+  _1 = gTraceRecord.traceBufferSize;
+  if (_1 != 0)
+    goto <bb 4>; [INV]
+  else
+    goto <bb 5>; [INV]
+
+  <bb 4> :
+  timestamp = TimerRead ();
+  _2 = NextRecord (&gTraceRecord);
+  index = (uint16_t) _2;
+  buffer = gTraceRecord.pTraceBuffer;
+  _3 = (unsigned int) index;
+  _4 = _3 * 12;
+  _5 = buffer + _4;
+  _5->timestamp = timestamp;
+  _6 = (unsigned int) index;
+  _7 = _6 * 12;
+  _8 = buffer + _7;
+  _9 = CoreIdRead ();
+  _8->coreID = _9;
+  _10 = (unsigned int) index;
+  _11 = _10 * 12;
+  _12 = buffer + _11;
+  _12->eventType = eventType;
+  _13 = (unsigned int) index;
+  _14 = _13 * 12;
+  _15 = buffer + _14;
+  _15->extraInfo1 = extra1;
+  _16 = (unsigned int) index;
+  _17 = _16 * 12;
+  _18 = buffer + _17;
+  _18->extraInfo2 = extra2;
+
+  <bb 5> :
+  return;
+
+}
+
+
+RsdkTraceInit (char * pTraceBuffer, uint16_t buffSize)
+{
+  rsdkStatus_t D.6822;
+
+  <bb 2> :
+  if (pTraceBuffer == 0B)
+    goto <bb 5>; [INV]
+  else
+    goto <bb 3>; [INV]
+
+  <bb 3> :
+  if (buffSize == 0)
+    goto <bb 5>; [INV]
+  else
+    goto <bb 4>; [INV]
+
+  <bb 4> :
+  _1 = buffSize % 12;
+  if (_1 != 0)
+    goto <bb 5>; [INV]
+  else
+    goto <bb 6>; [INV]
+
+  <bb 5> :
+  D.6822 = 69632;
+  // predicted unlikely by early return (on trees) predictor.
+  goto <bb 7>; [INV]
+
+  <bb 6> :
+  InitRecord (&gTraceRecord, pTraceBuffer, buffSize, 1);
+  TimerInit ();
+  D.6822 = 0;
+
+  <bb 7> :
+<L4>:
+  return D.6822;
+
+}
+
+
+TraceAtomicValueGet (atomic traceAtomic_t * pAddr)
+{
+  traceAtomic_t __atomic_load_tmp;
+  atomic traceAtomic_t * __atomic_load_ptr;
+  int value;
+  int D.6829;
+  traceAtomic_t D.6761;
+
+  <bb 2> :
+  __atomic_load_ptr = pAddr;
+  _1 = __atomic_load_4 (__atomic_load_ptr, 5);
+  _2 = (int) _1;
+  __atomic_load_tmp = _2;
+  D.6761 = __atomic_load_tmp;
+  __atomic_load_tmp = {CLOBBER};
+  value = D.6761;
+  D.6829 = value;
+
+  <bb 3> :
+<L0>:
+  return D.6829;
+
+}
+
+
+TraceAtomicValueSet (atomic traceAtomic_t * pAddr, int value)
+{
+  traceAtomic_t __atomic_store_tmp;
+  atomic traceAtomic_t * __atomic_store_ptr;
+
+  <bb 2> :
+  __atomic_store_ptr = pAddr;
+  __atomic_store_tmp = value;
+  __atomic_store_tmp.1_1 = __atomic_store_tmp;
+  __atomic_store_tmp.2_2 = (unsigned int) __atomic_store_tmp.1_1;
+  __atomic_store_4 (__atomic_store_ptr, __atomic_store_tmp.2_2, 5);
+  __atomic_store_tmp = {CLOBBER};
+  return;
+
+}
+
+

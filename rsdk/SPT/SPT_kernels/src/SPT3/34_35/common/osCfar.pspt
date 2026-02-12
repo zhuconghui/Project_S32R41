@@ -1,0 +1,264 @@
+/**************************************************************************************************
+ *
+ *
+ * Copyright 2020-2021 NXP
+ *
+ *****************************************************************************
+ *
+ * NXP Confidential and Proprietary. This software is owned or controlled by NXP and
+ * may only be used strictly in accordance with the applicable license terms.  By
+ * expressly accepting such terms or by downloading, installing, activating and/or
+ * otherwise using the software, you are agreeing that you have read, and that you
+ * agree to comply with and are bound by, such license terms.  If you do not agree to
+ * be bound by the applicable license terms, then you may not retain, install, activate or
+ * otherwise use the software.
+ *
+ **************************************************************************************************/
+
+/** @cond */
+/*==================================================================================================
+ *                                        INCLUDE FILES
+ *==================================================================================================*/
+ #include "spt_assembler_defines.h"
+ .include "oram.inc"                   /* include ORAM header file */
+ .include "tram.inc"                   /* include TRAM header file */
+ .include "wr.inc"                     /* include WR header file */
+ .include "spt_kernel_internals.inc"    /* include local defines */
+
+/*==================================================================================================
+ *                                          SECTION
+ *==================================================================================================*/
+ .section .RsdkSpt3 , "ax"   /* memory section where to store SPT code */
+
+/*==================================================================================================
+ *                                      LOCAL CONSTANTS
+ *==================================================================================================*/
+ //DSP cmd 1 format: indirect parameter passing, CRC enabled
+ #define DSP_CMD1_FORMAT (0x3)
+
+ .set MAX_VEC_SIZE,					0 //8192 operands
+ .set TOTAL_OPERANDS_PER_LOOP,		8192
+ .set PDMA_PEAK_TRANSFER_SIZE,      (TOTAL_OPERANDS_PER_LOOP>>5) //the input takes 1 OPRAM bank (8192 elements re+im); the output is 8192/16/2 (packed 16 bits from DSP + complex PDMA)
+ .set PDMA_READ_SRAM_SIZE,			(TOTAL_OPERANDS_PER_LOOP>>1) //4096 complex operands
+ .set LOG2_FORMAT_BYTE,             2
+ .set SHIFT_VALUE_PEAKS,            4 //16peaks / opram location => >>4
+ .set THR_INDEX,                    11
+ .set PDMA_PEAK_TRANSFER_SIZE,      (TOTAL_OPERANDS_PER_LOOP>>5) //the input takes 1 OPRAM bank (8192 elements); the output is 8192/16 (packed 16 bits from DSP)
+ .set DSP_CMD1_BITS_31_0,           RSDK_DSP_CMD_BITS_31_0(0x05, 0x06, 0x07)
+ .set DSP_CMD1_BITS_63_32,          RSDK_DSP_CMD_BITS_63_32(0)
+ .set DSP_CMD1_BITS_95_64,          RSDK_DSP_CMD_BITS_95_64(0)
+ .set DSP_CMD1_BITS_120_96,         RSDK_DSP_CMD_BITS_120_96(DSP_CMD1_FORMAT, 0)
+
+/*==================================================================================================
+ *                                      GLOBAL REFERENCES
+ *==================================================================================================*/
+
+/** @endcond */
+/*==================================================================================================
+ *                                      GLOBAL FUNCTIONS
+ *==================================================================================================*/
+/*================================================================================================*/
+/**
+* @addtogroup spt_kernels_api_func
+* @{
+*
+* @fn             void *RsdkSptOsCfar();
+* @brief          Function for Sliding OS-CFAR, any number of Range Bins and maximum 4096 Doppler Bins
+* @details        Compute Sliding OS-CFAR, storing results in SRAM/DDR.
+*
+*
+* @param[in]      WR_1: 24bit(RE): 0 \n
+*                       24bit(IM): Offset(restricted to 24bit value!) of the INPUT buffer(Range-Doppler Matrix)
+*                       relative to SRAM/DDR start address, @ref RSDK_SPT_OTHER_BASE_ADDR "RSDK_SPT_OTHER_BASE_ADDR". \n
+* @verbatim
+*                 INPUT Memory layout:
+*                 SRAM/DDR, 16 bit real Log2 Mag2 format
+*                 63:48           47:32           31:16           15:0
+*                 R0_D0_MAG       R0_D1_MAG       R0_D2_MAG       R0_D3_MAG
+*                 |               |               |               |
+*                 R0_Dm-4_MAG     R0_Dm-3_MAG     R0_Dm-2_MAG     R0_m-1_MAG
+*                 R1_D0_MAG       R1_D1_MAG       R1_D2_MAG       R1_D3_MAG
+*                 |               |               |               |
+*                 R1_Dm-4_MAG     R1_Dm-3_MAG     R1_Dm-2_MAG     R1_m-1_MAG
+*                 |               |               |               |
+*                 |               |               |               |
+*                 |               |               |               |
+*                 |               |               |               |
+*                 |               |               |               |
+*                 Rn_D0_MAG       Rn_D1_MAG       Rn_D2_MAG       Rn_D3_MAG
+*                 |               |               |               |
+*                 Rn-1_Dm-4_MAG   Rn-1_Dm-3_MAG   Rn-1_Dm-2_MAG   Rn-1_m-1_MAG \m
+* @endverbatim
+*   			  OBS: n is the number of range bins and m is the number of doppler bins
+*
+* @param[out]     WR_2: 24bit(RE): 0 \n
+*                       24bit(IM): Offset(restricted to 24bit value!) of the OUTPUT buffer(bitfiels with peaks postions),
+*                       relative to SRAM/DDR start address, @ref RSDK_SPT_OTHER_BASE_ADDR "RSDK_SPT_OTHER_BASE_ADDR".
+* @verbatim
+*                 OUTPUT Memory layout (BIG ENDIAN representation):
+*                 SRAM/DDR, bitfield, P<n> = bit 1(peak), bit 0(non peak)
+*            0x0  P31P30......P17P16  P15P14........P1P0
+*            0x4  P63P62......P49P48  P47P46......P33P32
+*            0x8  P95P94......P81P80  P79P78......P65P64
+*                 ......................................
+*                 Pm-1Pm-2.........................Pm-32 -> Range_bin0
+*                 -------------------------------------------------
+*                 P31P30......P17P16  P15P14........P1P0
+*                 P63P62......P49P48  P47P46......P33P32
+*                 P95P94......P81P80  P79P78......P65P64
+*                 ......................................
+*                 Pm-1Pm-2.........................Pm-32 -> Range_bin_1
+*                 -------------------------------------------------
+*                 |                   |
+*                 |                   |
+*                 |                   |
+*                 -------------------------------------------------
+*                 P31P30......P17P16  P15P14........P1P0
+*                 P63P62......P49P48  P47P46......P33P32
+*                 P95P94......P81P80  P79P78......P65P64
+*                 ......................................
+*                 Pm-1Pm-2.........................Pm-32 -> Range_bin_n-1
+*                 -------------------------------------------------
+* @endverbatim
+* @param[in]      WR_3: 24bit(RE): Threshold Scaling Factor (mag2log2 format).\n
+*                       24bit(IM): 0.
+*
+* @param[in]      WR_4: 24bit(RE): Number of loops.\n
+*                       24bit(IM): 0. \n
+*
+*                 *Computed using the RSDK_SPT_OSCFAR_NUM_OF_LOOPS(rangeBins, dopplerBins) macro in rsdk_spt_kernels_s32r45.h
+*
+* @param[in]      WR_5: 24bit(RE): Pointer to rsdkBbe32OsCfarParams_t structure (RESERVED FOR DSP).\n
+*                       24bit(IM): 0. \n
+*				  *Use the rsdkDspCmd_t struct.
+*
+* @param[in]      WR_6: 24bit(RE): Pointer to function ID (RESERVED FOR DSP).\n
+*                       24bit(IM): 0. \n
+*				  *The function ID is returned by the macro RSDK_DSP_GET_FUNC_ID(RsdkBbe32OsCfar)
+*				  *Use the rsdkDspCmd_t struct.
+*
+*
+* @param[in]      WR_7: 24bit(RE): CRC (RESERVED FOR DSP).\n
+*                       24bit(IM): 0. \n
+*				  *Computed with the RSDK_SPT_CMD_GEN_DSP_CMD_CRC command after populating the rsdkDspCmd_t struct with the pointer and id.
+*
+*
+*
+* @return         WR_0: No value returned.
+* @retval         No value returned.
+*
+* @note		  Example code for computing CRC: \n
+*                   \code
+*					rsdkStatus_t sptStatus = RSDK_SUCCESS; \n
+*    				rsdkDspCmd_t dspCmd; \n
+*    				rsdkSptDriverCommand_t sptCmd; \n
+*
+*    				AppMemAllocBuffer(heapMem, &osCfarParamsBufH, sizeof(rsdkBbe32OsCfarParams_t), CACHE_LINE_SIZE, RSDK_OALMEM_CHUNK_ID_SRAM); \n
+*
+*   				dspCmd.id = (uint16_t)RSDK_DSP_GET_FUNC_ID(RsdkBbe32OsCfar); \n
+*	 				dspCmd.arg = (uint32_t)(uintptr_t)osCfarParamsBufH.phyAddr; \n
+*	 				sptCmd.cmdId = RSDK_SPT_CMD_GEN_DSP_CMD_CRC; \n
+*	 				sptCmd.cmdParam = (rsdkSptDriverCommandParam_t)&dspCmd; \n
+*	 				sptStatus = RsdkSptCommand(&sptCmd, &sptCmdResult); \n \n
+*                   \endcode
+*
+*                 THIS KERNEL IS ONLY USED IN CONJUNCTION WITH THE DSP FUNCTION "RsdkBbe32OsCfar" \n
+*                 The current implementation works for any number of Range Bins >= 16 and Doppler Bins >= 16 and <= 4096. \n
+*                 The product of Range Bins nad Doppler Bins SHOULD be a multiple of 8192. \n
+*                 The user MUST PREVENT saturation when using the Threshold Scaling Factor in WR_3 \n
+*                 The memory map is fixed. Input samples: OR_0_0_0, Input thresholds for BBE32: OR_2_0_0, Output: OR_0_0_0. \n
+*                 All buffers MUST be 16 bytes aligned.
+*
+* @}*/
+/*================================================================================================*/
+/* @cond */
+ .global RsdkSptOsCfar
+ .global RsdkSptOsCfar_size
+
+RsdkSptOsCfar:
+    /*=========================================================================
+     * Kernel watermarking instruction without side-effects. WR_0 can be ovewritten
+     * with the output parameter, according to the SPT calling convention
+     *=========================================================================*/
+    set #RSDK_SPT_KERNEL_WATERMARK, WR_0
+
+/*=========================================================================
+ * API parameter passing
+ *=========================================================================*/
+    /*=========================================================================
+     * INPUT
+     *=========================================================================
+     * WR_11: 24bit(RE): OPRAM address where to put the range bins
+     *        24bit(IM): SRAM/DDR address where to take the range bins
+     * WR_12: 24bit(RE): OPRAM address where to take the peak bitmap
+     *        24bit(IM): SRAM/DDR address where to place the peak bitmap
+     * WR_13: 24bit(RE): no adder for OPRAM address
+     *        24bit(IM): SRAM/DDR offset to next chunk of range bins
+     * WR_14: 24bit(RE): no adder for OPRAM address
+     *        24bit(IM): SRAM/DDR offset to place the peak bitmap
+     *=========================================================================*/
+    add .noshift .mod24 WR_1, #OR_0_0_0, WR_11
+    add .noshift .mod24 WR_2, #OR_0_0_0, WR_12
+    set #((TOTAL_OPERANDS_PER_LOOP * LOG2_FORMAT_BYTE) << 24), WR_13
+	set #(((TOTAL_OPERANDS_PER_LOOP * LOG2_FORMAT_BYTE) >> SHIFT_VALUE_PEAKS) << 24), WR_14
+
+/*=========================================================================
+ * OS CFAR SECTION
+ *=========================================================================*/
+
+    /*=========================================================================
+     * LOOP: Number of loops given by RSDK_SPT_OSCFAR_NUM_OF_LOOPS(rangeBins, dopplerBins) in spt_assembler_defines.h
+     *=========================================================================*/
+    loop WR_4
+
+        /*=========================================================================
+         * PDMA: transfer range bins from SRAM/DDR to OPRAM (swap to have the data alligned for threshold calculation)
+         *=========================================================================*/
+        pdma.ind .signext .16swap .sysram2opram .sync, PDMA_READ_SRAM_SIZE, RSDK_SPT_OTHER_BASE_ADDR, WR_11, 0x0, 0x1, 0x0, 0x8
+
+        /*=========================================================================
+         * SORT: real, sliding window on 16 elements, pick the 11th element as threshold, in/out packed
+         *=========================================================================*/
+        sort .real .no_preproc .ss16 .in_48packed THR_INDEX, MAX_VEC_SIZE, OR_0_0_0, OR_1_0_0, 0x1, 0x1
+
+        /*=========================================================================
+         * VMT: Add threshold scaling factor in WR_3 to the thresholds, in/out packed
+         *=========================================================================*/
+        vmt.off_sq2s2 .real .rst_sum .in_48 .op_on .no_sq2s1 WR_3 .no_sq2s3, MAX_VEC_SIZE, OR_1_0_0, OR_2_0_0, 0x1, 0x1
+
+        /*=========================================================================
+         * ADD: Increment for the next chunk of range bins
+         *=========================================================================*/
+        add .noshift .mod24 WR_11, WR_13, WR_11
+
+        /*=========================================================================
+         * DSP: Blocking, indirect, call RsdkBbe32OsCfar,
+         * compute bitmap
+         *=========================================================================*/
+        dsp .block, DSP_CMD1_BITS_120_96, DSP_CMD1_BITS_95_64, DSP_CMD1_BITS_63_32, DSP_CMD1_BITS_31_0
+
+        /*=========================================================================
+         * PDMA: async, transfer peak bitmap from ORAM to SRAM/DDR (swap to have the data alligned as s0,s1,...,sN in memory)
+         *=========================================================================*/
+        pdma.ind .zeropad .16swap .opram2sysram .async .notrace , PDMA_PEAK_TRANSFER_SIZE, RSDK_SPT_OTHER_BASE_ADDR, WR_12, 0x0, 0x1, 0x0, 0x8
+
+        /*=========================================================================
+         * ADD: Increment for the next chunk of peaks bitmap
+         *=========================================================================*/
+        add .noshift .mod24 WR_12, WR_14, WR_12
+
+    /*=========================================================================
+     * NEXT: go to the next chunk of range bins
+     *=========================================================================*/
+    next
+
+/*=========================================================================
+ * STOP: end of OS CFAR program
+ *=========================================================================*/
+ stop
+
+ .set RsdkSptOsCfar_size, .-RsdkSptOsCfar
+/*******************************************************************************
+ * EOF
+ ******************************************************************************/
+/** @endcond */

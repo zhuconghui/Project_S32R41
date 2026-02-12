@@ -1,0 +1,2262 @@
+<?xml version="1.0" encoding= "UTF-8" ?>
+<component:config_component id="Csi2" label="Csi2" global_only="false" xsi:schemaLocation="http://swtools.freescale.net/XSD/component/1.0 http://swtools.freescale.net/XSD/component/1.0/component-8.0.xsd" xmlns:component="http://swtools.freescale.net/XSD/component/1.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" category="driver" max_instances="1" >
+
+<sw_comp_ref name="platform.driver.csi2" version="0.8.10"/>
+
+    <description>Csi2 Driver Configuration</description>
+    <mode id="ip" label="CSI2 Module" available="true">
+        <description>Csi2 Driver Module Name, not used</description>
+        <config_set_refs>
+            <config_set_ref>Csi2</config_set_ref>
+        </config_set_refs>
+    </mode>
+
+
+    <config_set id="Csi2" label="CSI2" public="true" options="ShowContentAs=Tabs;UI_LABEL_HIDDEN;UI_BORDER_HIDDEN">
+        <description>Configuration of the Csi2 module.</description>
+        <quick_selections>
+            <quick_selection id="Csi2Default" label="Default Values" available="true">
+                <set id="Name">Csi2</set>
+                <set id="Csi2GeneralConfiguration.Csi2DevErrorDetect">false</set>
+                <set id="Csi2GeneralConfiguration.Csi2StopAfterErrorReport">true</set>
+                <set id="Csi2GeneralConfiguration.Csi2SingleThreadUsed">true</set>
+                <set id="Csi2GeneralConfiguration.Csi2VersionInfo">false</set>
+                <set id="Csi2GeneralConfiguration.Csi2StatisticDataUsage">false</set>
+                <set id="Csi2GeneralConfiguration.Csi2HeaderDataUsage">false</set>
+                <set id="Csi2GeneralConfiguration.Csi2FooterDataUsage">false</set>
+                <set id="Csi2GeneralConfiguration.Csi2DcAutoCompensation">false</set>
+                <set id="Csi2GeneralConfiguration.Csi2AuxiliaryDataUsage">false</set>
+                <set id="Csi2GeneralConfiguration.Csi2MetaDataUsage">false</set>
+                <set id="Csi2GeneralConfiguration.Csi2SingleCallbackUsage">true</set>
+                <set id="Csi2GeneralConfiguration.Csi2RxStartStopUsage">false</set>
+                <set id="Csi2GeneralConfiguration.Csi2PowerOnOffUsage">true</set>
+                <set id="Csi2GeneralConfiguration.Csi2InterfaceFunctionsUsage">false</set>
+                <set id="Csi2GeneralConfiguration.Csi2FramesCounterUsage">true</set>
+                <set id="Csi2GeneralConfiguration.Csi2GPIOUsage">false</set>
+                <set id="Csi2GeneralConfiguration.Csi2SDMAUsage">false</set>
+                <set id="Csi2GeneralConfiguration.Csi2PhyUsageSaf85">false</set>
+                <set id="Csi2GeneralConfiguration.Csi2Rfe20Usage">true</set>
+                <set id="Csi2GeneralConfiguration.Csi2OsIfTimerUsage">OSIF_COUNTER_DUMMY</set>
+                <set id="Csi2GeneralConfiguration.Csi2PinsSwapClock">false</set>
+                <set id="Csi2GeneralConfiguration.Csi2PinsSwapLane0">false</set>
+                <set id="Csi2GeneralConfiguration.Csi2PinsSwapLane1">false</set>
+                <set id="Csi2GeneralConfiguration.Csi2PinsSwapLane2">false</set>
+                <set id="Csi2GeneralConfiguration.Csi2PinsSwapLane3">false</set>
+                <set id="Csi2GeneralConfiguration.Csi2CallbackSetup.Csi2SingleCallbackName">Csi2_SingleIsrCallback</set>
+                <set id="Csi2GeneralConfiguration.Csi2CallbackSetup.Csi2PhyErrorCallbackName">Csi2_PhyIsrCallbackUnit</set>
+                <set id="Csi2GeneralConfiguration.Csi2CallbackSetup.Csi2PcktErrorCallbackName">Csi2_PcktIsrCallbackUnit</set>
+                <set id="Csi2GeneralConfiguration.Csi2CallbackSetup.Csi2EvtErrorCallbackName">Csi2_EvtIsrCallbackUnit</set>
+
+             </quick_selection>
+            <default>Default</default>
+        </quick_selections>
+
+        <settings>
+            <variable value="`../Csi2/csi2_codegenerator.js`" id="codegen_file"></variable>
+            <variable value="`Csi2_CodeGenerator`" id="codegen_class"></variable>
+            <variable value="`true`" id="generate_templates"></variable>
+            <variable value="toArray(`CSI2`)" id="used_peripherals" />
+            <variable value="$this.getMode()" id="mode"/>
+            <variable value="$this" id="rootNode"/>
+            <variable value="$this.execScriptFunction(`../Csi2/csi2_utils.js`, `Csi2GetPlatform`, getPartNumber())" id="PlatformName"></variable>
+            <variable value="$this.execScriptFunction(`../Csi2/csi2_utils.js`, `Csi2IsPlatformMatch`, getPartNumber(), `S32R41`)" id="Is_S32R41"></variable>
+            <variable value="$this.execScriptFunction(`../Csi2/csi2_utils.js`, `Csi2IsPlatformMatch`, getPartNumber(), `SAF8`)" id="Is_STRX"></variable>
+            <variable value="$this.execScriptFunction(`../Csi2/csi2_utils.js`, `Csi2IsPlatformMatch`, getPartNumber(), `SAF85`)" id="Is_OneChip"></variable>
+            <variable value="$this.execScriptFunction(`../Csi2/csi2_utils.js`, `Csi2IsPlatformMatch`, getPartNumber(), `SAF86`)" id="Is_Remote"></variable>
+            <variable value="$this.execScriptFunction(`../Csi2/csi2_utils.js`, `Csi2IsPlatformMatch`, getPartNumber(), `SAF86`)" id="Use_Single_Callback"></variable>
+            <variable value="$this.execScriptFunction(`../Csi2/csi2_utils.js`, `GetNumLanes`, $configSet.Csi2SpecificConfiguration.Csi2DriverMainContainer)" id="NumRxLanes"></variable>
+            <variable value="get(get(system::getParent($this, 1),15),8).getValue()" id="Is_AutoDCSelected"></variable>
+            <variable value="false" id="DebugMode"></variable>
+
+            <struct id="Csi2GeneralConfiguration" label="Compile Parameters">
+                <description>
+                    This container contains the global configuration parameters of the RadarSDK CSI2 driver.
+                </description>
+                <quick_selections>
+                    <quick_selection id="Csi2GeneralConfigDefault" label="Default Values" available="true">
+                        <set id="Csi2DevErrorDetect">false</set>
+                        <set id="Csi2StopAfterErrorReport">true</set>
+                        <set id="Csi2SingleThreadUsed">true</set>
+                        <set id="Csi2VersionInfo">false</set>
+                        <set id="Csi2StatisticDataUsage">false</set>
+                        <set id="Csi2HeaderDataUsage">false</set>
+                        <set id="Csi2FooterDataUsage">false</set>
+                        <set id="Csi2DcAutoCompensation">false</set>
+                        <set id="Csi2AuxiliaryDataUsage">false</set>
+                        <set id="Csi2MetaDataUsage">false</set>
+                        <set id="Csi2SingleCallbackUsage">true</set>
+                        <set id="Csi2RxStartStopUsage">false</set>
+                        <set id="Csi2PowerOnOffUsage">true</set>
+                        <set id="Csi2InterfaceFunctionsUsage">false</set>
+                        <set id="Csi2FramesCounterUsage">true</set>
+                        <set id="Csi2GPIOUsage">false</set>
+                        <set id="Csi2SDMAUsage">false</set>
+                        <set id="Csi2PhyUsageSaf85">false</set>
+                        <set id="Csi2Rfe20Usage">true</set>
+                        <set id="Csi2OsIfTimerUsage">OSIF_COUNTER_DUMMY</set>
+                        <set id="Csi2PinsSwapClock">false</set>
+                        <set id="Csi2PinsSwapLane0">false</set>
+                        <set id="Csi2PinsSwapLane1">false</set>
+                        <set id="Csi2PinsSwapLane2">false</set>
+                        <set id="Csi2PinsSwapLane3">false</set>
+                        <set id="Csi2CallbackSetup.Csi2SingleCallbackName">Csi2_SingleIsrCallback</set>
+                        <set id="Csi2CallbackSetup.Csi2PhyErrorCallbackName">Csi2_PhyIsrCallbackUnit</set>
+                        <set id="Csi2CallbackSetup.Csi2PcktErrorCallbackName">Csi2_PcktIsrCallbackUnit</set>
+                        <set id="Csi2CallbackSetup.Csi2EvtErrorCallbackName">Csi2_EvtIsrCallbackUnit</set>
+
+                    </quick_selection>
+                    <default>Default</default>
+                </quick_selections>
+
+                <info id="DebugInfo" label="Debug Info" available="($configSet.DebugMode.getValue())"
+                    value="$configSet.NumRxLanes.getValue()" >
+                    <description>User defined debug data to be shown.--</description>
+                    <options_expr>
+                        <option id="type" expr="`STRING`"/>
+                        <option id="UUID" expr="`ECUC:dafa241d-31e0-493f-8e05-3716f0464317`"/>
+                        <option id="postBuildVariantValue" expr="true"/>
+                        <option id="origin" expr="`AUTOSAR_ECUC`"/>
+                        <option id="symbolicNameValue" expr="false"/>
+                        <option id="defaultValue" expr="`PORT_PIN_HIGH_Z`"/>
+                        <option id="scope" expr="`LOCAL`"/>
+                        <option id="valueConfigClass" expr="`POST-BUILD=VARIANT-POST-BUILD;PRE-COMPILE=VARIANT-PRE-COMPILE`"/>
+                    </options_expr>
+                </info>
+
+
+                <!-- object Csi2DevErrorDetect  -->
+                <bool id="Csi2DevErrorDetect" label="Detect Development Errors" available="system::hasExclusiveOwnership(`CSI2`, $group)">
+                    <description>
+                        <![CDATA[<html>Parameter to enable or disable the errors at development time
+                        <b>TRUE</b> = the development errors will be checked and reported
+                        <b>FALSE</b> = the development errors will not be checked, usually this means the parameters will not be checked for correctness </html> ]]>
+                    </description>
+                    <options_expr>
+                        <!-- option id="type" expr="`BOOL`"/ -->
+                        <option id="UUID" expr="`ECUC:2beea917-2bcd-497c-a2ed-c8285559c370`"/>
+                        <option id="postBuildVariantValue" expr="false"/>
+                        <option id="SYNC_VALUE"/>
+                        <option id="origin" expr="`NXP`"/>
+                        <option id="symbolicNameValue" expr="false"/>
+                        <option id="defaultValue" expr="`false`"/>
+                        <option id="scope" expr="`LOCAL`"/>
+                        <option id="valueConfigClass" expr="`PRE-COMPILE=VARIANT-POST-BUILD;PRE-COMPILE=VARIANT-PRE-COMPILE`"/>
+                        <option id="multiplicityConfigClass" expr="`PRE-COMPILE=VARIANT-POST-BUILD;PRE-COMPILE=VARIANT-PRE-COMPILE`"/>
+                    </options_expr>
+                </bool>
+
+                <!-- object Csi2StopAfterErrorReport  -->
+                <bool id="Csi2StopAfterErrorReport" label="Stop After Error Report" available="system::hasExclusiveOwnership(`CSI2`, $group)">
+                    <description>
+                        <![CDATA[<html>Parameter to define the code execution after an error was reported
+                        <b>TRUE</b> = the execution will stop after error was reported, in an endless loop
+                        <b>FALSE</b> = the execution will continue after error reporting</html>]]>
+                    </description>
+                    <options_expr>
+                        <option id="type" expr="`BOOLEAN`"/>
+                        <option id="UUID" expr="`ECUC:2beea917-2bcd-497c-a2ed-c8285559c370`"/>
+                        <option id="postBuildVariantValue" expr="false"/>
+                        <option id="SYNC_VALUE"/>
+                        <option id="origin" expr="`NXP`"/>
+                        <option id="symbolicNameValue" expr="false"/>
+                        <option id="defaultValue" expr="`true`"/>
+                        <option id="scope" expr="`LOCAL`"/>
+                        <option id="valueConfigClass" expr="`PRE-COMPILE=VARIANT-POST-BUILD;PRE-COMPILE=VARIANT-PRE-COMPILE`"/>
+                        <option id="multiplicityConfigClass" expr="`PRE-COMPILE=VARIANT-POST-BUILD;PRE-COMPILE=VARIANT-PRE-COMPILE`"/>
+                    </options_expr>
+                </bool>
+
+                <!-- object Csi2SingleThreadUsed  -->
+                <bool id="Csi2SingleThreadUsed" label="A Single Thread is Used" available="system::hasExclusiveOwnership(`CSI2`, $group)">
+                    <description>
+                        <![CDATA[<html>Parameter to specify if the application is using a single or multiple threads to manage Csi2 driver.
+                        <b>TRUE</b> = single thread used, so no necessary to use exclusive area functions
+                        <b>FALSE</b> = multiple threads used, so is necessary to use exclusive area functions</html>]]>
+                    </description>
+                    <options_expr>
+                        <option id="type" expr="`BOOLEAN`"/>
+                        <option id="UUID" expr="`ECUC:2beea917-2bcd-497c-a2ed-c8285559c370`"/>
+                        <option id="postBuildVariantValue" expr="false"/>
+                        <option id="SYNC_VALUE"/>
+                        <option id="origin" expr="`NXP`"/>
+                        <option id="symbolicNameValue" expr="false"/>
+                        <option id="defaultValue" expr="`true`"/>
+                        <option id="scope" expr="`LOCAL`"/>
+                        <option id="valueConfigClass" expr="`PRE-COMPILE=VARIANT-POST-BUILD;PRE-COMPILE=VARIANT-PRE-COMPILE`"/>
+                        <option id="multiplicityConfigClass" expr="`PRE-COMPILE=VARIANT-POST-BUILD;PRE-COMPILE=VARIANT-PRE-COMPILE`"/>
+                    </options_expr>
+                </bool>
+
+                <!-- object Csi2VersionInfo  -->
+                <bool id="Csi2VersionInfo" label="Provide Version Info" available="system::hasExclusiveOwnership(`CSI2`, $group)">
+                    <description>
+                        <![CDATA[<html>Parameter to specify if the Version Info will be available to application.
+                        <b>TRUE</b> = Version Info provided, the function Csi2_GetVersionInfo is available
+                        <b>FALSE</b> = Version Info not provided</html>]]>
+                    </description>
+                    <options_expr>
+                        <option id="type" expr="`BOOLEAN`"/>
+                        <option id="UUID" expr="`ECUC:2beea917-2bcd-497c-a2ed-c8285559c370`"/>
+                        <option id="postBuildVariantValue" expr="false"/>
+                        <option id="SYNC_VALUE"/>
+                        <option id="origin" expr="`NXP`"/>
+                        <option id="symbolicNameValue" expr="false"/>
+                        <option id="defaultValue" expr="`false`"/>
+                        <option id="scope" expr="`LOCAL`"/>
+                        <option id="valueConfigClass" expr="`PRE-COMPILE=VARIANT-POST-BUILD;PRE-COMPILE=VARIANT-PRE-COMPILE`"/>
+                        <option id="multiplicityConfigClass" expr="`PRE-COMPILE=VARIANT-POST-BUILD;PRE-COMPILE=VARIANT-PRE-COMPILE`"/>
+                    </options_expr>
+                </bool>
+
+                <!-- object Csi2StatisticDataUsage  -->
+                <bool id="Csi2StatisticDataUsage" label="Use the Statistical Data" available="true" >
+                    <description>
+                        <![CDATA[<html>Parameter to specify if the Statistical data provided by the interface will be provided.
+                        To receive this data, the chirp line buffer must be upgraded with 80 supplimentary bytes, to receive the statistical data after each chirp. This will affect all used Virtual Channels and Data Type used.
+                        The statistical data content consist, for each analog channel :
+                        - sum of all samples in the chirp
+                        - min, max ADC channel value in the chirp
+                        - bit toggle
+                        To activate the 'Automatic channel DC compensation' feature, this parametr must be set to TRUE.
+                        <b>TRUE</b> = Statistica Data added at the end of the chirp
+                        <b>FALSE</b> = Statistical Data not provided</html>]]>
+                    </description>
+                    <options_expr>
+                        <option id="type" expr="`BOOLEAN`"/>
+                        <option id="UUID" expr="`ECUC:2beea917-2bcd-497c-a2ed-c8285559c370`"/>
+                        <option id="postBuildVariantValue" expr="false"/>
+                        <option id="SYNC_VALUE"/>
+                        <option id="origin" expr="`NXP`"/>
+                        <option id="symbolicNameValue" expr="false"/>
+                        <option id="defaultValue" expr="`false`"/>
+                        <option id="scope" expr="`LOCAL`"/>
+                        <option id="valueConfigClass" expr="`PRE-COMPILE=VARIANT-POST-BUILD;PRE-COMPILE=VARIANT-PRE-COMPILE`"/>
+                        <option id="multiplicityConfigClass" expr="`PRE-COMPILE=VARIANT-POST-BUILD;PRE-COMPILE=VARIANT-PRE-COMPILE`"/>
+                    </options_expr>
+                </bool>
+
+                <!-- object Csi2HeaderDataUsage  -->
+                <bool id="Csi2HeaderDataUsage" label="Header Data Usage" available="($configSet.Is_OneChip.getValue())">
+                    <description>
+                        <![CDATA[<html>Parameter to specify if the Header statistical data will be provided. The data is added at the end of each chirp.
+                        For this another 16 bytes of data must be provided at the end of the chirp data. This parameter/buffer usage is not related to Statistical data.
+                        The requests for Header/Footer data are independent, both are using the same 16 bytes space.
+                        This feature is available only for SAF85XX, Please read the RM for the provided data usage.
+                        <b>TRUE</b> = Header Data added at the end of the chirp
+                        <b>FALSE</b> = Header Data not provided</html>]]>
+                    </description>
+                    <options_expr>
+                        <option id="type" expr="`BOOLEAN`"/>
+                        <option id="UUID" expr="`ECUC:2beea917-2bcd-497c-a2ed-c8285559c370`"/>
+                        <option id="postBuildVariantValue" expr="false"/>
+                        <option id="SYNC_VALUE"/>
+                        <option id="origin" expr="`NXP`"/>
+                        <option id="symbolicNameValue" expr="false"/>
+                        <option id="defaultValue" expr="`false`"/>
+                        <option id="scope" expr="`LOCAL`"/>
+                        <option id="valueConfigClass" expr="`PRE-COMPILE=VARIANT-POST-BUILD;PRE-COMPILE=VARIANT-PRE-COMPILE`"/>
+                        <option id="multiplicityConfigClass" expr="`PRE-COMPILE=VARIANT-POST-BUILD;PRE-COMPILE=VARIANT-PRE-COMPILE`"/>
+                    </options_expr>
+                </bool>
+
+                <!-- object Csi2FooterDataUsage  -->
+                <bool id="Csi2FooterDataUsage" label="Footer Data Usage" available="($configSet.Is_OneChip.getValue())">
+                    <description>
+                        <![CDATA[<html>Parameter to specify if the Footer statistical data will be provided. The data is added at the end of each chirp.
+                        For this another 16 bytes of data must be provided at the end of the chirp data. This parameter/buffer usage is not related to Statistical data.
+                        The requests for Header/Footer data are independent, both are using the same 16 bytes space.
+                        This feature is available only for SAF85XX, Please read the RM for the provided data usage.
+                        <b>TRUE</b> = Footer Data added at the end of the chirp
+                        <b>FALSE</b> = Footer Data not provided</html>]]>
+                    </description>
+                    <options_expr>
+                        <option id="type" expr="`BOOLEAN`"/>
+                        <option id="UUID" expr="`ECUC:2beea917-2bcd-497c-a2ed-c8285559c370`"/>
+                        <option id="postBuildVariantValue" expr="false"/>
+                        <option id="SYNC_VALUE"/>
+                        <option id="origin" expr="`NXP`"/>
+                        <option id="symbolicNameValue" expr="false"/>
+                        <option id="defaultValue" expr="`false`"/>
+                        <option id="scope" expr="`LOCAL`"/>
+                        <option id="valueConfigClass" expr="`PRE-COMPILE=VARIANT-POST-BUILD;PRE-COMPILE=VARIANT-PRE-COMPILE`"/>
+                        <option id="multiplicityConfigClass" expr="`PRE-COMPILE=VARIANT-POST-BUILD;PRE-COMPILE=VARIANT-PRE-COMPILE`"/>
+                    </options_expr>
+                </bool>
+
+                <!-- object Csi2DcAutoCompensation  -->
+                <bool id="Csi2DcAutoCompensation" label="Automatic DC Compensation Usage" available="get(system::getParent($this,1),5).getValue()">
+                    <description>
+                        <![CDATA[<html>Parameter to specify if the driver will implement the automatic DC compensation.
+                        This parameter is available only if the 'Statistical data' is enabled. The real usage will be defined later for each Virtual Channel used.
+                        <b>TRUE</b> = Auto DC compensation to be used
+                        <b>FALSE</b> = Auto DC compensation not to be used</html>]]>
+                    </description>
+                    <options_expr>
+                        <option id="type" expr="`BOOLEAN`"/>
+                        <option id="UUID" expr="`ECUC:2beea917-2bcd-497c-a2ed-c8285559c370`"/>
+                        <option id="postBuildVariantValue" expr="false"/>
+                        <option id="SYNC_VALUE"/>
+                        <option id="origin" expr="`NXP`"/>
+                        <option id="symbolicNameValue" expr="false"/>
+                        <option id="defaultValue" expr="`false`"/>
+                        <option id="scope" expr="`LOCAL`"/>
+                        <option id="valueConfigClass" expr="`PRE-COMPILE=VARIANT-POST-BUILD;PRE-COMPILE=VARIANT-PRE-COMPILE`"/>
+                        <option id="multiplicityConfigClass" expr="`PRE-COMPILE=VARIANT-POST-BUILD;PRE-COMPILE=VARIANT-PRE-COMPILE`"/>
+                    </options_expr>
+                </bool>
+
+                <!-- object Csi2AuxiliaryDataUsage  -->
+                <bool id="Csi2AuxiliaryDataUsage" label="Auxiliary Data Usage" available="system::hasExclusiveOwnership(`CSI2`, $group)">
+                    <description>
+                        <![CDATA[<html>Parameter to specify if the Auxiliary Data feature will be used for data reception.
+                        Please read the RadarSDK User Manual and Reference Manual to understand how the ADC data flow is split for radar data and auxiliary data.
+                        <b>TRUE</b> = Auxiliary Data to be used
+                        <b>FALSE</b> = Auxiliary Data not to be used</html>]]>
+                    </description>
+                    <options_expr>
+                        <option id="type" expr="`BOOLEAN`"/>
+                        <option id="UUID" expr="`ECUC:2beea917-2bcd-497c-a2ed-c8285559c370`"/>
+                        <option id="postBuildVariantValue" expr="false"/>
+                        <option id="SYNC_VALUE"/>
+                        <option id="origin" expr="`NXP`"/>
+                        <option id="symbolicNameValue" expr="false"/>
+                        <option id="defaultValue" expr="`false`"/>
+                        <option id="scope" expr="`LOCAL`"/>
+                        <option id="valueConfigClass" expr="`PRE-COMPILE=VARIANT-POST-BUILD;PRE-COMPILE=VARIANT-PRE-COMPILE`"/>
+                        <option id="multiplicityConfigClass" expr="`PRE-COMPILE=VARIANT-POST-BUILD;PRE-COMPILE=VARIANT-PRE-COMPILE`"/>
+                    </options_expr>
+                </bool>
+
+                <!-- object Csi2MetaDataUsage  -->
+                <bool id="Csi2MetaDataUsage" label="Metadata Data Usage" available="system::hasExclusiveOwnership(`CSI2`, $group)">
+                    <description>
+                        <![CDATA[<html>Parameter to specify if the Metadata Data feature will be used for data reception.
+                        Please read the RadarSDK User Manual to understand how the Metadata can be received and handled.
+                        <b>TRUE</b> = Metadata Data to be used
+                        <b>FALSE</b> = Metadata Data not to be used</html>]]>
+                    </description>
+                    <options_expr>
+                        <option id="type" expr="`BOOLEAN`"/>
+                        <option id="UUID" expr="`ECUC:2beea917-2bcd-497c-a2ed-c8285559c370`"/>
+                        <option id="postBuildVariantValue" expr="false"/>
+                        <option id="SYNC_VALUE"/>
+                        <option id="origin" expr="`NXP`"/>
+                        <option id="symbolicNameValue" expr="false"/>
+                        <option id="defaultValue" expr="`false`"/>
+                        <option id="scope" expr="`LOCAL`"/>
+                        <option id="valueConfigClass" expr="`PRE-COMPILE=VARIANT-POST-BUILD;PRE-COMPILE=VARIANT-PRE-COMPILE`"/>
+                        <option id="multiplicityConfigClass" expr="`PRE-COMPILE=VARIANT-POST-BUILD;PRE-COMPILE=VARIANT-PRE-COMPILE`"/>
+                    </options_expr>
+                </bool>
+
+                <!-- object Csi2SingleCallbackUsage  -->
+                <bool id="Csi2SingleCallbackUsage" label="Single Callback Usage" available="system::hasExclusiveOwnership(`CSI2`, $group)">
+                    <description>
+                        <![CDATA[<html>Parameter to set the usage of the callbacks.
+                        <b>TRUE</b>: A single callback is used for all three Csi2 interrupts.
+                        <b>FALSE</b>: Three different callbacks to be used :
+                        the "first two" for error reporting, the "third" for events reporting.</html>]]>
+                    </description>
+                    <options_expr>
+                        <option id="type" expr="`BOOLEAN`"/>
+                        <option id="UUID" expr="`ECUC:2beea917-2bcd-497c-a2ed-c8285559c370`"/>
+                        <option id="postBuildVariantValue" expr="false"/>
+                        <option id="SYNC_VALUE"/>
+                        <option id="origin" expr="`NXP`"/>
+                        <option id="symbolicNameValue" expr="false"/>
+                        <option id="defaultValue" expr="`false`"/>
+                        <option id="scope" expr="`LOCAL`"/>
+                        <option id="valueConfigClass" expr="`PRE-COMPILE=VARIANT-POST-BUILD;PRE-COMPILE=VARIANT-PRE-COMPILE`"/>
+                        <option id="multiplicityConfigClass" expr="`PRE-COMPILE=VARIANT-POST-BUILD;PRE-COMPILE=VARIANT-PRE-COMPILE`"/>
+                    </options_expr>
+                </bool>
+
+                <!-- object Csi2RxStartStopUsage  -->
+                <bool id="Csi2RxStartStopUsage" label="Rx Start/Stop Functions Usage" available="system::hasExclusiveOwnership(`CSI2`, $group)">
+                    <description>
+                        <![CDATA[<html>Parameter to set the usage of the Csi2_RxStop and Csi2_RxStart functions.
+                        <b>TRUE</b>: The functions to be available to be used.</P>
+                        <b>FALSE</b>: The functions will not be used and for this reason will be removed from the code files at compile time.</html>]]>
+                    </description>
+                    <options_expr>
+                        <option id="type" expr="`BOOLEAN`"/>
+                        <option id="UUID" expr="`ECUC:2beea917-2bcd-497c-a2ed-c8285559c370`"/>
+                        <option id="postBuildVariantValue" expr="false"/>
+                        <option id="SYNC_VALUE"/>
+                        <option id="origin" expr="`NXP`"/>
+                        <option id="symbolicNameValue" expr="false"/>
+                        <option id="defaultValue" expr="`false`"/>
+                        <option id="scope" expr="`LOCAL`"/>
+                        <option id="valueConfigClass" expr="`PRE-COMPILE=VARIANT-POST-BUILD;PRE-COMPILE=VARIANT-PRE-COMPILE`"/>
+                        <option id="multiplicityConfigClass" expr="`PRE-COMPILE=VARIANT-POST-BUILD;PRE-COMPILE=VARIANT-PRE-COMPILE`"/>
+                    </options_expr>
+                </bool>
+
+                <!-- object Csi2PowerOnOffUsage  -->
+                <bool id="Csi2PowerOnOffUsage" label="Power On/Off Functions Usage" available="system::hasExclusiveOwnership(`CSI2`, $group)">
+                    <description>
+                        <![CDATA[<html>Parameter to set the usage of the Csi2_PowerOn and Csi2_PowerOff functions.
+                        <b>TRUE</b>: The functions to be available to be used.</P>
+                        <b>FALSE</b>: The functions will not be used and for this reason will be removed from the code files at compile time.</html>]]>
+                    </description>
+                    <options_expr>
+                        <option id="type" expr="`BOOLEAN`"/>
+                        <option id="UUID" expr="`ECUC:2beea917-2bcd-497c-a2ed-c8285559c370`"/>
+                        <option id="postBuildVariantValue" expr="false"/>
+                        <option id="SYNC_VALUE"/>
+                        <option id="origin" expr="`NXP`"/>
+                        <option id="symbolicNameValue" expr="false"/>
+                        <option id="defaultValue" expr="`false`"/>
+                        <option id="scope" expr="`LOCAL`"/>
+                        <option id="valueConfigClass" expr="`PRE-COMPILE=VARIANT-POST-BUILD;PRE-COMPILE=VARIANT-PRE-COMPILE`"/>
+                        <option id="multiplicityConfigClass" expr="`PRE-COMPILE=VARIANT-POST-BUILD;PRE-COMPILE=VARIANT-PRE-COMPILE`"/>
+                    </options_expr>
+                </bool>
+
+                <!-- object Csi2InterfaceFunctionsUsage  -->
+                <bool id="Csi2InterfaceFunctionsUsage" label="Interface Functions Usage" available="system::hasExclusiveOwnership(`CSI2`, $group)">
+                    <description>
+                        <![CDATA[<html>Parameter to set the usage of the Csi2_GetInterfaceStatus and Csi2_GetLaneStatus functions.
+                        <b>TRUE</b>: The functions to be available to be used.</P>
+                        <b>FALSE</b>: The functions will not be used and for this reason will be removed from the code files at compile time.</html>]]>
+                    </description>
+                    <options_expr>
+                        <option id="type" expr="`BOOLEAN`"/>
+                        <option id="UUID" expr="`ECUC:2beea917-2bcd-497c-a2ed-c8285559c370`"/>
+                        <option id="postBuildVariantValue" expr="false"/>
+                        <option id="SYNC_VALUE"/>
+                        <option id="origin" expr="`NXP`"/>
+                        <option id="symbolicNameValue" expr="false"/>
+                        <option id="defaultValue" expr="`false`"/>
+                        <option id="scope" expr="`LOCAL`"/>
+                        <option id="valueConfigClass" expr="`PRE-COMPILE=VARIANT-POST-BUILD;PRE-COMPILE=VARIANT-PRE-COMPILE`"/>
+                        <option id="multiplicityConfigClass" expr="`PRE-COMPILE=VARIANT-POST-BUILD;PRE-COMPILE=VARIANT-PRE-COMPILE`"/>
+                    </options_expr>
+                </bool>
+
+                <!-- object Csi2FramesCounterUsage  -->
+                <bool id="Csi2FramesCounterUsage" label="Frames Counter Usage" available="system::hasExclusiveOwnership(`CSI2`, $group)">
+                    <description>
+                        <![CDATA[<html>Parameter to set the usage of the frames counter.
+                        <b>TRUE</b>: Frames counter to be used, The function Csi2_FetFramesCounter will be available.</P>
+                        <b>FALSE</b>: The frames counter not be used and the function Csi2_FetFramesCounter will be available.</html>]]>
+                    </description>
+                    <options_expr>
+                        <option id="type" expr="`BOOLEAN`"/>
+                        <option id="UUID" expr="`ECUC:2beea917-2bcd-497c-a2ed-c8285559c370`"/>
+                        <option id="postBuildVariantValue" expr="false"/>
+                        <option id="SYNC_VALUE"/>
+                        <option id="origin" expr="`NXP`"/>
+                        <option id="symbolicNameValue" expr="false"/>
+                        <option id="defaultValue" expr="`false`"/>
+                        <option id="scope" expr="`LOCAL`"/>
+                        <option id="valueConfigClass" expr="`PRE-COMPILE=VARIANT-POST-BUILD;PRE-COMPILE=VARIANT-PRE-COMPILE`"/>
+                        <option id="multiplicityConfigClass" expr="`PRE-COMPILE=VARIANT-POST-BUILD;PRE-COMPILE=VARIANT-PRE-COMPILE`"/>
+                    </options_expr>
+                </bool>
+
+                <!-- object Csi2GPIOUsage  -->
+                <bool id="Csi2GPIOUsage" label="GPIO Usage" available="system::hasExclusiveOwnership(`CSI2`, $group)">
+                    <description>
+                        <![CDATA[<html>Parameter to set the usage of the GPIO feature of the Csi2 hardware. The setup of the GPIO outputs must be done separately.
+                        <b>TRUE</b>: GPIO to be used.</P>
+                        <b>FALSE</b>: GPIO not used, the appropriate code will be removed from the build.</html>]]>
+                    </description>
+                    <options_expr>
+                        <option id="type" expr="`BOOLEAN`"/>
+                        <option id="UUID" expr="`ECUC:2beea917-2bcd-497c-a2ed-c8285559c370`"/>
+                        <option id="postBuildVariantValue" expr="false"/>
+                        <option id="SYNC_VALUE"/>
+                        <option id="origin" expr="`NXP`"/>
+                        <option id="symbolicNameValue" expr="false"/>
+                        <option id="defaultValue" expr="`false`"/>
+                        <option id="scope" expr="`LOCAL`"/>
+                        <option id="valueConfigClass" expr="`PRE-COMPILE=VARIANT-POST-BUILD;PRE-COMPILE=VARIANT-PRE-COMPILE`"/>
+                        <option id="multiplicityConfigClass" expr="`PRE-COMPILE=VARIANT-POST-BUILD;PRE-COMPILE=VARIANT-PRE-COMPILE`"/>
+                    </options_expr>
+                </bool>
+
+                <!-- object Csi2SDMAUsage  -->
+                <bool id="Csi2SDMAUsage" label="SDMA Usage" available="system::hasExclusiveOwnership(`CSI2`, $group)">
+                    <description>
+                        <![CDATA[<html>Parameter to set the usage of the SDMA feature of the Csi2 hardware. The setup of the SDMA outputs must be done separately.
+                        <b>TRUE</b>: SDMA to be used.</P>
+                        <b>FALSE</b>: SDMA not used, the appropriate code will be removed from the build.</html>]]>
+                    </description>
+                    <options_expr>
+                        <option id="type" expr="`BOOLEAN`"/>
+                        <option id="UUID" expr="`ECUC:2beea917-2bcd-497c-a2ed-c8285559c370`"/>
+                        <option id="postBuildVariantValue" expr="false"/>
+                        <option id="SYNC_VALUE"/>
+                        <option id="origin" expr="`NXP`"/>
+                        <option id="symbolicNameValue" expr="false"/>
+                        <option id="defaultValue" expr="`false`"/>
+                        <option id="scope" expr="`LOCAL`"/>
+                        <option id="valueConfigClass" expr="`PRE-COMPILE=VARIANT-POST-BUILD;PRE-COMPILE=VARIANT-PRE-COMPILE`"/>
+                        <option id="multiplicityConfigClass" expr="`PRE-COMPILE=VARIANT-POST-BUILD;PRE-COMPILE=VARIANT-PRE-COMPILE`"/>
+                    </options_expr>
+                </bool>
+
+                <!-- object Csi2PhyUsageSaf85  -->
+                <bool id="Csi2PhyUsageSaf85" label="CSI2-PHY Usage" available="($configSet.Is_OneChip.getValue())">
+                    <description>
+                        <![CDATA[<html>Parameter to set the usage of the CSI2 PHY interface, only for SAF8X platforms. For the other platforms the PHY level is used by default.
+                        <b>TRUE</b>: PHY to be used.</P>
+                        <b>FALSE</b>: PHY not used, the appropriate code will be removed from the build.</html>]]>
+                    </description>
+                    <options_expr>
+                        <option id="type" expr="`BOOLEAN`"/>
+                        <option id="UUID" expr="`ECUC:2beea917-2bcd-497c-a2ed-c8285559c370`"/>
+                        <option id="postBuildVariantValue" expr="false"/>
+                        <option id="SYNC_VALUE"/>
+                        <option id="origin" expr="`NXP`"/>
+                        <option id="symbolicNameValue" expr="false"/>
+                        <option id="defaultValue" expr="`false`"/>
+                        <option id="scope" expr="`LOCAL`"/>
+                        <option id="valueConfigClass" expr="`PRE-COMPILE=VARIANT-POST-BUILD;PRE-COMPILE=VARIANT-PRE-COMPILE`"/>
+                        <option id="multiplicityConfigClass" expr="`PRE-COMPILE=VARIANT-POST-BUILD;PRE-COMPILE=VARIANT-PRE-COMPILE`"/>
+                    </options_expr>
+                </bool>
+
+                <!-- object Csi2Rfe20Usage  -->
+                <bool id="Csi2Rfe20Usage" label="RFE 2.0 Abstract Usage" available="($configSet.Is_S32R41.getValue())">
+                    <description>
+                        <![CDATA[<html> This parameter specify if for S32R41 platform the RFE 2.0 Abstract is used.
+                        If this is used, the CSI2 interface needs a very specific setup, to align the needs of RFE Abstract 2.0 for Front-End (TEF82XX, etc.) BIST :
+                        <b>- Virtual Channel 3 reserved for BIST data reception
+                        - the correct setup for data to be received
+                        - usage of a very specific physical address for data to be received, aligned to the one specified in the RFE Abstract 2.0 Tresos plugin</b>
+                        As it will be detected after files generation, this feature is connected to and needs the files generated from RFE Abstract 2.0 plugin.
+                        All necesssary Virtual Channel 3 definitions will be added to the Csi2_PBCfg.c file, but using the same <b>RFE_RFBIST_BUFFERS_ADDRESS</b> address.
+                        As each Front-End needs the own BIST buffer and the BIST buffer memory allocation is contiguous, at file generation time the buffers will be aligned to
+                        modulo <b>RFE_NUM_USED_FRONT_ENDS</b> basis, the BIST buffer start for the n-th CSI2 setup starting at <b>RFE_RFBIST_BUFFERS_ADDRESS + (1024 * (n % RFE_NUM_USED_FRONT_ENDS))</b>
+                        If the CSI2 units setup is registered in the normal order, the resulted configuration will be perfect. If not, it will be necessary to adjust manually the BIST buffer start in the resulted Csi2_PBCfg.c file.
+                        <b>TRUE</b>: RFE 2.0 Abstract to be used.</P>
+                        <b>FALSE</b>: RFE 2.0 Abstract not used.</html>]]>
+                    </description>
+                    <options_expr>
+                        <option id="type" expr="`BOOLEAN`"/>
+                        <option id="UUID" expr="`ECUC:2beea917-2bcd-497c-a2ed-c8285559c370`"/>
+                        <option id="postBuildVariantValue" expr="false"/>
+                        <option id="SYNC_VALUE"/>
+                        <option id="origin" expr="`NXP`"/>
+                        <option id="symbolicNameValue" expr="false"/>
+                        <option id="defaultValue" expr="`false`"/>
+                        <option id="scope" expr="`LOCAL`"/>
+                        <option id="valueConfigClass" expr="`PRE-COMPILE=VARIANT-POST-BUILD;PRE-COMPILE=VARIANT-PRE-COMPILE`"/>
+                        <option id="multiplicityConfigClass" expr="`PRE-COMPILE=VARIANT-POST-BUILD;PRE-COMPILE=VARIANT-PRE-COMPILE`"/>
+                    </options_expr>
+                </bool>
+
+                <!-- object Csi2OsIfTimerUsage  -->
+                <dynamic_enum id="Csi2OsIfTimerUsage" label="OsIf timer/counter type" items="toArray(`OSIF_COUNTER_DUMMY`,
+                                                                                                     `OSIF_COUNTER_SYSTEM`,
+                                                                                                     `OSIF_COUNTER_CUSTOM`)">
+                    <description><![CDATA[<html> OsIf timer used by the driver for necessary time counting. This must be aligned to the general timer for the application.
+                        Possible usage:
+                        <b>OSIF_COUNTER_DUMMY</b>  = no counters used from OS level
+                        <b>OSIF_COUNTER_SYSTEM</b> = the system counter used
+                        <b>OSIF_COUNTER_CUSTOM</b> = the application must implement teh custom timer</html>]]>
+                    </description>
+                    <options_expr>
+                        <option id="type" expr="`ENUMERATION`"/>
+                        <option id="UUID" expr="`ECUC:daca2411-31e0-493f-8e05-3716f0464317`"/>
+                        <option id="postBuildVariantValue" expr="true"/>
+                        <option id="origin" expr="`NXP`"/>
+                        <option id="symbolicNameValue" expr="false"/>
+                        <option id="defaultValue" expr="`OSIF_COUNTER_DUMMY`"/>
+                        <option id="scope" expr="`LOCAL`"/>
+                        <option id="valueConfigClass" expr="`POST-BUILD=VARIANT-POST-BUILD;PRE-COMPILE=VARIANT-PRE-COMPILE`"/>
+                    </options_expr>
+                </dynamic_enum>
+
+                <!-- first sub-section : specific Csi2PinsSetup -->
+                <struct id="Csi2PinsSetup" label="Pins Swap Setup" available="($configSet.Is_STRX.getValue())">
+                    <description>
+                        <![CDATA[<html>Necessary parameters to setup the CSI2 PHY interface to receive external data for SAF platforms. <p/>
+                        </html>]]>
+                    </description>
+
+                    <!-- object Csi2PinsSwapClock  -->
+                    <bool id="Csi2PinsSwapClock" label="Clock Lane Swap Pins" available="system::hasExclusiveOwnership(`CSI2`, $group)">
+                        <description>
+                            <![CDATA[<html> Specify the clock polarity pins to be used when receiving radar data using CSI2 Subsystem - PHY Usage selected.
+                            <b>TRUE</b>: Swap the clock pins polarity
+                            <b>FALSE</b>: Use the default pins polarity, get after the reset/power-on</html>]]>
+                        </description>
+                        <options_expr>
+                            <option id="type" expr="`BOOLEAN`"/>
+                            <option id="UUID" expr="`ECUC:2beea917-2bcd-497c-a2ed-c8285559c370`"/>
+                            <option id="postBuildVariantValue" expr="false"/>
+                            <option id="SYNC_VALUE"/>
+                            <option id="origin" expr="`NXP`"/>
+                            <option id="symbolicNameValue" expr="false"/>
+                            <option id="defaultValue" expr="`false`"/>
+                            <option id="scope" expr="`LOCAL`"/>
+                            <option id="valueConfigClass" expr="`PRE-COMPILE=VARIANT-POST-BUILD;PRE-COMPILE=VARIANT-PRE-COMPILE`"/>
+                            <option id="multiplicityConfigClass" expr="`PRE-COMPILE=VARIANT-POST-BUILD;PRE-COMPILE=VARIANT-PRE-COMPILE`"/>
+                        </options_expr>
+                    </bool>
+
+                    <!-- object Csi2PinsSwapLane0  -->
+                    <bool id="Csi2PinsSwapLane0" label="Lane_0 Lane Swap Pins" available="system::hasExclusiveOwnership(`CSI2`, $group)">
+                        <description>
+                            <![CDATA[<html> Specify the lane_0 polarity pins to be used when receiving radar data using CSI2 Subsystem - PHY Usage selected.
+                            <b>TRUE</b>: Swap the lane_0 pins polarity
+                            <b>FALSE</b>: Use the default pins polarity, get after the reset/power-on</html>]]>
+                        </description>
+                        <options_expr>
+                            <option id="type" expr="`BOOLEAN`"/>
+                            <option id="UUID" expr="`ECUC:2beea917-2bcd-497c-a2ed-c8285559c370`"/>
+                            <option id="postBuildVariantValue" expr="false"/>
+                            <option id="SYNC_VALUE"/>
+                            <option id="origin" expr="`NXP`"/>
+                            <option id="symbolicNameValue" expr="false"/>
+                            <option id="defaultValue" expr="`false`"/>
+                            <option id="scope" expr="`LOCAL`"/>
+                            <option id="valueConfigClass" expr="`PRE-COMPILE=VARIANT-POST-BUILD;PRE-COMPILE=VARIANT-PRE-COMPILE`"/>
+                            <option id="multiplicityConfigClass" expr="`PRE-COMPILE=VARIANT-POST-BUILD;PRE-COMPILE=VARIANT-PRE-COMPILE`"/>
+                        </options_expr>
+                    </bool>
+
+                    <!-- object Csi2PinsSwapLane1  -->
+                    <bool id="Csi2PinsSwapLane1" label="Lane_1 Lane Swap Pins" available="system::hasExclusiveOwnership(`CSI2`, $group)">
+                        <description>
+                            <![CDATA[<html> Specify the lane_1 polarity pins to be used when receiving radar data using CSI2 Subsystem - PHY Usage selected.
+                            <b>TRUE</b>: Swap the lane_1 pins polarity
+                            <b>FALSE</b>: Use the default pins polarity, get after the reset/power-on</html>]]>
+                        </description>
+                        <options_expr>
+                            <option id="type" expr="`BOOLEAN`"/>
+                            <option id="UUID" expr="`ECUC:2beea917-2bcd-497c-a2ed-c8285559c370`"/>
+                            <option id="postBuildVariantValue" expr="false"/>
+                            <option id="SYNC_VALUE"/>
+                            <option id="origin" expr="`NXP`"/>
+                            <option id="symbolicNameValue" expr="false"/>
+                            <option id="defaultValue" expr="`false`"/>
+                            <option id="scope" expr="`LOCAL`"/>
+                            <option id="valueConfigClass" expr="`PRE-COMPILE=VARIANT-POST-BUILD;PRE-COMPILE=VARIANT-PRE-COMPILE`"/>
+                            <option id="multiplicityConfigClass" expr="`PRE-COMPILE=VARIANT-POST-BUILD;PRE-COMPILE=VARIANT-PRE-COMPILE`"/>
+                        </options_expr>
+                    </bool>
+
+                    <!-- object Csi2PinsSwapLane2  -->
+                    <bool id="Csi2PinsSwapLane2" label="Lane_2 Lane Swap Pins" available="false">
+                        <description>
+                            <![CDATA[<html> Specify the lane_2 polarity pins to be used when receiving radar data using CSI2 Subsystem - PHY Usage selected.
+                            <b>TRUE</b>: Swap the lane_2 pins polarity
+                            <b>FALSE</b>: Use the default pins polarity, get after the reset/power-on</html>]]>
+                        </description>
+                        <options_expr>
+                            <option id="type" expr="`BOOLEAN`"/>
+                            <option id="UUID" expr="`ECUC:2beea917-2bcd-497c-a2ed-c8285559c370`"/>
+                            <option id="postBuildVariantValue" expr="false"/>
+                            <option id="SYNC_VALUE"/>
+                            <option id="origin" expr="`NXP`"/>
+                            <option id="symbolicNameValue" expr="false"/>
+                            <option id="defaultValue" expr="`false`"/>
+                            <option id="scope" expr="`LOCAL`"/>
+                            <option id="valueConfigClass" expr="`PRE-COMPILE=VARIANT-POST-BUILD;PRE-COMPILE=VARIANT-PRE-COMPILE`"/>
+                            <option id="multiplicityConfigClass" expr="`PRE-COMPILE=VARIANT-POST-BUILD;PRE-COMPILE=VARIANT-PRE-COMPILE`"/>
+                        </options_expr>
+                    </bool>
+
+                    <!-- object Csi2PinsSwapLane3  -->
+                    <bool id="Csi2PinsSwapLane3" label="Lane_3 Lane Swap Pins" available="false">
+                        <description>
+                            <![CDATA[<html> Specify the lane_3 polarity pins to be used when receiving radar data using CSI2 Subsystem - PHY Usage selected.
+                            <b>TRUE</b>: Swap the lane_3 pins polarity
+                            <b>FALSE</b>: Use the default pins polarity, get after the reset/power-on</html>]]>
+                        </description>
+                        <options_expr>
+                            <option id="type" expr="`BOOLEAN`"/>
+                            <option id="UUID" expr="`ECUC:2beea917-2bcd-497c-a2ed-c8285559c370`"/>
+                            <option id="postBuildVariantValue" expr="false"/>
+                            <option id="SYNC_VALUE"/>
+                            <option id="origin" expr="`NXP`"/>
+                            <option id="symbolicNameValue" expr="false"/>
+                            <option id="defaultValue" expr="`false`"/>
+                            <option id="scope" expr="`LOCAL`"/>
+                            <option id="valueConfigClass" expr="`PRE-COMPILE=VARIANT-POST-BUILD;PRE-COMPILE=VARIANT-PRE-COMPILE`"/>
+                            <option id="multiplicityConfigClass" expr="`PRE-COMPILE=VARIANT-POST-BUILD;PRE-COMPILE=VARIANT-PRE-COMPILE`"/>
+                        </options_expr>
+                    </bool>
+                </struct>                 <!-- first sub-section : specific Csi2PinsSetup -->
+
+                <!-- second sub-section : callbacks -->
+                <struct id="Csi2CallbackSetup" label="Callbacks Setup" available="system::hasExclusiveOwnership(`CSI2`, $group)">
+                    <description>
+                        <![CDATA[<html>Callbacks setup for the current application. This structure is influenced by the selection of 'Single Callback Usage' parameter.<p/>
+                        </html>]]>
+                    </description>
+
+                    <!-- object Csi2SingleCallbackName  -->
+                    <string id="Csi2SingleCallbackName" label="Single Callback Name"
+                                available="$configSet.Csi2GeneralConfiguration.Csi2SingleCallbackUsage.getValue()">
+                        <description>This is the single callback implementation used in the application.</description>
+                        <validation>
+                            <constraint cond_expr="(($this.getValue() != ``) &amp;&amp; isCIdentifier($this.getValue()))" level="error" description="Name must be a valid C identifier!"/>
+                        </validation>
+                        <options_expr>
+                            <option id="type" expr="`STRING`"/>
+                            <option id="UUID" expr="`ECUC:2beea917-2bcd-497c-a2ed-c8285559c370`"/>
+                            <option id="origin" expr="`NXP`"/>
+                            <option id="SYNC_VALUE"/>
+                            <option id="postBuildVariantValue" expr="true"/>
+                            <option id="symbolicNameValue" expr="false"/>
+                            <option id="defaultValue" expr="`Csi2_SingleIsrCallback`"/>
+                            <option id="valueConfigClass" expr="`PRE-COMPILE=VARIANT-POST-BUILD;PRE-COMPILE=VARIANT-PRE-COMPILE`"/>
+                            <option id="multiplicityConfigClass" expr="`PRE-COMPILE=VARIANT-POST-BUILD;PRE-COMPILE=VARIANT-PRE-COMPILE`"/>
+                        </options_expr>
+                    </string>
+
+                    <!-- object Csi2PhyErrorCallbackName  -->
+                    <string id="Csi2PhyErrorCallbackName" label="Phy Errors Irq Callback Name"
+                                available="$configSet.Csi2GeneralConfiguration.Csi2SingleCallbackUsage.getValue() == `false`">
+                        <description>This is the callback implementation for PHY errors interrupt callback used in the application.</description>
+                        <validation>
+                            <constraint cond_expr="(($this.getValue() != ``) &amp;&amp; isCIdentifier($this.getValue()))" level="error" description="Name must be a valid C identifier!"/>
+                        </validation>
+                        <options_expr>
+                            <option id="type" expr="`STRING`"/>
+                            <option id="UUID" expr="`ECUC:2beea917-2bcd-497c-a2ed-c8285559c370`"/>
+                            <option id="origin" expr="`NXP`"/>
+                            <option id="SYNC_VALUE"/>
+                            <option id="postBuildVariantValue" expr="true"/>
+                            <option id="symbolicNameValue" expr="false"/>
+                            <option id="defaultValue" expr="Csi2_PhyIsrCallbackUnit"/>
+                            <option id="valueConfigClass" expr="`PRE-COMPILE=VARIANT-POST-BUILD;PRE-COMPILE=VARIANT-PRE-COMPILE`"/>
+                            <option id="multiplicityConfigClass" expr="`PRE-COMPILE=VARIANT-POST-BUILD;PRE-COMPILE=VARIANT-PRE-COMPILE`"/>
+                        </options_expr>
+                    </string>
+
+                    <!-- object Csi2PcktErrorCallbackName  -->
+                    <string id="Csi2PcktErrorCallbackName" label="Packet Errors Irq Callback Name"
+                                available="$configSet.Csi2GeneralConfiguration.Csi2SingleCallbackUsage.getValue() == `false`">
+                        <description>This is the callback implementation for packet errors interrupt callback used in the application.</description>
+                        <validation>
+                            <constraint cond_expr="(($this.getValue() != ``) &amp;&amp; isCIdentifier($this.getValue()))" level="error" description="Name must be a valid C identifier!"/>
+                        </validation>
+                        <options_expr>
+                            <option id="type" expr="`STRING`"/>
+                            <option id="UUID" expr="`ECUC:2beea917-2bcd-497c-a2ed-c8285559c370`"/>
+                            <option id="origin" expr="`NXP`"/>
+                            <option id="SYNC_VALUE"/>
+                            <option id="postBuildVariantValue" expr="true"/>
+                            <option id="symbolicNameValue" expr="false"/>
+                            <option id="defaultValue" expr="Csi2_PcktIsrCallbackUnit"/>
+                            <option id="valueConfigClass" expr="`PRE-COMPILE=VARIANT-POST-BUILD;PRE-COMPILE=VARIANT-PRE-COMPILE`"/>
+                            <option id="multiplicityConfigClass" expr="`PRE-COMPILE=VARIANT-POST-BUILD;PRE-COMPILE=VARIANT-PRE-COMPILE`"/>
+                        </options_expr>
+                    </string>
+
+                    <!-- object Csi2EvtErrorCallbackName  -->
+                    <string id="Csi2EvtErrorCallbackName" label="Events Irq Callback Name"
+                                available="$configSet.Csi2GeneralConfiguration.Csi2SingleCallbackUsage.getValue() == `false`">
+                        <description>This is the callback implementation for events interrupt callback used in the application.</description>
+                        <validation>
+                            <constraint cond_expr="(($this.getValue() != ``) &amp;&amp; isCIdentifier($this.getValue()))" level="error" description="Name must be a valid C identifier!"/>
+                        </validation>
+                        <options_expr>
+                            <option id="type" expr="`STRING`"/>
+                            <option id="UUID" expr="`ECUC:2beea917-2bcd-497c-a2ed-c8285559c370`"/>
+                            <option id="origin" expr="`NXP`"/>
+                            <option id="SYNC_VALUE"/>
+                            <option id="postBuildVariantValue" expr="true"/>
+                            <option id="symbolicNameValue" expr="false"/>
+                            <option id="defaultValue" expr="Csi2_EvtIsrCallbackUnit"/>
+                            <option id="valueConfigClass" expr="`PRE-COMPILE=VARIANT-POST-BUILD;PRE-COMPILE=VARIANT-PRE-COMPILE`"/>
+                            <option id="multiplicityConfigClass" expr="`PRE-COMPILE=VARIANT-POST-BUILD;PRE-COMPILE=VARIANT-PRE-COMPILE`"/>
+                        </options_expr>
+                    </string>
+
+                </struct>       <!-- second sub-section : callbacks -->
+
+            </struct>
+
+            <!-- second page : specific CSI2 defintions for real driver setup -->
+            <struct id="Csi2SpecificConfiguration" label="Defined CSI2 Configurations">
+                <description>
+                    <![CDATA[<html>This container contains a list of the necessary setup structures for the Csi2 driver.
+                        The necessary parameters have two levels :
+                        <b>Unit level</b> : the specific paameters for the Csi2 unit level, mainly the interface.
+                        <b>Virtual Channel level</b> : the specific paameters for the Csi2 Virtual Channel level.
+                        For each setup parameter at least one and maximum four Virtual channels must be defined</html>]]>
+                </description>
+
+                <!-- the array of the CSI2 unit(s) parameters to be defined -->
+                <array id="Csi2DriverMainContainer" type="Csi2DriverParamsType" label="All CSI2 Unit Params" options="ShowContentAs=MasterDetail;UI_BORDER_HIDDEN" min_expr="1" max_expr="99"
+                            key_selector_expr="x -> x.getID()">
+                    <description>Container collecting the CSI2 unit setup defined parameters.</description>
+                    <validation>
+                        <constraint cond_expr="$this.findDuplicates(item -&gt; item.getSetting(`Csi2DriverParamsName`).value()).length() == 0" level="error" description="There are some duplicated 'Csi2DriverParamsName' in the Defined CSI2 Configurations Container"/>
+                    </validation>
+                    <item_defaults>
+                        <set_default id="Csi2DriverParamsName" value_expr="x -&gt; `Csi2SetupParamsList_` + x.getID()"/>
+                    </item_defaults>
+                    <options_expr>
+                        <option id="type" expr="`CONTAINER`"/>
+                        <option id="UUID" expr="`ECUC:66380587-564d-45f3-bada-0475671e8218`"/>
+                        <option id="lowerMultiplicity" expr="1"/>
+                        <option id="upperMultiplicityInfinite" expr="1"/>
+                        <option id="postBuildVariantMultiplicity" expr="false"/>
+                        <option id="multiplicityConfigClass" expr="`PRE-COMPILE=VARIANT-POST-BUILD;PRE-COMPILE=VARIANT-PRE-COMPILE`"/>
+                    </options_expr>
+                </array>
+
+
+            </struct>
+        </settings>
+
+
+        <user_types>
+            <!-- type structure for CSI2 unit setup -->
+            <struct id="Csi2DriverParamsType">
+                <variable value="$this.execScriptFunction(`../Csi2/csi2_utils.js`, `Csi2GetSetupParamsName`, system::getParent($this,1).getID())" id="ParamsName"></variable>
+                <quick_selections>
+                    <quick_selection id="Csi2DriverParamsTypeDefault" label="Default Values" available="true">
+                        <set id="Csi2DriverParamsName">Csi2SetupParamsList_</set>
+                        <set id="Csi2RxFrequency">"$this.execScriptFunction(`../Csi2/csi2_utils.js`, `Csi2MinFreq`, getPartNumber()).toInt()"</set>
+                        <set id="Csi2NumLanesRx">Two___lanes</set>
+                        <set id="Csi2UnitInitOptions">CSI2_DPHY_INIT_SHORT_CALIB</set>
+                    </quick_selection>
+                </quick_selections>
+
+                <string id="Csi2DriverParamsName" label="Variable Identifier">
+                    <description>The name of the variable to be used in the generated .c file.</description>
+                    <validation>
+                        <constraint cond_expr="(($this.getValue() != ``) &amp;&amp; isCIdentifier($this.getValue())) &amp;&amp; $this.execScriptFunction(`../Csi2/csi2_utils.js`, `Csi2IsPlatformMatch`, $this.getValue(), `Csi2SetupParamsList_`)"
+                        level="error" description="Name must be a valid C identifier and must start with 'Csi2SetupParamsList_' !"/>
+                        <constraint cond_expr="countOccurrences(($parent.getParent()), x -&gt; (x.getSetting(`Csi2DriverParamsName`).getValue() == $this.value())) == 1" level="error" description="Duplicated value&#44; Csi2DriverParamsName must be unique across all CSI2 units parameters."/>
+                    </validation>
+                </string>
+
+                <!-- object Csi2RxFrequency  -->
+                <integer id="Csi2RxFrequency" label="Clock Frequency [MHz]" type="uint32_t" min_expr="$this.execScriptFunction(`../Csi2/csi2_utils.js`, `Csi2MinFreq`, getPartNumber()).toInt()"
+                            max_expr="2500">
+                    <description><![CDATA[<html>The input clock frequency of the MIPI-CSI2 unit for the current setup.
+                        The value is specified in MHz/Mbps.
+                        For SAFxx chips, for internal path, 0 (zero) value must be used.</html>]]>
+                    </description>
+                    <options_expr>
+                        <option id="type" expr="`INTEGER`"/>
+                        <option id="UUID" expr="`ECUC:89dc979d-14a5-4550-b3a3-ee44747d6f11`"/>
+                        <option id="postBuildVariantValue" expr="false"/>
+                        <option id="SYNC_VALUE"/>
+                        <option id="origin" expr="`AUTOSAR_ECUC`"/>
+                        <option id="symbolicNameValue" expr="true"/>
+                        <option id="defaultValue" expr="`2`"/>
+                        <option id="min" expr="1"/>
+                        <option id="max" expr="181"/>
+                        <option id="scope" expr="`LOCAL`"/>
+                        <option id="valueConfigClass" expr="`PRE-COMPILE=VARIANT-POST-BUILD;PRE-COMPILE=VARIANT-PRE-COMPILE`"/>
+                    </options_expr>
+                    <validation>
+                        <constraint cond_expr="($configSet.Is_OneChip.getValue() &amp;&amp;
+                        ((get(get(system::getParent($this,4),15),18).getValue() &amp;&amp; ($this.getValue() != 0)) ||
+                        ((get(get(system::getParent($this,4),15),18).getValue() == `false`) &amp;&amp; ($this.getValue() == 0)))) ||
+                        ($configSet.Is_S32R41.getValue() &amp;&amp; ($this.getValue() != 0))"
+                        level="error" description="Only two lanes can be used by the SAF85 chips"/>
+                    </validation>
+                </integer>
+
+                <!-- object Csi2NumLanesRx  -->
+                <dynamic_enum id="Csi2NumLanesRx" label="The used number for Rx lanes" items="toArray(`One___lane`,`Two___lanes`,`Three_lanes`,`Four__lanes`)"
+                        available="$configSet.Is_S32R41.getValue() || ($configSet.Is_OneChip.getValue() &amp;&amp; $configSet.Csi2GeneralConfiguration.Csi2PhyUsageSaf85.getValue())">
+                    <description><![CDATA[<html> The number of lanes used to receive data. This parameter is used only for CSI2-PHY setup.
+                        Possible usage:
+                        <b>One___lane</b>  = only one lane
+                        <b>Two___lanes</b> = two lanes
+                        <b>Three_lanes</b> = three lanes
+                        <b>Four__lanes</b> = four lanes</html>]]>
+                    </description>
+                    <options_expr>
+                        <option id="type" expr="`ENUMERATION`"/>
+                        <option id="UUID" expr="`ECUC:daca2411-31e0-493f-8e05-3716f0464317`"/>
+                        <option id="postBuildVariantValue" expr="true"/>
+                        <option id="origin" expr="`NXP`"/>
+                        <option id="symbolicNameValue" expr="false"/>
+                        <option id="defaultValue" expr="`Two___lanes`"/>
+                        <option id="scope" expr="`LOCAL`"/>
+                        <option id="valueConfigClass" expr="`POST-BUILD=VARIANT-POST-BUILD;PRE-COMPILE=VARIANT-PRE-COMPILE`"/>
+                    </options_expr>
+                    <validation>
+                        <constraint cond_expr="($configSet.Is_OneChip.getValue() &amp;&amp; (($this.getValue() == `One___lane`) || ($this.getValue() == `Two___lanes`))) ||
+                        $configSet.Is_S32R41.getValue()" level="error" description="Only two lanes can be used by the SAF85 chips"/>
+                    </validation>
+                </dynamic_enum>
+
+                <!-- lanes mapping -->
+                <struct id="Csi2LanesMapping" label="The real mapping of the input lanes" available="$configSet.Is_S32R41.getValue() || ($configSet.Is_OneChip.getValue() &amp;&amp; $configSet.Csi2GeneralConfiguration.Csi2PhyUsageSaf85.getValue())">
+                    <quick_selections>
+                        <quick_selection id="Csi2LanesMappingDefault" label="Default Values" available="true">
+                            <set id="Csi2Lane1Mapping">1</set>
+                            <set id="Csi2Lane2Mapping">2</set>
+                            <set id="Csi2Lane3Mapping">3</set>
+                            <set id="Csi2Lane4Mapping">4</set>
+                        </quick_selection>
+                    </quick_selections>
+                    <validation>
+                        <constraint cond_expr="true" level="error" description="There are some duplicated lanes or conflicts in the Csi2LanesMapping"/>
+                    </validation>
+
+                    <!-- object Csi2Lane1Mapping  -->
+                    <integer id="Csi2Lane1Mapping" label="Real Lane_1 Mapping" type="uint32_t" min_expr="1"  max_expr="4">
+                        <description><![CDATA[<html>The Tx output lane connected to Rx lane 1</html>]]>
+                        </description>
+                        <options_expr>
+                            <option id="type" expr="`INTEGER`"/>
+                            <option id="UUID" expr="`ECUC:89dc979d-14a5-4550-b3a3-ee44747d6f11`"/>
+                            <option id="postBuildVariantValue" expr="false"/>
+                            <option id="SYNC_VALUE"/>
+                            <option id="origin" expr="`AUTOSAR_ECUC`"/>
+                            <option id="symbolicNameValue" expr="true"/>
+                            <option id="defaultValue" expr="1"/>
+                            <option id="scope" expr="`LOCAL`"/>
+                            <option id="valueConfigClass" expr="`PRE-COMPILE=VARIANT-POST-BUILD;PRE-COMPILE=VARIANT-PRE-COMPILE`"/>
+                        </options_expr>
+                        <validation>
+                            <constraint cond_expr="$this.getValue() &lt;= size($this.execScriptFunction(`../Csi2/csi2_utils.js`, `GetNumLanes`, get(system::getParent($this,2), 3).getValue()))" level="error" description="There are some duplicated lanes or conflicts in the Csi2LanesMapping"/>
+                        </validation>
+                    </integer>
+
+                    <!-- object Csi2Lane2Mapping  -->
+                    <integer id="Csi2Lane2Mapping" label="Real Lane_2 Mapping" type="uint32_t" min_expr="1"  max_expr="4"
+                            available="(get(system::getParent($this,2), 3).getValue() == `Four__lanes`) || (get(system::getParent($this,2), 3).getValue() == `Three_lanes`)
+                                || (get(system::getParent($this,2), 3).getValue() == `Two___lanes`)">
+                        <description><![CDATA[<html>The Tx output lane connected to Rx lane 2</html>]]>
+                        </description>
+                        <options_expr>
+                            <option id="type" expr="`INTEGER`"/>
+                            <option id="UUID" expr="`ECUC:89dc979d-14a5-4550-b3a3-ee44747d6f11`"/>
+                            <option id="postBuildVariantValue" expr="false"/>
+                            <option id="SYNC_VALUE"/>
+                            <option id="origin" expr="`AUTOSAR_ECUC`"/>
+                            <option id="symbolicNameValue" expr="true"/>
+                            <option id="defaultValue" expr="2"/>
+                            <option id="scope" expr="`LOCAL`"/>
+                            <option id="valueConfigClass" expr="`PRE-COMPILE=VARIANT-POST-BUILD;PRE-COMPILE=VARIANT-PRE-COMPILE`"/>
+                        </options_expr>
+                        <validation>
+                            <constraint cond_expr="$this.getValue() &lt;= size($this.execScriptFunction(`../Csi2/csi2_utils.js`, `GetNumLanes`, get(system::getParent($this,2), 3).getValue()))" level="error" description="There are some duplicated lanes or conflicts in the Csi2LanesMapping"/>
+                            <constraint cond_expr="( ($this.isAvailable()) &amp;&amp;
+                                (get(system::getParent($this,1),0).getValue() == $this.getValue() )) != `true`"
+                            level="error" description="There are some duplicated lanes or conflicts in the Csi2LanesMapping"/>
+                        </validation>
+                    </integer>
+
+                    <!-- object Csi2Lane3Mapping  -->
+                    <integer id="Csi2Lane3Mapping" label="Real Lane_3 Mapping" type="uint32_t" min_expr="1"  max_expr="4"
+                            available="(get(system::getParent($this,2), 3).getValue() == `Four__lanes`) || (get(system::getParent($this,2), 3).getValue() == `Three_lanes`)">
+                        <description><![CDATA[<html>The Tx output lane connected to Rx lane 3</html>]]>
+                        </description>
+                        <options_expr>
+                            <option id="type" expr="`INTEGER`"/>
+                            <option id="UUID" expr="`ECUC:89dc979d-14a5-4550-b3a3-ee44747d6f11`"/>
+                            <option id="postBuildVariantValue" expr="false"/>
+                            <option id="SYNC_VALUE"/>
+                            <option id="origin" expr="`AUTOSAR_ECUC`"/>
+                            <option id="symbolicNameValue" expr="true"/>
+                            <option id="defaultValue" expr="3"/>
+                            <option id="scope" expr="`LOCAL`"/>
+                            <option id="valueConfigClass" expr="`PRE-COMPILE=VARIANT-POST-BUILD;PRE-COMPILE=VARIANT-PRE-COMPILE`"/>
+                        </options_expr>
+                        <validation>
+                            <constraint cond_expr="$this.getValue() &lt;= size($this.execScriptFunction(`../Csi2/csi2_utils.js`, `GetNumLanes`, get(system::getParent($this,2), 3).getValue()))" level="error" description="There are some duplicated lanes or conflicts in the Csi2LanesMapping"/>
+                            <constraint cond_expr="( ($this.isAvailable()) &amp;&amp;
+                                ((get(system::getParent($this,1),0).getValue() == $this.getValue()) ||
+                                 (get(system::getParent($this,1),1).getValue() == $this.getValue()) )) != `true`"
+                            level="error" description="There are some duplicated lanes or conflicts in the Csi2LanesMapping"/>
+                        </validation>
+                    </integer>
+
+                    <!-- object Csi2Lane4Mapping  -->
+                    <integer id="Csi2Lane4Mapping" label="Real Lane_4 Mapping" type="uint32_t" min_expr="1"  max_expr="4"
+                            available="get(system::getParent($this,2), 3).getValue() == `Four__lanes`">
+                        <description><![CDATA[<html>The Tx output lane connected to Rx lane 4</html>]]>
+                        </description>
+                        <options_expr>
+                            <option id="type" expr="`INTEGER`"/>
+                            <option id="UUID" expr="`ECUC:89dc979d-14a5-4550-b3a3-ee44747d6f11`"/>
+                            <option id="postBuildVariantValue" expr="false"/>
+                            <option id="SYNC_VALUE"/>
+                            <option id="origin" expr="`AUTOSAR_ECUC`"/>
+                            <option id="symbolicNameValue" expr="true"/>
+                            <option id="defaultValue" expr="3"/>
+                            <option id="scope" expr="`LOCAL`"/>
+                            <option id="valueConfigClass" expr="`PRE-COMPILE=VARIANT-POST-BUILD;PRE-COMPILE=VARIANT-PRE-COMPILE`"/>
+                        </options_expr>
+                        <validation>
+                            <constraint cond_expr="$this.getValue() &lt;= size($this.execScriptFunction(`../Csi2/csi2_utils.js`, `GetNumLanes`, get(system::getParent($this,2), 3).getValue()))" level="error" description="There are some duplicated lanes or conflicts in the Csi2LanesMapping"/>
+                            <constraint cond_expr="( ($this.isAvailable()) &amp;&amp;
+                                ((get(system::getParent($this,1),0).getValue() == $this.getValue()) ||
+                                 (get(system::getParent($this,1),1).getValue() == $this.getValue()) ||
+                                 (get(system::getParent($this,1),2).getValue() == $this.getValue()) )) != `true`"
+                            level="error" description="There are some duplicated lanes or conflicts in the Csi2LanesMapping"/>
+                        </validation>
+                    </integer>
+
+                </struct>
+
+                <!-- object Csi2UnitInitOptions  -->
+                <dynamic_enum id="Csi2UnitInitOptions" label="DPHY Init Options" items="toArray(`CSI2_DPHY_INIT_SIMPLE`,
+                                                                                                `CSI2_DPHY_INIT_SHORT_CALIB`,
+                                                                                                `CSI2_DPHY_INIT_W_STOP_STATE`,
+                                                                                                `CSI2_DPHY_INIT_SHORT_AND_STOP`)"
+                        available="$configSet.Is_S32R41.getValue() || ($configSet.Is_OneChip.getValue() &amp;&amp; $configSet.Csi2GeneralConfiguration.Csi2PhyUsageSaf85.getValue())">
+                    <description><![CDATA[<html>The possible initialization options for the CSI2 unit:
+                                                <b>CSI2_DPHY_INIT_SIMPLE</b> : simple calibration, with hardware reset but STOP state possible not achieved on the lanes
+                                                <b>CSI2_DPHY_INIT_SHORT_CALIB</b> : the shortest calibration, using the previous PHY values and STOP state not tested/achieved
+                                                <b>CSI2_DPHY_INIT_W_STOP_STATE</b> : hardware reset used and STOP state not tested/achieved
+                                                <b>CSI2_DPHY_INIT_SHORT_AND_STOP</b> : previous PHY values used and STOP state achieved
+                                                Using previous PHY values reduce the initialization time to around 100-200 us.
+                                                The time linit to wait for the STOP state on the lanes is set to 1.2 ms.
+                                                If the stop state is not achieved in this time period, the initialization will fail.</html>]]>
+                    </description>
+                    <options_expr>
+                        <option id="type" expr="`ENUMERATION`"/>
+                        <option id="UUID" expr="`ECUC:daca2411-31e0-493f-8e05-3716f0464317`"/>
+                        <option id="postBuildVariantValue" expr="true"/>
+                        <option id="origin" expr="`NXP`"/>
+                        <option id="symbolicNameValue" expr="false"/>
+                        <option id="defaultValue" expr="`CSI2_DPHY_INIT_SHORT_CALIB`"/>
+                        <option id="scope" expr="`LOCAL`"/>
+                        <option id="valueConfigClass" expr="`POST-BUILD=VARIANT-POST-BUILD;PRE-COMPILE=VARIANT-PRE-COMPILE`"/>
+                    </options_expr>
+                </dynamic_enum>
+
+                <!-- object Csi2StatisticsImplOptions  -->
+                <dynamic_enum id="Csi2StatisticsImplOptions" label="Statistics Usage Implementation" items="toArray(`CSI2_AUTODC_NO`,
+                                                                                                `CSI2_AUTODC_EVERY_LINE`,
+                                                                                                `CSI2_AUTODC_AT_FE`,
+                                                                                                `CSI2_AUTODC_LAST_LINE`)"
+                                available="$configSet.Is_AutoDCSelected.getValue()">
+                    <description><![CDATA[<html>The possible automatic DC compensation computation.
+                                                As the statistic data is reported after each chirp, this parameter defines how often the data is processed, as the data processing is done inside the events interrupt handler.
+                                                <b>CSI2_AUTODC_NO</b> : auto DC compensation not done, no computation to be done
+                                                <b>CSI2_AUTODC_EVERY_LINE</b> : auto DC compensation using all statistics received
+                                                <b>CSI2_AUTODC_AT_FE</b> : auto DC compensation done at the end of the frame (only once) using the statistics from all lines/chirps in the receiving buffer
+                                                <b>CSI2_AUTODC_LAST_LINE</b> : auto DC compensation done at the end of the frame (only once) using the statistics only from the last received line/chirp</html>]]>
+                    </description>
+                    <options_expr>
+                        <option id="type" expr="`ENUMERATION`"/>
+                        <option id="UUID" expr="`ECUC:daca2411-31e0-493f-8e05-3716f0464317`"/>
+                        <option id="postBuildVariantValue" expr="true"/>
+                        <option id="origin" expr="`NXP`"/>
+                        <option id="symbolicNameValue" expr="false"/>
+                        <option id="defaultValue" expr="`CSI2_AUTODC_NO`"/>
+                        <option id="scope" expr="`LOCAL`"/>
+                        <option id="valueConfigClass" expr="`POST-BUILD=VARIANT-POST-BUILD;PRE-COMPILE=VARIANT-PRE-COMPILE`"/>
+                    </options_expr>
+                </dynamic_enum>
+
+                <!-- the array of the Virtual Channels to be defined -->
+                <array id="Csi2DriverVCContainer" type="Csi2VCParamsType" label="All CSI2 VC Params" options="ShowContentAs=MasterDetail;UI_BORDER_HIDDEN" min_expr="1" max_expr="4"
+                            key_selector_expr="x -> x.getID()">
+                    <description>Container collecting the CSI2 Virtual Channel setup defined parameters.</description>
+                    <validation>
+                        <constraint cond_expr="$this.findDuplicates(item -&gt; item.getSetting(`Name`).value()).length() == 0" level="error" description="There are some duplicated 'Name' in the Defined CSI2 Configurations Container"/>
+                    </validation>
+                    <item_defaults>
+                        <set_default id="Csi2VCParamsName" value_expr="x -&gt; `SetupParam_` + system::getParent($this,1).getID() + `_Params_VC_` + x.getID()"/>
+                        <set_default id="Csi2VcNumber" value_expr="x -&gt; x.getID()"/>
+                        <set_default id="Csi2VcStreamType" value_expr="x -&gt; (`CSI2_DATA_TYPE_RAW16`)"/>
+                        <set_default id="Csi2VcDataBuffer.Csi2VcBufMemPointer" value_expr="x -&gt; `bufData_` + system::getParent($this,1).getID() + `_` + x.getID() + `_VcPtr`"/>
+                        <set_default id="Csi2VcMetadataSetup.Csi2VcMetadataBufMemPointer" value_expr="x -&gt; `bufData_` + system::getParent($this,1).getID() + `_` + x.getID() + `_MetaPtr`"/>
+                        <set_default id="Csi2VcAuxiliaryDataSetup.Csi2VcAuxDataBufMemPointer" value_expr="x -&gt; `bufData_` + system::getParent($this,1).getID() + `_` + x.getID() + `_AuxPtr`"/>
+
+                    </item_defaults>
+                    <options_expr>
+                        <option id="type" expr="`CONTAINER`"/>
+                        <option id="UUID" expr="`ECUC:66380587-564d-45f3-bada-0475671e8218`"/>
+                        <option id="lowerMultiplicity" expr="1"/>
+                        <option id="upperMultiplicityInfinite" expr="1"/>
+                        <option id="postBuildVariantMultiplicity" expr="false"/>
+                        <option id="multiplicityConfigClass" expr="`PRE-COMPILE=VARIANT-POST-BUILD;PRE-COMPILE=VARIANT-PRE-COMPILE`"/>
+                    </options_expr>
+                </array>
+
+            </struct>  <!-- type structure for CSI2 unit setup : struct id="Csi2DriverParamsType" -->
+
+            <!-- type structure for CSI2 Virtual Channel setup -->
+            <struct id="Csi2VCParamsType" label="Defined Virtual Channel Usage">
+                <description><![CDATA[<html>The Virtual Channel setup parameters</html>]]>
+                </description>
+                <quick_selections>
+                    <quick_selection id="Csi2VCParamsTypeDefault" label="Default Values" available="true">
+                        <set id="Csi2VCParamsName">SetupParam_x_Params_VC_y</set>
+                        <set id="Csi2VcStreamType">CSI2_DATA_TYPE_RAW16</set>
+                        <set id="Csi2VcChannels">4</set>
+                        <set id="Csi2VcNumSamples">256</set>
+                        <set id="Csi2VcNumChirps">512</set>
+                        <set id="Csi2BufResetType">CSI2_BUF_RESET_NO</set>
+                        <set id="Csi2VcOutputMode">CSI2_VC_BUF_OUT_ILEAVED</set>
+                        <set id="Csi2VcOutputComplex">false</set>
+                        <set id="Csi2VcOutputFlip">false</set>
+
+                    </quick_selection>
+                </quick_selections>
+
+                <string id="Csi2VCParamsName" label="Variable Identifier">
+                    <description>The name of the variable to be used in the generated .c file.</description>
+                    <validation>
+                        <constraint cond_expr="(($this.getValue() != ``) &amp;&amp; isCIdentifier($this.getValue())) &amp;&amp; $this.execScriptFunction(`../Csi2/csi2_utils.js`, `Csi2IsPlatformMatch`, $this.getValue(), `SetupParam_`)"
+                        level="error" description="Name must be a valid C identifier and must start with 'VC_' !"/>
+                        <constraint cond_expr="countOccurrences(($parent.getParent()), x -&gt; (x.getSetting(`Csi2VCParamsName`).getValue() == $this.value())) == 1" level="error" description="Duplicated value&#44; Csi2VCParamsName must be unique across all Virtual Channels."/>
+                    </validation>
+                </string>
+
+                <!-- object Csi2VcNumber  -->
+                <integer id="Csi2VcNumber" label="The Virtual Channel used" type="uint32_t" min_expr="0"  max_expr="3">
+                    <description><![CDATA[<html>The Virtual Channel number used to receive data for this set of parameters</html>]]>
+                    </description>
+                    <validation>
+                        <constraint cond_expr="countOccurrences(($parent.getParent()), x -&gt; (x.getSetting(`Csi2VcNumber`).getValue() == $this.value())) == 1" level="error" description="Duplicated value&#44; Csi2VcNumber must be unique across all Virtual Channels."/>
+                    </validation>
+                    <options_expr>
+                        <option id="type" expr="`INTEGER`"/>
+                        <option id="UUID" expr="`ECUC:89dc979d-14a5-4550-b3a3-ee44747d6f11`"/>
+                        <option id="postBuildVariantValue" expr="false"/>
+                        <option id="SYNC_VALUE"/>
+                        <option id="origin" expr="`AUTOSAR_ECUC`"/>
+                        <option id="symbolicNameValue" expr="true"/>
+                        <option id="defaultValue" expr="3"/>
+                        <option id="scope" expr="`LOCAL`"/>
+                        <option id="valueConfigClass" expr="`PRE-COMPILE=VARIANT-POST-BUILD;PRE-COMPILE=VARIANT-PRE-COMPILE`"/>
+                    </options_expr>
+                </integer>
+
+                <!-- object Csi2VcStreamType  -->
+                <dynamic_enum id="Csi2VcStreamType" label="Received Data Type" items="toArray(`CSI2_DATA_TYPE_EMBD`,
+                                                                                              `CSI2_DATA_TYPE_YUV422_8`,
+                                                                                              `CSI2_DATA_TYPE_YUV422_10`,
+                                                                                              `CSI2_DATA_TYPE_RGB565`,
+                                                                                              `CSI2_DATA_TYPE_RGB888`,
+                                                                                              `CSI2_DATA_TYPE_RAW8`,
+                                                                                              `CSI2_DATA_TYPE_RAW10`,
+                                                                                              `CSI2_DATA_TYPE_RAW12`,
+                                                                                              `CSI2_DATA_TYPE_RAW14`,
+                                                                                              `CSI2_DATA_TYPE_RAW16`,
+                                                                                              `CSI2_DATA_TYPE_USR0`,
+                                                                                              `CSI2_DATA_TYPE_USR1`,
+                                                                                              `CSI2_DATA_TYPE_USR2`,
+                                                                                              `CSI2_DATA_TYPE_USR3`,
+                                                                                              `CSI2_DATA_TYPE_USR4`,
+                                                                                              `CSI2_DATA_TYPE_USR5`,
+                                                                                              `CSI2_DATA_TYPE_16_FROM_8`,
+                                                                                              `CSI2_DATA_TYPE_USR7`)" >
+                    <description><![CDATA[<html>Input stream type.</html>]]>
+                    </description>
+                    <options_expr>
+                        <option id="type" expr="`ENUMERATION`"/>
+                        <option id="UUID" expr="`ECUC:daca2411-31e0-493f-8e05-3716f0464317`"/>
+                        <option id="postBuildVariantValue" expr="true"/>
+                        <option id="origin" expr="`NXP`"/>
+                        <option id="symbolicNameValue" expr="false"/>
+                        <option id="defaultValue" expr="`CSI2_DATA_TYPE_RAW16`"/>
+                        <option id="scope" expr="`LOCAL`"/>
+                        <option id="valueConfigClass" expr="`POST-BUILD=VARIANT-POST-BUILD;PRE-COMPILE=VARIANT-PRE-COMPILE`"/>
+                    </options_expr>
+                </dynamic_enum>
+
+                <!-- object Csi2VcChannels  -->
+                <integer id="Csi2VcChannels" label="Used Number of ADC channels" type="uint32_t" min_expr="1"  max_expr="4">
+                    <description><![CDATA[<html>The number of analog channels used for this flow. Usually this is the number of antennas.</html>]]>
+                    </description>
+                    <options_expr>
+                        <option id="type" expr="`INTEGER`"/>
+                        <option id="UUID" expr="`ECUC:89dc979d-14a5-4550-b3a3-ee44747d6f11`"/>
+                        <option id="postBuildVariantValue" expr="false"/>
+                        <option id="SYNC_VALUE"/>
+                        <option id="origin" expr="`AUTOSAR_ECUC`"/>
+                        <option id="symbolicNameValue" expr="true"/>
+                        <option id="defaultValue" expr="4"/>
+                        <option id="scope" expr="`LOCAL`"/>
+                        <option id="valueConfigClass" expr="`PRE-COMPILE=VARIANT-POST-BUILD;PRE-COMPILE=VARIANT-PRE-COMPILE`"/>
+                    </options_expr>
+                </integer>
+
+                <!-- object Csi2VcNumSamples  -->
+                <integer id="Csi2VcNumSamples" label="Used Number of samples" type="uint32_t" min_expr="1"  max_expr="8192">
+                    <description><![CDATA[<html>The number of samples per channel/antenna to be received in a chirp.
+                                                        If Auxiliary Data is used, this number must be the effective value to be received into the data buffer line, without the Auxiliary Data.</html>]]>
+                    </description>
+                    <options_expr>
+                        <option id="type" expr="`INTEGER`"/>
+                        <option id="UUID" expr="`ECUC:89dc979d-14a5-4550-b3a3-ee44747d6f11`"/>
+                        <option id="postBuildVariantValue" expr="false"/>
+                        <option id="SYNC_VALUE"/>
+                        <option id="origin" expr="`AUTOSAR_ECUC`"/>
+                        <option id="symbolicNameValue" expr="true"/>
+                        <option id="defaultValue" expr="256"/>
+                        <option id="scope" expr="`LOCAL`"/>
+                        <option id="valueConfigClass" expr="`PRE-COMPILE=VARIANT-POST-BUILD;PRE-COMPILE=VARIANT-PRE-COMPILE`"/>
+                    </options_expr>
+                </integer>
+
+                <!-- object Csi2VcNumChirps  -->
+                <integer id="Csi2VcNumChirps" label="Used Number of chirps" type="uint32_t" min_expr="1"  max_expr="2000">
+                    <description><![CDATA[<html>The number of chirps to be received in a frame.</html>]]>
+                    </description>
+                    <options_expr>
+                        <option id="type" expr="`INTEGER`"/>
+                        <option id="UUID" expr="`ECUC:89dc979d-14a5-4550-b3a3-ee44747d6f11`"/>
+                        <option id="postBuildVariantValue" expr="false"/>
+                        <option id="SYNC_VALUE"/>
+                        <option id="origin" expr="`AUTOSAR_ECUC`"/>
+                        <option id="symbolicNameValue" expr="true"/>
+                        <option id="defaultValue" expr="512"/>
+                        <option id="scope" expr="`LOCAL`"/>
+                        <option id="valueConfigClass" expr="`PRE-COMPILE=VARIANT-POST-BUILD;PRE-COMPILE=VARIANT-PRE-COMPILE`"/>
+                    </options_expr>
+                </integer>
+
+                <!-- object Csi2BufResetType  -->
+                <dynamic_enum id="Csi2BufResetType" label="Buffer Pointer Reset Type" items="toArray(`CSI2_BUF_RESET_NO`,
+                                                                                              `CSI2_BUF_RESET_FS`)" >
+                    <description><![CDATA[<html>Select the buffer reset metthod at the end of the frame.
+                            <b>CSI2_BUF_RESET_NO</b> = the buffer pointer is not reset, the first data line of the next frame will be put after the last line of the previous frame,
+                            <b>CSI2_BUF_RESET_FS</b> = always the first line/chirp of the frame will be put in the first line of the buffer</html>]]>
+                    </description>
+                    <options_expr>
+                        <option id="type" expr="`ENUMERATION`"/>
+                        <option id="UUID" expr="`ECUC:daca2411-31e0-493f-8e05-3716f0464317`"/>
+                        <option id="postBuildVariantValue" expr="true"/>
+                        <option id="origin" expr="`NXP`"/>
+                        <option id="symbolicNameValue" expr="false"/>
+                        <option id="defaultValue" expr="`CSI2_BUF_RESET_NO`"/>
+                        <option id="scope" expr="`LOCAL`"/>
+                        <option id="valueConfigClass" expr="`POST-BUILD=VARIANT-POST-BUILD;PRE-COMPILE=VARIANT-PRE-COMPILE`"/>
+                    </options_expr>
+                </dynamic_enum>
+
+                <!-- object Csi2VcOutputMode  -->
+                <dynamic_enum id="Csi2VcOutputMode" label="Buffer Data Output Template" items="toArray(`CSI2_VC_BUF_OUT_ILEAVED`,
+                                                                                              `CSI2_VC_BUF_OUT_TILE8`,
+                                                                                              `CSI2_VC_BUF_OUT_TILE16`)" >
+                    <description><![CDATA[<html>Select the output data template.
+                            <b>CSI2_VC_BUF_OUT_ILEAVED</b> = data is put in the buffer as received
+                            <b>CSI2_VC_BUF_OUT_TILE8</b>   = for each channel eight samples are put together, the buffer will receive data as :
+                                chA_0, chA_1,..., chA_7, chB_0, chB_1,..., chB_7,..., chA_8, chA_9,.., chA_15, chB_8, chB_9,..., chB_15, ...
+                            <b>CSI2_VC_BUF_OUT_TILE16</b>   = for each channel sixteen samples are put together, the buffer will receive data as :
+                                chA_0, chA_1,..., chA_15, chB_0, chB_1,..., chB_15,..., chA_16, chA_17,.., chA_31, chB_16, chB_17,..., chB_31, ...</html>]]>
+                    </description>
+                    <options_expr>
+                        <option id="type" expr="`ENUMERATION`"/>
+                        <option id="UUID" expr="`ECUC:daca2411-31e0-493f-8e05-3716f0464317`"/>
+                        <option id="postBuildVariantValue" expr="true"/>
+                        <option id="origin" expr="`NXP`"/>
+                        <option id="symbolicNameValue" expr="false"/>
+                        <option id="defaultValue" expr="`CSI2_VC_BUF_OUT_ILEAVED`"/>
+                        <option id="scope" expr="`LOCAL`"/>
+                        <option id="valueConfigClass" expr="`POST-BUILD=VARIANT-POST-BUILD;PRE-COMPILE=VARIANT-PRE-COMPILE`"/>
+                    </options_expr>
+                </dynamic_enum>
+
+                <!-- object Csi2VcOutputComplex  -->
+                <bool id="Csi2VcOutputComplex" label="Complex ADC Data output" available="system::hasExclusiveOwnership(`CSI2`, $group)">
+                    <description>
+                        <![CDATA[<html>The type of the data to receive, real/complex.
+                                    If complex data to be received, the specified number of channes will be multipled by 2.
+                                    Ex.: if 4 channels specified and complex data to receive, in the data flow will be considered 8 different channels.
+                                    <b>FALSE</b> : Real data will be received
+                                    <b>TRUE </b> : Complex data will be received </html> ]]>
+                    </description>
+                    <options_expr>
+                        <option id="UUID" expr="`ECUC:2beea917-2bcd-497c-a2ed-c8285559c370`"/>
+                        <option id="postBuildVariantValue" expr="false"/>
+                        <option id="SYNC_VALUE"/>
+                        <option id="origin" expr="`NXP`"/>
+                        <option id="symbolicNameValue" expr="false"/>
+                        <option id="defaultValue" expr="`false`"/>
+                        <option id="scope" expr="`LOCAL`"/>
+                        <option id="valueConfigClass" expr="`PRE-COMPILE=VARIANT-POST-BUILD;PRE-COMPILE=VARIANT-PRE-COMPILE`"/>
+                        <option id="multiplicityConfigClass" expr="`PRE-COMPILE=VARIANT-POST-BUILD;PRE-COMPILE=VARIANT-PRE-COMPILE`"/>
+                    </options_expr>
+                </bool>
+
+                <!-- object Csi2VcOutputFlip  -->
+                <bool id="Csi2VcOutputFlip" label="Flip Received Data Sign" available="system::hasExclusiveOwnership(`CSI2`, $group)">
+                    <description>
+                        <![CDATA[<html>Specify if the sign of the received data will be flipped or not.
+                                    This can be applied to the data types for which the length of the received data is less than the lenght of the data put in the memory buffer.
+                                    <b>FALSE</b> : The data received will have only sign extension
+                                    <b>TRUE </b> : The sign of the received data will be flipped </html> ]]>
+                    </description>
+                    <options_expr>
+                        <option id="UUID" expr="`ECUC:2beea917-2bcd-497c-a2ed-c8285559c370`"/>
+                        <option id="postBuildVariantValue" expr="false"/>
+                        <option id="SYNC_VALUE"/>
+                        <option id="origin" expr="`NXP`"/>
+                        <option id="symbolicNameValue" expr="false"/>
+                        <option id="defaultValue" expr="`false`"/>
+                        <option id="scope" expr="`LOCAL`"/>
+                        <option id="valueConfigClass" expr="`PRE-COMPILE=VARIANT-POST-BUILD;PRE-COMPILE=VARIANT-PRE-COMPILE`"/>
+                        <option id="multiplicityConfigClass" expr="`PRE-COMPILE=VARIANT-POST-BUILD;PRE-COMPILE=VARIANT-PRE-COMPILE`"/>
+                    </options_expr>
+                </bool>
+
+                <!-- object Csi2VcOutputSwap8  -->
+                <bool id="Csi2VcOutputSwap8" label="Swap Bytes for RAW8 Data Type" available="get(system::getParent($this,1),2).getValue() == `CSI2_DATA_TYPE_RAW8`">
+                    <description>
+                        <![CDATA[<html>Swap the bytes for RAW8 data received. It applies only for RAW8 data type.
+                                                            <b>FALSE</b> : The data received will be put in buffer as received
+                                                            <b>TRUE </b> : The data received will have the bytes swapped </html> ]]>
+                    </description>
+                    <options_expr>
+                        <option id="UUID" expr="`ECUC:2beea917-2bcd-497c-a2ed-c8285559c370`"/>
+                        <option id="postBuildVariantValue" expr="false"/>
+                        <option id="SYNC_VALUE"/>
+                        <option id="origin" expr="`NXP`"/>
+                        <option id="symbolicNameValue" expr="false"/>
+                        <option id="defaultValue" expr="`false`"/>
+                        <option id="scope" expr="`LOCAL`"/>
+                        <option id="valueConfigClass" expr="`PRE-COMPILE=VARIANT-POST-BUILD;PRE-COMPILE=VARIANT-PRE-COMPILE`"/>
+                        <option id="multiplicityConfigClass" expr="`PRE-COMPILE=VARIANT-POST-BUILD;PRE-COMPILE=VARIANT-PRE-COMPILE`"/>
+                    </options_expr>
+                </bool>
+
+                <!-- object Csi2VcOutputSwap16  -->
+                <bool id="Csi2VcOutputSwap16" label="Swap Bytes for RAW16 Data Type" available="get(system::getParent($this,1),2).getValue() == `CSI2_DATA_TYPE_RAW16`">
+                    <description>
+                        <![CDATA[<html>Swap the bytes for RAW16 data received. It applies only for RAW16 data type.
+                                                            <b>FALSE</b> : The data received will be put in buffer as received
+                                                            <b>TRUE </b> : The data received will have the bytes swapped </html> ]]>
+                    </description>
+                    <options_expr>
+                        <option id="UUID" expr="`ECUC:2beea917-2bcd-497c-a2ed-c8285559c370`"/>
+                        <option id="postBuildVariantValue" expr="false"/>
+                        <option id="SYNC_VALUE"/>
+                        <option id="origin" expr="`NXP`"/>
+                        <option id="symbolicNameValue" expr="false"/>
+                        <option id="defaultValue" expr="`false`"/>
+                        <option id="scope" expr="`LOCAL`"/>
+                        <option id="valueConfigClass" expr="`PRE-COMPILE=VARIANT-POST-BUILD;PRE-COMPILE=VARIANT-PRE-COMPILE`"/>
+                        <option id="multiplicityConfigClass" expr="`PRE-COMPILE=VARIANT-POST-BUILD;PRE-COMPILE=VARIANT-PRE-COMPILE`"/>
+                    </options_expr>
+                </bool>
+
+                <!-- object Csi2VcOutputWriteAll  -->
+                <bool id="Csi2VcOutputWriteAll" label="Write All Received Data" available="true">
+                    <description>
+                        <![CDATA[<html>Write all received data into the buffer, even it was received before FrameStart.
+                                                            <b>FALSE</b> : The data received will not be written
+                                                            <b>TRUE </b> : The data received will be written </html> ]]>
+                    </description>
+                    <options_expr>
+                        <option id="UUID" expr="`ECUC:2beea917-2bcd-497c-a2ed-c8285559c370`"/>
+                        <option id="postBuildVariantValue" expr="false"/>
+                        <option id="SYNC_VALUE"/>
+                        <option id="origin" expr="`NXP`"/>
+                        <option id="symbolicNameValue" expr="false"/>
+                        <option id="defaultValue" expr="`false`"/>
+                        <option id="scope" expr="`LOCAL`"/>
+                        <option id="valueConfigClass" expr="`PRE-COMPILE=VARIANT-POST-BUILD;PRE-COMPILE=VARIANT-PRE-COMPILE`"/>
+                        <option id="multiplicityConfigClass" expr="`PRE-COMPILE=VARIANT-POST-BUILD;PRE-COMPILE=VARIANT-PRE-COMPILE`"/>
+                    </options_expr>
+                </bool>
+
+                <!-- Virtual Channel buffer definitions -->
+                <struct id="Csi2VcDataBuffer" label="Memory Buffer Parameters">
+                    <description>
+                        <![CDATA[<html>Necessary parameters for the memory buffer used to receive CSI2 data. </html> ]]>
+                    </description>
+
+                    <!-- object Csi2VcBufNumLines  -->
+                    <integer id="Csi2VcBufNumLines" label="Number of Lines in the Memory Buffer" type="uint32_t" min_expr="1"  max_expr="2048">
+                        <description><![CDATA[<html>The number of the lines available in the memory buffer.
+                                    The total memory reserved for CSI2 data must be :
+                                    <b>NUM_LINES * (NUM_CHRPS * (NUM_SAMPLES * NUM_CHANNELS) * BUF_SAMPLE_LEN + STATISTICS_DATA)</b>
+                                    For some data the input data length is different than the buffer data len. Ex. : for RAW12, the input is 12 bits, but the output is 16 bits.
+                                    The received data will be put into the memory using the memory buffer lines as a cicular buffer of lines. </html>]]>
+                        </description>
+                        <options_expr>
+                            <option id="type" expr="`INTEGER`"/>
+                            <option id="UUID" expr="`ECUC:89dc979d-14a5-4550-b3a3-ee44747d6f11`"/>
+                            <option id="postBuildVariantValue" expr="false"/>
+                            <option id="SYNC_VALUE"/>
+                            <option id="origin" expr="`AUTOSAR_ECUC`"/>
+                            <option id="symbolicNameValue" expr="true"/>
+                            <option id="defaultValue" expr="2"/>
+                            <option id="scope" expr="`LOCAL`"/>
+                            <option id="valueConfigClass" expr="`PRE-COMPILE=VARIANT-POST-BUILD;PRE-COMPILE=VARIANT-PRE-COMPILE`"/>
+                        </options_expr>
+                    </integer>
+
+                    <!-- object Csi2VcBufLineLen  -->
+                    <integer id="Csi2VcBufLineLen" label="The Length of a Memory Buffer Line" type="uint32_t" min_expr="1"  max_expr="65535">
+                        <description><![CDATA[<html>The length of a memory buffer line.
+                            The lenth of a buffer line must be at least the length of the data to be put in memory for a chirp. It could be bigger. The necessary amount of memory for a buffer line is :
+                            <b>(NUM_CHRPS * (NUM_SAMPLES * NUM_CHANNELS) * BUF_SAMPLE_LEN + STATISTICS_DATA</b>
+                            For some data the input data length is different than the buffer data len. Ex. : for RAW12, the input is 12 bits, but the output is 16 bits. </html>]]>
+                        </description>
+                        <options_expr>
+                            <option id="type" expr="`INTEGER`"/>
+                            <option id="UUID" expr="`ECUC:89dc979d-14a5-4550-b3a3-ee44747d6f11`"/>
+                            <option id="postBuildVariantValue" expr="false"/>
+                            <option id="SYNC_VALUE"/>
+                            <option id="origin" expr="`AUTOSAR_ECUC`"/>
+                            <option id="symbolicNameValue" expr="true"/>
+                            <option id="defaultValue" expr="4096"/>
+                            <option id="scope" expr="`LOCAL`"/>
+                            <option id="valueConfigClass" expr="`PRE-COMPILE=VARIANT-POST-BUILD;PRE-COMPILE=VARIANT-PRE-COMPILE`"/>
+                        </options_expr>
+                    </integer>
+
+                    <!-- object Csi2VcBufMemPointer  -->
+                    <string id="Csi2VcBufMemPointer" label="The Symbolic Name of the Buffer Pointer" available="true">
+                        <description><![CDATA[<html>The name of the pointer which is initialized with the start memory address of the buffer data.
+                                    As C code, if the specified name is 'pBufData', it must be initialized like :
+                                    uint8_t *pBufData;<br>
+                                    pBufData = {start_memory_address}
+                                    The {start_memory_address} must be a valid physically address. </html> ]]></description>
+                        <validation>
+                            <constraint cond_expr="(($this.getValue() != ``) &amp;&amp; isCIdentifier($this.getValue()))" level="error" description="Name must be a valid C identifier!"/>
+                        </validation>
+                        <options_expr>
+                            <option id="type" expr="`STRING`"/>
+                            <option id="UUID" expr="`ECUC:2beea917-2bcd-497c-a2ed-c8285559c370`"/>
+                            <option id="origin" expr="`NXP`"/>
+                            <option id="SYNC_VALUE"/>
+                            <option id="postBuildVariantValue" expr="true"/>
+                            <option id="symbolicNameValue" expr="false"/>
+                            <option id="defaultValue" expr="`bufPtrVc`"/>
+                            <option id="valueConfigClass" expr="`PRE-COMPILE=VARIANT-POST-BUILD;PRE-COMPILE=VARIANT-PRE-COMPILE`"/>
+                            <option id="multiplicityConfigClass" expr="`PRE-COMPILE=VARIANT-POST-BUILD;PRE-COMPILE=VARIANT-PRE-COMPILE`"/>
+                        </options_expr>
+                    </string>
+
+                </struct>  <!-- Virtual Channel buffer definitions : Csi2VcDataBuffer -->
+
+                <!-- DC offset definitions -->
+                <struct id="Csi2VcDcOffsets" label="DC Offsets for All Channels">
+                    <description>
+                        <![CDATA[<html>Common container for all possible DC offsets. </html> ]]>
+                    </description>
+
+                    <!-- Real data DC offset definitions -->
+                    <struct id="Csi2VcDcOffsetsReal" label="DC Offsets for Real Channels">
+                        <description>
+                            <![CDATA[<html>Common container for real data DC offsets. </html> ]]>
+                        </description>
+
+                        <!-- object Csi2VcDcOffsetReal0  -->
+                        <integer id="Csi2VcDcOffsetReal0" label="DC Offset for Real Channel A" type="uint32_t" min_expr="-32760"  max_expr="32767">
+                            <description><![CDATA[<html>DC offset for Real Channel A.
+                                    The <b>32767</b> value is only for Auto DC Adjustment and signal that the channel DC offset is adjusted after each frame.
+                                                                Any other value is a fix value to be applied as DC adjustment. </html>]]>
+                            </description>
+                            <options_expr>
+                                <option id="type" expr="`INTEGER`"/>
+                                <option id="UUID" expr="`ECUC:89dc979d-14a5-4550-b3a3-ee44747d6f11`"/>
+                                <option id="postBuildVariantValue" expr="false"/>
+                                <option id="SYNC_VALUE"/>
+                                <option id="origin" expr="`AUTOSAR_ECUC`"/>
+                                <option id="symbolicNameValue" expr="true"/>
+                                <option id="defaultValue" expr="2"/>
+                                <option id="scope" expr="`LOCAL`"/>
+                                <option id="valueConfigClass" expr="`PRE-COMPILE=VARIANT-POST-BUILD;PRE-COMPILE=VARIANT-PRE-COMPILE`"/>
+                            </options_expr>
+                        </integer>
+
+                        <!-- object Csi2VcDcOffsetReal1  -->
+                        <integer id="Csi2VcDcOffsetReal1" label="DC Offset for Real Channel B" type="uint32_t" min_expr="-32760"  max_expr="32767"
+                                available="get(system::getParent($this,3),3).getValue() &gt; 1">
+                            <description><![CDATA[<html>DC offset for Real Channel B.
+                                    The <b>32767</b> value is only for Auto DC Adjustment and signal that the channel DC offset is adjusted after each frame.
+                                                                Any other value is a fix value to be applied as DC adjustment. </html>]]>
+                            </description>
+                            <options_expr>
+                                <option id="type" expr="`INTEGER`"/>
+                                <option id="UUID" expr="`ECUC:89dc979d-14a5-4550-b3a3-ee44747d6f11`"/>
+                                <option id="postBuildVariantValue" expr="false"/>
+                                <option id="SYNC_VALUE"/>
+                                <option id="origin" expr="`AUTOSAR_ECUC`"/>
+                                <option id="symbolicNameValue" expr="true"/>
+                                <option id="defaultValue" expr="2"/>
+                                <option id="scope" expr="`LOCAL`"/>
+                                <option id="valueConfigClass" expr="`PRE-COMPILE=VARIANT-POST-BUILD;PRE-COMPILE=VARIANT-PRE-COMPILE`"/>
+                            </options_expr>
+                        </integer>
+
+                        <!-- object Csi2VcDcOffsetReal2  -->
+                        <integer id="Csi2VcDcOffsetReal2" label="DC Offset for Real Channel C" type="uint32_t" min_expr="-32760"  max_expr="32767"
+                                available="get(system::getParent($this,3),3).getValue() &gt; 2">
+                            <description><![CDATA[<html>DC offset for Real Channel C.
+                                    The <b>32767</b> value is only for Auto DC Adjustment and signal that the channel DC offset is adjusted after each frame.
+                                                                Any other value is a fix value to be applied as DC adjustment. </html>]]>
+                            </description>
+                            <options_expr>
+                                <option id="type" expr="`INTEGER`"/>
+                                <option id="UUID" expr="`ECUC:89dc979d-14a5-4550-b3a3-ee44747d6f11`"/>
+                                <option id="postBuildVariantValue" expr="false"/>
+                                <option id="SYNC_VALUE"/>
+                                <option id="origin" expr="`AUTOSAR_ECUC`"/>
+                                <option id="symbolicNameValue" expr="true"/>
+                                <option id="defaultValue" expr="2"/>
+                                <option id="scope" expr="`LOCAL`"/>
+                                <option id="valueConfigClass" expr="`PRE-COMPILE=VARIANT-POST-BUILD;PRE-COMPILE=VARIANT-PRE-COMPILE`"/>
+                            </options_expr>
+                        </integer>
+
+                        <!-- object Csi2VcDcOffsetReal3  -->
+                        <integer id="Csi2VcDcOffsetReal3" label="DC Offset for Real Channel D" type="uint32_t" min_expr="-32760"  max_expr="32767"
+                                available="get(system::getParent($this,3),3).getValue() &gt; 3">
+                            <description><![CDATA[<html>DC offset for Real Channel D.
+                                    The <b>32767</b> value is only for Auto DC Adjustment and signal that the channel DC offset is adjusted after each frame.
+                                                                Any other value is a fix value to be applied as DC adjustment. </html>]]>
+                            </description>
+                            <options_expr>
+                                <option id="type" expr="`INTEGER`"/>
+                                <option id="UUID" expr="`ECUC:89dc979d-14a5-4550-b3a3-ee44747d6f11`"/>
+                                <option id="postBuildVariantValue" expr="false"/>
+                                <option id="SYNC_VALUE"/>
+                                <option id="origin" expr="`AUTOSAR_ECUC`"/>
+                                <option id="symbolicNameValue" expr="true"/>
+                                <option id="defaultValue" expr="2"/>
+                                <option id="scope" expr="`LOCAL`"/>
+                                <option id="valueConfigClass" expr="`PRE-COMPILE=VARIANT-POST-BUILD;PRE-COMPILE=VARIANT-PRE-COMPILE`"/>
+                            </options_expr>
+                        </integer>
+
+                    </struct>   <!-- Real data DC offset definitions : Csi2VcDcOffsetsReal -->
+
+
+                    <!-- Complex data DC offset definitions -->
+                    <struct id="Csi2VcDcOffsetsComplex" label="DC Offsets for Complex Channels" available="get(system::getParent($this,2),8).getValue()">
+                        <description>
+                            <![CDATA[<html>Common container for complex data DC offsets. </html> ]]>
+                        </description>
+
+                        <!-- object Csi2VcDcOffsetComplex0  -->
+                        <integer id="Csi2VcDcOffsetComplex0" label="DC Offset for Complex Channel E" type="uint32_t" min_expr="-32760"  max_expr="32767">
+                            <description><![CDATA[<html>DC offset for Complex Channel E.
+                                    The <b>32767</b> value is only for Auto DC Adjustment and signal that the channel DC offset is adjusted after each frame.
+                                                                Any other value is a fix value to be applied as DC adjustment. </html>]]>
+                            </description>
+                            <options_expr>
+                                <option id="type" expr="`INTEGER`"/>
+                                <option id="UUID" expr="`ECUC:89dc979d-14a5-4550-b3a3-ee44747d6f11`"/>
+                                <option id="postBuildVariantValue" expr="false"/>
+                                <option id="SYNC_VALUE"/>
+                                <option id="origin" expr="`AUTOSAR_ECUC`"/>
+                                <option id="symbolicNameValue" expr="true"/>
+                                <option id="defaultValue" expr="2"/>
+                                <option id="scope" expr="`LOCAL`"/>
+                                <option id="valueConfigClass" expr="`PRE-COMPILE=VARIANT-POST-BUILD;PRE-COMPILE=VARIANT-PRE-COMPILE`"/>
+                            </options_expr>
+                        </integer>
+
+                        <!-- object Csi2VcDcOffsetComplex1  -->
+                        <integer id="Csi2VcDcOffsetComplex1" label="DC Offset for Complex Channel F" type="uint32_t" min_expr="-32760"  max_expr="32767"
+                                available="(get(system::getParent($this,3),3).getValue() &gt; 1)">
+                            <description><![CDATA[<html>DC offset for Complex Channel F.
+                                    The <b>32767</b> value is only for Auto DC Adjustment and signal that the channel DC offset is adjusted after each frame.
+                                                                Any other value is a fix value to be applied as DC adjustment. </html>]]>
+                            </description>
+                            <options_expr>
+                                <option id="type" expr="`INTEGER`"/>
+                                <option id="UUID" expr="`ECUC:89dc979d-14a5-4550-b3a3-ee44747d6f11`"/>
+                                <option id="postBuildVariantValue" expr="false"/>
+                                <option id="SYNC_VALUE"/>
+                                <option id="origin" expr="`AUTOSAR_ECUC`"/>
+                                <option id="symbolicNameValue" expr="true"/>
+                                <option id="defaultValue" expr="2"/>
+                                <option id="scope" expr="`LOCAL`"/>
+                                <option id="valueConfigClass" expr="`PRE-COMPILE=VARIANT-POST-BUILD;PRE-COMPILE=VARIANT-PRE-COMPILE`"/>
+                            </options_expr>
+                        </integer>
+
+                        <!-- object Csi2VcDcOffsetComplex2  -->
+                        <integer id="Csi2VcDcOffsetComplex2" label="DC Offset for Complex Channel G" type="uint32_t" min_expr="-32760"  max_expr="32767"
+                                available="get(system::getParent($this,3),3).getValue() &gt; 2">
+                            <description><![CDATA[<html>DC offset for Complex Channel G.
+                                    The <b>32767</b> value is only for Auto DC Adjustment and signal that the channel DC offset is adjusted after each frame.
+                                                                Any other value is a fix value to be applied as DC adjustment. </html>]]>
+                            </description>
+                            <options_expr>
+                                <option id="type" expr="`INTEGER`"/>
+                                <option id="UUID" expr="`ECUC:89dc979d-14a5-4550-b3a3-ee44747d6f11`"/>
+                                <option id="postBuildVariantValue" expr="false"/>
+                                <option id="SYNC_VALUE"/>
+                                <option id="origin" expr="`AUTOSAR_ECUC`"/>
+                                <option id="symbolicNameValue" expr="true"/>
+                                <option id="defaultValue" expr="2"/>
+                                <option id="scope" expr="`LOCAL`"/>
+                                <option id="valueConfigClass" expr="`PRE-COMPILE=VARIANT-POST-BUILD;PRE-COMPILE=VARIANT-PRE-COMPILE`"/>
+                            </options_expr>
+                        </integer>
+
+                        <!-- object Csi2VcDcOffsetComplex3  -->
+                        <integer id="Csi2VcDcOffsetComplex3" label="DC Offset for Complex Channel D" type="uint32_t" min_expr="-32760"  max_expr="32767"
+                                available="get(system::getParent($this,3),3).getValue() &gt; 3">
+                            <description><![CDATA[<html>DC offset for Complex Channel H.
+                                    The <b>32767</b> value is only for Auto DC Adjustment and signal that the channel DC offset is adjusted after each frame.
+                                                                Any other value is a fix value to be applied as DC adjustment. </html>]]>
+                            </description>
+                            <options_expr>
+                                <option id="type" expr="`INTEGER`"/>
+                                <option id="UUID" expr="`ECUC:89dc979d-14a5-4550-b3a3-ee44747d6f11`"/>
+                                <option id="postBuildVariantValue" expr="false"/>
+                                <option id="SYNC_VALUE"/>
+                                <option id="origin" expr="`AUTOSAR_ECUC`"/>
+                                <option id="symbolicNameValue" expr="true"/>
+                                <option id="defaultValue" expr="2"/>
+                                <option id="scope" expr="`LOCAL`"/>
+                                <option id="valueConfigClass" expr="`PRE-COMPILE=VARIANT-POST-BUILD;PRE-COMPILE=VARIANT-PRE-COMPILE`"/>
+                            </options_expr>
+                        </integer>
+                    </struct>    <!-- Complex data DC offset definitions : Csi2VcDcOffsetsComplex-->
+                </struct>  <!-- Virtual Channel buffer definitions : Csi2VcDataBuffer -->
+
+                <!-- Virtual Channel events management definitions -->
+                <struct id="Csi2VcEventsManagement" label="Virtual Channel Events Management">
+                    <description> <![CDATA[<html>Container for Virtual Channel events management. </html> ]]>
+                    </description>
+
+                    <!-- object Csi2VcBufLinesTrigger  -->
+                    <integer id="Csi2VcBufLinesTrigger" label="Number of Lines to Generate a Trigger" type="uint32_t" min_expr="1"  max_expr="1024" available="true">
+                        <description><![CDATA[<html>Define the number of lines received which generate a LineReceived signal to SPT.
+                            If CSI2_EVT_LINE_END is selected, this is the number of lines received to generate a callback signaling this event. </html>]]>
+                        </description>
+                        <options_expr>
+                            <option id="type" expr="`INTEGER`"/>
+                            <option id="UUID" expr="`ECUC:89dc979d-14a5-4550-b3a3-ee44747d6f11`"/>
+                            <option id="postBuildVariantValue" expr="false"/>
+                            <option id="SYNC_VALUE"/>
+                            <option id="origin" expr="`AUTOSAR_ECUC`"/>
+                            <option id="symbolicNameValue" expr="true"/>
+                            <option id="defaultValue" expr="1"/>
+                            <option id="scope" expr="`LOCAL`"/>
+                            <option id="valueConfigClass" expr="`PRE-COMPILE=VARIANT-POST-BUILD;PRE-COMPILE=VARIANT-PRE-COMPILE`"/>
+                        </options_expr>
+                    </integer>
+
+                    <!-- Virtual Channel events selection definitions -->
+                    <struct id="Csi2VcEventsSelection" label="Virtual Channel Events Selection">
+                        <description> <![CDATA[<html>Container for selection of the reported events for Virtual Channel activities. </html> ]]>
+                        </description>
+
+                        <!-- object Csi2VcFrameStartEvt  -->
+                        <bool id="Csi2VcFrameStartEvt" label="Frame Start Event" available="true">
+                            <description>
+                                <![CDATA[<html>If selected, when Frame Start packet is received, it will be reported to application, using the callback.</html> ]]>
+                            </description>
+                            <options_expr>
+                                <option id="UUID" expr="`ECUC:2beea917-2bcd-497c-a2ed-c8285559c370`"/>
+                                <option id="postBuildVariantValue" expr="false"/>
+                                <option id="SYNC_VALUE"/>
+                                <option id="origin" expr="`NXP`"/>
+                                <option id="symbolicNameValue" expr="false"/>
+                                <option id="defaultValue" expr="`false`"/>
+                                <option id="scope" expr="`LOCAL`"/>
+                                <option id="valueConfigClass" expr="`PRE-COMPILE=VARIANT-POST-BUILD;PRE-COMPILE=VARIANT-PRE-COMPILE`"/>
+                                <option id="multiplicityConfigClass" expr="`PRE-COMPILE=VARIANT-POST-BUILD;PRE-COMPILE=VARIANT-PRE-COMPILE`"/>
+                            </options_expr>
+                        </bool>
+
+                        <!-- object Csi2VcFrameEndEvt  -->
+                        <bool id="Csi2VcFrameEndEvt" label="Frame End Event" available="true">
+                            <description>
+                                <![CDATA[<html>If selected, when Frame End packet is received, it will be reported to application, using the callback.</html> ]]>
+                            </description>
+                            <options_expr>
+                                <option id="UUID" expr="`ECUC:2beea917-2bcd-497c-a2ed-c8285559c370`"/>
+                                <option id="postBuildVariantValue" expr="false"/>
+                                <option id="SYNC_VALUE"/>
+                                <option id="origin" expr="`NXP`"/>
+                                <option id="symbolicNameValue" expr="false"/>
+                                <option id="defaultValue" expr="`false`"/>
+                                <option id="scope" expr="`LOCAL`"/>
+                                <option id="valueConfigClass" expr="`PRE-COMPILE=VARIANT-POST-BUILD;PRE-COMPILE=VARIANT-PRE-COMPILE`"/>
+                                <option id="multiplicityConfigClass" expr="`PRE-COMPILE=VARIANT-POST-BUILD;PRE-COMPILE=VARIANT-PRE-COMPILE`"/>
+                            </options_expr>
+                        </bool>
+
+                        <!-- object Csi2VcLineDoneEvt  -->
+                        <bool id="Csi2VcLineDoneEvt" label="Line Done/Received Event" available="true">
+                            <description>
+                                <![CDATA[<html>If selected, a LineDone event will be reported, it will be reported to application, using the callback.
+                                       The event will be reported only after the number of lines specified in "Number of Lines to Generate a Trigger".</html> ]]>
+                            </description>
+                            <options_expr>
+                                <option id="UUID" expr="`ECUC:2beea917-2bcd-497c-a2ed-c8285559c370`"/>
+                                <option id="postBuildVariantValue" expr="false"/>
+                                <option id="SYNC_VALUE"/>
+                                <option id="origin" expr="`NXP`"/>
+                                <option id="symbolicNameValue" expr="false"/>
+                                <option id="defaultValue" expr="`false`"/>
+                                <option id="scope" expr="`LOCAL`"/>
+                                <option id="valueConfigClass" expr="`PRE-COMPILE=VARIANT-POST-BUILD;PRE-COMPILE=VARIANT-PRE-COMPILE`"/>
+                                <option id="multiplicityConfigClass" expr="`PRE-COMPILE=VARIANT-POST-BUILD;PRE-COMPILE=VARIANT-PRE-COMPILE`"/>
+                            </options_expr>
+                        </bool>
+
+                        <!-- object Csi2VcShortPackedEvt  -->
+                        <bool id="Csi2VcShortPackedEvt" label="Short Packet Received Event" available="true">
+                            <description>
+                                <![CDATA[<html>If selected, a Short Packet Received event will be reported,
+                                                                if a short packet other then FrameStart and FrameEnd will be received.</html> ]]>
+                            </description>
+                            <options_expr>
+                                <option id="UUID" expr="`ECUC:2beea917-2bcd-497c-a2ed-c8285559c370`"/>
+                                <option id="postBuildVariantValue" expr="false"/>
+                                <option id="SYNC_VALUE"/>
+                                <option id="origin" expr="`NXP`"/>
+                                <option id="symbolicNameValue" expr="false"/>
+                                <option id="defaultValue" expr="`false`"/>
+                                <option id="scope" expr="`LOCAL`"/>
+                                <option id="valueConfigClass" expr="`PRE-COMPILE=VARIANT-POST-BUILD;PRE-COMPILE=VARIANT-PRE-COMPILE`"/>
+                                <option id="multiplicityConfigClass" expr="`PRE-COMPILE=VARIANT-POST-BUILD;PRE-COMPILE=VARIANT-PRE-COMPILE`"/>
+                            </options_expr>
+                        </bool>
+
+                        <!-- object Csi2VcBitNotToggledEvt  -->
+                        <bool id="Csi2VcBitNotToggledEvt" label="Bit Not Toggled Event" available="get(get(system::getParent($this,8),15),5).getValue()">
+                            <description>
+                                <![CDATA[<html>If selected, a Bit Not Toggled event will be reported, if a smaple bit seems not to toggle for a chirp.
+                                       This event is available only if Statistics is enabled.</html> ]]>
+                            </description>
+                            <options_expr>
+                                <option id="UUID" expr="`ECUC:2beea917-2bcd-497c-a2ed-c8285559c370`"/>
+                                <option id="postBuildVariantValue" expr="false"/>
+                                <option id="SYNC_VALUE"/>
+                                <option id="origin" expr="`NXP`"/>
+                                <option id="symbolicNameValue" expr="false"/>
+                                <option id="defaultValue" expr="`false`"/>
+                                <option id="scope" expr="`LOCAL`"/>
+                                <option id="valueConfigClass" expr="`PRE-COMPILE=VARIANT-POST-BUILD;PRE-COMPILE=VARIANT-PRE-COMPILE`"/>
+                                <option id="multiplicityConfigClass" expr="`PRE-COMPILE=VARIANT-POST-BUILD;PRE-COMPILE=VARIANT-PRE-COMPILE`"/>
+                            </options_expr>
+                        </bool>
+                    </struct>   <!-- Virtual Channel events selection definitions : Csi2VcEventsSelection-->
+                </struct>   <!-- Virtual Channel events management definitions : Csi2VcEventsManagement-->
+
+                <!-- Virtual Channel GPIO setup -->
+                <struct id="Csi2VcGpioSetup" label="GPIO Trigger Setup" available="get(get(system::getParent($this,6),15),16).getValue()">
+                    <description> <![CDATA[<html>General setup for the GPIO triggers. The GPIO outputs are not initialized by the CSI2 driver. </html> ]]>
+                    </description>
+
+                    <!-- object Csi2Gpio1EnaPackAndFrame  -->
+                    <bool id="Csi2Gpio1EnaPackAndFrame" label="GPIO 1 Enable Frame and Packet Events" available="true">
+                        <description>
+                            <![CDATA[<html>Enable the output trigger for the GPIO_1 if a Frame Start/End packet is received or Chirp Start/End is received. </html> ]]>
+                        </description>
+                        <options_expr>
+                            <option id="UUID" expr="`ECUC:2beea917-2bcd-497c-a2ed-c8285559c370`"/>
+                            <option id="postBuildVariantValue" expr="false"/>
+                            <option id="SYNC_VALUE"/>
+                            <option id="origin" expr="`NXP`"/>
+                            <option id="symbolicNameValue" expr="false"/>
+                            <option id="defaultValue" expr="`false`"/>
+                            <option id="scope" expr="`LOCAL`"/>
+                            <option id="valueConfigClass" expr="`PRE-COMPILE=VARIANT-POST-BUILD;PRE-COMPILE=VARIANT-PRE-COMPILE`"/>
+                            <option id="multiplicityConfigClass" expr="`PRE-COMPILE=VARIANT-POST-BUILD;PRE-COMPILE=VARIANT-PRE-COMPILE`"/>
+                        </options_expr>
+                    </bool>
+
+                    <!-- object Csi2Gpio1PackAndFrameSelection  -->
+                    <dynamic_enum id="Csi2Gpio1PackAndFrameSelection" label="GPIO_1 Frame and Packet Events" items="toArray(`Frame_Start`,
+                                                                                                         `Frame_End`,
+                                                                                                         `Packet_Start`,
+                                                                                                         `Packet_End`)"
+                                available="get(system::getParent($this,1),0).getValue()">
+                        <description><![CDATA[<html>Select the trigger source for the GPIO_1, only one of the four possible events can be selected.</html>]]>
+                        </description>
+                        <options_expr>
+                            <option id="type" expr="`ENUMERATION`"/>
+                            <option id="UUID" expr="`ECUC:daca2411-31e0-493f-8e05-3716f0464317`"/>
+                            <option id="postBuildVariantValue" expr="true"/>
+                            <option id="origin" expr="`NXP`"/>
+                            <option id="symbolicNameValue" expr="false"/>
+                            <option id="defaultValue" expr="`Frame_Start`"/>
+                            <option id="scope" expr="`LOCAL`"/>
+                            <option id="valueConfigClass" expr="`POST-BUILD=VARIANT-POST-BUILD;PRE-COMPILE=VARIANT-PRE-COMPILE`"/>
+                        </options_expr>
+                    </dynamic_enum>
+
+                    <!-- object Csi2Gpio1EnaPackType  -->
+                    <bool id="Csi2Gpio1EnaPackType" label="GPIO 1 Enable Specific Packet Events" available="true">
+                        <description>
+                            <![CDATA[<html>Enable the output trigger for the GPIO_1 if a specific packet is received. </html> ]]>
+                        </description>
+                        <options_expr>
+                            <option id="UUID" expr="`ECUC:2beea917-2bcd-497c-a2ed-c8285559c370`"/>
+                            <option id="postBuildVariantValue" expr="false"/>
+                            <option id="SYNC_VALUE"/>
+                            <option id="origin" expr="`NXP`"/>
+                            <option id="symbolicNameValue" expr="false"/>
+                            <option id="defaultValue" expr="`false`"/>
+                            <option id="scope" expr="`LOCAL`"/>
+                            <option id="valueConfigClass" expr="`PRE-COMPILE=VARIANT-POST-BUILD;PRE-COMPILE=VARIANT-PRE-COMPILE`"/>
+                            <option id="multiplicityConfigClass" expr="`PRE-COMPILE=VARIANT-POST-BUILD;PRE-COMPILE=VARIANT-PRE-COMPILE`"/>
+                        </options_expr>
+                    </bool>
+
+                    <!-- object Csi2Gpio1PackTypeSelection  -->
+                    <dynamic_enum id="Csi2Gpio1PackTypeSelection" label="GPIO_1 Specific Packet Events Selection" items="toArray(`Embedded_Data`,
+                                                                                                         `User_Defined_Data`,
+                                                                                                         `RAW_Data`,
+                                                                                                         `RGB_Data`)"
+                                available="get(system::getParent($this,1),2).getValue()">
+                        <description><![CDATA[<html>Select the trigger source for the GPIO_1, only one of the four possible events can be selected.</html>]]>
+                        </description>
+                        <options_expr>
+                            <option id="type" expr="`ENUMERATION`"/>
+                            <option id="UUID" expr="`ECUC:daca2411-31e0-493f-8e05-3716f0464317`"/>
+                            <option id="postBuildVariantValue" expr="true"/>
+                            <option id="origin" expr="`NXP`"/>
+                            <option id="symbolicNameValue" expr="false"/>
+                            <option id="defaultValue" expr="`Embedded_Data`"/>
+                            <option id="scope" expr="`LOCAL`"/>
+                            <option id="valueConfigClass" expr="`POST-BUILD=VARIANT-POST-BUILD;PRE-COMPILE=VARIANT-PRE-COMPILE`"/>
+                        </options_expr>
+                    </dynamic_enum>
+
+                    <!-- object Csi2Gpio1EnaError  -->
+                    <bool id="Csi2Gpio1EnaError" label="GPIO 1 Enable Error Packet Events" available="true">
+                        <description>
+                            <![CDATA[<html>Enable the output trigger for the GPIO_1 if an error is detected. </html> ]]>
+                        </description>
+                        <options_expr>
+                            <option id="UUID" expr="`ECUC:2beea917-2bcd-497c-a2ed-c8285559c370`"/>
+                            <option id="postBuildVariantValue" expr="false"/>
+                            <option id="SYNC_VALUE"/>
+                            <option id="origin" expr="`NXP`"/>
+                            <option id="symbolicNameValue" expr="false"/>
+                            <option id="defaultValue" expr="`false`"/>
+                            <option id="scope" expr="`LOCAL`"/>
+                            <option id="valueConfigClass" expr="`PRE-COMPILE=VARIANT-POST-BUILD;PRE-COMPILE=VARIANT-PRE-COMPILE`"/>
+                            <option id="multiplicityConfigClass" expr="`PRE-COMPILE=VARIANT-POST-BUILD;PRE-COMPILE=VARIANT-PRE-COMPILE`"/>
+                        </options_expr>
+                    </bool>
+
+                    <!-- object Csi2Gpio1ErrorSelection  -->
+                    <dynamic_enum id="Csi2Gpio1ErrorSelection" label="GPIO_1 Error Events Selection" items="toArray(`Line_Count`,
+                                                                                                         `Line_Length`,
+                                                                                                         `CRC_or_ECC2bits`,
+                                                                                                         `No_Synchronization_on_DPHY`)"
+                                available="get(system::getParent($this,1),4).getValue()">
+                        <description><![CDATA[<html>Select the trigger source for the GPIO_1, only one of the four possible events can be selected.</html>]]>
+                        </description>
+                        <options_expr>
+                            <option id="type" expr="`ENUMERATION`"/>
+                            <option id="UUID" expr="`ECUC:daca2411-31e0-493f-8e05-3716f0464317`"/>
+                            <option id="postBuildVariantValue" expr="true"/>
+                            <option id="origin" expr="`NXP`"/>
+                            <option id="symbolicNameValue" expr="false"/>
+                            <option id="defaultValue" expr="`Line_Count`"/>
+                            <option id="scope" expr="`LOCAL`"/>
+                            <option id="valueConfigClass" expr="`POST-BUILD=VARIANT-POST-BUILD;PRE-COMPILE=VARIANT-PRE-COMPILE`"/>
+                        </options_expr>
+                    </dynamic_enum>
+                </struct>   <!-- Virtual Channel GPIO setup : Csi2VcGpioSetup -->
+
+                <!-- Virtual Channel SDMA setup -->
+                <struct id="Csi2VcSdmaSetup" label="SDMA Trigger Setup" available="get(get(system::getParent($this,6),15),17).getValue()">
+                    <description> <![CDATA[<html>General setup for the SDMA triggers. The SDMA outputs are not initialized by the CSI2 driver. </html> ]]>
+                    </description>
+
+                    <!-- object Csi2Sdma1EnaPackAndFrame  -->
+                    <bool id="Csi2Sdma1EnaPackAndFrame" label="SDMA 1 Enable Frame and Packet Events" available="true">
+                        <description>
+                            <![CDATA[<html>Enable the output trigger for the GPIO_1 if a Frame Start/End packet is received or Chirp Start/End is received. </html> ]]>
+                        </description>
+                        <options_expr>
+                            <option id="UUID" expr="`ECUC:2beea917-2bcd-497c-a2ed-c8285559c370`"/>
+                            <option id="postBuildVariantValue" expr="false"/>
+                            <option id="SYNC_VALUE"/>
+                            <option id="origin" expr="`NXP`"/>
+                            <option id="symbolicNameValue" expr="false"/>
+                            <option id="defaultValue" expr="`false`"/>
+                            <option id="scope" expr="`LOCAL`"/>
+                            <option id="valueConfigClass" expr="`PRE-COMPILE=VARIANT-POST-BUILD;PRE-COMPILE=VARIANT-PRE-COMPILE`"/>
+                            <option id="multiplicityConfigClass" expr="`PRE-COMPILE=VARIANT-POST-BUILD;PRE-COMPILE=VARIANT-PRE-COMPILE`"/>
+                        </options_expr>
+                    </bool>
+
+                    <!-- object Csi2Sdma1PackAndFrameSelection  -->
+                    <dynamic_enum id="Csi2Sdma1PackAndFrameSelection" label="SDMA_1 Frame and Packet Events" items="toArray(`Frame_Start`,
+                                                                                                         `Frame_End`,
+                                                                                                         `Packet_Start`,
+                                                                                                         `Packet_End`)"
+                                available="get(system::getParent($this,1),0).getValue()">
+                        <description><![CDATA[<html>Select the trigger source for the SDMA_1, only one of the four possible events can be selected.</html>]]>
+                        </description>
+                        <options_expr>
+                            <option id="type" expr="`ENUMERATION`"/>
+                            <option id="UUID" expr="`ECUC:daca2411-31e0-493f-8e05-3716f0464317`"/>
+                            <option id="postBuildVariantValue" expr="true"/>
+                            <option id="origin" expr="`NXP`"/>
+                            <option id="symbolicNameValue" expr="false"/>
+                            <option id="defaultValue" expr="`Frame_Start`"/>
+                            <option id="scope" expr="`LOCAL`"/>
+                            <option id="valueConfigClass" expr="`POST-BUILD=VARIANT-POST-BUILD;PRE-COMPILE=VARIANT-PRE-COMPILE`"/>
+                        </options_expr>
+                    </dynamic_enum>
+
+                    <!-- object Csi2Sdma1EnaPackType  -->
+                    <bool id="Csi2Sdma1EnaPackType" label="SDMA 1 Enable Specific Packet Events" available="true">
+                        <description>
+                            <![CDATA[<html>Enable the output trigger for the SDMA_1 if a specific packet is received. </html> ]]>
+                        </description>
+                        <options_expr>
+                            <option id="UUID" expr="`ECUC:2beea917-2bcd-497c-a2ed-c8285559c370`"/>
+                            <option id="postBuildVariantValue" expr="false"/>
+                            <option id="SYNC_VALUE"/>
+                            <option id="origin" expr="`NXP`"/>
+                            <option id="symbolicNameValue" expr="false"/>
+                            <option id="defaultValue" expr="`false`"/>
+                            <option id="scope" expr="`LOCAL`"/>
+                            <option id="valueConfigClass" expr="`PRE-COMPILE=VARIANT-POST-BUILD;PRE-COMPILE=VARIANT-PRE-COMPILE`"/>
+                            <option id="multiplicityConfigClass" expr="`PRE-COMPILE=VARIANT-POST-BUILD;PRE-COMPILE=VARIANT-PRE-COMPILE`"/>
+                        </options_expr>
+                    </bool>
+
+                    <!-- object Csi2Sdma1PackTypeSelection  -->
+                    <dynamic_enum id="Csi2Sdma1PackTypeSelection" label="SDMA_1 Specific Packet Events Selection" items="toArray(`Embedded_Data`,
+                                                                                                         `User_Defined_Data`,
+                                                                                                         `RAW_Data`,
+                                                                                                         `RGB_Data`)"
+                                available="get(system::getParent($this,1),2).getValue()">
+                        <description><![CDATA[<html>Select the trigger source for the SDMA_1, only one of the four possible events can be selected.</html>]]>
+                        </description>
+                        <options_expr>
+                            <option id="type" expr="`ENUMERATION`"/>
+                            <option id="UUID" expr="`ECUC:daca2411-31e0-493f-8e05-3716f0464317`"/>
+                            <option id="postBuildVariantValue" expr="true"/>
+                            <option id="origin" expr="`NXP`"/>
+                            <option id="symbolicNameValue" expr="false"/>
+                            <option id="defaultValue" expr="`Embedded_Data`"/>
+                            <option id="scope" expr="`LOCAL`"/>
+                            <option id="valueConfigClass" expr="`POST-BUILD=VARIANT-POST-BUILD;PRE-COMPILE=VARIANT-PRE-COMPILE`"/>
+                        </options_expr>
+                    </dynamic_enum>
+
+                    <!-- object Csi2Sdma1EnaError  -->
+                    <bool id="Csi2Sdma1EnaError" label="SDMA 1 Enable Error Packet Events" available="true">
+                        <description>
+                            <![CDATA[<html>Enable the output trigger for the SDMA_1 if an error is detected. </html> ]]>
+                        </description>
+                        <options_expr>
+                            <option id="UUID" expr="`ECUC:2beea917-2bcd-497c-a2ed-c8285559c370`"/>
+                            <option id="postBuildVariantValue" expr="false"/>
+                            <option id="SYNC_VALUE"/>
+                            <option id="origin" expr="`NXP`"/>
+                            <option id="symbolicNameValue" expr="false"/>
+                            <option id="defaultValue" expr="`false`"/>
+                            <option id="scope" expr="`LOCAL`"/>
+                            <option id="valueConfigClass" expr="`PRE-COMPILE=VARIANT-POST-BUILD;PRE-COMPILE=VARIANT-PRE-COMPILE`"/>
+                            <option id="multiplicityConfigClass" expr="`PRE-COMPILE=VARIANT-POST-BUILD;PRE-COMPILE=VARIANT-PRE-COMPILE`"/>
+                        </options_expr>
+                    </bool>
+
+                    <!-- object Csi2Sdma1ErrorSelection  -->
+                    <dynamic_enum id="Csi2Sdma1ErrorSelection" label="SDMA_1 Error Events Selection" items="toArray(`Line_Count`,
+                                                                                                         `Line_Length`,
+                                                                                                         `CRC_or_ECC2bits`,
+                                                                                                         `No_Synchronization_on_DPHY`)"
+                                available="get(system::getParent($this,1),4).getValue()">
+                        <description><![CDATA[<html>Select the trigger source for the SDMA_1, only one of the four possible events can be selected.</html>]]>
+                        </description>
+                        <options_expr>
+                            <option id="type" expr="`ENUMERATION`"/>
+                            <option id="UUID" expr="`ECUC:daca2411-31e0-493f-8e05-3716f0464317`"/>
+                            <option id="postBuildVariantValue" expr="true"/>
+                            <option id="origin" expr="`NXP`"/>
+                            <option id="symbolicNameValue" expr="false"/>
+                            <option id="defaultValue" expr="`Line_Count`"/>
+                            <option id="scope" expr="`LOCAL`"/>
+                            <option id="valueConfigClass" expr="`POST-BUILD=VARIANT-POST-BUILD;PRE-COMPILE=VARIANT-PRE-COMPILE`"/>
+                        </options_expr>
+                    </dynamic_enum>
+                </struct>   <!-- Virtual Channel SDMA setup -->
+
+                <!-- Virtual Channel SDMA setup -->
+                <struct id="Csi2VcMetadataSetup" label="Csi2 VC Metadata Setup" available="get(get(system::getParent($this,6),15),10).getValue()">
+                    <description> <![CDATA[<html>General setup for Metadata usage. </html> ]]>
+                    </description>
+
+                    <!-- object Csi2VcMetadataUsage  -->
+                    <bool id="Csi2VcMetadataUsage" label="Metadata is Used" available="true">
+                        <description>
+                            <![CDATA[<html>Metadata usage for this Virtual Channel setup. </html> ]]>
+                        </description>
+                        <options_expr>
+                            <option id="UUID" expr="`ECUC:2beea917-2bcd-497c-a2ed-c8285559c370`"/>
+                            <option id="postBuildVariantValue" expr="false"/>
+                            <option id="SYNC_VALUE"/>
+                            <option id="origin" expr="`NXP`"/>
+                            <option id="symbolicNameValue" expr="false"/>
+                            <option id="defaultValue" expr="`false`"/>
+                            <option id="scope" expr="`LOCAL`"/>
+                            <option id="valueConfigClass" expr="`PRE-COMPILE=VARIANT-POST-BUILD;PRE-COMPILE=VARIANT-PRE-COMPILE`"/>
+                            <option id="multiplicityConfigClass" expr="`PRE-COMPILE=VARIANT-POST-BUILD;PRE-COMPILE=VARIANT-PRE-COMPILE`"/>
+                        </options_expr>
+                    </bool>
+
+                    <!-- object Csi2VcMetadataStreamType  -->
+                    <dynamic_enum id="Csi2VcMetadataStreamType" label="Data Stream Type" items="toArray(`CSI2_DATA_TYPE_EMBD`,
+                                                                                                  `CSI2_DATA_TYPE_YUV422_8`,
+                                                                                                  `CSI2_DATA_TYPE_YUV422_10`,
+                                                                                                  `CSI2_DATA_TYPE_RGB565`,
+                                                                                                  `CSI2_DATA_TYPE_RGB888`,
+                                                                                                  `CSI2_DATA_TYPE_RAW8`,
+                                                                                                  `CSI2_DATA_TYPE_RAW10`,
+                                                                                                  `CSI2_DATA_TYPE_RAW12`,
+                                                                                                  `CSI2_DATA_TYPE_RAW14`,
+                                                                                                  `CSI2_DATA_TYPE_RAW16`,
+                                                                                                  `CSI2_DATA_TYPE_USR0`,
+                                                                                                  `CSI2_DATA_TYPE_USR1`,
+                                                                                                  `CSI2_DATA_TYPE_USR2`,
+                                                                                                  `CSI2_DATA_TYPE_USR3`,
+                                                                                                  `CSI2_DATA_TYPE_USR4`,
+                                                                                                  `CSI2_DATA_TYPE_USR5`,
+                                                                                                  `CSI2_DATA_TYPE_16_FROM_8`,
+                                                                                                  `CSI2_DATA_TYPE_USR7`)"
+                                   available="get(system::getParent($this,1),0).getValue()">
+                        <description><![CDATA[<html>Input stream type.</html>]]>
+                        </description>
+                        <options_expr>
+                            <option id="type" expr="`ENUMERATION`"/>
+                            <option id="UUID" expr="`ECUC:daca2411-31e0-493f-8e05-3716f0464317`"/>
+                            <option id="postBuildVariantValue" expr="true"/>
+                            <option id="origin" expr="`NXP`"/>
+                            <option id="symbolicNameValue" expr="false"/>
+                            <option id="defaultValue" expr="`CSI2_DATA_TYPE_EMBD`"/>
+                            <option id="scope" expr="`LOCAL`"/>
+                            <option id="valueConfigClass" expr="`POST-BUILD=VARIANT-POST-BUILD;PRE-COMPILE=VARIANT-PRE-COMPILE`"/>
+                        </options_expr>
+                    </dynamic_enum>
+
+                    <!-- object Csi2VcMetadataInputNumLines  -->
+                    <integer id="Csi2VcMetadataInputNumLines" label="Metadata Num Lines to Receive in a Frame" type="uint32_t" min_expr="1"  max_expr="20"
+                            available="get(system::getParent($this,1),0).getValue()">
+                        <description><![CDATA[<html>The number of Metadata lines to be received in a frame. </html>]]>
+                        </description>
+                        <options_expr>
+                            <option id="type" expr="`INTEGER`"/>
+                            <option id="UUID" expr="`ECUC:89dc979d-14a5-4550-b3a3-ee44747d6f11`"/>
+                            <option id="postBuildVariantValue" expr="false"/>
+                            <option id="SYNC_VALUE"/>
+                            <option id="origin" expr="`AUTOSAR_ECUC`"/>
+                            <option id="symbolicNameValue" expr="true"/>
+                            <option id="defaultValue" expr="1"/>
+                            <option id="scope" expr="`LOCAL`"/>
+                            <option id="valueConfigClass" expr="`PRE-COMPILE=VARIANT-POST-BUILD;PRE-COMPILE=VARIANT-PRE-COMPILE`"/>
+                        </options_expr>
+                    </integer>
+
+                    <!-- object Csi2VcMetadataInputLineLen  -->
+                    <integer id="Csi2VcMetadataInputLineLen" label="Metadata Line Length to Receive" type="uint32_t" min_expr="1"  max_expr="128"
+                            available="get(system::getParent($this,1),0).getValue()">
+                        <description><![CDATA[<html>The length of a Metadata line to be received. </html>]]>
+                        </description>
+                        <options_expr>
+                            <option id="type" expr="`INTEGER`"/>
+                            <option id="UUID" expr="`ECUC:89dc979d-14a5-4550-b3a3-ee44747d6f11`"/>
+                            <option id="postBuildVariantValue" expr="false"/>
+                            <option id="SYNC_VALUE"/>
+                            <option id="origin" expr="`AUTOSAR_ECUC`"/>
+                            <option id="symbolicNameValue" expr="true"/>
+                            <option id="defaultValue" expr="64"/>
+                            <option id="scope" expr="`LOCAL`"/>
+                            <option id="valueConfigClass" expr="`PRE-COMPILE=VARIANT-POST-BUILD;PRE-COMPILE=VARIANT-PRE-COMPILE`"/>
+                        </options_expr>
+                    </integer>
+
+                    <!-- object Csi2VcMetadataBufNumLines  -->
+                    <integer id="Csi2VcMetadataBufNumLines" label="Number of Metadata Lines in the Memory Buffer" type="uint32_t" min_expr="1"  max_expr="10"
+                            available="get(system::getParent($this,1),0).getValue()">
+                        <description><![CDATA[<html>The number of the lines available in the memory buffer for Metadata. </html>]]>
+                        </description>
+                        <options_expr>
+                            <option id="type" expr="`INTEGER`"/>
+                            <option id="UUID" expr="`ECUC:89dc979d-14a5-4550-b3a3-ee44747d6f11`"/>
+                            <option id="postBuildVariantValue" expr="false"/>
+                            <option id="SYNC_VALUE"/>
+                            <option id="origin" expr="`AUTOSAR_ECUC`"/>
+                            <option id="symbolicNameValue" expr="true"/>
+                            <option id="defaultValue" expr="1"/>
+                            <option id="scope" expr="`LOCAL`"/>
+                            <option id="valueConfigClass" expr="`PRE-COMPILE=VARIANT-POST-BUILD;PRE-COMPILE=VARIANT-PRE-COMPILE`"/>
+                        </options_expr>
+                    </integer>
+
+                    <!-- object Csi2VcMetadataBufLineLen  -->
+                    <integer id="Csi2VcMetadataBufLineLen" label="The Length of a Metadata Buffer Line" type="uint32_t" min_expr="1"  max_expr="256"
+                            available="get(system::getParent($this,1),0).getValue()">
+                        <description><![CDATA[<html>The length of a memory buffer line.
+                                   As for Metadata the received data is put into the memory as received, this value must be at least the length of the received Metadata line. </html>]]>
+                        </description>
+                        <options_expr>
+                            <option id="type" expr="`INTEGER`"/>
+                            <option id="UUID" expr="`ECUC:89dc979d-14a5-4550-b3a3-ee44747d6f11`"/>
+                            <option id="postBuildVariantValue" expr="false"/>
+                            <option id="SYNC_VALUE"/>
+                            <option id="origin" expr="`AUTOSAR_ECUC`"/>
+                            <option id="symbolicNameValue" expr="true"/>
+                            <option id="defaultValue" expr="64"/>
+                            <option id="scope" expr="`LOCAL`"/>
+                            <option id="valueConfigClass" expr="`PRE-COMPILE=VARIANT-POST-BUILD;PRE-COMPILE=VARIANT-PRE-COMPILE`"/>
+                        </options_expr>
+                    </integer>
+
+                    <!-- object Csi2VcMetadataBufMemPointer  -->
+                    <string id="Csi2VcMetadataBufMemPointer" label="The Symbolic Name of the Buffer Pointer"
+                                available="get(system::getParent($this,1),0).getValue()">
+                        <description><![CDATA[<html>The name of the pointer which is initialized with the start memory address of the Metadata buffer data.
+                                                            As C code, if the specified name is 'pBufferData', it must be defined like :
+                                                            uint8_t *pBufferData;
+                                                            The {start_memory_address} must be a valid physically address.</html>]]></description>
+                        <validation>
+                            <constraint cond_expr="(($this.getValue() != ``) &amp;&amp; isCIdentifier($this.getValue()))" level="error" description="Name must be a valid C identifier!"/>
+                            <!-- constraint cond_expr="countOccurrences(($parent.getParent(2)), x -&gt; (x.getSetting(`Csi2VcMetadataSetup.Csi2VcMetadataBufMemPointer`).getValue() == $this.getValue())) == 1" level="error" description="Duplicated value&#44; Csi2DriverParamsName must be unique across all CSI2 units parameters."/ -->
+                        </validation>
+                        <options_expr>
+                            <option id="type" expr="`STRING`"/>
+                            <option id="UUID" expr="`ECUC:2beea917-2bcd-497c-a2ed-c8285559c370`"/>
+                            <option id="origin" expr="`NXP`"/>
+                            <option id="SYNC_VALUE"/>
+                            <option id="postBuildVariantValue" expr="true"/>
+                            <option id="symbolicNameValue" expr="false"/>
+                            <option id="defaultValue" expr="metadataBufMemPtr"/>
+                            <option id="valueConfigClass" expr="`PRE-COMPILE=VARIANT-POST-BUILD;PRE-COMPILE=VARIANT-PRE-COMPILE`"/>
+                            <option id="multiplicityConfigClass" expr="`PRE-COMPILE=VARIANT-POST-BUILD;PRE-COMPILE=VARIANT-PRE-COMPILE`"/>
+                        </options_expr>
+                    </string>
+
+                </struct>   <!-- Virtual Channel SDMA setup : Csi2VcMetadataSetup -->
+
+                <!-- Virtual Channel buffer definitions -->
+                <struct id="Csi2VcAuxiliaryDataSetup" label="Csi2 VC Auxiliary Data Setup" available="get(get(system::getParent($this,6),15),9).getValue()">
+                    <description>
+                        <![CDATA[<html>Necessary parameters for the memory buffer used to receive CSI2 data. </html> ]]>
+                    </description>
+
+                    <!-- object Csi2VcAuxiliaryDataUsage  -->
+                    <bool id="Csi2VcAuxiliaryDataUsage" label="Auxiliary Data is Used" available="true">
+                        <description>
+                            <![CDATA[<html>Auxiliary data usage for this Virtual Channel setup. </html> ]]>
+                        </description>
+                        <options_expr>
+                            <option id="UUID" expr="`ECUC:2beea917-2bcd-497c-a2ed-c8285559c370`"/>
+                            <option id="postBuildVariantValue" expr="false"/>
+                            <option id="SYNC_VALUE"/>
+                            <option id="origin" expr="`NXP`"/>
+                            <option id="symbolicNameValue" expr="false"/>
+                            <option id="defaultValue" expr="`false`"/>
+                            <option id="scope" expr="`LOCAL`"/>
+                            <option id="valueConfigClass" expr="`PRE-COMPILE=VARIANT-POST-BUILD;PRE-COMPILE=VARIANT-PRE-COMPILE`"/>
+                            <option id="multiplicityConfigClass" expr="`PRE-COMPILE=VARIANT-POST-BUILD;PRE-COMPILE=VARIANT-PRE-COMPILE`"/>
+                        </options_expr>
+                        <validation>
+                            <constraint cond_expr="($this.getValue() == `false`) || (($this.getValue() == `true`) &amp;&amp; ((getValue(get(getParent($this,2), 2)) == `CSI2_DATA_TYPE_RAW12`) || (getValue(get(getParent($this,2), 2)) == `CSI2_DATA_TYPE_RAW16`)))" level="error" description="Only CSI2_DATA_TYPE_RAW12 or CSI2_DATA_TYPE_RAW16 data types are accepted !"/>
+                        </validation>
+                    </bool>
+
+                    <!-- object Csi2VcAuxiliaryDataStreamType  -->
+                    <dynamic_enum id="Csi2VcAuxiliaryDataStreamType" label="Data Stream Drop Schema" items="toArray(`CSI2_DATA_TYPE_AUX_0_NO_DROP`,
+                                                                                                  `CSI2_DATA_TYPE_AUX_0_DR_1OF2`,
+                                                                                                  `CSI2_DATA_TYPE_AUX_0_DR_3OF4`,
+                                                                                                  `CSI2_DATA_TYPE_AUX_1_NO_DROP`)"
+                                   available="get(system::getParent($this,1),0).getValue()">
+                        <description><![CDATA[<html>Auxiliary Data input stream split/drop type. Please check the Reference Manual to understand which is the correct usage you need. </html>]]>
+                        </description>
+                        <options_expr>
+                            <option id="type" expr="`ENUMERATION`"/>
+                            <option id="UUID" expr="`ECUC:daca2411-31e0-493f-8e05-3716f0464317`"/>
+                            <option id="postBuildVariantValue" expr="true"/>
+                            <option id="origin" expr="`NXP`"/>
+                            <option id="symbolicNameValue" expr="false"/>
+                            <option id="defaultValue" expr="`CSI2_DATA_TYPE_AUX_0_NO_DROP`"/>
+                            <option id="scope" expr="`LOCAL`"/>
+                            <option id="valueConfigClass" expr="`POST-BUILD=VARIANT-POST-BUILD;PRE-COMPILE=VARIANT-PRE-COMPILE`"/>
+                        </options_expr>
+                    </dynamic_enum>
+
+                    <!-- object Csi2AuxiliaryDataBufNumLines  -->
+                    <integer id="Csi2AuxiliaryDataBufNumLines" label="Number of Auxiliary Data Lines in the Memory Buffer" type="uint32_t" min_expr="1"  max_expr="1000"
+                            available="get(system::getParent($this,1),0).getValue()">
+                        <description><![CDATA[<html>The number of the lines available in the memory buffer for Auxiliary Data. It can differ from the number of lines for the radar data. </html>]]>
+                        </description>
+                        <options_expr>
+                            <option id="type" expr="`INTEGER`"/>
+                            <option id="UUID" expr="`ECUC:89dc979d-14a5-4550-b3a3-ee44747d6f11`"/>
+                            <option id="postBuildVariantValue" expr="false"/>
+                            <option id="SYNC_VALUE"/>
+                            <option id="origin" expr="`AUTOSAR_ECUC`"/>
+                            <option id="symbolicNameValue" expr="true"/>
+                            <option id="defaultValue" expr="1"/>
+                            <option id="scope" expr="`LOCAL`"/>
+                            <option id="valueConfigClass" expr="`PRE-COMPILE=VARIANT-POST-BUILD;PRE-COMPILE=VARIANT-PRE-COMPILE`"/>
+                        </options_expr>
+                    </integer>
+
+                    <!-- object Csi2VcAuxiliaryDataBufLineLen  -->
+                    <integer id="Csi2VcAuxiliaryDataBufLineLen" label="The Length of a Auxiliary Data Buffer Line" type="uint32_t" min_expr="1"  max_expr="32000"
+                            available="get(system::getParent($this,1),0).getValue()">
+                        <description><![CDATA[<html>The length of a memory buffer line.
+                                For Auxiliary Data, the effective necessary buffer data length must be the same as for teh radar data, applying the drop data schema. </html>]]>
+                        </description>
+                        <options_expr>
+                            <option id="type" expr="`INTEGER`"/>
+                            <option id="UUID" expr="`ECUC:89dc979d-14a5-4550-b3a3-ee44747d6f11`"/>
+                            <option id="postBuildVariantValue" expr="false"/>
+                            <option id="SYNC_VALUE"/>
+                            <option id="origin" expr="`AUTOSAR_ECUC`"/>
+                            <option id="symbolicNameValue" expr="true"/>
+                            <option id="defaultValue" expr="64"/>
+                            <option id="scope" expr="`LOCAL`"/>
+                            <option id="valueConfigClass" expr="`PRE-COMPILE=VARIANT-POST-BUILD;PRE-COMPILE=VARIANT-PRE-COMPILE`"/>
+                        </options_expr>
+                    </integer>
+
+                    <!-- object Csi2VcAuxDataBufMemPointer  -->
+                    <string id="Csi2VcAuxDataBufMemPointer" label="The Symbolic Name of the Buffer Pointer"
+                                available="get(system::getParent($this,1),0).getValue()">
+                        <description><![CDATA[<html>The name of the pointer which is initialized with the start memory address of the Metadata buffer data.
+                                                            As C code, if the specified name is 'pBufferData', it must be defined like :
+                                                            uint8_t *pBufferData;
+                                                            The {start_memory_address} must be a valid physically address.</html>]]></description>
+                        <validation>
+                            <constraint cond_expr="(($this.getValue() != ``) &amp;&amp; isCIdentifier($this.getValue()))" level="error" description="Name must be a valid C identifier!"/>
+                            <!-- constraint cond_expr="countOccurrences(($parent.getParent(2)), x -&gt; (x.getSetting(`Csi2VcAuxiliaryDataSetup.Csi2VcAuxDataBufMemPointer`).getValue() == $this.getValue())) == 1" level="error" description="Duplicated value&#44; Csi2VcAuxDataBufMemPointer must be unique across all CSI2 units parameters."/ -->
+                        </validation>
+                        <options_expr>
+                            <option id="type" expr="`STRING`"/>
+                            <option id="UUID" expr="`ECUC:2beea917-2bcd-497c-a2ed-c8285559c370`"/>
+                            <option id="origin" expr="`NXP`"/>
+                            <option id="SYNC_VALUE"/>
+                            <option id="postBuildVariantValue" expr="true"/>
+                            <option id="symbolicNameValue" expr="false"/>
+                            <option id="defaultValue" expr="auxDataBufMemPtr"/>
+                            <option id="valueConfigClass" expr="`PRE-COMPILE=VARIANT-POST-BUILD;PRE-COMPILE=VARIANT-PRE-COMPILE`"/>
+                            <option id="multiplicityConfigClass" expr="`PRE-COMPILE=VARIANT-POST-BUILD;PRE-COMPILE=VARIANT-PRE-COMPILE`"/>
+                        </options_expr>
+                    </string>
+
+                </struct>   <!-- Virtual Channel buffer definitions : Csi2VcAuxiliaryDataSetup-->
+
+
+            </struct>   <!-- type structure for CSI2 Virtual Channel setup : Csi2VCParamsType-->
+
+        </user_types>
+        <options_expr>
+            <option id="type" expr="`MODULE-DEF`"/>
+            <option id="path" expr="`/TS_T40D47M10I0R0/Csi2`"/>
+            <option id="UUID" expr="`ECUC:b510368b-ff12-4d58-aaad-a568c1cb3e3b`"/>
+            <option id="adminData" expr="`4.7.0;AUTOSAR;2014-10-31`"/>
+            <option id="lowerMultiplicity" expr="0"/>
+            <option id="upperMultiplicity" expr="1"/>
+            <option id="postBuildVariantSupport" expr="true"/>
+            <option id="supportedConfigVariants" expr="`VARIANT-POST-BUILD;VARIANT-PRE-COMPILE`"/>
+        </options_expr>
+    </config_set>
+    <options_expr>
+        <option id="type" expr="`AR-PACKAGE`"/>
+        <option id="path" expr="`TS_T40D47M10I0R0`"/>
+        <option id="UUID" expr="`ECUC:f7df7962-be27-40e8-8f74-bbc5c1a39133`"/>
+        <option id="ecucDefinitionCollection" expr="`ECUC:b11d9356-6af9-4d50-ab1b-17c7180096f1;Csi2_EcuParameterDefinition`"/>
+    </options_expr>
+</component:config_component>

@@ -1,0 +1,363 @@
+/**************************************************************************************************
+ *
+ *
+ * Copyright 2021 NXP
+ *
+ *****************************************************************************
+ *
+ * NXP Confidential and Proprietary. This software is owned or controlled by NXP and
+ * may only be used strictly in accordance with the applicable license terms.  By
+ * expressly accepting such terms or by downloading, installing, activating and/or
+ * otherwise using the software, you are agreeing that you have read, and that you
+ * agree to comply with and are bound by, such license terms.  If you do not agree to
+ * be bound by the applicable license terms, then you may not retain, install, activate or
+ * otherwise use the software.
+ *
+ **************************************************************************************************/
+
+/** @cond */
+/*==================================================================================================
+ *                                        INCLUDE FILES
+ *==================================================================================================*/
+ .include "oram.inc"                    /* include ORAM header file */
+ .include "tram.inc"                    /* include TRAM header file */
+ .include "wr.inc"                      /* include WR header file */
+ .include "spt_kernel_internals.inc"    /* include local defines */
+
+/*==================================================================================================
+ *                                          SECTION
+ *==================================================================================================*/
+ .section .RsdkSpt3 , "ax"   /* memory section where to store SPT code */
+
+/*==================================================================================================
+ *                                      LOCAL CONSTANTS
+ *==================================================================================================*/
+ .set SAMPLES_PER_CHIRP,           512
+ .set CHIRPS_PER_FRAME,            128
+ .set BYTES_REAL_RDM_SAMPLE,       2
+ .set BYTES_TAGGED_DATA,           4
+ .set BYTES_BITFIELD_WORD32_DATA,  4
+ .set DOPPLER_BINS_CHUNK,          8
+ .set RANGE_BINS,                  (SAMPLES_PER_CHIRP >> 1)
+ .set THRL_SRAM_SLICES,            (RANGE_BINS >> 2)
+ .set DOPPLER_BIN_BITFIELD_DATA,   (RANGE_BINS >> 5)
+ .set DOPPLER_8BINS_BITFIELD_DATA, (8*DOPPLER_BIN_BITFIELD_DATA)
+ .set THRESHOLD_ADDR,              (OR_4_0_0)
+
+/** @endcond */
+/*==================================================================================================
+ *                                      GLOBAL FUNCTIONS
+ *==================================================================================================*/
+/*================================================================================================*/
+/**
+* @addtogroup spt_kernels_api_func
+* @{
+*
+* @fn             void *RsdkSptPeakSearch512smp128crp();
+* @brief          Function for Peak Search, 128 chirps (doppler bins), 512 sample/chirp (256 range bins).
+* @details        Compute Peaks, storing results in SRAM as packed bitfields, to be used togheter with
+*                 Radar Data Cube by more advanced algorithms.
+*
+* @param[in]      WR_1: 24bit(RE): 0 \n
+*                       24bit(IM): Offset(restricted to 24bit value!) of the INPUT buffer(Range-Doppler Matrix),
+*                       relative to SRAM start address, @ref RSDK_SPT_OTHER_BASE_ADDR "RSDK_SPT_OTHER_BASE_ADDR".
+* @verbatim
+*                 INPUT Memory layout:
+*                 SRAM, 16 bit real Log2 Mag2 format
+*                 63:48           47:32           31:16           15:0
+*                 R0_D0_MAG       R0_D1_MAG       R0_D2_MAG       R0_D3_MAG
+*                 |               |               |               |
+*                 R0_D124_MAG     R0_D125_MAG     R0_D126_MAG     R0_D127_MAG
+*                 R1_D0_MAG       R1_D1_MAG       R1_D2_MAG       R1_D3_MAG
+*                 |               |               |               |
+*                 R1_D124_MAG     R1_D125_MAG     R1_D126_MAG     R1_D127_MAG
+*                 |               |               |               |
+*                 |               |               |               |
+*                 |               |               |               |
+*                 |               |               |               |
+*                 |               |               |               |
+*                 R255_D0_MAG     R255_D1_MAG     R255_D2_MAG     R255_D3_MAG
+*                 |               |               |               |
+*                 R255_D124_MAG   R255_D125_MAG   R255_D126_MAG   R255_D127_MAG
+* @endverbatim
+*
+* @param[in]      WR_2: 24bit(RE): 0 \n
+*                       24bit(IM): Offset(restricted to 24bit value!) of the Threshold buffer, log2 format,
+*                       relative to SRAM start address @ref RSDK_SPT_OTHER_BASE_ADDR "RSDK_SPT_OTHER_BASE_ADDR".
+* @verbatim
+*                 Threshold Memory layout:
+*                 SRAM, 16bit log2 format
+*                 63:48           47:32           31:16           15:0
+*                 Thr_RangeBin0   Thr_RangeBin1   Thr_RangeBin2   Thr_RangeBin3
+*                 Thr_RangeBin4   Thr_RangeBin5   Thr_RangeBin6   Thr_RangeBin7
+*                 |               |               |               |
+*                 |               |               |               |
+*                 |               |               |               |
+*                 Thr_RangeBin252 Thr_RangeBin253 Thr_RangeBin254 Thr_RangeBin255
+* @endverbatim
+*
+* @param[out]     WR_3: 24bit(RE): 0 \n
+*                       24bit(IM): Offset(restricted to 24bit value!) of the SCRATCH buffer(data not needed after exiting the kernel),
+*                       relative to SRAM start address @ref RSDK_SPT_OTHER_BASE_ADDR "RSDK_SPT_OTHER_BASE_ADDR".
+*
+* @param[out]     WR_4: 24bit(RE): 0 \n
+*                       24bit(IM): Offset(restricted to 24bit value!) of the OUTPUT buffer(bitfiels with peaks postions),
+*                       relative to SRAM start address, @ref RSDK_SPT_OTHER_BASE_ADDR "RSDK_SPT_OTHER_BASE_ADDR".
+* @verbatim
+*                 OUTPUT Memory layout (BIG ENDIAN representation):
+*                 SRAM, bitfield, P<n> = bit 1(peak), bit 0(non peak)
+*            0x0  P31P30......P17P16  P15P14........P1P0
+*            0x4  P63P62......P49P48  P47P46......P33P32
+*            0x8  P95P94......P81P80  P79P78......P65P64
+*            0xC  P127P126..P113P112  P111P110....P97P96
+*           0x10  P159P158..P145P144  P143P142..P129P128
+*           0x14  P191P190..P177P176  P175P174..P161P160
+*           0x18  P223P222..P209P208  P207P206..P193P192
+*           0x1C  P255P254..P241P240  P239P238..P225P224 -> chirp 0
+*                 -------------------------------------------------
+*                 P31P30......P17P16  P15P14........P1P0
+*                 P63P62......P49P48  P47P46......P33P32
+*                 P95P94......P81P80  P79P78......P65P64
+*                 P127P126..P113P112  P111P110....P97P96
+*                 P159P158..P145P144  P143P142..P129P128
+*                 P191P190..P177P176  P175P174..P161P160
+*                 P223P222..P209P208  P207P206..P193P192
+*                 P255P254..P241P240  P239P238..P225P224 -> chirp 1
+*                 -------------------------------------------------
+*                 |                   |
+*                 |                   |
+*                 |                   |
+*                 -------------------------------------------------
+*                 P31P30......P17P16  P15P14........P1P0
+*                 P63P62......P49P48  P47P46......P33P32
+*                 P95P94......P81P80  P79P78......P65P64
+*                 P127P126..P113P112  P111P110....P97P96
+*                 P159P158..P145P144  P143P142..P129P128
+*                 P191P190..P177P176  P175P174..P161P160
+*                 P223P222..P209P208  P207P206..P193P192
+*                 P255P254..P241P240  P239P238..P225P224 -> chirp 127
+*                 -------------------------------------------------
+* @endverbatim
+*
+*
+* @return         WR_0: No value returned.
+* @retval         No value returned.
+*
+* @pre            N/A.
+*
+* @note           The current implementation is ONLY to be used in combination with 512 Range FFT and 128 Doppler FFT. \n
+*                 The input buffer MUST NOT be reused for either scratch or peaks output. \n
+*                 All buffers MUST be 8 bytes aligned.
+*
+* @}*/
+/*================================================================================================*/
+/** @cond */
+ .global RsdkSptPeakSearch512smp128crp
+ .global RsdkSptPeakSearch512smp128crp_size
+
+RsdkSptPeakSearch512smp128crp:
+    /*=========================================================================
+     * Kernel watermarking instruction without side-effects. WR_0 can be ovewritten
+     * with the output parameter, according to the SPT calling convention
+     *=========================================================================*/
+    set #RSDK_SPT_KERNEL_WATERMARK, WR_0
+
+/*=========================================================================
+ * API parameter passing
+ *=========================================================================*/
+    /*=========================================================================
+     * INPUT
+     *=========================================================================
+     * WR_11: 24bit(RE): OPRAM address where to put range-doppler matrix
+     *        24bit(IM): SRAM INPUT range-doppler matrix buffer address
+     * WR_13: 24bit(RE): no adder for OPRAM address
+     *        24bit(IM): SRAM offset for the results of the next range bin
+     * WR_22: 24bit(RE): OPRAM address where to put threshold for each range bin
+     *        24bit(IM): SRAM Threshold buffer address offset
+     *=========================================================================*/
+    add .noshift .mod24 WR_1, #(OR_2_0_0), WR_11
+    set #(((CHIRPS_PER_FRAME) * BYTES_REAL_RDM_SAMPLE) << 24), WR_13
+    add .noshift .mod24 WR_2, #(THRESHOLD_ADDR), WR_22
+
+    /*=========================================================================
+     * OUTPUT - SCRATCH
+     *=========================================================================
+     * WR_16: 24bit(RE): OPRAM address where to get the tagged data after max on range bin
+     *        24bit(IM): SRAM SCRATCH buffer address offset
+     * WR_17: 24bit(RE): no adder for OPRAM address
+     *        24bit(IM): SRAM offset for the results of the next range bin
+     *=========================================================================*/
+    add .noshift .mod24 WR_3, #(OR_1_0_0), WR_16
+    set #((CHIRPS_PER_FRAME * BYTES_TAGGED_DATA) << 24), WR_17
+
+/*=========================================================================
+ * PEAK SEARCH SECTION
+ *=========================================================================*/
+    /*=========================================================================
+     * PDMA: transfer threshold buffer into Twiddle RAM
+     *=========================================================================*/
+    pdma.ind .signext .16real .sysram2opram .sync .notrace, THRL_SRAM_SLICES, RSDK_SPT_OTHER_BASE_ADDR, WR_22, 0x0, 0x1, 0x0, 0x1
+
+    /*=========================================================================
+     * WR_24: 24bit(RE): WR to store the threshold value for each range bin
+     *        24bit(IM): start address of the OPRAM from where to take the thresholds
+     * WR_25: 24bit(RE): no inc for WR, same WR for all thresholds
+     *        24bit(IM): inc the OPRAM address
+     *=========================================================================*/
+    set #(WR_23 | (THRESHOLD_ADDR << 24)), WR_24
+    set #(0x1 << 24), WR_25
+
+    /*=========================================================================
+     * GET: take the threshold for first range bin and place it in WR_23
+     *=========================================================================*/
+    get.ind WR_24
+
+    /*=========================================================================
+     * LOOP: loop #count is number of range bins
+     *=========================================================================*/
+    loop #(RANGE_BINS)
+
+        /*=======================================================================
+         * PDMA: copy the range doppler matrix data to opram, CHIRPS_PER_FRAME/4 SRAM slices
+         *=========================================================================*/
+        pdma.ind .signext .16real .sysram2opram .sync .notrace, CHIRPS_PER_FRAME>>2, RSDK_SPT_OTHER_BASE_ADDR, WR_11, 0x0, 0x1, 0x0, 0x1
+
+        /*=========================================================================
+         * MAXS with output tagging: local maxima on range bin, no IN/OUT packing
+         * no cyclic extention search, TRAM address for threshold: WR_23
+         *=========================================================================*/
+        maxs.lmth .no_maxsn .log2 .no_preproc .in_24real .tag .no_tag_in .no_cyc_ext .gt_thld, CHIRPS_PER_FRAME, OR_2_0_0, OR_1_0_0, 0x1, 0x1, WR_23
+
+        /*=========================================================================
+         * PDMA: copy the range bin tagged data to the scratch memory (SRAM)
+         *=========================================================================*/
+        pdma.ind .signext .24real .opram2sysram .async .notrace, CHIRPS_PER_FRAME, RSDK_SPT_OTHER_BASE_ADDR, WR_16, 0x0, 0x1, 0x0, 0x1
+
+        /*=========================================================================
+         * ADD: increment SRAM offset to next range bin
+         *=========================================================================*/
+        add .noshift .mod24 WR_11, WR_13, WR_11
+
+        /*=========================================================================
+         * ADD: increment SCRATCH SRAM offset to write next tagged range bin of the RDM
+         *=========================================================================*/
+        add .noshift .mod24 WR_16, WR_17, WR_16
+
+        /*=========================================================================
+         * ADD: increment TRAM addres to take next range bin threshold
+         *=========================================================================*/
+        add .noshift .mod24 WR_24, WR_25, WR_24
+
+        /*=========================================================================
+         * GET: take the next threshold place it in WR_23
+         *=========================================================================*/
+        get.ind WR_24
+
+    /*=========================================================================
+     * NEXT: end of the loop
+     *=========================================================================*/
+    next
+
+    /*=========================================================================
+     * INPUT - SCRATCH
+     *=========================================================================
+     * WR_16: 24bit(RE): OPRAM address where to put the tagged data, 8 doppler bins(8k..8k+7)
+     *        24bit(IM): SRAM SCRATCH buffer address offset, 8 doppler bins
+     * WR_17: 24bit(RE): OPRAM address where to put the tagged data, 8 doppler bins (8k+8..8k+15)
+     *        24bit(IM): SRAM SCRATCH buffer address offset, 8 doppler bins
+     * WR_18: 24bit(RE): no adder for OPRAM address
+     *        24bit(IM): SRAM offset for the next 2*8 doppler bins
+     *=========================================================================*/
+    add .noshift .mod24 WR_3, #(OR_0_0_0), WR_16
+    add .noshift .mod24 WR_3, #(OR_1_0_0 | (((DOPPLER_BINS_CHUNK * BYTES_TAGGED_DATA) << 24))), WR_17
+    set #((2 * DOPPLER_BINS_CHUNK * BYTES_TAGGED_DATA) << 24), WR_18
+
+    /*=========================================================================
+     * OUTPUT - PEAKS
+     *=========================================================================
+     * WR_19: 24bit(RE): OPRAM address where to get peak list(bitfield format) data after max on doppler bin
+     *        24bit(IM): SRAM OUTPUT buffer(bitfield format) address offset(doppler bins: 8k..8k+7)
+     * WR_20: 24bit(RE): OPRAM address where to get peak list(bitfield format) data after max on doppler bin
+     *        24bit(IM): SRAM OUTPUT buffer(bitfield format) address offset(doppler bins: 8k+8..8k+15)
+     * WR_21: 24bit(RE): no adder for OPRAM address
+     *        24bit(IM): SRAM offset for the results of the next 2*8 doppler bins
+     *=========================================================================*/
+    add .noshift .mod24 WR_4, #(OR_0_0_0), WR_19
+    add .noshift .mod24 WR_4, #(OR_1_0_0 | (((DOPPLER_8BINS_BITFIELD_DATA * BYTES_BITFIELD_WORD32_DATA) << 24))), WR_20
+    set #((2 * DOPPLER_8BINS_BITFIELD_DATA * BYTES_BITFIELD_WORD32_DATA) << 24), WR_21
+
+    /*=========================================================================
+     * LOOP: loop #count is number of chirps/16(16 doppler bins proccessed each iteration)
+     *=========================================================================*/
+    loop #(CHIRPS_PER_FRAME>>4)
+
+        /*=========================================================================
+         * PDMA: transfer tagged data into OPRAM, 8 doppler bins(0-7/8-15),
+         * 256 tagged data per bin, SRAM skip addr 60 (128/2 - 4), continous addr 4
+         *=========================================================================*/
+        pdma.ind .signext .24real .sysram2opram  .sync .notrace, DOPPLER_BINS_CHUNK*RANGE_BINS>>1, RSDK_SPT_OTHER_BASE_ADDR, WR_16, 0x0, 0x1, ((CHIRPS_PER_FRAME>>1) - 4), 0x4
+        pdma.ind .signext .24real .sysram2opram .async .notrace, DOPPLER_BINS_CHUNK*RANGE_BINS>>1, RSDK_SPT_OTHER_BASE_ADDR, WR_17, 0x0, 0x1, ((CHIRPS_PER_FRAME>>1) - 4), 0x4
+
+        /*=========================================================================
+         * COPY 8x8 transpose 8 doppler bins * 256 tagged data
+         *=========================================================================*/
+        copy.trans DOPPLER_BINS_CHUNK*RANGE_BINS, OR_0_0_0, OR_2_0_0, 0x1, 0x1, 0x8, 0x8
+
+        /*=========================================================================
+         * REPEAT + MAXS with packed bitfield output: local maxima on 0..7 doppler bins(tagged input)
+         * src_adr skip 8, dst_adr inc 1, 8 word32 packed data
+         *=========================================================================*/
+        repeat 8, MEM_SLICES, DOPPLER_BIN_BITFIELD_DATA, 0x0, 0x0
+        maxs.lm .no_maxsn .log2 .no_preproc .in_24real .16bits .tag_in .no_cyc_ext, RANGE_BINS, OR_2_0_0, OR_0_0_0, 0x8, 0x1
+
+        /*=========================================================================
+         * PDMA: transfer maxima data into SRAM, 8 doppler bins(0..7)
+         * packed bitfield output data, 8*256/32 = 64 word32 (32packed bits per OPRAM slice)
+         *=========================================================================*/
+        pdma.ind .zeropad .16cmplx .opram2sysram .async .notrace, DOPPLER_BINS_CHUNK*RANGE_BINS>>5, RSDK_SPT_OTHER_BASE_ADDR, WR_19, 0x0, 0x1, 0x0, 0x1
+
+        /*=========================================================================
+         * COPY 8x8 transpose 8 doppler bins * 256 tagged data
+         *=========================================================================*/
+        copy.trans DOPPLER_BINS_CHUNK*RANGE_BINS, OR_1_0_0, OR_3_0_0, 0x1, 0x1, 0x8, 0x8
+
+        /*=========================================================================
+         * REPEAT + MAXS with packed bitfield output: local maxima on 8..15 doppler bins(tagged input)
+         * src_adr skip 8, dst_adr inc 1, 8 word32 packed data
+         *=========================================================================*/
+        repeat 8, MEM_SLICES, DOPPLER_BIN_BITFIELD_DATA, 0x0, 0x0
+        maxs.lm .no_maxsn .log2 .no_preproc .in_24real .16bits .tag_in .no_cyc_ext, RANGE_BINS, OR_3_0_0, OR_1_0_0, 0x8, 0x1
+
+        /*=========================================================================
+         * PDMA: transfer maxima data into SRAM, 8 doppler bins(8..15)
+         * packed bitfield output data, 8*256/32 = 64 word32 (32packed bits per OPRAM slice)
+         *=========================================================================*/
+        pdma.ind .zeropad .16cmplx .opram2sysram .async .notrace, DOPPLER_BINS_CHUNK*RANGE_BINS>>5, RSDK_SPT_OTHER_BASE_ADDR, WR_20, 0x0, 0x1, 0x0, 0x1
+
+        /*=========================================================================
+         * ADD: increment the SRAM address to next (8k..8k+7) or (8k+8..8k+15) doppler bins
+         *=========================================================================*/
+        add .noshift .mod24 WR_16, WR_18, WR_16
+        add .noshift .mod24 WR_17, WR_18, WR_17
+
+        /*=========================================================================
+         * ADD: increment the SRAM address to write the next (8k..8k+7) or (8k+8..8k+15) packed bitfield output
+         *=========================================================================*/
+        add .noshift .mod24 WR_19, WR_21, WR_19
+        add .noshift .mod24 WR_20, WR_21, WR_20
+
+    /*=========================================================================
+     * NEXT: end of the loop
+     *=========================================================================*/
+    next
+
+/*=========================================================================
+ * STOP: end of Peak Search program
+ *=========================================================================*/
+ stop
+
+ .set RsdkSptPeakSearch512smp128crp_size, .-RsdkSptPeakSearch512smp128crp
+/*******************************************************************************
+ * EOF
+ ******************************************************************************/
+/** @endcond */

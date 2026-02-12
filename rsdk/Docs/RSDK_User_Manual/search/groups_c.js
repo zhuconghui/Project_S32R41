@@ -1,0 +1,27 @@
+var searchData=
+[
+  ['reciprocal_2c_20rcp_2c_201_2fx_0',['Reciprocal, rcp, 1/x',['../group__c__functions__model__rcp.html',1,'']]],
+  ['reorder_20bit_2dreverse_1',['Reorder bit-reverse',['../group__c__functions__model__fft__br.html',1,'']]],
+  ['rfe_20abstract_202_2e0_2',['RFE Abstract 2.0',['../group__rfe__abstraction.html',1,'']]],
+  ['rfe_20abstract_202_2e0_20_2d_20debug_20interface_3',['RFE Abstract 2.0 - Debug Interface',['../group__rsdk__rfe__hw__api__dbg.html',1,'']]],
+  ['rfe_20abstract_202_2e0_20_2d_20firmware_20constants_4',['RFE Abstract 2.0 - Firmware Constants',['../group__rsdk__rfe__api__fsm__const.html',1,'']]],
+  ['rfe_20abstract_202_2e0_20_2d_20firmware_20interface_5',['RFE Abstract 2.0 - Firmware Interface',['../group__rsdk__rfe__api__fsm__api.html',1,'']]],
+  ['rfe_20abstract_202_2e0_20_2d_20front_2dend_20configuration_20structure_20_3a_20blob_6',['RFE Abstract 2.0 - Front-End configuration structure : BLOB',['../group__rsdk__rfe__blob.html',1,'']]],
+  ['rfe_20abstract_202_2e0_20_2d_20gpio_20interface_7',['RFE Abstract 2.0 - GPIO Interface',['../group__rsdk__rfe__hw__api__gpio.html',1,'']]],
+  ['rfe_20abstract_202_2e0_20_2d_20interrupt_20interface_8',['RFE Abstract 2.0 - Interrupt Interface',['../group__rsdk__rfe__hw__api__irq.html',1,'']]],
+  ['rfe_20abstract_202_2e0_20_2d_20ipc_20interface_9',['RFE Abstract 2.0 - IPC Interface',['../group__rsdk__rfe__ipc__api__interface.html',1,'']]],
+  ['rfe_20abstract_202_2e0_20_2d_20low_20level_20constants_10',['RFE Abstract 2.0 - Low Level Constants',['../group__rsdk__rfe__const.html',1,'']]],
+  ['rfe_20abstract_202_2e0_20_2d_20low_20level_20interface_11',['RFE Abstract 2.0 - Low Level Interface',['../group__rsdk__rfe__interface.html',1,'']]],
+  ['rfe_20abstract_202_2e0_20_2d_20peripheral_20access_20interface_12',['RFE Abstract 2.0 - Peripheral Access Interface',['../group__rsdk__rfe__hw.html',1,'']]],
+  ['rfe_20abstract_202_2e0_20_2d_20spi_20interface_13',['RFE Abstract 2.0 - SPI Interface',['../group__rsdk__rfe__hw__api__spi.html',1,'']]],
+  ['rfe_20abstract_202_2e0_20_2d_20timers_20interface_14',['RFE Abstract 2.0 - Timers Interface',['../group__rsdk__rfe__hw__api__timers.html',1,'']]],
+  ['rfe_20abstract_202_2e0_20_2d_20user_20guide_15',['RFE Abstract 2.0 - User Guide',['../group__rfe__abstraction__ug.html',1,'']]],
+  ['rfe_20abstract_202_2e0_20api_16',['RFE Abstract 2.0 API',['../group__rfe__abstraction__api.html',1,'']]],
+  ['rfe_20abstract_202_2e0_20blob_20_2d_20constants_17',['RFE Abstract 2.0 BLOB - Constants',['../group__rsdk__rfe__blob__const.html',1,'']]],
+  ['rfe_20abstract_202_2e0_20blob_20_2d_20low_20level_20interface_18',['RFE Abstract 2.0 BLOB - Low Level Interface',['../group__rsdk__rfe__blob__interface.html',1,'']]],
+  ['rfe_20abstract_202_2e0_20constants_19',['RFE Abstract 2.0 Constants',['../group__rsdk__rfe__api__const.html',1,'']]],
+  ['rfe_20abstract_202_2e0_20external_20software_20dependencies_20',['RFE Abstract 2.0 External Software Dependencies',['../group__rfe__abstraction__req__api.html',1,'']]],
+  ['rfe_20abstract_202_2e0_20firmware_20api_21',['RFE Abstract 2.0 Firmware API',['../group__rsdk__rfe__api__fsm.html',1,'']]],
+  ['rfe_20abstract_202_2e0_20interface_22',['RFE Abstract 2.0 Interface',['../group__rsdk__rfe__api__interface.html',1,'']]],
+  ['rsqrt_23',['RSqrt',['../group__c__functions__model__rsqrt.html',1,'']]]
+];

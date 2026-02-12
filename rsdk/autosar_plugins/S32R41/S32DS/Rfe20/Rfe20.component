@@ -1,0 +1,309 @@
+<?xml version="1.0" encoding= "UTF-8" ?>
+<component:config_component id="rfe20" label="rfe20" global_only="false" xsi:schemaLocation="http://swtools.freescale.net/XSD/component/1.0 http://swtools.freescale.net/XSD/component/1.0/component-8.0.xsd" xmlns:component="http://swtools.freescale.net/XSD/component/1.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" category="driver" max_instances="1" >
+
+<sw_comp_ref name="platform.driver.rfe20" version="0.8.10"/>
+
+    <description>Rfe20 Driver Configuration</description>
+    <mode id="ip" label="RFE20 Module" available="true">
+        <description>Rfe20 Driver Module Name, not used</description>
+        <config_set_refs>
+            <config_set_ref>Rfe20</config_set_ref>
+        </config_set_refs>
+    </mode>
+
+
+    <config_set id="Rfe20" label="RFE20" public="true" options="ShowContentAs=Tabs;UI_LABEL_HIDDEN;UI_BORDER_HIDDEN">
+        <description>Configuration of the Rfe20 module.</description>
+        <quick_selections>
+            <quick_selection id="Rfe20Default" label="Default Values" available="true">
+                <set id="Name">Rfe20</set>
+
+             </quick_selection>
+            <default>Default</default>
+        </quick_selections>
+
+        <settings>
+            <variable value="`../Rfe20/rfe20_codegenerator.js`" id="codegen_file"></variable>
+            <variable value="`Rfe20_CodeGenerator`" id="codegen_class"></variable>
+            <variable value="`true`" id="generate_templates"></variable>
+            <variable value="toArray(`RFE20`)" id="used_peripherals" />
+            <variable value="$this.getMode()" id="mode"/>
+            <variable value="$this" id="rootNode"/>
+            <variable value="false" id="DebugMode"></variable>
+
+            <struct id="Rfe20GeneralConfiguration" label="Compile Parameters">
+                <description>
+                    This container contains the global configuration parameters of the RadarSDK RFE20 driver.
+                </description>
+                <quick_selections>
+                    <quick_selection id="Rfe20GeneralConfigDefault" label="Default Values" available="true">
+                        <set id="Rfe20DevErrorDetect">false</set>
+                        <set id="Rfe20StopAfterErrorReport">true</set>
+                        <set id="Rfe20SingleThreadUsed">true</set>
+                        <set id="Rfe20VersionInfo">false</set>
+
+                    </quick_selection>
+                    <default>Default</default>
+                </quick_selections>
+
+                <info id="DebugInfo" label="Debug Info" available="($configSet.DebugMode.getValue())"
+                    value="$configSet.NumRxLanes.getValue()" >
+                    <description>User defined debug data to be shown.--</description>
+                    <options_expr>
+                        <option id="type" expr="`STRING`"/>
+                        <option id="UUID" expr="`ECUC:dafa241d-31e0-493f-8e05-3716f0464317`"/>
+                        <option id="postBuildVariantValue" expr="true"/>
+                        <option id="origin" expr="`AUTOSAR_ECUC`"/>
+                        <option id="symbolicNameValue" expr="false"/>
+                        <option id="defaultValue" expr="`PORT_PIN_HIGH_Z`"/>
+                        <option id="scope" expr="`LOCAL`"/>
+                        <option id="valueConfigClass" expr="`POST-BUILD=VARIANT-POST-BUILD;PRE-COMPILE=VARIANT-PRE-COMPILE`"/>
+                    </options_expr>
+                </info>
+
+
+                <!-- object Rfe20DevErrorDetect  -->
+                <bool id="Rfe20DevErrorDetect" label="Detect Development Errors" available="system::hasExclusiveOwnership(`RFE20`, $group)">
+                    <description>
+                        <![CDATA[<html>Parameter to enable or disable the errors at development time
+                        <b>TRUE</b> = the development errors will be checked and reported
+                        <b>FALSE</b> = the development errors will not be checked, usually this means the parameters will not be checked for correctness </html> ]]>
+                    </description>
+                    <options_expr>
+                        <!-- option id="type" expr="`BOOL`"/ -->
+                        <option id="UUID" expr="`ECUC:2beea917-2bcd-497c-a2ed-c8285559c370`"/>
+                        <option id="postBuildVariantValue" expr="false"/>
+                        <option id="SYNC_VALUE"/>
+                        <option id="origin" expr="`NXP`"/>
+                        <option id="symbolicNameValue" expr="false"/>
+                        <option id="defaultValue" expr="`false`"/>
+                        <option id="scope" expr="`LOCAL`"/>
+                        <option id="valueConfigClass" expr="`PRE-COMPILE=VARIANT-POST-BUILD;PRE-COMPILE=VARIANT-PRE-COMPILE`"/>
+                        <option id="multiplicityConfigClass" expr="`PRE-COMPILE=VARIANT-POST-BUILD;PRE-COMPILE=VARIANT-PRE-COMPILE`"/>
+                    </options_expr>
+                </bool>
+
+                <!-- object Rfe20StopAfterErrorReport  -->
+                <bool id="Rfe20StopAfterErrorReport" label="Stop After Error Report" available="system::hasExclusiveOwnership(`RFE20`, $group)">
+                    <description>
+                        <![CDATA[<html>Parameter to define the code execution after an error was reported
+                        <b>TRUE</b> = the execution will stop after error was reported, in an endless loop
+                        <b>FALSE</b> = the execution will continue after error reporting</html>]]>
+                    </description>
+                    <options_expr>
+                        <option id="type" expr="`BOOLEAN`"/>
+                        <option id="UUID" expr="`ECUC:2beea917-2bcd-497c-a2ed-c8285559c370`"/>
+                        <option id="postBuildVariantValue" expr="false"/>
+                        <option id="SYNC_VALUE"/>
+                        <option id="origin" expr="`NXP`"/>
+                        <option id="symbolicNameValue" expr="false"/>
+                        <option id="defaultValue" expr="`true`"/>
+                        <option id="scope" expr="`LOCAL`"/>
+                        <option id="valueConfigClass" expr="`PRE-COMPILE=VARIANT-POST-BUILD;PRE-COMPILE=VARIANT-PRE-COMPILE`"/>
+                        <option id="multiplicityConfigClass" expr="`PRE-COMPILE=VARIANT-POST-BUILD;PRE-COMPILE=VARIANT-PRE-COMPILE`"/>
+                    </options_expr>
+                </bool>
+
+                <!-- object Rfe20SingleThreadUsed  -->
+                <bool id="Rfe20SingleThreadUsed" label="A Single Thread is Used" available="system::hasExclusiveOwnership(`RFE20`, $group)">
+                    <description>
+                        <![CDATA[<html>Parameter to specify if the application is using a single or multiple threads to manage Rfe20 driver.
+                        <b>TRUE</b> = single thread used, so no necessary to use exclusive area functions
+                        <b>FALSE</b> = multiple threads used, so is necessary to use exclusive area functions</html>]]>
+                    </description>
+                    <options_expr>
+                        <option id="type" expr="`BOOLEAN`"/>
+                        <option id="UUID" expr="`ECUC:2beea917-2bcd-497c-a2ed-c8285559c370`"/>
+                        <option id="postBuildVariantValue" expr="false"/>
+                        <option id="SYNC_VALUE"/>
+                        <option id="origin" expr="`NXP`"/>
+                        <option id="symbolicNameValue" expr="false"/>
+                        <option id="defaultValue" expr="`true`"/>
+                        <option id="scope" expr="`LOCAL`"/>
+                        <option id="valueConfigClass" expr="`PRE-COMPILE=VARIANT-POST-BUILD;PRE-COMPILE=VARIANT-PRE-COMPILE`"/>
+                        <option id="multiplicityConfigClass" expr="`PRE-COMPILE=VARIANT-POST-BUILD;PRE-COMPILE=VARIANT-PRE-COMPILE`"/>
+                    </options_expr>
+                </bool>
+
+                <!-- object Rfe20VersionInfo  -->
+                <bool id="Rfe20VersionInfo" label="Provide Version Info" available="system::hasExclusiveOwnership(`RFE20`, $group)">
+                    <description>
+                        <![CDATA[<html>Parameter to specify if the Version Info will be available to application.
+                        <b>TRUE</b> = Version Info provided, the function Rfe20_GetVersionInfo is available
+                        <b>FALSE</b> = Version Info not provided</html>]]>
+                    </description>
+                    <options_expr>
+                        <option id="type" expr="`BOOLEAN`"/>
+                        <option id="UUID" expr="`ECUC:2beea917-2bcd-497c-a2ed-c8285559c370`"/>
+                        <option id="postBuildVariantValue" expr="false"/>
+                        <option id="SYNC_VALUE"/>
+                        <option id="origin" expr="`NXP`"/>
+                        <option id="symbolicNameValue" expr="false"/>
+                        <option id="defaultValue" expr="`false`"/>
+                        <option id="scope" expr="`LOCAL`"/>
+                        <option id="valueConfigClass" expr="`PRE-COMPILE=VARIANT-POST-BUILD;PRE-COMPILE=VARIANT-PRE-COMPILE`"/>
+                        <option id="multiplicityConfigClass" expr="`PRE-COMPILE=VARIANT-POST-BUILD;PRE-COMPILE=VARIANT-PRE-COMPILE`"/>
+                    </options_expr>
+                </bool>
+                
+                                <!-- object Rfe20_RfeMode  -->
+                <dynamic_enum id="Rfe20_RfeMode" label="RFE-Fw working mode" items="toArray(`CASCADED`,
+                                                                                                     `STANDALONE`)">
+                    <description><![CDATA[<html> This parameter describe the usage of the connected Radar Front-Ends.
+                        Possible usage:
+                        <b>CASCADED</b>   = the front-ends are cascaded
+                        <b>STANDALONE</b> = the front-ends are not cascaded, but used as standalone</html>]]>
+                    </description>
+                    <options_expr>
+                        <option id="type" expr="`ENUMERATION`"/>
+                        <option id="UUID" expr="`ECUC:daca2411-31e0-493f-8e05-3716f0464317`"/>
+                        <option id="postBuildVariantValue" expr="true"/>
+                        <option id="origin" expr="`NXP`"/>
+                        <option id="symbolicNameValue" expr="false"/>
+                        <option id="defaultValue" expr="`CASCADED`"/>
+                        <option id="scope" expr="`LOCAL`"/>
+                        <option id="valueConfigClass" expr="`POST-BUILD=VARIANT-POST-BUILD;PRE-COMPILE=VARIANT-PRE-COMPILE`"/>
+                    </options_expr>
+                </dynamic_enum>
+                
+                <!-- object Rfe20FeNumber  -->
+                <integer id="Rfe20FeNumber" label="Number of Connected Front-Ends" type="uint32_t" min_expr="2"
+                            max_expr="4">
+                    <description><![CDATA[<html><b>Radar Front End Abstract 2.0</b> - Number of connected Front-Ends. 
+                                    This parameter define the number of connected Front-Ends.
+                                    A minimum value of 2 and a maximum of 4 are accepted.</html>]]>
+                    </description>
+                    <options_expr>
+                        <option id="type" expr="`INTEGER`"/>
+                        <option id="UUID" expr="`ECUC:89dc979d-14a5-4550-b3a3-ee44747d6f11`"/>
+                        <option id="postBuildVariantValue" expr="false"/>
+                        <option id="SYNC_VALUE"/>
+                        <option id="origin" expr="`AUTOSAR_ECUC`"/>
+                        <option id="symbolicNameValue" expr="true"/>
+                        <option id="defaultValue" expr="`2`"/>
+                        <option id="min" expr="2"/>
+                        <option id="max" expr="4"/>
+                        <option id="scope" expr="`LOCAL`"/>
+                        <option id="valueConfigClass" expr="`PRE-COMPILE=VARIANT-POST-BUILD;PRE-COMPILE=VARIANT-PRE-COMPILE`"/>
+                    </options_expr>
+                </integer>
+
+                <!-- object Rfe20FeStateAddress  -->
+                <integer id="Rfe20FeStateAddress" label="Fw Status - Shared Memory Address" type="uint32_t" min_expr="0x30000000"
+                            max_expr="0x40000000">
+                    <description><![CDATA[<html><b>Radar Front End Abstract 2.0</b> - the Shared address between API and Firmware : the location of Front-End Status.
+                                    This parameter define the exact memory address where the Front-End status is saved by the Firmware, to be accessible to the API.</html>]]>
+                    </description>
+                    <options_expr>
+                        <option id="type" expr="`INTEGER`"/>
+                        <option id="UUID" expr="`ECUC:89dc979d-14a5-4550-b3a3-ee44747d6f11`"/>
+                        <option id="postBuildVariantValue" expr="false"/>
+                        <option id="SYNC_VALUE"/>
+                        <option id="origin" expr="`AUTOSAR_ECUC`"/>
+                        <option id="symbolicNameValue" expr="true"/>
+                        <option id="defaultValue" expr="0x343ffff8"/>
+                        <option id="min" expr="0x30000000"/>
+                        <option id="max" expr="0x40000000"/>
+                        <option id="scope" expr="`LOCAL`"/>
+                        <option id="valueConfigClass" expr="`PRE-COMPILE=VARIANT-POST-BUILD;PRE-COMPILE=VARIANT-PRE-COMPILE`"/>
+                    </options_expr>
+                </integer>
+
+                <!-- object Rfe20FePointerAddress  -->
+                <integer id="Rfe20FePointerAddress" label="Data Buffer Pointer Location - Shared Memory Address" type="uint32_t" min_expr="0x30000000"
+                            max_expr="0x40000000">
+                    <description><![CDATA[<html><b>Radar Front End Abstract 2.0</b> - the Shared address between API and Firmware : the location of transfer memory pointer.
+                                    This parameter define the exact memory address where the Firmware will receive the memory buffer address to use for data transfer.
+                                    At interface initialization, this location will be put by API interface with the Shared Memory Buffer address.</html>]]>
+                    </description>
+                    <options_expr>
+                        <option id="type" expr="`INTEGER`"/>
+                        <option id="UUID" expr="`ECUC:89dc979d-14a5-4550-b3a3-ee44747d6f11`"/>
+                        <option id="postBuildVariantValue" expr="false"/>
+                        <option id="SYNC_VALUE"/>
+                        <option id="origin" expr="`AUTOSAR_ECUC`"/>
+                        <option id="symbolicNameValue" expr="true"/>
+                        <option id="defaultValue" expr="0x343ffff8"/>
+                        <option id="min" expr="0x30000000"/>
+                        <option id="max" expr="0x40000000"/>
+                        <option id="scope" expr="`LOCAL`"/>
+                        <option id="valueConfigClass" expr="`PRE-COMPILE=VARIANT-POST-BUILD;PRE-COMPILE=VARIANT-PRE-COMPILE`"/>
+                    </options_expr>
+                </integer>
+
+                <!-- object Rfe20DataTransferBuffer  -->
+                <integer id="Rfe20DataTransferBuffer" label="Data Transfer Buffer Address" type="uint32_t" min_expr="0x30000000"
+                            max_expr="0x40000000">
+                    <description><![CDATA[<html><b>Radar Front End Abstract 2.0</b> - the Data Transfer Buffer
+                                This parameter define the exact memory address where starts the data transfer buffer between API and Firmware.
+                                At interface initialization, this address will be put by API interface in the Data Buffer Pointer Location.
+                                The memory space reserved for data transfer must be at least 544 bytes. It must not be used by any application for other purposes.</html>]]>
+                    </description>
+                    <options_expr>
+                        <option id="type" expr="`INTEGER`"/>
+                        <option id="UUID" expr="`ECUC:89dc979d-14a5-4550-b3a3-ee44747d6f11`"/>
+                        <option id="postBuildVariantValue" expr="false"/>
+                        <option id="SYNC_VALUE"/>
+                        <option id="origin" expr="`AUTOSAR_ECUC`"/>
+                        <option id="symbolicNameValue" expr="true"/>
+                        <option id="defaultValue" expr="0x343ffff8"/>
+                        <option id="min" expr="0x30000000"/>
+                        <option id="max" expr="0x40000000"/>
+                        <option id="scope" expr="`LOCAL`"/>
+                        <option id="valueConfigClass" expr="`PRE-COMPILE=VARIANT-POST-BUILD;PRE-COMPILE=VARIANT-PRE-COMPILE`"/>
+                    </options_expr>
+                </integer>
+
+                <!-- object Rfe20BistBuffer  -->
+                <integer id="Rfe20BistBuffer" label="BIST Buffer Address" type="uint32_t" min_expr="0x30000000"
+                            max_expr="0x40000000">
+                    <description><![CDATA[<html><b>Radar Front End Abstract 2.0</b> - the BIST Buffer
+                                This parameter define the exact memory address where starts the BIST buffer, used by the Firmware to receive the BIST data from the Front-End(s).
+                                This value must be used by the application running on M7_0 core to initialize the CSI2 interface.
+                                The memory space reserved for BIST data transfer must be 128[samples] * 4[channels] * 2[bytes/sample] * N[front-end(s) used] .
+                                The CSI2 setup must be done like this, for TEF82XX front-end BIST data : 
+                                ☛ Virtual Channel 3 
+                                    ☛ RAW12 data type 
+                                    ☛ single data line 
+                                    ☛ 128 samples for line length 
+                                    ☛ 4 (four) real channels 
+                                    ☛ for buffer data pointers :  - this memory address for the first front-end - this memory address + (1024[bytes] * n[follower front-end position, 1...]) for each follower</html>]]>
+                    </description>
+                    <options_expr>
+                        <option id="type" expr="`INTEGER`"/>
+                        <option id="UUID" expr="`ECUC:89dc979d-14a5-4550-b3a3-ee44747d6f11`"/>
+                        <option id="postBuildVariantValue" expr="false"/>
+                        <option id="SYNC_VALUE"/>
+                        <option id="origin" expr="`AUTOSAR_ECUC`"/>
+                        <option id="symbolicNameValue" expr="true"/>
+                        <option id="defaultValue" expr="0x343ffff8"/>
+                        <option id="min" expr="0x30000000"/>
+                        <option id="max" expr="0x40000000"/>
+                        <option id="scope" expr="`LOCAL`"/>
+                        <option id="valueConfigClass" expr="`PRE-COMPILE=VARIANT-POST-BUILD;PRE-COMPILE=VARIANT-PRE-COMPILE`"/>
+                    </options_expr>
+                </integer>
+                
+                
+            </struct>
+
+        </settings>
+
+        <options_expr>
+            <option id="type" expr="`MODULE-DEF`"/>
+            <option id="path" expr="`/TS_T40D47M10I0R0/Rfe20`"/>
+            <option id="UUID" expr="`ECUC:b510368b-ff12-4d58-aaad-a568c1cb3e3b`"/>
+            <option id="adminData" expr="`4.7.0;AUTOSAR;2014-10-31`"/>
+            <option id="lowerMultiplicity" expr="0"/>
+            <option id="upperMultiplicity" expr="1"/>
+            <option id="postBuildVariantSupport" expr="true"/>
+            <option id="supportedConfigVariants" expr="`VARIANT-POST-BUILD;VARIANT-PRE-COMPILE`"/>
+        </options_expr>
+    </config_set>
+    <options_expr>
+        <option id="type" expr="`AR-PACKAGE`"/>
+        <option id="path" expr="`TS_T40D47M10I0R0`"/>
+        <option id="UUID" expr="`ECUC:f7df7962-be27-40e8-8f74-bbc5c1a39133`"/>
+        <option id="ecucDefinitionCollection" expr="`ECUC:b11d9356-6af9-4d50-ab1b-17c7180096f1;Rfe20_EcuParameterDefinition`"/>
+    </options_expr>
+</component:config_component>

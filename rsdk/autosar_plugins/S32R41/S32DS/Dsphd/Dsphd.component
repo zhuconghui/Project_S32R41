@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding= "UTF-8" ?>
+<component:config_component id="Dsphd" label="Dsphd" global_only="false" xsi:schemaLocation="http://swtools.freescale.net/XSD/component/1.0 http://swtools.freescale.net/XSD/component/1.0/component-8.0.xsd" xmlns:component="http://swtools.freescale.net/XSD/component/1.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" category="driver" max_instances="1" >
+
+<sw_comp_ref name="platform.driver.dsphd" version="0.8.10"/>
+
+    <description>DSP Host Driver Configuration</description>
+    <mode id="ip" label="DSP-HD Module" available="true">
+        <description>DSP Host Driver Module Name, not used</description>
+        <config_set_refs>
+            <config_set_ref>Dsphd</config_set_ref>
+        </config_set_refs>
+    </mode>
+
+
+    <config_set id="Dsphd" label="DSP-HD" public="true" options="ShowContentAs=Tabs;UI_LABEL_HIDDEN;UI_BORDER_HIDDEN">
+        <description>Configuration of the Dsphd (DSP Host Driver) module.</description>
+        <quick_selections>
+            <quick_selection id="DsphdDefault" label="Default Values" available="true">
+                <set id="Name">Dsphd</set>
+                <set id="DsphdGeneralConfiguration.DsphdDevErrorDetect">true</set>
+                <set id="DsphdGeneralConfiguration.DsphdDevHaltOnError">false</set>
+                <set id="DsphdGeneralConfiguration.DsphdVersionInfoApi">true</set>
+
+             </quick_selection>
+            <default>Default</default>
+        </quick_selections>
+
+        <settings>
+            <variable value="`../Dsphd/dsphd_codegenerator.js`" id="codegen_file"></variable>
+            <variable value="`Dsphd_CodeGenerator`" id="codegen_class"></variable>
+            <variable value="`true`" id="generate_templates"></variable>
+            <variable value="toArray(`DSP-HD`)" id="used_peripherals" />
+            <variable value="$this.getMode()" id="mode"/>
+            <variable value="$this" id="rootNode"/>
+
+            <struct id="DsphdGeneralConfiguration" label="DSP-HD Parameters">
+                <description>
+                    This container contains the global configuration parameters of the RadarSDK DSP Host Driver.
+                </description>
+                <quick_selections>
+                    <quick_selection id="DsphdGeneralConfigDefault" label="Default Values" available="true">
+                        <set id="DsphdDevErrorDetect">true</set>
+                        <set id="DsphdDevHaltOnError">false</set>
+                        <set id="DsphdVersionInfoApi">true</set>
+
+                    </quick_selection>
+                    <default>Default</default>
+                </quick_selections>
+
+                <!-- object DsphdDevErrorDetect  -->
+                <bool id="DsphdDevErrorDetect" label="Detect Development Errors" available="system::hasExclusiveOwnership(`DSP-HD`, $group)">
+                    <description>
+                        <![CDATA[<html>Parameter to enable or disable the errors at development time
+                        <b>TRUE</b> = the development errors will be checked and reported
+                        <b>FALSE</b> = the development errors will not be checked, usually this means the parameters will not be checked for correctness </html> ]]>
+                    </description>
+                    <options_expr>
+                        <!-- option id="type" expr="`BOOL`"/ -->
+                        <option id="UUID" expr="`ECUC:915d3264-35f2-4df4-8185-002572f63322`"/>
+                        <option id="postBuildVariantValue" expr="false"/>
+                        <option id="SYNC_VALUE"/>
+                        <option id="origin" expr="`NXP`"/>
+                        <option id="symbolicNameValue" expr="false"/>
+                        <option id="defaultValue" expr="`true`"/>
+                        <option id="scope" expr="`LOCAL`"/>
+                        <option id="valueConfigClass" expr="`PRE-COMPILE=VARIANT-POST-BUILD;PRE-COMPILE=VARIANT-PRE-COMPILE`"/>
+                        <option id="multiplicityConfigClass" expr="`PRE-COMPILE=VARIANT-POST-BUILD;PRE-COMPILE=VARIANT-PRE-COMPILE`"/>
+                    </options_expr>
+                </bool>
+
+                <!-- object DsphdDevHaltOnError  -->
+                <bool id="DsphdDevHaltOnError" label="Stop After Error Report" available="system::hasExclusiveOwnership(`DSP-HD`, $group)">
+                    <description>
+                        <![CDATA[<html>Parameter to define the code execution after an error was reported
+                        <b>TRUE</b> = the execution will stop after error was reported, in an endless loop
+                        <b>FALSE</b> = the execution will continue after error reporting</html>]]>
+                    </description>
+                    <validation>
+						<constraint cond_expr="!((system::getParent($this, 1).getSetting(`DsphdDevErrorDetect`).getValue() == false) &amp;&amp; ($this.getValue() == `true`))" level="error" description="DSP-HD development errors must be enabled."/>
+                    </validation>
+                    <options_expr>
+                        <option id="type" expr="`BOOLEAN`"/>
+                        <option id="UUID" expr="`ECUC:197db8bc-0786-4ec9-96f8-6b142d1b8c64`"/>
+                        <option id="postBuildVariantValue" expr="false"/>
+                        <option id="SYNC_VALUE"/>
+                        <option id="origin" expr="`NXP`"/>
+                        <option id="symbolicNameValue" expr="false"/>
+                        <option id="defaultValue" expr="`false`"/>
+                        <option id="scope" expr="`LOCAL`"/>
+                        <option id="valueConfigClass" expr="`PRE-COMPILE=VARIANT-POST-BUILD;PRE-COMPILE=VARIANT-PRE-COMPILE`"/>
+                        <option id="multiplicityConfigClass" expr="`PRE-COMPILE=VARIANT-POST-BUILD;PRE-COMPILE=VARIANT-PRE-COMPILE`"/>
+                    </options_expr>
+                </bool>
+
+                <!-- object DsphdVersionInfo  -->
+                <bool id="DsphdVersionInfoApi" label="Provide Version Info" available="system::hasExclusiveOwnership(`DSP-HD`, $group)">
+                    <description>
+                        <![CDATA[<html>Parameter to specify if the Version Info will be available to application.
+                        <b>TRUE</b> = Version Info provided, the function Dsphd_GetVersionInfo is available
+                        <b>FALSE</b> = Version Info not provided</html>]]>
+                    </description>
+                    <options_expr>
+                        <option id="type" expr="`BOOLEAN`"/>
+                        <option id="UUID" expr="`ECUC:dc1aa9b4-7a2f-4ef9-9e43-9d536ae5c99e`"/>
+                        <option id="postBuildVariantValue" expr="false"/>
+                        <option id="SYNC_VALUE"/>
+                        <option id="origin" expr="`NXP`"/>
+                        <option id="symbolicNameValue" expr="false"/>
+                        <option id="defaultValue" expr="`true`"/>
+                        <option id="scope" expr="`LOCAL`"/>
+                        <option id="valueConfigClass" expr="`PRE-COMPILE=VARIANT-POST-BUILD;PRE-COMPILE=VARIANT-PRE-COMPILE`"/>
+                        <option id="multiplicityConfigClass" expr="`PRE-COMPILE=VARIANT-POST-BUILD;PRE-COMPILE=VARIANT-PRE-COMPILE`"/>
+                    </options_expr>
+                </bool>
+
+            </struct>
+
+        </settings>
+
+        <options_expr>
+            <option id="type" expr="`MODULE-DEF`"/>
+            <option id="path" expr="`/TS_T40D47M10I0R0/Dsphd`"/>
+            <option id="UUID" expr="`ECUC:80cf4636-a2c9-496f-8738-e5202862eef4`"/>
+            <option id="adminData" expr="`4.7.0;AUTOSAR;2014-10-31`"/>
+            <option id="lowerMultiplicity" expr="0"/>
+            <option id="upperMultiplicity" expr="1"/>
+            <option id="postBuildVariantSupport" expr="true"/>
+            <option id="supportedConfigVariants" expr="`VARIANT-POST-BUILD;VARIANT-PRE-COMPILE`"/>
+        </options_expr>
+    </config_set>
+    <options_expr>
+        <option id="type" expr="`AR-PACKAGE`"/>
+        <option id="path" expr="`TS_T40D47M10I0R0`"/>
+        <option id="UUID" expr="`ECUC:1448aecd-0689-46e6-adf5-b7af6c4f9227`"/>
+        <option id="ecucDefinitionCollection" expr="`ECUC:32bd8bc6-a6f0-435d-b21b-0e44c6c9efff;Dsphd_EcuParameterDefinition`"/>
+    </options_expr>
+</component:config_component>

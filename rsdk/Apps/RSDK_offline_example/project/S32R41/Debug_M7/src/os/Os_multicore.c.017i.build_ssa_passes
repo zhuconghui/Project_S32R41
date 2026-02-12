@@ -1,0 +1,56 @@
+OSGetLogicalCoreID ()
+{
+  CoreIdType coreInd;
+  CoreIdType D.5854;
+
+  <bb 2> :
+  coreInd = 0;
+  D.5854 = coreInd;
+
+  <bb 3> :
+<L0>:
+  return D.5854;
+
+}
+
+
+OS_StartNonAutosarCore (CoreIdType coreId, StatusType * status)
+{
+  volatile OSDWORD OSMC_ME_DUMMY;
+  unsigned int vol.0;
+
+  <bb 2> :
+  _1 = (int) coreId;
+  switch (_1) <default: <L2> [INV], case 0: <L0> [INV], case 1: <L1> [INV]>
+
+  <bb 3> :
+<L0>:
+  *status = 0;
+  goto <bb 6>; [INV]
+
+  <bb 4> :
+<L1>:
+  _2 = (unsigned int) coreId;
+  _3 = _2 + 4294967295;
+  _4 = OsCoreStartup[_3];
+  _5 = (unsigned int) _4;
+  OSMC_ME_DUMMY = _5;
+  vol.0 = OSMC_ME_DUMMY;
+  _6 = (int) coreId;
+  _7 = 1 << _6;
+  _8 = (unsigned char) _7;
+  OsStartedCores.1_9 = OsStartedCores;
+  _10 = _8 | OsStartedCores.1_9;
+  OsStartedCores = _10;
+  goto <bb 6>; [INV]
+
+  <bb 5> :
+<L2>:
+  *status = 0;
+
+  <bb 6> :
+  return;
+
+}
+
+

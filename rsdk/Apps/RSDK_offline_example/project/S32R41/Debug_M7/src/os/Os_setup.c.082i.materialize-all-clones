@@ -1,0 +1,102 @@
+OS_ControlIdle (CoreIdType CoreID, IdleModeType IdleMode)
+{
+  StatusType retStatus;
+  StatusType D.5802;
+  StatusType _6;
+
+  <bb 2> :
+  retStatus_2 = 0;
+  if (retStatus_2 == 0)
+    goto <bb 3>; [INV]
+  else
+    goto <bb 4>; [INV]
+
+  <bb 3> :
+  OsIdleMode_ = IdleMode_4(D);
+
+  <bb 4> :
+  _6 = retStatus_2;
+
+  <bb 5> :
+<L2>:
+  return _6;
+
+}
+
+
+OS_GetActiveApplicationMode ()
+{
+  AppModeType D.5798;
+  AppModeType _1;
+
+  <bb 2> :
+  _1 = 0;
+
+  <bb 3> :
+<L0>:
+  return _1;
+
+}
+
+
+OS_ShutdownOS (StatusType error)
+{
+  <bb 2> :
+  OSShutdownOS (error_2(D));
+  return;
+
+}
+
+
+OSShutdownOS (volatile StatusType error)
+{
+  <bb 2> :
+  __asm__ __volatile__("cpsid i");
+  __asm__ __volatile__("dsb");
+  OSPlatformIntcShutdown ();
+
+  <bb 3> :
+  goto <bb 3>; [INV]
+
+}
+
+
+__attribute__((optimize ("O1")))
+StartOS (AppModeType mode)
+{
+  register OSDWORD resultReg;
+  unsigned int OsSchedulerVector1_.0_1;
+
+  <bb 2> [local count: 107374]:
+  __asm__ __volatile__("cpsid i");
+  OsIdleMode_ = 0;
+  OsSuspendLevelAll_ = 0;
+  OSInitializeISR ();
+  OsSchedulerVector1_ = 0;
+  OSInitTasks ();
+  OSFillStacks ();
+  OSInitResources ();
+  __asm__ __volatile__("dsb
+ cpsie i
+");
+  OsSchedulerVector1_.0_1 = OsSchedulerVector1_;
+  __asm__ __volatile__("clz %0, %1" : "=r" resultReg_15 : "r" OsSchedulerVector1_.0_1);
+  if (resultReg_15 != 1)
+    goto <bb 3>; [48.88%]
+  else
+    goto <bb 5>; [51.12%]
+
+  <bb 3> [local count: 52484]:
+  OSTaskForceDispatch ();
+
+  <bb 5> [local count: 107374]:
+
+  <bb 6> [local count: 1073741824]:
+  OSWait ();
+
+  <bb 7> [local count: 1073741824]:
+  goto <bb 6>; [100.00%]
+
+}
+
+

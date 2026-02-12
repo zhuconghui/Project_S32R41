@@ -1,0 +1,145 @@
+Power_Ip_DisableSleepOnExit ()
+{
+  <bb 2> :
+  Power_Ip_CM7_DisableSleepOnExit ();
+  return;
+
+}
+
+
+Power_Ip_EnableSleepOnExit ()
+{
+  <bb 2> :
+  Power_Ip_CM7_EnableSleepOnExit ();
+  return;
+
+}
+
+
+Power_Ip_InstallNotificationsCallback (void (*Power_Ip_ReportErrorsCallbackType) (Power_Ip_ReportErrorType, uint8) ReportErrorsCallback)
+{
+  <bb 2> :
+  Power_Ip_pfReportErrorsCallback = ReportErrorsCallback_2(D);
+  return;
+
+}
+
+
+Power_Ip_Init (const struct Power_Ip_HwIPsConfigType * HwIPsConfigPtr)
+{
+  const struct Power_Ip_MC_RGM_ConfigType * _1;
+  const struct Power_Ip_PMC_ConfigType * _2;
+
+  <bb 2> :
+  _1 = HwIPsConfigPtr_4(D)->McRgmConfigPtr;
+  Power_Ip_MC_RGM_ResetInit (_1);
+  _2 = HwIPsConfigPtr_4(D)->PMCConfigPtr;
+  Power_Ip_PMC_PowerInit (_2);
+  return;
+
+}
+
+
+Power_Ip_GetResetRawValue ()
+{
+  Power_Ip_RawResetType ResetReason;
+  Power_Ip_RawResetType D.6280;
+  Power_Ip_RawResetType _4;
+
+  <bb 2> :
+  ResetReason_3 = Power_Ip_MC_RGM_GetResetRawValue ();
+  _4 = ResetReason_3;
+
+  <bb 3> :
+<L0>:
+  return _4;
+
+}
+
+
+Power_Ip_GetResetReason ()
+{
+  Power_Ip_ResetType ResetReason;
+  Power_Ip_ResetType D.6278;
+  Power_Ip_ResetType _5;
+
+  <bb 2> :
+  ResetReason_1 = 31;
+  ResetReason_4 = Power_Ip_MC_RGM_GetResetReason ();
+  _5 = ResetReason_4;
+
+  <bb 3> :
+<L0>:
+  return _5;
+
+}
+
+
+Power_Ip_SetMode (const struct Power_Ip_ModeConfigType * ModeConfigPtr)
+{
+  const struct Power_Ip_MC_ME_ModeConfigType * _1;
+  const struct Power_Ip_MC_RGM_ModeConfigType * _2;
+  const struct Power_Ip_MC_ME_ModeConfigType * _3;
+  const struct Power_Ip_MC_ME_ModeConfigType * _4;
+  const struct Power_Ip_MC_RGM_ModeConfigType * _5;
+  const struct Power_Ip_MC_ME_ModeConfigType * _6;
+  const struct Power_Ip_MC_ME_ModeConfigType * _7;
+
+  <bb 2> :
+  _1 = ModeConfigPtr_9(D)->McMeModeConfigPtr;
+  Power_Ip_MC_ME_EnablePartitionClock (_1);
+  _2 = ModeConfigPtr_9(D)->McRgmModeConfigPtr;
+  Power_Ip_MC_RGM_EnableResetDomain (_2);
+  _3 = ModeConfigPtr_9(D)->McMeModeConfigPtr;
+  Power_Ip_MC_ME_DisablePartitionOutputSafe (_3);
+  _4 = ModeConfigPtr_9(D)->McMeModeConfigPtr;
+  Power_Ip_MC_ME_ConfigCoreCOFBClock (_4);
+  _5 = ModeConfigPtr_9(D)->McRgmModeConfigPtr;
+  Power_Ip_SetRGMMode (_5);
+  _6 = ModeConfigPtr_9(D)->McMeModeConfigPtr;
+  Power_Ip_MC_ME_DisablePartitionClock (_6);
+  _7 = ModeConfigPtr_9(D)->McMeModeConfigPtr;
+  Power_Ip_MC_ME_EnablePartitionOutputSafe (_7);
+  Power_Ip_HandleSelectedMode (ModeConfigPtr_9(D));
+  return;
+
+}
+
+
+Power_Ip_SetRGMMode (const struct Power_Ip_MC_RGM_ModeConfigType * pRGMConfig)
+{
+  <bb 2> :
+  Power_Ip_MC_RGM_ModeConfig (pRGMConfig_2(D));
+  Power_Ip_MC_RGM_CheckModeConfig (pRGMConfig_2(D));
+  Power_Ip_MC_RGM_DisableResetDomain (pRGMConfig_2(D));
+  return;
+
+}
+
+
+Power_Ip_HandleSelectedMode (const struct Power_Ip_ModeConfigType * ModeConfigPtr)
+{
+  Power_Ip_PowerModeType PowerMode;
+
+  <bb 2> :
+  PowerMode_4 = ModeConfigPtr_3(D)->PowerMode;
+  if (PowerMode_4 == 0)
+    goto <bb 4>; [INV]
+  else
+    goto <bb 3>; [INV]
+
+  <bb 3> :
+  if (PowerMode_4 == 1)
+    goto <bb 4>; [INV]
+  else
+    goto <bb 5>; [INV]
+
+  <bb 4> :
+  Power_Ip_MC_ME_SocTriggerResetEvent (PowerMode_4);
+
+  <bb 5> :
+  return;
+
+}
+
+

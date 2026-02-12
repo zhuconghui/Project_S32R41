@@ -1,0 +1,80 @@
+RsdkPlatformSetup (platformType_t platformType)
+{
+  appStatus_t status;
+  appStatus_t D.11157;
+
+  <bb 2> :
+  status = 0;
+  _1 = (int) platformType;
+  if (_1 == 1)
+    goto <bb 3>; [INV]
+  else
+    goto <bb 4>; [INV]
+
+  <bb 3> :
+<L0>:
+  Rm_Init (&Rm_Config);
+  AppMcuInit ();
+  goto <bb 5>; [INV]
+
+  <bb 4> :
+<L1>:
+  status = 1;
+
+  <bb 5> :
+  D.11157 = status;
+
+  <bb 6> :
+<L3>:
+  return D.11157;
+
+}
+
+
+AppMcuInit ()
+{
+  Std_ReturnType stdStatus;
+
+  <bb 2> :
+  Mcu_Init (0B);
+  stdStatus = Mcu_InitClock (0);
+  _1 = (int) stdStatus;
+  statusCheck ("Mcu_InitClock", _1);
+
+  <bb 3> :
+  _2 = Mcu_GetPllStatus ();
+  if (_2 != 0)
+    goto <bb 3>; [INV]
+  else
+    goto <bb 4>; [INV]
+
+  <bb 4> :
+  stdStatus = Mcu_DistributePllClock ();
+  _3 = (int) stdStatus;
+  statusCheck ("Mcu_DistributePllClock", _3);
+  Mcu_SetMode (0);
+  _4 = Mcu_GetClockFrequency (43);
+  if (_4 != 600000000)
+    goto <bb 5>; [INV]
+  else
+    goto <bb 6>; [INV]
+
+  <bb 5> :
+  DbgPrintMsg ("Clock init error: ACCEL_CLK frequency not set as expected\n");
+
+  <bb 6> :
+  _5 = Mcu_GetClockFrequency (35);
+  if (_5 != 400000000)
+    goto <bb 7>; [INV]
+  else
+    goto <bb 8>; [INV]
+
+  <bb 7> :
+  DbgPrintMsg ("Clock init error: SYS_CLK frequency not set as expected\n");
+
+  <bb 8> :
+  return;
+
+}
+
+

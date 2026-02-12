@@ -1,0 +1,26 @@
+var group__dsp__algos__api__func =
+[
+    [ "RsdkBbe32CaCfar", "group__dsp__algos__api__func.html#gac07b92ded1c9f6fc04130f416dafe1ae", null ],
+    [ "RsdkBbe32CmprSptInit", "group__dsp__algos__api__func.html#ga120cb403c9b414ded0a538f38c631461", null ],
+    [ "RsdkBbe32DecTxps", "group__dsp__algos__api__func.html#gae38a3ee3101c1126f082540a1f116368", null ],
+    [ "RsdkBbe32Doa128", "group__dsp__algos__api__func.html#ga31ff9c959fed4df186232fba26341c02", null ],
+    [ "RsdkBbe32Doa256", "group__dsp__algos__api__func.html#ga957ae0c54f0827ab644fc4387d6301cb", null ],
+    [ "RsdkBbe32EncCp4d", "group__dsp__algos__api__func.html#gab2adbf9dde516d5998b5cc4f0b4420fd", null ],
+    [ "RsdkBbe32EncCp4dFmta", "group__dsp__algos__api__func.html#ga6ee78013f960becfdbc48e0747973207", null ],
+    [ "RsdkBbe32EncCp4dFmtb", "group__dsp__algos__api__func.html#ga3633ce85cc9f88371220e41e2ba67ea1", null ],
+    [ "RsdkBbe32EncFlxSpt34", "group__dsp__algos__api__func.html#ga8a17390c065d55de22d0bcfc0a00e50b", null ],
+    [ "RsdkBbe32EncSeqFixOnebuf", "group__dsp__algos__api__func.html#gaf94033a2d424b3b6c307146b53c58fd7", null ],
+    [ "RsdkBbe32EncSeqFixTwobuf4", "group__dsp__algos__api__func.html#ga57b231b6749682bd27127ca4aafe23ae", null ],
+    [ "RsdkBbe32EncSeqFixTwobuf8", "group__dsp__algos__api__func.html#gae5d794556ea5db94e3dec7e6557f3d75", null ],
+    [ "RsdkBbe32EncSeqFlxOnebuf", "group__dsp__algos__api__func.html#ga7db25d37991b1358882e7cdbe1fc21eb", null ],
+    [ "RsdkBbe32EncSeqFlxTwobuf4", "group__dsp__algos__api__func.html#ga7fffd16c9da226d76a98474cdbfa0b8d", null ],
+    [ "RsdkBbe32EncSeqFlxTwobuf8", "group__dsp__algos__api__func.html#gad29ff7b3cc1fe6e98e896f033fb21894", null ],
+    [ "RsdkBbe32EncTxps", "group__dsp__algos__api__func.html#ga99f9115562f0afe2bc0427d3df8cf073", null ],
+    [ "RsdkBbe32Fft2Real", "group__dsp__algos__api__func.html#ga2ec39f1dc593b5d8c8a1957c4552f5f4", null ],
+    [ "RsdkBbe32FftCplx", "group__dsp__algos__api__func.html#ga68da36702a90b161e211a1f23eaf8d4f", null ],
+    [ "RsdkBbe32FftInit", "group__dsp__algos__api__func.html#ga8bcaec2c478e4cda035eebe9663e85d0", null ],
+    [ "RsdkBbe32Hist", "group__dsp__algos__api__func.html#gab4c2a2e282711010ed0ce2b6a8341a16", null ],
+    [ "RsdkBbe32OsCfar", "group__dsp__algos__api__func.html#gafef23881f5557e5affee9760164596b8", null ],
+    [ "RsdkBbe32ReordTile16to4Ch", "group__dsp__algos__api__func.html#ga8f2db302fae6523e17d42e57ebf5752e", null ],
+    [ "RsdkBbe32TdIm", "group__dsp__algos__api__func.html#ga2200bd40c663169681b39bbb8433d009", null ]
+];

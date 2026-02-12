@@ -1,0 +1,85 @@
+Mscm_Ip_InitPrivileged (const struct Mscm_Ip_ConfigType * pMscmConfig)
+{
+  uint16 u16SPINumber;
+  uint16 u16TargetCores;
+  uint16 spiIdx;
+
+  <bb 2> :
+  _1 = pMscmConfig != 0B;
+  DevAssert (_1);
+  _2 = pMscmConfig->u32GlobalRouteConfigCount;
+  _3 = _2 <= 85;
+  DevAssert (_3);
+  spiIdx = 0;
+  goto <bb 4>; [INV]
+
+  <bb 3> :
+  _4 = pMscmConfig->aGlobalRouteConfig;
+  _5 = (unsigned int) spiIdx;
+  _6 = _5 * 4;
+  _7 = _4 + _6;
+  u16TargetCores = _7->u16TargetCores;
+  _8 = pMscmConfig->aGlobalRouteConfig;
+  _9 = (unsigned int) spiIdx;
+  _10 = _9 * 4;
+  _11 = _8 + _10;
+  u16SPINumber = _11->u16IrqNumber;
+  _12 = u16SPINumber <= 237;
+  DevAssert (_12);
+  _13 = 1073807360B;
+  _14 = (int) u16SPINumber;
+  _15 = _13->IRSPRC[_14];
+  _16 = (signed short) _15;
+  _17 = _16 >= 0;
+  DevAssert (_17);
+  _18 = u16TargetCores <= 15;
+  DevAssert (_18);
+  _19 = 1073807360B;
+  _20 = (int) u16SPINumber;
+  _21 = u16TargetCores & 15;
+  _19->IRSPRC[_20] = _21;
+  spiIdx.0_22 = spiIdx;
+  spiIdx = spiIdx.0_22 + 1;
+
+  <bb 4> :
+  _23 = (long unsigned int) spiIdx;
+  _24 = pMscmConfig->u32GlobalRouteConfigCount;
+  if (_23 < _24)
+    goto <bb 3>; [INV]
+  else
+    goto <bb 5>; [INV]
+
+  <bb 5> :
+  return;
+
+}
+
+
+Mscm_Ip_Init (const struct Mscm_Ip_ConfigType * pMscmConfig)
+{
+  <bb 2> :
+  Mscm_Ip_InitPrivileged (pMscmConfig);
+  return;
+
+}
+
+
+DevAssert (volatile boolean x)
+{
+  <bb 2> :
+  x.1_1 = x;
+  if (x.1_1 != 0)
+    goto <bb 4>; [INV]
+  else
+    goto <bb 3>; [INV]
+
+  <bb 3> :
+  __asm__ __volatile__("BKPT #0");
+  goto <bb 3>; [INV]
+
+  <bb 4> :
+  return;
+
+}
+
+

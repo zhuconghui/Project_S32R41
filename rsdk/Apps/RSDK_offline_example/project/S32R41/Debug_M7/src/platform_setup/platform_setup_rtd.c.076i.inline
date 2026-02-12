@@ -1,0 +1,223 @@
+IPA summary for RsdkPlatformSetup/20 is missing.
+IPA summary for AppMcuInit/19 is missing.
+
+Flattening functions:
+Overall time estimate: 0.000000 weighted by profile: 0.000000
+
+Deciding on inlining of small functions.  Starting with size 0.
+
+Reclaiming functions:
+Reclaiming variables:
+Clearing address taken flags:
+
+Deciding on functions to be inlined into all callers and removing useless speculations:
+Overall time estimate: 0.000000 weighted by profile: 0.000000
+
+Why inlining failed?
+function not considered for inlining              :        1 calls, 1.000000 freq, 0 count
+function body not available                       :       12 calls, 12.000000 freq, 0 count
+IPA summary for RsdkPlatformSetup/20 is missing.
+IPA summary for AppMcuInit/19 is missing.
+Symbol table:
+
+Rm_Config/30 (Rm_Config) @07afd288
+  Type: variable
+  Body removed by symtab_remove_unreachable_nodes
+  Visibility: external public
+  References: 
+  Referring: RsdkPlatformSetup/20 (addr)
+  Availability: not_available
+  Varpool flags: read-only
+Rm_Init/29 (Rm_Init) @07adb380
+  Type: function
+  Visibility: external public
+  References: 
+  Referring: 
+  Availability: not_available
+  Function flags:
+  Called by: RsdkPlatformSetup/20 
+  Calls: 
+DbgPrintMsg/28 (DbgPrintMsg) @07adb1c0
+  Type: function
+  Visibility: external public
+  References: 
+  Referring: 
+  Availability: not_available
+  Function flags:
+  Called by: AppMcuInit/19 AppMcuInit/19 
+  Calls: 
+Mcu_GetClockFrequency/27 (Mcu_GetClockFrequency) @07adb0e0
+  Type: function
+  Visibility: external public
+  References: 
+  Referring: 
+  Availability: not_available
+  Function flags:
+  Called by: AppMcuInit/19 AppMcuInit/19 
+  Calls: 
+Mcu_SetMode/26 (Mcu_SetMode) @07adb000
+  Type: function
+  Visibility: external public
+  References: 
+  Referring: 
+  Availability: not_available
+  Function flags:
+  Called by: AppMcuInit/19 
+  Calls: 
+Mcu_DistributePllClock/25 (Mcu_DistributePllClock) @07ad6620
+  Type: function
+  Visibility: external public
+  References: 
+  Referring: 
+  Availability: not_available
+  Function flags:
+  Called by: AppMcuInit/19 
+  Calls: 
+Mcu_GetPllStatus/24 (Mcu_GetPllStatus) @07ad6ee0
+  Type: function
+  Visibility: external public
+  References: 
+  Referring: 
+  Availability: not_available
+  Function flags:
+  Called by: AppMcuInit/19 
+  Calls: 
+statusCheck/23 (statusCheck) @07ad6e00
+  Type: function
+  Visibility: external public
+  References: 
+  Referring: 
+  Availability: not_available
+  Function flags:
+  Called by: AppMcuInit/19 AppMcuInit/19 
+  Calls: 
+Mcu_InitClock/22 (Mcu_InitClock) @07ad6d20
+  Type: function
+  Visibility: external public
+  References: 
+  Referring: 
+  Availability: not_available
+  Function flags:
+  Called by: AppMcuInit/19 
+  Calls: 
+Mcu_Init/21 (Mcu_Init) @07ad6c40
+  Type: function
+  Visibility: external public
+  References: 
+  Referring: 
+  Availability: not_available
+  Function flags:
+  Called by: AppMcuInit/19 
+  Calls: 
+RsdkPlatformSetup/20 (RsdkPlatformSetup) @07ad67e0
+  Type: function definition analyzed
+  Visibility: force_output externally_visible no_reorder public
+  References: Rm_Config/30 (addr)
+  Referring: 
+  Availability: available
+  Function flags: body
+  Called by: 
+  Calls: AppMcuInit/19 Rm_Init/29 
+AppMcuInit/19 (AppMcuInit) @07ad6540
+  Type: function definition analyzed
+  Visibility: force_output no_reorder prevailing_def_ironly
+  References: 
+  Referring: 
+  Availability: available
+  Function flags: body
+  Called by: RsdkPlatformSetup/20 
+  Calls: DbgPrintMsg/28 Mcu_GetClockFrequency/27 DbgPrintMsg/28 Mcu_GetClockFrequency/27 Mcu_SetMode/26 statusCheck/23 Mcu_DistributePllClock/25 Mcu_GetPllStatus/24 statusCheck/23 Mcu_InitClock/22 Mcu_Init/21 
+
+;; Function AppMcuInit (AppMcuInit, funcdef_no=19, decl_uid=11136, cgraph_uid=20, symbol_order=19)
+
+AppMcuInit ()
+{
+  Std_ReturnType stdStatus;
+  int _1;
+  <unnamed type> _2;
+  int _3;
+  long unsigned int _4;
+  long unsigned int _5;
+
+  <bb 2> :
+  Mcu_Init (0B);
+  stdStatus_12 = Mcu_InitClock (0);
+  _1 = (int) stdStatus_12;
+  statusCheck ("Mcu_InitClock", _1);
+
+  <bb 3> :
+  _2 = Mcu_GetPllStatus ();
+  if (_2 != 0)
+    goto <bb 3>; [INV]
+  else
+    goto <bb 4>; [INV]
+
+  <bb 4> :
+  stdStatus_16 = Mcu_DistributePllClock ();
+  _3 = (int) stdStatus_16;
+  statusCheck ("Mcu_DistributePllClock", _3);
+  Mcu_SetMode (0);
+  _4 = Mcu_GetClockFrequency (43);
+  if (_4 != 600000000)
+    goto <bb 5>; [INV]
+  else
+    goto <bb 6>; [INV]
+
+  <bb 5> :
+  DbgPrintMsg ("Clock init error: ACCEL_CLK frequency not set as expected\n");
+
+  <bb 6> :
+  _5 = Mcu_GetClockFrequency (35);
+  if (_5 != 400000000)
+    goto <bb 7>; [INV]
+  else
+    goto <bb 8>; [INV]
+
+  <bb 7> :
+  DbgPrintMsg ("Clock init error: SYS_CLK frequency not set as expected\n");
+
+  <bb 8> :
+  return;
+
+}
+
+
+
+;; Function RsdkPlatformSetup (RsdkPlatformSetup, funcdef_no=20, decl_uid=10431, cgraph_uid=21, symbol_order=20)
+
+RsdkPlatformSetup (platformType_t platformType)
+{
+  appStatus_t status;
+  appStatus_t D.11157;
+  int _1;
+  appStatus_t _10;
+
+  <bb 2> :
+  status_4 = 0;
+  _1 = (int) platformType_5(D);
+  if (_1 == 1)
+    goto <bb 3>; [INV]
+  else
+    goto <bb 4>; [INV]
+
+  <bb 3> :
+<L0>:
+  Rm_Init (&Rm_Config);
+  AppMcuInit ();
+  goto <bb 5>; [INV]
+
+  <bb 4> :
+<L1>:
+  status_9 = 1;
+
+  <bb 5> :
+  # status_2 = PHI <status_4(3), status_9(4)>
+  _10 = status_2;
+
+  <bb 6> :
+<L3>:
+  return _10;
+
+}
+
+

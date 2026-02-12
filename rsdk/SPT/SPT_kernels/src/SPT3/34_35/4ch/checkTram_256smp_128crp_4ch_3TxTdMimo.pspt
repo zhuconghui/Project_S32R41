@@ -1,0 +1,385 @@
+/**************************************************************************************************
+ *
+ *
+ * Copyright 2021 NXP
+ *
+ *****************************************************************************
+ *
+ * NXP Confidential and Proprietary. This software is owned or controlled by NXP and
+ * may only be used strictly in accordance with the applicable license terms.  By
+ * expressly accepting such terms or by downloading, installing, activating and/or
+ * otherwise using the software, you are agreeing that you have read, and that you
+ * agree to comply with and are bound by, such license terms.  If you do not agree to
+ * be bound by the applicable license terms, then you may not retain, install, activate or
+ * otherwise use the software.
+ *
+ **************************************************************************************************/
+
+/** @cond */
+/*==================================================================================================
+ *                                        INCLUDE FILES
+ *==================================================================================================*/
+ .include "oram.inc"                    /* include ORAM header file */
+ .include "tram.inc"                    /* include TRAM header file */
+ .include "wr.inc"                      /* include WR header file */
+ .include "spt_kernel_internals.inc"    /* include local defines */
+
+/*==================================================================================================
+ *                                          SECTION
+ *==================================================================================================*/
+ .section .RsdkSpt3 , "ax"   /* memory section where to store SPT code */
+
+/*==================================================================================================
+ *                                      LOCAL CONSTANTS
+ *==================================================================================================*/
+ .set   PACKED_DATA_LENGTH0, (FFT256_TRAM_TWIDDLE_NO + FFT128_TRAM_TWIDDLE_NO + FFT256_WIN_NO>>1 + FFT128_WIN_NO>>1 + FFT32_TRAM_TWIDDLE_NO)
+ .set   PACKED_DATA_LENGTH1, (PACKED_DATA_LENGTH0 + 2*DEROT_VECT128_NO)
+ .set   PACKED_DATA_LENGTH2, (PACKED_DATA_LENGTH1 + 2*DBF64_8CH_NO)
+ .set UNPACKED_DATA_LENGTH2, (2*PACKED_DATA_LENGTH2)
+
+ .set   PACKED_DATA_LENGTH3, (FFT256_TRAM_TWIDDLE_NO + FFT128_TRAM_TWIDDLE_NO)
+ .set UNPACKED_DATA_LENGTH3, (2*PACKED_DATA_LENGTH3)
+
+ .set UNPACKED_DATA_LENGTH4, (FFT256_WIN_NO + FFT128_WIN_NO)
+ .set UNPACKED_DATA_LENGTH5, (2*FFT32_TRAM_TWIDDLE_NO + 4*DEROT_VECT128_NO + 4*DBF64_8CH_NO)
+
+ .set TRAM_LAYOUT_LENGTH1,   (FFT256_TRAM_TWIDDLE_NO + FFT128_TRAM_TWIDDLE_NO + FFT256_WIN_NO + FFT128_WIN_NO + FFT32_TRAM_TWIDDLE_NO + 2*DEROT_VECT128_NO)
+ .set TRAM_LAYOUT_LENGTH2,   (2*DBF64_8CH_NO)
+ .set TRAM_LAYOUT_LENGTH3,   (TRAM_LAYOUT_LENGTH1 + TRAM_LAYOUT_LENGTH2)
+
+/*==================================================================================================
+ *                                      GLOBAL REFERENCES
+ *==================================================================================================*/
+
+/** @endcond */
+/*==================================================================================================
+ *                                      GLOBAL FUNCTIONS
+ *==================================================================================================*/
+/*================================================================================================*/
+/**
+* @addtogroup spt_kernels_api_func
+* @{
+*
+* @fn             void *RsdkSptCheckTram256smp128crp4ch3TxTdMimo();
+* @brief          Function for checking sanity of persistent TRAM content. 256 samples, 128 chirps, 4 physical channels/TX slot, 3TX TD-Mimo.
+* @details        Compare persistent TRAM content with the SRAM/flash reference.
+*                 The kernell will reload the twiddles, window, derotation and steering vector coefficients into SPT memory and compare them
+*                 with the data already stored in TRAM at the initialization time.
+*
+* @param[in]      WR_1: 24bit(RE): 0 \n
+*                       24bit(IM): Offset(restricted to 24bit value!) of the INPUT buffer(FFT256 Twiddle Factors),
+*                       relative to SRAM start address @ref RSDK_SPT_OTHER_BASE_ADDR "RSDK_SPT_OTHER_BASE_ADDR".
+* @verbatim
+*                 INPUT Memory layout:
+*                 SRAM, 32bit complex(16b_Im + 16b_Re)
+*                 63:48    47:32    31:16    15:0
+*                 tw1_Im   tw1_Re   tw1_Im   tw1_Re
+*                 tw1_Im   tw1_Re   tw1_Im   tw1_Re
+*                 tw1_Im   tw1_Re   tw1_Im   tw1_Re
+*                 tw1_Im   tw1_Re   tw1_Im   tw1_Re
+*                 tw2_Im   tw2_Re   tw2_Im   tw2_Re
+*                 tw2_Im   tw2_Re   tw2_Im   tw2_Re
+*                 tw2_Im   tw2_Re   tw2_Im   tw2_Re
+*                 tw2_Im   tw2_Re   tw2_Im   tw2_Re
+*                 |        |        |        |
+*                 |        |        |        |
+*                 |        |        |        |
+*                 tw32_Im  tw32_Re  tw32_Im  tw32_Re
+*                 tw32_Im  tw32_Re  tw32_Im  tw32_Re
+*                 tw32_Im  tw32_Re  tw32_Im  tw32_Re
+*                 tw32_Im  tw32_Re  tw32_Im  tw32_Re
+* @endverbatim
+*
+* @param[in]      WR_2: 24bit(RE): 0 \n
+*                       24bit(IM): Offset(restricted to 24bit value!) of the INPUT buffer(FFT128 Twiddle Factors),
+*                       relative to SRAM start address @ref RSDK_SPT_OTHER_BASE_ADDR "RSDK_SPT_OTHER_BASE_ADDR".
+* @verbatim
+*                 INPUT Memory layout:
+*                 SRAM, 32bit complex(16b_Im + 16b_Re)
+*                 63:48    47:32    31:16    15:0
+*                 tw1_Im   tw1_Re   tw1_Im   tw1_Re
+*                 tw1_Im   tw1_Re   tw1_Im   tw1_Re
+*                 tw1_Im   tw1_Re   tw1_Im   tw1_Re
+*                 tw1_Im   tw1_Re   tw1_Im   tw1_Re
+*                 tw2_Im   tw2_Re   tw2_Im   tw2_Re
+*                 tw2_Im   tw2_Re   tw2_Im   tw2_Re
+*                 tw2_Im   tw2_Re   tw2_Im   tw2_Re
+*                 tw2_Im   tw2_Re   tw2_Im   tw2_Re
+*                 |        |        |        |
+*                 |        |        |        |
+*                 |        |        |        |
+*                 tw16_Im  tw16_Re  tw16_Im  tw16_Re
+*                 tw16_Im  tw16_Re  tw16_Im  tw16_Re
+*                 tw16_Im  tw16_Re  tw16_Im  tw16_Re
+*                 tw16_Im  tw16_Re  tw16_Im  tw16_Re
+* @endverbatim
+*
+* @param[in]      WR_3: 24bit(RE): 0 \n
+*                       24bit(IM): Offset(restricted to 24bit value!) of the INPUT buffer(Reordered Window coef for Range FFT256),
+*                       relative to SRAM start address @ref RSDK_SPT_OTHER_BASE_ADDR "RSDK_SPT_OTHER_BASE_ADDR".
+* @verbatim
+*                 INPUT Memory layout:
+*                 SRAM, 16bit Real Window Coef
+*                 63:48  47:32   31:16    15:0
+*                 win0   win64   win128   win192
+*                 win16  win80   win144   win208
+*                 |      |       |        |
+*                 |      |       |        |
+*                 win15  win79   win143   win207
+*                 win31  win95   win159   win223
+*                 win32  win96   win160   win224
+*                 win48  win112  win176   win240
+*                 |      |       |        |
+*                 |      |       |        |
+*                 win47  win111  win175   win239
+*                 win63  win127  win191   win255
+* @endverbatim
+*
+* @param[in]      WR_4: 24bit(RE): 0 \n
+*                       24bit(IM): Offset(restricted to 24bit value!) of the INPUT buffer(Reordered Window coef for Doppler FFT128),
+*                       relative to SRAM start address @ref RSDK_SPT_OTHER_BASE_ADDR "RSDK_SPT_OTHER_BASE_ADDR".
+* @verbatim
+*                 INPUT Memory layout:
+*                 SRAM, 16bit Real Window Coef
+*                 63:48  47:32   31:16    15:0
+*                 win0   win32   win64    win96
+*                 win8   win40   win72    win104
+*                 |      |       |        |
+*                 |      |       |        |
+*                 win7   win39   win71    win103
+*                 win15  win47   win79    win111
+*                 win16  win48   win80    win112
+*                 win24  win56   win88    win120
+*                 |      |       |        |
+*                 |      |       |        |
+*                 win23  win55   win87    win119
+*                 win31  win63   win95    win127
+* @endverbatim
+*
+* @param[in]      WR_5: 24bit(RE): 0 \n
+*                       24bit(IM): Offset(restricted to 24bit value!) of the INPUT buffer(FFT32 Twiddle Factors),
+*                       relative to SRAM start address @ref RSDK_SPT_OTHER_BASE_ADDR "RSDK_SPT_OTHER_BASE_ADDR".
+* @verbatim
+*                 INPUT Memory layout:
+*                 SRAM, 32bit complex(16b_Im + 16b_Re)
+*                 63:48    47:32    31:16    15:0
+*                 tw1_Im   tw1_Re   tw1_Im   tw1_Re
+*                 tw1_Im   tw1_Re   tw1_Im   tw1_Re
+*                 tw1_Im   tw1_Re   tw1_Im   tw1_Re
+*                 tw1_Im   tw1_Re   tw1_Im   tw1_Re
+*                 tw2_Im   tw2_Re   tw2_Im   tw2_Re
+*                 tw2_Im   tw2_Re   tw2_Im   tw2_Re
+*                 tw2_Im   tw2_Re   tw2_Im   tw2_Re
+*                 tw2_Im   tw2_Re   tw2_Im   tw2_Re
+*                 tw3_Im   tw3_Re   tw3_Im   tw3_Re
+*                 tw3_Im   tw3_Re   tw3_Im   tw3_Re
+*                 tw3_Im   tw3_Re   tw3_Im   tw3_Re
+*                 tw3_Im   tw3_Re   tw3_Im   tw3_Re
+*                 tw4_Im   tw4_Re   tw4_Im   tw4_Re
+*                 tw4_Im   tw4_Re   tw4_Im   tw4_Re
+*                 tw4_Im   tw4_Re   tw4_Im   tw4_Re
+*                 tw4_Im   tw4_Re   tw4_Im   tw4_Re
+* @endverbatim
+*
+* @param[in]      WR_6: 24bit(RE): 0 \n
+*                       24bit(IM): Offset(restricted to 24bit value!) of the INPUT buffer(Derotation Phased Vector),
+*                       relative to SRAM start address @ref RSDK_SPT_OTHER_BASE_ADDR "RSDK_SPT_OTHER_BASE_ADDR".
+* @verbatim
+*                 INPUT Memory layout:
+*                 SRAM, 32bit complex(16b_Im + 16b_Re)
+*                 63:48             47:32           31:16           15:0
+*                 DeRotPh0_Im-TX1   DeRotPh0_Re-TX1   DeRotPh1_Im-TX1   DeRotPh1_Re-TX1
+*                 DeRotPh2_Im-TX1   DeRotPh2_Re-TX1   DeRotPh3_Im-TX1   DeRotPh3_Re-TX1
+*                 |                 |                 |                 |
+*                 |                 |                 |                 |
+*                 |                 |                 |                 |
+*                 DeRotPh124_Im-TX1 DeRotPh124_Re-TX1 DeRotPh125_Im-TX1 DeRotPh125_Re-TX1
+*                 DeRotPh126_Im-TX1 DeRotPh126_Re-TX1 DeRotPh127_Im-TX1 DeRotPh127_Re-TX1
+*                 DeRotPh0_Im-TX2   DeRotPh0_Re-TX2   DeRotPh1_Im-TX2   DeRotPh1_Re-TX2
+*                 DeRotPh2_Im-TX2   DeRotPh2_Re-TX2   DeRotPh3_Im-TX2   DeRotPh3_Re-TX2
+*                 |                 |                 |                 |
+*                 |                 |                 |                 |
+*                 |                 |                 |                 |
+*                 DeRotPh124_Im-TX2 DeRotPh124_Re-TX2 DeRotPh125_Im-TX2 DeRotPh125_Re-TX2
+*                 DeRotPh126_Im-TX2 DeRotPh126_Re-TX2 DeRotPh127_Im-TX2 DeRotPh127_Re-TX2
+* @endverbatim
+*
+* @param[in]      WR_7: 24bit(RE): 0 \n
+*                       24bit(IM): Offset(restricted to 24bit value!) of the INPUT buffer(Beamforming Steering Vector),
+*                       relative to SRAM start address @ref RSDK_SPT_OTHER_BASE_ADDR "RSDK_SPT_OTHER_BASE_ADDR".
+* @verbatim
+*                 INPUT Memory layout:
+*                 SRAM, 32 bit complex(16b_Im + 16b_Re)
+*                 63:48         47:32           31:16           15:0
+*                 SV0_Im-CH0    SV0_Re-CH0      SV0_Im-CH1      SV0_Re-CH1
+*                 SV0_Im-CH2    SV0_Re-CH2      SV0_Im-CH3      SV0_Re-CH3
+*                 SV0_Im-CH4    SV0_Re-CH4      SV0_Im-CH5      SV0_Re-CH5
+*                 SV0_Im-CH6    SV0_Re-CH6      SV0_Im-CH7      SV0_Re-CH7
+*                 SV0_Im-CH8    SV0_Re-CH8      SV0_Im-CH9      SV0_Re-CH9
+*                 SV0_Im-CH10   SV0_Re-CH10     SV0_Im-CH11     SV0_Re-CH11
+*                 |             |               |               |
+*                 |             |               |               |
+*                 |             |               |               |
+*                 SV63_Im-CH0   SV63_Re-CH0     SV63_Im-CH1     SV63_Re-CH1
+*                 SV63_Im-CH2   SV63_Re-CH2     SV63_Im-CH3     SV63_Re-CH3
+*                 SV63_Im-CH4   SV63_Re-CH4     SV63_Im-CH5     SV63_Re-CH5
+*                 SV63_Im-CH6   SV63_Re-CH6     SV63_Im-CH7     SV63_Re-CH7
+*                 SV63_Im-CH8   SV63_Re-CH8     SV63_Im-CH9     SV63_Re-CH9
+*                 SV63_Im-CH10  SV63_Re-CH10    SV63_Im-CH11    SV63_Re-CH11
+* @endverbatim
+*
+* @return         WR_0: will indicate if persistent TRAM content is corrupted or not.
+* @retval         0, if persistent TRAM content is not corrupted. \n
+*                 >0, if persistent TRAM content is corrupted.
+*
+* @note           All buffers MUST be 8 bytes aligned.
+*
+* @}*/
+/*================================================================================================*/
+/** @cond */
+ .global RsdkSptCheckTram256smp128crp4ch3TxTdMimo
+ .global RsdkSptCheckTram256smp128crp4ch3TxTdMimo_size
+
+RsdkSptCheckTram256smp128crp4ch3TxTdMimo:
+
+    /*=========================================================================
+     * Kernel watermarking instruction without side-effects. WR_0 can be ovewritten
+     * with the output parameter, according to the SPT calling convention
+     *=========================================================================*/
+    set #RSDK_SPT_KERNEL_WATERMARK, WR_0
+
+/*=========================================================================
+ * API parameter passing
+ *=========================================================================*/
+    /*=========================================================================
+     * INPUT
+     *=========================================================================
+     * WR_11: 24bit(RE): OPRAM address where to put FFT256 twiddle factors
+     *        24bit(IM): SRAM twiddle factors address offset
+     * WR_12: 24bit(RE): OPRAM address where to put FFT128 twiddle coef
+     *        24bit(IM): SRAM window coef address offset
+     * WR_13: 24bit(RE): OPRAM address where to put range FFT256 window coef
+     *        24bit(IM): SRAM window coef address offset
+     * WR_14: 24bit(RE): OPRAM address where to put doppler FFT128 window coef
+     *        24bit(IM): SRAM twiddle coef address offset
+     * WR_15: 24bit(RE): OPRAM address where to put FFT32 twiddle factors
+     *        24bit(IM): SRAM twiddle factors address offset
+     * WR_16: 24bit(RE): OPRAM address where to put DeRotPh vector, TX1 & TX2
+     *        24bit(IM): SRAM derotation phased vector address offset
+     * WR_17: 24bit(RE): OPRAM address where to put DBF steering vectors
+     *        24bit(IM): SRAM steering vector address offset
+     *=========================================================================*/
+    add .noshift .mod24 WR_1, #(OR_0_0_0                                                                                                                                     ), WR_11
+    add .noshift .mod24 WR_2, #(OR_0_0_0 + FFT256_TRAM_TWIDDLE_NO                                                                                                            ), WR_12
+    add .noshift .mod24 WR_3, #(OR_0_0_0 + FFT256_TRAM_TWIDDLE_NO + FFT128_TRAM_TWIDDLE_NO                                                                                   ), WR_13
+    add .noshift .mod24 WR_4, #(OR_0_0_0 + FFT256_TRAM_TWIDDLE_NO + FFT128_TRAM_TWIDDLE_NO + FFT256_WIN_NO>>1                                                                ), WR_14
+    add .noshift .mod24 WR_5, #(OR_0_0_0 + FFT256_TRAM_TWIDDLE_NO + FFT128_TRAM_TWIDDLE_NO + FFT256_WIN_NO>>1 + FFT128_WIN_NO>>1                                             ), WR_15
+    add .noshift .mod24 WR_6, #(OR_2_0_0 + FFT256_TRAM_TWIDDLE_NO + FFT128_TRAM_TWIDDLE_NO + FFT256_WIN_NO>>1 + FFT128_WIN_NO>>1 + FFT32_TRAM_TWIDDLE_NO                     ), WR_16
+    add .noshift .mod24 WR_7, #(OR_0_0_0 + FFT256_TRAM_TWIDDLE_NO + FFT128_TRAM_TWIDDLE_NO + FFT256_WIN_NO>>1 + FFT128_WIN_NO>>1 + FFT32_TRAM_TWIDDLE_NO + 2*DEROT_VECT128_NO), WR_17
+
+/*=========================================================================
+ * START COMPARE
+ *=========================================================================*/
+    /*=========================================================================
+     * PDMA: Copy 256 FFT twiddles from SRAM to OPRAM
+     *       Copy 128 FFT twiddles from SRAM to OPRAM
+     *       Copy 256 FFT range window coefficients from SRAM to OPRAM
+     *       Copy 128 FFT doppler window coefficients from SRAM to OPRAM
+     *       Copy 32 FFT twiddles from SRAM to OPRAM
+     *       Copy DeRotPh vector, from SRAM to OPRAM, for 2 TX slots
+     *       Copy DBF steering vector from SRAM to OPRAM
+     *=========================================================================*/
+    pdma.ind .signext .16cmplx .sysram2opram .sync .notrace, FFT256_TWIDDLE_SRAM_SLICES,  RSDK_SPT_OTHER_BASE_ADDR, WR_11, 0x0, 0x1, 0x0, 0x1
+    pdma.ind .signext .16cmplx .sysram2opram .sync .notrace, FFT128_TWIDDLE_SRAM_SLICES,  RSDK_SPT_OTHER_BASE_ADDR, WR_12, 0x0, 0x1, 0x0, 0x1
+    pdma.ind .signext .16swap  .sysram2opram .sync .notrace, FFT256_WIN_SRAM_SLICES,      RSDK_SPT_OTHER_BASE_ADDR, WR_13, 0x0, 0x1, 0x0, 0x1
+    pdma.ind .signext .16swap  .sysram2opram .sync .notrace, FFT128_WIN_SRAM_SLICES,      RSDK_SPT_OTHER_BASE_ADDR, WR_14, 0x0, 0x1, 0x0, 0x1
+    pdma.ind .signext .16cmplx .sysram2opram .sync .notrace, FFT32_TWIDDLE_SRAM_SLICES,   RSDK_SPT_OTHER_BASE_ADDR, WR_15, 0x0, 0x1, 0x0, 0x1
+    pdma.ind .signext .16cmplx .sysram2opram .sync .notrace, 2*DEROT_VECT128_SRAM_SLICES, RSDK_SPT_OTHER_BASE_ADDR, WR_16, 0x0, 0x1, 0x0, 0x1
+    pdma.ind .signext .16cmplx .sysram2opram .sync .notrace, DBF64_12CH_SRAM_SLICES,      RSDK_SPT_OTHER_BASE_ADDR, WR_17, 0x0, 0x1, 0x0, 0x1
+
+    /*=========================================================================
+     * COPY: Invert DeRotPh vector(2 TX slots). Copy half of data.
+     *=========================================================================*/
+    copy.simple DEROT_VECT128_NO>>1, OR_2_0_0 + PACKED_DATA_LENGTH0                        , OR_0_0_0 + PACKED_DATA_LENGTH0 +   DEROT_VECT128_NO>>1, 0x1, 0x1
+    copy.simple DEROT_VECT128_NO>>1, OR_2_0_0 + PACKED_DATA_LENGTH0 +   DEROT_VECT128_NO>>1, OR_0_0_0 + PACKED_DATA_LENGTH0                        , 0x1, 0x1
+    copy.simple DEROT_VECT128_NO>>1, OR_2_0_0 + PACKED_DATA_LENGTH0 + 2*DEROT_VECT128_NO>>1, OR_0_0_0 + PACKED_DATA_LENGTH0 + 3*DEROT_VECT128_NO>>1, 0x1, 0x1
+    copy.simple DEROT_VECT128_NO>>1, OR_2_0_0 + PACKED_DATA_LENGTH0 + 3*DEROT_VECT128_NO>>1, OR_0_0_0 + PACKED_DATA_LENGTH0 + 2*DEROT_VECT128_NO>>1, 0x1, 0x1
+
+    /*=========================================================================
+     * COPY simple/shift/clear: move 12 channel SV for each beam, on 16 values in OPRAM, 12 ch SV + 4 zeros
+     *=========================================================================*/
+    copy.shift  DBF64_12CH_NO,   OR_0_0_0 + PACKED_DATA_LENGTH1, OR_3_0_4, 0x1, 0x1
+    copy.simple DBF64_8CH_NO>>1, OR_0_0_0 + PACKED_DATA_LENGTH1, OR_2_0_0, 0x3, 0x4
+    copy.simple DBF64_8CH_NO>>1, OR_0_1_0 + PACKED_DATA_LENGTH1, OR_2_1_0, 0x3, 0x4
+    copy.simple DBF64_8CH_NO>>1, OR_3_2_0                      , OR_2_2_0, 0x3, 0x4
+    copy.simple DBF64_8CH_NO>>1, OR_3_3_0                      , OR_2_3_0, 0x3, 0x4
+    copy.clear  DBF64_8CH_NO,                                    OR_2_1_0, 0x2, 0xFF00
+
+    /*=========================================================================
+     * VMT: Half magnitude the steering vector coef.
+     *=========================================================================*/
+    set #(0x3F), WR_46 /* set WR_46, for right shift value 1. 111111b (-1) */
+    vmt.shift_sq2s2 .cmplx .rst_sum .in_48 .op_off .no_sq2s1 WR_46 .no_sq2s3, 2*DBF64_8CH_NO, OR_2_0_0, OR_0_0_0 + PACKED_DATA_LENGTH1, 0x1, 0x1
+
+    /*=========================================================================
+     * COPY: unpack a complex number into real numbers (in real part only of the OPRAM).
+     *=========================================================================*/
+    copy.unpack .keep_orig, PACKED_DATA_LENGTH2, OR_0_0_0, OR_2_0_0, 0x1, 0x1
+
+    /*=========================================================================
+     * COPY R2I: move the real part into imag part. Prepare for conjugate.
+     *=========================================================================*/
+    copy.partial_r2i .keep_orig, UNPACKED_DATA_LENGTH2, OR_2_0_0, OR_0_0_0, 0x1, 0x1
+
+    /*=========================================================================
+     * VMT: Conjugate a imag number == negate all the data.
+     *=========================================================================*/
+    vmt.no_sq2s2 .cmplx .rst_sum .in_48 .op_off .conj_sq2s1 .no_sq2s3, UNPACKED_DATA_LENGTH2, OR_0_0_0, OR_2_0_0, 0x1, 0x1
+
+    /*=========================================================================
+     * COPY: reconstruct the original memory layout, as present in TRAM.
+     *=========================================================================*/
+    copy.imag_pack               UNPACKED_DATA_LENGTH3, OR_2_0_0                                               ,  OR_0_0_0                      , 0x1, 0x1
+    copy.partial_i2r .keep_orig, UNPACKED_DATA_LENGTH4, OR_2_0_0 + UNPACKED_DATA_LENGTH3                       ,  OR_0_0_0 + PACKED_DATA_LENGTH3, 0x1, 0x1
+    copy.clear                   UNPACKED_DATA_LENGTH4,                                                           OR_0_0_0 + PACKED_DATA_LENGTH3, 0x1, 0xAAAA
+    copy.imag_pack               UNPACKED_DATA_LENGTH5, OR_2_0_0 + UNPACKED_DATA_LENGTH3 + UNPACKED_DATA_LENGTH4, OR_0_0_0 + PACKED_DATA_LENGTH3 + UNPACKED_DATA_LENGTH4, 0x1, 0x1
+
+    /*=========================================================================
+     * VMT: Vector add. Add TRAM persistent content to the negated OPRAM content.
+     *=========================================================================*/
+    vmt.vec_sq2s2 .cmplx .rst_sum .in_48 .op_off .no_sq2s1   TR_0_0_0 .no_sq2s3, TRAM_LAYOUT_LENGTH1, OR_0_0_0                      , OR_2_0_0                      , 0x1, 0x1
+    vmt.vec_sq2s2 .cmplx .rst_sum .in_48 .op_off .no_sq2s1 TR_0_384_0 .no_sq2s3, TRAM_LAYOUT_LENGTH2, OR_0_0_0 + TRAM_LAYOUT_LENGTH1, OR_2_0_0 + TRAM_LAYOUT_LENGTH1, 0x1, 0x1
+
+    /*=========================================================================
+     * Global MAXS on the entire data(Real ABS preprocessing), PACKED input(x2).
+     *=========================================================================*/
+    set #0x0, OR_0_0_0
+    maxs.gm .no_maxsn .real .abs_proc .in_48packed, 2*TRAM_LAYOUT_LENGTH3, OR_2_0_0, OR_0_0_0, 0x1, 0x1
+
+    /*=========================================================================
+     * GET: get overall max value from OPRAM in WR_0.
+     *=========================================================================*/
+    get OR_0_0_0, WR_0
+
+    /*=========================================================================
+     * Workaround for errata ERR010997: the CPU is only allowed to read WR0 before the STOP instruction
+     * and this can only be done using an EVT/WAIT handshake with the SPT kernel right before STOP.
+     * Use 'lsb' event line for this.
+     *=========================================================================*/
+    evt.cpu 0
+
+    /*=========================================================================
+     * WAIT: wait.ext SW generated event
+     *=========================================================================*/
+    wait.cpu 0
+
+    /*=========================================================================
+     * STOP cmd
+     *=========================================================================*/
+    stop
+
+ .set RsdkSptCheckTram256smp128crp4ch3TxTdMimo_size, .-RsdkSptCheckTram256smp128crp4ch3TxTdMimo
+/*******************************************************************************
+ * EOF
+ ******************************************************************************/
+/** @endcond */

@@ -1,0 +1,429 @@
+
+/*
+ * Copyright 2022-2023 NXP
+ * NXP Confidential and Proprietary. This software is owned or controlled by NXP and
+ * may only be used strictly in accordance with the applicable license terms.  By
+ * expressly accepting such terms or by downloading, installing, activating and/or
+ * otherwise using the software, you are agreeing that you have read, and that you
+ * agree to comply with and are bound by, such license terms.  If you do not agree to
+ * be bound by the applicable license terms, then you may not retain, install, activate or
+ * otherwise use the software.
+ */
+
+
+
+
+
+
+
+
+
+#ifndef CSI2_H
+#define CSI2_H
+
+
+/**
+*
+*   @implements CDD_Csi2.h_Artifact
+*
+*/
+
+#ifdef __cplusplus
+extern "C"{
+#endif
+
+/*
+* @page misra_violations MISRA-C:2012 violations
+*
+* @section Csi2_h_REF_1
+* Violates MISRA 2012 Advisory Rule 20.1, #Include directives should only be preceded by preprocessor directives or comments.
+* <MA>_MemMap.h is included after each section define in order to set the current memory section as defined by AUTOSAR.
+*/
+
+
+/*==================================================================================================
+*                                          INCLUDE FILES
+* 1) system and project includes
+* 2) needed interfaces from external units
+* 3) internal and external interfaces from this unit
+==================================================================================================*/
+#include "Csi2_Cfg.h"
+#include "Csi2_Types.h"
+#include "Csi2_Irq.h"
+#include "rsdk_version.h"
+
+#include "S32R41_SIUL2.h"
+
+
+/** @addtogroup csi2_asr_api_const
+ *  @{
+ */
+
+/*==================================================================================================
+*                                 SOURCE FILE VERSION INFORMATION
+==================================================================================================*/
+
+    #define CSI2_VENDOR_ID                          43
+    #define CSI2_MODULE_ID                          2550
+    #define CSI2_AR_RELEASE_MAJOR_VERSION           RSDK_AR_MAJOR
+    #define CSI2_AR_RELEASE_MINOR_VERSION           RSDK_AR_MINOR
+    #define CSI2_AR_RELEASE_REVISION_VERSION        RSDK_AR_REV
+    #define CSI2_SW_MAJOR_VERSION                   RSDK_SW_MAJOR
+    #define CSI2_SW_MINOR_VERSION                   RSDK_SW_MINOR
+    #define CSI2_SW_PATCH_VERSION       			RSDK_SW_PATCH
+
+
+/*==================================================================================================
+*                                       FILE VERSION CHECKS
+==================================================================================================*/
+
+    /* Check Csi2_Types.h versions                                                                              */
+    #if (CSI2_VENDOR_ID != CSI2_TYPES_VENDOR_ID)
+        #error "Csi2.h and Csi2_Types.h have different vendor ids"
+    #endif
+
+    /* Check if Csi2 header file and Csi2_Types configuration header file are of the same Autosar version       */
+    #if ((CSI2_AR_RELEASE_MAJOR_VERSION    != CSI2_TYPES_AR_RELEASE_MAJOR_VERSION) ||   \
+         (CSI2_AR_RELEASE_MINOR_VERSION    != CSI2_TYPES_AR_RELEASE_MINOR_VERSION) ||   \
+         (CSI2_AR_RELEASE_REVISION_VERSION != CSI2_TYPES_AR_RELEASE_REVISION_VERSION)   \
+        )
+        #error "AutoSar Version Numbers of Csi2.h and Csi2_Types.h are different"
+    #endif
+
+    /* Check if Csi2 header file and Csi2_Types configuration header file are of the same software version      */
+    #if ((CSI2_SW_MAJOR_VERSION    != CSI2_TYPES_SW_MAJOR_VERSION) ||   \
+         (CSI2_SW_MINOR_VERSION    != CSI2_TYPES_SW_MINOR_VERSION) ||   \
+         (CSI2_SW_PATCH_VERSION    != CSI2_TYPES_SW_PATCH_VERSION)      \
+        )
+        #error "Software Version Numbers of Csi2.h and Csi2_Types.h are different"
+    #endif
+
+    /* Check Csi2_Cfg.h versions                                                                                */
+    #if (CSI2_VENDOR_ID != CSI2_CFG_VENDOR_ID)
+        #error "Csi2.h and Csi2_Cfg.h have different vendor ids"
+    #endif
+
+    /* Check if Csi2 header file and Csi2_Cfg configuration header file are of the same Autosar version         */
+    #if ((CSI2_AR_RELEASE_MAJOR_VERSION    != CSI2_CFG_AR_RELEASE_MAJOR_VERSION) ||   \
+         (CSI2_AR_RELEASE_MINOR_VERSION    != CSI2_CFG_AR_RELEASE_MINOR_VERSION) ||   \
+         (CSI2_AR_RELEASE_REVISION_VERSION != CSI2_CFG_AR_RELEASE_REVISION_VERSION)   \
+        )
+        #error "AutoSar Version Numbers of Csi2.h and Csi2_Cfg.h are different"
+    #endif
+
+    /* Check if Csi2 header file and Csi2_Cfg configuration header file are of the same software version        */
+    #if ((CSI2_SW_MAJOR_VERSION    != CSI2_CFG_SW_MAJOR_VERSION) ||     \
+         (CSI2_SW_MINOR_VERSION    != CSI2_CFG_SW_MINOR_VERSION) ||     \
+         (CSI2_SW_PATCH_VERSION    != CSI2_CFG_SW_PATCH_VERSION)        \
+        )
+        #error "Software Version Numbers of Csi2.h and Csi2_Cfg.h are different"
+    #endif
+
+    /* Check Csi2_Irq.h versions                                                                              */
+    #if (CSI2_VENDOR_ID != CSI2_IRQ_VENDOR_ID)
+        #error "Csi2.h and Csi2_Irq.h have different vendor ids"
+    #endif
+
+    /* Check if Csi2 header file and Csi2_Irq configuration header file are of the same Autosar version       */
+    #if ((CSI2_AR_RELEASE_MAJOR_VERSION    != CSI2_IRQ_AR_RELEASE_MAJOR_VERSION) ||   \
+         (CSI2_AR_RELEASE_MINOR_VERSION    != CSI2_IRQ_AR_RELEASE_MINOR_VERSION) ||   \
+         (CSI2_AR_RELEASE_REVISION_VERSION != CSI2_IRQ_AR_RELEASE_REVISION_VERSION)   \
+        )
+        #error "AutoSar Version Numbers of Csi2.h and Csi2_Irq.h are different"
+    #endif
+
+    /* Check if Csi2 header file and Csi2_Irq configuration header file are of the same software version      */
+    #if ((CSI2_SW_MAJOR_VERSION    != CSI2_IRQ_SW_MAJOR_VERSION) ||   \
+         (CSI2_SW_MINOR_VERSION    != CSI2_IRQ_SW_MINOR_VERSION) ||   \
+         (CSI2_SW_PATCH_VERSION    != CSI2_IRQ_SW_PATCH_VERSION)      \
+        )
+        #error "Software Version Numbers of Csi2.h and Csi2_Irq.h are different"
+    #endif
+
+
+
+/*==================================================================================================
+*                                            CONSTANTS
+==================================================================================================*/
+
+/*==================================================================================================
+*                                       DEFINES AND MACROS
+==================================================================================================*/
+
+/** @} */
+
+/* update a MIPI-CSI2 32 bits registry                              */
+#define CSI2_SET_REGISTRY32(registryPtr, alignedMask, alignedValue) \
+                *(registryPtr) = (((*(registryPtr)) & (~((uint32)alignedMask))) | ((uint32)alignedValue))
+
+/* update a MIPI-CSI2 8 bits registry                               */
+#define CSI2_SET_REGISTRY8(registryPtr, alignedMask, alignedValue) \
+                *(registryPtr) = (((*(registryPtr)) & (~((uint8)alignedMask))) | ((uint8)alignedValue))
+
+
+/*==================================================================================================
+*                                              ENUMS
+==================================================================================================*/
+
+/*==================================================================================================
+*                                  STRUCTURES AND OTHER TYPEDEFS
+==================================================================================================*/
+
+/*==================================================================================================
+*                                  GLOBAL VARIABLE DECLARATIONS
+==================================================================================================*/
+
+
+
+
+
+
+
+    extern Csi2_DriverParamsType gCsi2Settings[CSI2_MAX_UNITS];
+    extern volatile GENERIC_CSI2_Type *gMipiCsi2RegsPtr[CSI2_MAX_UNITS];
+#if (CSI2_FRAMES_COUNTER_USED == STD_ON)
+    extern volatile uint32 gsCsi2FramesCounter[CSI2_MAX_UNITS][CSI2_MAX_VC];
+#endif
+
+
+
+/*==================================================================================================
+*                                       FUNCTION PROTOTYPES
+==================================================================================================*/
+
+    #define CSI2_START_SEC_CODE
+    /*
+    * @section Csi2_h_REF_1
+    * Violates MISRA 2012 Advisory Rule 20.1, #Include directives should only be preceded by preprocessor directives or comments.
+    * <MA>_MemMap.h is included after each section define in order to set the current memory section as defined by AUTOSAR.
+    */
+    #include "Csi2_MemMap.h"
+
+/**
+ * @addtogroup csi2_asr_api_func
+ * @{
+ */
+ 
+#if (CSI2_VERSION_INFO_API == STD_ON)
+/**
+ *
+ * @brief       The function returns the version info for the module.
+ * @details     The function returns the version info for the module.
+ *
+ * @param[in]   versionInfoPtr  - pointer to a version structure to receive the data
+ *
+ * @pre         It can be called when the reception need to be stopped. The unit must be in INITIALIZED state.
+ *
+ */
+void Csi2_GetVersionInfo(Std_VersionInfoType* versionInfoPtr);
+#endif
+/** @} */
+
+
+
+/**
+ * @addtogroup csi2_asr_api_func
+ * @{
+ */
+
+/**
+ * @brief       This function prepare the CSI2 interface to receive data
+ * @details     The detailed actions done by this function :
+ *                  - verify the input parameters; if any wrong parameter, error is returned
+ *                  - reset the interface
+ *                  - setup the CSI2 interface
+ *                  - setup the interrupt vectors
+ *                  - start the interface
+ *                  - reset the frame counters
+ *                  The function can be called at any time, if necessary.
+ *                  If the result is not E_OK, the interface status is NOT_INITIALIZED,
+ *                  no matter was the status at call time.
+ *
+ * @param[in]   unitId          - the unit id to be used
+ * @param[in]   setupParamPtr   - pointer to the CSI2 Driver setup structure
+ *
+ * @return      Std_ReturnType  - success or error, detailed status information reported on Det.
+ *
+ * @pre         It must be called in the following situations:
+ *              - at application start (e.g. after boot)
+ *              - whenever the system parameters described in setupParamPtr need to be changed
+ *              - every time the Csi2_GetInterfaceStatus returns an error
+ *
+ */
+Std_ReturnType Csi2_Setup(const Csi2_UnitIdType unitId, const Csi2_SetupParamsType *setupParamPtr);
+
+#if ((!defined(SAF85XX)) && (!(defined SAF86XX))) || (defined(SAF85XX) && (CSI2_SAF85XX_PHY_USED == STD_ON)) || \
+                                                     (defined(SAF86XX) && (CSI2_SAF86XX_PHY_USED == STD_ON))
+#if (CSI2_RX_START_STOP_USAGE == STD_ON)
+/**
+ * @brief       The function stop the CSI2 receive module.
+ * @details     The receive module of the CSI2 interface is stopped.
+ *              The receive will stop only after the end of the currently received packet.
+ *
+ * @param[in]   unitId    - unit identifier
+ *
+ * @return      Std_ReturnType - success or error, detailed status information reported on Det.
+ *
+ * @pre         It can be called when the reception need to be stopped. The unit must be in INITIALIZED state.
+ *
+ */
+Std_ReturnType Csi2_RxStop(const Csi2_UnitIdType unitId);
+
+
+/**
+ * @brief       The function start the CSI2 receive module.
+ * @details     The receive module of the CSI2 interface is started.
+ *              This action must be done if a CSI2_RxStop was done before,
+ *               and the reception must be done at the same parameters.
+ *
+ * @param[in]   unitId    - unit identifier
+ *
+ * @return      Std_ReturnType - success or error, detailed status information reported on Det.
+ *
+ * @pre         It can be called when the reception is stopped, after an previous Csi2_RxStop.
+ *
+ */
+Std_ReturnType Csi2_RxStart(const Csi2_UnitIdType unitId);
+#endif  /* (CSI2_RX_START_STOP_USAGE == STD_ON)     */
+
+
+#if (CSI2_POWER_ON_OFF_USAGE == STD_ON)
+/**
+ * @brief       The function power off the CSI2 module.
+ * @details     The interface is powered off.
+ *
+ * @param[in]   unitId    - unit identifier
+ *
+ * @return      Std_ReturnType - success or error, detailed status information reported on Det.
+ *
+ * @pre         It can be called when the reception need to be stopped and/or the interface to be powered off.
+ *              The unit must be in INITIALIZED state.
+ *
+ */
+Std_ReturnType Csi2_PowerOff(const Csi2_UnitIdType unitId);
+
+
+/**
+ * @brief       The function power on the CSI2 module.
+ * @details     The interface is powered on.
+ *              This action must be done only after a Csi2PowerOff was done before.
+ *              After this call, the last setup parameters will be used to reinitialize the interface.
+ *
+ * @param[in]   unitId    - unit identifier
+ *
+ * @return      Std_ReturnType - success or error, detailed status information reported on Det.
+ *
+ * @pre         It can be called when the unit is powered off, or a restart is intended.
+ *              If the Csi2_Setup call was not done before, an error will be reported, else
+ *               the unit will be resetup using the previous setup parameters.
+ */
+Std_ReturnType Csi2_PowerOn(const Csi2_UnitIdType unitId);
+#endif  /* (CSI2_POWER_ON_OFF_USAGE == STD_ON)      */
+
+
+#if (CSI2_SECONDARY_FUNCTIONS_USAGE == STD_ON)
+/**
+ * @brief       The function ask for the current status of the interface.
+ * @details     The function return the status of the interface at the moment of the call.
+ *
+ * @param[in]   unitId    - unit identifier
+ *
+ * @return      Csi2_LaneStatusType - the current status of lane 0
+ *
+ * @pre         It can be called at any time, after a successful setup, to check the current status of the interface.
+ *              Depending of the returned status, some times is necessary to loop on this call to really
+ *              understand how interface is working.
+ *
+ */
+Csi2_LaneStatusType Csi2_GetInterfaceStatus(const Csi2_UnitIdType unitId);
+
+
+/**
+ * @brief       The function ask for the current status of the specific lane.
+ * @details     The function return the status of the interface or specific lane at the moment of the call.
+ *
+ * @param[in]   unitId    - unit identifier
+ * @param[in]   laneId    - lane identifier
+ *
+ * @return      Csi2_LaneStatusType - the current status of lane 0
+ *
+ * @pre         It can be called at any time, to check the current status of the interface/lane.
+ *              Depending of the returned status, some times is necessary to loop on this call to
+ *              really understand how lane is working.
+ */
+Csi2_LaneStatusType Csi2_GetLaneStatus(const Csi2_UnitIdType unitId, const Csi2_LaneIdType laneId);
+
+#endif  /* (CSI2_SECONDARY_FUNCTIONS_USAGE == STD_ON)       */
+
+#endif /* #if ((!defined(SAF85XX)) && (!defined(SAF86XX)) || (defined(SAF85XX) && (CSI2_SAF85XX_PHY_USED == STD_ON)...*/
+
+/**
+ * @brief       Procedure to get the real buffer length for a line/chirp.
+ * @details     The procedure compute the necessary buffer length according to the input parameters.
+ * @note        Because the length include the line/chirp statistics, autoStatistics must be 1 even only one channel
+ *              in the entire Virtual Channel need the autoStatistics computation.
+ *
+ * @param[in]   dataType        Type of data to receive, normally RSDK_CSI2_DATA_TYPE_RAW12 for radar
+ * @param[in]   numChannels     Number of channels, 1 ... 8; usually this number is
+ *                              the number of active antennas, multiply by 2 if complex (Re & Im) acquisition
+ * @param[in]   samplesPerChirp Samples per chirp and channel
+ * @param[in]   autoStatistics  Value to inform that statistics must be added at the end of the chirp
+ *
+ * @return      The necessary memory amount for one line (chirp) if not 0. <br>
+ *              Wrong input parameter if 0.
+ *
+ */
+uint32 Csi2_GetBufferRealLineLen(const Csi2_DataStreamType dataType, const uint32 numChannels,
+        const uint32 samplesPerChirp
+#if (CSI2_STATISTIC_DATA_USAGE == STD_ON)
+        , const Csi2_StatisticsType autoStatistics
+#endif
+        );
+
+
+#if (CSI2_FRAMES_COUNTER_USED == STD_ON)
+
+/**
+ * @brief       The function return the current frames counter
+ * @details     The application can read the counter of frames, to decide how to manage the data. The counter is
+ *              increased after handling the Frame End interrupt request. <br>
+ *              A correct unitId and vcId must be provided.
+ *
+ * @param[in]   unitId    - unit identifier
+ * @param[in]   vcId      - Virtual Channe identifier
+ *
+ * @return      uint32    - the current frames counter, 0xffffffff is not a valid value
+ *
+ */
+uint32 Csi2_GetFramesCounter(const Csi2_UnitIdType unitId, const Csi2_VirtChnlIdType vcId);
+#endif
+
+
+/**
+ * @brief       Get the real channels number of the VC..
+ *
+ * @param[in]   pVCState - pointer to VC driver state
+ *
+ * @return      The channels number
+ *
+ */
+uint8 Csi2_GetChannelNum(const Csi2_VCDriverStateType *pVCState);
+
+/** @} */
+
+
+    #define CSI2_STOP_SEC_CODE
+    /*
+    * @section Csi2_h_REF_1
+    * Violates MISRA 2012 Advisory Rule 20.1, #Include directives should only be preceded by preprocessor directives or comments.
+    * <MA>_MemMap.h is included after each section define in order to set the current memory section as defined by AUTOSAR.
+    */
+    #include "Csi2_MemMap.h"
+
+
+
+#ifdef __cplusplus
+}
+#endif
+
+#endif /* CSI2_H */

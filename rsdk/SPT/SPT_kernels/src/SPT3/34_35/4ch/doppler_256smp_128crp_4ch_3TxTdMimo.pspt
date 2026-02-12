@@ -1,0 +1,611 @@
+/**************************************************************************************************
+ *
+ *
+ * Copyright 2021 NXP
+ *
+ *****************************************************************************
+ *
+ * NXP Confidential and Proprietary. This software is owned or controlled by NXP and
+ * may only be used strictly in accordance with the applicable license terms.  By
+ * expressly accepting such terms or by downloading, installing, activating and/or
+ * otherwise using the software, you are agreeing that you have read, and that you
+ * agree to comply with and are bound by, such license terms.  If you do not agree to
+ * be bound by the applicable license terms, then you may not retain, install, activate or
+ * otherwise use the software.
+ *
+ **************************************************************************************************/
+
+/** @cond */
+/*==================================================================================================
+ *                                        INCLUDE FILES
+ *==================================================================================================*/
+ .include "oram.inc"                    /* include ORAM header file */
+ .include "tram.inc"                    /* include TRAM header file */
+ .include "wr.inc"                      /* include WR header file */
+ .include "spt_kernel_internals.inc"    /* include local defines */
+
+/*==================================================================================================
+ *                                          SECTION
+ *==================================================================================================*/
+ .section .RsdkSpt3 , "ax"   /* memory section where to store SPT code */
+
+/*==================================================================================================
+ *                                      LOCAL CONSTANTS
+ *==================================================================================================*/
+ .set SAMPLES_PER_CHIRP,        256
+ .set CHIRPS_PER_TX_SLOT,       128
+ .set TDMIMO_TX_SLOTS,          3
+ .set BYTES_COMPLEX_FFT_SAMPLE, 4
+ .set CHANNELS_PER_SLOT,        4
+ .set RANGE_BINS,               (SAMPLES_PER_CHIRP >> 1)
+ .set SRAM_SLICES,              ((TDMIMO_TX_SLOTS * CHANNELS_PER_SLOT * CHIRPS_PER_TX_SLOT) >> 1)
+
+/*==================================================================================================
+ *                                      GLOBAL REFERENCES
+ *==================================================================================================*/
+
+/** @endcond */
+ /*==================================================================================================
+ *                                      GLOBAL FUNCTIONS
+ *==================================================================================================*/
+/*==================================================================================================*/
+/**
+* @addtogroup spt_kernels_api_func
+* @{
+*
+* @fn             void *RsdkSptDoppler256smp128crp4ch3TxTdMimo();
+* @brief          Function for Doppler FFT 128, 4 physical channels/TX slot, 3TX TD-MIMO
+* @details        Compute Doppler FFT storing results in SRAM.
+*
+* @param[in]      WR_1: 24bit(RE): 0 \n
+*                       24bit(IM): Offset(restricted to 24bit value!) of the INPUT buffer(Range FFT results),
+*                       relative to SRAM start address @ref RSDK_SPT_CUBE_BASE_ADDR "RSDK_SPT_CUBE_BASE_ADDR".
+* @verbatim
+*                 INPUT Memory layout:
+*                 SRAM, 32bit complex(16b_Im + 16b_Re)
+*                 63:48              47:32              31:16              15:0
+*                 CH0_0_Im-Crp0      CH0_0_Re-Crp0      CH1_0_Im-Crp0      CH1_0_Re-Crp0
+*                 CH2_0_Im-Crp0      CH2_0_Re-Crp0      CH3_0_Im-Crp0      CH3_0_Re-Crp0         -> TX0_Crp0
+*                 ------------------------------------------------------------------------------------------
+*                 CH0_0_Im-Crp0      CH0_0_Re-Crp0      CH1_0_Im-Crp0      CH1_0_Re-Crp0
+*                 CH2_0_Im-Crp0      CH2_0_Re-Crp0      CH3_0_Im-Crp0      CH3_0_Re-Crp0         -> TX1_Crp0
+*                 ------------------------------------------------------------------------------------------
+*                 CH0_0_Im-Crp0      CH0_0_Re-Crp0      CH1_0_Im-Crp0      CH1_0_Re-Crp0
+*                 CH2_0_Im-Crp0      CH2_0_Re-Crp0      CH3_0_Im-Crp0      CH3_0_Re-Crp0         -> TX2_Crp0
+*                 ------------------------------------------------------------------------------------------
+*                 |                  |                  |                  |
+*                 |                  |                  |                  |
+*                 |                  |                  |                  |
+*                 CH0_0_Im-Crp127    CH0_0_Re-Crp127    CH1_0_Im-Crp127    CH1_0_Re-Crp127
+*                 CH2_0_Im-Crp127    CH2_0_Re-Crp127    CH3_0_Im-Crp127    CH3_0_Re-Crp127     -> TX0_Crp127
+*                 ------------------------------------------------------------------------------------------
+*                 CH0_0_Im-Crp127    CH0_0_Re-Crp127    CH1_0_Im-Crp127    CH1_0_Re-Crp127
+*                 CH2_0_Im-Crp127    CH2_0_Re-Crp127    CH3_0_Im-Crp127    CH3_0_Re-Crp127     -> TX1_Crp127
+*                 ------------------------------------------------------------------------------------------
+*                 CH0_0_Im-Crp127    CH0_0_Re-Crp127    CH1_0_Im-Crp127    CH1_0_Re-Crp127
+*                 CH2_0_Im-Crp127    CH2_0_Re-Crp127    CH3_0_Im-Crp127    CH3_0_Re-Crp127     -> TX2_Crp127
+*                 ------------------------------------------------------------------------------------------
+*                 |                  |                  |                  |
+*                 |                  |                  |                  |
+*                 |                  |                  |                  |
+*                 |                  |                  |                  |
+*                 |                  |                  |                  |
+*                 |                  |                  |                  |
+*                 CH0_127_Im-Crp0    CH0_127_Re-Crp0    CH1_127_Im-Crp0    CH1_127_Re-Crp0
+*                 CH2_127_Im-Crp0    CH2_127_Re-Crp0    CH3_127_Im-Crp0    CH3_127_Re-Crp0       -> TX0_Crp0
+*                 ------------------------------------------------------------------------------------------
+*                 CH0_127_Im-Crp0    CH0_127_Re-Crp0    CH1_127_Im-Crp0    CH1_127_Re-Crp0
+*                 CH2_127_Im-Crp0    CH2_127_Re-Crp0    CH3_127_Im-Crp0    CH3_127_Re-Crp0       -> TX1_Crp0
+*                 ------------------------------------------------------------------------------------------
+*                 CH0_127_Im-Crp0    CH0_127_Re-Crp0    CH1_127_Im-Crp0    CH1_127_Re-Crp0
+*                 CH2_127_Im-Crp0    CH2_127_Re-Crp0    CH3_127_Im-Crp0    CH3_127_Re-Crp0       -> TX2_Crp0
+*                 ------------------------------------------------------------------------------------------
+*                 |                  |                  |                  |
+*                 |                  |                  |                  |
+*                 |                  |                  |                  |
+*                 CH0_127_Im-Crp127  CH0_127_Re-Crp127  CH1_127_Im-Crp127  CH1_127_Re-Crp127
+*                 CH2_127_Im-Crp127  CH2_127_Re-Crp127  CH3_127_Im-Crp127  CH3_127_Re-Crp127   -> TX0_Crp127
+*                 ------------------------------------------------------------------------------------------
+*                 CH0_127_Im-Crp127  CH0_127_Re-Crp127  CH1_127_Im-Crp127  CH1_127_Re-Crp127
+*                 CH2_127_Im-Crp127  CH2_127_Re-Crp127  CH3_127_Im-Crp127  CH3_127_Re-Crp127   -> TX1_Crp127
+*                 ------------------------------------------------------------------------------------------
+*                 CH0_127_Im-Crp127  CH0_127_Re-Crp127  CH1_127_Im-Crp127  CH1_127_Re-Crp127
+*                 CH2_127_Im-Crp127  CH2_127_Re-Crp127  CH3_127_Im-Crp127  CH3_127_Re-Crp127   -> TX2_Crp127
+*                 ------------------------------------------------------------------------------------------
+* @endverbatim
+*
+* @param[out]     WR_2: 24bit(RE): 0
+*                       24bit(IM): Offset(restricted to 24bit value!) of the OUTPUT buffer(Doppler FFT results),
+*                       relative to SRAM start address @ref RSDK_SPT_CUBE_BASE_ADDR "RSDK_SPT_CUBE_BASE_ADDR"
+* @verbatim
+*                 OUTPUT Memory layout:
+*                 SRAM, 32bit complex(16b_Im + 16b_Re)
+*                 63:48              47:32              31:16              15:0
+*                 CH0_0_Im-Crp0      CH0_0_Re-Crp0      CH1_0_Im-Crp0      CH1_0_Re-Crp0
+*                 CH2_0_Im-Crp0      CH2_0_Re-Crp0      CH3_0_Im-Crp0      CH3_0_Re-Crp0         -> TX0_Crp0
+*                 ------------------------------------------------------------------------------------------
+*                 CH0_0_Im-Crp0      CH0_0_Re-Crp0      CH1_0_Im-Crp0      CH1_0_Re-Crp0
+*                 CH2_0_Im-Crp0      CH2_0_Re-Crp0      CH3_0_Im-Crp0      CH3_0_Re-Crp0         -> TX1_Crp0
+*                 ------------------------------------------------------------------------------------------
+*                 CH0_0_Im-Crp0      CH0_0_Re-Crp0      CH1_0_Im-Crp0      CH1_0_Re-Crp0
+*                 CH2_0_Im-Crp0      CH2_0_Re-Crp0      CH3_0_Im-Crp0      CH3_0_Re-Crp0         -> TX2_Crp0
+*                 ------------------------------------------------------------------------------------------
+*                 |                  |                  |                  |
+*                 |                  |                  |                  |
+*                 |                  |                  |                  |
+*                 CH0_0_Im-Crp127    CH0_0_Re-Crp127    CH1_0_Im-Crp127    CH1_0_Re-Crp127
+*                 CH2_0_Im-Crp127    CH2_0_Re-Crp127    CH3_0_Im-Crp127    CH3_0_Re-Crp127     -> TX0_Crp127
+*                 ------------------------------------------------------------------------------------------
+*                 CH0_0_Im-Crp127    CH0_0_Re-Crp127    CH1_0_Im-Crp127    CH1_0_Re-Crp127
+*                 CH2_0_Im-Crp127    CH2_0_Re-Crp127    CH3_0_Im-Crp127    CH3_0_Re-Crp127     -> TX1_Crp127
+*                 ------------------------------------------------------------------------------------------
+*                 CH0_0_Im-Crp127    CH0_0_Re-Crp127    CH1_0_Im-Crp127    CH1_0_Re-Crp127
+*                 CH2_0_Im-Crp127    CH2_0_Re-Crp127    CH3_0_Im-Crp127    CH3_0_Re-Crp127     -> TX2_Crp127
+*                 ------------------------------------------------------------------------------------------
+*                 |                  |                  |                  |
+*                 |                  |                  |                  |
+*                 |                  |                  |                  |
+*                 |                  |                  |                  |
+*                 |                  |                  |                  |
+*                 |                  |                  |                  |
+*                 CH0_127_Im-Crp0    CH0_127_Re-Crp0    CH1_127_Im-Crp0    CH1_127_Re-Crp0
+*                 CH2_127_Im-Crp0    CH2_127_Re-Crp0    CH3_127_Im-Crp0    CH3_127_Re-Crp0       -> TX0_Crp0
+*                 ------------------------------------------------------------------------------------------
+*                 CH0_127_Im-Crp0    CH0_127_Re-Crp0    CH1_127_Im-Crp0    CH1_127_Re-Crp0
+*                 CH2_127_Im-Crp0    CH2_127_Re-Crp0    CH3_127_Im-Crp0    CH3_127_Re-Crp0       -> TX1_Crp0
+*                 ------------------------------------------------------------------------------------------
+*                 CH0_127_Im-Crp0    CH0_127_Re-Crp0    CH1_127_Im-Crp0    CH1_127_Re-Crp0
+*                 CH2_127_Im-Crp0    CH2_127_Re-Crp0    CH3_127_Im-Crp0    CH3_127_Re-Crp0       -> TX2_Crp0
+*                 ------------------------------------------------------------------------------------------
+*                 |                  |                  |                  |
+*                 |                  |                  |                  |
+*                 |                  |                  |                  |
+*                 CH0_127_Im-Crp127  CH0_127_Re-Crp127  CH1_127_Im-Crp127  CH1_127_Re-Crp127
+*                 CH2_127_Im-Crp127  CH2_127_Re-Crp127  CH3_127_Im-Crp127  CH3_127_Re-Crp127   -> TX0_Crp127
+*                 ------------------------------------------------------------------------------------------
+*                 CH0_127_Im-Crp127  CH0_127_Re-Crp127  CH1_127_Im-Crp127  CH1_127_Re-Crp127
+*                 CH2_127_Im-Crp127  CH2_127_Re-Crp127  CH3_127_Im-Crp127  CH3_127_Re-Crp127   -> TX1_Crp127
+*                 ------------------------------------------------------------------------------------------
+*                 CH0_127_Im-Crp127  CH0_127_Re-Crp127  CH1_127_Im-Crp127  CH1_127_Re-Crp127
+*                 CH2_127_Im-Crp127  CH2_127_Re-Crp127  CH3_127_Im-Crp127  CH3_127_Re-Crp127   -> TX2_Crp127
+*                 ------------------------------------------------------------------------------------------
+* @endverbatim
+*
+* @param[in]      WR_3: 24bit(RE): Scaling Factor, e.g. 1 for scale left with 1. \n
+*                       24bit(IM): 0.
+*
+* @return         WR_0: No value returned.
+* @retval         No value returned.
+*
+* @pre            Twiddle coeficients are placed in TRAM at TR_0_32_0 by the Init function. \n
+*                 Window coeficients are placed in TRAM at TR_0_80_0 by the Init function. \n
+*                 Derotation phase coeficients, are places in TRAM at TR_0_100_0 by the Init function.
+*
+* @note           The current implementation is ONLY to be used in combination with 256 Range FFT 3TX TD-MIMO. \n
+*                 The input buffer CAN be reused for the output buffer. \n
+*                 All buffers MUST be 8 bytes aligned.
+*
+* @}*/
+/*==================================================================================================*/
+/** @cond */
+ .global RsdkSptDoppler256smp128crp4ch3TxTdMimo
+ .global RsdkSptDoppler256smp128crp4ch3TxTdMimo_size
+
+RsdkSptDoppler256smp128crp4ch3TxTdMimo:
+    /*=========================================================================
+     * Kernel watermarking instruction without side-effects. WR_0 can be ovewritten
+     * with the output parameter, according to the SPT calling convention
+     *=========================================================================*/
+    set #RSDK_SPT_KERNEL_WATERMARK, WR_0
+
+/*=========================================================================
+ * API parameter passing
+ *=========================================================================*/
+    /*=========================================================================
+     * INPUT/OUTPUT
+     *=========================================================================
+     * WR_11: 24bit(RE): OPRAM address where to put range data for all channels
+     *        24bit(IM): SRAM offset to range data (doppler input), ODD samples
+     * WR_12: 24bit(RE): OPRAM address where to get doppler fft results for CH#0..CH#7 channels
+     *        24bit(IM): SRAM doppler fft result buffer address offset, ODD samples
+     * WR_13: 24bit(RE): OPRAM address where to get doppler fft results for CH#8..CH#11 channels
+     *        24bit(IM): SRAM doppler fft result buffer address offset, ODD samples
+     * WR_14: 24bit(RE): OPRAM address where to put range data for all channels
+     *        24bit(IM): SRAM offset to range data (doppler input), EVEN samples
+     * WR_15: 24bit(RE): OPRAM address where to get doppler fft results for CH#0..CH#7 channels
+     *        24bit(IM): SRAM doppler fft result buffer address offset, EVEN samples
+     * WR_16: 24bit(RE): OPRAM address where to get doppler fft results for CH#8..CH#11 channels
+     *        24bit(IM): SRAM doppler fft result buffer address offset, EVEN samples
+     * WR_17: 24bit(RE): no adder for OPRAM address
+     *        24bit(IM): SRAM offset to results of next samples(for all chirps)
+     *=========================================================================*/
+    add .noshift .mod24 WR_1, #(OR_1_0_0), WR_11
+    add .noshift .mod24 WR_2, #(OR_0_0_0), WR_12
+    add .noshift .mod24 WR_2, #(OR_1_0_0 | ((2 * CHANNELS_PER_SLOT * BYTES_COMPLEX_FFT_SAMPLE) << 24)), WR_13
+
+    add .noshift .mod24 WR_1, #(OR_2_0_0 | ((TDMIMO_TX_SLOTS * CHANNELS_PER_SLOT * CHIRPS_PER_TX_SLOT * BYTES_COMPLEX_FFT_SAMPLE) << 24)), WR_14
+    add .noshift .mod24 WR_2, #(OR_0_0_0 | ((TDMIMO_TX_SLOTS * CHANNELS_PER_SLOT * CHIRPS_PER_TX_SLOT * BYTES_COMPLEX_FFT_SAMPLE) << 24)), WR_15
+    add .noshift .mod24 WR_2, #(OR_2_0_0 | (((TDMIMO_TX_SLOTS * CHIRPS_PER_TX_SLOT + 2) * CHANNELS_PER_SLOT * BYTES_COMPLEX_FFT_SAMPLE) << 24)), WR_16
+
+    set #((2*(TDMIMO_TX_SLOTS * CHANNELS_PER_SLOT * CHIRPS_PER_TX_SLOT * BYTES_COMPLEX_FFT_SAMPLE)) << 24), WR_17
+
+/*=========================================================================
+ * START DOPPLER FFT SECTION
+ *=========================================================================*/
+    /*=========================================================================
+     * by default, set WR_46, for right shift value 8
+     *=========================================================================*/
+    set #(0x8), WR_46
+
+    /*=========================================================================
+     * set WR_46, for custom left shift
+     *=========================================================================*/
+    sub .noshift .mod24 WR_3, WR_46, WR_46
+
+    /*=========================================================================
+     * LOOP: loop #count is number of range bins/2 (2 range bins processed within one iteration)
+     *=========================================================================*/
+    loop #(RANGE_BINS >> 1)
+
+        /*=========================================================================
+         * PDMA: transfer range FFT samples of all 12 virtual channels from SRAM to OPRAM, ODD/EVEN range bins
+         *=========================================================================*/
+        pdma.ind .signext .16cmplx .sysram2opram  .sync .notrace, SRAM_SLICES, RSDK_SPT_CUBE_BASE_ADDR, WR_11, 0x0, 0x1, 0x0, 0x1
+        pdma.ind .signext .16cmplx .sysram2opram .async .notrace, SRAM_SLICES, RSDK_SPT_CUBE_BASE_ADDR, WR_14, 0x0, 0x1, 0x0, 0x1
+
+        /*=========================================================================
+         * ODD range bins proccesing part
+         *=========================================================================
+         *=========================================================================
+         * Work Register 20/21, 22/23, 24/25 used together with 26
+         *=========================================================================
+         * WR_20: OPRAM address from and where to put rdx results OR_1_0_0 -> OR_0_0_0
+         * WR_21: OPRAM address from and where to put rdx results OR_0_0_0 -> OR_1_0_0
+         * WR_22: OPRAM address from and where to put rdx results OR_1_4_0 -> OR_0_4_0
+         * WR_23: OPRAM address from and where to put rdx results OR_0_4_0 -> OR_1_4_0
+         * WR_24: OPRAM address from and where to put rdx results OR_3_0_0 -> OR_1_0_0
+         * WR_25: OPRAM address from and where to put rdx results OR_1_0_0 -> OR_3_0_0
+         * WR_26: increment value for the next channels
+         *=========================================================================*/
+        set #(OR_0_0_0 | (OR_1_0_0 << 24)), WR_20
+        set #(OR_1_0_0 | (OR_0_0_0 << 24)), WR_21
+        set #(OR_0_4_0 | (OR_1_4_0 << 24)), WR_22
+        set #(OR_1_4_0 | (OR_0_4_0 << 24)), WR_23
+        set #(OR_1_0_0 | (OR_3_0_0 << 24)), WR_24
+        set #(OR_3_0_0 | (OR_1_0_0 << 24)), WR_25
+        set #(0x8 | (0x8 << 24)), WR_26
+
+        /*=========================================================================
+         * COPY simple/shift: rearange all 12 channels, done on half samples(interleaved)
+         *=========================================================================*/
+        copy.shift TDMIMO_TX_SLOTS*CHANNELS_PER_SLOT*CHIRPS_PER_TX_SLOT, OR_1_0_0, OR_3_0_4, 0x1, 0x1
+        copy.simple 2*CHANNELS_PER_SLOT*CHIRPS_PER_TX_SLOT>>1, OR_1_0_0, OR_0_0_0, 0x3, 0x2
+        copy.simple 2*CHANNELS_PER_SLOT*CHIRPS_PER_TX_SLOT>>1, OR_3_2_0, OR_0_1_0, 0x3, 0x2
+        copy.simple 2*CHANNELS_PER_SLOT*CHIRPS_PER_TX_SLOT>>1, OR_1_1_0, OR_0_128_0, 0x3, 0x2
+        copy.simple 2*CHANNELS_PER_SLOT*CHIRPS_PER_TX_SLOT>>1, OR_3_3_0, OR_0_129_0, 0x3, 0x2
+
+        /*=========================================================================
+         * COPY 8x8 transpose 8 channels(CH#0..CH#7) * CHIRPS_PER_TX_SLOT
+         *=========================================================================*/
+        copy.trans 2*CHANNELS_PER_SLOT*CHIRPS_PER_TX_SLOT, OR_0_0_0, OR_1_0_0, 0x1, 0x1, 0x8, 0x8
+
+        /*=========================================================================
+         * COPY 8x8 transpose 8 channels(CH#8..CH#11, 4 dummy) * CHIRPS_PER_TX_SLOT
+         *=========================================================================*/
+        copy.trans 2*CHANNELS_PER_SLOT*CHIRPS_PER_TX_SLOT, OR_0_128_0, OR_3_0_0, 0x1, 0x1, 0x8, 0x8
+
+        /*=========================================================================
+         * Repeat 4(CHANNELS_PER_SLOT) times Doppler FFT128, 2 TX slots
+         *=========================================================================*/
+        loop #(CHANNELS_PER_SLOT)
+
+            /*=========================================================================
+             * FFT128 for CH#0..CH#3
+             *=========================================================================
+             *=========================================================================
+             * RDX4/RDX2 Round 0(+win,prescaling)...3, src & dest inc 8, Twiddle in TR_0_32_0, Window in TR_0_80_0
+             * prescaling with 8 to benefit of having OPRAM on 24bit (Input on 16bit)
+             *=========================================================================*/
+            rdx4.ind .cmplx .real_win_real_tram .qext .noovs .round0 .shift8, CHIRPS_PER_TX_SLOT, WR_20, 0x8, 0x8, TR_0_80_0, .mod0, 0x1
+            rdx4.ind .cmplx .no_win .qext .noovs .round1 .nosft, CHIRPS_PER_TX_SLOT, WR_21, 0x8, 0x8, TR_0_32_0, .mod0, 0x1
+            rdx4.ind .cmplx .no_win .qext .noovs .round2 .nosft, CHIRPS_PER_TX_SLOT, WR_20, 0x8, 0x8, TR_0_32_0, .mod0, 0x1
+            rdx2.ind .cmplx .nosplit .qext .noovs .round3 .nosft, CHIRPS_PER_TX_SLOT, WR_21, 0x8, 0x8, TR_0_32_0
+
+            /*=========================================================================
+             * VMT: custom right shift(WR_46), by default 8(to compensate the initial pre-scalling)
+             *=========================================================================*/
+            vmt.shift_sq2s2.ind .cmplx .rst_sum .in_48 .op_off .no_sq2s1 WR_46 .no_sq2s3, CHIRPS_PER_TX_SLOT, WR_20, 0x8, 0x8
+
+            /*=========================================================================
+             * COPY simple: move the result back, src & dest inc 8
+             *=========================================================================*/
+            copy.simple.ind CHIRPS_PER_TX_SLOT,WR_21, 0x8, 0x8
+
+            /*=========================================================================
+             * FFT128 for CH#4..CH#7
+             *=========================================================================
+             *=========================================================================
+             * RDX4/RDX2 Round 0(+win,prescaling)...3, src & dest inc 8, Twiddle in TR_0_32_0, Window in TR_0_80_0
+             * prescaling with 8 to benefit of having OPRAM on 24bit (Input on 16bit)
+             *=========================================================================*/
+            rdx4.ind .cmplx .real_win_real_tram .qext .noovs .round0 .shift8, CHIRPS_PER_TX_SLOT, WR_22, 0x8, 0x8, TR_0_80_0, .mod0, 0x1
+            rdx4.ind .cmplx .no_win .qext .noovs .round1 .nosft, CHIRPS_PER_TX_SLOT, WR_23, 0x8, 0x8, TR_0_32_0, .mod0, 0x1
+            rdx4.ind .cmplx .no_win .qext .noovs .round2 .nosft, CHIRPS_PER_TX_SLOT, WR_22, 0x8, 0x8, TR_0_32_0, .mod0, 0x1
+            rdx2.ind .cmplx .nosplit .qext .noovs .round3 .nosft, CHIRPS_PER_TX_SLOT, WR_23, 0x8, 0x8, TR_0_32_0
+
+            /*=========================================================================
+             * WIN: multiply with Derotation Phase Vector, TX1, src & dest inc 8, Vector in TR_0_100_0
+             *=========================================================================*/
+            win.ind .cmplx .cmplx_win .nosft, CHIRPS_PER_TX_SLOT, WR_22, 0x8, 0x8, TR_0_100_0, .mod0, 0x1
+
+            /*=========================================================================
+             * VMT: custom right shift(WR_46), by default 8(to compensate the initial pre-scalling)
+             *=========================================================================*/
+            vmt.shift_sq2s2.ind .cmplx .rst_sum .in_48 .op_off .no_sq2s1 WR_46 .no_sq2s3, CHIRPS_PER_TX_SLOT, WR_23, 0x8, 0x8
+
+            /*=========================================================================
+             * ADD: increment OPRAM address for the next channels CH#0..CH#3, CH#4..CH#7
+             *=========================================================================*/
+            add .noshift .mod24 WR_20, WR_26, WR_20
+            add .noshift .mod24 WR_21, WR_26, WR_21
+            add .noshift .mod24 WR_22, WR_26, WR_22
+            add .noshift .mod24 WR_23, WR_26, WR_23
+
+        /*=========================================================================
+         * NEXT: end of the loop
+         *=========================================================================*/
+        next
+
+        /*=========================================================================
+         * COPY 8x8 transpose 8 channels(CH#0..CH#7) * CHIRPS_PER_TX_SLOT
+         * Invert the spectrum, DC in the middle. Copy half of data.
+         *=========================================================================*/
+        copy.trans 2*CHANNELS_PER_SLOT*CHIRPS_PER_TX_SLOT>>1, OR_1_0_0, OR_0_0_0 + 2*CHANNELS_PER_SLOT*CHIRPS_PER_TX_SLOT>>1, 0x1, 0x1, 0x8, 0x8
+        copy.trans 2*CHANNELS_PER_SLOT*CHIRPS_PER_TX_SLOT>>1, OR_1_0_0 + 2*CHANNELS_PER_SLOT*CHIRPS_PER_TX_SLOT>>1, OR_0_0_0, 0x1, 0x1, 0x8, 0x8
+
+        /*=========================================================================
+         * PDMA: transfer doppler FFT results of first 8(CH#0..CH#7) channels from OPRAM to SRAM
+         * OPRAM no skip, continuous OPRAM, SRAM skip 2, continous SRAM 4, ODD range bins
+         *=========================================================================*/
+        pdma.ind .signext .16cmplx .opram2sysram .async .notrace, 2*CHANNELS_PER_SLOT*CHIRPS_PER_TX_SLOT, RSDK_SPT_CUBE_BASE_ADDR, WR_12, 0x0, 0x1, 0x2, 0x4
+
+        /*=========================================================================
+         * Repeat 4 (CHANNELS_PER_SLOT) times Doppler FFT128: CH#8..CH#11
+         *=========================================================================*/
+        loop #(CHANNELS_PER_SLOT)
+
+            /*=========================================================================
+             * RDX4/RDX2 Round 0(+win,prescaling)...3, src & dest inc 8, Twiddle in TR_0_32_0, Window in TR_0_80_0
+             * prescaling with 8 to benefit of having OPRAM on 24bit (Input on 16bit)
+             *=========================================================================*/
+            rdx4.ind .cmplx .real_win_real_tram .qext .noovs .round0 .shift8, CHIRPS_PER_TX_SLOT, WR_24, 0x8, 0x8, TR_0_80_0, .mod0, 0x1
+            rdx4.ind .cmplx .no_win .qext .noovs .round1 .nosft, CHIRPS_PER_TX_SLOT, WR_25, 0x8, 0x8, TR_0_32_0, .mod0, 0x1
+            rdx4.ind .cmplx .no_win .qext .noovs .round2 .nosft, CHIRPS_PER_TX_SLOT, WR_24, 0x8, 0x8, TR_0_32_0, .mod0, 0x1
+            rdx2.ind .cmplx .nosplit .qext .noovs .round3 .nosft, CHIRPS_PER_TX_SLOT, WR_25, 0x8, 0x8, TR_0_32_0
+
+            /*=========================================================================
+             * WIN: multiply with Derotation Phase Vector, TX2, src & dest inc 8, Vector in TR_0_116_0
+             *=========================================================================*/
+            win.ind .cmplx .cmplx_win .nosft, CHIRPS_PER_TX_SLOT, WR_24, 0x8, 0x8, TR_0_116_0, .mod0, 0x1
+
+            /*=========================================================================
+             * VMT: custom right shift(WR_46), by default 8(to compensate the initial pre-scalling)
+             *=========================================================================*/
+            vmt.shift_sq2s2.ind .cmplx .rst_sum .in_48 .op_off .no_sq2s1 WR_46 .no_sq2s3, CHIRPS_PER_TX_SLOT, WR_25, 0x8, 0x8
+
+            /*=========================================================================
+             * ADD: increment OPRAM address for the next channels
+             *=========================================================================*/
+            add .noshift .mod24 WR_24, WR_26, WR_24
+            add .noshift .mod24 WR_25, WR_26, WR_25
+
+        /*=========================================================================
+         * NEXT: end of the loop
+         *=========================================================================*/
+        next
+
+        /*=========================================================================
+         * COPY 8x4 FWD transpose 8 channels(CH#8..CH#11, 4 dummy) * CHIRPS_PER_TX_SLOT
+         * Invert the spectrum, DC in the middle. Copy half of data.
+         *=========================================================================*/
+        copy.trans_fwd_8x4 2*CHANNELS_PER_SLOT*CHIRPS_PER_TX_SLOT>>1, OR_3_0_0, OR_1_0_0 + 2*CHANNELS_PER_SLOT*CHIRPS_PER_TX_SLOT>>1, 0x1, 0x1, 0x8, 0x8
+        copy.trans_fwd_8x4 2*CHANNELS_PER_SLOT*CHIRPS_PER_TX_SLOT>>1, OR_3_0_0 + 2*CHANNELS_PER_SLOT*CHIRPS_PER_TX_SLOT>>1, OR_1_0_0, 0x1, 0x1, 0x8, 0x8
+
+        /*=========================================================================
+         * PDMA: transfer doppler FFT results of last 4(CH#8..CH#11) channels from OPRAM to SRAM
+         * OPRAM skip 4, continuous OPRAM 4, SRAM skip 4, continous SRAM 2, ODD range bins
+         *=========================================================================*/
+        pdma.ind .signext .16cmplx .opram2sysram .async .notrace, CHANNELS_PER_SLOT*CHIRPS_PER_TX_SLOT, RSDK_SPT_CUBE_BASE_ADDR, WR_13, 0x4, 0x4, 0x4, 0x2
+
+        /*=========================================================================
+         * EVEN range bins proccesing part
+         *=========================================================================
+         *=========================================================================
+         * Work Register 20/21, 22/23, 24/25 used together with 26
+         *=========================================================================
+         * WR_20: OPRAM address from and where to put rdx results OR_2_0_0 -> OR_0_0_0
+         * WR_21: OPRAM address from and where to put rdx results OR_0_0_0 -> OR_2_0_0
+         * WR_22: OPRAM address from and where to put rdx results OR_2_4_0 -> OR_0_4_0
+         * WR_23: OPRAM address from and where to put rdx results OR_0_4_0 -> OR_2_4_0
+         * WR_24: OPRAM address from and where to put rdx results OR_3_0_0 -> OR_2_0_0
+         * WR_25: OPRAM address from and where to put rdx results OR_2_0_0 -> OR_3_0_0
+         * WR_26: increment value for the next channels
+         *=========================================================================*/
+        set #(OR_0_0_0 | (OR_2_0_0 << 24)), WR_20
+        set #(OR_2_0_0 | (OR_0_0_0 << 24)), WR_21
+        set #(OR_0_4_0 | (OR_2_4_0 << 24)), WR_22
+        set #(OR_2_4_0 | (OR_0_4_0 << 24)), WR_23
+        set #(OR_2_0_0 | (OR_3_0_0 << 24)), WR_24
+        set #(OR_3_0_0 | (OR_2_0_0 << 24)), WR_25
+
+        /*=========================================================================
+         * COPY simple/shift: rearange all 12 channels, done on half samples(interleaved)
+         *=========================================================================*/
+        copy.shift TDMIMO_TX_SLOTS*CHANNELS_PER_SLOT*CHIRPS_PER_TX_SLOT, OR_2_0_0, OR_3_0_4, 0x1, 0x1
+        copy.simple 2*CHANNELS_PER_SLOT*CHIRPS_PER_TX_SLOT>>1, OR_2_0_0, OR_0_0_0, 0x3, 0x2
+        copy.simple 2*CHANNELS_PER_SLOT*CHIRPS_PER_TX_SLOT>>1, OR_3_2_0, OR_0_1_0, 0x3, 0x2
+        copy.simple 2*CHANNELS_PER_SLOT*CHIRPS_PER_TX_SLOT>>1, OR_2_1_0, OR_0_128_0, 0x3, 0x2
+        copy.simple 2*CHANNELS_PER_SLOT*CHIRPS_PER_TX_SLOT>>1, OR_3_3_0, OR_0_129_0, 0x3, 0x2
+
+        /*=========================================================================
+         * COPY 8x8 transpose 8 channels(CH#0..CH#7) * CHIRPS_PER_TX_SLOT
+         *=========================================================================*/
+        copy.trans 2*CHANNELS_PER_SLOT*CHIRPS_PER_TX_SLOT, OR_0_0_0, OR_2_0_0, 0x1, 0x1, 0x8, 0x8
+
+        /*=========================================================================
+         * COPY 8x8 transpose 8 channels(CH#8..CH#11, 4 dummy) * CHIRPS_PER_TX_SLOT
+         *=========================================================================*/
+        copy.trans 2*CHANNELS_PER_SLOT*CHIRPS_PER_TX_SLOT, OR_0_128_0, OR_3_0_0, 0x1, 0x1, 0x8, 0x8
+
+        /*=========================================================================
+         * Repeat 4(CHANNELS_PER_SLOT) times Doppler FFT128, 2 TX slots
+         *=========================================================================*/
+        loop #(CHANNELS_PER_SLOT)
+
+            /*=========================================================================
+             * FFT128 for CH#0..CH#3
+             *=========================================================================
+             *=========================================================================
+             * RDX4/RDX2 Round 0(+win,prescaling)...3, src & dest inc 8, Twiddle in TR_0_32_0, Window in TR_0_80_0
+             * prescaling with 8 to benefit of having OPRAM on 24bit (Input on 16bit)
+             *=========================================================================*/
+            rdx4.ind .cmplx .real_win_real_tram .qext .noovs .round0 .shift8, CHIRPS_PER_TX_SLOT, WR_20, 0x8, 0x8, TR_0_80_0, .mod0, 0x1
+            rdx4.ind .cmplx .no_win .qext .noovs .round1 .nosft, CHIRPS_PER_TX_SLOT, WR_21, 0x8, 0x8, TR_0_32_0, .mod0, 0x1
+            rdx4.ind .cmplx .no_win .qext .noovs .round2 .nosft, CHIRPS_PER_TX_SLOT, WR_20, 0x8, 0x8, TR_0_32_0, .mod0, 0x1
+            rdx2.ind .cmplx .nosplit .qext .noovs .round3 .nosft, CHIRPS_PER_TX_SLOT, WR_21, 0x8, 0x8, TR_0_32_0
+
+            /*=========================================================================
+             * VMT: custom right shift(WR_46), by default 8(to compensate the initial pre-scalling)
+             *=========================================================================*/
+            vmt.shift_sq2s2.ind .cmplx .rst_sum .in_48 .op_off .no_sq2s1 WR_46 .no_sq2s3, CHIRPS_PER_TX_SLOT, WR_20, 0x8, 0x8
+
+            /*=========================================================================
+             * COPY simple: move the result back, src & dest inc 8
+             *=========================================================================*/
+            copy.simple.ind CHIRPS_PER_TX_SLOT,WR_21, 0x8, 0x8
+
+            /*=========================================================================
+             * FFT128 for CH#4..CH#7
+             *=========================================================================
+             *=========================================================================
+             * RDX4/RDX2 Round 0(+win,prescaling)...3, src & dest inc 8, Twiddle in TR_0_32_0, Window in TR_0_80_0
+             * prescaling with 8 to benefit of having OPRAM on 24bit (Input on 16bit)
+             *=========================================================================*/
+            rdx4.ind .cmplx .real_win_real_tram .qext .noovs .round0 .shift8, CHIRPS_PER_TX_SLOT, WR_22, 0x8, 0x8, TR_0_80_0, .mod0, 0x1
+            rdx4.ind .cmplx .no_win .qext .noovs .round1 .nosft, CHIRPS_PER_TX_SLOT, WR_23, 0x8, 0x8, TR_0_32_0, .mod0, 0x1
+            rdx4.ind .cmplx .no_win .qext .noovs .round2 .nosft, CHIRPS_PER_TX_SLOT, WR_22, 0x8, 0x8, TR_0_32_0, .mod0, 0x1
+            rdx2.ind .cmplx .nosplit .qext .noovs .round3 .nosft, CHIRPS_PER_TX_SLOT, WR_23, 0x8, 0x8, TR_0_32_0
+
+            /*=========================================================================
+             * WIN: multiply with Derotation Phase Vector, TX1, src & dest inc 8, Vector in TR_0_100_0
+             *=========================================================================*/
+            win.ind .cmplx .cmplx_win .nosft, CHIRPS_PER_TX_SLOT, WR_22, 0x8, 0x8, TR_0_100_0, .mod0, 0x1
+
+            /*=========================================================================
+             * VMT: custom right shift(WR_46), by default 8(to compensate the initial pre-scalling)
+             *=========================================================================*/
+            vmt.shift_sq2s2.ind .cmplx .rst_sum .in_48 .op_off .no_sq2s1 WR_46 .no_sq2s3, CHIRPS_PER_TX_SLOT, WR_23, 0x8, 0x8
+
+            /*=========================================================================
+             * ADD: increment OPRAM address for the next channels CH#0..CH#3, CH#4..CH#7
+             *=========================================================================*/
+            add .noshift .mod24 WR_20, WR_26, WR_20
+            add .noshift .mod24 WR_21, WR_26, WR_21
+            add .noshift .mod24 WR_22, WR_26, WR_22
+            add .noshift .mod24 WR_23, WR_26, WR_23
+
+        /*=========================================================================
+         * NEXT: end of the loop
+         *=========================================================================*/
+        next
+
+        /*=========================================================================
+         * COPY 8x8 transpose 8 channels(CH#0..CH#7) * CHIRPS_PER_TX_SLOT
+         * Invert the spectrum, DC in the middle. Copy half of data.
+         *=========================================================================*/
+        copy.trans 2*CHANNELS_PER_SLOT*CHIRPS_PER_TX_SLOT>>1, OR_2_0_0, OR_0_0_0 + 2*CHANNELS_PER_SLOT*CHIRPS_PER_TX_SLOT>>1, 0x1, 0x1, 0x8, 0x8
+        copy.trans 2*CHANNELS_PER_SLOT*CHIRPS_PER_TX_SLOT>>1, OR_2_0_0 + 2*CHANNELS_PER_SLOT*CHIRPS_PER_TX_SLOT>>1, OR_0_0_0, 0x1, 0x1, 0x8, 0x8
+
+        /*=========================================================================
+         * PDMA: transfer doppler FFT results of first 8(CH#0..CH#7) channels from OPRAM to SRAM
+         * OPRAM no skip, continuous OPRAM, SRAM skip 2, continous SRAM 4, EVEN range bins
+         *=========================================================================*/
+        pdma.ind .signext .16cmplx .opram2sysram .async .notrace, 2*CHANNELS_PER_SLOT*CHIRPS_PER_TX_SLOT, RSDK_SPT_CUBE_BASE_ADDR, WR_15, 0x0, 0x1, 0x2, 0x4
+
+        /*=========================================================================
+         * Repeat 4 (CHANNELS_PER_SLOT) times Doppler FFT128: CH#8..CH#11
+         *=========================================================================*/
+        loop #(CHANNELS_PER_SLOT)
+
+            /*=========================================================================
+             * RDX4/RDX2 Round 0(+win,prescaling)...3, src & dest inc 8, Twiddle in TR_0_32_0, Window in TR_0_80_0
+             * prescaling with 8 to benefit of having OPRAM on 24bit (Input on 16bit)
+             *=========================================================================*/
+            rdx4.ind .cmplx .real_win_real_tram .qext .noovs .round0 .shift8, CHIRPS_PER_TX_SLOT, WR_24, 0x8, 0x8, TR_0_80_0, .mod0, 0x1
+            rdx4.ind .cmplx .no_win .qext .noovs .round1 .nosft, CHIRPS_PER_TX_SLOT, WR_25, 0x8, 0x8, TR_0_32_0, .mod0, 0x1
+            rdx4.ind .cmplx .no_win .qext .noovs .round2 .nosft, CHIRPS_PER_TX_SLOT, WR_24, 0x8, 0x8, TR_0_32_0, .mod0, 0x1
+            rdx2.ind .cmplx .nosplit .qext .noovs .round3 .nosft, CHIRPS_PER_TX_SLOT, WR_25, 0x8, 0x8, TR_0_32_0
+
+            /*=========================================================================
+             * WIN: multiply with Derotation Phase Vector, TX2, src & dest inc 8, Vector in TR_0_116_0
+             *=========================================================================*/
+            win.ind .cmplx .cmplx_win .nosft, CHIRPS_PER_TX_SLOT, WR_24, 0x8, 0x8, TR_0_116_0, .mod0, 0x1
+
+            /*=========================================================================
+             * VMT: custom right shift(WR_46), by default 8(to compensate the initial pre-scalling)
+             *=========================================================================*/
+            vmt.shift_sq2s2.ind .cmplx .rst_sum .in_48 .op_off .no_sq2s1 WR_46 .no_sq2s3, CHIRPS_PER_TX_SLOT, WR_25, 0x8, 0x8
+
+            /*=========================================================================
+             * ADD: increment OPRAM address for the next channels
+             *=========================================================================*/
+            add .noshift .mod24 WR_24, WR_26, WR_24
+            add .noshift .mod24 WR_25, WR_26, WR_25
+
+        /*=========================================================================
+         * NEXT: end of the loop
+         *=========================================================================*/
+        next
+
+        /*=========================================================================
+         * COPY 8x4 FWD transpose 8 channels(CH#8..CH#11, 4 dummy) * CHIRPS_PER_TX_SLOT
+         * Invert the spectrum, DC in the middle. Copy half of data.
+         *=========================================================================*/
+        copy.trans_fwd_8x4 2*CHANNELS_PER_SLOT*CHIRPS_PER_TX_SLOT>>1, OR_3_0_0, OR_2_0_0 + 2*CHANNELS_PER_SLOT*CHIRPS_PER_TX_SLOT>>1, 0x1, 0x1, 0x8, 0x8
+        copy.trans_fwd_8x4 2*CHANNELS_PER_SLOT*CHIRPS_PER_TX_SLOT>>1, OR_3_0_0 + 2*CHANNELS_PER_SLOT*CHIRPS_PER_TX_SLOT>>1, OR_2_0_0, 0x1, 0x1, 0x8, 0x8
+
+        /*=========================================================================
+         * PDMA: transfer doppler FFT results of last 4(CH#8..CH#11) channels from OPRAM to SRAM
+         * OPRAM skip 4, continuous OPRAM 4, SRAM skip 4, continous SRAM 2, EVEN range bins
+         *=========================================================================*/
+        pdma.ind .signext .16cmplx .opram2sysram .async .notrace, CHANNELS_PER_SLOT*CHIRPS_PER_TX_SLOT, RSDK_SPT_CUBE_BASE_ADDR, WR_16, 0x4, 0x4, 0x4, 0x2
+
+        /*=========================================================================
+         * ADD: increment input SRAM offset to next ODD/EVEN range bins
+         *=========================================================================*/
+        add .noshift .mod24 WR_11, WR_17, WR_11
+        add .noshift .mod24 WR_14, WR_17, WR_14
+
+        /*=========================================================================
+         * ADD: increment output SRAM offset to next ODD/EVEN range bins
+         *=========================================================================*/
+        add .noshift .mod24 WR_12, WR_17, WR_12
+        add .noshift .mod24 WR_13, WR_17, WR_13
+        add .noshift .mod24 WR_15, WR_17, WR_15
+        add .noshift .mod24 WR_16, WR_17, WR_16
+
+    /*=========================================================================
+     * NEXT: end of the loop
+     *=========================================================================*/
+    next
+
+/*=========================================================================
+ * STOP: end of FFT 128 doppler program
+ *=========================================================================*/
+ stop
+
+ .set RsdkSptDoppler256smp128crp4ch3TxTdMimo_size, .-RsdkSptDoppler256smp128crp4ch3TxTdMimo
+/*******************************************************************************
+ * EOF
+ ******************************************************************************/
+/** @endcond */

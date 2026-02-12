@@ -1,0 +1,155 @@
+InitRecord (struct traceRecord_t * pTraceRecord, char * pTraceBuffer, uint16_t buffSize, int traceEnable)
+{
+  <bb 2> :
+  _1 = (unsigned int) buffSize;
+  memset (pTraceBuffer, 0, _1);
+  pTraceRecord->pTraceBuffer = pTraceBuffer;
+  _2 = buffSize / 12;
+  pTraceRecord->traceBufferSize = _2;
+  pTraceRecord->wrapFlag = 0;
+  _3 = &pTraceRecord->traceBufferIndex;
+  IndexWrite (_3, 0);
+  _4 = &pTraceRecord->enable;
+  TraceAtomicValueSet (_4, traceEnable);
+  gsFirst = 1;
+  return;
+
+}
+
+
+NextRecord (struct traceRecord_t * pTraceRecord)
+{
+  int index;
+  int D.6824;
+
+  <bb 2> :
+  _1 = &pTraceRecord->traceBufferIndex;
+  _2 = pTraceRecord->traceBufferSize;
+  index = IndexReadIncrement (_1, _2);
+  if (index == 0)
+    goto <bb 3>; [INV]
+  else
+    goto <bb 5>; [INV]
+
+  <bb 3> :
+  gsFirst.3_3 = gsFirst;
+  if (gsFirst.3_3 == 1)
+    goto <bb 4>; [INV]
+  else
+    goto <bb 5>; [INV]
+
+  <bb 4> :
+  gsFirst = 0;
+  goto <bb 7>; [INV]
+
+  <bb 5> :
+  if (index == 0)
+    goto <bb 6>; [INV]
+  else
+    goto <bb 7>; [INV]
+
+  <bb 6> :
+  pTraceRecord->wrapFlag = 1;
+
+  <bb 7> :
+  D.6824 = index;
+
+  <bb 8> :
+<L6>:
+  return D.6824;
+
+}
+
+
+RotateBuff (struct traceRecord_t * pTraceRecord)
+{
+  int i;
+  struct logRecord_t tmp;
+  int shift;
+
+  <bb 2> :
+  _1 = pTraceRecord->wrapFlag;
+  if (_1 != 0)
+    goto <bb 3>; [INV]
+  else
+    goto <bb 10>; [INV]
+
+  <bb 3> :
+  _2 = &pTraceRecord->traceBufferIndex;
+  _3 = pTraceRecord->traceBufferSize;
+  shift = IndexRead (_2, _3);
+  goto <bb 8>; [INV]
+
+  <bb 4> :
+  _4 = pTraceRecord->pTraceBuffer;
+  MEM[(char * {ref-all})&tmp] = MEM[(char * {ref-all})_4];
+  i = 0;
+  goto <bb 6>; [INV]
+
+  <bb 5> :
+  _5 = pTraceRecord->pTraceBuffer;
+  i.0_6 = (sizetype) i;
+  _7 = i.0_6 + 1;
+  _8 = _7 * 12;
+  _9 = _5 + _8;
+  _10 = pTraceRecord->pTraceBuffer;
+  i.1_11 = (unsigned int) i;
+  _12 = i.1_11 * 12;
+  _13 = _10 + _12;
+  *_13 = *_9;
+  i = i + 1;
+
+  <bb 6> :
+  _14 = pTraceRecord->traceBufferSize;
+  _15 = (int) _14;
+  _16 = _15 + -1;
+  if (i < _16)
+    goto <bb 5>; [INV]
+  else
+    goto <bb 7>; [INV]
+
+  <bb 7> :
+  _17 = pTraceRecord->pTraceBuffer;
+  i.2_18 = (unsigned int) i;
+  _19 = i.2_18 * 12;
+  _20 = _17 + _19;
+  MEM[(char * {ref-all})_20] = MEM[(char * {ref-all})&tmp];
+  shift = shift + -1;
+  tmp = {CLOBBER};
+
+  <bb 8> :
+  if (shift > 0)
+    goto <bb 4>; [INV]
+  else
+    goto <bb 9>; [INV]
+
+  <bb 9> :
+  _21 = &pTraceRecord->traceBufferIndex;
+  _22 = pTraceRecord->traceBufferSize;
+  _23 = (int) _22;
+  IndexWrite (_21, _23);
+  pTraceRecord->wrapFlag = 0;
+
+  <bb 10> :
+  return;
+
+}
+
+
+TraceAtomicValueSet (atomic traceAtomic_t * pAddr, int value)
+{
+  traceAtomic_t __atomic_store_tmp;
+  atomic traceAtomic_t * __atomic_store_ptr;
+
+  <bb 2> :
+  __atomic_store_ptr = pAddr;
+  __atomic_store_tmp = value;
+  __atomic_store_tmp.4_1 = __atomic_store_tmp;
+  __atomic_store_tmp.5_2 = (unsigned int) __atomic_store_tmp.4_1;
+  __atomic_store_4 (__atomic_store_ptr, __atomic_store_tmp.5_2, 5);
+  __atomic_store_tmp = {CLOBBER};
+  return;
+
+}
+
+

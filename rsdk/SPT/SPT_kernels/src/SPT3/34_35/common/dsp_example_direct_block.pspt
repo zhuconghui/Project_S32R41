@@ -1,0 +1,107 @@
+/**************************************************************************************************
+ *
+ *
+ * Copyright 2021 NXP
+ *
+ *****************************************************************************
+ *
+ * NXP Confidential and Proprietary. This software is owned or controlled by NXP and
+ * may only be used strictly in accordance with the applicable license terms.  By
+ * expressly accepting such terms or by downloading, installing, activating and/or
+ * otherwise using the software, you are agreeing that you have read, and that you
+ * agree to comply with and are bound by, such license terms.  If you do not agree to
+ * be bound by the applicable license terms, then you may not retain, install, activate or
+ * otherwise use the software.
+ *
+ **************************************************************************************************/
+
+/** @cond */
+/*==================================================================================================
+ *                                        INCLUDE FILES
+ *==================================================================================================*/
+ #include "spt_assembler_defines.h"
+ .include "oram.inc"                   /* include ORAM header file */
+ .include "tram.inc"                   /* include TRAM header file */
+ .include "wr.inc"                     /* include WR header file */
+ .include "spt_kernel_internals.inc"   /* include local defines */
+
+/*==================================================================================================
+ *                                          SECTION
+ *==================================================================================================*/
+ .section .RsdkSpt3 , "ax"   /* memory section where to store SPT code */
+
+/*==================================================================================================
+ *                                      LOCAL CONSTANTS
+ *==================================================================================================*/
+ //DSP cmd format: direct parameter passing, CRC enabled
+ #define DSP_CMD2_FORMAT (0x1)
+
+ //Attention: function ID must match the integer value assigned in the main application.
+ //See \Apps\DSP_Dispatcher_example\src\host_integration\dispatcher_func_list.inc
+ #define DSP_CMD2_FUNCID (1) /* RsdkBbe32Func2() */
+
+ /* Intention is to pass 2 32-bit integer arguments to the RsdkBbe32Func2() function: 0x05060708 and 0x10203040 */
+ #define DSP_CMD2_PARAM3 (0x0506)
+ #define DSP_CMD2_PARAM2 (0x07081020)
+ #define DSP_CMD2_PARAM1 (0x3040)
+
+ //8-bit CRC must be computed using CRC SAE J-1850 / x^8 +x^4 +x^3 +x^2 +1 polynomial, on DSP command bits 8:111, with bytes taken in little endian order
+ //e.g. for DSP_CMD2: [0x01 0x40 0x30 0x20 0x10 0x08 0x07 0x06 0x05 0x00 0x00 0x00 0x00]
+ #define DSP_CMD2_CRC (0x06)
+
+ .set DSP_CMD2_BITS_120_96, RSDK_DSP_CMD_BITS_120_96(DSP_CMD2_FORMAT, 0)
+ .set DSP_CMD2_BITS_95_64, 	RSDK_DSP_CMD_BITS_95_64(DSP_CMD2_PARAM3)
+ .set DSP_CMD2_BITS_63_32, 	RSDK_DSP_CMD_BITS_63_32(DSP_CMD2_PARAM2)
+ .set DSP_CMD2_BITS_31_0,  	RSDK_DSP_CMD_BITS_31_0(DSP_CMD2_PARAM1, DSP_CMD2_FUNCID, DSP_CMD2_CRC)
+
+/*==================================================================================================
+ *                                      GLOBAL REFERENCES
+ *==================================================================================================*/
+
+/** @endcond */
+/*==================================================================================================
+ *                                      GLOBAL FUNCTIONS
+ *==================================================================================================*/
+/*================================================================================================*/
+/**
+* @addtogroup spt_kernels_api_func
+* @{
+*
+* @fn             void *RsdkSptDspExampleDirectBlocking();
+* @brief
+* @details        Sends a blocking "DSP" command which triggers execution of a preselected function on the BBE32 DSP.
+*				  All command parameters are hardcoded at compile time.
+*                 This routine will exit only after the DSP function has replied by pushing a response to the SPT Response Queue.
+*
+* @note
+*
+* @}*/
+/*================================================================================================*/
+/** @cond */
+ .global RsdkSptDspExampleDirectBlocking
+ .global RsdkSptDspExampleDirectBlocking_size
+
+RsdkSptDspExampleDirectBlocking:
+    /*=========================================================================
+     * Kernel watermarking instruction without side-effects. WR_0 can be ovewritten
+     * with the output parameter, according to the SPT calling convention
+     *=========================================================================*/
+    set #RSDK_SPT_KERNEL_WATERMARK, WR_0
+
+    //function ID and parameters can be set directly in the SPT kernel at compile time:
+    /*=========================================================================
+     * DSP instruction works only with immediate value. Use the "RSDK_DSP_CMD_BITS_"
+     * macros to encode the parameters in the command
+     *=========================================================================*/
+    dsp .block, DSP_CMD2_BITS_120_96, DSP_CMD2_BITS_95_64, DSP_CMD2_BITS_63_32, DSP_CMD2_BITS_31_0
+
+    /*=========================================================================
+     * STOP cmd
+     *=========================================================================*/
+    stop
+
+ .set RsdkSptDspExampleDirectBlocking_size, .-RsdkSptDspExampleDirectBlocking
+/*******************************************************************************
+ * EOF
+ ******************************************************************************/
+/** @endcond */

@@ -1,0 +1,207 @@
+<?xml version='1.0'?>
+<datamodel version="3.0"
+           xmlns="http://www.tresos.de/_projects/DataModel2/08/root.xsd"
+           xmlns:a="http://www.tresos.de/_projects/DataModel2/08/attribute.xsd"
+           xmlns:v="http://www.tresos.de/_projects/DataModel2/06/schema.xsd"
+           xmlns:d="http://www.tresos.de/_projects/DataModel2/06/data.xsd">
+<!--
+*   @file    Spt.xdm
+*   @version 0.8.10
+*
+*   @brief   AUTOSAR Spt - Tresos Studio plugin schema file
+*   @details This file contains the schema configuration for and Spt Tresos Studio
+*            plugin.
+-->
+<!--
+====================================================================================================
+*   Project              : RTD AUTOSAR 4.7
+*   Platform             : CORTEXM
+*   Peripheral           : Spt
+*   Dependencies         : none
+*
+*   Autosar Version      : 4.7.0
+*   Autosar Revision     : ASR_REL_4_7_REV_0000
+*   Autosar Conf.Variant :
+*   SW Version           : 0.8.10
+*   Build Version        : SAF85_RTD_2_0_0_CD01_D2306_ASR_REL_4_7_REV_0000_20230623
+
+*   Copyright 2023-2024 NXP Semiconductors
+====================================================================================================
+-->
+  <d:ctr type="AUTOSAR" factory="autosar"
+         xmlns:ad="http://www.tresos.de/_projects/DataModel2/08/admindata.xsd"
+         xmlns:icc="http://www.tresos.de/_projects/DataModel2/08/implconfigclass.xsd"
+         xmlns:mt="http://www.tresos.de/_projects/DataModel2/11/multitest.xsd" >
+    <d:lst type="TOP-LEVEL-PACKAGES">
+      <d:ctr name="TS_T40D47M8I10R0" type="AR-PACKAGE">
+        <a:a name="UUID" value="ECUC:eae2a5e4-a163-429c-ab89-c6cc99dc185f"/>
+        <d:lst type="ELEMENTS">
+          <d:chc name="Spt" type="AR-ELEMENT" value="MODULE-DEF">
+            <v:ctr type="MODULE-DEF">
+              <a:a name="RELEASE" value="asc:4.7"/>
+              <a:a name="ADMIN-DATA" type="ADMIN-DATA">
+                <ad:ADMIN-DATA>
+                  <ad:DOC-REVISIONS>
+                    <ad:DOC-REVISION>
+                      <ad:REVISION-LABEL>4.6.0</ad:REVISION-LABEL>
+                      <ad:ISSUED-BY>AUTOSAR</ad:ISSUED-BY>
+                      <ad:DATE>2014-10-31</ad:DATE>
+                    </ad:DOC-REVISION>
+                  </ad:DOC-REVISIONS>
+                </ad:ADMIN-DATA>
+              </a:a>
+
+              <a:a name="UUID" value="ECUC:c2e852b0-b79b-63fc-fc77-745e045720ed"/>
+
+              <v:ctr name="SptGeneral" type="IDENTIFIABLE">
+                <a:a name="DESC">
+                  <a:v><![CDATA[EN:<html><p>Configuration of the SPT module.</p></html>]]></a:v>
+                </a:a>
+                <a:a name="UUID" value="ECUC:3c3afe65-1470-4b71-9734-4929dbb81566"/>
+
+                <v:var name="POST_BUILD_VARIANT_USED" type="BOOLEAN">
+                  <a:a name="DESC"
+                      value="Indicates whether a module implementation has or plans to have (i.e., introduced at link or post-build time) new post-build variation points."/>
+                  <a:a name="LABEL" value="Post Build Variant Used"/>
+                  <a:a name="ORIGIN" value="EB"/>
+                  <a:a name="POSTBUILDVARIANTVALUE" value="false"/>
+                  <a:a name="UUID" value="ECUC:2f26f38e-0125-4aef-929a-17e0c28c627e"/>
+                  <a:da name="DEFAULT" value="false"/>
+                  <a:da name="READONLY" value="false"/>
+                  <a:da name="TOOLTIP"
+                        value="Indicates whether a module implementation has or plans to have (i.e., introduced at link or post-build time) new post-build variation points."/>
+                </v:var>
+
+                <v:var name="SptDevErrorDetect" type="BOOLEAN">
+                  <a:a name="DESC"
+                      value="Pre-processor switch to enable/disable development error detection for Spt API"/>
+                  <a:a name="LABEL" value="SptDevErrorDetect"/>
+                  <a:a name="ORIGIN" value="NXP"/>
+                  <a:a name="POSTBUILDVARIANTVALUE" value="false"/>
+                  <a:a name="UUID" value="ECUC:ff8cb225-9365-4f2c-b291-7af1239c3a26"/>
+                  <a:da name="DEFAULT" value="true"/>
+                  <a:da name="READONLY" value="false"/>
+                  <a:da name="TOOLTIP"
+                        value="Pre-processor switch to enable/disable development error detection for Spt API"/>
+                </v:var>
+
+                <v:var name="SptHaltOnError" type="BOOLEAN">
+                  <a:a name="DESC"
+                      value="Pre-processor switch to enable/disable halting on error for development errors for Spt API"/>
+                  <a:a name="LABEL" value="SptHaltOnError"/>
+                  <a:a name="ORIGIN" value="NXP"/>
+                  <a:a name="POSTBUILDVARIANTVALUE" value="false"/>
+                  <a:a name="UUID" value="ECUC:3f36a0db-6bf1-405b-bde7-155743781fee"/>
+                  <a:da name="DEFAULT" value="false"/>
+                  <a:a name="INVALID" type="XPath">
+                    <a:tst expr="not(../SptDevErrorDetect = 'true') and (. = 'true')" true="SptGeneral/SptDevErrorDetect must be enabled."/>
+                  </a:a>
+                  <a:da name="READONLY" value="false"/>
+                  <a:da name="TOOLTIP"
+                        value="Pre-processor switch to enable/disable haling on error for development errors for Spt API"/>
+                </v:var>
+
+                <v:var name="SptSingleThread" type="BOOLEAN">
+                  <a:a name="DESC"
+                      value="Pre-processor switch to enable/disable support for exclusive areas in the SPT driver (If all SPT driver calls are made from the same thread, there is no need for exclusive ares)."/>
+                  <a:a name="LABEL" value="SptSingleThread"/>
+                  <a:a name="ORIGIN" value="NXP"/>
+                  <a:a name="POSTBUILDVARIANTVALUE" value="false"/>
+                  <a:a name="UUID" value="ECUC:10729ee4-cac9-46c3-ad22-5e43ce53fd13"/>
+                  <a:da name="DEFAULT" value="true"/>
+                  <a:da name="READONLY" value="false"/>
+                  <a:da name="TOOLTIP"
+                        value="Pre-processor switch to enable/disable support for exclusive areas in the SPT driver (If all SPT driver calls are made from the same thread, there is no need for exclusive ares)."/>
+                </v:var>
+
+                <v:var name="SptVersionInfoApi" type="BOOLEAN">
+                  <a:a name="DESC"
+                      value="Pre-processor switch to enable/disable version info report for Spt API"/>
+                  <a:a name="LABEL" value="SptVersionInfoApi"/>
+                  <a:a name="ORIGIN" value="NXP"/>
+                  <a:a name="POSTBUILDVARIANTVALUE" value="false"/>
+                  <a:a name="UUID" value="ECUC:6272106d-1c61-4f79-b4e1-5ab6179b6c65"/>
+                  <a:da name="DEFAULT" value="true"/>
+                  <a:da name="READONLY" value="false"/>
+                  <a:da name="TOOLTIP"
+                        value="Pre-processor switch to enable/disable version info report for Spt API"/>
+                </v:var>
+
+                <v:var name="SptDspEnable" type="BOOLEAN">
+                  <a:a name="DESC"
+                      value="Pre-processor switch to enable/disable DSP support from the SPT driver"/>
+                  <a:a name="LABEL" value="SptDspEnable"/>
+                  <a:a name="ORIGIN" value="NXP"/>
+                  <a:a name="POSTBUILDVARIANTVALUE" value="false"/>
+                  <a:a name="UUID" value="ECUC:34d18e4a-b5d0-45ba-bdfa-9435f156560a"/>
+                  <a:da name="DEFAULT" value="true"/>
+                  <a:da name="READONLY" value="false"/>
+                  <a:da name="TOOLTIP"
+                        value="Pre-processor switch to enable/disable DSP support from the SPT driver"/>
+                </v:var>
+
+                <v:var name="SptRunPoll" type="BOOLEAN">
+                  <a:a name="DESC"
+                      value="Pre-processor switch to enable/disable polling support from the SPT driver (If this option is true, it allows the SPT context to be configured in polling mode at runtime, but does not mean that IRQ configuration is not an option)."/>
+                  <a:a name="LABEL" value="SptRunPoll"/>
+                  <a:a name="ORIGIN" value="NXP"/>
+                  <a:a name="POSTBUILDVARIANTVALUE" value="false"/>
+                  <a:a name="UUID" value="ECUC:b6974cce-27a9-4310-b189-c0d9bfae18b4"/>
+                  <a:da name="DEFAULT" value="true"/>
+                  <a:da name="READONLY" value="false"/>
+                  <a:da name="TOOLTIP"
+                        value="Pre-processor switch to enable/disable polling support from the SPT driver (If this option is true, it allows the SPT context to be configured in polling mode at runtime, but does not mean that IRQ configuration is not an option)."/>
+                </v:var>
+              </v:ctr>
+
+              <v:ctr name="SptSetup" type="IDENTIFIABLE">
+                <a:a name="DESC"
+                    value="Contains initialization parameters for the SPT Driver."/>
+                <a:a name="UUID" value="ECUC:562d0b86-f75f-4191-8dd5-36144c6aa5b3"/>
+
+                <v:var name="SptSetupStructureName" type="STRING">
+                    <a:a name="DESC"
+                        value="The name of the structure to be used by Spt_Setup()."/>
+                    <a:a name="LABEL" value="The Name of the Setup structure."/>
+                    <a:a name="ORIGIN" value="NXP"/>
+                    <a:a name="SCOPE" value="LOCAL"/>
+                    <a:a name="SYMBOLICNAMEVALUE" value="false"/>
+                    <a:a name="POSTBUILDVARIANTVALUE" value="true"/>
+                    <a:a name="UUID" value="ECUC:96455f3e-0576-078a-8083-ab68666c339d"/>
+                    <a:da name="DEFAULT" value="sptInitInfo"/>
+                    <a:da name="INVALID" type="XPath" expr="text:grep( . , '^[A-Za-z][A-Za-z_0-9]*')"
+                            false="The name must be an accepted C symbol and must not start with _." />
+                </v:var>
+
+                <v:var name="SptDspEnable" type="BOOLEAN">
+                  <a:a name="DESC"
+                      value="Enable the BBE32 DSP to boot-up and start running the DSP Dispatcher."/>
+                  <a:a name="LABEL" value="dspEn"/>
+                  <a:a name="ORIGIN" value="NXP"/>
+                  <a:a name="POSTBUILDVARIANTVALUE" value="false"/>
+                  <a:a name="UUID" value="ECUC:c65c2163-2090-4cc3-bb91-a8461e1c2349"/>
+                  <a:da name="DEFAULT" value="false"/>
+                  <a:a name="INVALID" type="XPath">
+                    <a:tst expr="not(../../SptGeneral/SptDspEnable = 'true') and (. = 'true')" true="SptGeneral/SptDspEnable must be enabled."/>
+                  </a:a>
+                  <a:a name="EDITABLE" type="XPath">
+                    <a:tst expr="../../SptGeneral/POST_BUILD_VARIANT_USED = 'true'"/>
+                  </a:a>
+                  <a:da name="READONLY" value="false"/>
+                  <a:da name="TOOLTIP"
+                      value="Enable the BBE32 DSP to boot-up and start running the DSP Dispatcher."/>
+                </v:var>
+
+              </v:ctr>
+
+              <d:ref type="REFINED_MODULE_DEF" value="ASPath:/AUTOSAR/EcucDefs/Spt"/>
+            </v:ctr>
+          </d:chc>
+
+        </d:lst>
+      </d:ctr>
+    </d:lst>
+  </d:ctr>
+
+</datamodel>
+

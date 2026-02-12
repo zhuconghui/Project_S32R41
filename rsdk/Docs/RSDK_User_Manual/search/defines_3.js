@@ -1,0 +1,28 @@
+var searchData=
+[
+  ['debug_5fassert_0',['DEBUG_ASSERT',['../debug__tools_8h.html#ace8af4de47b773406e0ec4093cf7c726',1,'debug_tools.h']]],
+  ['dsphd_5fcfg_5far_5frelease_5fmajor_5fversion_1',['DSPHD_CFG_AR_RELEASE_MAJOR_VERSION',['../_dsphd__cfg_8h.html#a9547571033b9dbd9fd60ea77e65be6ff',1,'Dsphd_cfg.h']]],
+  ['dsphd_5fcfg_5far_5frelease_5fminor_5fversion_2',['DSPHD_CFG_AR_RELEASE_MINOR_VERSION',['../_dsphd__cfg_8h.html#a940410ebd8c2d7903455c9d69e2ec5b5',1,'Dsphd_cfg.h']]],
+  ['dsphd_5fcfg_5far_5frelease_5frevision_5fversion_3',['DSPHD_CFG_AR_RELEASE_REVISION_VERSION',['../_dsphd__cfg_8h.html#a1513847702beb1f7166e305732981f8a',1,'Dsphd_cfg.h']]],
+  ['dsphd_5fcfg_5fh_4',['DSPHD_CFG_H',['../_dsphd__cfg_8h.html#a658b840a59fc81f1ab4f8c0f4c62b2ec',1,'Dsphd_cfg.h']]],
+  ['dsphd_5fcfg_5fsw_5fmajor_5fversion_5',['DSPHD_CFG_SW_MAJOR_VERSION',['../_dsphd__cfg_8h.html#a11c44ad8482b195a5636dd5b9901f1eb',1,'Dsphd_cfg.h']]],
+  ['dsphd_5fcfg_5fsw_5fminor_5fversion_6',['DSPHD_CFG_SW_MINOR_VERSION',['../_dsphd__cfg_8h.html#a5bb1cdfd0efaf07b6e17c077f0d0aa5e',1,'Dsphd_cfg.h']]],
+  ['dsphd_5fcfg_5fsw_5fpatch_5fversion_7',['DSPHD_CFG_SW_PATCH_VERSION',['../_dsphd__cfg_8h.html#a6c748dfd791901eb062c84d6120eef4e',1,'Dsphd_cfg.h']]],
+  ['dsphd_5fcfg_5fvendor_5fid_8',['DSPHD_CFG_VENDOR_ID',['../_dsphd__cfg_8h.html#ae40d0e52374f43cfa06f2f69a82c33d8',1,'Dsphd_cfg.h']]],
+  ['dsphd_5fe_5fparam_5fpointer_9',['DSPHD_E_PARAM_POINTER',['../_c_d_d___dsphd_8h.html#a3cc8186fd640151f5fc076e737160d5d',1,'CDD_Dsphd.h']]],
+  ['dsphd_5fe_5fparam_5fvalue_10',['DSPHD_E_PARAM_VALUE',['../_c_d_d___dsphd_8h.html#a148d942a731746d94700891425c8c1a4',1,'CDD_Dsphd.h']]],
+  ['dsphd_5fhalt_5fon_5ferror_11',['DSPHD_HALT_ON_ERROR',['../_dsphd__cfg_8h.html#aed752e90c436d285e77512676730b84d',1,'Dsphd_cfg.h']]],
+  ['dsphd_5finstance_5fid_12',['DSPHD_INSTANCE_ID',['../_c_d_d___dsphd_8h.html#ace6bdb3a1a7da7d152604358ca37edf1',1,'CDD_Dsphd.h']]],
+  ['dsphd_5freport_5ferror_13',['DSPHD_REPORT_ERROR',['../_c_d_d___dsphd_8h.html#aa2b3bb584810c8ca0da816636eac776a',1,'CDD_Dsphd.h']]],
+  ['dsphd_5fstart_5fsec_5fcode_14',['DSPHD_START_SEC_CODE',['../_c_d_d___dsphd_8h.html#af71ce07ba0aa2133649efc2e388a745f',1,'CDD_Dsphd.h']]],
+  ['dsphd_5fstart_5fsec_5fvar_5fno_5finit_5funspecified_15',['DSPHD_START_SEC_VAR_NO_INIT_UNSPECIFIED',['../_dsphd___types_8h.html#ab5ec499811e8292cf676d75c27e33b4d',1,'Dsphd_Types.h']]],
+  ['dsphd_5fstop_5fsec_5fcode_16',['DSPHD_STOP_SEC_CODE',['../_c_d_d___dsphd_8h.html#abd90ba7aaaf21b55856e4205c4e5d2ef',1,'CDD_Dsphd.h']]],
+  ['dsphd_5fstop_5fsec_5fvar_5fno_5finit_5funspecified_17',['DSPHD_STOP_SEC_VAR_NO_INIT_UNSPECIFIED',['../_dsphd___types_8h.html#a66f6f6f931cc903e339a81ae71b0c1d7',1,'Dsphd_Types.h']]],
+  ['dsphd_5ftypes_5far_5frelease_5fmajor_5fversion_18',['DSPHD_TYPES_AR_RELEASE_MAJOR_VERSION',['../_dsphd___types_8h.html#a68592c9ef37b4f3812b607c3a617af91',1,'Dsphd_Types.h']]],
+  ['dsphd_5ftypes_5far_5frelease_5fminor_5fversion_19',['DSPHD_TYPES_AR_RELEASE_MINOR_VERSION',['../_dsphd___types_8h.html#a5a6155be9ac3f14122b59c4e7b61f593',1,'Dsphd_Types.h']]],
+  ['dsphd_5ftypes_5far_5frelease_5frevision_5fversion_20',['DSPHD_TYPES_AR_RELEASE_REVISION_VERSION',['../_dsphd___types_8h.html#a1081a4d525372ca4a3b98bf8a080f1d0',1,'Dsphd_Types.h']]],
+  ['dsphd_5ftypes_5fsw_5fmajor_5fversion_21',['DSPHD_TYPES_SW_MAJOR_VERSION',['../_dsphd___types_8h.html#a0860b8d85783ba48df0c20b532292dcc',1,'Dsphd_Types.h']]],
+  ['dsphd_5ftypes_5fsw_5fminor_5fversion_22',['DSPHD_TYPES_SW_MINOR_VERSION',['../_dsphd___types_8h.html#a14801add261cbc8b891e5acaf0299cf7',1,'Dsphd_Types.h']]],
+  ['dsphd_5ftypes_5fsw_5fpatch_5fversion_23',['DSPHD_TYPES_SW_PATCH_VERSION',['../_dsphd___types_8h.html#a0702ecd886e4bcdfd7315cb343a36861',1,'Dsphd_Types.h']]],
+  ['dsphd_5ftypes_5fvendor_5fid_24',['DSPHD_TYPES_VENDOR_ID',['../_dsphd___types_8h.html#abff2958764eb99c8caedf278a9665039',1,'Dsphd_Types.h']]]
+];

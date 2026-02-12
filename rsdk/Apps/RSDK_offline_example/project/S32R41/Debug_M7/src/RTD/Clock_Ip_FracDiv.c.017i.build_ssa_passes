@@ -1,0 +1,181 @@
+Clock_Ip_CompleteDfsMfiMfn (Clock_Ip_NameType DfsName)
+{
+  uint32 DividerIndex;
+  uint32 Instance;
+  Clock_Ip_DfsStatusType Status;
+  uint32 DfsPortStatus;
+  uint32 TimeoutTicks;
+  uint32 ElapsedTime;
+  uint32 StartTime;
+  boolean TimeoutOccurred;
+  Clock_Ip_DfsStatusType D.6616;
+
+  <bb 2> :
+  TimeoutOccurred = 0;
+  Status = 2;
+  _1 = (int) DfsName;
+  _2 = Clock_Ip_au8ClockFeatures[_1][0];
+  Instance = (uint32) _2;
+  _3 = (int) DfsName;
+  _4 = Clock_Ip_au8ClockFeatures[_3][5];
+  DividerIndex = (uint32) _4;
+  _5 = Clock_Ip_apxDfs[Instance];
+  _6 = _5->PORTRESET;
+  _7 = _6 >> DividerIndex;
+  _8 = _7 & 1;
+  if (_8 == 0)
+    goto <bb 3>; [INV]
+  else
+    goto <bb 8>; [INV]
+
+  <bb 3> :
+  Clock_Ip_StartTimeout (&StartTime, &ElapsedTime, &TimeoutTicks, 50000);
+
+  <bb 4> :
+  _9 = Clock_Ip_apxDfs[Instance];
+  _10 = _9->PORTSR;
+  _11 = 1 << DividerIndex;
+  _12 = _10 & _11;
+  DfsPortStatus = _12 & 3;
+  TimeoutTicks.0_13 = TimeoutTicks;
+  TimeoutOccurred = Clock_Ip_TimeoutExpired (&StartTime, &ElapsedTime, TimeoutTicks.0_13);
+  if (DfsPortStatus == 0)
+    goto <bb 5>; [INV]
+  else
+    goto <bb 6>; [INV]
+
+  <bb 5> :
+  _14 = ~TimeoutOccurred;
+  if (_14 != 0)
+    goto <bb 4>; [INV]
+  else
+    goto <bb 6>; [INV]
+
+  <bb 6> :
+  if (TimeoutOccurred != 0)
+    goto <bb 7>; [INV]
+  else
+    goto <bb 9>; [INV]
+
+  <bb 7> :
+  Status = 1;
+  Clock_Ip_ReportClockErrors (1, DfsName);
+  goto <bb 9>; [INV]
+
+  <bb 8> :
+  Status = 0;
+
+  <bb 9> :
+  D.6616 = Status;
+  StartTime = {CLOBBER};
+  ElapsedTime = {CLOBBER};
+  TimeoutTicks = {CLOBBER};
+
+  <bb 10> :
+<L9>:
+  return D.6616;
+
+}
+
+
+Clock_Ip_SetDfsMfiMfn (const struct Clock_Ip_FracDivConfigType * Config)
+{
+  uint32 Value;
+  uint32 FractionalPart;
+  uint32 IntegerPart;
+  uint32 DividerIndex;
+  uint32 Instance;
+
+  <bb 2> :
+  Value = 0;
+  if (Config != 0B)
+    goto <bb 3>; [INV]
+  else
+    goto <bb 5>; [INV]
+
+  <bb 3> :
+  _1 = Config->Name;
+  _2 = (int) _1;
+  _3 = Clock_Ip_au8ClockFeatures[_2][0];
+  Instance = (uint32) _3;
+  _4 = Config->Name;
+  _5 = (int) _4;
+  _6 = Clock_Ip_au8ClockFeatures[_5][5];
+  DividerIndex = (uint32) _6;
+  IntegerPart = Config->Value[0];
+  FractionalPart = Config->Value[1];
+  _7 = Config->Enable;
+  if (_7 != 0)
+    goto <bb 4>; [INV]
+  else
+    goto <bb 5>; [INV]
+
+  <bb 4> :
+  _8 = FractionalPart & 63;
+  Value = Value | _8;
+  _9 = IntegerPart << 8;
+  _10 = _9 & 65535;
+  Value = Value | _10;
+  _11 = Clock_Ip_apxDfs[Instance];
+  _11->DVPORT[DividerIndex] = Value;
+  _12 = Clock_Ip_apxDfs[Instance];
+  _13 = _12->PORTRESET;
+  _14 = 1 << DividerIndex;
+  _15 = ~_14;
+  _16 = Clock_Ip_apxDfs[Instance];
+  _17 = _13 & _15;
+  _16->PORTRESET = _17;
+
+  <bb 5> :
+  return;
+
+}
+
+
+Clock_Ip_ResetDfsMfiMfn (const struct Clock_Ip_FracDivConfigType * Config)
+{
+  uint32 DividerIndex;
+  uint32 Instance;
+
+  <bb 2> :
+  _1 = Config->Name;
+  _2 = (int) _1;
+  _3 = Clock_Ip_au8ClockFeatures[_2][0];
+  Instance = (uint32) _3;
+  _4 = Config->Name;
+  _5 = (int) _4;
+  _6 = Clock_Ip_au8ClockFeatures[_5][5];
+  DividerIndex = (uint32) _6;
+  _7 = Clock_Ip_apxDfs[Instance];
+  _8 = _7->PORTRESET;
+  _9 = 1 << DividerIndex;
+  _10 = Clock_Ip_apxDfs[Instance];
+  _11 = _8 | _9;
+  _10->PORTRESET = _11;
+  return;
+
+}
+
+
+Clock_Ip_CallbackFracDivEmptyComplete (Clock_Ip_NameType DfsName)
+{
+  Clock_Ip_DfsStatusType D.6604;
+
+  <bb 2> :
+  D.6604 = 0;
+
+  <bb 3> :
+<L0>:
+  return D.6604;
+
+}
+
+
+Clock_Ip_CallbackFracDivEmpty (const struct Clock_Ip_FracDivConfigType * Config)
+{
+  <bb 2> :
+  return;
+
+}
+
+

@@ -1,0 +1,479 @@
+OSActivateTaskInternal (TaskType taskId)
+{
+  OSWORD taskId;
+  OSDWORD regx;
+  OSDWORD D.5914;
+  register OSDWORD resultReg;
+  OSDWORD D.5916;
+  StatusType retStatus;
+  StatusType D.5887;
+  int _1;
+  unsigned char _2;
+  unsigned int _3;
+  unsigned int _4;
+  StatusType _12;
+  unsigned int OsSchedulerVector1_.7_13;
+  unsigned int _16;
+  unsigned int _17;
+  unsigned int _18;
+  struct OSTSKCB * _19;
+  struct OSTSKCB * OsRunning_.8_20;
+  int _22;
+  unsigned char _23;
+  int _24;
+  unsigned char _25;
+  unsigned int _26;
+  long unsigned int _27;
+  unsigned int OsSchedulerVector1_.6_28;
+  unsigned int _29;
+
+  <bb 2> :
+  retStatus_7 = 0;
+  if (retStatus_7 == 0)
+    goto <bb 3>; [INV]
+  else
+    goto <bb 12>; [INV]
+
+  <bb 3> :
+  _1 = (int) taskId_9(D);
+  _2 = OsTaskTable[_1].status;
+  _3 = (unsigned int) _2;
+  _4 = _3 & 16;
+  if (_4 != 0)
+    goto <bb 4>; [INV]
+  else
+    goto <bb 5>; [INV]
+
+  <bb 4> :
+  retStatus_10 = 4;
+  OSErrorHook_1 (retStatus_10);
+  goto <bb 12>; [INV]
+
+  <bb 5> :
+  taskId_21 = taskId_9(D);
+  _22 = (int) taskId_21;
+  _23 = OsTaskTable[_22].status;
+  _24 = (int) taskId_21;
+  _25 = _23 | 18;
+  OsTaskTable[_24].status = _25;
+  _26 = (unsigned int) taskId_21;
+  _27 = 2147483648 >> _26;
+  OsSchedulerVector1_.6_28 = OsSchedulerVector1_;
+  _29 = _27 | OsSchedulerVector1_.6_28;
+  OsSchedulerVector1_ = _29;
+
+  <bb 6> :
+  OsSchedulerVector1_.7_13 = OsSchedulerVector1_;
+  regx_14 = OsSchedulerVector1_.7_13;
+  __asm__ __volatile__("clz %0, %1" : "=r" resultReg_15 : "r" regx_14);
+  _16 = resultReg_15;
+
+  <bb 7> :
+<L8>:
+  _17 = _16;
+
+  <bb 8> :
+  _18 = _17;
+  _19 = OsPrioLink[_18];
+  OsRunning_.8_20 = OsRunning_;
+  if (_19 != OsRunning_.8_20)
+    goto <bb 9>; [INV]
+  else
+    goto <bb 10>; [INV]
+
+  <bb 9> :
+  OSTaskForceDispatch ();
+
+  <bb 10> :
+
+  <bb 11> :
+
+  <bb 12> :
+  # retStatus_5 = PHI <retStatus_10(4), retStatus_7(2), retStatus_7(11)>
+  _12 = retStatus_5;
+
+  <bb 13> :
+<L7>:
+  return _12;
+
+}
+
+
+OSChainTaskInternal (TaskType taskId)
+{
+  StatusType retStatus;
+  StatusType D.5878;
+  int _1;
+  unsigned char _2;
+  unsigned int _3;
+  unsigned int _4;
+  struct OSTSKCB * OsRunning_.4_5;
+  short unsigned int _6;
+  int _7;
+  unsigned char _8;
+  int _9;
+  unsigned char _10;
+  unsigned int _11;
+  long unsigned int _12;
+  unsigned int OsSchedulerVector1_.5_13;
+  unsigned int _14;
+  StatusType _24;
+
+  <bb 2> :
+  retStatus_17 = 0;
+  if (retStatus_17 == 0)
+    goto <bb 3>; [INV]
+  else
+    goto <bb 7>; [INV]
+
+  <bb 3> :
+  _1 = (int) taskId_19(D);
+  _2 = OsTaskTable[_1].status;
+  _3 = (unsigned int) _2;
+  _4 = _3 & 16;
+  if (_4 != 0)
+    goto <bb 4>; [INV]
+  else
+    goto <bb 6>; [INV]
+
+  <bb 4> :
+  OsRunning_.4_5 = OsRunning_;
+  _6 = OsRunning_.4_5->taskId;
+  if (taskId_19(D) != _6)
+    goto <bb 5>; [INV]
+  else
+    goto <bb 6>; [INV]
+
+  <bb 5> :
+  retStatus_20 = 4;
+  OSErrorHook_1 (retStatus_20);
+  goto <bb 7>; [INV]
+
+  <bb 6> :
+  _7 = (int) taskId_19(D);
+  _8 = OsTaskTable[_7].status;
+  _9 = (int) taskId_19(D);
+  _10 = _8 | 18;
+  OsTaskTable[_9].status = _10;
+  _11 = (unsigned int) taskId_19(D);
+  _12 = 2147483648 >> _11;
+  OsSchedulerVector1_.5_13 = OsSchedulerVector1_;
+  _14 = _12 | OsSchedulerVector1_.5_13;
+  OsSchedulerVector1_ = _14;
+
+  <bb 7> :
+  # retStatus_15 = PHI <retStatus_17(2), retStatus_20(5), retStatus_17(6)>
+  _24 = retStatus_15;
+
+  <bb 8> :
+<L6>:
+  return _24;
+
+}
+
+
+OSGetTaskStateInternal (TaskType taskId, TaskStateType * stateRef)
+{
+  OSWORD taskId;
+  TaskStateType * stateRef;
+  StatusType retStatus;
+  StatusType D.5864;
+  StatusType _5;
+  struct OSTSKCB * OsRunning_.3_8;
+  short unsigned int _9;
+  int _10;
+  unsigned char _11;
+  unsigned int _12;
+  unsigned int _13;
+
+  <bb 2> :
+  retStatus_1 = 0;
+  taskId_6 = taskId_3(D);
+  stateRef_7 = stateRef_4(D);
+  OsRunning_.3_8 = OsRunning_;
+  _9 = OsRunning_.3_8->taskId;
+  if (taskId_6 == _9)
+    goto <bb 3>; [INV]
+  else
+    goto <bb 4>; [INV]
+
+  <bb 3> :
+  *stateRef_7 = 0;
+  goto <bb 7>; [INV]
+
+  <bb 4> :
+  _10 = (int) taskId_6;
+  _11 = OsTaskTable[_10].status;
+  _12 = (unsigned int) _11;
+  _13 = _12 & 16;
+  if (_13 != 0)
+    goto <bb 5>; [INV]
+  else
+    goto <bb 6>; [INV]
+
+  <bb 5> :
+  *stateRef_7 = 2;
+  goto <bb 7>; [INV]
+
+  <bb 6> :
+  *stateRef_7 = 3;
+
+  <bb 7> :
+
+  <bb 8> :
+  _5 = retStatus_1;
+
+  <bb 9> :
+<L0>:
+  return _5;
+
+}
+
+
+OSInitTasks ()
+{
+  const struct OSTSK * task_cfg;
+  struct OSTSKCB * task_cb;
+  OSCARDINAL i;
+  void (*<T4d0>) (void) _1;
+  short unsigned int _2;
+  short unsigned int _3;
+  int _4;
+  unsigned char _5;
+  unsigned char _6;
+  unsigned char _7;
+  unsigned int _8;
+  unsigned int _9;
+  unsigned char _10;
+  unsigned char _11;
+  short unsigned int _12;
+  unsigned int _13;
+  long unsigned int _14;
+  unsigned int OsSchedulerVector1_.1_15;
+  unsigned int _16;
+  unsigned int OsSchedulerVector1_.2_17;
+  unsigned int _18;
+
+  <bb 2> :
+  i_24 = 0;
+  goto <bb 4>; [INV]
+
+  <bb 3> :
+  OsPrioLink[i_19] = 0B;
+  i_50 = i_19 + 1;
+
+  <bb 4> :
+  # i_19 = PHI <i_24(2), i_50(3)>
+  if (i_19 <= 1)
+    goto <bb 3>; [INV]
+  else
+    goto <bb 5>; [INV]
+
+  <bb 5> :
+  i_26 = 0;
+  goto <bb 9>; [INV]
+
+  <bb 6> :
+  task_cb_37 = &OsTaskTable[i_20];
+  task_cfg_38 = &OsTaskCfgTable[i_20];
+  _1 = task_cfg_38->entry;
+  task_cb_37->entry = _1;
+  _2 = task_cfg_38->taskId;
+  task_cb_37->taskId = _2;
+  _3 = task_cfg_38->taskId;
+  _4 = (int) _3;
+  OsPrioLink[_4] = task_cb_37;
+  _5 = task_cfg_38->property;
+  _6 = _5 | 2;
+  task_cb_37->status = _6;
+  task_cb_37->tos = 0B;
+  task_cb_37->bos = &OS_MAIN_STACK_MIN;
+  task_cb_37->resources = 0B;
+  _7 = task_cfg_38->property;
+  _8 = (unsigned int) _7;
+  _9 = _8 & 8;
+  if (_9 != 0)
+    goto <bb 7>; [INV]
+  else
+    goto <bb 8>; [INV]
+
+  <bb 7> :
+  _10 = task_cb_37->status;
+  _11 = _10 | 18;
+  task_cb_37->status = _11;
+  _12 = task_cfg_38->taskId;
+  _13 = (unsigned int) _12;
+  _14 = 2147483648 >> _13;
+  OsSchedulerVector1_.1_15 = OsSchedulerVector1_;
+  _16 = _14 | OsSchedulerVector1_.1_15;
+  OsSchedulerVector1_ = _16;
+
+  <bb 8> :
+  i_48 = i_20 + 1;
+
+  <bb 9> :
+  # i_20 = PHI <i_26(5), i_48(8)>
+  if (i_20 == 0)
+    goto <bb 6>; [INV]
+  else
+    goto <bb 10>; [INV]
+
+  <bb 10> :
+  task_cb_27 = &OsTaskTable[1];
+  task_cb_27->entry = 0B;
+  task_cb_27->taskId = 1;
+  OsPrioLink[1] = task_cb_27;
+  task_cb_27->status = 16;
+  OsSchedulerVector1_.2_17 = OsSchedulerVector1_;
+  _18 = OsSchedulerVector1_.2_17 | 1073741824;
+  OsSchedulerVector1_ = _18;
+  task_cb_27->tos = 0B;
+  task_cb_27->bos = &OS_MAIN_STACK_MIN;
+  task_cb_27->resources = 0B;
+  OsRunning_ = task_cb_27;
+  return;
+
+}
+
+
+OS_GetTaskState (TaskType taskId, TaskStateType * stateRef)
+{
+  StatusType retStatus;
+  StatusType D.5860;
+  StatusType _9;
+
+  <bb 2> :
+  retStatus_3 = 0;
+
+  <bb 3> :
+  if (retStatus_3 == 0)
+    goto <bb 4>; [INV]
+  else
+    goto <bb 5>; [INV]
+
+  <bb 4> :
+  retStatus_8 = OSGetTaskStateInternal (taskId_5(D), stateRef_6(D));
+
+  <bb 5> :
+  # retStatus_1 = PHI <retStatus_3(3), retStatus_8(4)>
+  _9 = retStatus_1;
+
+  <bb 6> :
+<L4>:
+  return _9;
+
+}
+
+
+OS_GetTaskID (TaskType * taskIdRef)
+{
+  StatusType retStatus;
+  StatusType D.5854;
+  struct OSTSKCB * OsRunning_.0_1;
+  short unsigned int _2;
+  StatusType _8;
+
+  <bb 2> :
+  retStatus_4 = 0;
+
+  <bb 3> :
+  if (retStatus_4 == 0)
+    goto <bb 4>; [INV]
+  else
+    goto <bb 5>; [INV]
+
+  <bb 4> :
+  OsRunning_.0_1 = OsRunning_;
+  _2 = OsRunning_.0_1->taskId;
+  *taskIdRef_6(D) = _2;
+
+  <bb 5> :
+  _8 = retStatus_4;
+
+  <bb 6> :
+<L4>:
+  return _8;
+
+}
+
+
+OS_ChainTask (TaskType taskId)
+{
+  StatusType retStatus;
+  StatusType D.5848;
+  StatusType _8;
+
+  <bb 2> :
+  retStatus_2 = 0;
+  retStatus_6 = OSChainTaskInternal (taskId_4(D));
+  if (retStatus_6 == 0)
+    goto <bb 3>; [INV]
+  else
+    goto <bb 4>; [INV]
+
+  <bb 3> :
+  OSTaskTerminateDispatch ();
+
+  <bb 4> :
+  _8 = retStatus_6;
+
+  <bb 5> :
+<L2>:
+  return _8;
+
+}
+
+
+OS_TerminateTask ()
+{
+  StatusType retStatus;
+  StatusType D.5844;
+  StatusType _5;
+
+  <bb 2> :
+  retStatus_2 = 0;
+  if (retStatus_2 == 0)
+    goto <bb 3>; [INV]
+  else
+    goto <bb 4>; [INV]
+
+  <bb 3> :
+  OSTaskTerminateDispatch ();
+
+  <bb 4> :
+  _5 = retStatus_2;
+
+  <bb 5> :
+<L2>:
+  return _5;
+
+}
+
+
+OS_ActivateTask (TaskType taskId)
+{
+  StatusType retStatus;
+  StatusType D.5840;
+  StatusType _8;
+
+  <bb 2> :
+  retStatus_3 = 0;
+  if (retStatus_3 == 0)
+    goto <bb 3>; [INV]
+  else
+    goto <bb 4>; [INV]
+
+  <bb 3> :
+  retStatus_7 = OSActivateTaskInternal (taskId_5(D));
+
+  <bb 4> :
+  # retStatus_1 = PHI <retStatus_3(2), retStatus_7(3)>
+  _8 = retStatus_1;
+
+  <bb 5> :
+<L2>:
+  return _8;
+
+}
+
+

@@ -1,0 +1,38 @@
+var group__spt__driver__api__err =
+[
+    [ "Spt_ErrStatusType", "group__spt__driver__api__err.html#ga9ba68d9d805dbd63a8de9fe78b6e787c", [
+      [ "SPT_E_INVALID_PARAM", "group__spt__driver__api__err.html#gga9ba68d9d805dbd63a8de9fe78b6e787caa6b750850a7c07d0c982ce42dfbcd747", null ],
+      [ "SPT_E_INVALID_STATE", "group__spt__driver__api__err.html#gga9ba68d9d805dbd63a8de9fe78b6e787cae3180a2a41e14b5a085024bf7349ebec", null ],
+      [ "SPT_E_TIMEOUT_BLOCK", "group__spt__driver__api__err.html#gga9ba68d9d805dbd63a8de9fe78b6e787cafafbc66335cef996eca1a10ac3f3eafa", null ],
+      [ "SPT_E_WARN_HW_BUSY", "group__spt__driver__api__err.html#gga9ba68d9d805dbd63a8de9fe78b6e787cabd548498cf7dd9d3f223878dac7db6c9", null ],
+      [ "SPT_E_MEM", "group__spt__driver__api__err.html#gga9ba68d9d805dbd63a8de9fe78b6e787ca3a5884b2d85d735f7fd8daa03f856b41", null ],
+      [ "SPT_E_DMA", "group__spt__driver__api__err.html#gga9ba68d9d805dbd63a8de9fe78b6e787ca5f08cde6fb2c72aad59574de08fc3955", null ],
+      [ "SPT_E_HW_ACC", "group__spt__driver__api__err.html#gga9ba68d9d805dbd63a8de9fe78b6e787cae423594a31a5c6b3021517c7e020541c", null ],
+      [ "SPT_E_ILLOP", "group__spt__driver__api__err.html#gga9ba68d9d805dbd63a8de9fe78b6e787ca904d670d28182e66d2c0be53812deb19", null ],
+      [ "SPT_E_TIMEOUT_START", "group__spt__driver__api__err.html#gga9ba68d9d805dbd63a8de9fe78b6e787cacc77f1680ee2f689a51f5b8a94e1740c", null ],
+      [ "SPT_E_TIMEOUT_STOP", "group__spt__driver__api__err.html#gga9ba68d9d805dbd63a8de9fe78b6e787ca82cd779fb58625bd7752cee0065db3b6", null ],
+      [ "SPT_E_WARN_UNEXPECTED_STOP", "group__spt__driver__api__err.html#gga9ba68d9d805dbd63a8de9fe78b6e787ca5743109107ab9309cb8689ae0de699c2", null ],
+      [ "SPT_E_HIST_OVF0", "group__spt__driver__api__err.html#gga9ba68d9d805dbd63a8de9fe78b6e787ca4766f516c6cc595edbb0fda4391d510d", null ],
+      [ "SPT_E_HIST_OVF1", "group__spt__driver__api__err.html#gga9ba68d9d805dbd63a8de9fe78b6e787ca702c9f27fa2535357b13ad983528a15d", null ],
+      [ "SPT_E_IRQ_REG", "group__spt__driver__api__err.html#gga9ba68d9d805dbd63a8de9fe78b6e787ca160498e596602c5d2fd1a14cda39db28", null ],
+      [ "SPT_E_UNMAP_SPT_MEM", "group__spt__driver__api__err.html#gga9ba68d9d805dbd63a8de9fe78b6e787cafc01091a0445fbcbfe8f564b10ee6ab4", null ],
+      [ "SPT_E_WR", "group__spt__driver__api__err.html#gga9ba68d9d805dbd63a8de9fe78b6e787ca47e9b6a69861f24512121d3f0bedef9a", null ],
+      [ "SPT_E_ILLOP_SCS0", "group__spt__driver__api__err.html#gga9ba68d9d805dbd63a8de9fe78b6e787ca46e57713d59c572b83b392c5ade615c8", null ],
+      [ "SPT_E_ILLOP_SCS1", "group__spt__driver__api__err.html#gga9ba68d9d805dbd63a8de9fe78b6e787cafe2ff9af0bfaa1552746d7bfbab00212", null ],
+      [ "SPT_E_WARN_DRV_BUSY", "group__spt__driver__api__err.html#gga9ba68d9d805dbd63a8de9fe78b6e787cac3d769ec8bde60bafc44628655f3c5c1", null ],
+      [ "SPT_E_API_INIT_LOCK_FAIL", "group__spt__driver__api__err.html#gga9ba68d9d805dbd63a8de9fe78b6e787ca62c78662b93ed1d1f1c7656ca7c91149", null ],
+      [ "SPT_E_API_ENTER_LOCK_FAIL", "group__spt__driver__api__err.html#gga9ba68d9d805dbd63a8de9fe78b6e787caf1f0ec375291ccc09da9930f5ea848ba", null ],
+      [ "SPT_E_API_ENTER_UNLOCK_FAIL", "group__spt__driver__api__err.html#gga9ba68d9d805dbd63a8de9fe78b6e787ca2baa3c8e4c434162e4e4c6a2f450ccb1", null ],
+      [ "SPT_E_API_EXIT_LOCK_FAIL", "group__spt__driver__api__err.html#gga9ba68d9d805dbd63a8de9fe78b6e787ca8e41ad1cfad96c613fc942c58fefe743", null ],
+      [ "SPT_E_API_EXIT_UNLOCK_FAIL", "group__spt__driver__api__err.html#gga9ba68d9d805dbd63a8de9fe78b6e787ca322a6830108a91ddde6bb3f10f5db5b2", null ],
+      [ "SPT_E_THR_CREATE", "group__spt__driver__api__err.html#gga9ba68d9d805dbd63a8de9fe78b6e787cab931a595a1ba13002999079c31b840e6", null ],
+      [ "SPT_E_THR_TERM", "group__spt__driver__api__err.html#gga9ba68d9d805dbd63a8de9fe78b6e787cab9fde07a57e6fdd19d9812734f5bbea1", null ],
+      [ "SPT_E_OAL_COMM_INIT", "group__spt__driver__api__err.html#gga9ba68d9d805dbd63a8de9fe78b6e787cadef1e5bea08dea0ebf0c15c516057329", null ],
+      [ "SPT_E_CHECK_WATERMARK", "group__spt__driver__api__err.html#gga9ba68d9d805dbd63a8de9fe78b6e787ca1372195569b3f91dfa93a6259ce3a0c6", null ],
+      [ "SPT_E_INIT_Q_FAIL", "group__spt__driver__api__err.html#gga9ba68d9d805dbd63a8de9fe78b6e787ca89ee6f23c23a22221dc94ed7713aa1ab", null ],
+      [ "SPT_E_BBE32_REBOOT", "group__spt__driver__api__err.html#gga9ba68d9d805dbd63a8de9fe78b6e787cad6f920bcf7a9b246cc6f72534bf82552", null ],
+      [ "SPT_E_INVALID_KERNEL", "group__spt__driver__api__err.html#gga9ba68d9d805dbd63a8de9fe78b6e787ca358baa37e6b7650cdcca65057c282a44", null ],
+      [ "SPT_E_HW_RST", "group__spt__driver__api__err.html#gga9ba68d9d805dbd63a8de9fe78b6e787cadc2e9b494d2fbd503701e14a63153dc8", null ],
+      [ "SPT_E_OTHER", "group__spt__driver__api__err.html#gga9ba68d9d805dbd63a8de9fe78b6e787cac6637d9d88b878dab51db5218e8888fe", null ]
+    ] ]
+];

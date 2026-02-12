@@ -1,0 +1,358 @@
+/**************************************************************************************************
+ *
+ *
+ * Copyright 2021 NXP
+ *
+ *****************************************************************************
+ *
+ * NXP Confidential and Proprietary. This software is owned or controlled by NXP and
+ * may only be used strictly in accordance with the applicable license terms.  By
+ * expressly accepting such terms or by downloading, installing, activating and/or
+ * otherwise using the software, you are agreeing that you have read, and that you
+ * agree to comply with and are bound by, such license terms.  If you do not agree to
+ * be bound by the applicable license terms, then you may not retain, install, activate or
+ * otherwise use the software.
+ *
+ **************************************************************************************************/
+
+/** @cond */
+/*==================================================================================================
+ *                                        INCLUDE FILES
+ *==================================================================================================*/
+ .include "oram.inc"                    /* include ORAM header file */
+ .include "tram.inc"                    /* include TRAM header file */
+ .include "wr.inc"                      /* include WR header file */
+ .include "spt_kernel_internals.inc"    /* include local defines */
+
+/*==================================================================================================
+ *                                          SECTION
+ *==================================================================================================*/
+ .section .RsdkSpt3 , "ax"   /* memory section where to store SPT code */
+
+/*==================================================================================================
+ *                                      LOCAL CONSTANTS
+ *==================================================================================================*/
+ .set SAMPLES_PER_CHIRP,         256
+ .set CHIRPS_PER_FRAME,          256
+ .set BYTES_COMPLEX_FFT_SAMPLE,    4
+ .set LOG2_FORMAT_BYTE,            2
+ .set HIST_BINS,                  64
+ .set BYTES_HIST_BINS,             2
+ .set CHANNELS_NO,                 4 /* total phy channels no */
+ .set FFT_SIZE,                   16
+ .set RANGE_BINS,               (SAMPLES_PER_CHIRP >> 1)
+ .set SRAM_SLICES,              ((CHANNELS_NO * CHIRPS_PER_FRAME) >> 1)
+
+/** @endcond */
+/*==================================================================================================
+ *                                      GLOBAL FUNCTIONS
+ *==================================================================================================*/
+/*================================================================================================*/
+/**
+* @addtogroup spt_kernels_api_func
+* @{
+*
+* @fn             void *RsdkSpt3Dfft256smp256crp4ch();
+* @brief          Function for 3D FFT, 256 chirps, 256 sample/chirp, 4 channels(CH#0..CH#3).
+* @details        Compute 3D FFT, storing results in SRAM.
+*
+* @param[in]      WR_1: 24bit(RE): 0 \n
+*                       24bit(IM): Offset(restricted to 24bit value!) of the INPUT buffer(Doppler FFT results),
+*                       relative to SRAM start address, @ref RSDK_SPT_CUBE_BASE_ADDR "RSDK_SPT_CUBE_BASE_ADDR".
+* @verbatim
+*                 INPUT Memory layout:
+*                 SRAM, 32bit complex(16b_Im + 16b_Re)
+*                 63:48               47:32               31:16               15:0
+*                 CH0_0-Im-Crp0       CH0_0-Re-Crp0       CH1_0-Im-Crp0       CH1_0-Re-Crp0
+*                 CH2_0-Im-Crp0       CH2_0-Re-Crp0       CH3_0_Im-Crp0       CH3_0-Re-Crp0
+*                 |                   |                   |                   |
+*                 CH0_0-Im-Crp255     CH0_0-Re-Crp255     CH1_0-Im-Crp255     CH1_0-Re-Crp255
+*                 CH2_0-Im-Crp255     CH2_0-Re-Crp255     CH3_0_Im-Crp255     CH3_0-Re-Crp255    ---> RangeBin #0
+*                 -------------------------------------------------------------------------------------------------
+*                 |                   |                   |                   |
+*                 |                   |                   |                   |
+*                 |                   |                   |                   |
+*                 -------------------------------------------------------------------------------------------------
+*                 CH0_127-Im-Crp0     CH0_127-Re-Crp0     CH1_127-Im-Crp0     CH1_127-Re-Crp0
+*                 CH2_127-Im-Crp0     CH2_127-Re-Crp0     CH3_127_Im-Crp0     CH3_127-Re-Crp0
+*                 |                   |                   |                   |
+*                 CH0_127-Im-Crp255   CH0_127-Re-Crp255   CH1_127-Im-Crp255   CH1_127-Re-Crp255
+*                 CH2_127-Im-Crp255   CH2_127-Re-Crp255   CH3_127_Im-Crp255   CH3_127-Re-Crp255  ---> RangeBin #127
+*                 -------------------------------------------------------------------------------------------------
+* @endverbatim
+*
+* @param[out]     WR_2: 24bit(RE): 0 \n
+*                       24bit(IM): Offset(restricted to 24bit value!) of the RDM OUTPUT buffer(3D FFT matrix),
+*                       relative to SRAM start address, @ref RSDK_SPT_OTHER_BASE_ADDR "RSDK_SPT_OTHER_BASE_ADDR".
+* @verbatim
+*                 OUTPUT Memory layout:
+*                 SRAM, 16 bit real Log2 Mag2 format
+*                 63:48           47:32           31:16           15:0
+*                 R0_D0_MAG       R0_D1_MAG       R0_D2_MAG       R0_D3_MAG
+*                 |               |               |               |
+*                 R0_D252_MAG     R0_D253_MAG     R0_D254_MAG     R0_D255_MAG
+*                 R1_D0_MAG       R1_D1_MAG       R1_D2_MAG       R1_D3_MAG
+*                 |               |               |               |
+*                 R1_D252_MAG     R1_D253_MAG     R1_D254_MAG     R1_D255_MAG
+*                 |               |               |               |
+*                 |               |               |               |
+*                 |               |               |               |
+*                 |               |               |               |
+*                 |               |               |               |
+*                 R127_D0_MAG     R127_D1_MAG     R127_D2_MAG     R127_D3_MAG
+*                 |               |               |               |
+*                 R127_D252_MAG   R127_D253_MAG   R127_D254_MAG   R127_D255_MAG
+* @endverbatim
+*
+* @param[out]     WR_3: 24bit(RE): 0 \n
+*                       24bit(IM): Offset(restricted to 24bit value!) of the Histogram OUTPUT buffer,
+*                       relative to SRAM start address, @ref RSDK_SPT_OTHER_BASE_ADDR "RSDK_SPT_OTHER_BASE_ADDR".
+* @verbatim
+*                 OUTPUT Memory layout:
+*                 SRAM, 16 bit values histogram counters
+*            0x0  bin1  bin0
+*            0x4  bin3  bin2
+*                 |     |
+*                 bin61 bin60
+*                 bin63 bin62 -> Range Bin 0
+*                 --------------------------
+*                 bin1  bin0
+*                 bin3  bin2
+*                 |     |
+*                 bin61 bin60
+*                 bin63 bin62 -> Range Bin 1
+*                 ---------------------------
+*                 |     |
+*                 |     |
+*                 |     |
+*                 --------------------------
+*                 bin1  bin0
+*                 bin3  bin2
+*                 |     |
+*                 bin61 bin60
+*                 bin63 bin62 -> Range Bin 127
+*                 --------------------------
+* @endverbatim
+*
+* @return         WR_0: No value returned.
+* @retval         No value returned.
+*
+* @pre            Twiddle coeficients are placed in TRAM at TR_0_96_0 by the Init function.
+*
+* @note           The current implementation is ONLY to be used in combination with 256 Range FFT and 256 Doppler FFT. \n
+*                 The input buffer MUST NOT be reused for the histogram or RDM output. \n
+*                 All buffers MUST be 8 bytes aligned.
+*
+* @}*/
+/*================================================================================================*/
+/** @cond */
+ .global RsdkSpt3Dfft256smp256crp4ch
+ .global RsdkSpt3Dfft256smp256crp4ch_size
+
+RsdkSpt3Dfft256smp256crp4ch:
+    /*=========================================================================
+     * Kernel watermarking instruction without side-effects. WR_0 can be ovewritten
+     * with the output parameter, according to the SPT calling convention
+     *=========================================================================*/
+    set #RSDK_SPT_KERNEL_WATERMARK, WR_0
+
+/*=========================================================================
+ * API parameter passing
+ *=========================================================================*/
+    /*=========================================================================
+     * INPUT
+     *=========================================================================
+     * WR_11: 24bit(RE): OPRAM address where to put ODD range bins for all channels
+     *        24bit(IM): SRAM offset to ODD range bins
+     * WR_12: 24bit(RE): OPRAM address where to put EVEN range bins for all channels
+     *        24bit(IM): SRAM offset to EVEN range bins
+     * WR_13: 24bit(RE): no adder for OPRAM address
+     *        24bit(IM): SRAM offset to next range bins
+     *=========================================================================*/
+    add .noshift .mod24 WR_1, #(OR_1_0_0), WR_11
+    add .noshift .mod24 WR_1, #(OR_3_0_0 | ((CHANNELS_NO * CHIRPS_PER_FRAME * BYTES_COMPLEX_FFT_SAMPLE) << 24)), WR_12
+    set #((2 * CHANNELS_NO * CHIRPS_PER_FRAME * BYTES_COMPLEX_FFT_SAMPLE) << 24), WR_13
+
+    /*=========================================================================
+     * OUTPUT
+     *=========================================================================
+     * WR_14: 24bit(RE): OPRAM address where to get the data after vmt Mag2+Log2, (ODD range bins)
+     *        24bit(IM): SRAM RDM result buffer address offset
+     * WR_15: 24bit(RE): OPRAM address where to get the data after vmt Mag2+Log2, (EVEN range bins)
+     *        24bit(IM): SRAM RDM result buffer address offset
+     * WR_16: 24bit(RE): no adder for OPRAM address
+     *        24bit(IM): SRAM offset for the results of the next range bin
+     *=========================================================================*/
+    add .noshift .mod24 WR_2, #(OR_0_0_0), WR_14
+    add .noshift .mod24 WR_2, #(OR_1_0_0 | ((CHIRPS_PER_FRAME * LOG2_FORMAT_BYTE) << 24)), WR_15
+    set #((2 * CHIRPS_PER_FRAME * LOG2_FORMAT_BYTE) << 24), WR_16
+
+    /*=========================================================================
+     * OUTPUT - Histogram
+     *=========================================================================
+     * WR_17: 24bit(RE): OPRAM address where to get the histogram counters, (ODD range bins)
+     *        24bit(IM): SRAM histogram buffer address offset
+     * WR_18: 24bit(RE): OPRAM address where to get the histogram counters, (EVEN range bins)
+     *        24bit(IM): SRAM histogram buffer address offset
+     * WR_19: 24bit(RE): no adder for OPRAM address
+     *        24bit(IM): SRAM offset for the results of the next range bin
+     *=========================================================================*/
+    add .noshift .mod24 WR_3, #(OR_1_0_0), WR_17
+    add .noshift .mod24 WR_3, #(OR_3_0_0 | ((HIST_BINS * BYTES_HIST_BINS) << 24)), WR_18
+    set #((2 * HIST_BINS * BYTES_HIST_BINS) << 24), WR_19
+
+/*=========================================================================
+ * 3DFFT SECTION
+ *=========================================================================*/
+    /*=========================================================================
+     * COPY with clear. Reset the OPRAM to zero, for 3D FFT.
+     * Padding with zeros form 4 to 16 antenna samples. RESERVE OR_2_0_0 for the rest of processing!
+     *=========================================================================*/
+    copy.clear 16*CHIRPS_PER_FRAME, OR_2_0_0, 0x1, 0xFFFF
+
+    /*=========================================================================
+     * LOOP: loop #count is number of range bins/2 (2 range bins processed within one iteration)
+     *=========================================================================*/
+    loop #(RANGE_BINS >> 1)
+
+        /*=========================================================================
+         * PDMA: transfer ODD/EVEN range bin data of all 4 channels from SRAM to OPRAM
+         *=========================================================================*/
+        pdma.ind .signext .16cmplx .sysram2opram  .sync .notrace, SRAM_SLICES, RSDK_SPT_CUBE_BASE_ADDR, WR_11, 0x0, 0x1, 0x0, 0x1
+        pdma.ind .signext .16cmplx .sysram2opram .async .notrace, SRAM_SLICES, RSDK_SPT_CUBE_BASE_ADDR, WR_12, 0x0, 0x1, 0x0, 0x1
+
+        /*=========================================================================
+         * ODD range bins proccesing part
+         *=========================================================================
+         *=========================================================================
+         * COPY: move 4 channels for the same range bin, on 16 values in OPRAM
+         * 4 ch samples + 12 zeros -> 16 samples for 3rd FFT(16)
+         *=========================================================================*/
+        copy.simple CHIRPS_PER_FRAME<<2, OR_1_0_0, OR_2_0_0, 0x1, 0x4
+        copy.shift  CHIRPS_PER_FRAME<<2, OR_1_0_0, OR_0_0_4, 0x1, 0x1
+        copy.simple CHIRPS_PER_FRAME<<2, OR_0_1_0, OR_2_2_0, 0x1, 0x4
+        copy.clear  CHIRPS_PER_FRAME<<2, OR_2_0_0, 0x4, 0xFF00
+        copy.clear  CHIRPS_PER_FRAME<<2, OR_2_2_0, 0x4, 0xFF00
+
+        /*=========================================================================
+         * RDX4 Round 0(with prescaling)...1, Twiddle in TR_0_96_0. Repeat FFT16 for CHIRPS_PER_FRAME times.
+         * prescaling with 8 to benefit of having OPRAM on 24bit (Input on 16bit)
+         *=========================================================================*/
+        repeat CHIRPS_PER_FRAME, FFT_SIZE, FFT_SIZE, 0x0, 0x0
+        rdx4 .cmplx .no_win .qext .noovs .round0 .shift8, FFT_SIZE, OR_2_0_0, OR_1_0_0, 0x1, 0x1, TR_0_96_0, .mod0, 0x1
+
+        repeat CHIRPS_PER_FRAME, FFT_SIZE, FFT_SIZE, 0x0, 0x0
+        rdx4 .cmplx .no_win .qext .noovs .round1 .nosft, FFT_SIZE, OR_1_0_0, OR_0_0_0, 0x1, 0x1, TR_0_96_0, .mod0, 0x1
+
+        /*=========================================================================
+         * VMT: Operation Sequence 1, Mag2 and log2. log2(S^2). Output packed.
+         *=========================================================================*/
+        vmt.sq1 .cmplx .in_48 .op_on, 16*CHIRPS_PER_FRAME, OR_0_0_0, OR_1_0_0, 0x1, 0x1
+
+        /*=========================================================================
+         * MAX16: absolute maxima on DOA axis, input packed,
+         * done for CHIRPS_PER_FRAME times, splited in 16 sample per search
+         *=========================================================================*/
+        repeat CHIRPS_PER_FRAME, MEM_SLICES, 0x1, 0x0, 0x0
+        maxs.gm .no_maxsn .log2 .no_preproc .in_48packed, 16, OR_1_0_0, OR_0_0_0, 0x1, 0x1
+
+        /*=========================================================================
+         * HIST: Histogram per range bin. The output will be used for threshold calculation
+         * on the CPU. Input in log2 format. Threshold bin: 0
+         *=========================================================================*/
+        hist .log2 .no_preproc .read_store .64bins .no_preload .no_pack_real .24bits, CHIRPS_PER_FRAME, OR_0_0_0, OR_1_0_0, 0x1, 0x1, 0x0
+
+        /*=========================================================================
+         * PDMA: move the Histogram counters in SRAM, for each range bin
+         *=========================================================================*/
+        pdma.ind .zeropad .16cmplx .opram2sysram .async .notrace, HIST_BINS>>1, RSDK_SPT_OTHER_BASE_ADDR, WR_17, 0x0, 0x1, 0x0, 0x1
+
+        /*=========================================================================
+         * PDMA: copy the RDM data to SRAM
+         *=========================================================================*/
+        pdma.ind .zeropad .16real .opram2sysram .async .notrace, CHIRPS_PER_FRAME, RSDK_SPT_OTHER_BASE_ADDR, WR_14, 0x0, 0x1, 0x0, 0x1
+
+        /*=========================================================================
+         * EVEN range bins proccesing part
+         *=========================================================================
+         *=========================================================================
+         * COPY: move 4 channels for the same range bin, on 16 values in OPRAM
+         * 4 ch samples + 12 zeros -> 16 samples for 3rd FFT(16)
+         *=========================================================================*/
+        copy.simple CHIRPS_PER_FRAME<<2, OR_3_0_0, OR_2_0_0, 0x1, 0x4
+        copy.shift  CHIRPS_PER_FRAME<<2, OR_3_0_0, OR_1_0_4, 0x1, 0x1
+        copy.simple CHIRPS_PER_FRAME<<2, OR_1_1_0, OR_2_2_0, 0x1, 0x4
+        copy.clear  CHIRPS_PER_FRAME<<2, OR_2_0_0, 0x4, 0xFF00
+        copy.clear  CHIRPS_PER_FRAME<<2, OR_2_2_0, 0x4, 0xFF00
+
+        /*=========================================================================
+         * RDX4 Round 0(with prescaling)...1, Twiddle in TR_0_96_0. Repeat FFT16 for CHIRPS_PER_FRAME times.
+         * prescaling with 8 to benefit of having OPRAM on 24bit (Input on 16bit)
+         *=========================================================================*/
+        repeat CHIRPS_PER_FRAME, FFT_SIZE, FFT_SIZE, 0x0, 0x0
+        rdx4 .cmplx .no_win .qext .noovs .round0 .shift8, 16, OR_2_0_0, OR_3_0_0, 0x1, 0x1, TR_0_96_0, .mod0, 0x1
+
+        repeat CHIRPS_PER_FRAME, FFT_SIZE, FFT_SIZE, 0x0, 0x0
+        rdx4 .cmplx .no_win .qext .noovs .round1 .nosft, FFT_SIZE, OR_3_0_0, OR_1_0_0, 0x1, 0x1, TR_0_96_0, .mod0, 0x1
+
+        /*=========================================================================
+         * VMT: Operation Sequence 1, Mag2 and log2. log2(S^2). Output packed.
+         *=========================================================================*/
+        vmt.sq1 .cmplx .in_48 .op_on, 16*CHIRPS_PER_FRAME, OR_1_0_0, OR_3_0_0, 0x1, 0x1
+
+        /*=========================================================================
+         * MAX16: absolute maxima on DOA axis, input packed,
+         * done for CHIRPS_PER_FRAME times, splited in 16 sample per search
+         *=========================================================================*/
+        repeat CHIRPS_PER_FRAME, MEM_SLICES, 0x1, 0x0, 0x0
+        maxs.gm .no_maxsn .log2 .no_preproc .in_48packed, 16, OR_3_0_0, OR_1_0_0, 0x1, 0x1
+
+        /*=========================================================================
+         * HIST: Histogram per range bin. The output will be used for threshold calculation
+         * on the CPU. Input in log2 format. Threshold bin: 0
+         *=========================================================================*/
+        hist .log2 .no_preproc .read_store .64bins .no_preload .no_pack_real .24bits, CHIRPS_PER_FRAME, OR_1_0_0, OR_3_0_0, 0x1, 0x1, 0x0
+
+        /*=========================================================================
+         * PDMA: move the Histogram counters in SRAM, for each range bin
+         *=========================================================================*/
+        pdma.ind .zeropad .16cmplx .opram2sysram .async .notrace, HIST_BINS>>1, RSDK_SPT_OTHER_BASE_ADDR, WR_18, 0x0, 0x1, 0x0, 0x1
+
+        /*=========================================================================
+         * PDMA: copy the RDM data to SRAM
+         *=========================================================================*/
+        pdma.ind .zeropad .16real .opram2sysram .async .notrace, CHIRPS_PER_FRAME, RSDK_SPT_OTHER_BASE_ADDR, WR_15, 0x0, 0x1, 0x0, 0x1
+
+        /*=========================================================================
+         * ADD: increment input SRAM offset to next ODD/EVEN range bin
+         *=========================================================================*/
+        add .noshift .mod24 WR_11, WR_13, WR_11
+        add .noshift .mod24 WR_12, WR_13, WR_12
+
+        /*=========================================================================
+         * ADD: increment output SRAM offset to next ODD/EVEN range bin (RDM)
+         *=========================================================================*/
+        add .noshift .mod24 WR_14, WR_16, WR_14
+        add .noshift .mod24 WR_15, WR_16, WR_15
+
+        /*=========================================================================
+         * ADD: increment output SRAM offset to next ODD/EVEN range bin histogram
+         *=========================================================================*/
+        add .noshift .mod24 WR_17, WR_19, WR_17
+        add .noshift .mod24 WR_18, WR_19, WR_18
+
+    /*=========================================================================
+     * NEXT: end of the loop
+     *=========================================================================*/
+    next
+
+/*=========================================================================
+ * STOP: end of 3DFFT program
+ *=========================================================================*/
+ stop
+
+ .set RsdkSpt3Dfft256smp256crp4ch_size, .-RsdkSpt3Dfft256smp256crp4ch
+/*******************************************************************************
+ * EOF
+ ******************************************************************************/
+/** @endcond */

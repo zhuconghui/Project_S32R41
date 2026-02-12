@@ -1,0 +1,108 @@
+FuncRSDK_Main ()
+{
+  char traceBufferHost[3600];
+  char traceFileNameHost[18];
+  return_value _1;
+  struct rsdk_heap_t * pHeapMem.1_2;
+
+  <bb 2> :
+  traceFileNameHost = "RsdkTraceDump.hex";
+  DBG_POINT (19);
+  _1 = RsdkPlatformSetup (1);
+  if (_1 != 0)
+    goto <bb 3>; [INV]
+  else
+    goto <bb 4>; [INV]
+
+  <bb 3> :
+  goto <bb 3>; [INV]
+
+  <bb 4> :
+  DbgPrintMsg ("Platform setup done \n");
+  DbgPrintMsg ("Starting SPT Example application \n");
+  pHeapMem.1_2 = pHeapMem;
+  AppMemInit (pHeapMem.1_2, &heapBuffer, 1048576);
+  RsdkTraceInit (&traceBufferHost, 3600);
+  ExampleInitSPTDriver ();
+  DbgPrintMsg ("Initialized SPT driver\n");
+  AppInitDsphd ();
+  DbgPrintMsg ("Initialized DSP Host Driver\n");
+  ExampleTestSPTMemErrInject ();
+  ExampleInitSPTKernels ();
+  DbgPrintMsg ("Initialized SPT kernels\n");
+  ExampleProcSPT ();
+  DbgPrintMsg ("Finished SPT processing\n");
+  DbgPrintMsg ("Finished offline example\n");
+  RsdkTraceDump (&traceFileNameHost, DbgWriteFile);
+  DBG_POINT (15);
+
+  <bb 5> :
+  goto <bb 5>; [INV]
+
+}
+
+
+main ()
+{
+  int D.9578;
+  int _3;
+
+  <bb 2> :
+  StartOS (0);
+  _3 = 0;
+
+  <bb 3> :
+<L0>:
+  return _3;
+
+}
+
+
+ErrorHook (StatusType Error)
+{
+  int _1;
+
+  <bb 2> :
+  _1 = (int) Error_2(D);
+  sprintf (&gDbgMsg, "ErrorHook : %d", _1);
+  DbgPrintMsg (&gDbgMsg);
+  return;
+
+}
+
+
+__attribute__((unused))
+rsdk_test_not_null_lnk_sym (uintptr_t symName)
+{
+  volatile uintptr_t dummy_volatile;
+  uint8 retVal;
+  uint8 D.9576;
+  unsigned int dummy_volatile.0_1;
+  uint8 _8;
+
+  <bb 2> :
+  dummy_volatile ={v} symName_4(D);
+  dummy_volatile.0_1 ={v} dummy_volatile;
+  if (dummy_volatile.0_1 != 0)
+    goto <bb 3>; [INV]
+  else
+    goto <bb 4>; [INV]
+
+  <bb 3> :
+  retVal_7 = 1;
+  goto <bb 5>; [INV]
+
+  <bb 4> :
+  retVal_6 = 0;
+
+  <bb 5> :
+  # retVal_2 = PHI <retVal_7(3), retVal_6(4)>
+  _8 = retVal_2;
+
+  <bb 6> :
+<L3>:
+  return _8;
+
+}
+
+

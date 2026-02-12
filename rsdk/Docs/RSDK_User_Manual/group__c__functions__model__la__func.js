@@ -1,0 +1,25 @@
+var group__c__functions__model__la__func =
+[
+    [ "Absolute value", "group__c__functions__model__absolute__value.html", "group__c__functions__model__absolute__value" ],
+    [ "Complex conjugate", "group__c__functions__model__conj.html", "group__c__functions__model__conj" ],
+    [ "Min/Max", "group__c__functions__model__minmax.html", "group__c__functions__model__minmax" ],
+    [ "Thresholding", "group__c__functions__model__thresh.html", "group__c__functions__model__thresh" ],
+    [ "Addition", "group__c__functions__model__add.html", "group__c__functions__model__add" ],
+    [ "Summing", "group__c__functions__model__sums.html", "group__c__functions__model__sums" ],
+    [ "Subtraction", "group__c__functions__model__sub.html", "group__c__functions__model__sub" ],
+    [ "Multiplication", "group__c__functions__model__mpy.html", "group__c__functions__model__mpy" ],
+    [ "Product", "group__c__functions__model__prod.html", "group__c__functions__model__prod" ],
+    [ "Multiply and accumulate", "group__c__functions__model__mac.html", "group__c__functions__model__mac" ],
+    [ "Division", "group__c__functions__model__div.html", "group__c__functions__model__div" ],
+    [ "Mean, average statistics", "group__c__functions__model__means.html", "group__c__functions__model__means" ],
+    [ "Cross-correlation", "group__c__functions__model__xcorr.html", "group__c__functions__model__xcorr" ],
+    [ "Norms and Distance computation", "group__c__functions__model__dist.html", "group__c__functions__model__dist" ],
+    [ "Transpose", "group__c__functions__model____transpose.html", "group__c__functions__model____transpose" ],
+    [ "Matrix Determinant", "group__c__functions__model__det.html", "group__c__functions__model__det" ],
+    [ "Triangular matrix solvers", "group__c__functions__model__triang__solver.html", "group__c__functions__model__triang__solver" ],
+    [ "Matrix Inverse", "group__c__functions__model__inv.html", "group__c__functions__model__inv" ],
+    [ "Factorizations, decomposition", "group__c__functions__model__dec__func.html", "group__c__functions__model__dec__func" ],
+    [ "Matrix Eigensolver", "group__c__functions__model__eigen.html", "group__c__functions__model__eigen" ],
+    [ "Tridiagonal Hermitian Matrix to Tridiagonal Symmetric Matrix Conversion", "group__c__functions__model__tridiag.html", "group__c__functions__model__tridiag" ],
+    [ "Angle conversion", "group__c__functions__model__angle__convert.html", "group__c__functions__model__angle__convert" ]
+];

@@ -1,0 +1,353 @@
+/**************************************************************************************************
+ *
+ *
+ * Copyright 2021 NXP
+ *
+ *****************************************************************************
+ *
+ * NXP Confidential and Proprietary. This software is owned or controlled by NXP and
+ * may only be used strictly in accordance with the applicable license terms.  By
+ * expressly accepting such terms or by downloading, installing, activating and/or
+ * otherwise using the software, you are agreeing that you have read, and that you
+ * agree to comply with and are bound by, such license terms.  If you do not agree to
+ * be bound by the applicable license terms, then you may not retain, install, activate or
+ * otherwise use the software.
+ *
+ **************************************************************************************************/
+
+/** @cond */
+/*==================================================================================================
+ *                                        INCLUDE FILES
+ *==================================================================================================*/
+ .include "oram.inc"                    /* include ORAM header file */
+ .include "tram.inc"                    /* include TRAM header file */
+ .include "wr.inc"                      /* include WR header file */
+ .include "spt_kernel_internals.inc"    /* include local defines */
+
+/*==================================================================================================
+ *                                          SECTION
+ *==================================================================================================*/
+ .section .RsdkSpt3 , "ax"   /* memory section where to store SPT code */
+
+/*==================================================================================================
+ *                                      LOCAL CONSTANTS
+ *==================================================================================================*/
+ .set SAMPLES_PER_CHIRP,        512
+ .set CHIRPS_PER_FRAME,         128
+ .set BYTES_COMPLEX_FFT_SAMPLE,   4
+ .set CHANNELS_NO,                4 /* total phy channels no */
+ .set RANGE_BINS,               (SAMPLES_PER_CHIRP >> 1)
+ .set SRAM_SLICES,              ((CHANNELS_NO * CHIRPS_PER_FRAME) >> 1)
+
+/** @endcond */
+/*==================================================================================================
+ *                                      GLOBAL FUNCTIONS
+ *==================================================================================================*/
+/*================================================================================================*/
+/**
+* @addtogroup spt_kernels_api_func
+* @{
+*
+* @fn             void *RsdkSptDoppler512smp128crp4ch();
+* @brief          Function for Doppler FFT 128, 4 channels(CH#0..CH#3)
+* @details        Compute Doppler FFT storing results in SRAM.
+*
+* @param[in]      WR_1: 24bit(RE): 0 \n
+*                       24bit(IM): Offset(restricted to 24bit value!) of the INPUT buffer(Range FFT results),
+*                       relative to SRAM start address @ref RSDK_SPT_CUBE_BASE_ADDR "RSDK_SPT_CUBE_BASE_ADDR".
+* @verbatim
+*                 INPUT Memory layout:
+*                 SRAM, 32bit complex(16b_Im + 16b_Re)
+*                 63:48               47:32               31:16               15:0
+*                 CH0_0-Im-Crp0       CH0_0-Re-Crp0       CH1_0-Im-Crp0       CH1_0-Re-Crp0
+*                 CH2_0-Im-Crp0       CH2_0-Re-Crp0       CH3_0_Im-Crp0       CH3_0-Re-Crp0
+*                 |                   |                   |                   |
+*                 CH0_0-Im-Crp127     CH0_0-Re-Crp127     CH1_0-Im-Crp127     CH1_0-Re-Crp127
+*                 CH2_0-Im-Crp127     CH2_0-Re-Crp127     CH3_0_Im-Crp127     CH3_0-Re-Crp127    ---> RangeBin #0
+*                 -------------------------------------------------------------------------------------------------
+*                 |                   |                   |                   |
+*                 |                   |                   |                   |
+*                 |                   |                   |                   |
+*                 -------------------------------------------------------------------------------------------------
+*                 CH0_255-Im-Crp0     CH0_255-Re-Crp0     CH1_255-Im-Crp0     CH1_255-Re-Crp0
+*                 CH2_255-Im-Crp0     CH2_255-Re-Crp0     CH3_255_Im-Crp0     CH3_255-Re-Crp0
+*                 |                   |                   |                   |
+*                 CH0_255-Im-Crp127   CH0_255-Re-Crp127   CH1_255-Im-Crp127   CH1_255-Re-Crp127
+*                 CH2_255-Im-Crp127   CH2_255-Re-Crp127   CH3_255_Im-Crp127   CH3_255-Re-Crp127  ---> RangeBin #255
+*                 -------------------------------------------------------------------------------------------------
+* @endverbatim
+*
+* @param[out]     WR_2: 24bit(RE): 0 \n
+*                       24bit(IM): Offset(restricted to 24bit value!) of the OUTPUT buffer(Doppler FFT results),
+*                       relative to SRAM start address @ref RSDK_SPT_CUBE_BASE_ADDR "RSDK_SPT_CUBE_BASE_ADDR".
+* @verbatim
+*                 OUTPUT Memory layout:
+*                 SRAM, 32bit complex(16b_Im + 16b_Re)
+*                 63:48               47:32               31:16               15:0
+*                 CH0_0-Im-Crp0       CH0_0-Re-Crp0       CH1_0-Im-Crp0       CH1_0-Re-Crp0
+*                 CH2_0-Im-Crp0       CH2_0-Re-Crp0       CH3_0_Im-Crp0       CH3_0-Re-Crp0
+*                 |                   |                   |                   |
+*                 CH0_0-Im-Crp127     CH0_0-Re-Crp127     CH1_0-Im-Crp127     CH1_0-Re-Crp127
+*                 CH2_0-Im-Crp127     CH2_0-Re-Crp127     CH3_0_Im-Crp127     CH3_0-Re-Crp127    ---> RangeBin #0
+*                 -------------------------------------------------------------------------------------------------
+*                 |                   |                   |                   |
+*                 |                   |                   |                   |
+*                 |                   |                   |                   |
+*                 -------------------------------------------------------------------------------------------------
+*                 CH0_255-Im-Crp0     CH0_255-Re-Crp0     CH1_255-Im-Crp0     CH1_255-Re-Crp0
+*                 CH2_255-Im-Crp0     CH2_255-Re-Crp0     CH3_255_Im-Crp0     CH3_255-Re-Crp0
+*                 |                   |                   |                   |
+*                 CH0_255-Im-Crp127   CH0_255-Re-Crp127   CH1_255-Im-Crp127   CH1_255-Re-Crp127
+*                 CH2_255-Im-Crp127   CH2_255-Re-Crp127   CH3_255_Im-Crp127   CH3_255-Re-Crp127  ---> RangeBin #255
+*                 -------------------------------------------------------------------------------------------------
+* @endverbatim
+*
+* @param[in]      WR_3: 24bit(RE): Scaling Factor, e.g. 1 for scale left with 1. \n
+*                       24bit(IM): 0.
+*
+* @return         WR_0: No value returned.
+* @retval         No value returned.
+*
+* @pre            Twiddle coeficients are placed in TRAM at TR_0_64_0 by the Init function. \n
+*                 Window coeficients are placed in TRAM at TR_0_144_0 by the Init function.
+*
+* @note           The kernel implementation guarantees no saturation for 0 output scaling factor.
+*                 If other scaling is used, it's the user responsibility to prevent saturation. \n
+*                 The current implementation is ONLY to be used in combination with 512 Range FFT. \n
+*                 The input buffer CAN be reused for the output buffer. \n
+*                 All buffers MUST be 8 bytes aligned.
+*
+* @}*/
+/*================================================================================================*/
+/** @cond */
+ .global RsdkSptDoppler512smp128crp4ch
+ .global RsdkSptDoppler512smp128crp4ch_size
+
+RsdkSptDoppler512smp128crp4ch:
+    /*=========================================================================
+     * Kernel watermarking instruction without side-effects. WR_0 can be ovewritten
+     * with the output parameter, according to the SPT calling convention
+     *=========================================================================*/
+    set #RSDK_SPT_KERNEL_WATERMARK, WR_0
+
+/*=========================================================================
+ * API parameter passing
+ *=========================================================================*/
+    /*=========================================================================
+     * INPUT
+     *=========================================================================
+     * WR_11: 24bit(RE): OPRAM address where to put ODD range bins for all channels
+     *        24bit(IM): SRAM offset to ODD range bins (doppler input)
+     * WR_12: 24bit(RE): OPRAM address where to put EVEN range bins for all channels
+     *        24bit(IM): SRAM offset to EVEN range bins (doppler input)
+     * WR_13: 24bit(RE): no adder for OPRAM address
+     *        24bit(IM): SRAM offset to next range bins/doppler
+     *=========================================================================*/
+    add .noshift .mod24 WR_1, #(OR_0_0_0), WR_11
+    add .noshift .mod24 WR_1, #(OR_2_0_0 | ((CHANNELS_NO * CHIRPS_PER_FRAME * BYTES_COMPLEX_FFT_SAMPLE) << 24)), WR_12
+    set #((2 * CHANNELS_NO * CHIRPS_PER_FRAME * BYTES_COMPLEX_FFT_SAMPLE) << 24), WR_13
+
+    /*=========================================================================
+     * OUTPUT
+     *=========================================================================
+     * WR_14: 24bit(RE): OPRAM address where to get doppler results(ODD range bins) for all channels
+     *        24bit(IM): SRAM doppler result buffer address offset
+     * WR_15: 24bit(RE): OPRAM address where to get doppler results(EVEN range bins) for all channels
+     *        24bit(IM): SRAM doppler result buffer address offset
+     *=========================================================================*/
+    add .noshift .mod24 WR_2, #(OR_1_0_0), WR_14
+    add .noshift .mod24 WR_2, #(OR_3_0_0 | ((CHANNELS_NO * CHIRPS_PER_FRAME * BYTES_COMPLEX_FFT_SAMPLE) << 24)), WR_15
+
+/*=========================================================================
+ * START DOPPLER FFT128 SECTION
+ *=========================================================================*/
+    /*=========================================================================
+     * set WR_46, for custom left shift. By default, left shift 8
+     *=========================================================================*/
+    set #(0x8), WR_46
+    sub .noshift .mod24 WR_3, WR_46, WR_46
+
+    /*=========================================================================
+     * LOOP: loop #count is number of range bins/2 (2 range bins processed within one iteration)
+     *=========================================================================*/
+    loop #(RANGE_BINS >> 1)
+
+        /*=========================================================================
+         * PDMA: transfer ODD/EVEN range bin data of all channels from SRAM to OPRAM
+         *=========================================================================*/
+        pdma.ind .signext .16cmplx .sysram2opram  .sync .notrace, SRAM_SLICES, RSDK_SPT_CUBE_BASE_ADDR, WR_11, 0x0, 0x1, 0x0, 0x1
+        pdma.ind .signext .16cmplx .sysram2opram .async .notrace, SRAM_SLICES, RSDK_SPT_CUBE_BASE_ADDR, WR_12, 0x0, 0x1, 0x0, 0x1
+
+        /*=========================================================================
+         * ODD range bins proccesing part
+         *=========================================================================
+         *=========================================================================
+         * COPY 8x4 BCK transpose for all channels
+         *=========================================================================*/
+        copy.trans_bck_4x8 CHANNELS_NO*CHIRPS_PER_FRAME, OR_0_0_0, OR_1_0_0, 0x1, 0x1, 0x8, 0x8
+
+        /*=========================================================================
+         * FFT128 for CH#0
+         *=========================================================================
+         *=========================================================================
+         * RDX Round 0(+win, prescaling)...3, Twiddle in TR_0_64_0, Window in TR_0_144_0
+         * prescaling with 8 to benefit of having OPRAM on 24bit (Input on 16bit)
+         =========================================================================*/
+        rdx4 .cmplx .real_win_real_tram .qext .noovs .round0 .shift8, CHIRPS_PER_FRAME, OR_1_0_0, OR_0_0_0, 0x4, 0x4, TR_0_144_0, .mod0, 0x1
+        rdx4 .cmplx .no_win .qext .noovs .round1 .nosft, CHIRPS_PER_FRAME, OR_0_0_0, OR_1_0_0, 0x4, 0x4, TR_0_64_0, .mod0, 0x1
+        rdx4 .cmplx .no_win .qext .noovs .round2 .nosft, CHIRPS_PER_FRAME, OR_1_0_0, OR_0_0_0, 0x4, 0x4, TR_0_64_0, .mod0, 0x1
+        rdx2 .cmplx .nosplit .qext .noovs .round3 .nosft, CHIRPS_PER_FRAME, OR_0_0_0, OR_1_0_0, 0x4, 0x4, TR_0_64_0
+
+        /*=========================================================================
+         * FFT128 for CH#1
+         *=========================================================================
+         *=========================================================================
+         * RDX Round 0(+win, prescaling)...3, Twiddle in TR_0_64_0, Window in TR_0_144_0
+         * prescaling with 8 to benefit of having OPRAM on 24bit (Input on 16bit)
+         =========================================================================*/
+        rdx4 .cmplx .real_win_real_tram .qext .noovs .round0 .shift8, CHIRPS_PER_FRAME, OR_1_1_0, OR_0_1_0, 0x4, 0x4, TR_0_144_0, .mod0, 0x1
+        rdx4 .cmplx .no_win .qext .noovs .round1 .nosft, CHIRPS_PER_FRAME, OR_0_1_0, OR_1_1_0, 0x4, 0x4, TR_0_64_0, .mod0, 0x1
+        rdx4 .cmplx .no_win .qext .noovs .round2 .nosft, CHIRPS_PER_FRAME, OR_1_1_0, OR_0_1_0, 0x4, 0x4, TR_0_64_0, .mod0, 0x1
+        rdx2 .cmplx .nosplit .qext .noovs .round3 .nosft, CHIRPS_PER_FRAME, OR_0_1_0, OR_1_1_0, 0x4, 0x4, TR_0_64_0
+
+        /*=========================================================================
+         * FFT128 for CH#2
+         *=========================================================================
+         *=========================================================================
+         * RDX Round 0(+win, prescaling)...3, Twiddle in TR_0_64_0, Window in TR_0_144_0
+         * prescaling with 8 to benefit of having OPRAM on 24bit (Input on 16bit)
+         =========================================================================*/
+        rdx4 .cmplx .real_win_real_tram .qext .noovs .round0 .shift8, CHIRPS_PER_FRAME, OR_1_2_0, OR_0_2_0, 0x4, 0x4, TR_0_144_0, .mod0, 0x1
+        rdx4 .cmplx .no_win .qext .noovs .round1 .nosft, CHIRPS_PER_FRAME, OR_0_2_0, OR_1_2_0, 0x4, 0x4, TR_0_64_0, .mod0, 0x1
+        rdx4 .cmplx .no_win .qext .noovs .round2 .nosft, CHIRPS_PER_FRAME, OR_1_2_0, OR_0_2_0, 0x4, 0x4, TR_0_64_0, .mod0, 0x1
+        rdx2 .cmplx .nosplit .qext .noovs .round3 .nosft, CHIRPS_PER_FRAME, OR_0_2_0, OR_1_2_0, 0x4, 0x4, TR_0_64_0
+
+        /*=========================================================================
+         * FFT128 for CH#3
+         *=========================================================================
+         *=========================================================================
+         * RDX Round 0(+win, prescaling)...3, Twiddle in TR_0_64_0, Window in TR_0_144_0
+         * prescaling with 8 to benefit of having OPRAM on 24bit (Input on 16bit)
+         =========================================================================*/
+        rdx4 .cmplx .real_win_real_tram .qext .noovs .round0 .shift8, CHIRPS_PER_FRAME, OR_1_3_0, OR_0_3_0, 0x4, 0x4, TR_0_144_0, .mod0, 0x1
+        rdx4 .cmplx .no_win .qext .noovs .round1 .nosft, CHIRPS_PER_FRAME, OR_0_3_0, OR_1_3_0, 0x4, 0x4, TR_0_64_0, .mod0, 0x1
+        rdx4 .cmplx .no_win .qext .noovs .round2 .nosft, CHIRPS_PER_FRAME, OR_1_3_0, OR_0_3_0, 0x4, 0x4, TR_0_64_0, .mod0, 0x1
+        rdx2 .cmplx .nosplit .qext .noovs .round3 .nosft, CHIRPS_PER_FRAME, OR_0_3_0, OR_1_3_0, 0x4, 0x4, TR_0_64_0
+
+        /*=========================================================================
+         * COPY 8x4 FWD transpose for all channels
+         * Invert the spectrum, DC in the middle. Copy half of data.
+         *=========================================================================*/
+        copy.trans_fwd_8x4 CHANNELS_NO*CHIRPS_PER_FRAME>>1, OR_1_0_0, OR_0_0_0 + CHANNELS_NO*CHIRPS_PER_FRAME>>1, 0x1, 0x1, 0x8, 0x8
+        copy.trans_fwd_8x4 CHANNELS_NO*CHIRPS_PER_FRAME>>1, OR_1_0_0 + CHANNELS_NO*CHIRPS_PER_FRAME>>1, OR_0_0_0, 0x1, 0x1, 0x8, 0x8
+
+        /*=========================================================================
+         * VMT: custom shift(WR_46). Default shift left by 8(to compensate the pre-scalling).
+         *=========================================================================*/
+        vmt.shift_sq2s2 .cmplx .rst_sum .in_48 .op_off .no_sq2s1 WR_46 .no_sq2s3, CHANNELS_NO*CHIRPS_PER_FRAME, OR_0_0_0, OR_1_0_0, 0x1, 0x1
+
+        /*=========================================================================
+         * PDMA: transfer doppler results(ODD range bins) of all channels from OPRAM to SRAM
+         *=========================================================================*/
+        pdma.ind .signext .16cmplx .opram2sysram .async .notrace, CHANNELS_NO*CHIRPS_PER_FRAME, RSDK_SPT_CUBE_BASE_ADDR, WR_14, 0x0, 0x1, 0x0, 0x1
+
+        /*=========================================================================
+         * EVEN range bins proccesing part
+         *=========================================================================
+         *=========================================================================
+         * COPY 8x4 BCK transpose for all channels
+         *=========================================================================*/
+        copy.trans_bck_4x8 CHANNELS_NO*CHIRPS_PER_FRAME, OR_2_0_0, OR_3_0_0, 0x1, 0x1, 0x8, 0x8
+
+        /*=========================================================================
+         * FFT128 for CH#0
+         *=========================================================================
+         *=========================================================================
+         * RDX Round 0(+win, prescaling)...3, Twiddle in TR_0_64_0, Window in TR_0_144_0
+         * prescaling with 8 to benefit of having OPRAM on 24bit (Input on 16bit)
+         =========================================================================*/
+        rdx4 .cmplx .real_win_real_tram .qext .noovs .round0 .shift8, CHIRPS_PER_FRAME, OR_3_0_0, OR_2_0_0, 0x4, 0x4, TR_0_144_0, .mod0, 0x1
+        rdx4 .cmplx .no_win .qext .noovs .round1 .nosft, CHIRPS_PER_FRAME, OR_2_0_0, OR_3_0_0, 0x4, 0x4, TR_0_64_0, .mod0, 0x1
+        rdx4 .cmplx .no_win .qext .noovs .round2 .nosft, CHIRPS_PER_FRAME, OR_3_0_0, OR_2_0_0, 0x4, 0x4, TR_0_64_0, .mod0, 0x1
+        rdx2 .cmplx .nosplit .qext .noovs .round3 .nosft, CHIRPS_PER_FRAME, OR_2_0_0, OR_3_0_0, 0x4, 0x4, TR_0_64_0
+
+        /*=========================================================================
+         * FFT128 for CH#1
+         *=========================================================================
+         *=========================================================================
+         * RDX Round 0(+win, prescaling)...3, Twiddle in TR_0_64_0, Window in TR_0_144_0
+         * prescaling with 8 to benefit of having OPRAM on 24bit (Input on 16bit)
+         =========================================================================*/
+        rdx4 .cmplx .real_win_real_tram .qext .noovs .round0 .shift8, CHIRPS_PER_FRAME, OR_3_1_0, OR_2_1_0, 0x4, 0x4, TR_0_144_0, .mod0, 0x1
+        rdx4 .cmplx .no_win .qext .noovs .round1 .nosft, CHIRPS_PER_FRAME, OR_2_1_0, OR_3_1_0, 0x4, 0x4, TR_0_64_0, .mod0, 0x1
+        rdx4 .cmplx .no_win .qext .noovs .round2 .nosft, CHIRPS_PER_FRAME, OR_3_1_0, OR_2_1_0, 0x4, 0x4, TR_0_64_0, .mod0, 0x1
+        rdx2 .cmplx .nosplit .qext .noovs .round3 .nosft, CHIRPS_PER_FRAME, OR_2_1_0, OR_3_1_0, 0x4, 0x4, TR_0_64_0
+
+        /*=========================================================================
+         * FFT128 for CH#2
+         *=========================================================================
+         *=========================================================================
+         * RDX Round 0(+win, prescaling)...3, Twiddle in TR_0_64_0, Window in TR_0_144_0
+         * prescaling with 8 to benefit of having OPRAM on 24bit (Input on 16bit)
+         =========================================================================*/
+        rdx4 .cmplx .real_win_real_tram .qext .noovs .round0 .shift8, CHIRPS_PER_FRAME, OR_3_2_0, OR_2_2_0, 0x4, 0x4, TR_0_144_0, .mod0, 0x1
+        rdx4 .cmplx .no_win .qext .noovs .round1 .nosft, CHIRPS_PER_FRAME, OR_2_2_0, OR_3_2_0, 0x4, 0x4, TR_0_64_0, .mod0, 0x1
+        rdx4 .cmplx .no_win .qext .noovs .round2 .nosft, CHIRPS_PER_FRAME, OR_3_2_0, OR_2_2_0, 0x4, 0x4, TR_0_64_0, .mod0, 0x1
+        rdx2 .cmplx .nosplit .qext .noovs .round3 .nosft, CHIRPS_PER_FRAME, OR_2_2_0, OR_3_2_0, 0x4, 0x4, TR_0_64_0
+
+        /*=========================================================================
+         * FFT128 for CH#3
+         *=========================================================================
+         *=========================================================================
+         * RDX Round 0(+win, prescaling)...3, Twiddle in TR_0_64_0, Window in TR_0_144_0
+         * prescaling with 8 to benefit of having OPRAM on 24bit (Input on 16bit)
+         =========================================================================*/
+        rdx4 .cmplx .real_win_real_tram .qext .noovs .round0 .shift8, CHIRPS_PER_FRAME, OR_3_3_0, OR_2_3_0, 0x4, 0x4, TR_0_144_0, .mod0, 0x1
+        rdx4 .cmplx .no_win .qext .noovs .round1 .nosft, CHIRPS_PER_FRAME, OR_2_3_0, OR_3_3_0, 0x4, 0x4, TR_0_64_0, .mod0, 0x1
+        rdx4 .cmplx .no_win .qext .noovs .round2 .nosft, CHIRPS_PER_FRAME, OR_3_3_0, OR_2_3_0, 0x4, 0x4, TR_0_64_0, .mod0, 0x1
+        rdx2 .cmplx .nosplit .qext .noovs .round3 .nosft, CHIRPS_PER_FRAME, OR_2_3_0, OR_3_3_0, 0x4, 0x4, TR_0_64_0
+
+        /*=========================================================================
+         * COPY 8x4 FWD transpose for all channels
+         * Invert the spectrum, DC in the middle. Copy half of data.
+         *=========================================================================*/
+        copy.trans_fwd_8x4 CHANNELS_NO*CHIRPS_PER_FRAME>>1, OR_3_0_0, OR_2_0_0 + CHANNELS_NO*CHIRPS_PER_FRAME>>1, 0x1, 0x1, 0x8, 0x8
+        copy.trans_fwd_8x4 CHANNELS_NO*CHIRPS_PER_FRAME>>1, OR_3_0_0 + CHANNELS_NO*CHIRPS_PER_FRAME>>1, OR_2_0_0, 0x1, 0x1, 0x8, 0x8
+
+        /*=========================================================================
+         * VMT: custom shift(WR_46). Default shift left by 8(to compensate the pre-scalling).
+         *=========================================================================*/
+        vmt.shift_sq2s2 .cmplx .rst_sum .in_48 .op_off .no_sq2s1 WR_46 .no_sq2s3, CHANNELS_NO*CHIRPS_PER_FRAME, OR_2_0_0, OR_3_0_0, 0x1, 0x1
+
+        /*=========================================================================
+         * PDMA: transfer doppler results(EVEN range bins) of all 8 channels from OPRAM to SRAM
+         *=========================================================================*/
+        pdma.ind .signext .16cmplx .opram2sysram .async .notrace, CHANNELS_NO*CHIRPS_PER_FRAME, RSDK_SPT_CUBE_BASE_ADDR, WR_15, 0x0, 0x1, 0x0, 0x1
+
+        /*=========================================================================
+         * ADD: increment input SRAM offset to next ODD/EVEN range bin
+         *=========================================================================*/
+        add .noshift .mod24 WR_11, WR_13, WR_11
+        add .noshift .mod24 WR_12, WR_13, WR_12
+
+        /*=========================================================================
+         * ADD: increment output SRAM offset to next ODD/EVEN range bin
+         *=========================================================================*/
+        add .noshift .mod24 WR_14, WR_13, WR_14
+        add .noshift .mod24 WR_15, WR_13, WR_15
+
+    /*=========================================================================
+     * NEXT: end of the loop
+     *=========================================================================*/
+    next
+
+/*=========================================================================
+ * STOP: end of FFT128 doppler program
+ *=========================================================================*/
+ stop
+
+ .set RsdkSptDoppler512smp128crp4ch_size, .-RsdkSptDoppler512smp128crp4ch
+/*******************************************************************************
+ * EOF
+ ******************************************************************************/
+/** @endcond */

@@ -1,0 +1,722 @@
+ipc_hw_flush_cache_remote (const uint8 instance)
+{
+  <bb 2> :
+  return;
+
+}
+
+
+ipc_hw_flush_cache_local (const uint8 instance)
+{
+  <bb 2> :
+  return;
+
+}
+
+
+ipc_hw_irq_clear (const uint8 instance)
+{
+  uint8 msi_rx_index;
+  uint8 remote_core;
+  uint8 local_core;
+  int _1;
+  short int _2;
+  int _3;
+  int _4;
+  int _5;
+  int _6;
+  volatile struct IPC_MSCM_IRCPnIRx_Type * _7;
+  int _8;
+  int _9;
+  long unsigned int _10;
+
+  <bb 2> :
+  _1 = (int) instance_12(D);
+  _2 = ipc_hw_priv[_1].mscm_rx_irq;
+  if (_2 != -1)
+    goto <bb 3>; [INV]
+  else
+    goto <bb 4>; [INV]
+
+  <bb 3> :
+  _3 = (int) instance_12(D);
+  local_core_14 = ipc_hw_priv[_3].local_core;
+  _4 = (int) instance_12(D);
+  remote_core_15 = ipc_hw_priv[_4].remote_core;
+  _5 = (int) instance_12(D);
+  msi_rx_index_16 = ipc_hw_priv[_5].msi_rx_irq;
+  _6 = (int) remote_core_15;
+  _7 = 1073807872B;
+  _8 = (int) local_core_14;
+  _9 = (int) msi_rx_index_16;
+  _10 = 1 << _6;
+  _7->IRCPnIRx[_8][_9].IPC_ISR ={v} _10;
+
+  <bb 4> :
+  return;
+
+}
+
+
+ipc_hw_irq_notify (const uint8 instance)
+{
+  uint8 msi_tx_index;
+  uint8 remote_core;
+  int _1;
+  short int _2;
+  int _3;
+  int _4;
+  volatile struct IPC_MSCM_IRCPnIRx_Type * _5;
+  int _6;
+  int _7;
+  long unsigned int _8;
+  volatile struct IPC_MSCM_IRCPnIRx_Type * _9;
+  int _10;
+  int _11;
+  long unsigned int _12;
+
+  <bb 2> :
+  _1 = (int) instance_14(D);
+  _2 = ipc_hw_priv[_1].mscm_tx_irq;
+  if (_2 != -1)
+    goto <bb 3>; [INV]
+  else
+    goto <bb 4>; [INV]
+
+  <bb 3> :
+  _3 = (int) instance_14(D);
+  remote_core_16 = ipc_hw_priv[_3].remote_core;
+  _4 = (int) instance_14(D);
+  msi_tx_index_17 = ipc_hw_priv[_4].msi_tx_irq;
+  _5 = 1073807872B;
+  _6 = (int) remote_core_16;
+  _7 = (int) msi_tx_index_17;
+  _8 ={v} _5->IRCPnIRx[_6][_7].IPC_IGR;
+  _9 = 1073807872B;
+  _10 = (int) remote_core_16;
+  _11 = (int) msi_tx_index_17;
+  _12 = _8 | 1;
+  _9->IRCPnIRx[_10][_11].IPC_IGR ={v} _12;
+
+  <bb 4> :
+  return;
+
+}
+
+
+ipc_hw_irq_disable (const uint8 instance)
+{
+  int _1;
+  short int _2;
+
+  <bb 2> :
+  _1 = (int) instance_3(D);
+  _2 = ipc_hw_priv[_1].mscm_rx_irq;
+
+  <bb 3> :
+  return;
+
+}
+
+
+ipc_hw_irq_enable (const uint8 instance)
+{
+  int _1;
+  short int _2;
+
+  <bb 2> :
+  _1 = (int) instance_3(D);
+  _2 = ipc_hw_priv[_1].mscm_rx_irq;
+
+  <bb 3> :
+  return;
+
+}
+
+
+ipc_hw_free (const uint8 instance)
+{
+  <bb 2> :
+  ipc_hw_irq_clear (instance_2(D));
+  return;
+
+}
+
+
+ipc_hw_init (const uint8 instance, const struct ipc_shm_cfg * cfg)
+{
+  sint8 err;
+  sint8 D.6217;
+  int _1;
+  long unsigned int _2;
+  sint8 _17;
+
+  <bb 2> :
+  err_6 = 0;
+  err_11 = ipc_hw_set_core (instance_8(D), cfg_9(D));
+  if (err_11 == 0)
+    goto <bb 3>; [INV]
+  else
+    goto <bb 4>; [INV]
+
+  <bb 3> :
+  err_13 = ipc_hw_set_irq_idx (instance_8(D), cfg_9(D));
+
+  <bb 4> :
+  # err_3 = PHI <err_11(2), err_13(3)>
+  if (err_3 == 0)
+    goto <bb 5>; [INV]
+  else
+    goto <bb 6>; [INV]
+
+  <bb 5> :
+  _1 = (int) instance_8(D);
+  _2 = cfg_9(D)->shm_size;
+  ipc_hw_priv[_1].shm_size = _2;
+  ipc_hw_irq_disable (instance_8(D));
+  ipc_hw_irq_clear (instance_8(D));
+
+  <bb 6> :
+  _17 = err_3;
+
+  <bb 7> :
+<L4>:
+  return _17;
+
+}
+
+
+ipc_hw_set_irq_idx (const uint8 instance, const struct ipc_shm_cfg * cfg)
+{
+  sint8 err;
+  sint8 D.6211;
+  short int _1;
+  short int _2;
+  short int _3;
+  short int _4;
+  int _5;
+  int _6;
+  short int _7;
+  short int _8;
+  int _9;
+  int _10;
+  short int _11;
+  sint8 _30;
+
+  <bb 2> :
+  err_17 = 0;
+  _1 = cfg_19(D)->inter_core_rx_irq;
+  _2 = cfg_19(D)->inter_core_tx_irq;
+  if (_1 == _2)
+    goto <bb 3>; [INV]
+  else
+    goto <bb 5>; [INV]
+
+  <bb 3> :
+  _3 = cfg_19(D)->inter_core_rx_irq;
+  if (_3 != -1)
+    goto <bb 4>; [INV]
+  else
+    goto <bb 5>; [INV]
+
+  <bb 4> :
+  err_20 = -3;
+  goto <bb 14>; [INV]
+
+  <bb 5> :
+  err_23 = ipc_hw_set_tx_irq_idx (instance_21(D), cfg_19(D));
+  if (err_23 == 0)
+    goto <bb 6>; [INV]
+  else
+    goto <bb 7>; [INV]
+
+  <bb 6> :
+  err_25 = ipc_hw_set_rx_irq_idx (instance_21(D), cfg_19(D));
+
+  <bb 7> :
+  # err_12 = PHI <err_23(5), err_25(6)>
+  if (err_12 == 0)
+    goto <bb 8>; [INV]
+  else
+    goto <bb 14>; [INV]
+
+  <bb 8> :
+  _4 = cfg_19(D)->inter_core_tx_irq;
+  if (_4 == -1)
+    goto <bb 9>; [INV]
+  else
+    goto <bb 10>; [INV]
+
+  <bb 9> :
+  _5 = (int) instance_21(D);
+  ipc_hw_priv[_5].mscm_tx_irq = -1;
+  goto <bb 11>; [INV]
+
+  <bb 10> :
+  _6 = (int) instance_21(D);
+  _7 = cfg_19(D)->inter_core_tx_irq;
+  ipc_hw_priv[_6].mscm_tx_irq = _7;
+
+  <bb 11> :
+  _8 = cfg_19(D)->inter_core_rx_irq;
+  if (_8 == -1)
+    goto <bb 12>; [INV]
+  else
+    goto <bb 13>; [INV]
+
+  <bb 12> :
+  _9 = (int) instance_21(D);
+  ipc_hw_priv[_9].mscm_rx_irq = -1;
+  goto <bb 14>; [INV]
+
+  <bb 13> :
+  _10 = (int) instance_21(D);
+  _11 = cfg_19(D)->inter_core_rx_irq;
+  ipc_hw_priv[_10].mscm_rx_irq = _11;
+
+  <bb 14> :
+  # err_13 = PHI <err_20(4), err_12(7), err_12(12), err_12(13)>
+  _30 = err_13;
+
+  <bb 15> :
+<L14>:
+  return _30;
+
+}
+
+
+ipc_hw_set_rx_irq_idx (const uint8 instance, const struct ipc_shm_cfg * cfg)
+{
+  sint8 err;
+  sint8 D.6195;
+  short int _1;
+  int _2;
+  int _3;
+  int _4;
+  int _5;
+  int _6;
+  unsigned char _7;
+  int _8;
+  sint8 _23;
+
+  <bb 2> :
+  err_13 = 0;
+  _1 = cfg_15(D)->inter_core_rx_irq;
+  _2 = (int) _1;
+  switch (_2) <default: <L8> [INV], case -1: <L0> [INV], case 1: <L1> [INV], case 2: <L2> [INV], case 3: <L3> [INV], case 36: <L4> [INV]>
+
+  <bb 3> :
+<L0>:
+  goto <bb 12>; [INV]
+
+  <bb 4> :
+<L1>:
+  _3 = (int) instance_16(D);
+  ipc_hw_priv[_3].msi_rx_irq = 0;
+  goto <bb 12>; [INV]
+
+  <bb 5> :
+<L2>:
+  _4 = (int) instance_16(D);
+  ipc_hw_priv[_4].msi_rx_irq = 1;
+  goto <bb 12>; [INV]
+
+  <bb 6> :
+<L3>:
+  _5 = (int) instance_16(D);
+  ipc_hw_priv[_5].msi_rx_irq = 2;
+  goto <bb 12>; [INV]
+
+  <bb 7> :
+<L4>:
+  _6 = (int) instance_16(D);
+  _7 = ipc_hw_priv[_6].local_core;
+  if (_7 == 3)
+    goto <bb 8>; [INV]
+  else
+    goto <bb 9>; [INV]
+
+  <bb 8> :
+  err_18 = -3;
+  goto <bb 10>; [INV]
+
+  <bb 9> :
+  _8 = (int) instance_16(D);
+  ipc_hw_priv[_8].msi_rx_irq = 3;
+
+  <bb 10> :
+  # err_9 = PHI <err_18(8), err_13(9)>
+  goto <bb 12>; [INV]
+
+  <bb 11> :
+<L8>:
+  err_22 = -3;
+
+  <bb 12> :
+  # err_10 = PHI <err_13(3), err_13(4), err_13(5), err_13(6), err_9(10), err_22(11)>
+  _23 = err_10;
+
+  <bb 13> :
+<L10>:
+  return _23;
+
+}
+
+
+ipc_hw_set_tx_irq_idx (const uint8 instance, const struct ipc_shm_cfg * cfg)
+{
+  sint8 err;
+  sint8 D.6190;
+  short int _1;
+  int _2;
+  int _3;
+  int _4;
+  int _5;
+  int _6;
+  unsigned char _7;
+  int _8;
+  sint8 _23;
+
+  <bb 2> :
+  err_13 = 0;
+  _1 = cfg_15(D)->inter_core_tx_irq;
+  _2 = (int) _1;
+  switch (_2) <default: <L8> [INV], case -1: <L0> [INV], case 1: <L1> [INV], case 2: <L2> [INV], case 3: <L3> [INV], case 36: <L4> [INV]>
+
+  <bb 3> :
+<L0>:
+  goto <bb 12>; [INV]
+
+  <bb 4> :
+<L1>:
+  _3 = (int) instance_16(D);
+  ipc_hw_priv[_3].msi_tx_irq = 0;
+  goto <bb 12>; [INV]
+
+  <bb 5> :
+<L2>:
+  _4 = (int) instance_16(D);
+  ipc_hw_priv[_4].msi_tx_irq = 1;
+  goto <bb 12>; [INV]
+
+  <bb 6> :
+<L3>:
+  _5 = (int) instance_16(D);
+  ipc_hw_priv[_5].msi_tx_irq = 2;
+  goto <bb 12>; [INV]
+
+  <bb 7> :
+<L4>:
+  _6 = (int) instance_16(D);
+  _7 = ipc_hw_priv[_6].remote_core;
+  if (_7 == 3)
+    goto <bb 8>; [INV]
+  else
+    goto <bb 9>; [INV]
+
+  <bb 8> :
+  err_18 = -3;
+  goto <bb 10>; [INV]
+
+  <bb 9> :
+  _8 = (int) instance_16(D);
+  ipc_hw_priv[_8].msi_tx_irq = 3;
+
+  <bb 10> :
+  # err_9 = PHI <err_18(8), err_13(9)>
+  goto <bb 12>; [INV]
+
+  <bb 11> :
+<L8>:
+  err_22 = -3;
+
+  <bb 12> :
+  # err_10 = PHI <err_13(3), err_13(4), err_13(5), err_13(6), err_9(10), err_22(11)>
+  _23 = err_10;
+
+  <bb 13> :
+<L10>:
+  return _23;
+
+}
+
+
+ipc_hw_set_core (const uint8 instance, const struct ipc_shm_cfg * cfg)
+{
+  uint32 local_core_personality;
+  uint8 local_core_idx;
+  sint8 err;
+  sint8 D.6185;
+  struct MSCM_Type * _1;
+  long unsigned int _2;
+  unsigned char _3;
+  struct MSCM_Type * _4;
+  int _5;
+  unsigned char _6;
+  int _7;
+  unsigned char _8;
+  ipc_shm_core_type _9;
+  int _10;
+  unsigned char _11;
+  ipc_shm_core_type _12;
+  sint8 _27;
+
+  <bb 2> :
+  err_16 = 0;
+  _1 = 1073807360B;
+  _2 ={v} _1->CPXNUM;
+  _3 = (unsigned char) _2;
+  local_core_idx_18 = _3 & 3;
+  _4 = 1073807360B;
+  local_core_personality_19 ={v} _4->CPXTYPE;
+  err_23 = ipc_hw_set_remote_core (instance_20(D), cfg_21(D));
+  if (err_23 == 0)
+    goto <bb 3>; [INV]
+  else
+    goto <bb 4>; [INV]
+
+  <bb 3> :
+  err_25 = ipc_hw_set_local_core (instance_20(D), cfg_21(D));
+
+  <bb 4> :
+  # err_13 = PHI <err_23(2), err_25(3)>
+  if (err_13 == 0)
+    goto <bb 5>; [INV]
+  else
+    goto <bb 11>; [INV]
+
+  <bb 5> :
+  _5 = (int) instance_20(D);
+  _6 = ipc_hw_priv[_5].remote_core;
+  _7 = (int) instance_20(D);
+  _8 = ipc_hw_priv[_7].local_core;
+  if (_6 == _8)
+    goto <bb 10>; [INV]
+  else
+    goto <bb 6>; [INV]
+
+  <bb 6> :
+  _9 = cfg_21(D)->local_core.type;
+  if (_9 != 9)
+    goto <bb 7>; [INV]
+  else
+    goto <bb 8>; [INV]
+
+  <bb 7> :
+  _10 = (int) instance_20(D);
+  _11 = ipc_hw_priv[_10].local_core;
+  if (local_core_idx_18 != _11)
+    goto <bb 10>; [INV]
+  else
+    goto <bb 8>; [INV]
+
+  <bb 8> :
+  _12 = cfg_21(D)->local_core.type;
+  if (_12 == 9)
+    goto <bb 9>; [INV]
+  else
+    goto <bb 11>; [INV]
+
+  <bb 9> :
+  if (local_core_personality_19 != 0)
+    goto <bb 10>; [INV]
+  else
+    goto <bb 11>; [INV]
+
+  <bb 10> :
+  err_26 = -3;
+
+  <bb 11> :
+  # err_14 = PHI <err_13(4), err_13(8), err_13(9), err_26(10)>
+  _27 = err_14;
+
+  <bb 12> :
+<L10>:
+  return _27;
+
+}
+
+
+ipc_hw_set_local_core (const uint8 instance, const struct ipc_shm_cfg * cfg)
+{
+  sint8 err;
+  sint8 D.6173;
+  ipc_shm_core_index _1;
+  int _2;
+  ipc_shm_core_type _3;
+  int _4;
+  int _5;
+  int _6;
+  int _7;
+  int _8;
+  ipc_shm_core_type _9;
+  int _10;
+  sint8 _29;
+
+  <bb 2> :
+  err_17 = 0;
+  _1 = cfg_19(D)->local_core.index;
+  _2 = (int) _1;
+  switch (_2) <default: <L11> [INV], case 1: <L0> [INV], case 2: <L7> [INV]>
+
+  <bb 3> :
+<L0>:
+  _3 = cfg_19(D)->local_core.type;
+  _4 = (int) _3;
+  switch (_4) <default: <L5> [INV], case 0: <L4> [INV], case 1: <L1> [INV], case 2: <L2> [INV], case 9: <L3> [INV]>
+
+  <bb 4> :
+<L1>:
+  _5 = (int) instance_21(D);
+  ipc_hw_priv[_5].local_core = 2;
+  goto <bb 9>; [INV]
+
+  <bb 5> :
+<L2>:
+  _6 = (int) instance_21(D);
+  ipc_hw_priv[_6].local_core = 0;
+  goto <bb 9>; [INV]
+
+  <bb 6> :
+<L3>:
+  _7 = (int) instance_21(D);
+  ipc_hw_priv[_7].local_core = 3;
+  goto <bb 9>; [INV]
+
+  <bb 7> :
+<L4>:
+  _8 = (int) instance_21(D);
+  ipc_hw_priv[_8].local_core = 0;
+  goto <bb 9>; [INV]
+
+  <bb 8> :
+<L5>:
+  err_27 = -3;
+
+  <bb 9> :
+  # err_11 = PHI <err_17(4), err_17(5), err_17(6), err_17(7), err_27(8)>
+  goto <bb 15>; [INV]
+
+  <bb 10> :
+<L7>:
+  _9 = cfg_19(D)->local_core.type;
+  if (_9 == 2)
+    goto <bb 11>; [INV]
+  else
+    goto <bb 12>; [INV]
+
+  <bb 11> :
+  _10 = (int) instance_21(D);
+  ipc_hw_priv[_10].local_core = 1;
+  goto <bb 13>; [INV]
+
+  <bb 12> :
+  err_20 = -3;
+
+  <bb 13> :
+  # err_12 = PHI <err_17(11), err_20(12)>
+  goto <bb 15>; [INV]
+
+  <bb 14> :
+<L11>:
+  err_28 = -3;
+
+  <bb 15> :
+  # err_13 = PHI <err_11(9), err_12(13), err_28(14)>
+  _29 = err_13;
+
+  <bb 16> :
+<L13>:
+  return _29;
+
+}
+
+
+ipc_hw_set_remote_core (const uint8 instance, const struct ipc_shm_cfg * cfg)
+{
+  sint8 err;
+  sint8 D.6168;
+  ipc_shm_core_index _1;
+  int _2;
+  ipc_shm_core_type _3;
+  int _4;
+  int _5;
+  int _6;
+  int _7;
+  ipc_shm_core_type _8;
+  int _9;
+  sint8 _27;
+
+  <bb 2> :
+  err_16 = 0;
+  _1 = cfg_18(D)->remote_core.index;
+  _2 = (int) _1;
+  switch (_2) <default: <L10> [INV], case 1: <L0> [INV], case 2: <L6> [INV]>
+
+  <bb 3> :
+<L0>:
+  _3 = cfg_18(D)->remote_core.type;
+  _4 = (int) _3;
+  switch (_4) <default: <L4> [INV], case 1: <L1> [INV], case 2: <L2> [INV], case 9: <L3> [INV]>
+
+  <bb 4> :
+<L1>:
+  _5 = (int) instance_20(D);
+  ipc_hw_priv[_5].remote_core = 2;
+  goto <bb 8>; [INV]
+
+  <bb 5> :
+<L2>:
+  _6 = (int) instance_20(D);
+  ipc_hw_priv[_6].remote_core = 0;
+  goto <bb 8>; [INV]
+
+  <bb 6> :
+<L3>:
+  _7 = (int) instance_20(D);
+  ipc_hw_priv[_7].remote_core = 3;
+  goto <bb 8>; [INV]
+
+  <bb 7> :
+<L4>:
+  err_25 = -3;
+
+  <bb 8> :
+  # err_10 = PHI <err_16(4), err_16(5), err_16(6), err_25(7)>
+  goto <bb 14>; [INV]
+
+  <bb 9> :
+<L6>:
+  _8 = cfg_18(D)->remote_core.type;
+  if (_8 == 2)
+    goto <bb 10>; [INV]
+  else
+    goto <bb 11>; [INV]
+
+  <bb 10> :
+  _9 = (int) instance_20(D);
+  ipc_hw_priv[_9].remote_core = 1;
+  goto <bb 12>; [INV]
+
+  <bb 11> :
+  err_19 = -3;
+
+  <bb 12> :
+  # err_11 = PHI <err_16(10), err_19(11)>
+  goto <bb 14>; [INV]
+
+  <bb 13> :
+<L10>:
+  err_26 = -3;
+
+  <bb 14> :
+  # err_12 = PHI <err_10(8), err_11(12), err_26(13)>
+  _27 = err_12;
+
+  <bb 15> :
+<L12>:
+  return _27;
+
+}
+
+

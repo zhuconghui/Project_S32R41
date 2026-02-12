@@ -1,0 +1,276 @@
+/**************************************************************************************************
+ *
+ * NXP Confidential Proprietary
+ *
+ * Copyright 2021 NXP
+ * All Rights Reserved
+ *
+ *****************************************************************************
+ *
+ * NXP Confidential and Proprietary. This software is owned or controlled by NXP and
+ * may only be used strictly in accordance with the applicable license terms.  By
+ * expressly accepting such terms or by downloading, installing, activating and/or
+ * otherwise using the software, you are agreeing that you have read, and that you
+ * agree to comply with and are bound by, such license terms.  If you do not agree to
+ * be bound by the applicable license terms, then you may not retain, install, activate or
+ * otherwise use the software.
+ *
+ **************************************************************************************************/
+
+/** @cond */
+/*==================================================================================================
+ *                                        INCLUDE FILES
+ *==================================================================================================*/
+ .include "oram.inc"                    /* include ORAM header file */
+ .include "tram.inc"                    /* include TRAM header file */
+ .include "wr.inc"                      /* include WR header file */
+ .include "spt_kernel_internals.inc"    /* include local defines */
+
+/*==================================================================================================
+ *                                          SECTION
+ *==================================================================================================*/
+ .section .RsdkSpt3 , "ax"              /* memory section where to store SPT code */
+
+/*==================================================================================================
+ *                                      LOCAL CONSTANTS
+ *==================================================================================================*/
+ .set BYTES_CP4D_DATA,        8
+ .set CHANNELS_48NO,         48
+ .set PEAK_NO,              128
+ .set PEAKS_PER_ITER,        64 /* peaks to be proccesed at a time */
+ .set BYTES_AZIMUTH_SAMPLE,   4
+ .set AZIMUTH_BINS_NO,      128
+ .set SRAM_SLICES,          ((PEAKS_PER_ITER * CHANNELS_48NO) >> 2) /* twelve SRAM slice contains compressed data for 1 Peak */
+
+/** @endcond */
+/*==================================================================================================
+ *                                      GLOBAL FUNCTIONS
+ *==================================================================================================*/
+/*================================================================================================*/
+/**
+* @addtogroup spt_kernels_api_func
+* @{
+*
+* @fn             void *RsdkSptDbfFFT128Bins48Ch128PeaksCp4d();
+* @brief          Function for Digital BeamForming - DBF for 128 bins, 48 channels and 128 peaks.
+* @details        Compute FFT 128 (16 bit complex format) for each peak.
+*
+* @param[in]      WR_1: 24bit(RE): 0 \n
+*                       24bit(IM): Offset(restricted to 24bit value!) of the INPUT buffer(Compressed Peak list),
+*                       relative to SRAM start address @ref RSDK_SPT_OTHER_BASE_ADDR "RSDK_SPT_OTHER_BASE_ADDR".
+* @verbatim
+*                 INPUT Memory layout:
+*                 SRAM, 64bit compressed data
+*                 63:0
+*                 CH0-CH1-CH2-CH3
+*                 CH4-CH5-CH6-CH7
+*                 |
+*                 CH40-CH41-CH42-CH43
+*                 CH44-CH45-CH46-CH47     -> P0
+*                 -----------------------------
+*                 |
+*                 |
+*                 |
+*                 -----------------------------
+*                 CH0-CH1-CH2-CH3
+*                 CH4-CH5-CH6-CH7
+*                 |
+*                 CH40-CH41-CH42-CH43
+*                 CH44-CH45-CH46-CH47   -> P127
+*                 -----------------------------
+* @endverbatim
+*
+* @param[out]     WR_2: 24bit(RE): 0 \n
+*                       24bit(IM): Offset(restricted to 24bit value!) of the OUTPUT buffer(128 azimuth bins for 128 peaks),
+*                       relative to SRAM start address @ref RSDK_SPT_OTHER_BASE_ADDR "RSDK_SPT_OTHER_BASE_ADDR".
+* @verbatim
+*                 OUTPUT Memory layout:
+*                 SRAM, 16 bit complex format
+*                 63:48           47:32           31:16           15:0
+*                 AzBin0-Im       AzBin0-Re       AzBin1-Im       AzBin1-Re
+*                 AzBin2-Im       AzBin2-Re       AzBin3-Im       AzBin3-Re
+*                 |               |               |               |
+*                 AzBin124-Im     AzBin124-Re     AzBin125-Im     AzBin125-Re
+*                 AzBin126-Im     AzBin126-Re     AzBin127-Im     AzBin127-Re  ---> P0
+*                 ---------------------------------------------------------------------
+*                 |               |               |               |
+*                 |               |               |               |
+*                 |               |               |               |
+*                 ---------------------------------------------------------------------
+*                 AzBin0-Im       AzBin0-Re       AzBin1-Im       AzBin1-Re
+*                 AzBin2-Im       AzBin2-Re       AzBin3-Im       AzBin3-Re
+*                 |               |               |               |
+*                 AzBin124-Im     AzBin124-Re     AzBin125-Im     AzBin125-Re
+*                 AzBin126-Im     AzBin126-Re     AzBin127-Im     AzBin127-Re  ---> P127
+*                 ----------------------------------------------------------------------
+* @endverbatim
+*
+* @param[in]      WR_3: 24bit(RE): Scaling Factor, e.g. 1 for scale left with 1. \n
+*                       24bit(IM): 0.
+*
+* @return         WR_0: No value returned.
+* @retval         No value returned.
+*
+* @pre            Twiddle coeficients are placed in TRAM at TR_0_96_0 by the Init function. \n
+*                 Window coeficients are placed in TRAM at TR_0_32_0 by the Init function.
+*
+* @note           The kernel implementation guarantees no saturation, for 0 output scaling factor.
+*                 If other scaling is used, it's the user responsibility to prevent saturation. \n
+*                 The input buffer CANNOT be reused for the output buffer. \n
+*                 All buffers MUST be 8 bytes aligned.
+*
+* @}*/
+/*================================================================================================*/
+/** @cond */
+ .global RsdkSptDbfFFT128Bins48Ch128PeaksCp4d
+ .global RsdkSptDbfFFT128Bins48Ch128PeaksCp4d_size
+
+RsdkSptDbfFFT128Bins48Ch128PeaksCp4d:
+    /*=========================================================================
+     * Kernel watermarking instruction without side-effects. WR_0 can be ovewritten
+     * with the output parameter, according to the SPT calling convention
+     *=========================================================================*/
+    set #RSDK_SPT_KERNEL_WATERMARK, WR_0
+
+/*=========================================================================
+ * API parameter passing
+ *=========================================================================*/
+    /*=========================================================================
+     * INPUT
+     *=========================================================================
+     * WR_11: 24bit(RE): OPRAM address to put first chunk of PEAKS_PER_ITER peak samples of 48 channels
+     *        24bit(IM): SRAM offset to first chunk of peak samples
+     * WR_12: 24bit(RE): OPRAM address to put second chunk of PEAKS_PER_ITER peak samples of 48 channels
+     *        24bit(IM): SRAM offset to second chunk of peak samples.
+     *=========================================================================*/
+    add .noshift .mod24 WR_1, #(OR_2_0_0), WR_11
+    add .noshift .mod24 WR_1, #(OR_6_0_0 | ((PEAKS_PER_ITER * ((CHANNELS_48NO >> 2)*BYTES_CP4D_DATA)) << 24)), WR_12
+
+    /*=========================================================================
+     * OUTPUT
+     *=========================================================================
+     * WR_13: 24bit(RE): OPRAM address to get azimuth bins for first chunk of PEAKS_PER_ITER peaks
+     *        24bit(IM): SRAM azimuth bins address offset for first chunk of PEAKS_PER_ITER peaks
+     * WR_14: 24bit(RE): OPRAM address to get azimuth bins for second chunk of PEAKS_PER_ITER peaks
+     *        24bit(IM): SRAM azimuth bins address offset for second chunk of PEAKS_PER_ITER peaks
+     *=========================================================================*/
+    add .noshift .mod24 WR_2, #(OR_0_0_0), WR_13
+    add .noshift .mod24 WR_2, #(OR_4_0_0 | (PEAKS_PER_ITER * AZIMUTH_BINS_NO * BYTES_AZIMUTH_SAMPLE) << 24), WR_14
+
+/*=========================================================================
+ * START FFT128 BEAMFORMING
+ *=========================================================================*/
+    /*=========================================================================
+     * set WR_46, for custom output left shift. By default, right shift by 7
+     * (right shift 8 to adjust from 24b to 16b), (left shift 1 to compensate zeropadding scaling 128/48)
+     * additional custom left shift set by WR_3
+     *=========================================================================*/
+    set #(0x7), WR_46
+    sub .noshift .mod24 WR_3, WR_46, WR_46
+
+    /*=========================================================================
+     * COPY with clear. Reset OPRAM banks to zero to prepare for zero padding.
+     * PDMA: transfer first and second half of individual range bin data for all 48 virtual channels from SRAM to OPRAM
+     * Prepare for oversampled FFT, copy 48 virtual channels and skip 80 zeros.
+     *=========================================================================*/
+    copy.clear OPRAM_BANK_SIZE, OR_2_0_0, 0x1, 0xFFFF
+    copy.clear OPRAM_BANK_SIZE, OR_3_0_0, 0x1, 0xFFFF
+    pdma.ind .signext .CP4D .sysram2opram .async .notrace, SRAM_SLICES, RSDK_SPT_OTHER_BASE_ADDR, WR_11, 0xA, 0x6, 0x0, 0x1
+
+    copy.clear OPRAM_BANK_SIZE, OR_6_0_0, 0x1, 0xFFFF
+    copy.clear OPRAM_BANK_SIZE, OR_7_0_0, 0x1, 0xFFFF
+    pdma.ind .signext .CP4D .sysram2opram .async .notrace, SRAM_SLICES, RSDK_SPT_OTHER_BASE_ADDR, WR_12, 0xA, 0x6, 0x0, 0x1
+
+
+    /*=========================================================================
+     * Frist half of peaks processing part
+     *=========================================================================*/
+
+    /*=========================================================================
+     * Repeat PEAKS_PER_ITER times Azimut FFT128 on 48 ch samples + 80 zeros
+     *=========================================================================
+     *=========================================================================
+     * RDX Round 0(+win)...3, Twiddle in TR_0_32_0, Window in TR_0_96_0
+     =========================================================================*/
+    repeat PEAKS_PER_ITER, AZIMUTH_BINS_NO, AZIMUTH_BINS_NO, 0x0, 0x0
+    rdx4 .cmplx .real_win_real_tram .qext .noovs .round0 .nosft, AZIMUTH_BINS_NO, OR_2_0_0, OR_0_0_0, 0x1, 0x1, TR_0_96_0, .mod0, 0x1
+
+    repeat PEAKS_PER_ITER, AZIMUTH_BINS_NO, AZIMUTH_BINS_NO, 0x0, 0x0
+    rdx4 .cmplx .no_win .qext .noovs .round1 .nosft, AZIMUTH_BINS_NO, OR_0_0_0, OR_2_0_0, 0x1, 0x1, TR_0_32_0, .mod0, 0x1
+
+    repeat PEAKS_PER_ITER, AZIMUTH_BINS_NO, AZIMUTH_BINS_NO, 0x0, 0x0
+    rdx4 .cmplx .no_win .qext .noovs .round2 .nosft, AZIMUTH_BINS_NO, OR_2_0_0, OR_0_0_0, 0x1, 0x1, TR_0_32_0, .mod0, 0x1
+
+    repeat PEAKS_PER_ITER, AZIMUTH_BINS_NO, AZIMUTH_BINS_NO, 0x0, 0x0
+    rdx2 .cmplx .nosplit .qext .noovs .round3 .nosft, AZIMUTH_BINS_NO, OR_0_0_0, OR_2_0_0, 0x1, 0x1, TR_0_32_0
+
+    /*=========================================================================
+     * Repeat PEAKS_PER_ITER times VMT
+     *=========================================================================
+     *=========================================================================
+     * VMT: custom shift(WR_46). Default shift right by 7(save on 16bit on SRAM)
+     * Invert the spectrum. Copy half of data.
+     *=========================================================================*/
+    repeat PEAKS_PER_ITER, AZIMUTH_BINS_NO, AZIMUTH_BINS_NO, 0x0, 0x0
+    vmt.shift_sq2s2 .cmplx .rst_sum .in_48 .op_off .no_sq2s1 WR_46 .no_sq2s3, AZIMUTH_BINS_NO>>1, OR_2_0_0, OR_0_0_0 + AZIMUTH_BINS_NO>>1, 0x1, 0x1
+
+    repeat PEAKS_PER_ITER, AZIMUTH_BINS_NO, AZIMUTH_BINS_NO, 0x0, 0x0
+    vmt.shift_sq2s2 .cmplx .rst_sum .in_48 .op_off .no_sq2s1 WR_46 .no_sq2s3, AZIMUTH_BINS_NO>>1, OR_2_0_0 + AZIMUTH_BINS_NO>>1, OR_0_0_0, 0x1, 0x1
+
+    /*=========================================================================
+     * PDMA: transfer azimuth FFT results for first chunk of PEAKS_PER_ITER peaks from OPRAM to SRAM
+     *=========================================================================*/
+    pdma.ind .signext .16cmplx .opram2sysram .async .notrace, AZIMUTH_BINS_NO*PEAKS_PER_ITER, RSDK_SPT_OTHER_BASE_ADDR, WR_13, 0x0, 0x1, 0x0, 0x1
+
+
+    /*=========================================================================
+     * Second half of peaks processing part
+     *=========================================================================*/
+
+    /*=========================================================================
+     * Repeat PEAKS_PER_ITER times Azimut FFT128 on 48 ch samples + 80 zeros
+     *=========================================================================
+     *=========================================================================
+     * RDX Round 0(+win)...3, Twiddle in TR_0_32_0, Window in TR_0_96_0
+     =========================================================================*/
+    repeat PEAKS_PER_ITER, AZIMUTH_BINS_NO, AZIMUTH_BINS_NO, 0x0, 0x0
+    rdx4 .cmplx .real_win_real_tram .qext .noovs .round0 .nosft, AZIMUTH_BINS_NO, OR_6_0_0, OR_4_0_0, 0x1, 0x1, TR_0_96_0, .mod0, 0x1
+
+    repeat PEAKS_PER_ITER, AZIMUTH_BINS_NO, AZIMUTH_BINS_NO, 0x0, 0x0
+    rdx4 .cmplx .no_win .qext .noovs .round1 .nosft, AZIMUTH_BINS_NO, OR_4_0_0, OR_6_0_0, 0x1, 0x1, TR_0_32_0, .mod0, 0x1
+
+    repeat PEAKS_PER_ITER, AZIMUTH_BINS_NO, AZIMUTH_BINS_NO, 0x0, 0x0
+    rdx4 .cmplx .no_win .qext .noovs .round2 .nosft, AZIMUTH_BINS_NO, OR_6_0_0, OR_4_0_0, 0x1, 0x1, TR_0_32_0, .mod0, 0x1
+
+    repeat PEAKS_PER_ITER, AZIMUTH_BINS_NO, AZIMUTH_BINS_NO, 0x0, 0x0
+    rdx2 .cmplx .nosplit .qext .noovs .round3 .nosft, AZIMUTH_BINS_NO, OR_4_0_0, OR_6_0_0, 0x1, 0x1, TR_0_32_0
+
+    /*=========================================================================
+     * Repeat PEAKS_PER_ITER times VMT
+     *=========================================================================
+     *=========================================================================
+     * VMT: custom shift(WR_46). Default shift right by 7(save on 16bit on SRAM)
+     * Invert the spectrum. Copy half of data.
+     *=========================================================================*/
+    repeat PEAKS_PER_ITER, AZIMUTH_BINS_NO, AZIMUTH_BINS_NO, 0x0, 0x0
+    vmt.shift_sq2s2 .cmplx .rst_sum .in_48 .op_off .no_sq2s1 WR_46 .no_sq2s3, AZIMUTH_BINS_NO>>1, OR_6_0_0, OR_4_0_0 + AZIMUTH_BINS_NO>>1, 0x1, 0x1
+
+    repeat PEAKS_PER_ITER, AZIMUTH_BINS_NO, AZIMUTH_BINS_NO, 0x0, 0x0
+    vmt.shift_sq2s2 .cmplx .rst_sum .in_48 .op_off .no_sq2s1 WR_46 .no_sq2s3, AZIMUTH_BINS_NO>>1, OR_6_0_0 + AZIMUTH_BINS_NO>>1, OR_4_0_0, 0x1, 0x1
+
+    /*=========================================================================
+     * PDMA: transfer azimuth FFT results for second chunk of PEAKS_PER_ITER peaks from OPRAM to SRAM
+     *=========================================================================*/
+    pdma.ind .signext .16cmplx .opram2sysram .async .notrace, AZIMUTH_BINS_NO*PEAKS_PER_ITER, RSDK_SPT_OTHER_BASE_ADDR, WR_14, 0x0, 0x1, 0x0, 0x1
+
+
+/*=========================================================================
+ * STOP: end of FFT128 BEAMFORMING kernel
+ *=========================================================================*/
+ stop
+
+ .set RsdkSptDbfFFT128Bins48Ch128PeaksCp4d_size, .-RsdkSptDbfFFT128Bins48Ch128PeaksCp4d
+/*******************************************************************************
+ * EOF
+ ******************************************************************************/
+/** @endcond */

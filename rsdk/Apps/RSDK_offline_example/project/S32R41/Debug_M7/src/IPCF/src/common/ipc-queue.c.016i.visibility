@@ -1,0 +1,507 @@
+
+Marking local functions:
+
+
+Marking externally visible functions: ipc_queue_check_integrity ipc_queue_free ipc_queue_init ipc_queue_push ipc_queue_pop
+
+
+Marking externally visible variables:
+
+
+Reclaiming functions:
+Reclaiming variables:
+Clearing address taken flags:
+Symbol table:
+
+ipc_memcpy/21 (ipc_memcpy) @06177c40
+  Type: function
+  Visibility: external public
+  References: 
+  Referring: 
+  Availability: not_available
+  Function flags:
+  Called by: ipc_queue_push/16 ipc_queue_pop/15 
+  Calls: 
+ipc_queue_check_integrity/20 (ipc_queue_check_integrity) @061777e0
+  Type: function definition analyzed
+  Visibility: force_output externally_visible no_reorder public
+  References: 
+  Referring: 
+  Availability: available
+  Function flags: body
+  Called by: ipc_queue_pop/15 
+  Calls: 
+ipc_queue_free/19 (ipc_queue_free) @06177540
+  Type: function definition analyzed
+  Visibility: force_output externally_visible no_reorder public
+  References: 
+  Referring: 
+  Availability: available
+  Function flags: body
+  Called by: 
+  Calls: 
+ipc_queue_init/18 (ipc_queue_init) @061772a0
+  Type: function definition analyzed
+  Visibility: force_output externally_visible no_reorder public
+  References: 
+  Referring: 
+  Availability: available
+  Function flags: body
+  Called by: 
+  Calls: ipc_queue_sync_index/17 
+ipc_queue_sync_index/17 (ipc_queue_sync_index) @06177000
+  Type: function definition analyzed
+  Visibility: force_output no_reorder prevailing_def_ironly
+  References: 
+  Referring: 
+  Availability: available
+  Function flags: body
+  Called by: ipc_queue_init/18 
+  Calls: 
+ipc_queue_push/16 (ipc_queue_push) @0616fee0
+  Type: function definition analyzed
+  Visibility: force_output externally_visible no_reorder public
+  References: 
+  Referring: 
+  Availability: available
+  Function flags: body
+  Called by: 
+  Calls: ipc_memcpy/21 
+ipc_queue_pop/15 (ipc_queue_pop) @0616fc40
+  Type: function definition analyzed
+  Visibility: force_output externally_visible no_reorder public
+  References: 
+  Referring: 
+  Availability: available
+  Function flags: body
+  Called by: 
+  Calls: ipc_memcpy/21 ipc_queue_check_integrity/20 
+ipc_queue_check_integrity (struct ipc_queue * queue)
+{
+  sint8 err;
+  sint8 D.5996;
+
+  <bb 2> :
+  err = -6;
+  _1 = queue->pop_ring;
+  _2 = _1->sentinel;
+  if (_2 == 5138124842591277129)
+    goto <bb 3>; [INV]
+  else
+    goto <bb 5>; [INV]
+
+  <bb 3> :
+  _3 = queue->push_ring;
+  _4 = _3->sentinel;
+  if (_4 == 5138124842591277129)
+    goto <bb 4>; [INV]
+  else
+    goto <bb 5>; [INV]
+
+  <bb 4> :
+  err = 0;
+
+  <bb 5> :
+  D.5996 = err;
+
+  <bb 6> :
+<L4>:
+  return D.5996;
+
+}
+
+
+ipc_queue_free (struct ipc_queue * queue)
+{
+  <bb 2> :
+  if (queue != 0B)
+    goto <bb 3>; [INV]
+  else
+    goto <bb 8>; [INV]
+
+  <bb 3> :
+  _1 = queue->push_ring;
+  if (_1 != 0B)
+    goto <bb 4>; [INV]
+  else
+    goto <bb 7>; [INV]
+
+  <bb 4> :
+  _2 = queue->push_ring;
+  _3 = _2->sentinel;
+  if (_3 == 5138124842591277129)
+    goto <bb 6>; [INV]
+  else
+    goto <bb 5>; [INV]
+
+  <bb 5> :
+  _4 = queue->push_ring;
+  _5 = _4->sentinel;
+  if (_5 == 6073471649104220233)
+    goto <bb 6>; [INV]
+  else
+    goto <bb 7>; [INV]
+
+  <bb 6> :
+  queue->elem_num = 0;
+  queue->elem_size = 0;
+  _6 = queue->push_ring;
+  _6->sentinel = 0;
+  _7 = queue->push_ring;
+  _7->write = 0;
+  _8 = queue->push_ring;
+  _8->read = 0;
+
+  <bb 7> :
+  queue->push_ring = 0B;
+
+  <bb 8> :
+  return;
+
+}
+
+
+ipc_queue_init (struct ipc_queue * queue, struct ipc_queue_data queue_data)
+{
+  sint8 err;
+  sint8 D.5983;
+
+  <bb 2> :
+  err = -3;
+  if (queue != 0B)
+    goto <bb 3>; [INV]
+  else
+    goto <bb 11>; [INV]
+
+  <bb 3> :
+  _1 = queue_data.push_addr;
+  if (_1 != 0)
+    goto <bb 4>; [INV]
+  else
+    goto <bb 11>; [INV]
+
+  <bb 4> :
+  _2 = queue_data.pop_addr;
+  if (_2 != 0)
+    goto <bb 5>; [INV]
+  else
+    goto <bb 11>; [INV]
+
+  <bb 5> :
+  _3 = queue_data.elem_num;
+  if (_3 != 0)
+    goto <bb 6>; [INV]
+  else
+    goto <bb 11>; [INV]
+
+  <bb 6> :
+  _4 = queue_data.elem_size;
+  if (_4 != 0)
+    goto <bb 7>; [INV]
+  else
+    goto <bb 11>; [INV]
+
+  <bb 7> :
+  _5 = queue_data.elem_size;
+  _6 = _5 & 7;
+  if (_6 == 0)
+    goto <bb 8>; [INV]
+  else
+    goto <bb 11>; [INV]
+
+  <bb 8> :
+  _7 = queue_data.queue_type;
+  if (_7 == 0)
+    goto <bb 10>; [INV]
+  else
+    goto <bb 9>; [INV]
+
+  <bb 9> :
+  _8 = queue_data.queue_type;
+  if (_8 == 1)
+    goto <bb 10>; [INV]
+  else
+    goto <bb 11>; [INV]
+
+  <bb 10> :
+  _9 = queue_data.elem_num;
+  _10 = _9 + 1;
+  queue->elem_num = _10;
+  _11 = queue_data.elem_size;
+  queue->elem_size = _11;
+  _12 = queue_data.push_addr;
+  _13 = (struct ipc_ring *) _12;
+  queue->push_ring = _13;
+  _14 = queue_data.pop_addr;
+  _15 = (struct ipc_ring *) _14;
+  queue->pop_ring = _15;
+  _16 = queue_data.queue_type;
+  err = ipc_queue_sync_index (queue, _16);
+
+  <bb 11> :
+  D.5983 = err;
+
+  <bb 12> :
+<L15>:
+  return D.5983;
+
+}
+
+
+ipc_queue_sync_index (struct ipc_queue * queue, ipc_shm_queue_type queue_type)
+{
+  sint8 err;
+  sint8 D.5966;
+
+  <bb 2> :
+  err = 0;
+  _1 = queue->pop_ring;
+  _2 = _1->sentinel;
+  if (_2 == 6073471649104220233)
+    goto <bb 3>; [INV]
+  else
+    goto <bb 4>; [INV]
+
+  <bb 3> :
+  err = -7;
+  goto <bb 10>; [INV]
+
+  <bb 4> :
+  _3 = queue->push_ring;
+  _3->sentinel = 6073471649104220233;
+  _4 = queue->pop_ring;
+  _5 = _4->sentinel;
+  if (_5 == 5138124842591277129)
+    goto <bb 5>; [INV]
+  else
+    goto <bb 8>; [INV]
+
+  <bb 5> :
+  _6 = queue->pop_ring;
+  _7 = queue->push_ring;
+  _8 = _6->read;
+  _7->write = _8;
+  if (queue_type == 0)
+    goto <bb 6>; [INV]
+  else
+    goto <bb 7>; [INV]
+
+  <bb 6> :
+  _9 = queue->pop_ring;
+  _10 = _9->write;
+  _11 = queue->elem_num;
+  _12 = (long unsigned int) _11;
+  _13 = queue->push_ring;
+  _14 = _10 % _12;
+  _13->read = _14;
+  goto <bb 9>; [INV]
+
+  <bb 7> :
+  _15 = queue->pop_ring;
+  _16 = _15->write;
+  _17 = _16 + 1;
+  _18 = queue->elem_num;
+  _19 = (long unsigned int) _18;
+  _20 = queue->push_ring;
+  _21 = _17 % _19;
+  _20->read = _21;
+  goto <bb 9>; [INV]
+
+  <bb 8> :
+  _22 = queue->push_ring;
+  _22->write = 0;
+  _23 = queue->push_ring;
+  _23->read = 0;
+
+  <bb 9> :
+  err = 0;
+
+  <bb 10> :
+  D.5966 = err;
+
+  <bb 11> :
+<L9>:
+  return D.5966;
+
+}
+
+
+ipc_queue_push (struct ipc_queue * queue, const void * buf)
+{
+  sint8 err;
+  void * dst;
+  uint32 read;
+  uint32 write;
+  sint8 D.5955;
+
+  <bb 2> :
+  err = -3;
+  if (queue != 0B)
+    goto <bb 3>; [INV]
+  else
+    goto <bb 10>; [INV]
+
+  <bb 3> :
+  if (buf != 0B)
+    goto <bb 4>; [INV]
+  else
+    goto <bb 10>; [INV]
+
+  <bb 4> :
+  _1 = queue->push_ring;
+  write = _1->write;
+  _2 = queue->pop_ring;
+  read = _2->read;
+  _3 = queue->elem_num;
+  _4 = (long unsigned int) _3;
+  if (read >= _4)
+    goto <bb 6>; [INV]
+  else
+    goto <bb 5>; [INV]
+
+  <bb 5> :
+  _5 = queue->elem_num;
+  _6 = (long unsigned int) _5;
+  if (write >= _6)
+    goto <bb 6>; [INV]
+  else
+    goto <bb 7>; [INV]
+
+  <bb 6> :
+  err = -3;
+  goto <bb 10>; [INV]
+
+  <bb 7> :
+  _7 = write + 1;
+  _8 = queue->elem_num;
+  _9 = (long unsigned int) _8;
+  _10 = _7 % _9;
+  if (read == _10)
+    goto <bb 8>; [INV]
+  else
+    goto <bb 9>; [INV]
+
+  <bb 8> :
+  err = -2;
+  goto <bb 10>; [INV]
+
+  <bb 9> :
+  _11 = queue->push_ring;
+  _12 = queue->elem_size;
+  _13 = (long unsigned int) _12;
+  _14 = write * _13;
+  dst = &_11->data[_14];
+  _15 = queue->elem_size;
+  _16 = (long unsigned int) _15;
+  ipc_memcpy (dst, buf, _16);
+  _17 = write + 1;
+  _18 = queue->elem_num;
+  _19 = (long unsigned int) _18;
+  _20 = queue->push_ring;
+  _21 = _17 % _19;
+  _20->write = _21;
+  err = 0;
+
+  <bb 10> :
+  D.5955 = err;
+
+  <bb 11> :
+<L11>:
+  return D.5955;
+
+}
+
+
+ipc_queue_pop (struct ipc_queue * queue, void * buf)
+{
+  sint8 err;
+  void * src;
+  uint32 read;
+  uint32 write;
+  sint8 D.5942;
+
+  <bb 2> :
+  err = -3;
+  if (queue != 0B)
+    goto <bb 3>; [INV]
+  else
+    goto <bb 12>; [INV]
+
+  <bb 3> :
+  if (buf != 0B)
+    goto <bb 4>; [INV]
+  else
+    goto <bb 12>; [INV]
+
+  <bb 4> :
+  _1 = queue->pop_ring;
+  write = _1->write;
+  _2 = queue->push_ring;
+  read = _2->read;
+  _3 = queue->elem_num;
+  _4 = (long unsigned int) _3;
+  if (read >= _4)
+    goto <bb 6>; [INV]
+  else
+    goto <bb 5>; [INV]
+
+  <bb 5> :
+  _5 = queue->elem_num;
+  _6 = (long unsigned int) _5;
+  if (write >= _6)
+    goto <bb 6>; [INV]
+  else
+    goto <bb 7>; [INV]
+
+  <bb 6> :
+  err = -3;
+  goto <bb 12>; [INV]
+
+  <bb 7> :
+  _7 = ipc_queue_check_integrity (queue);
+  if (_7 != 0)
+    goto <bb 8>; [INV]
+  else
+    goto <bb 9>; [INV]
+
+  <bb 8> :
+  err = -6;
+  goto <bb 12>; [INV]
+
+  <bb 9> :
+  if (read == write)
+    goto <bb 10>; [INV]
+  else
+    goto <bb 11>; [INV]
+
+  <bb 10> :
+  err = -4;
+  goto <bb 12>; [INV]
+
+  <bb 11> :
+  _8 = queue->pop_ring;
+  _9 = queue->elem_size;
+  _10 = (long unsigned int) _9;
+  _11 = read * _10;
+  src = &_8->data[_11];
+  _12 = queue->elem_size;
+  _13 = (long unsigned int) _12;
+  ipc_memcpy (buf, src, _13);
+  _14 = read + 1;
+  _15 = queue->elem_num;
+  _16 = (long unsigned int) _15;
+  _17 = queue->push_ring;
+  _18 = _14 % _16;
+  _17->read = _18;
+  err = 0;
+
+  <bb 12> :
+  D.5942 = err;
+
+  <bb 13> :
+<L14>:
+  return D.5942;
+
+}
+
+

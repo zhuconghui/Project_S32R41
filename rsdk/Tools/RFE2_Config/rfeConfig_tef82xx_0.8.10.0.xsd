@@ -1,0 +1,1322 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" version="1.1">
+
+    <!-- root node definition -->
+    <xsd:element name="rfeConfig">
+        <xsd:complexType>
+            <xsd:sequence>
+                <xsd:element name="generalConfig" type="generalConfigElement" />
+                <xsd:element name="monitorAndSafetyConfig" type="monitorAndSafetyConfigElement" />
+                <xsd:element name="radarCycleConfig" type="radarCycleConfigElement" />
+                <xsd:element name="chirpSequenceConfigs" type="chirpSequenceConfigsElement" />
+                <xsd:element name="chirpProfiles" type="chirpProfilesElement" />
+                <xsd:element name="dynamicTables" type="dynamicTablesElement" minOccurs="0" maxOccurs="1" />
+            </xsd:sequence>
+        </xsd:complexType>
+    </xsd:element>
+
+
+    <!-- top-level generalConfigElement definition -->
+    <xsd:complexType name="generalConfigElement">
+        <xsd:sequence>
+            <xsd:element name="power" type="powerElement" />
+            <xsd:element name="ioSignals" type="ioSignalsElement" />
+            <xsd:element name="clkInOut" type="clkInOutElement" />
+            <xsd:element name="pdc" type="pdcElement" />
+            <xsd:element name="dataOut" type="dataOutElement" />
+            <xsd:element name="jumpbackTiming" type="jumpbackTimingElement" />
+            <xsd:element name="txCalibration" type="txCalibrationElement" minOccurs="0" maxOccurs="1" />
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="powerElement">
+        <xsd:attribute name="mode" type="rfeApi_powerMode_t" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="ioSignalsElement">
+        <xsd:attribute name="radar-cycle-start" type="rfe_gpio_t" use="required" />
+        <xsd:attribute name="chirp-sequence-active" type="rfe_gpio_t" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="clkInOutElement">
+        <xsd:attribute name="in" type="disabledOrEnabled" use="required" />
+        <xsd:attribute name="out" type="disabledOrEnabled" use="required" />
+        <xsd:attribute name="reduce-driver-level" type="boolean" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="pdcElement">
+        <xsd:attribute name="decimation-filter" type="rfe_pdcDecimationFilter_t" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="dataOutElement">
+        <xsd:sequence>
+            <xsd:element name="metadata" type="metadataElement" />
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="metadataElement">
+        <xsd:attribute name="packet" type="disabledOrEnabled" use="required" />
+        <xsd:attribute name="hardware-field" type="disabledOrEnabled" use="required" />
+        <xsd:attribute name="software-content" type="rfe_metadataPacketSwContent_t" use="required" />
+        <xsd:attribute name="virtual-channel" type="rfe_virtualChannel_t" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="jumpbackTimingElement">
+        <xsd:attribute name="time-ticks" type="staticConfigJumpbackTimeTicks" use="required" />
+    </xsd:complexType>
+    
+    <xsd:complexType name="txCalibrationElement">
+        <xsd:attribute name="mode" type="rfeApi_txCalibration_t" use="required" />
+    </xsd:complexType>
+
+
+
+
+    <!-- top-level monitorAndSafetyConfigElement definition -->
+    <xsd:complexType name="monitorAndSafetyConfigElement">
+        <xsd:sequence>
+            <xsd:element name="rxSaturation" type="rxSaturationElement" />
+            <xsd:element name="adcClippingCounter" type="pdcClippingCounterElement" />
+            <xsd:element name="temperatureThresholds" type="temperatureThresholdsElement" />
+            <xsd:element name="r1FaultPromotion" type="r1FaultPromotionElement" />
+            <xsd:element name="frequencyForBist" type="bistFrequencyElement"/>
+            <xsd:element name="rxBist" type="rxBistElement"/>
+            <xsd:element name="checkBBD" type="checkBBDElement"/>
+            <xsd:element name="txPpdThreshold" type="ppdThresholdElement"/>
+            <xsd:element name="fuSaFaultMask0" type="fuSaFaultMaskElement0"/>
+            <xsd:element name="fuSaFaultMask1" type="fuSaFaultMaskElement1"/>
+            <xsd:element name="fuSaFaultMask2" type="fuSaFaultMaskElement2"/>
+            <xsd:element name="fuSaFaultMask3" type="fuSaFaultMaskElement3"/>
+            <xsd:element name="fuSaFaultMask4" type="fuSaFaultMaskElement4"/>
+            <xsd:element name="fuSaFaultMask5" type="fuSaFaultMaskElement5"/>
+            <xsd:element name="fuSaFaultMask6" type="fuSaFaultMaskElement6"/>
+            <xsd:element name="fuSaFaultMask7" type="fuSaFaultMaskElement7"/>
+            <xsd:element name="fuSaFaultMask8" type="fuSaFaultMaskElement8"/>
+            <xsd:element name="fuSaFaultMask9" type="fuSaFaultMaskElement9"/>
+            <xsd:element name="fuSaFaultMask10" type="fuSaFaultMaskElement10"/>
+            <xsd:element name="fuSaFaultMask11" type="fuSaFaultMaskElement11"/>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:complexType name="rxSaturationElement">
+        <xsd:sequence>
+            <xsd:element name="rxSaturationCounter" type="rxSaturationCounterElement" />
+            <xsd:element name="rxSaturationThresholds" type="rxSaturationThresholdsElement" />
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="rxSaturationCounterElement">
+        <xsd:attribute name="reset-every-sequence" type="boolean" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="rxSaturationThresholdsElement">
+        <xsd:sequence>
+            <xsd:element name="rxSaturationThresholdRx1" type="rxSaturationThresholdElement"/>
+            <xsd:element name="rxSaturationThresholdRx2" type="rxSaturationThresholdElement"/>
+            <xsd:element name="rxSaturationThresholdRx3" type="rxSaturationThresholdElement"/>
+            <xsd:element name="rxSaturationThresholdRx4" type="rxSaturationThresholdElement"/>
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="rxSaturationThresholdElement">
+        <xsd:attribute name="power-stage-1" type="rfeApi_rxSaturationThreshold_t" use="required" />
+        <xsd:attribute name="max-count-stage-1" type="rxSaturationCountLimit" use="required" />
+        <xsd:attribute name="power-stage-2" type="rfeApi_rxSaturationThreshold_t" use="required" />
+        <xsd:attribute name="max-count-stage-2" type="rxSaturationCountLimit" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="pdcClippingCounterElement">
+        <xsd:attribute name="reset-every-sequence" type="boolean" use="required" />
+        <xsd:attribute name="limit-adc1" type="rxSaturationCountLimit" use="required" />
+        <xsd:attribute name="limit-adc2" type="rxSaturationCountLimit" use="required" />
+        <xsd:attribute name="limit-adc3" type="rxSaturationCountLimit" use="required" />
+        <xsd:attribute name="limit-adc4" type="rxSaturationCountLimit" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="pdcClippingCountResetEveryChirpSequenceElement">
+        <xsd:attribute name="value" type="boolean" use="required" />
+    </xsd:complexType>
+
+
+    <xsd:complexType name="temperatureThresholdsElement">
+        <xsd:sequence>
+            <xsd:element name="temperatureThresholdTx12" type="temperatureThresholdElement"/>
+            <xsd:element name="temperatureThresholdTx3" type="temperatureThresholdElement"/>
+            <xsd:element name="temperatureThresholdXo" type="temperatureThresholdElement"/>
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="temperatureThresholdElement">
+        <xsd:attribute name="under-error-celsius" type="rfeApi_temperature_t" use="required" />
+        <xsd:attribute name="high-warning-celsius" type="rfeApi_temperature_t" use="required" />
+        <xsd:attribute name="over-error-celsius" type="rfeApi_temperature_t" use="required" />
+    </xsd:complexType>
+
+    
+    <xsd:complexType name="r1FaultPromotionElement">
+       <xsd:attribute name="threshold-value" type="uint8_t" use="required" />
+    </xsd:complexType>
+    
+    <xsd:complexType name="bistFrequencyElement">        
+       <xsd:attribute name="frequency-in-kHz" type="frequency_t" use="required" />
+    </xsd:complexType>
+    
+   <xsd:complexType name="rxBistElement">
+       <xsd:sequence>
+           <xsd:element name="rxPhaseDiffLna" type="rxPhaseDiffElement"/>
+           <xsd:element name="rxGainDiffLna" type="rxGainDiffElement"/>
+           <xsd:element name="rxPhaseDiffMixer" type="rxPhaseDiffElement"/>
+           <xsd:element name="rxGainDiffMixer" type="rxGainDiffElement"/>
+           <xsd:element name="injectTestTone" type="injectTestToneElement"/>
+       </xsd:sequence>
+    </xsd:complexType>
+    
+    <xsd:complexType name="checkBBDElement">
+       <xsd:sequence>
+           <xsd:element name="loiBbd" type="loiBbdElement"/>
+           <xsd:element name="txBbd" type="txBbdElement"/>
+           <xsd:element name="rxBbd" type="rxBbdElement"/>
+       </xsd:sequence>
+    </xsd:complexType>
+	
+    <xsd:complexType name="rxPhaseDiffElement">        
+       <xsd:attribute name="phase-diff-threshold-tolerance" type="phaseThreshold_t" use="required" />
+       <xsd:attribute name="zero-hr-ref-rx12" type="phaseDiff_t" use="required" />
+       <xsd:attribute name="zero-hr-ref-rx13" type="phaseDiff_t" use="required" />
+       <xsd:attribute name="zero-hr-ref-rx14" type="phaseDiff_t" use="required" />
+    </xsd:complexType>
+    
+    <xsd:complexType name="rxGainDiffElement">        
+       <xsd:attribute name="gain-diff-threshold-tolerance" type="phaseThreshold_t" use="required" />
+       <xsd:attribute name="zero-hr-ref-rx12" type="gainDiff_t" use="required" />
+       <xsd:attribute name="zero-hr-ref-rx13" type="gainDiff_t" use="required" />
+       <xsd:attribute name="zero-hr-ref-rx14" type="gainDiff_t" use="required" />
+    </xsd:complexType>
+    	
+    <xsd:complexType name="injectTestToneElement">        
+       <xsd:attribute name="mode" type="injectTone_t" use="required" />
+    </xsd:complexType>
+    
+    <xsd:complexType name="loiBbdElement">        
+       <xsd:attribute name="loi-bbd-enable" type="disabledOrEnabled" use="required" />
+       <xsd:attribute name="loout-sensitivity" type="sensitivity_t" use="required" />
+       <xsd:attribute name="loout-grounded" type="grounding_t" use="required" />
+       <xsd:attribute name="loin-sensitivity" type="sensitivity_t" use="required" />
+       <xsd:attribute name="loin-grounded" type="grounding_t" use="required" />
+    </xsd:complexType>
+    
+    <xsd:complexType name="txBbdElement">        
+       <xsd:attribute name="tx-bbd-enable" type="disabledOrEnabled" use="required" />
+       <xsd:attribute name="tx-sensitivity" type="sensitivity_t" use="required" />
+       <xsd:attribute name="tx-grounded" type="grounding_t" use="required" />
+    </xsd:complexType>
+    
+    <xsd:complexType name="rxBbdElement">        
+       <xsd:attribute name="rx-bbd-enable" type="disabledOrEnabled" use="required" />
+       <xsd:attribute name="rx-sensitivity" type="sensitivity_t" use="required" />
+       <xsd:attribute name="rx-grounded" type="grounding_t" use="required" />
+    </xsd:complexType>
+   
+    <xsd:complexType name="ppdThresholdElement">
+       <xsd:attribute name="profile0-dBm" type="txPower_dBm" use="required" />
+       <xsd:attribute name="profile1-dBm" type="txPower_dBm" use="optional" />
+       <xsd:attribute name="profile2-dBm" type="txPower_dBm" use="optional" />
+       <xsd:attribute name="profile3-dBm" type="txPower_dBm" use="optional" />
+       <xsd:attribute name="profile4-dBm" type="txPower_dBm" use="optional" />
+       <xsd:attribute name="profile5-dBm" type="txPower_dBm" use="optional" />
+       <xsd:attribute name="profile6-dBm" type="txPower_dBm" use="optional" />
+       <xsd:attribute name="profile7-dBm" type="txPower_dBm" use="optional" />       
+    </xsd:complexType> 
+    
+    <xsd:complexType name="fuSaFaultMaskElement0">
+       <xsd:attribute name="sr65-sr67-supply-low-1v8-tx2" type="fusaMask_t" use="required" />
+       <xsd:attribute name="sr65-sr67-supply-low-1v8-tx3" type="fusaMask_t" use="required" />
+       <xsd:attribute name="sr72-pr-tx1" type="fusaMask_t" use="required" />
+       <xsd:attribute name="sr72-pr-tx2" type="fusaMask_t" use="required" />
+       <xsd:attribute name="sr72-pr-tx3" type="fusaMask_t" use="required" />
+       <xsd:attribute name="sr65-sr67-supply-low-1v1-tx1" type="fusaMask_t" use="required" />
+       <xsd:attribute name="sr65-sr67-supply-low-1v1-tx2" type="fusaMask_t" use="required" />
+       <xsd:attribute name="sr65-sr67-supply-low-1v1-tx3" type="fusaMask_t" use="required" />
+    </xsd:complexType> 
+	
+    <xsd:complexType name="fuSaFaultMaskElement1">
+       <xsd:attribute name="sr27-bb-tx3" type="fusaMask_t" use="required" />
+       <xsd:attribute name="sr69-rf-level-min-tx1" type="fusaMask_t" use="required" />
+       <xsd:attribute name="sr69-rf-level-min-tx2" type="fusaMask_t" use="required" />
+       <xsd:attribute name="sr69-rf-level-min-tx3" type="fusaMask_t" use="required" />
+       <xsd:attribute name="sr69-rf-level-max-tx1" type="fusaMask_t" use="required" />
+       <xsd:attribute name="sr69-rf-level-max-tx2" type="fusaMask_t" use="required" />
+       <xsd:attribute name="sr69-rf-level-max-tx3" type="fusaMask_t" use="required" />
+       <xsd:attribute name="sr65-sr67-supply-low-1v8-tx1" type="fusaMask_t" use="required" /> 
+    </xsd:complexType>
+    
+    <xsd:complexType name="fuSaFaultMaskElement2">
+       <xsd:attribute name="sr65-sr67-supply-low-1v1-rx3" type="fusaMask_t" use="required" />
+       <xsd:attribute name="sr65-sr67-supply-low-1v1-rx4" type="fusaMask_t" use="required" />
+       <xsd:attribute name="sr65-sr67-supply-low-1v8-rx1" type="fusaMask_t" use="required" />
+       <xsd:attribute name="sr65-sr67-supply-low-1v8-rx2" type="fusaMask_t" use="required" />
+       <xsd:attribute name="sr65-sr67-supply-low-1v8-rx3" type="fusaMask_t" use="required" />
+       <xsd:attribute name="sr65-sr67-supply-low-1v8-rx4" type="fusaMask_t" use="required" />
+       <xsd:attribute name="sr27-bb-tx1" type="fusaMask_t" use="required" />
+       <xsd:attribute name="sr27-bb-tx2" type="fusaMask_t" use="required" />
+    </xsd:complexType> 
+    
+    <xsd:complexType name="fuSaFaultMaskElement3">
+       <xsd:attribute name="s47-lo-level-min-rx3" type="fusaMask_t" use="required" />
+       <xsd:attribute name="s47-lo-level-min-rx4" type="fusaMask_t" use="required" />
+       <xsd:attribute name="s47-lo-level-max-rx1" type="fusaMask_t" use="required" />
+       <xsd:attribute name="s47-lo-level-max-rx2" type="fusaMask_t" use="required" />
+       <xsd:attribute name="s47-lo-level-max-rx3" type="fusaMask_t" use="required" />
+       <xsd:attribute name="s47-lo-level-max-rx4" type="fusaMask_t" use="required" />
+       <xsd:attribute name="sr65-sr67-supply-low-1v1-rx1" type="fusaMask_t" use="required" />
+       <xsd:attribute name="sr65-sr67-supply-low-1v1-rx2" type="fusaMask_t" use="required" />
+    </xsd:complexType> 
+    
+    <xsd:complexType name="fuSaFaultMaskElement4">
+       <xsd:attribute name="sr46-aafc-chirp" type="fusaMask_t" use="required" />
+       <xsd:attribute name="sr46-aafc-cal-timeout-chirp" type="fusaMask_t" use="required" />
+       <xsd:attribute name="sr9-bb-rx1" type="fusaMask_t" use="required" />
+       <xsd:attribute name="sr9-bb-rx2" type="fusaMask_t" use="required" />
+       <xsd:attribute name="sr9-bb-rx3" type="fusaMask_t" use="required" />
+       <xsd:attribute name="sr9-bb-rx4" type="fusaMask_t" use="required" />
+       <xsd:attribute name="s47-lo-level-min-rx1" type="fusaMask_t" use="required" />
+       <xsd:attribute name="s47-lo-level-min-rx2" type="fusaMask_t" use="required" />
+    </xsd:complexType> 
+	
+    <xsd:complexType name="fuSaFaultMaskElement5">
+       <xsd:attribute name="sr43-unlock-chirp" type="fusaMask_t" use="required" />
+       <xsd:attribute name="sr45-level-min-chirp" type="fusaMask_t" use="required" />
+       <xsd:attribute name="sr45-level-max-chirp" type="fusaMask_t" use="required" />
+       <xsd:attribute name="sr42-vco-freq-480-chirp" type="fusaMask_t" use="required" />
+       <xsd:attribute name="sr7-interface-stuck-chirp" type="fusaMask_t" use="required" />
+       <xsd:attribute name="sr65-sr67-supply-low-pll-1v8-chirp" type="fusaMask_t" use="required" />
+       <xsd:attribute name="sr65-sr67-supply-low-vco-1v8-chirp" type="fusaMask_t" use="required" />
+       <xsd:attribute name="sr65-sr67-supply-low-1v1-chirp" type="fusaMask_t" use="required" />
+    </xsd:complexType> 
+    
+    <xsd:complexType name="fuSaFaultMaskElement6">
+       <xsd:attribute name="sr18-bb-lo-out-loi" type="fusaMask_t" use="required" />
+       <xsd:attribute name="sr17-bb-lo-in-loi" type="fusaMask_t" use="required" />
+       <xsd:attribute name="sr65-sr67-supply-low-1v1-loi" type="fusaMask_t" use="required" />
+       <xsd:attribute name="sr19-wr-spi-crc" type="fusaMask_t" use="required" />
+       <xsd:attribute name="sr19-rd-spi-crc" type="fusaMask_t" use="required" />
+       <xsd:attribute name="sr48-level-min-loi" type="fusaMask_t" use="required" />
+       <xsd:attribute name="sr48-level-max-loi" type="fusaMask_t" use="required" />
+       <xsd:attribute name="sr7-lock-step-chirp" type="fusaMask_t" use="required" />
+    </xsd:complexType>
+	
+    <xsd:complexType name="fuSaFaultMaskElement7">
+       <xsd:attribute name="sr61-supply-high-1v8-gldo" type="fusaMask_t" use="required" />
+       <xsd:attribute name="sr59-supply-low-1v1-gldo" type="fusaMask_t" use="required" />
+       <xsd:attribute name="sr57-supply-high-1v1-gldo" type="fusaMask_t" use="required" />
+       <xsd:attribute name="sr35-pll-lock-mclk" type="fusaMask_t" use="required" />
+       <xsd:attribute name="sr39-dig-freq-mclk" type="fusaMask_t" use="required" />
+       <xsd:attribute name="sr65-sr67-supply-low-1v8-mclk" type="fusaMask_t" use="required" />
+       <xsd:attribute name="sr36-mspc-mclk" type="fusaMask_t" use="required" />
+       <xsd:attribute name="sr11-xo-no-clock-mclk" type="fusaMask_t" use="required" />
+    </xsd:complexType>
+    
+    <xsd:complexType name="fuSaFaultMaskElement8">
+       <xsd:attribute name="sr65-67-supply-low-1v8-adc12" type="fusaMask_t" use="required" />
+       <xsd:attribute name="sr65-67-supply-low-1v8-adc34" type="fusaMask_t" use="required" />
+       <xsd:attribute name="sr65-67-supply-low-1v8-ssb" type="fusaMask_t" use="required" />
+       <xsd:attribute name="sr65-67-supply-low-1v8-gbias" type="fusaMask_t" use="required" />
+       <xsd:attribute name="sr65-67-supply-low-1v1-ser" type="fusaMask_t" use="required" />
+       <xsd:attribute name="sr65-67-supply-low-1v1-csi2" type="fusaMask_t" use="required" />
+       <xsd:attribute name="sr65-67-supply-low-1v8-ser" type="fusaMask_t" use="required" />
+       <xsd:attribute name="sr63-supply-low-1v8-gldo" type="fusaMask_t" use="required" />
+    </xsd:complexType> 
+	
+    <xsd:complexType name="fuSaFaultMaskElement9">
+       <xsd:attribute name="sr31-bist-mixer-gaindiff-sw" type="fusaMask_t" use="required" />
+       <xsd:attribute name="sr31-bist-lna-phasediff-sw" type="fusaMask_t" use="required" />
+       <xsd:attribute name="sr31-bist-lna-gaindiff-sw" type="fusaMask_t" use="required" />
+       <xsd:attribute name="sr3-reg-crc" type="fusaMask_t" use="required" />
+       <xsd:attribute name="sr34-cal-adc1" type="fusaMask_t" use="required" />
+       <xsd:attribute name="sr34-cal-adc2" type="fusaMask_t" use="required" />
+       <xsd:attribute name="sr34-cal-adc3" type="fusaMask_t" use="required" />
+       <xsd:attribute name="sr34-cal-adc4" type="fusaMask_t" use="required" />
+    </xsd:complexType> 
+    
+    <xsd:complexType name="fuSaFaultMaskElement10">
+       <xsd:attribute name="sr31-bist-mixer-phasediff-sw" type="fusaMask_t" use="required" />
+       <xsd:attribute name="sr44-cafc-intgerity-level-sw" type="fusaMask_t" use="required" />
+       <xsd:attribute name="sr44-cafc-intgerity-unlock-sw" type="fusaMask_t" use="required" />
+       <xsd:attribute name="sr44-cafc-integrity-sw" type="fusaMask_t" use="required" />
+       <xsd:attribute name="sr70-tx-integrity-sw" type="fusaMask_t" use="required" />
+       <xsd:attribute name="sr72-tx-pr-cal-sw" type="fusaMask_t" use="required" />
+       <xsd:attribute name="sr72-tx1-pr-cal-sw" type="fusaMask_t" use="required" />
+       <xsd:attribute name="sr72-tx2-pr-cal-sw" type="fusaMask_t" use="required" />
+    </xsd:complexType> 
+    
+    <xsd:complexType name="fuSaFaultMaskElement11">
+       <xsd:attribute name="sr37-pll-level-mclk" type="fusaMask_t" use="required" />
+       <xsd:attribute name="sr72-tx3-pr-cal-sw" type="fusaMask_t" use="required" />
+       <xsd:attribute name="sr14-disable-lb-toggle-test-sw" type="fusaMask_t" use="required" />
+       <xsd:attribute name="sr13-input-mode-toggle-test-sw" type="fusaMask_t" use="required" />
+       <xsd:attribute name="rfe-generic-sw" type="fusaMask_t" use="required" />
+    </xsd:complexType> 
+    
+    
+    <!-- top-level radarCycleConfigElement definition -->
+    <xsd:complexType name="radarCycleConfigElement">
+        <xsd:sequence>
+            <xsd:element name="radarCycleDuration" type="radarCycleDurationElement" />
+            <xsd:element name="chirpSequences" type="chirpSequencesElement" />
+            <xsd:element name="recalibration" type="recalibrationElement" />
+            <xsd:element name="bistInterval" type="bistIntervalElement" />
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="radarCycleDurationElement">
+        <xsd:attribute name="ticks" type="rfeApi_radarCycleDuration_t" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="chirpSequencesElement">
+        <xsd:attribute name="chirp-sequence-config-index" type="chirpSequenceConfigIndexListArgument" use="required" />
+        <xsd:attribute name="start-time-offset" type="chirpSequenceStartTimeOffsetListArgument" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="recalibrationElement">
+        <xsd:sequence>
+            <xsd:element name="recalibrationProfileIndependent" type="recalibrationProfileIndependentElement" minOccurs="0" maxOccurs="1" />
+            <xsd:element name="recalibrationProfileDependent" type="recalibrationProfileDependentElement" minOccurs="0" maxOccurs="8" />
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="recalibrationProfileIndependentElement">
+        <xsd:attribute name="chirp-sequences" type="chirpSequencesSelectListArgument" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="recalibrationProfileDependentElement">
+        <xsd:attribute name="chirp-sequence" type="rfeApi_chirpSequenceConfigIndex_t" use="required" />
+        <xsd:attribute name="chirp-profiles" type="chirpProfilesSelectListArgument" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="bistIntervalElement">
+        <xsd:attribute name="interval" type="rfeApi_bistInterval_t" use="required" />
+    </xsd:complexType>
+
+
+
+
+    <!-- top-level chirpSequenceConfigsElement definition -->
+    <xsd:complexType name="chirpSequenceConfigsElement">
+        <xsd:sequence>
+            <xsd:element name="chirpSequenceConfig" type="chirpSequenceConfigElement" minOccurs="1" maxOccurs="8" />
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="chirpSequenceConfigElement">
+        <xsd:sequence>
+            <xsd:element name="chirpCount" type="chirpCountElement" />
+            <xsd:element name="chirpProfileSequence" type="chirpProfileSequenceElement" />
+            <xsd:element name="profileRepeatCount" type="profileRepeatCountElement" />
+            <xsd:element name="dynamicUpdate" type="dynamicUpdateElement" />
+            <xsd:element name="ddma" type="rfeApi_ddma_t" />
+            <xsd:element name="rxEnable" type="rxEnableElement" />
+            <xsd:element name="pdc" type="chirpSeqPdcElement" />
+            <xsd:element name="txCalibrationThresholds" type="chirpSeqTxCalibElement" minOccurs="0" maxOccurs="1"/>
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="chirpCountElement">
+        <xsd:attribute name="count" type="chirpSequenceConfigChirpCount" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="chirpProfileSequenceElement">
+        <xsd:attribute name="sequence" type="chirpProfileIndexListArgument" use="required" />
+    </xsd:complexType>
+    
+    <xsd:complexType name="profileRepeatCountElement">
+        <xsd:attribute name="count" type="chirpSequenceProfileRepeatCount" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="dynamicUpdateElement">
+        <xsd:attribute name="dynamic-updates" type="disabledOrEnabled" use="required" />
+        <xsd:attribute name="dynamic-table-index" type="dynamicTableIndex" use="required" />
+    </xsd:complexType>
+    
+    
+    <xsd:complexType name="rfeApi_ddma_t">
+        <xsd:attribute name="mode" type="rfeApi_ddma-mode_t" use="required" />
+        <xsd:attribute name="tx-1-use-ddma" type="boolean" use="required" />
+        <xsd:attribute name="tx-2-use-ddma" type="boolean" use="required" />
+        <xsd:attribute name="tx-3-use-ddma" type="boolean" use="required" />
+        <xsd:attribute name="tx-1-ddma-init-phase" type="rfeApi_phaseRotation_t" use="required" />
+        <xsd:attribute name="tx-2-ddma-init-phase" type="rfeApi_phaseRotation_t" use="required" />
+        <xsd:attribute name="tx-3-ddma-init-phase" type="rfeApi_phaseRotation_t" use="required" />
+        <xsd:attribute name="tx-1-ddma-phase-update" type="rfeApi_phaseRotation_t" use="required" />
+        <xsd:attribute name="tx-2-ddma-phase-update" type="rfeApi_phaseRotation_t" use="required" />
+        <xsd:attribute name="tx-3-ddma-phase-update" type="rfeApi_phaseRotation_t" use="required" />
+        <xsd:attribute name="tx-1-final-pc-gen-mode" type="rfeApi_pc-gen-mode_t" use="required" />
+        <xsd:attribute name="tx-2-final-pc-gen-mode" type="rfeApi_pc-gen-mode_t" use="required" />
+        <xsd:attribute name="tx-3-final-pc-gen-mode" type="rfeApi_pc-gen-mode_t" use="required" />
+    </xsd:complexType>
+    
+            
+
+    <xsd:complexType name="rxEnableElement">
+        <xsd:attribute name="rx-1" type="disabledOrEnabled" use="required" />
+        <xsd:attribute name="rx-2" type="disabledOrEnabled" use="required" />
+        <xsd:attribute name="rx-3" type="disabledOrEnabled" use="required" />
+        <xsd:attribute name="rx-4" type="disabledOrEnabled" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="chirpSeqPdcElement">
+        <xsd:attribute name="notch-filter-enable" type="boolean" use="required" />
+    </xsd:complexType>
+    
+    <xsd:complexType name="chirpSeqTxCalibElement">
+        <xsd:attribute name="tx-rf-threshold-high-dB" type="rfeApi_txCalibrationThreshold_t" use="required" />
+        <xsd:attribute name="tx-rf-threshold-low-dB" type="rfeApi_txCalibrationThreshold_t" use="required" />
+    </xsd:complexType>
+
+    <xsd:simpleType name="chirpProfileIndexListArgument">
+        <xsd:restriction base="chirpProfileIndexList">
+            <xsd:minLength value="1" />
+            <xsd:maxLength value="8" />
+        </xsd:restriction>
+    </xsd:simpleType>
+
+    <xsd:simpleType name="chirpProfileIndexList">
+        <xsd:list itemType="rfeApi_chirpProfileIndex_t" />
+    </xsd:simpleType>
+
+
+    <!-- top-level chirpProfilesElement definition -->
+    <xsd:complexType name="chirpProfilesElement">
+        <xsd:sequence>
+            <xsd:element name="chirpProfile" type="chirpProfileElement" minOccurs="1" maxOccurs="8" />
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="chirpProfileElement">
+        <xsd:sequence>
+            <xsd:element name="effectiveSamplingFrequency" type="effectiveSamplingFrequencyElement" />
+            <xsd:element name="chirpTiming" type="chirpTimingElement" />
+            <xsd:element name="chirpGenerator" type="chirpGeneratorElement" />
+            <xsd:element name="txTransmissionEnable" type="txTransmissionEnableElement" />
+            <xsd:element name="txPower" type="txPowerElement" />
+            <xsd:element name="txPhaseRotation" type="txPhaseRotationElement" />
+            <xsd:element name="chirpFrequency" type="chirpFrequencyElement" />
+            <xsd:element name="rxGain" type="rxGainElement" />
+            <xsd:element name="rxFilter" type="rxFilterElement" />
+            <xsd:element name="csi2VirtualChannel" type="csi2VirtualChannelElement" />
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="effectiveSamplingFrequencyElement">
+        <xsd:attribute name="frequency" type="rfeApi_effectiveSamplingFrequency_t" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="chirpTimingElement">
+        <xsd:attribute name="chirp-interval-time-ticks" type="chirpProfileChirpIntervalTimeTicks" use="required" />
+        <xsd:attribute name="dwell-time-ticks" type="chirpProfileDwellTimeTicks" use="required" />
+        <xsd:attribute name="settle-time-ticks" type="chirpProfileSettleTimeTicks" use="required" />
+        <xsd:attribute name="acquisition-time-ticks" type="chirpProfileAcquisitionTimeTicks" use="required" />
+        <xsd:attribute name="reset-time-ticks" type="chirpProfileResetTimeTicks" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="chirpGeneratorElement">
+        <xsd:attribute name="center-frequency-kHz" type="chirpProfileCenterFrequency" use="required" />
+        <xsd:attribute name="effective-chirp-bandwidth-kHz" type="chirpProfileEffectiveChirpBandwidth" use="required" />
+        <xsd:attribute name="vco" type="rfeApi_chirpGenVco_t" use="required" />
+        <xsd:attribute name="slope" type="rfeApi_chirpSlopeDirection_t" use="required" />
+        <xsd:attribute name="pll-loop-filter-bandwidth" type="rfe_chirpPllLoopFilterBandwidth_t" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="txPowerElement">
+        <xsd:attribute name="dBm" type="txPower_dBm" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="txPhaseRotationElement">
+        <xsd:attribute name="tx-1" type="rfeApi_phaseRotation_t" use="required" />
+        <xsd:attribute name="tx-2" type="rfeApi_phaseRotation_t" use="required" />
+        <xsd:attribute name="tx-3" type="rfeApi_phaseRotation_t" use="required" />
+    </xsd:complexType>
+    
+    <xsd:complexType name="chirpFrequencyElement">
+        <xsd:attribute name="frequency-drift-steps" type="freqDrift_t" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="txTransmissionEnableElement">
+        <xsd:attribute name="tx-1" type="disabledOrEnabled" use="required" />
+        <xsd:attribute name="tx-2" type="disabledOrEnabled" use="required" />
+        <xsd:attribute name="tx-3" type="disabledOrEnabled" use="required" />
+        <xsd:attribute name="time-reference" type="rfeApi_txEnableReferenceTime_t" use="required" />
+        <xsd:attribute name="time-offset-ticks" type="chirpProfileTxEnableTimeOffset" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="rxGainElement">
+        <xsd:attribute name="gain" type="rfeApi_rxGain_t" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="rxFilterElement">
+        <xsd:attribute name="high-pass-filter" type="rfeApi_rxHpfCutOffFrequency_t" use="required" />
+        <xsd:attribute name="low-pass-filter" type="rfeApi_rxLpfCutOffFrequency_t" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="csi2VirtualChannelElement">
+        <xsd:attribute name="channel" type="rfe_virtualChannel_t" use="required" />
+    </xsd:complexType>
+
+
+
+
+    <!-- top-level dynamicTablesElement definition -->
+    <xsd:complexType name="dynamicTablesElement">
+        <xsd:sequence>
+            <xsd:element name="dynamicTable" type="dynamicTableElement" minOccurs="1" maxOccurs="255" />
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="dynamicTableElement">
+        <xsd:sequence>
+            <xsd:element name="dynamicTableEntry" type="dynamicTableEntryElement" minOccurs="1" maxOccurs="32768" />
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="dynamicTableEntryElement">
+        <xsd:attribute name="phase-rotation-tx-1" type="rfeApi_dynTblPhaseRotation_t" use="optional" />
+        <xsd:attribute name="phase-rotation-tx-2" type="rfeApi_dynTblPhaseRotation_t" use="optional" />
+        <xsd:attribute name="phase-rotation-tx-3" type="rfeApi_dynTblPhaseRotation_t" use="optional" />
+    </xsd:complexType>
+
+
+
+
+    <!-- camelCaseString definition -->
+    <xsd:simpleType name="camelCaseString">
+        <xsd:restriction base="xsd:string">
+            <xsd:pattern value="[a-z]([a-zA-Z0-9])*" />
+            <xsd:minLength value="2" />
+        </xsd:restriction>
+    </xsd:simpleType>
+
+    <!-- constraint for boolean constants -->
+    <xsd:simpleType name="boolean">
+        <xsd:restriction base="xsd:string">
+            <xsd:pattern value="true" />
+            <xsd:pattern value="false" />
+        </xsd:restriction>
+    </xsd:simpleType>
+
+    <!-- constraint for disabledOrEnabled constants -->
+    <xsd:simpleType name="disabledOrEnabled">
+        <xsd:restriction base="xsd:string">
+            <xsd:pattern value="disabled" />
+            <xsd:pattern value="enabled" />
+        </xsd:restriction>
+    </xsd:simpleType>
+
+    <!-- constraint for uint8_t constants -->
+    <xsd:simpleType name="uint8_t">
+        <xsd:restriction base="xsd:integer">
+            <xsd:minInclusive value="0" />
+            <xsd:maxInclusive value="255" />
+        </xsd:restriction>
+    </xsd:simpleType>
+
+    <!-- constraint for uint16_t constants -->
+    <xsd:simpleType name="uint16_t">
+        <xsd:restriction base="xsd:integer">
+            <xsd:minInclusive value="0" />
+            <xsd:maxInclusive value="65535" />
+        </xsd:restriction>
+    </xsd:simpleType>
+
+    <!-- constraint for uint32_t constants -->
+    <xsd:simpleType name="uint32_t">
+        <xsd:restriction base="xsd:integer">
+            <xsd:minInclusive value="0" />
+            <xsd:maxInclusive value="4294967295" />
+        </xsd:restriction>
+    </xsd:simpleType>
+
+    <!-- constraint for uint64_t constants -->
+    <xsd:simpleType name="uint64_t">
+        <xsd:restriction base="xsd:integer">
+            <xsd:minInclusive value="0" />
+            <xsd:maxInclusive value="18446744073709551615" />
+        </xsd:restriction>
+    </xsd:simpleType>
+
+    <!-- constraint for int8_t constants -->
+    <xsd:simpleType name="int8_t">
+        <xsd:restriction base="xsd:integer">
+            <xsd:minInclusive value="-128" />
+            <xsd:maxInclusive value="127" />
+        </xsd:restriction>
+    </xsd:simpleType>
+
+    <!-- constraint for int16_t constants -->
+    <xsd:simpleType name="int16_t">
+        <xsd:restriction base="xsd:integer">
+            <xsd:minInclusive value="-32768" />
+            <xsd:maxInclusive value="32767" />
+        </xsd:restriction>
+    </xsd:simpleType>
+
+    <!-- constraint for int32_t constants -->
+    <xsd:simpleType name="int32_t">
+        <xsd:restriction base="xsd:integer">
+            <xsd:minInclusive value="-2147483648" />
+            <xsd:maxInclusive value="2147483647" />
+        </xsd:restriction>
+    </xsd:simpleType>
+
+    <!-- constraint for int64_t constants -->
+    <xsd:simpleType name="int64_t">
+        <xsd:restriction base="xsd:integer">
+            <xsd:minInclusive value="0" />
+            <xsd:maxInclusive value="18446744073709551615" />
+        </xsd:restriction>
+    </xsd:simpleType>
+
+    <!-- constraint for integer constants -->
+    <xsd:simpleType name="integer">
+        <xsd:restriction base="xsd:string">
+            <xsd:pattern value="([0-9_])+" />
+            <xsd:pattern value="0b([0-1_])+" />
+            <xsd:pattern value="0x([0-9a-fA-F_])+" />
+        </xsd:restriction>
+    </xsd:simpleType>
+
+
+
+
+    <!-- rfeApi_powerMode_t -->
+    <xsd:simpleType name="rfeApi_powerMode_t">
+        <xsd:restriction base="xsd:string">
+            <xsd:pattern value="lower power" />
+            <xsd:pattern value="active" />
+        </xsd:restriction>
+    </xsd:simpleType>
+
+    <!-- rfe_gpio_t -->
+    <xsd:simpleType name="rfe_gpio_t">
+        <xsd:restriction base="xsd:string">
+            <xsd:pattern value="gpio 0" />
+            <xsd:pattern value="gpio 1" />
+            <xsd:pattern value="gpio 2" />
+            <xsd:pattern value="gpio 3" />
+            <xsd:pattern value="gpio 4" />
+            <xsd:pattern value="gpio 5" />
+            <xsd:pattern value="gpio 6" />
+            <xsd:pattern value="gpio 7" />
+            <xsd:pattern value="disabled" />
+        </xsd:restriction>
+    </xsd:simpleType>
+
+    <!-- rfe_pdcDecimationFilter_t -->
+    <xsd:simpleType name="rfe_pdcDecimationFilter_t">
+        <xsd:restriction base="xsd:string">
+            <xsd:pattern value="narrow" />
+            <xsd:pattern value="wide" />
+        </xsd:restriction>
+    </xsd:simpleType>
+
+    <!-- rfe_chirpPllLoopFilterBandwidth_t -->
+    <xsd:simpleType name="rfe_chirpPllLoopFilterBandwidth_t">
+        <xsd:restriction base="xsd:string">
+            <xsd:pattern value="200 kHz" />
+            <xsd:pattern value="250 kHz" />
+            <xsd:pattern value="300 kHz" />
+            <xsd:pattern value="350 kHz" />
+            <xsd:pattern value="400 kHz" />
+            <xsd:pattern value="450 kHz" />
+            <xsd:pattern value="500 kHz" />
+            <xsd:pattern value="550 kHz" />
+            <xsd:pattern value="600 kHz" />
+            <xsd:pattern value="650 kHz" />
+            <xsd:pattern value="700 kHz" />
+            <xsd:pattern value="750 kHz" />
+            <xsd:pattern value="800 kHz" />
+            <xsd:pattern value="850 kHz" />
+            <xsd:pattern value="900 kHz" />
+            <xsd:pattern value="950 kHz" />
+            <xsd:pattern value="1000 kHz" />
+            <xsd:pattern value="1050 kHz" />
+            <xsd:pattern value="1100 kHz" />
+            <xsd:pattern value="1150 kHz" />
+            <xsd:pattern value="1200 kHz" />
+            <xsd:pattern value="1250 kHz" />
+            <xsd:pattern value="1300 kHz" />
+            <xsd:pattern value="1350 kHz" />
+            <xsd:pattern value="1400 kHz" />
+            <xsd:pattern value="1450 kHz" />
+            <xsd:pattern value="1500 kHz" />
+            <xsd:pattern value="1550 kHz" />
+            <xsd:pattern value="1600 kHz" />
+            <xsd:pattern value="1650 kHz" />
+            <xsd:pattern value="1700 kHz" />
+        </xsd:restriction>
+    </xsd:simpleType>
+
+    <!-- rfe_metadataPacketSwContent_t -->
+    <xsd:simpleType name="rfe_metadataPacketSwContent_t">
+        <xsd:restriction base="xsd:string">
+            <xsd:pattern value="rx stage 1 in-phase saturation count" />
+            <xsd:pattern value="rx stage 1 quadrature saturation count" />
+            <xsd:pattern value="rx stage 2 in-phase saturation count" />
+            <xsd:pattern value="rx stage 2 quadrature saturation count" />
+            <xsd:pattern value="chirp sequence timestamp" />
+        </xsd:restriction>
+    </xsd:simpleType>
+
+    <!-- rfe_virtualChannel_t -->
+    <xsd:simpleType name="rfe_virtualChannel_t">
+        <xsd:restriction base="xsd:string">
+            <xsd:pattern value="0" />
+            <xsd:pattern value="1" />
+            <xsd:pattern value="2" />
+        </xsd:restriction>
+    </xsd:simpleType>
+
+    <!-- staticConfigJumpbackTimeTicks -->
+    <xsd:simpleType name="staticConfigJumpbackTimeTicks">
+        <xsd:restriction base="xsd:integer">
+            <xsd:minInclusive value="1" />
+            <xsd:maxInclusive value="254" />
+        </xsd:restriction>
+    </xsd:simpleType>
+
+    <!-- rfeApi_rxSaturationThreshold_t -->
+    <xsd:simpleType name="rfeApi_rxSaturationThreshold_t">
+        <xsd:restriction base="xsd:string">
+            <xsd:pattern value="-13.05 dB" />
+            <xsd:pattern value="-12.18 dB" />
+            <xsd:pattern value="-11.31 dB" />
+            <xsd:pattern value="-10.44 dB" />
+            <xsd:pattern value="-9.57 dB" />
+            <xsd:pattern value="-8.70 dB" />
+            <xsd:pattern value="-7.83 dB" />
+            <xsd:pattern value="-6.96 dB" />
+            <xsd:pattern value="-6.09 dB" />
+            <xsd:pattern value="-5.22 dB" />
+            <xsd:pattern value="-4.35 dB" />
+            <xsd:pattern value="-3.48 dB" />
+            <xsd:pattern value="-2.61 dB" />
+            <xsd:pattern value="-1.74 dB" />
+            <xsd:pattern value="-0.87 dB" />
+            <xsd:pattern value="0 dB" />
+        </xsd:restriction>
+    </xsd:simpleType>
+
+    <!-- rxSaturationCountLimit -->
+    <xsd:simpleType name="rxSaturationCountLimit">
+        <xsd:restriction base="xsd:integer">
+            <xsd:minInclusive value="0" />
+            <xsd:maxInclusive value="4194303" />
+        </xsd:restriction>
+    </xsd:simpleType>
+
+    <!-- rfeApi_temperature_t -->
+    <xsd:simpleType name="rfeApi_temperature_t">
+        <!-- Temperature values are encoded as signed, two's complement, 16 bit value where bits [14:6] contain the degress and bits [5:0] the fractions of degrees in multiples of 0.015625 (=1/64) -->
+        <xsd:restriction base="xsd:decimal">
+            <xsd:minInclusive value="-40" />
+            <xsd:maxInclusive value="150" />
+            <xsd:fractionDigits value="6" />
+        </xsd:restriction>
+    </xsd:simpleType>
+
+    <!-- rfeApi_chirpSequenceConfigIndex_t -->
+    <xsd:simpleType name="rfeApi_chirpSequenceConfigIndex_t">
+        <xsd:restriction base="xsd:string">
+            <xsd:pattern value="0" />
+            <xsd:pattern value="1" />
+            <xsd:pattern value="2" />
+            <xsd:pattern value="3" />
+            <xsd:pattern value="4" />
+            <xsd:pattern value="5" />
+            <xsd:pattern value="6" />
+            <xsd:pattern value="7" />
+        </xsd:restriction>
+    </xsd:simpleType>
+
+    <!-- chirpSequenceConfigIndexListArgument -->
+    <xsd:simpleType name="chirpSequenceConfigIndexListArgument">
+        <xsd:restriction base="chirpSequenceConfigIndexList">
+            <xsd:minLength value="1" />
+            <xsd:maxLength value="8" />
+        </xsd:restriction>
+    </xsd:simpleType>
+
+    <!-- chirpSequenceConfigIndexList -->
+    <xsd:simpleType name="chirpSequenceConfigIndexList">
+        <xsd:list itemType="rfeApi_chirpSequenceConfigIndex_t" />
+    </xsd:simpleType>
+
+    <!-- chirpSequenceStartTimeOffsetListArgument -->
+    <xsd:simpleType name="chirpSequenceStartTimeOffsetListArgument">
+        <xsd:restriction base="xsd:string">
+            <xsd:pattern value="((- )*((0|20000000|([1]\d{0,7})|([2-9]\d{0,6}))( )*){0,8}|-{1})" />
+        </xsd:restriction>
+    </xsd:simpleType>
+
+    <!-- chirpSequencesSelectListArgument -->
+    <xsd:simpleType name="chirpSequencesSelectListArgument">
+        <xsd:restriction base="chirpSequenceConfigIndexList">
+            <xsd:minLength value="1" />
+            <xsd:maxLength value="8" />
+        </xsd:restriction>
+    </xsd:simpleType>
+
+    <!-- chirpSequencesSelectList -->
+    <xsd:simpleType name="chirpSequencesSelectList">
+        <xsd:list itemType="chirpSequencesSelectItem" />
+    </xsd:simpleType>
+
+    <xsd:simpleType name="chirpSequencesSelectItem">
+        <xsd:restriction base="xsd:string">
+            <xsd:pattern value="0" />
+            <xsd:pattern value="1" />
+            <xsd:pattern value="2" />
+            <xsd:pattern value="3" />
+            <xsd:pattern value="4" />
+            <xsd:pattern value="5" />
+            <xsd:pattern value="6" />
+            <xsd:pattern value="7" />
+        </xsd:restriction>
+    </xsd:simpleType>
+
+    <!-- rfe_chirpProfilesSelect_t -->
+    <xsd:simpleType name="rfe_chirpProfilesSelect_t">
+        <xsd:restriction base="xsd:string">
+            <xsd:pattern value="0" />
+            <xsd:pattern value="1" />
+            <xsd:pattern value="2" />
+            <xsd:pattern value="3" />
+            <xsd:pattern value="4" />
+            <xsd:pattern value="5" />
+            <xsd:pattern value="6" />
+            <xsd:pattern value="7" />
+        </xsd:restriction>
+    </xsd:simpleType>
+
+    <!-- rfe_chirpProfileIndex_t -->
+    <xsd:simpleType name="rfe_chirpProfileIndex_t">
+        <xsd:restriction base="xsd:string">
+            <xsd:pattern value="0" />
+            <xsd:pattern value="1" />
+            <xsd:pattern value="2" />
+            <xsd:pattern value="3" />
+            <xsd:pattern value="4" />
+            <xsd:pattern value="5" />
+            <xsd:pattern value="6" />
+            <xsd:pattern value="7" />
+        </xsd:restriction>
+    </xsd:simpleType>
+
+    <!-- chirpProfilesSelectListArgument -->
+    <xsd:simpleType name="chirpProfilesSelectListArgument">
+        <xsd:restriction base="chirpSequenceConfigIndexList">
+            <xsd:minLength value="0" />
+            <xsd:maxLength value="8" />
+        </xsd:restriction>
+    </xsd:simpleType>
+
+    <!-- chirpProfilesSelectList -->
+    <xsd:simpleType name="chirpProfilesSelectList">
+        <xsd:list itemType="rfe_chirpProfilesSelect_t" />
+    </xsd:simpleType>
+
+    <!-- rfeApi_bistInterval_t -->
+    <xsd:simpleType name="rfeApi_bistInterval_t">
+        <xsd:restriction base="xsd:string">
+            <xsd:pattern value="every radar cycle" />
+            <xsd:pattern value="once in two radar cycles" />
+            <xsd:pattern value="once in four radar cycles" />
+            <xsd:pattern value="no bist" />
+        </xsd:restriction>
+    </xsd:simpleType>
+
+    <xsd:simpleType name="rfeApi_chirpProfileIndex_t">
+        <xsd:restriction base="xsd:string">
+            <xsd:pattern value="0" />
+            <xsd:pattern value="1" />
+            <xsd:pattern value="2" />
+            <xsd:pattern value="3" />
+            <xsd:pattern value="4" />
+            <xsd:pattern value="5" />
+            <xsd:pattern value="6" />
+            <xsd:pattern value="7" />
+        </xsd:restriction>
+    </xsd:simpleType>
+
+    <!-- rfeApi_effectiveSamplingFrequency_t -->
+    <xsd:simpleType name="rfeApi_effectiveSamplingFrequency_t">
+        <xsd:restriction base="xsd:string">
+            <xsd:pattern value="40 MHz" />
+            <xsd:pattern value="20 MHz" />
+            <xsd:pattern value="10 MHz" />
+            <xsd:pattern value="5 MHz" />
+        </xsd:restriction>
+    </xsd:simpleType>
+
+    <!-- rfeApi_chirpGenVco_t -->
+    <xsd:simpleType name="rfeApi_chirpGenVco_t">
+        <xsd:restriction base="xsd:string">
+            <xsd:pattern value="1 GHz" />
+            <xsd:pattern value="2 GHz" />
+            <xsd:pattern value="4 GHz" />
+        </xsd:restriction>
+    </xsd:simpleType>
+
+    <!-- rfeApi_chirpSlopeDirection_t -->
+    <xsd:simpleType name="rfeApi_chirpSlopeDirection_t">
+        <xsd:restriction base="xsd:string">
+            <xsd:pattern value="falling" />
+            <xsd:pattern value="rising" />
+        </xsd:restriction>
+    </xsd:simpleType>
+
+    <!-- txPower_dBm -->
+    <xsd:simpleType name="txPower_dBm">
+        <!-- TX power is encoded as an uint8_t with a 0.1 dBm resolution -->
+        <xsd:restriction base="xsd:decimal">
+            <xsd:minInclusive value="3" />
+            <xsd:maxInclusive value="15" />
+            <xsd:fractionDigits value="1" />
+        </xsd:restriction>
+    </xsd:simpleType>
+
+<!-- rfeApi_dynTblPhaseRotation_t -->
+    <xsd:simpleType name="rfeApi_dynTblPhaseRotation_t">
+        <xsd:restriction base="xsd:decimal">
+            <xsd:pattern value="0" />
+            <xsd:pattern value="90" />
+            <xsd:pattern value="180" />
+            <xsd:pattern value="270" />
+        </xsd:restriction>
+    </xsd:simpleType>
+
+    <!-- rfeApi_phaseRotation_t -->
+    <xsd:simpleType name="rfeApi_phaseRotation_t">
+        <xsd:restriction base="xsd:string">
+            <xsd:pattern value="0" />
+            <xsd:pattern value="5.625" />
+            <xsd:pattern value="11.25" />
+            <xsd:pattern value="16.875" />
+            <xsd:pattern value="22.5" />
+            <xsd:pattern value="28.125" />
+            <xsd:pattern value="33.75" />
+            <xsd:pattern value="39.375" />
+            <xsd:pattern value="45" />
+            <xsd:pattern value="50.625" />
+            <xsd:pattern value="56.25" />
+            <xsd:pattern value="61.875" />
+            <xsd:pattern value="67.5" />
+            <xsd:pattern value="73.125" />
+            <xsd:pattern value="78.75" />
+            <xsd:pattern value="84.375" />
+            <xsd:pattern value="90" />
+            <xsd:pattern value="95.625" />
+            <xsd:pattern value="101.25" />
+            <xsd:pattern value="106.875" />
+            <xsd:pattern value="112.5" />
+            <xsd:pattern value="118.125" />
+            <xsd:pattern value="123.75" />
+            <xsd:pattern value="129.375" />
+            <xsd:pattern value="135" />
+            <xsd:pattern value="140.625" />
+            <xsd:pattern value="146.25" />
+            <xsd:pattern value="151.875" />
+            <xsd:pattern value="157.5" />
+            <xsd:pattern value="163.125" />
+            <xsd:pattern value="168.75" />
+            <xsd:pattern value="174.375" />
+            <xsd:pattern value="180" />
+            <xsd:pattern value="185.625" />
+            <xsd:pattern value="191.25" />
+            <xsd:pattern value="196.875" />
+            <xsd:pattern value="202.5" />
+            <xsd:pattern value="208.125" />
+            <xsd:pattern value="213.75" />
+            <xsd:pattern value="219.375" />
+            <xsd:pattern value="225" />
+            <xsd:pattern value="230.625" />
+            <xsd:pattern value="236.25" />
+            <xsd:pattern value="241.875" />
+            <xsd:pattern value="247.5" />
+            <xsd:pattern value="253.125" />
+            <xsd:pattern value="258.75" />
+            <xsd:pattern value="264.375" />
+            <xsd:pattern value="270" />
+            <xsd:pattern value="275.625" />
+            <xsd:pattern value="281.25" />
+            <xsd:pattern value="286.875" />
+            <xsd:pattern value="292.5" />
+            <xsd:pattern value="298.125" />
+            <xsd:pattern value="303.75" />
+            <xsd:pattern value="309.375" />
+            <xsd:pattern value="315" />
+            <xsd:pattern value="320.625" />
+            <xsd:pattern value="326.25" />
+            <xsd:pattern value="331.875" />
+            <xsd:pattern value="337.5" />
+            <xsd:pattern value="343.125" />
+            <xsd:pattern value="348.75" />
+            <xsd:pattern value="354.375" />
+        </xsd:restriction>
+    </xsd:simpleType>
+    
+    <!-- rfeApi_ddma-mode_t -->
+    <xsd:simpleType name="rfeApi_ddma-mode_t">
+        <xsd:restriction base="xsd:string">
+            <xsd:pattern value="disabled" />
+            <xsd:pattern value="fun mode" />
+            <xsd:pattern value="test mode" />
+            <xsd:pattern value="test no chirp" />
+        </xsd:restriction>
+    </xsd:simpleType>
+    
+    <!-- rfeApi_pc-gen-mode_t -->
+    <xsd:simpleType name="rfeApi_pc-gen-mode_t">
+        <xsd:restriction base="xsd:string">
+            <xsd:pattern value="no change" />
+            <xsd:pattern value="replace msb with qpsk" />
+            <xsd:pattern value="add qpsk to msb" />
+        </xsd:restriction>
+    </xsd:simpleType>
+    
+    <!-- rfeApi_txCalibation_t -->
+    <xsd:simpleType name="rfeApi_txCalibration_t">
+        <xsd:restriction base="xsd:string">
+            <xsd:pattern value="without transmission" />
+            <xsd:pattern value="with transmission" />
+        </xsd:restriction>
+    </xsd:simpleType>
+    
+    <!-- rfeApi_txCalibrationThreshold_t -->
+    <xsd:simpleType name="rfeApi_txCalibrationThreshold_t">
+        <xsd:restriction base="xsd:decimal">
+            <xsd:minExclusive value="0" />
+            <xsd:maxInclusive value="4" />
+            <xsd:fractionDigits value="2" />
+        </xsd:restriction>
+    </xsd:simpleType>
+    
+    <!-- rfeApi_txEnableReferenceTime_t -->
+    <xsd:simpleType name="rfeApi_txEnableReferenceTime_t">
+        <xsd:restriction base="xsd:string">
+            <xsd:pattern value="start of dwell time" />
+            <xsd:pattern value="start of settle time" />
+        </xsd:restriction>
+    </xsd:simpleType>
+
+    <!-- rfeApi_rxGain_t -->
+    <xsd:simpleType name="rfeApi_rxGain_t">
+        <xsd:restriction base="xsd:string">
+            <xsd:pattern value="27 dB" />
+            <xsd:pattern value="30 dB" />
+            <xsd:pattern value="33 dB" />
+            <xsd:pattern value="36 dB" />
+            <xsd:pattern value="39 dB" />
+            <xsd:pattern value="42 dB" />
+            <xsd:pattern value="45 dB" />
+        </xsd:restriction>
+    </xsd:simpleType>
+
+    <!-- rfeApi_rxHpfCutOffFrequency_t -->
+    <xsd:simpleType name="rfeApi_rxHpfCutOffFrequency_t">
+        <xsd:restriction base="xsd:string">
+            <xsd:pattern value="100 kHz" />
+            <xsd:pattern value="200 kHz" />
+            <xsd:pattern value="300 kHz" />
+            <xsd:pattern value="400 kHz" />
+            <xsd:pattern value="800 kHz" />
+            <xsd:pattern value="1600 kHz" />
+            <xsd:pattern value="3200 kHz" />
+        </xsd:restriction>
+    </xsd:simpleType>
+
+    <!-- rfeApi_rxLpfCutOffFrequency_t -->
+    <xsd:simpleType name="rfeApi_rxLpfCutOffFrequency_t">
+        <xsd:restriction base="xsd:string">
+            <xsd:pattern value="12P5 MHz" />
+            <xsd:pattern value="15 MHz" />
+            <xsd:pattern value="20 MHz" />
+            <xsd:pattern value="25 MHz" />
+            <xsd:pattern value="40 MHz" />
+        </xsd:restriction>
+    </xsd:simpleType>
+
+    <!-- rfeApi_radarCycleDuration_t -->
+    <xsd:simpleType name="rfeApi_radarCycleDuration_t">
+        <xsd:restriction base="xsd:integer">
+            <xsd:minInclusive value="400000" />
+            <xsd:maxInclusive value="20000000" />
+        </xsd:restriction>
+    </xsd:simpleType>
+
+    <!-- chirpSequenceStartTimeOffset -->
+    <xsd:simpleType name="chirpSequenceStartTimeOffset">
+        <xsd:restriction base="xsd:integer">
+            <xsd:minInclusive value="0" />
+            <xsd:maxInclusive value="100000" />
+        </xsd:restriction>
+    </xsd:simpleType>
+
+    <!-- chirpSequenceConfigChirpCount -->
+    <xsd:simpleType name="chirpSequenceConfigChirpCount">
+        <xsd:restriction base="xsd:integer">
+            <xsd:minInclusive value="1" />
+            <xsd:maxInclusive value="4096" />
+        </xsd:restriction>
+    </xsd:simpleType>
+    
+    <!-- chirpSequenceConfigChirpCount -->
+    <xsd:simpleType name="chirpSequenceProfileRepeatCount">
+        <xsd:restriction base="xsd:integer">
+            <xsd:minInclusive value="1" />
+            <xsd:maxInclusive value="127" />
+        </xsd:restriction>
+    </xsd:simpleType>
+
+    <!-- dynamicTableIndex -->
+    <xsd:simpleType name="dynamicTableIndex">
+        <xsd:restriction base="xsd:integer">
+            <xsd:minInclusive value="0" />
+            <xsd:maxInclusive value="7" />
+        </xsd:restriction>
+    </xsd:simpleType>
+
+    <!-- chirpProfileChirpIntervalTimeTicks -->
+    <xsd:simpleType name="chirpProfileChirpIntervalTimeTicks">
+        <xsd:restriction base="xsd:integer">
+            <xsd:minInclusive value="400" />
+            <xsd:maxInclusive value="4194303" />
+        </xsd:restriction>
+    </xsd:simpleType>
+
+    <!-- chirpProfileDwellTimeTicks -->
+    <xsd:simpleType name="chirpProfileDwellTimeTicks">
+        <xsd:restriction base="xsd:integer">
+            <xsd:minInclusive value="40" />
+            <xsd:maxInclusive value="4094" />
+        </xsd:restriction>
+    </xsd:simpleType>
+
+    <!-- chirpProfileSettleTimeTicks -->
+    <xsd:simpleType name="chirpProfileSettleTimeTicks">
+        <xsd:restriction base="xsd:integer">
+            <xsd:minInclusive value="80" />
+            <xsd:maxInclusive value="4094" />
+        </xsd:restriction>
+    </xsd:simpleType>
+
+    <!-- chirpProfileAcquisitionTimeTicks -->
+    <xsd:simpleType name="chirpProfileAcquisitionTimeTicks">
+        <xsd:restriction base="xsd:integer">
+            <xsd:minInclusive value="8" />
+            <xsd:maxInclusive value="8192" />
+        </xsd:restriction>
+    </xsd:simpleType>
+    
+    <!-- chirpProfileResetTimeTicks -->
+    <xsd:simpleType name="chirpProfileResetTimeTicks">
+        <xsd:restriction base="xsd:integer">
+            <xsd:minInclusive value="30" />
+            <xsd:maxInclusive value="4094" />
+        </xsd:restriction>
+    </xsd:simpleType>
+
+    <!-- chirpProfileCenterFrequency -->
+    <xsd:simpleType name="chirpProfileCenterFrequency">
+        <xsd:restriction base="xsd:integer">
+            <xsd:minInclusive value="76000000" />
+            <xsd:maxInclusive value="81000000" />
+        </xsd:restriction>
+    </xsd:simpleType>
+
+    <!-- chirpProfileEffectiveChirpBandwidth -->
+    <xsd:simpleType name="chirpProfileEffectiveChirpBandwidth">
+        <xsd:restriction base="xsd:integer">
+            <xsd:minInclusive value="0" />
+            <xsd:maxInclusive value="4000000" />
+        </xsd:restriction>
+    </xsd:simpleType>
+
+    <!-- chirpProfileTxEnableTimeOffset -->
+    <xsd:simpleType name="chirpProfileTxEnableTimeOffset">
+        <xsd:restriction base="xsd:integer">
+            <xsd:minInclusive value="2" />
+            <xsd:maxInclusive value="4094" />
+        </xsd:restriction>
+    </xsd:simpleType>
+    
+    <!-- freqDrift_t -->
+    <xsd:simpleType name="freqDrift_t">
+        <xsd:restriction base="xsd:integer">
+            <xsd:minInclusive value="0" />
+            <xsd:maxInclusive value="932068" />
+        </xsd:restriction>
+    </xsd:simpleType>
+	
+    <!-- PhaseDiff -->
+    <xsd:simpleType name="phaseDiff_t">
+        <xsd:restriction base="xsd:integer">
+            <xsd:minInclusive value="-1800" />
+            <xsd:maxInclusive value="1800" />
+        </xsd:restriction>
+    </xsd:simpleType>
+    
+    <!-- GainDiff -->
+    <xsd:simpleType name="gainDiff_t">
+        <xsd:restriction base="xsd:integer">
+            <xsd:minInclusive value="-400" />
+            <xsd:maxInclusive value="400" />
+        </xsd:restriction>
+    </xsd:simpleType>
+    
+    <!-- PhaseThreshold -->
+    <xsd:simpleType name="phaseThreshold_t">
+        <xsd:restriction base="xsd:integer">
+            <xsd:minInclusive value="0" />
+            <xsd:maxInclusive value="400" />
+        </xsd:restriction>
+    </xsd:simpleType>
+    
+    <!-- injectTone_t -->
+    <xsd:simpleType name="injectTone_t">
+        <xsd:restriction base="xsd:string">
+            <xsd:pattern value="both lna and mixer" />
+            <xsd:pattern value="only mixer" />
+            <xsd:pattern value="alternate lna mixer" />
+        </xsd:restriction>
+    </xsd:simpleType>
+    
+    <!-- sensitivity_t -->
+    <xsd:simpleType name="sensitivity_t">
+        <xsd:restriction base="xsd:string">
+            <xsd:pattern value="normal" />
+            <xsd:pattern value="high" />
+        </xsd:restriction>
+    </xsd:simpleType>
+    
+    <!-- grounding_t -->
+    <xsd:simpleType name="grounding_t">
+        <xsd:restriction base="xsd:string">
+            <xsd:pattern value="not grounded" />
+            <xsd:pattern value="grounded" />
+        </xsd:restriction>
+    </xsd:simpleType>
+    
+    <xsd:simpleType name="fusaMask_t">
+        <xsd:restriction base="xsd:string">
+            <xsd:pattern value="0" />
+            <xsd:pattern value="1" />
+        </xsd:restriction>
+    </xsd:simpleType>
+    
+    <!-- constraint for frequency constants -->
+    <xsd:simpleType name="frequency_t">
+        <xsd:restriction base="xsd:integer">
+            <xsd:minInclusive value="75000000" />
+            <xsd:maxInclusive value="82000000" />
+        </xsd:restriction>
+    </xsd:simpleType>
+
+</xsd:schema>

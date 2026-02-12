@@ -1,0 +1,159 @@
+Symbol table:
+
+ErrorHook/24 (ErrorHook) @0617f2a0
+  Type: function
+  Visibility: external public
+  References: 
+  Referring: 
+  Availability: not_available
+  Function flags:
+  Called by: OSErrorHook_noPar/18 OSErrorHook_1/17 
+  Calls: 
+OsOldInterruptMask_/23 (OsOldInterruptMask_) @0617c5a0
+  Type: variable
+  Body removed by symtab_remove_unreachable_nodes
+  Visibility: external public
+  References: 
+  Referring: OSErrorHook_1/17 (read)OSErrorHook_1/17 (write)OSErrorHook_noPar/18 (read)OSErrorHook_noPar/18 (write)
+  Availability: not_available
+  Varpool flags:
+OsOldIntMaskAll_/22 (OsOldIntMaskAll_) @0617c558
+  Type: variable
+  Body removed by symtab_remove_unreachable_nodes
+  Visibility: external public
+  References: 
+  Referring: OSErrorHook_1/17 (read)OSErrorHook_1/17 (write)OSErrorHook_noPar/18 (read)OSErrorHook_noPar/18 (write)
+  Availability: not_available
+  Varpool flags:
+OsOldMsr_/21 (OsOldMsr_) @0617c510
+  Type: variable
+  Body removed by symtab_remove_unreachable_nodes
+  Visibility: external public
+  References: 
+  Referring: OSErrorHook_1/17 (read)OSErrorHook_1/17 (write)OSErrorHook_noPar/18 (read)OSErrorHook_noPar/18 (write)
+  Availability: not_available
+  Varpool flags:
+OsSuspendLevelAll_/20 (OsSuspendLevelAll_) @0617c4c8
+  Type: variable
+  Body removed by symtab_remove_unreachable_nodes
+  Visibility: external public
+  References: 
+  Referring: OSErrorHook_1/17 (read)OSErrorHook_1/17 (write)OSErrorHook_1/17 (write)OSErrorHook_noPar/18 (read)OSErrorHook_noPar/18 (write)OSErrorHook_noPar/18 (write)
+  Availability: not_available
+  Varpool flags:
+OsIsrLevel_/19 (OsIsrLevel_) @0617c480
+  Type: variable
+  Body removed by symtab_remove_unreachable_nodes
+  Visibility: external public
+  References: 
+  Referring: OSErrorHook_1/17 (read)OSErrorHook_1/17 (read)OSErrorHook_1/17 (read)OSErrorHook_1/17 (write)OSErrorHook_1/17 (write)OSErrorHook_noPar/18 (read)OSErrorHook_noPar/18 (read)OSErrorHook_noPar/18 (read)OSErrorHook_noPar/18 (write)OSErrorHook_noPar/18 (write)
+  Availability: not_available
+  Varpool flags:
+OSErrorHook_noPar/18 (OSErrorHook_noPar) @06126b60
+  Type: function definition analyzed
+  Visibility: force_output externally_visible no_reorder public
+  References: OsIsrLevel_/19 (read)OsIsrLevel_/19 (read)OsIsrLevel_/19 (read)OsIsrLevel_/19 (write)OsSuspendLevelAll_/20 (read)OsSuspendLevelAll_/20 (write)OsOldMsr_/21 (read)OsOldIntMaskAll_/22 (read)OsOldInterruptMask_/23 (read)OsOldInterruptMask_/23 (write)OsOldIntMaskAll_/22 (write)OsOldMsr_/21 (write)OsSuspendLevelAll_/20 (write)OsIsrLevel_/19 (write)
+  Referring: 
+  Availability: available
+  Function flags: body
+  Called by: 
+  Calls: ErrorHook/24 
+OSErrorHook_1/17 (OSErrorHook_1) @06126ee0
+  Type: function definition analyzed
+  Visibility: force_output externally_visible no_reorder public
+  References: OsIsrLevel_/19 (read)OsIsrLevel_/19 (read)OsIsrLevel_/19 (read)OsIsrLevel_/19 (write)OsSuspendLevelAll_/20 (read)OsSuspendLevelAll_/20 (write)OsOldMsr_/21 (read)OsOldIntMaskAll_/22 (read)OsOldInterruptMask_/23 (read)OsOldInterruptMask_/23 (write)OsOldIntMaskAll_/22 (write)OsOldMsr_/21 (write)OsSuspendLevelAll_/20 (write)OsIsrLevel_/19 (write)
+  Referring: 
+  Availability: available
+  Function flags: body
+  Called by: 
+  Calls: ErrorHook/24 
+OSErrorHook_noPar (StatusType error)
+{
+  OSDWORD oldMsr;
+  OSINTMASKTYPE oldInterruptMask;
+  OSINTMASKTYPE oldIntMaskAll;
+  OSBYTE oldSuspendLevelAll;
+  OSISRLEVELTYPE oldIsrLevel;
+  unsigned int OsIsrLevel_.2_1;
+  unsigned int _2;
+  unsigned int OsIsrLevel_.3_3;
+  unsigned int _4;
+  unsigned int _5;
+
+  <bb 2> :
+  OsIsrLevel_.2_1 = OsIsrLevel_;
+  _2 = OsIsrLevel_.2_1 & 4456448;
+  if (_2 == 0)
+    goto <bb 3>; [INV]
+  else
+    goto <bb 4>; [INV]
+
+  <bb 3> :
+  oldIsrLevel_8 = OsIsrLevel_;
+  OsIsrLevel_.3_3 = OsIsrLevel_;
+  _4 = OsIsrLevel_.3_3 & 31;
+  _5 = _4 | 4194304;
+  OsIsrLevel_ = _5;
+  oldSuspendLevelAll_10 = OsSuspendLevelAll_;
+  OsSuspendLevelAll_ = 0;
+  oldMsr_12 = OsOldMsr_;
+  oldIntMaskAll_13 = OsOldIntMaskAll_;
+  oldInterruptMask_14 = OsOldInterruptMask_;
+  ErrorHook (error_15(D));
+  OsOldInterruptMask_ = oldInterruptMask_14;
+  OsOldIntMaskAll_ = oldIntMaskAll_13;
+  OsOldMsr_ = oldMsr_12;
+  OsSuspendLevelAll_ = oldSuspendLevelAll_10;
+  OsIsrLevel_ = oldIsrLevel_8;
+
+  <bb 4> :
+  return;
+
+}
+
+
+OSErrorHook_1 (StatusType error)
+{
+  OSDWORD oldMsr;
+  OSINTMASKTYPE oldInterruptMask;
+  OSINTMASKTYPE oldIntMaskAll;
+  OSBYTE oldSuspendLevelAll;
+  OSISRLEVELTYPE oldIsrLevel;
+  unsigned int OsIsrLevel_.0_1;
+  unsigned int _2;
+  unsigned int OsIsrLevel_.1_3;
+  unsigned int _4;
+  unsigned int _5;
+
+  <bb 2> :
+  OsIsrLevel_.0_1 = OsIsrLevel_;
+  _2 = OsIsrLevel_.0_1 & 4456448;
+  if (_2 == 0)
+    goto <bb 3>; [INV]
+  else
+    goto <bb 4>; [INV]
+
+  <bb 3> :
+  oldIsrLevel_8 = OsIsrLevel_;
+  OsIsrLevel_.1_3 = OsIsrLevel_;
+  _4 = OsIsrLevel_.1_3 & 31;
+  _5 = _4 | 4194304;
+  OsIsrLevel_ = _5;
+  oldSuspendLevelAll_10 = OsSuspendLevelAll_;
+  OsSuspendLevelAll_ = 0;
+  oldMsr_12 = OsOldMsr_;
+  oldIntMaskAll_13 = OsOldIntMaskAll_;
+  oldInterruptMask_14 = OsOldInterruptMask_;
+  ErrorHook (error_15(D));
+  OsOldInterruptMask_ = oldInterruptMask_14;
+  OsOldIntMaskAll_ = oldIntMaskAll_13;
+  OsOldMsr_ = oldMsr_12;
+  OsSuspendLevelAll_ = oldSuspendLevelAll_10;
+  OsIsrLevel_ = oldIsrLevel_8;
+
+  <bb 4> :
+  return;
+
+}
+
+

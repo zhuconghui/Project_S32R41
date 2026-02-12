@@ -1,0 +1,518 @@
+Dsphd_GetVersionInfo (struct Std_VersionInfoType * versionInfoPtr)
+{
+  <bb 2> :
+  if (versionInfoPtr == 0B)
+    goto <bb 3>; [INV]
+  else
+    goto <bb 4>; [INV]
+
+  <bb 3> :
+  RsdkReportError (73755, 2549, 0, 3, 0);
+  goto <bb 5>; [INV]
+
+  <bb 4> :
+  versionInfoPtr->moduleID = 2549;
+  versionInfoPtr->vendorID = 43;
+  versionInfoPtr->sw_major_version = 0;
+  versionInfoPtr->sw_minor_version = 8;
+  versionInfoPtr->sw_patch_version = 10;
+
+  <bb 5> :
+  return;
+
+}
+
+
+Dsphd_Init ()
+{
+  Std_ReturnType status;
+  Std_ReturnType D.7046;
+
+  <bb 2> :
+  status = 0;
+  _1 = ipc_shm_init (&ipcf_shm_instances_cfg);
+  if (_1 != 0)
+    goto <bb 3>; [INV]
+  else
+    goto <bb 4>; [INV]
+
+  <bb 3> :
+  status = RsdkReportError (73760, 2549, 0, 0, 5);
+
+  <bb 4> :
+  D.7046 = status;
+
+  <bb 5> :
+<L2>:
+  return D.7046;
+
+}
+
+
+Dsphd_SendMsg (Dsphd_MsgTypeType msgType, uint32 msgPayload)
+{
+  struct Dsphd_RuntimeCfgType * cfgPaylodPtr;
+  char * txBufPtr;
+  struct rsdkDspHDMsg_t DspHDMsg;
+  sint32 retVal;
+  Std_ReturnType status;
+  Std_ReturnType D.7041;
+
+  <bb 2> :
+  status = 0;
+  if (msgType > 424252)
+    goto <bb 4>; [INV]
+  else
+    goto <bb 3>; [INV]
+
+  <bb 3> :
+  if (msgType <= 424241)
+    goto <bb 4>; [INV]
+  else
+    goto <bb 5>; [INV]
+
+  <bb 4> :
+  status = RsdkReportError (73755, 2549, 0, 2, 0);
+
+  <bb 5> :
+  if (status == 0)
+    goto <bb 6>; [INV]
+  else
+    goto <bb 13>; [INV]
+
+  <bb 6> :
+  if (msgType == 424249)
+    goto <bb 7>; [INV]
+  else
+    goto <bb 8>; [INV]
+
+  <bb 7> :
+  cfgPaylodPtr = (struct Dsphd_RuntimeCfgType *) msgPayload;
+  _1 = &cfgPaylodPtr->numberOfChirps;
+  _2 = GenCrc8 (_1, 17);
+  cfgPaylodPtr->crc = _2;
+
+  <bb 8> :
+  lastMsgSent = msgType;
+  DspHDMsg.type = msgType;
+  DspHDMsg.payload = msgPayload;
+  _3 = GenCrc8 (&DspHDMsg.type, 8);
+  DspHDMsg.crc = _3;
+  txBufPtr = GetShmBuffer (0, 0, 12);
+  if (txBufPtr != 0B)
+    goto <bb 9>; [INV]
+  else
+    goto <bb 12>; [INV]
+
+  <bb 9> :
+  memcpy (txBufPtr, &DspHDMsg, 12);
+  bbe32AckStatus = 0;
+  _4 = ipc_shm_tx (0, 0, txBufPtr, 12);
+  retVal = (sint32) _4;
+  if (retVal != 0)
+    goto <bb 10>; [INV]
+  else
+    goto <bb 11>; [INV]
+
+  <bb 10> :
+  status = RsdkReportError (73759, 2549, 0, 2, 4);
+  goto <bb 13>; [INV]
+
+  <bb 11> :
+  numberOfCommandsSent.12_5 = numberOfCommandsSent;
+  _6 = numberOfCommandsSent.12_5 + 1;
+  numberOfCommandsSent = _6;
+  status = CheckBbe32AckStatus ();
+  goto <bb 13>; [INV]
+
+  <bb 12> :
+  status = RsdkReportError (73757, 2549, 0, 2, 2);
+
+  <bb 13> :
+  D.7041 = status;
+  DspHDMsg = {CLOBBER};
+
+  <bb 14> :
+<L14>:
+  return D.7041;
+
+}
+
+
+Dsphd_CreateJobList (struct Dsphd_JobType * jobPtr, uint8 * jobPtrListBuffer, uint16 numJobs, uint8_t isCrcEnabled)
+{
+  uint16 i;
+  struct JobList_t * jobPtrList;
+  Std_ReturnType status;
+  Std_ReturnType D.7026;
+
+  <bb 2> :
+  status = 0;
+  jobPtrList = jobPtrListBuffer;
+  if (jobPtr == 0B)
+    goto <bb 4>; [INV]
+  else
+    goto <bb 3>; [INV]
+
+  <bb 3> :
+  if (jobPtrListBuffer == 0B)
+    goto <bb 4>; [INV]
+  else
+    goto <bb 5>; [INV]
+
+  <bb 4> :
+  status = RsdkReportError (73755, 2549, 0, 1, 0);
+
+  <bb 5> :
+  if (status == 0)
+    goto <bb 6>; [INV]
+  else
+    goto <bb 9>; [INV]
+
+  <bb 6> :
+  if (numJobs > 10)
+    goto <bb 8>; [INV]
+  else
+    goto <bb 7>; [INV]
+
+  <bb 7> :
+  if (numJobs == 0)
+    goto <bb 8>; [INV]
+  else
+    goto <bb 9>; [INV]
+
+  <bb 8> :
+  status = RsdkReportError (73755, 2549, 0, 1, 0);
+
+  <bb 9> :
+  if (status == 0)
+    goto <bb 10>; [INV]
+  else
+    goto <bb 14>; [INV]
+
+  <bb 10> :
+  i = 0;
+  goto <bb 12>; [INV]
+
+  <bb 11> :
+  _1 = (unsigned int) i;
+  _2 = _1 * 8;
+  _3 = jobPtr + _2;
+  _4 = (int) i;
+  _5 = &jobPtrList->jobDescriptor[_4];
+  DspHDAddJobToList (_3, _5, isCrcEnabled);
+  i.11_6 = i;
+  i = i.11_6 + 1;
+
+  <bb 12> :
+  if (i < numJobs)
+    goto <bb 11>; [INV]
+  else
+    goto <bb 13>; [INV]
+
+  <bb 13> :
+  jobPtrList->numJobs = numJobs;
+
+  <bb 14> :
+  D.7026 = status;
+
+  <bb 15> :
+<L13>:
+  return D.7026;
+
+}
+
+
+GetShmBuffer (uint8 instance, uint8 channel, size_t size)
+{
+  uint32_t timeout;
+  char * bufPtr;
+  char * D.7014;
+
+  <bb 2> :
+  bufPtr = 0B;
+  timeout = 10000;
+  goto <bb 6>; [INV]
+
+  <bb 3> :
+  bufPtr = ipc_shm_acquire_buf (instance, channel, size);
+  if (bufPtr != 0B)
+    goto <bb 4>; [INV]
+  else
+    goto <bb 5>; [INV]
+
+  <bb 4> :
+  goto <bb 7>; [INV]
+
+  <bb 5> :
+  timeout = timeout + 4294967295;
+
+  <bb 6> :
+  if (timeout != 0)
+    goto <bb 3>; [INV]
+  else
+    goto <bb 7>; [INV]
+
+  <bb 7> :
+  D.7014 = bufPtr;
+
+  <bb 8> :
+<L5>:
+  return D.7014;
+
+}
+
+
+DspHDAddJobToList (struct Dsphd_JobType * jobPtr, struct JobDescriptor_t * jobDescPtr, uint8_t isCrcEnabled)
+{
+  unsigned int D.7011;
+
+  <bb 2> :
+  if (isCrcEnabled == 1)
+    goto <bb 3>; [INV]
+  else
+    goto <bb 4>; [INV]
+
+  <bb 3> :
+  jobDescPtr->cmdFormat = 1;
+  goto <bb 5>; [INV]
+
+  <bb 4> :
+  jobDescPtr->cmdFormat = 0;
+
+  <bb 5> :
+  _1 = jobPtr->id;
+  jobDescPtr->funcId = _1;
+  _2 = &jobDescPtr->paramList;
+  _3 = &jobPtr->arg;
+  D.7011 = MEM[(char * {ref-all})_3];
+  MEM[(char * {ref-all})_2] = D.7011;
+  _4 = &jobDescPtr->funcId;
+  _5 = GenCrc8 (_4, 13);
+  jobDescPtr->crc = _5;
+  return;
+
+}
+
+
+Bbe32EvtIsr (void * argPtr, const uint8 instance, uint8 chan_id, void * bufPtr, uint32 size)
+{
+  int err;
+
+  <bb 2> :
+  if (chan_id == 0)
+    goto <bb 3>; [INV]
+  else
+    goto <bb 8>; [INV]
+
+  <bb 3> :
+  _1 = MEM[(struct Dsphd_CommandAckType *)bufPtr].commandNumber;
+  numberOfCommandsSent.9_2 = numberOfCommandsSent;
+  if (_1 == numberOfCommandsSent.9_2)
+    goto <bb 4>; [INV]
+  else
+    goto <bb 6>; [INV]
+
+  <bb 4> :
+  _3 = MEM[(struct Dsphd_CommandAckType *)bufPtr].commandType;
+  lastMsgSent.10_4 = lastMsgSent;
+  if (_3 == lastMsgSent.10_4)
+    goto <bb 5>; [INV]
+  else
+    goto <bb 6>; [INV]
+
+  <bb 5> :
+  bbe32AckStatus = 1;
+  goto <bb 7>; [INV]
+
+  <bb 6> :
+  bbe32AckStatus = 2;
+
+  <bb 7> :
+  goto <bb 12>; [INV]
+
+  <bb 8> :
+  if (chan_id == 1)
+    goto <bb 9>; [INV]
+  else
+    goto <bb 12>; [INV]
+
+  <bb 9> :
+  _5 = MEM[(uint32_t *)bufPtr];
+  if (_5 == 2081284097)
+    goto <bb 10>; [INV]
+  else
+    goto <bb 11>; [INV]
+
+  <bb 10> :
+  Dsphd_EventCb (2081284097);
+
+  <bb 11> :
+  memset (bufPtr, 0, size);
+
+  <bb 12> :
+  _6 = ipc_shm_release_buf (instance, chan_id, bufPtr);
+  err = (int) _6;
+
+  <bb 13> :
+  return;
+
+}
+
+
+CheckBbe32AckStatus ()
+{
+  Std_ReturnType status;
+  Std_ReturnType D.6985;
+
+  <bb 2> :
+  status = 0;
+  WaitBbe32Ack ();
+  bbe32AckStatus.6_1 = bbe32AckStatus;
+  _2 = (int) bbe32AckStatus.6_1;
+  switch (_2) <default: <L2> [INV], case 2: <L0> [INV], case 3: <L1> [INV]>
+
+  <bb 3> :
+<L0>:
+  status = RsdkReportError (73761, 2549, 0, 2, 6);
+  goto <bb 6>; [INV]
+
+  <bb 4> :
+<L1>:
+  status = RsdkReportError (73762, 2549, 0, 2, 7);
+  goto <bb 6>; [INV]
+
+  <bb 5> :
+<L2>:
+
+  <bb 6> :
+  D.6985 = status;
+
+  <bb 7> :
+<L4>:
+  return D.6985;
+
+}
+
+
+WaitBbe32Ack ()
+{
+  volatile uint32 ackTimeout;
+
+  <bb 2> :
+  ackTimeout = 10000;
+  goto <bb 8>; [INV]
+
+  <bb 3> :
+  bbe32AckStatus.1_1 = bbe32AckStatus;
+  if (bbe32AckStatus.1_1 == 1)
+    goto <bb 4>; [INV]
+  else
+    goto <bb 5>; [INV]
+
+  <bb 4> :
+  goto <bb 9>; [INV]
+
+  <bb 5> :
+  bbe32AckStatus.2_2 = bbe32AckStatus;
+  if (bbe32AckStatus.2_2 == 2)
+    goto <bb 6>; [INV]
+  else
+    goto <bb 7>; [INV]
+
+  <bb 6> :
+  goto <bb 9>; [INV]
+
+  <bb 7> :
+  ackTimeout.3_3 = ackTimeout;
+  _4 = ackTimeout.3_3 + 4294967295;
+  ackTimeout = _4;
+
+  <bb 8> :
+  ackTimeout.4_5 = ackTimeout;
+  if (ackTimeout.4_5 != 0)
+    goto <bb 3>; [INV]
+  else
+    goto <bb 9>; [INV]
+
+  <bb 9> :
+  ackTimeout.5_6 = ackTimeout;
+  if (ackTimeout.5_6 == 0)
+    goto <bb 10>; [INV]
+  else
+    goto <bb 11>; [INV]
+
+  <bb 10> :
+  bbe32AckStatus = 3;
+
+  <bb 11> :
+  return;
+
+}
+
+
+RsdkReportError (rsdkStatus_t rsdkErrCode, uint16 moduleId, uint8 instanceId, uint8 apiId, uint8 errCode)
+{
+  Std_ReturnType D.6992;
+  int iftmp.8;
+  int iftmp.7;
+
+  <bb 2> :
+  _1 = rsdkErrCode & 255;
+  _2 = (long unsigned int) errCode;
+  if (_1 == _2)
+    goto <bb 3>; [INV]
+  else
+    goto <bb 4>; [INV]
+
+  <bb 3> :
+  iftmp.7 = 1;
+  goto <bb 5>; [INV]
+
+  <bb 4> :
+  iftmp.7 = -1;
+
+  <bb 5> :
+  iftmp.8 = iftmp.7;
+  Det_ReportError (moduleId, instanceId, apiId, errCode);
+  D.6992 = 1;
+
+  <bb 6> :
+<L3>:
+  return D.6992;
+
+}
+
+
+__attribute__((unused))
+rsdk_test_not_null_lnk_sym (uintptr_t symName)
+{
+  volatile uintptr_t dummy_volatile;
+  uint8 retVal;
+  uint8 D.6977;
+
+  <bb 2> :
+  dummy_volatile = symName;
+  dummy_volatile.0_1 = dummy_volatile;
+  if (dummy_volatile.0_1 != 0)
+    goto <bb 3>; [INV]
+  else
+    goto <bb 4>; [INV]
+
+  <bb 3> :
+  retVal = 1;
+  goto <bb 5>; [INV]
+
+  <bb 4> :
+  retVal = 0;
+
+  <bb 5> :
+  D.6977 = retVal;
+
+  <bb 6> :
+<L3>:
+  return D.6977;
+
+}
+
+

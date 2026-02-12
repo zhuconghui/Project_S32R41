@@ -1,0 +1,112 @@
+Symbol table:
+
+Core_ID_1_Startup/33 (Core_ID_1_Startup) @0619f8c0
+  Type: function
+  Visibility: external public
+  Address is taken.
+  References: 
+  Referring: OsCoreStartup/30 (addr)
+  Availability: not_available
+  Function flags:
+  Called by: 
+  Calls: 
+OSGetLogicalCoreID/32 (OSGetLogicalCoreID) @0619f7e0
+  Type: function definition analyzed
+  Visibility: force_output externally_visible no_reorder public
+  References: 
+  Referring: 
+  Availability: available
+  Function flags: body
+  Called by: 
+  Calls: 
+OS_StartNonAutosarCore/31 (OS_StartNonAutosarCore) @0619f540
+  Type: function definition analyzed
+  Visibility: force_output externally_visible no_reorder public
+  References: OsCoreStartup/30 (read)OsStartedCores/29 (read)OsStartedCores/29 (write)
+  Referring: 
+  Availability: available
+  Function flags: body
+  Called by: 
+  Calls: 
+OsCoreStartup/30 (OsCoreStartup) @061a0168
+  Type: variable definition analyzed
+  Visibility: force_output no_reorder prevailing_def_ironly
+  References: Core_ID_1_Startup/33 (addr)
+  Referring: OS_StartNonAutosarCore/31 (read)
+  Availability: available
+  Varpool flags: initialized
+OsStartedCores/29 (OsStartedCores) @0619ae58
+  Type: variable definition analyzed
+  Visibility: force_output externally_visible no_reorder public
+  References: 
+  Referring: OS_StartNonAutosarCore/31 (read)OS_StartNonAutosarCore/31 (write)
+  Availability: available
+  Varpool flags:
+OSGetLogicalCoreID ()
+{
+  CoreIdType coreInd;
+  CoreIdType D.5854;
+  CoreIdType _2;
+
+  <bb 2> :
+  coreInd_1 = 0;
+  _2 = coreInd_1;
+
+  <bb 3> :
+<L0>:
+  return _2;
+
+}
+
+
+OS_StartNonAutosarCore (CoreIdType coreId, StatusType * status)
+{
+  volatile OSDWORD OSMC_ME_DUMMY;
+  unsigned int vol.0;
+  int _1;
+  unsigned int _2;
+  unsigned int _3;
+  void (*<T4d0>) (void) _4;
+  unsigned int _5;
+  int _6;
+  unsigned int _7;
+  unsigned char _8;
+  unsigned char OsStartedCores.1_9;
+  unsigned char _10;
+  unsigned int vol.0_15;
+
+  <bb 2> :
+  _1 = (int) coreId_12(D);
+  switch (_1) <default: <L2> [INV], case 0: <L0> [INV], case 1: <L1> [INV]>
+
+  <bb 3> :
+<L0>:
+  *status_17(D) = 0;
+  goto <bb 6>; [INV]
+
+  <bb 4> :
+<L1>:
+  _2 = (unsigned int) coreId_12(D);
+  _3 = _2 + 4294967295;
+  _4 = OsCoreStartup[_3];
+  _5 = (unsigned int) _4;
+  OSMC_ME_DUMMY ={v} _5;
+  vol.0_15 ={v} OSMC_ME_DUMMY;
+  _6 = (int) coreId_12(D);
+  _7 = 1 << _6;
+  _8 = (unsigned char) _7;
+  OsStartedCores.1_9 ={v} OsStartedCores;
+  _10 = _8 | OsStartedCores.1_9;
+  OsStartedCores ={v} _10;
+  goto <bb 6>; [INV]
+
+  <bb 5> :
+<L2>:
+  *status_17(D) = 0;
+
+  <bb 6> :
+  return;
+
+}
+
+

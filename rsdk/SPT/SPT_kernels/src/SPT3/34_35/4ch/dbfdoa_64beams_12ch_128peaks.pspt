@@ -1,0 +1,411 @@
+/**************************************************************************************************
+ *
+ *
+ * Copyright 2021 NXP
+ *
+ *****************************************************************************
+ *
+ * NXP Confidential and Proprietary. This software is owned or controlled by NXP and
+ * may only be used strictly in accordance with the applicable license terms.  By
+ * expressly accepting such terms or by downloading, installing, activating and/or
+ * otherwise using the software, you are agreeing that you have read, and that you
+ * agree to comply with and are bound by, such license terms.  If you do not agree to
+ * be bound by the applicable license terms, then you may not retain, install, activate or
+ * otherwise use the software.
+ *
+ **************************************************************************************************/
+
+/** @cond */
+/*==================================================================================================
+ *                                        INCLUDE FILES
+ *==================================================================================================*/
+ .include "oram.inc"                    /* include ORAM header file */
+ .include "tram.inc"                    /* include TRAM header file */
+ .include "wr.inc"                      /* include WR header file */
+ .include "spt_kernel_internals.inc"    /* include local defines */
+
+/*==================================================================================================
+ *                                          SECTION
+ *==================================================================================================*/
+ .section .RsdkSpt3 , "ax"   /* memory section where to store SPT code */
+
+/*==================================================================================================
+ *                                      LOCAL CONSTANTS
+ *==================================================================================================*/
+ .set PEAK_NUM,                 64 /* peaks to be proccesed at a time */
+ .set CHANNEL_NUM,              12
+ .set SCALAR_PROD_8TAPS,         8
+ .set SCALAR_PROD_4TAPS,         4
+ .set BEAM_NUM,                 64
+ .set BYTES_BEAM_MAG_SAMPLE,     4 /* 32 bits in SRAM, 24 used(log2 16 bit + tagging) */
+ .set BYTES_COMPLEX_FFT_SAMPLE,  4
+ .set PEAK_SRAM_SLICES,         ((PEAK_NUM * CHANNEL_NUM) >> 1)
+
+/** @endcond */
+/*==================================================================================================
+ *                                      GLOBAL FUNCTIONS
+ *==================================================================================================*/
+/*================================================================================================*/
+/**
+* @addtogroup spt_kernels_api_func
+* @{
+*
+* @fn             void *RsdkSptDbfDoa64Beams12Ch128Peaks();
+* @brief          Function for Digital BeamForming - DBF for 64 Steering Vector,
+*                 12 channels and 128 peaks and Direction of Arrival
+* @details        Compute Magnitudes(log2 format) for Beamscans (for each peak).
+*                 Compute Global Max, calculate thresold and compute the local maxima, per Beamscan.
+*                 Results stored in SRAM (log2 format + tagging for local peaks)
+*
+* @param[in]      WR_1: 24bit(RE): 0 \n
+*                       24bit(IM): Offset(restricted to 24bit value!) of the INPUT buffer(Peak list),
+*                       relative to SRAM start address @ref RSDK_SPT_OTHER_BASE_ADDR "RSDK_SPT_OTHER_BASE_ADDR".
+* @verbatim
+*                 INPUT Memory layout:
+*                 SRAM, 32bit complex(16b_Im + 16b_Re)
+*                 63:48         47:32           31:16           15:0
+*                 P0_Im-CH0     P0_Re-CH0       P0_Im-CH1       P0_Re-CH1
+*                 P0_Im-CH2     P0_Re-CH2       P0_Im-CH3       P0_Re-CH3
+*                 P0_Im-CH4     P0_Re-CH4       P0_Im-CH5       P0_Re-CH5
+*                 P0_Im-CH6     P0_Re-CH6       P0_Im-CH7       P0_Re-CH7
+*                 P0_Im-CH8     P0_Re-CH8       P0_Im-CH9       P0_Re-CH9
+*                 P0_Im-CH10    P0_Re-CH10      P0_Im-CH11      P0_Re-CH11
+*                 |             |               |               |
+*                 |             |               |               |
+*                 |             |               |               |
+*                 P127_Im-CH0   P127_Re-CH0     P127_Im-CH1     P127_Re-CH1
+*                 P127_Im-CH2   P127_Re-CH2     P127_Im-CH3     P127_Re-CH3
+*                 P127_Im-CH4   P127_Re-CH4     P127_Im-CH5     P127_Re-CH5
+*                 P127_Im-CH6   P127_Re-CH6     P127_Im-CH7     P127_Re-CH7
+*                 P127_Im-CH8   P127_Re-CH8     P127_Im-CH9     P127_Re-CH9
+*                 P127_Im-CH10  P127_Re-CH10    P127_Im-CH11    P127_Re-CH11
+* @endverbatim
+*
+* @param[out]     WR_2: 24bit(RE): 0 \n
+*                       24bit(IM): Offset(restricted to 24bit value!) of the OUTPUT buffer(128 beamscans of 64 beams),
+*                       relative to SRAM start address @ref RSDK_SPT_OTHER_BASE_ADDR "RSDK_SPT_OTHER_BASE_ADDR".
+* @verbatim
+*                 OUTPUT Memory layout:
+*                 SRAM, 32 bit real. First 16 bit reserved for tagging, next 16bit for log2 magnitudes
+*                 63:48           47:32           31:16           15:0
+*                 P0-TAG-Beam0    P0-MAG-Beam0    P0-TAG-Beam1    P0-MAG-Beam1
+*                 P0-TAG-Beam2    P0-MAG-Beam2    P0-TAG-Beam3    P0-MAG-Beam3
+*                 |               |               |               |
+*                 P0-TAG-Beam62   P0-MAG-Beam62   P0-TAG-Beam63   P0-MAG-Beam63 -> Beamscan 0
+*                 ----------------------------------------------------------------------------
+*                 P1-TAG-Beam0    P1-MAG-Beam0    P1-TAG-Beam1    P1-MAG-Beam1
+*                 P1-TAG-Beam2    P1-MAG-Beam2    P1-TAG-Beam3    P1-MAG-Beam3
+*                 |               |               |               |
+*                 P1-TAG-Beam62   P1-MAG-Beam62   P1-TAG-Beam63   P1-MAG-Beam63 -> Beamscan 1
+*                 ----------------------------------------------------------------------------
+*                 |               |               |               |
+*                 |               |               |               |
+*                 |               |               |               |
+*                 ----------------------------------------------------------------------------
+*                 P127-TAG-Beam0  P127-MAG-Beam0  P127-TAG-Beam1  P127-MAG-Beam1
+*                 P127-TAG-Beam2  P127-MAG-Beam2  P127-TAG-Beam3  P127-MAG-Beam3
+*                 |               |               |               |
+*                 P127-TAG-Beam62 P127-MAG-Beam62 P127-TAG-Beam63 P127-MAG-Beam63 -> Beamscan 127
+*                 ----------------------------------------------------------------------------
+* @endverbatim
+*
+* @param[in]      WR_3: 24bit(RE): Threshold Factor, used for Threshold calculation (14bit log2 format). \n
+*                       24bit(IM): 0.
+*
+* @return         WR_0: No value returned.
+* @retval         No value returned.
+*
+* @pre            Steering vector coeficients are placed in TRAM at TR_0_384_0 by the Init function. \n
+*                 The kernel rely on the assumption that TR_381..3_* can be used as temp location.
+*
+* @note           All buffers MUST be 8 bytes aligned. \n
+*                 The input buffer CANNOT be reused for the output buffers.
+*
+* @}*/
+/*================================================================================================*/
+/** @cond */
+ .global RsdkSptDbfDoa64Beams12Ch128Peaks
+ .global RsdkSptDbfDoa64Beams12Ch128Peaks_size
+
+RsdkSptDbfDoa64Beams12Ch128Peaks:
+    /*=========================================================================
+     * Kernel watermarking instruction without side-effects. WR_0 can be ovewritten
+     * with the output parameter, according to the SPT calling convention
+     *=========================================================================*/
+    set #RSDK_SPT_KERNEL_WATERMARK, WR_0
+
+/*=========================================================================
+ * API parameter passing
+ *=========================================================================*/
+    /*=========================================================================
+     * INPUT
+     *=========================================================================
+     * WR_11: 24bit(RE): OPRAM address where to put 64 peak samples of the 12 channels
+     *        24bit(IM): SRAM offset to peak samples
+     * WR_12: 24bit(RE): no adder for OPRAM address
+     *        24bit(IM): SRAM offset to the next 64 peak samples
+     *=========================================================================*/
+    add .noshift .mod24 WR_1, #(OR_0_0_0), WR_11
+    set #((PEAK_NUM * CHANNEL_NUM * BYTES_COMPLEX_FFT_SAMPLE) << 24), WR_12
+
+    /*=========================================================================
+     * OUTPUT
+     *=========================================================================
+     * WR_13: 24bit(RE): OPRAM address where to get beams magnitude for 64 peaks
+     *        24bit(IM): SRAM beam magnitude result buffer address offset for 64 peaks
+     * WR_14: 24bit(RE): no adder for OPRAM address
+     *        24bit(IM): SRAM beam magnitude result buffer offset for the next 64 peaks
+     *=========================================================================*/
+    add .noshift .mod24 WR_2, #(OR_1_0_0), WR_13
+    set #((PEAK_NUM * BEAM_NUM * BYTES_BEAM_MAG_SAMPLE) << 24), WR_14
+
+/*=========================================================================
+ * START DIGITAL BEAMFORMING SECTION + Direction of Arrival Algo
+ *=========================================================================*/
+    /*=========================================================================
+     * set WR_43. Keep "0" value as reference for cmp instruction
+     *=========================================================================*/
+    set #(0x0), WR_43
+
+    /*=========================================================================
+     * set WR_46, with left shift value 2
+     *=========================================================================*/
+    set #(0x2), WR_46
+
+    /*=========================================================================
+     * set TRAM column 381, slice 0..1 with "0.66", slice 2..3 with "0" coefs for 4 TAP coef
+     *=========================================================================*/
+    set #(0x5555), TR_0_381_0 /* 0.66 */
+    set #(0x5555), TR_0_381_1 /* 0.66 */
+    set #(0x0), TR_0_381_2 /* 0 */
+    set #(0x0), TR_0_381_3 /* 0 */
+
+    /*=========================================================================
+     * Repeat 2 times: 64 peaks + 64 peaks
+     *=========================================================================*/
+    loop #(2)
+
+        /*=========================================================================
+         * Work Register 15 used together with 16
+         *=========================================================================
+         * WR_15: TRAM address from and where to put one steering vector.
+         * WR_16: increment value where to take the next steering vector.
+         *=========================================================================*/
+        set #(TR_0_382_0 | (TR_0_384_0 << 24)), WR_15
+        set #(0x10 << 24), WR_16
+
+        /*=========================================================================
+         * Work Register 17 used together with 18
+         *=========================================================================
+         * WR_17: OPRAM address from and where to put the scp results.
+         * WR_18: increment value where to put the next scp results.
+         *=========================================================================*/
+        set #(OR_0_0_0 | (OR_3_0_0 << 24)), WR_17
+        set #(0x40), WR_18
+
+        /*=========================================================================
+         * Work Register 19 used together with 20
+         *=========================================================================
+         * WR_19: OPRAM address to take the global max(GM) for each peak.  WR_45 place to store the current global max.
+         * WR_20: increment value from where to take the next GM.
+         *=========================================================================*/
+        set #(WR_45 | (OR_4_0_0 << 24)), WR_19
+        set #(0x1 << 24), WR_20
+
+        /*=========================================================================
+         * Work Register 21 used together with 22
+         *=========================================================================
+         * WR_21: OPRAM address from and where to put the local max results.
+         * WR_22: increment value from and where to put to take next beams.
+         *=========================================================================*/
+        set #(OR_0_0_0 | (OR_1_0_0 << 24)), WR_21
+        set #(0x20 | (0x20 << 24)), WR_22
+
+        /*=========================================================================
+         * PDMA: transfer 64 peak samples for all 12 channels from SRAM to OPRAM
+         *=========================================================================*/
+        pdma.ind .signext .16cmplx .sysram2opram .sync .notrace, PEAK_SRAM_SLICES, RSDK_SPT_OTHER_BASE_ADDR, WR_11, 0x0, 0x1, 0x0, 0x1
+
+        /*=========================================================================
+         * COPY simple/shift: move 12 channels on 16 values in OPRAM. Prepare for SCP
+         *=========================================================================*/
+        copy.shift CHANNEL_NUM*PEAK_NUM, OR_0_0_0, OR_3_0_4, 0x1, 0x1
+        copy.simple 8*PEAK_NUM>>1, OR_0_0_0, OR_2_0_0, 0x3, 0x4
+        copy.simple 8*PEAK_NUM>>1, OR_0_1_0, OR_2_1_0, 0x3, 0x4
+        copy.simple 8*PEAK_NUM>>1, OR_3_2_0, OR_2_2_0, 0x3, 0x4
+        copy.simple 8*PEAK_NUM>>1, OR_3_3_0, OR_2_3_0, 0x3, 0x4
+
+        /*=========================================================================
+         * Repeat 64 (beam number) times the scp for 64 Peaks, bank OR_2_0_0 -> OR_0_0_0
+         *=========================================================================*/
+        loop #(BEAM_NUM)
+
+            /*=========================================================================
+             * COPY: move one steering vector(12+4zeros) to a fix adress in TRAM (TR_0_382_0)
+             *=========================================================================*/
+            copy.simple.ind 16, WR_15, 0x1, 0x1
+
+            /*=========================================================================
+             * 2 x SCP: scalar product with 8 taps, steering vector in TRAM, taken from TR_0_382_0...
+             * S1 = (P_A*SV_A + P_B*SV_B + P_C*SV_C + P_D*SV_D + P_E*SV_E + P_F*SV_F + P_G*SV_G + P_H*SV_H)/8, done for 8ch x PEAK_NUM(64).
+             * S2 = (P_I*SV_I + P_J*SV_J + P_K*SV_K + P_L*SV_L + 0 + 0 + 0 + 0)/8, done for 4ch x PEAK_NUM(64).
+             * Pre-Shift left(8) the input values, to work on 24bit resolution
+             * leave two columns empty, ready for the final 4 TAP SCP
+             *=========================================================================*/
+            scp .cmplx .coef_cmplx .shift8 SCALAR_PROD_8TAPS, 8*PEAK_NUM, OR_2_0_0, OR_3_0_0, 0x2, 0x4, TR_0_382_0
+            scp .cmplx .coef_cmplx .shift8 SCALAR_PROD_8TAPS, 8*PEAK_NUM, OR_2_1_0, OR_3_1_0, 0x2, 0x4, TR_0_383_0
+
+            /*=========================================================================
+             * COPY transpose 8x4 FWD. Prepare the data for the last 4 TAP SCP.
+             *=========================================================================*/
+            copy.trans_fwd_8x4 4*PEAK_NUM, OR_3_0_0, OR_1_0_0, 0x1, 0x1, 0x8, 0x8
+
+            /*=========================================================================
+             * SCP: scalar product with 4 taps, S = (S1*2/3 + S2*2/3 + 0 + 0)/4
+             * coeficients = 0.66, 0.66, 0, 0, taken from TRAM_381_0..3
+             *=========================================================================*/
+            scp .cmplx .coef_re .nosft SCALAR_PROD_4TAPS, 4*PEAK_NUM, OR_1_0_0, OR_3_0_0, 0x1, 0x1, TR_0_381_0
+
+            /*=========================================================================
+             * VMT: Operation Sequence 2, Stage 2. Shift left(2 in WR_46).
+             * Compensate the 2 bit resolution loss from SCP tap 4
+             *=========================================================================*/
+            vmt.shift_sq2s2.ind .cmplx .rst_sum .in_48 .op_off .no_sq2s1 WR_46 .no_sq2s3 WR_47, PEAK_NUM, WR_17, 0x1, 0x1
+
+            /*=========================================================================
+             * ADD: increment TRAM address to take next steering coef
+             *=========================================================================*/
+            add .noshift .mod24 WR_15, WR_16, WR_15
+
+            /*=========================================================================
+             * ADD: increment OPRAM address to write next scp final results
+             *=========================================================================*/
+            add .noshift .mod24 WR_17, WR_18, WR_17
+
+        /*=========================================================================
+         * NEXT: end of the loop
+         *=========================================================================*/
+        next
+
+        /*=========================================================================
+         * COPY 8x8 transpose. Done for 64 peaks*64beams
+         *=========================================================================*/
+        copy.trans PEAK_NUM*BEAM_NUM, OR_0_0_0, OR_1_0_0, 0x1, 0x1, 0x8, 0x8
+
+        /*=========================================================================
+         * REPEAT 8 times the COPY command (interleave), bank OR_1_0_0 -> OR_0_0_0
+         * COPY: rearrange the data, all the beams grouped for each Peak(Beamscan/SCP calculated)
+         * src_inc 8 (skip other 7*8 Peaks), dst_inc 1, done for 8 peaks*64beams, each time
+         *=========================================================================*/
+        repeat 8, MEM_SLICES, MEM_SLICES*BEAM_NUM, 0x0, 0x0
+        copy.simple 8*BEAM_NUM, OR_1_0_0, OR_0_0_0, 0x8, 0x1
+
+        /*=========================================================================
+         * COPY 8x8 transpose. Done for 64 peaks*64beams
+         *=========================================================================*/
+        copy.trans PEAK_NUM*BEAM_NUM, OR_0_0_0, OR_1_0_0, 0x1, 0x1, 0x8, 0x8
+
+        /*=========================================================================
+         * REPEAT 8 times the COPY command (interleave), bank OR_1_0_0 -> OR_0_0_0
+         * COPY: rearrange the data, eack peak to have all the 64 beams consecutive
+         * src_inc 8(skip other 7*8 Peaks), dst_inc 1, done for 8 peaks*64beams, each time
+         *=========================================================================*/
+        repeat 8, MEM_SLICES, MEM_SLICES*BEAM_NUM, 0x0, 0x0
+        copy.simple 8*BEAM_NUM, OR_1_0_0, OR_0_0_0, 0x8, 0x1
+
+        /*=========================================================================
+         * VMT: Operation Sequence 1(Mag2 and log2), output packing. Done for 64 peaks*64beams.
+         *=========================================================================*/
+        vmt.sq1 .cmplx .in_48 .op_on, PEAK_NUM*BEAM_NUM, OR_0_0_0, OR_1_0_0, 0x1, 0x1
+
+        /*=========================================================================
+         * REPEAT #PEAKS + Global MAXS on a beamscan, input packing
+         *=========================================================================*/
+        repeat PEAK_NUM, BEAM_NUM>>1, 0x1, 0x0, 0x0
+        maxs.gm .no_maxsn .log2 .no_preproc .in_48packed, BEAM_NUM, OR_1_0_0, OR_4_0_0, 0x1, 0x1
+
+        /*=========================================================================
+         * Repeat 128/2 = 64 (peak number - beamscan) the local max algorithm
+         *=========================================================================*/
+        loop #(PEAK_NUM)
+
+            /*=========================================================================
+             * GET: take the GM for first peak and place it in WR_45
+             *=========================================================================*/
+            get.ind WR_19
+
+            /*=========================================================================
+             * ADD: increment OPRAM address to read the next 64 beams(beamscan)
+             *=========================================================================*/
+            add .noshift .mod24 WR_19, WR_20, WR_19
+
+            /*=========================================================================
+             * SUB: substract thresholdFactor from the global max
+             *=========================================================================*/
+            sub .noshift .mod24 WR_45, WR_3, WR_44
+
+            /*=========================================================================
+             * CMP: compare the (GLB_MAX - thresholdFactor) > 0
+             *=========================================================================*/
+            cmp WR_44, WR_43, WR_42
+
+            /*=========================================================================
+             * SEL: check wr 42, SRC1(WR_45), SRC2(WR_45), SRC3(WR_44), Dest(WR_45)
+             * If (GLB_MAX - thresholdFactor) > 0 then Threshold = (GLB_MAX - thresholdFactor)
+             * If (GLB_MAX - thresholdFactor) <= 0 then Threshold = GLB_MAX
+             *=========================================================================*/
+            sel .re 42 WR_45, WR_45, WR_44, WR_45
+
+            /*=========================================================================
+             * MAXS with output tagging: local maxima on a beamscan, IN/OUT packing, threshold in WR_45
+             *=========================================================================*/
+            maxs.lmth.ind .no_maxsn .log2 .no_preproc .in_48packed .tag .no_tag_in .no_cyc_ext .gt_thld, BEAM_NUM, WR_21, 0x1, 0x1, WR_45
+
+            /*=========================================================================
+             * ADD: increment OPRAM address to read/write the data/local max for the next 64 beams(beamscan)
+             *=========================================================================*/
+            add .noshift .mod24 WR_21, WR_22, WR_21
+
+        /*=========================================================================
+         * NEXT: end of the loop
+         *=========================================================================*/
+        next
+
+        /*=========================================================================
+         * COPY: R2I and I2R. Inverse the real with imaginary column.
+         * Needed for PDMA with 24complex to transfer consecutive beam data
+         *=========================================================================*/
+        copy.partial_r2i .keep_orig, PEAK_NUM*BEAM_NUM>>1, OR_0_0_0, OR_1_0_0, 0x1, 0x1
+        copy.partial_i2r .keep_orig, PEAK_NUM*BEAM_NUM>>1, OR_0_0_0, OR_1_0_0, 0x1, 0x1
+
+        /*=========================================================================
+         * PDMA: copy mag2+log2 data + peak info(tagging)
+         * 64 beams for 64 peaks, grouped 2 real columns in one(Re/Im) OPRAM slice
+         *=========================================================================*/
+        pdma.ind .signext .24cmplx .opram2sysram .async .notrace, PEAK_NUM*BEAM_NUM>>1, RSDK_SPT_OTHER_BASE_ADDR, WR_13, 0x0, 0x1, 0x0, 0x1
+
+        /*=========================================================================
+         * ADD: increment input SRAM offset for to next 64 peaks
+         *=========================================================================*/
+        add .noshift .mod24 WR_11, WR_12, WR_11
+
+        /*=========================================================================
+         * ADD: increment output SRAM offset for to next 64 peaks
+         *=========================================================================*/
+        add .noshift .mod24 WR_13, WR_14, WR_13
+
+    /*=========================================================================
+     * NEXT: end of the loop
+     *=========================================================================*/
+    next
+
+/*=========================================================================
+ * STOP: end of DBF+DOA program
+ *=========================================================================*/
+ stop
+
+ .set RsdkSptDbfDoa64Beams12Ch128Peaks_size, .-RsdkSptDbfDoa64Beams12Ch128Peaks
+/*******************************************************************************
+ * EOF
+ ******************************************************************************/
+/** @endcond */

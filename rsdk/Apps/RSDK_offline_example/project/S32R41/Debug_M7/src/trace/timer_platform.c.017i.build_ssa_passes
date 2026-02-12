@@ -1,0 +1,165 @@
+IndexWrite (atomic traceAtomic_t * pTraceBufferIndex, int value)
+{
+  <bb 2> :
+  TraceAtomicValueSet (pTraceBufferIndex, value);
+  return;
+
+}
+
+
+IndexReadIncrement (atomic traceAtomic_t * pTraceBufferIndex, uint16_t traceBufferSize)
+{
+  int index;
+  int D.5883;
+
+  <bb 2> :
+  _1 = __atomic_fetch_add_4 (pTraceBufferIndex, 1, 5);
+  index = (int) _1;
+  _2 = (int) traceBufferSize;
+  index = index % _2;
+  D.5883 = index;
+
+  <bb 3> :
+<L0>:
+  return D.5883;
+
+}
+
+
+IndexRead (atomic traceAtomic_t * pTraceBufferIndex, uint16_t traceBufferSize)
+{
+  int index;
+  int D.5879;
+
+  <bb 2> :
+  index = TraceAtomicValueGet (pTraceBufferIndex);
+  _1 = (int) traceBufferSize;
+  D.5879 = index % _1;
+
+  <bb 3> :
+<L0>:
+  return D.5879;
+
+}
+
+
+CoreIdRead ()
+{
+  uint8_t D.5877;
+
+  <bb 2> :
+  _1 = OSGetLogicalCoreID ();
+  D.5877 = (uint8_t) _1;
+
+  <bb 3> :
+<L0>:
+  return D.5877;
+
+}
+
+
+TimerEnd (void * pArg)
+{
+  <bb 2> :
+  return;
+
+}
+
+
+TimerRead ()
+{
+  uint32_t D.5875;
+
+  <bb 2> :
+  D.5875 = STM_GetValue ();
+
+  <bb 3> :
+<L0>:
+  return D.5875;
+
+}
+
+
+TimerInit ()
+{
+  <bb 2> :
+  STM_Init (1);
+  return;
+
+}
+
+
+__attribute__((unused))
+rsdk_test_not_null_lnk_sym (uintptr_t symName)
+{
+  volatile uintptr_t dummy_volatile;
+  uint8 retVal;
+  uint8 D.5873;
+
+  <bb 2> :
+  dummy_volatile = symName;
+  dummy_volatile.0_1 = dummy_volatile;
+  if (dummy_volatile.0_1 != 0)
+    goto <bb 3>; [INV]
+  else
+    goto <bb 4>; [INV]
+
+  <bb 3> :
+  retVal = 1;
+  goto <bb 5>; [INV]
+
+  <bb 4> :
+  retVal = 0;
+
+  <bb 5> :
+  D.5873 = retVal;
+
+  <bb 6> :
+<L3>:
+  return D.5873;
+
+}
+
+
+TraceAtomicValueGet (atomic traceAtomic_t * pAddr)
+{
+  traceAtomic_t __atomic_load_tmp;
+  atomic traceAtomic_t * __atomic_load_ptr;
+  int value;
+  int D.5881;
+  traceAtomic_t D.5825;
+
+  <bb 2> :
+  __atomic_load_ptr = pAddr;
+  _1 = __atomic_load_4 (__atomic_load_ptr, 5);
+  _2 = (int) _1;
+  __atomic_load_tmp = _2;
+  D.5825 = __atomic_load_tmp;
+  __atomic_load_tmp = {CLOBBER};
+  value = D.5825;
+  D.5881 = value;
+
+  <bb 3> :
+<L0>:
+  return D.5881;
+
+}
+
+
+TraceAtomicValueSet (atomic traceAtomic_t * pAddr, int value)
+{
+  traceAtomic_t __atomic_store_tmp;
+  atomic traceAtomic_t * __atomic_store_ptr;
+
+  <bb 2> :
+  __atomic_store_ptr = pAddr;
+  __atomic_store_tmp = value;
+  __atomic_store_tmp.1_1 = __atomic_store_tmp;
+  __atomic_store_tmp.2_2 = (unsigned int) __atomic_store_tmp.1_1;
+  __atomic_store_4 (__atomic_store_ptr, __atomic_store_tmp.2_2, 5);
+  __atomic_store_tmp = {CLOBBER};
+  return;
+
+}
+
+

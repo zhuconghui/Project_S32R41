@@ -1,0 +1,95 @@
+// @file      S32R41_CM7_0_enable.cmm
+// @copyright 2021, NXP Semiconductors.
+
+// @brief   This script initialises the debugger and SRAM then ungates the Cortex M7_0 core.
+//          It can be used while the device is idling in serial boot mode, however the loaded
+//          application code must take care not to interfere since the bootROM is still active.
+
+PARAMETERS &param_comp
+PRIVATE &ppd &comp
+&ppd=OS.PPD()
+CD &ppd
+
+if (STRing.ComPare(STRing.LoWeR("&param_comp"),"ghs")==TRUE())
+(
+	&comp="ghs"
+)
+else
+(
+	&comp="gcc"
+)
+
+&elf_name = "RFE_processing_example_"+"&comp"+"_S32R41_M7_1_debug.elf"
+
+PRIVATE &M7_START_ADDR &MC_ME_BASE_ADDR &MC_RGM_BASE_ADDR
+&M7_START_ADDR=0x34300000
+&MC_ME_BASE_ADDR=0x400D0000
+&MC_RGM_BASE_ADDR=0x400CC000
+
+&exec_name="../../RFE_processing_example_M7_1/bin/"+"&elf_name"
+
+//=========================================================================
+// Debug Session Configuration
+//=========================================================================
+IF INTERCOM.PING(M7-1)
+(
+	InterCom M7-1 QUIT
+	Wait 1.s 
+)
+TargetSystem.NewInstance M7-1 /ARCHitecture ARM /TIMEOUT Infinite
+InterCom M7-1 TITLE "M7-1 RFE FW"
+
+;InterCom M7-1 Data.Load.Elf "&exec_name"
+;InterCom M7-1 Go
+
+// Set CPU to CM7_1 and initialise debugger
+InterCom M7-1 SYStem.CONFIG DEBUGPORTTYPE JTAG
+InterCom M7-1 SYStem.Down
+InterCom M7-1 SYStem.CPU S32R41-M7-1
+
+InterCom M7-1 SYStem.JtagClock 40MHz
+InterCom M7-1 SYStem.Option DUALPORT ON
+InterCom M7-1 SYStem.memaccess DAP
+InterCom M7-1 SYStem.Option ResBreak off
+
+InterCom M7-1 SYStem.Option TRST off
+InterCom M7-1 ETM.off
+InterCom M7-1 ITM.off
+
+InterCom M7-1 // Use prepare mode to write peripheral regs since the core is not active yet
+InterCom M7-1 SYStem.mode prepare
+InterCom M7-1 WAIT 0.1s
+
+//=========================================================================
+// Device Initialisation
+//=========================================================================
+// Writing infinite loop program to memory for CM7_1 to execute when started
+InterCom M7-1 D.S EAXI:&M7_START_ADDR %LE %Long 0
+InterCom M7-1 D.S EAXI:&M7_START_ADDR+0x4 %LE %Long &M7_START_ADDR+0x25
+InterCom M7-1 D.S EAXI:&M7_START_ADDR+0x24 %LE %Long 0xFFFEF7FF
+
+// Set start address, enable clock and release reset of CM7_1
+InterCom M7-1 D.S EAXI:&MC_ME_BASE_ADDR+0x16C %LE %Long &M7_START_ADDR          // (MC_ME_PRTN0_CORE1_ADDR)
+InterCom M7-1 D.S EAXI:&MC_ME_BASE_ADDR+0x160 %LE %Long 0x1                 // (MC_ME_PRTN0_CORE1_PCONF -> CCE)
+InterCom M7-1 D.S EAXI:&MC_ME_BASE_ADDR+0x164 %LE %Long 0x1                 // (MC_ME_PRTN0_CORE1_PUPD )
+InterCom M7-1 D.S EAXI:&MC_ME_BASE_ADDR %LE %Long 0x5AF0              // (MC_ME_CTL_KEY)
+InterCom M7-1 D.S EAXI:&MC_ME_BASE_ADDR %LE %Long 0xA50F              // (MC_ME_CTL_KEY)
+InterCom M7-1 D.S EAXI:&MC_RGM_BASE_ADDR+0x40 %LE %Long 0xFFFFFFFC            // (RGM_PRST0_0)
+InterCom M7-1 WAIT (Data.Long(EAXI:&MC_RGM_BASE_ADDR+0x140)&0x00000002)==0x00000000 // RGM.PSTAT0_0[CM7_Cluster_1_STAT] == 0
+
+//=========================================================================
+// CM7_1 Attach Debug
+//=========================================================================
+
+InterCom M7-1 // Attach debug 
+InterCom M7-1 SYStem.Attach
+
+InterCom M7-1 Mode.HLL
+InterCom M7-1 break.CONFIG.METHOD Program Onchip
+InterCom M7-1 Data.List
+
+InterCom M7-1 Break
+
+InterCom M7-1 Data.Load.Elf &exec_name
+
+ENDDO

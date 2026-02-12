@@ -1,0 +1,366 @@
+
+/*
+ * Copyright 2021-2023 NXP
+ * NXP Confidential and Proprietary. This software is owned or controlled by NXP and
+ * may only be used strictly in accordance with the applicable license terms.  By
+ * expressly accepting such terms or by downloading, installing, activating and/or
+ * otherwise using the software, you are agreeing that you have read, and that you
+ * agree to comply with and are bound by, such license terms.  If you do not agree to
+ * be bound by the applicable license terms, then you may not retain, install, activate or
+ * otherwise use the software.
+ */
+
+
+
+
+
+
+
+
+
+#ifndef SPT_TYPES_H
+#define SPT_TYPES_H
+
+#ifdef __cplusplus
+extern "C"{
+#endif
+
+/*==================================================================================================
+*                                          INCLUDE FILES
+* 1) system and project includes
+* 2) needed interfaces from external units
+* 3) internal and external interfaces from this unit
+==================================================================================================*/
+#include "Spt_Cfg.h"
+#include "rsdk_version.h"
+
+/*==================================================================================================
+*                                 SOURCE FILE VERSION INFORMATION
+==================================================================================================*/
+
+#define SPT_TYPES_VENDOR_ID                          43
+#define SPT_TYPES_AR_RELEASE_MAJOR_VERSION           RSDK_AR_MAJOR
+#define SPT_TYPES_AR_RELEASE_MINOR_VERSION           RSDK_AR_MINOR
+#define SPT_TYPES_AR_RELEASE_REVISION_VERSION        RSDK_AR_REV
+#define SPT_TYPES_SW_MAJOR_VERSION                   RSDK_SW_MAJOR
+#define SPT_TYPES_SW_MINOR_VERSION                   RSDK_SW_MINOR
+#define SPT_TYPES_SW_PATCH_VERSION                   RSDK_SW_PATCH
+
+
+/*==================================================================================================
+*                                       FILE VERSION CHECKS
+==================================================================================================*/
+
+
+/* Check Spt_Cfg.h versions                                                                                */
+#if (SPT_TYPES_VENDOR_ID != SPT_CFG_VENDOR_ID)
+    #error "Spt.h and Spt_Cfg.h have different vendor ids"
+#endif
+
+/* Check if Spt_Types header file and Spt_Cfg configuration header file are of the same Autosar version         */
+#if ((SPT_TYPES_AR_RELEASE_MAJOR_VERSION   != SPT_CFG_AR_RELEASE_MAJOR_VERSION) ||   \
+    (SPT_TYPES_AR_RELEASE_MINOR_VERSION    != SPT_CFG_AR_RELEASE_MINOR_VERSION) ||   \
+    (SPT_TYPES_AR_RELEASE_REVISION_VERSION != SPT_CFG_AR_RELEASE_REVISION_VERSION)   \
+    )
+    #error "AutoSar Version Numbers of Spt_Types.h and Spt_Cfg.h are different"
+#endif
+
+/* Check if Spt_Types header file and Spt_Cfg configuration header file are of the same software version        */
+#if ((SPT_TYPES_SW_MAJOR_VERSION   != SPT_CFG_SW_MAJOR_VERSION) ||     \
+    (SPT_TYPES_SW_MINOR_VERSION    != SPT_CFG_SW_MINOR_VERSION) ||     \
+    (SPT_TYPES_SW_PATCH_VERSION    != SPT_CFG_SW_PATCH_VERSION)        \
+    )
+    #error "Software Version Numbers of Spt_Types.h and Spt_Cfg.h are different"
+#endif
+
+
+
+/*==================================================================================================
+*                                            CONSTANTS
+==================================================================================================*/
+
+/** @addtogroup spt_driver_api_const
+*  @{
+*/
+
+
+
+/**
+* @anchor   Anchor_RSDK_SPT_CUBE_BASE_ADDR
+* @brief    Base address used for referencing radar cube related SPT kernel address parameters
+* @details  Used by the SPT kernels as the base address for computing internally the memory offsets for PDMA transfer
+*           of the "radar cube" data buffer.
+*
+* @note     Should be defined in the linker file of the application.
+*/
+RSDK_DECL_LNK_SYM(RSDK_SPT_CUBE_BASE_ADDR);
+
+/**
+* @anchor   Anchor_RSDK_SPT_OTHER_BASE_ADDR
+* @brief    Base address used for referencing non-radar_cube related SPT kernel address parameters
+* @details  Used by the SPT kernels as the base address for computing internally the memory offsets for PDMA transfer
+*           of all input and output buffers, other than the "radar cube".
+*
+* @note     Should be defined in the linker file of the application.
+*/
+RSDK_DECL_LNK_SYM(RSDK_SPT_OTHER_BASE_ADDR);
+
+
+
+
+
+
+
+
+
+
+
+
+
+/*==================================================================================================
+*                                       DEFINES AND MACROS
+==================================================================================================*/
+
+/**
+* @brief    Maximum number of input parameters to an SPT kernel.
+* @details  It is used to define the size of Spt_DriverContextType::kernelParList array.
+* */
+#define SPT_MAX_N_PAR               (10u)
+
+/**
+* @brief    Kernel code watermarking pattern
+* @details  It must be used by all SPT kernels which are launched by RSDK SPT Driver, by placing it
+*           in a mandatory first instruction: "set #SPT_KERNEL_WATERMARK, WR_0". This helps
+*           protect against passing wrong code memory pointers to the SPT command sequencer.
+* */
+#define SPT_KERNEL_WATERMARK        (0x00005253444BULL)
+
+/**
+* @brief    SPT command maximum result size.
+* @details  It is used to define the size of the Spt_DriverCmdResType structure.
+* */
+#define SPT_CMD_RESULT_SIZE         (8u)
+
+/**
+* @brief    Alignment constraint for start address of the SPT code.
+* */
+#define SPT_CODE_ADDR_ALIGN_BYTES   (16u)
+
+/**
+* @brief    Alignment constraint for start address of the SPT data buffers.
+* */
+#define SPT_DATA_ADDR_ALIGN_BYTES   (8u)
+/** @}*/
+/*==================================================================================================
+*                                              ENUMS
+==================================================================================================*/
+
+/** @addtogroup spt_driver_api_data_type
+* @{
+* 
+* @anchor spt_persist_data_section 
+* @par Persistent data ELF section
+* Internals of SPT driver make use of persistent data. All persistent data of SPT driver is grouped under 
+* .RSDK_SPT_DRV_MEM_PER section. It is application-level linker file responsibility to place this section 
+* in a proper memory location, with read/write priviledges.
+* 
+*/
+
+/**
+* @brief        Specifies the type of parameter to be passed to the SPT kernel.
+* @details      Enum fields are used to initialize Spt_DriverContextType::kernelParList.
+*
+* User-space address arguments must be pre-processed by the SPT Driver before passing them to the SPT hardware,
+* hence the need for differentiation between 'address' and 'data' argument types.
+*
+* \attention The SPT hardware instructions cannot handle full-width 32bit addresses, instead they work
+* with an implicit memory base address (which is #RSDK_SPT_CUBE_BASE_ADDR or #RSDK_SPT_OTHER_BASE_ADDR)
+* and an address offset on maximum 23 bits.
+*
+* See the @ref spt_call_conv for details.
+*/
+typedef enum
+{
+    SPT_PARAM_TYPE_NOTINIT = 0U, /**< Parameter is not initialized  */
+    SPT_PARAM_TYPE_ADDR,         /**< Parameter represents a memory address.
+                                          NOTE that all system memory data addresses which are passed to the SPT
+                                          must be aligned to an #SPT_CODE_ADDR_ALIGN_BYTES boundary*/
+    SPT_PARAM_TYPE_VALUE,        /**< Parameter represents a scalar value. The SPT driver splits this 32-bit value,
+                                          then copies the 8 most significant bits into the imaginary part of a Work
+                                          Register and the remaining 24 bits into the real part of the same WR.  */
+    SPT_PARAM_TYPE_LAST          /**< Signals the end of the SPT parameter list. The last member in
+                                          Spt_DriverContextType::kernelParList must have this type. */
+} Spt_ParamType;
+
+/**
+* @brief        Datatype coding the operating modes for the SPT Driver.
+* @details      Spt_Run() can execute either in blocking (polling) or non-blocking (interrupt) modes.
+*/
+typedef enum
+{
+    SPT_OP_MODE_BLOCK = 0U, /**< Blocking call (polling on the SPT_CS_STATUS0[PS_STOP] bit) */
+    SPT_OP_MODE_NONBLOCK    /**< Non-blocking call (triggering an interrupt on SPT_CS_STATUS0[PS_STOP] bit) */
+} Spt_DriverOpModeType;
+
+/**
+* @brief        Defines the command codes for Spt_Command().
+*
+*/
+typedef enum
+{
+    SPT_CMD_NONE = 0U,          /**< dummy value to avoid empty enum declaration */
+    SPT_CMD_MEM_ERR_INJECT_EN,  /**< Enable injection of parity errors in the SPT OPRAM and TRAM.
+                                     Parity bits will be altered on subsequent write accesses to memory.
+                                     Then, parity errors will be generated on memory read-back */
+    SPT_CMD_MEM_ERR_INJECT_DIS, /**< Disable injection of parity errors in the SPT OPRAM and TRAM. */
+    SPT_CMD_TRIGGER_SW_EVENT,   /**< Trigger and event on the SPT software event line (SW_EVTREG register),
+                                     to be used by the SPT WAIT instruction */
+#if(SPT_DSP_ENABLE == STD_ON)
+    SPT_CMD_GEN_DSP_CMD_CRC,    /**< Compute an 8-bit CRC of the DSP command, accounting for length and endiannes
+                                     to match with the verification on BBE32 side. The command parameter must be a
+                                     pointer of type Spt_DspCmdType. The result is passed in Spt_DspCmdType::crc field.
+                                     See the \ref dsp_call_conv "DSP Calling Convention" */
+    SPT_CMD_BBE32_REBOOT
+#endif
+} Spt_DriverCommandIdType;
+
+/*==================================================================================================
+*                                  STRUCTURES AND OTHER TYPEDEFS
+==================================================================================================*/
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+#if(SPT_DSP_ENABLE == STD_ON)
+/**
+* @brief        This structure packs the information needed to call a function on the BBE32 .
+*/
+typedef struct {
+    uint8   id;     /**< Command ID returned from RSDK_DSP_GET_FUNC_ID(function_name)*/
+    uint32  arg;    /**< Command argument. Can be either an immediate value or a 32-bit pointer to a command-specific
+                         data structure. */
+    uint8   crc;    /**< CRC checksum of the id and arg fields, used to verify command integrity on BBE32 side*/
+} Spt_DspCmdType;
+#endif
+
+/**
+* @brief        Datatype describing the parameters to be passed to the SPT kernel. See @ref spt_call_conv for details.
+* @details      Used to initialize Spt_DriverContextType::kernelParList with information for the SPT kernels.
+*/
+typedef struct
+{
+    Spt_ParamType   paramType;  /**< Indicates the intended usage of paramValue as an immediate value or a memory address*/
+    uintptr_t       paramValue; /**< Can contain either an immediate integer value or a memory address*/
+} Spt_DrvParamType;
+
+/**
+* @brief        Contains runtime parameters for the SPT Driver.
+* @details      This structure is only used by Spt_Run(). Must be allocated and initialized by the caller.
+*               Its content is not modified by the SPT Driver.
+*               Some fields are used for implementation of the SPT calling convention (see @ref spt_call_conv for details).
+*               The intended direction of data flow is specified in the description of each field.
+*/
+typedef struct
+{
+    Spt_DriverOpModeType    opMode;   /**< <b>[in]</b> Operating mode for Spt_Run() .*/
+
+
+
+
+
+
+    uintptr_t               kernelCodeAddr; /**< <b>[in]</b> Starting address of the SPT executable code, must be aligned
+                                                             to an #SPT_CODE_ADDR_ALIGN_BYTES boundary*/
+    Spt_DrvParamType        kernelParList[SPT_MAX_N_PAR]; /**< <b>[in]</b> List of parameters to be passed to the SPT kernel.*/
+    volatile sint32 *       kernelRetPar; /**< <b>[out]</b> Return parameter from the SPT kernel. The SPT driver creates this
+                                         32-bit value by concatenating8 bits from WR0_IM with 24 bits from WR0_RE.
+                                         This pointer must be initialized with a global address which is visible in the
+                                         contexts of Spt_Run() and SPT interrupts. If no return parameter is expected
+                                         from the SPT kernel, then it can be initialized to NULL.*/
+    uint8     checkKernelWatermark; /**< Check if the watermark instruction exists in the SPT kernel at kernelCodeAddr
+                                         address, to guard against passing invalid pointers to the SPT.
+                                         Valid values: 0=disable, 1=enable.
+                                         If this option is enabled in the SPT Driver, then all SPT kernels must start
+                                         with the predefined instruction "set #SPT_KERNEL_WATERMARK, WR_0",
+                                         otherwise the driver will not launch them. */
+} Spt_DriverContextType;
+
+/**
+* @brief          Init parameters which are specific to the hardware platform.
+*/
+typedef struct
+{
+#if(SPT_DSP_ENABLE == STD_ON)
+    uint8                   dspEn;      /**< Enable the BBE32 DSP to boot-up and start running the "DSP Dispatcher":
+                                             0=disable, "non-0"=enable. */
+
+
+
+
+
+
+
+
+
+#endif  /* #if(SPT_DSP_ENABLE == STD_ON) */
+} Spt_DriverInitPlatSpecificType;
+
+/**
+* @brief          Contains initialization parameters for the SPT Driver.
+* @details        This structure is only used by Spt_Setup(). Must be allocated and initialized by the caller.
+*                 Its content is not modified by the SPT Driver.
+*/
+typedef struct
+{
+    Spt_DriverInitPlatSpecificType hwPlatSpec; /**< Init parameters which are specific to a particular hardware
+                                                    platform. */
+} Spt_DriverInitType;
+
+/**
+* @brief        Typedef for returning information from Spt_Command(); to be used as argument to the function
+* @details      This structure is only used by Spt_Command(). Must be allocated by the caller.
+*               Its content is modified by the SPT Driver.
+*/
+typedef struct
+{
+    uint8 bytes[SPT_CMD_RESULT_SIZE];
+} Spt_DriverCmdResType;
+
+typedef uintptr_t Spt_DriverCommandParamType;
+
+/**
+* @brief        Structure containing the ID of the command to be served and additional parameters
+*               that may be needed for Spt_Command().
+*/
+typedef struct
+{
+    Spt_DriverCommandIdType     cmdId;    /**< Command ID */
+    Spt_DriverCommandParamType  cmdParam; /**< Additional command parameter*/
+} Spt_DriverCommandType;
+
+/*==================================================================================================
+*                                  GLOBAL VARIABLE DECLARATIONS
+==================================================================================================*/
+
+/*==================================================================================================
+*                                       FUNCTION PROTOTYPES
+==================================================================================================*/
+
+#ifdef __cplusplus
+}
+#endif
+
+/** @} */
+
+#endif /* SPT_TYPES_H */

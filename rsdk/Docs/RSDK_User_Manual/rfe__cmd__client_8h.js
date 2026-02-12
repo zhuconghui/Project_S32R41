@@ -1,0 +1,35 @@
+var rfe__cmd__client_8h =
+[
+    [ "RFE_CMD_CLIENT_FUSA_FAULT_BYTE_COUNT", "group__rsdk__rfe__const.html#gaed38531e941c0ef21a489ea226ad57a5", null ],
+    [ "RFE_CMD_CLIENT_UPDATE_SECTION_DYNAMIC_TABLE", "group__rsdk__rfe__const.html#ga8306631736d36ea32ebe065e3a0a481c", null ],
+    [ "rfeCmdClient_sharedParameter_t", "group__rsdk__rfe__interface.html#ga0dcc21aced619e26cb600c49ef26a586", [
+      [ "rfeCmdClient_sharedParameter_state_e", "group__rsdk__rfe__interface.html#gga0dcc21aced619e26cb600c49ef26a586a47d4a273cbb51a8d88f36bd3947a26e8", null ],
+      [ "rfeCmdClient_sharedParameter_radarCycleCount_e", "group__rsdk__rfe__interface.html#gga0dcc21aced619e26cb600c49ef26a586a69461c216d862a298c7747d3d0f52b3d", null ],
+      [ "rfeCmdClient_sharedParameter_chirpSequenceCount_e", "group__rsdk__rfe__interface.html#gga0dcc21aced619e26cb600c49ef26a586a209db03cd58014383e7286f227d358f1", null ],
+      [ "rfeCmdClient_sharedParameter_fw_ready_e", "group__rsdk__rfe__interface.html#gga0dcc21aced619e26cb600c49ef26a586a4186f02341122ace3c87ec451fe322ef", null ]
+    ] ],
+    [ "rfeCmdClient_call", "group__rsdk__rfe__interface.html#ga037e3e9380bc872a416b39b4e26b2628", null ],
+    [ "rfeCmdClient_checkNotBusy", "group__rsdk__rfe__interface.html#gaa57cb74ec4a9cd88bed226a75372cfd2", null ],
+    [ "rfeCmdClient_cmdParamAddBool", "group__rsdk__rfe__interface.html#gaa4ecb7950a1a23c056945e6edea3ef4a", null ],
+    [ "rfeCmdClient_cmdParamAddBuffer", "group__rsdk__rfe__interface.html#gab59308ea8003c2608074cff975959883", null ],
+    [ "rfeCmdClient_cmdParamAddInt16", "group__rsdk__rfe__interface.html#gaf00bdbb7ea624afc4b570fc75b948805", null ],
+    [ "rfeCmdClient_cmdParamAddInt32", "group__rsdk__rfe__interface.html#ga7182f1862b83e3f29626de9bc7a2be4b", null ],
+    [ "rfeCmdClient_cmdParamAddInt8", "group__rsdk__rfe__interface.html#ga2b67363d150c25705f3bd3efea54f175", null ],
+    [ "rfeCmdClient_cmdParamAddPointer", "group__rsdk__rfe__interface.html#ga19f8dd6d037ee5841a448329b5d4156a", null ],
+    [ "rfeCmdClient_cmdParamAddUint16", "group__rsdk__rfe__interface.html#ga0325935b7fd791445daa1fa71dd55c90", null ],
+    [ "rfeCmdClient_cmdParamAddUint32", "group__rsdk__rfe__interface.html#ga9cc89733db52c3ba0c256da8e6ab1dfe", null ],
+    [ "rfeCmdClient_cmdParamAddUint8", "group__rsdk__rfe__interface.html#ga7e1948c0809f65d84a7054b5684227d5", null ],
+    [ "rfeCmdClient_cmdParamStart", "group__rsdk__rfe__interface.html#gae0aa6aa32f865010f0a364d12adeb275", null ],
+    [ "rfeCmdClient_cmdRespGetBool", "group__rsdk__rfe__interface.html#gaac5347d517b4f69c80d6acfb446a44d3", null ],
+    [ "rfeCmdClient_cmdRespGetBuf", "group__rsdk__rfe__interface.html#gad48bbab1ba2d58aef205268d85a6689e", null ],
+    [ "rfeCmdClient_cmdRespGetInt16", "group__rsdk__rfe__interface.html#ga127e02f36ea1ac3f636089c6682cb803", null ],
+    [ "rfeCmdClient_cmdRespGetInt32", "group__rsdk__rfe__interface.html#gac60697093d06300a1ebdc96efef82739", null ],
+    [ "rfeCmdClient_cmdRespGetInt8", "group__rsdk__rfe__interface.html#gaf4a63054ec812c7ab55ef44e0c460b52", null ],
+    [ "rfeCmdClient_cmdRespGetUint16", "group__rsdk__rfe__interface.html#ga906165a7e58257890df3bdbdd9eaa2c5", null ],
+    [ "rfeCmdClient_cmdRespGetUint32", "group__rsdk__rfe__interface.html#gac52f52b05753515f11cd3a7d1b2c9b31", null ],
+    [ "rfeCmdClient_cmdRespGetUint8", "group__rsdk__rfe__interface.html#gab7eae3a52a0167e7f61fe90fefd84d19", null ],
+    [ "rfeCmdClient_configureInterrupt", "group__rsdk__rfe__interface.html#ga00e7e42964f45b2b619e742550c85b89", null ],
+    [ "rfeCmdClient_getCurrentRespLen", "group__rsdk__rfe__interface.html#ga18f261b1ac5062de96d40c97a655a32a", null ],
+    [ "rfeCmdClient_init", "group__rsdk__rfe__interface.html#gae9541cf5391e8910a6a08aaec9f5e7b6", null ],
+    [ "rfeCmdClient_sharedDataRead", "group__rsdk__rfe__interface.html#ga12a115862e6719e0a804323a66c2fae6", null ]
+];

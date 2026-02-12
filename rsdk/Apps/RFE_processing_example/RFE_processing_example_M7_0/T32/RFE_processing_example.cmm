@@ -1,0 +1,90 @@
+
+PARAMETERS &param_comp
+PRIVATE &dbg_tools_path &exec_name_c0 &bbe32Elf &comp
+
+if (STRing.ComPare(STRing.LoWeR("&param_comp"),"ghs")==TRUE())
+(
+	&comp="ghs"
+)
+else
+(
+	&comp="gcc"
+)
+
+&dbg_tools_path="../../../../Tools/Debug_tools/T32"
+&exec_name_c0="../bin/RFE_processing_example_"+"&comp"+"_S32R41_M7_0_debug.elf"
+&bbe32Elf="../../../DSP_Dispatcher_example/bin/DSP_Dispatcher_Example_S32R41_debug.elf"
+
+; create the necessary output folders, if necessary
+if os.dir("../data/out")
+(
+)
+else
+(
+    win.mkdir ../data/out
+)
+if os.dir("../data/out/S32R41")
+(
+)
+else
+(
+    win.mkdir ../data/out/S32R41
+)
+
+SYStem.Config.debugporttype JTAG
+SYStem.CPU S32R41-M7-0
+
+SYStem.JtagClock 40MHz
+SYStem.Option DUALPORT ON
+SYStem.MemAccess DAP
+;In case application is running on a board with Tracer connected - disable it
+trace.disable
+ETM.off
+system.resettarget
+
+SYStem.Option ResBreak off
+SYStem.Option TRST off
+
+ON ERROR Continue
+
+Sys.attach
+break
+
+do "&dbg_tools_path/window_layout.cmm"
+do "&dbg_tools_path/SAF_R41_SRAM_init.cmm" "s32r41"
+do "&dbg_tools_path/RSDK_BBE32_launch.cmm" "s32r41" "&bbe32Elf" "&dbg_tools_path"
+ETM.off
+
+do "S32R41_CM7_1_enable.cmm" "&comp"
+
+TITLE "M7-0 SW RFE API"
+MODE.HLL
+Data.Load.Elf "&exec_name_c0"
+
+Break.Delete
+
+;enable breakpoint for semihosting
+Break.Set dbg_point_label_platform_setup_done
+
+Go 
+
+WAIT !STATE.RUN()
+
+;check if stopped in init done or user-defined breakpoint
+if STRing.count(sYmbol.FUNCTION(PP()),"StartM7_1Debug")>0
+(
+	
+	PRINT "Stopped at StartM7_1Debug"
+	WAIT !STATE.RUN()
+
+	InterCom M7-1 Go
+	
+)
+
+;break.set Symbol.begin(ExampleRfeConfigure)
+do "&dbg_tools_path/S32R_run_dbg_semihosting.cmm" "&exec_name_c0"   ;run the test script with semihosting support
+
+
+ENDDO
+
+

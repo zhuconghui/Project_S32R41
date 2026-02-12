@@ -1,0 +1,117 @@
+<?xml version='1.0'?>
+<datamodel version="3.0"
+           xmlns="http://www.tresos.de/_projects/DataModel2/08/root.xsd"
+           xmlns:a="http://www.tresos.de/_projects/DataModel2/08/attribute.xsd"
+           xmlns:v="http://www.tresos.de/_projects/DataModel2/06/schema.xsd"
+           xmlns:d="http://www.tresos.de/_projects/DataModel2/06/data.xsd">
+<!--
+*   @file    Dsphd.xdm
+*   @version 0.8.10
+*
+*   @brief   AUTOSAR DSP Host Driver - Tresos Studio plugin schema file
+*   @details This file contains the schema configuration for RSDK DSP Host Driver Tresos Studio plugin.
+-->
+<!--
+====================================================================================================
+*   Project              : RTD AUTOSAR 4.7
+*   Platform             : CORTEXM
+*   Peripheral           : DspHD
+*   Dependencies         : none
+*
+*   Autosar Version      : 4.7.0
+*   Autosar Revision     : ASR_REL_4_7_REV_0000
+*   Autosar Conf.Variant :
+*   SW Version           : 0.8.10
+*   Build Version        : SAF85_RTD_2_0_0_CD01_D2306_ASR_REL_4_7_REV_0000_20230623
+
+*   Copyright 2023 NXP Semiconductors
+====================================================================================================
+-->
+  <d:ctr type="AUTOSAR" factory="autosar"
+         xmlns:ad="http://www.tresos.de/_projects/DataModel2/08/admindata.xsd"
+         xmlns:icc="http://www.tresos.de/_projects/DataModel2/08/implconfigclass.xsd"
+         xmlns:mt="http://www.tresos.de/_projects/DataModel2/11/multitest.xsd" >
+    <d:lst type="TOP-LEVEL-PACKAGES">
+      <d:ctr name="TS_T40D47M8I10R0" type="AR-PACKAGE">
+        <a:a name="UUID" value="ECUC:127fad27-48d8-4fcd-8d70-c73de74b9be2"/>
+        <d:lst type="ELEMENTS">
+          <d:chc name="Dsphd" type="AR-ELEMENT" value="MODULE-DEF">
+            <v:ctr type="MODULE-DEF">
+              <a:a name="RELEASE" value="asc:4.7"/>
+              <a:a name="ADMIN-DATA" type="ADMIN-DATA">
+                <ad:ADMIN-DATA>
+                  <ad:DOC-REVISIONS>
+                    <ad:DOC-REVISION>
+                      <ad:REVISION-LABEL>4.6.0</ad:REVISION-LABEL>
+                      <ad:ISSUED-BY>AUTOSAR</ad:ISSUED-BY>
+                      <ad:DATE>2014-10-31</ad:DATE>
+                    </ad:DOC-REVISION>
+                  </ad:DOC-REVISIONS>
+                </ad:ADMIN-DATA>
+              </a:a>
+
+              <a:a name="UUID" value="ECUC:c2e852b0-b79b-63fc-fc77-745e045720ed"/>
+
+              <v:ctr name="DsphdGeneral" type="IDENTIFIABLE">
+                <a:a name="DESC">
+                  <a:v><![CDATA[EN:<html><p>Configuration of the DSP Host Driver module.</p></html>]]></a:v>
+                </a:a>
+                <a:a name="UUID" value="ECUC:f1467887-ada0-4bf5-a37f-e9b1d6196f8a"/>
+
+                <v:var name="DsphdDevErrorDetect" type="BOOLEAN">
+                  <a:a name="DESC"
+                      value="Pre-processor switch to enable/disable development error detection for DSP Host Driver API"/>
+                  <a:a name="LABEL" value="DsphdDevErrorDetect"/>
+                  <a:a name="ORIGIN" value="NXP"/>
+                  <a:a name="POSTBUILDVARIANTVALUE" value="false"/>
+				  <a:a name="UUID" value="ECUC:f558b91f-0241-4062-a016-3e682acbe00b"/>
+                  <a:da name="DEFAULT" value="true"/>
+                  <a:da name="READONLY" value="false"/>
+                  <a:da name="TOOLTIP"
+                        value="Pre-processor switch to enable/disable development error detection for DSP Host Driver API"/>
+                </v:var>
+
+               <v:var name="DsphdDevHaltOnError" type="BOOLEAN">
+                  <a:a name="DESC"
+                      value="Pre-processor switch to halt the DSP Host Driver in an infinite loop upon error detection."/>
+                  <a:a name="LABEL" value="DsphdDevHaltOnError"/>
+                  <a:a name="ORIGIN" value="NXP"/>
+                  <a:a name="POSTBUILDVARIANTVALUE" value="false"/>
+				  <a:a name="UUID" value="ECUC:3a4ab3df-1de8-48c4-82c3-3cde9ffedb52"/>
+                  <a:da name="DEFAULT" value="false"/>
+                  <a:a name="INVALID" type="XPath">
+                    <a:tst expr="not(../DsphdDevErrorDetect = 'true') and (. = 'true')" true="DsphdGeneral/DsphdDevErrorDetect must be enabled."/>
+                  </a:a>
+                  <a:a name="EDITABLE" type="XPath">
+                    <a:tst expr="../DsphdDevErrorDetect = 'true'"/>
+                  </a:a>
+                  <a:da name="READONLY" value="false"/>
+                  <a:da name="TOOLTIP"
+                        value="Pre-processor switch to halt the DSP Host Driver in an infinite loop upon error detection."/>
+                </v:var>
+
+                 <v:var name="DsphdVersionInfoApi" type="BOOLEAN">
+                  <a:a name="DESC"
+                      value="Pre-processor switch to enable/disable version info report for DSP Host Driver API"/>
+                  <a:a name="LABEL" value="DsphdVersionInfoApi"/>
+                  <a:a name="ORIGIN" value="NXP"/>
+                  <a:a name="POSTBUILDVARIANTVALUE" value="false"/>
+				  <a:a name="UUID" value="ECUC:c44910ef-daad-46ae-87a3-65e2d573a94e"/>
+                  <a:da name="DEFAULT" value="true"/>
+                  <a:da name="READONLY" value="false"/>
+                  <a:da name="TOOLTIP"
+                        value="Pre-processor switch to enable/disable version info report for DSP Host Driver API"/>
+                </v:var>
+              </v:ctr>
+
+              <d:ref type="REFINED_MODULE_DEF" value="ASPath:/AUTOSAR/EcucDefs/Dsphd"/>
+            </v:ctr>
+          </d:chc>
+
+        </d:lst>
+      </d:ctr>
+    </d:lst>
+  </d:ctr>
+
+</datamodel>
+

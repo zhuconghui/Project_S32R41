@@ -1,0 +1,281 @@
+Symbol table:
+
+__atomic_store_4/24 (__atomic_store_4) @06180700
+  Type: function
+  Visibility: external public
+  References: 
+  Referring: 
+  Availability: not_available
+  Function flags:
+  Called by: TraceAtomicValueSet/14 
+  Calls: 
+memset/23 (memset) @06180540
+  Type: function
+  Visibility: external public
+  References: 
+  Referring: 
+  Availability: not_available
+  Function flags:
+  Called by: InitRecord/19 
+  Calls: 
+IndexReadIncrement/22 (IndexReadIncrement) @06180380
+  Type: function
+  Visibility: external public
+  References: 
+  Referring: 
+  Availability: not_available
+  Function flags:
+  Called by: NextRecord/18 
+  Calls: 
+IndexWrite/21 (IndexWrite) @061801c0
+  Type: function
+  Visibility: external public
+  References: 
+  Referring: 
+  Availability: not_available
+  Function flags:
+  Called by: InitRecord/19 RotateBuff/17 
+  Calls: 
+IndexRead/20 (IndexRead) @061800e0
+  Type: function
+  Visibility: external public
+  References: 
+  Referring: 
+  Availability: not_available
+  Function flags:
+  Called by: RotateBuff/17 
+  Calls: 
+InitRecord/19 (InitRecord) @06176ee0
+  Type: function definition analyzed
+  Visibility: force_output externally_visible no_reorder public
+  References: gsFirst/16 (write)
+  Referring: 
+  Availability: available
+  Function flags: body
+  Called by: 
+  Calls: TraceAtomicValueSet/14 IndexWrite/21 memset/23 
+NextRecord/18 (NextRecord) @06176c40
+  Type: function definition analyzed
+  Visibility: force_output externally_visible no_reorder public
+  References: gsFirst/16 (read)gsFirst/16 (write)
+  Referring: 
+  Availability: available
+  Function flags: body
+  Called by: 
+  Calls: IndexReadIncrement/22 
+RotateBuff/17 (RotateBuff) @061769a0
+  Type: function definition analyzed
+  Visibility: force_output externally_visible no_reorder public
+  References: 
+  Referring: 
+  Availability: available
+  Function flags: body
+  Called by: 
+  Calls: IndexWrite/21 IndexRead/20 
+gsFirst/16 (gsFirst) @061791f8
+  Type: variable definition analyzed
+  Visibility: force_output no_reorder prevailing_def_ironly
+  References: 
+  Referring: NextRecord/18 (write)NextRecord/18 (read)InitRecord/19 (write)
+  Availability: available
+  Varpool flags:
+TraceAtomicValueSet/14 (TraceAtomicValueSet) @06174000
+  Type: function definition analyzed
+  Visibility: no_reorder prevailing_def_ironly
+  References: 
+  Referring: 
+  Availability: local
+  Function flags: body local
+  Called by: InitRecord/19 
+  Calls: __atomic_store_4/24 
+InitRecord (struct traceRecord_t * pTraceRecord, char * pTraceBuffer, uint16_t buffSize, int traceEnable)
+{
+  unsigned int _1;
+  short unsigned int _2;
+  atomic traceAtomic_t * _3;
+  atomic traceAtomic_t * _4;
+
+  <bb 2> :
+  _1 = (unsigned int) buffSize_5(D);
+  memset (pTraceBuffer_7(D), 0, _1);
+  pTraceRecord_9(D)->pTraceBuffer = pTraceBuffer_7(D);
+  _2 = buffSize_5(D) / 12;
+  pTraceRecord_9(D)->traceBufferSize = _2;
+  pTraceRecord_9(D)->wrapFlag = 0;
+  _3 = &pTraceRecord_9(D)->traceBufferIndex;
+  IndexWrite (_3, 0);
+  _4 = &pTraceRecord_9(D)->enable;
+  TraceAtomicValueSet (_4, traceEnable_14(D));
+  gsFirst = 1;
+  return;
+
+}
+
+
+NextRecord (struct traceRecord_t * pTraceRecord)
+{
+  int index;
+  int D.6824;
+  atomic traceAtomic_t * _1;
+  short unsigned int _2;
+  int gsFirst.3_3;
+  int _11;
+
+  <bb 2> :
+  _1 = &pTraceRecord_5(D)->traceBufferIndex;
+  _2 = pTraceRecord_5(D)->traceBufferSize;
+  index_8 = IndexReadIncrement (_1, _2);
+  if (index_8 == 0)
+    goto <bb 3>; [INV]
+  else
+    goto <bb 5>; [INV]
+
+  <bb 3> :
+  gsFirst.3_3 = gsFirst;
+  if (gsFirst.3_3 == 1)
+    goto <bb 4>; [INV]
+  else
+    goto <bb 5>; [INV]
+
+  <bb 4> :
+  gsFirst = 0;
+  goto <bb 7>; [INV]
+
+  <bb 5> :
+  if (index_8 == 0)
+    goto <bb 6>; [INV]
+  else
+    goto <bb 7>; [INV]
+
+  <bb 6> :
+  pTraceRecord_5(D)->wrapFlag = 1;
+
+  <bb 7> :
+  _11 = index_8;
+
+  <bb 8> :
+<L6>:
+  return _11;
+
+}
+
+
+RotateBuff (struct traceRecord_t * pTraceRecord)
+{
+  int i;
+  struct logRecord_t tmp;
+  int shift;
+  unsigned char _1;
+  atomic traceAtomic_t * _2;
+  short unsigned int _3;
+  struct logRecord_t * _4;
+  struct logRecord_t * _5;
+  sizetype i.0_6;
+  sizetype _7;
+  sizetype _8;
+  struct logRecord_t * _9;
+  struct logRecord_t * _10;
+  unsigned int i.1_11;
+  unsigned int _12;
+  struct logRecord_t * _13;
+  short unsigned int _14;
+  int _15;
+  int _16;
+  struct logRecord_t * _17;
+  unsigned int i.2_18;
+  unsigned int _19;
+  struct logRecord_t * _20;
+  atomic traceAtomic_t * _21;
+  short unsigned int _22;
+  int _23;
+
+  <bb 2> :
+  _1 = pTraceRecord_30(D)->wrapFlag;
+  if (_1 != 0)
+    goto <bb 3>; [INV]
+  else
+    goto <bb 10>; [INV]
+
+  <bb 3> :
+  _2 = &pTraceRecord_30(D)->traceBufferIndex;
+  _3 = pTraceRecord_30(D)->traceBufferSize;
+  shift_32 = IndexRead (_2, _3);
+  goto <bb 8>; [INV]
+
+  <bb 4> :
+  _4 = pTraceRecord_30(D)->pTraceBuffer;
+  MEM[(char * {ref-all})&tmp] = MEM[(char * {ref-all})_4];
+  i_36 = 0;
+  goto <bb 6>; [INV]
+
+  <bb 5> :
+  _5 = pTraceRecord_30(D)->pTraceBuffer;
+  i.0_6 = (sizetype) i_25;
+  _7 = i.0_6 + 1;
+  _8 = _7 * 12;
+  _9 = _5 + _8;
+  _10 = pTraceRecord_30(D)->pTraceBuffer;
+  i.1_11 = (unsigned int) i_25;
+  _12 = i.1_11 * 12;
+  _13 = _10 + _12;
+  *_13 = *_9;
+  i_41 = i_25 + 1;
+
+  <bb 6> :
+  # i_25 = PHI <i_36(4), i_41(5)>
+  _14 = pTraceRecord_30(D)->traceBufferSize;
+  _15 = (int) _14;
+  _16 = _15 + -1;
+  if (i_25 < _16)
+    goto <bb 5>; [INV]
+  else
+    goto <bb 7>; [INV]
+
+  <bb 7> :
+  _17 = pTraceRecord_30(D)->pTraceBuffer;
+  i.2_18 = (unsigned int) i_25;
+  _19 = i.2_18 * 12;
+  _20 = _17 + _19;
+  MEM[(char * {ref-all})_20] = MEM[(char * {ref-all})&tmp];
+  shift_38 = shift_24 + -1;
+  tmp ={v} {CLOBBER};
+
+  <bb 8> :
+  # shift_24 = PHI <shift_32(3), shift_38(7)>
+  if (shift_24 > 0)
+    goto <bb 4>; [INV]
+  else
+    goto <bb 9>; [INV]
+
+  <bb 9> :
+  _21 = &pTraceRecord_30(D)->traceBufferIndex;
+  _22 = pTraceRecord_30(D)->traceBufferSize;
+  _23 = (int) _22;
+  IndexWrite (_21, _23);
+  pTraceRecord_30(D)->wrapFlag = 0;
+
+  <bb 10> :
+  return;
+
+}
+
+
+TraceAtomicValueSet (atomic traceAtomic_t * pAddr, int value)
+{
+  traceAtomic_t __atomic_store_tmp;
+  atomic traceAtomic_t * __atomic_store_ptr;
+  int __atomic_store_tmp.4_1;
+  unsigned int __atomic_store_tmp.5_2;
+
+  <bb 2> :
+  __atomic_store_ptr_4 = pAddr_3(D);
+  __atomic_store_tmp = value_6(D);
+  __atomic_store_tmp.4_1 = __atomic_store_tmp;
+  __atomic_store_tmp.5_2 = (unsigned int) __atomic_store_tmp.4_1;
+  __atomic_store_4 (__atomic_store_ptr_4, __atomic_store_tmp.5_2, 5);
+  __atomic_store_tmp ={v} {CLOBBER};
+  return;
+
+}
+
+

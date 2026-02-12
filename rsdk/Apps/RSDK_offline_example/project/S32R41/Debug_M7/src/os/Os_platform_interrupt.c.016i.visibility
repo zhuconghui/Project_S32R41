@@ -1,0 +1,330 @@
+
+Marking local functions:
+
+
+Marking externally visible functions: OSPlatformIntcShutdown OSPlatformIntcInit
+
+
+Marking externally visible variables: Os_ArmNvicNestingLevel_ Os_ArmSavedIRQCtx_
+
+
+Reclaiming functions:
+Reclaiming variables:
+Clearing address taken flags:
+Symbol table:
+
+OSArmDeactivateIsr/23 (OSArmDeactivateIsr) @060df460
+  Type: function
+  Visibility: external public
+  References: 
+  Referring: 
+  Availability: not_available
+  Function flags:
+  Called by: OSPlatformIntcShutdown/20 
+  Calls: 
+OsIsrCfg/22 (OsIsrCfg) @06086d38
+  Type: variable
+  Body removed by symtab_remove_unreachable_nodes
+  Visibility: external public
+  References: 
+  Referring: OSPlatformIntcInit/19 (read)OSPlatformIntcInit/19 (read)
+  Availability: not_available
+  Varpool flags: read-only
+OsIsr/21 (OsIsr) @06086cf0
+  Type: variable
+  Body removed by symtab_remove_unreachable_nodes
+  Visibility: external public
+  References: 
+  Referring: OSPlatformIntcInit/19 (read)OSPlatformIntcInit/19 (read)OSPlatformIntcInit/19 (read)
+  Availability: not_available
+  Varpool flags: read-only
+OSPlatformIntcShutdown/20 (OSPlatformIntcShutdown) @060d8e00
+  Type: function definition analyzed
+  Visibility: force_output externally_visible no_reorder public
+  References: Os_ArmNvicNestingLevel_/18 (read)Os_ArmSavedIRQCtx_/17 (read)Os_ArmSavedIRQCtx_/17 (read)
+  Referring: 
+  Availability: available
+  Function flags: body
+  Called by: 
+  Calls: OSArmDeactivateIsr/23 
+OSPlatformIntcInit/19 (OSPlatformIntcInit) @060d8620
+  Type: function definition analyzed
+  Visibility: force_output externally_visible no_reorder public
+  References: Os_ArmNvicNestingLevel_/18 (write)Os_ArmSavedIRQCtx_/17 (write)Os_ArmSavedIRQCtx_/17 (write)OsIsr/21 (read)OsIsr/21 (read)OsIsrCfg/22 (read)OsIsr/21 (read)OsIsrCfg/22 (read)
+  Referring: 
+  Availability: available
+  Function flags: body
+  Called by: 
+  Calls: 
+Os_ArmNvicNestingLevel_/18 (Os_ArmNvicNestingLevel_) @06086090
+  Type: variable definition analyzed
+  Visibility: force_output externally_visible no_reorder public
+  References: 
+  Referring: OSPlatformIntcInit/19 (write)OSPlatformIntcShutdown/20 (read)
+  Availability: available
+  Varpool flags:
+Os_ArmSavedIRQCtx_/17 (Os_ArmSavedIRQCtx_) @06086048
+  Type: variable definition analyzed
+  Visibility: force_output externally_visible no_reorder public
+  References: 
+  Referring: OSPlatformIntcInit/19 (write)OSPlatformIntcInit/19 (write)OSPlatformIntcShutdown/20 (read)OSPlatformIntcShutdown/20 (read)
+  Availability: available
+  Varpool flags:
+OSPlatformIntcShutdown ()
+{
+  OSDWORD lr;
+  OSDWORD xpsr;
+  OSDWORD idx;
+  OSDWORD isrId;
+  OSDWORD isrId;
+  OSDWORD isrId;
+  OSDWORD i;
+
+  <bb 2> :
+  i = 16;
+  goto <bb 11>; [INV]
+
+  <bb 3> :
+  if (i > 15)
+    goto <bb 4>; [INV]
+  else
+    goto <bb 5>; [INV]
+
+  <bb 4> :
+  isrId = i + 4294967280;
+  _1 = isrId & 31;
+  _2 = isrId >> 5;
+  _3 = _2 << 2;
+  _4 = _3 + 3758154112;
+  _5 = (volatile OSDWORD *) _4;
+  _6 = 1 << _1;
+  *_5 = _6;
+
+  <bb 5> :
+  if (i > 15)
+    goto <bb 6>; [INV]
+  else
+    goto <bb 7>; [INV]
+
+  <bb 6> :
+  isrId = i + 4294967280;
+  _7 = isrId & 31;
+  _8 = isrId >> 5;
+  _9 = _8 << 2;
+  _10 = _9 + 3758154368;
+  _11 = (volatile OSDWORD *) _10;
+  _12 = 1 << _7;
+  *_11 = _12;
+
+  <bb 7> :
+  if (i > 15)
+    goto <bb 8>; [INV]
+  else
+    goto <bb 9>; [INV]
+
+  <bb 8> :
+  isrId = i + 4294967280;
+  _13 = isrId + 3758154752;
+  _14 = (volatile OSBYTE *) _13;
+  *_14 = 240;
+  goto <bb 10>; [INV]
+
+  <bb 9> :
+  _15 = i + 3758157076;
+  _16 = (volatile OSBYTE *) _15;
+  *_16 = 240;
+
+  <bb 10> :
+  i = i + 1;
+
+  <bb 11> :
+  if (i <= 255)
+    goto <bb 3>; [INV]
+  else
+    goto <bb 12>; [INV]
+
+  <bb 12> :
+  i = Os_ArmNvicNestingLevel_;
+  goto <bb 16>; [INV]
+
+  <bb 13> :
+  _17 = 3758157060B;
+  _18 = *_17;
+  _19 = _18 & 511;
+  if (_19 != 0)
+    goto <bb 14>; [INV]
+  else
+    goto <bb 15>; [INV]
+
+  <bb 14> :
+  idx = i + 4294967295;
+  xpsr = Os_ArmSavedIRQCtx_[idx].xpsr;
+  lr = Os_ArmSavedIRQCtx_[idx].lr;
+  OSArmDeactivateIsr (xpsr, lr);
+
+  <bb 15> :
+  i = i + 4294967295;
+
+  <bb 16> :
+  if (i != 0)
+    goto <bb 13>; [INV]
+  else
+    goto <bb 17>; [INV]
+
+  <bb 17> :
+  return;
+
+}
+
+
+OSPlatformIntcInit ()
+{
+  OSDWORD isrId;
+  OSDWORD isrId;
+  OSDWORD isrId;
+  OSDWORD isrId;
+  OSDWORD isrId;
+  OSDWORD i;
+
+  <bb 2> :
+  Os_ArmNvicNestingLevel_ = 0;
+  i = 0;
+  goto <bb 4>; [INV]
+
+  <bb 3> :
+  Os_ArmSavedIRQCtx_[i].xpsr = 0;
+  Os_ArmSavedIRQCtx_[i].lr = 0;
+  i = i + 1;
+
+  <bb 4> :
+  if (i <= 15)
+    goto <bb 3>; [INV]
+  else
+    goto <bb 5>; [INV]
+
+  <bb 5> :
+  i = 0;
+  goto <bb 21>; [INV]
+
+  <bb 6> :
+  if (i > 15)
+    goto <bb 7>; [INV]
+  else
+    goto <bb 14>; [INV]
+
+  <bb 7> :
+  if (i > 15)
+    goto <bb 8>; [INV]
+  else
+    goto <bb 9>; [INV]
+
+  <bb 8> :
+  isrId = i + 4294967280;
+  _1 = isrId & 31;
+  _2 = isrId >> 5;
+  _3 = _2 << 2;
+  _4 = _3 + 3758154112;
+  _5 = (volatile OSDWORD *) _4;
+  _6 = 1 << _1;
+  *_5 = _6;
+
+  <bb 9> :
+  if (i > 15)
+    goto <bb 10>; [INV]
+  else
+    goto <bb 11>; [INV]
+
+  <bb 10> :
+  isrId = i + 4294967280;
+  _7 = isrId & 31;
+  _8 = isrId >> 5;
+  _9 = _8 << 2;
+  _10 = _9 + 3758154368;
+  _11 = (volatile OSDWORD *) _10;
+  _12 = 1 << _7;
+  *_11 = _12;
+
+  <bb 11> :
+  if (i > 15)
+    goto <bb 12>; [INV]
+  else
+    goto <bb 13>; [INV]
+
+  <bb 12> :
+  isrId = i + 4294967280;
+  _13 = isrId + 3758154752;
+  _14 = (volatile OSBYTE *) _13;
+  *_14 = 240;
+  goto <bb 14>; [INV]
+
+  <bb 13> :
+  _15 = i + 3758157076;
+  _16 = (volatile OSBYTE *) _15;
+  *_16 = 240;
+
+  <bb 14> :
+  _17 = OsIsr[i];
+  if (_17 != 4)
+    goto <bb 15>; [INV]
+  else
+    goto <bb 20>; [INV]
+
+  <bb 15> :
+  if (i > 15)
+    goto <bb 16>; [INV]
+  else
+    goto <bb 17>; [INV]
+
+  <bb 16> :
+  isrId = i + 4294967280;
+  _18 = OsIsr[i];
+  _19 = (int) _18;
+  _20 = OsIsrCfg[_19].isrPrio;
+  _21 = _20 << 4;
+  _22 = isrId + 3758154752;
+  _23 = (volatile OSBYTE *) _22;
+  _24 = _21 ^ 240;
+  *_23 = _24;
+  goto <bb 18>; [INV]
+
+  <bb 17> :
+  _25 = OsIsr[i];
+  _26 = (int) _25;
+  _27 = OsIsrCfg[_26].isrPrio;
+  _28 = _27 << 4;
+  _29 = i + 3758157076;
+  _30 = (volatile OSBYTE *) _29;
+  _31 = _28 ^ 240;
+  *_30 = _31;
+
+  <bb 18> :
+  if (i > 15)
+    goto <bb 19>; [INV]
+  else
+    goto <bb 20>; [INV]
+
+  <bb 19> :
+  isrId = i + 4294967280;
+  _32 = isrId & 31;
+  _33 = isrId >> 5;
+  _34 = _33 << 2;
+  _35 = _34 + 3758153984;
+  _36 = (volatile OSDWORD *) _35;
+  _37 = 1 << _32;
+  *_36 = _37;
+
+  <bb 20> :
+  i = i + 1;
+
+  <bb 21> :
+  if (i <= 255)
+    goto <bb 6>; [INV]
+  else
+    goto <bb 22>; [INV]
+
+  <bb 22> :
+  return;
+
+}
+
+

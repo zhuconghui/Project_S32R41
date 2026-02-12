@@ -1,0 +1,178 @@
+Spt_DspIsr ()
+{
+  uint32 i;
+  uint32 dspErrInfo;
+  uint32 dspErrCode;
+  volatile struct SPT_Type * const pSptRegs;
+
+  <bb 2> :
+  pSptRegs = Spt_GetMemMap ();
+  dspErrCode = pSptRegs->DSP_ERR_INFO_REG;
+  dspErrInfo = pSptRegs->DSP_DEBUG1_REG;
+  pSptRegs->DSP_ERR_INFO_REG = 4294967295;
+  i = 0;
+  goto <bb 7>; [INV]
+
+  <bb 3> :
+  _1 = dspErrCode >> i;
+  _2 = _1 & 1;
+  if (_2 == 0)
+    goto <bb 4>; [INV]
+  else
+    goto <bb 5>; [INV]
+
+  <bb 4> :
+  // predicted unlikely by continue predictor.
+  goto <bb 6>; [INV]
+
+  <bb 5> :
+  _3 = i + 73728;
+  Spt_DspIsrCb (_3, dspErrInfo);
+
+  <bb 6> :
+  i = i + 1;
+
+  <bb 7> :
+  if (i <= 31)
+    goto <bb 3>; [INV]
+  else
+    goto <bb 8>; [INV]
+
+  <bb 8> :
+  return;
+
+}
+
+
+Spt_EvtIsr ()
+{
+  uint32 evtInfo;
+  volatile struct SPT_Type * const pSptRegs;
+
+  <bb 2> :
+  pSptRegs = Spt_GetMemMap ();
+  evtInfo = pSptRegs->CS_EVTREG1;
+  pSptRegs->CS_EVTREG1 = 4294967295;
+  Spt_EvtIsrCb (0, evtInfo);
+  return;
+
+}
+
+
+Spt_EcsIsr ()
+{
+  rsdkStatus_t isrStatus;
+  volatile struct SPT_Type * const pSptRegs;
+
+  <bb 2> :
+  pSptRegs = Spt_GetMemMap ();
+  isrStatus = 0;
+  _1 = Spt_CheckAndResetHwError (pSptRegs, &gSptMemPer.errInfo);
+  isrStatus = (rsdkStatus_t) _1;
+  if (isrStatus != 0)
+    goto <bb 3>; [INV]
+  else
+    goto <bb 4>; [INV]
+
+  <bb 3> :
+  isrStatus = isrStatus + 69632;
+  Spt_SetDrvState (324508642);
+  goto <bb 10>; [INV]
+
+  <bb 4> :
+  _2 = pSptRegs->CS_STATUS0;
+  _3 = _2 & 8;
+  if (_3 != 0)
+    goto <bb 5>; [INV]
+  else
+    goto <bb 9>; [INV]
+
+  <bb 5> :
+  _4 = pSptRegs->CS_STATUS0;
+  _5 = _4 | 8;
+  pSptRegs->CS_STATUS0 = _5;
+  _6 = gSptMemPer.state;
+  _7 = Spt_CheckUnexpectedStop (pSptRegs, _6);
+  if (_7 != 0)
+    goto <bb 6>; [INV]
+  else
+    goto <bb 7>; [INV]
+
+  <bb 6> :
+  isrStatus = 69642;
+  goto <bb 8>; [INV]
+
+  <bb 7> :
+  RsdkTraceLogEvent (2, 101, 1);
+  isrStatus = 0;
+  _8 = gSptMemPer.kernelRetPar;
+  Spt_GetKernelRetVal (_8);
+
+  <bb 8> :
+  Spt_SetDrvState (324508640);
+  goto <bb 10>; [INV]
+
+  <bb 9> :
+  Spt_SetDrvState (324508642);
+  isrStatus = 73727;
+
+  <bb 10> :
+  _9 = gSptMemPer.state;
+  if (_9 == 324508642)
+    goto <bb 11>; [INV]
+  else
+    goto <bb 12>; [INV]
+
+  <bb 11> :
+  _10 = gSptMemPer.errInfo;
+  RsdkTraceLogEvent (2, 104, _10);
+
+  <bb 12> :
+  _11 = gSptMemPer.errInfo;
+  Spt_EcsIsrCb (isrStatus, _11);
+  return;
+
+}
+
+
+Spt_SetDrvState (Spt_DrvStateType newState)
+{
+  <bb 2> :
+  gSptMemPer.state = newState;
+  return;
+
+}
+
+
+__attribute__((unused))
+rsdk_test_not_null_lnk_sym (uintptr_t symName)
+{
+  volatile uintptr_t dummy_volatile;
+  uint8 retVal;
+  uint8 D.6982;
+
+  <bb 2> :
+  dummy_volatile = symName;
+  dummy_volatile.0_1 = dummy_volatile;
+  if (dummy_volatile.0_1 != 0)
+    goto <bb 3>; [INV]
+  else
+    goto <bb 4>; [INV]
+
+  <bb 3> :
+  retVal = 1;
+  goto <bb 5>; [INV]
+
+  <bb 4> :
+  retVal = 0;
+
+  <bb 5> :
+  D.6982 = retVal;
+
+  <bb 6> :
+<L3>:
+  return D.6982;
+
+}
+
+

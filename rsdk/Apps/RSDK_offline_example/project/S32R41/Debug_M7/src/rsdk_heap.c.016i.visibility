@@ -1,0 +1,449 @@
+
+Marking local functions:
+
+
+Marking externally visible functions: rsdkHeapClear rsdkHeapFreeLast rsdkHeapAlloc rsdkHeapMeasure rsdkHeapMark rsdkHeapInit
+
+
+Marking externally visible variables:
+
+
+Reclaiming functions:
+Reclaiming variables:
+Clearing address taken flags:
+Symbol table:
+
+rsdkHeapClear/8 (rsdkHeapClear) @0608b700
+  Type: function definition analyzed
+  Visibility: force_output externally_visible no_reorder public
+  References: 
+  Referring: 
+  Availability: available
+  Function flags: body
+  Called by: 
+  Calls: 
+rsdkHeapFreeLast/7 (rsdkHeapFreeLast) @0608b460
+  Type: function definition analyzed
+  Visibility: force_output externally_visible no_reorder public
+  References: 
+  Referring: 
+  Availability: available
+  Function flags: body
+  Called by: 
+  Calls: 
+rsdkHeapAlloc/6 (rsdkHeapAlloc) @0608b1c0
+  Type: function definition analyzed
+  Visibility: force_output externally_visible no_reorder public
+  References: 
+  Referring: 
+  Availability: available
+  Function flags: body
+  Called by: 
+  Calls: 
+rsdkHeapMeasure/5 (rsdkHeapMeasure) @06085d20
+  Type: function definition analyzed
+  Visibility: force_output externally_visible no_reorder public
+  References: 
+  Referring: 
+  Availability: available
+  Function flags: body
+  Called by: 
+  Calls: 
+rsdkHeapMark/4 (rsdkHeapMark) @06085ee0
+  Type: function definition analyzed
+  Visibility: force_output externally_visible no_reorder public
+  References: 
+  Referring: 
+  Availability: available
+  Function flags: body
+  Called by: 
+  Calls: 
+rsdkHeapInit/3 (rsdkHeapInit) @06085c40
+  Type: function definition analyzed
+  Visibility: force_output externally_visible no_reorder public
+  References: 
+  Referring: 
+  Availability: available
+  Function flags: body
+  Called by: 
+  Calls: 
+rsdkHeapClear (struct rsdk_heap_t * heap)
+{
+  rsdkStatus_t retval;
+  rsdkStatus_t D.6915;
+
+  <bb 2> :
+  if (heap == 0B)
+    goto <bb 4>; [INV]
+  else
+    goto <bb 3>; [INV]
+
+  <bb 3> :
+  _1 = heap->baseAdd;
+  if (_1 == 0B)
+    goto <bb 4>; [INV]
+  else
+    goto <bb 5>; [INV]
+
+  <bb 4> :
+  retval = 2;
+  goto <bb 6>; [INV]
+
+  <bb 5> :
+  _2 = heap->baseAdd;
+  heap->topAdd = _2;
+  retval = 0;
+
+  <bb 6> :
+  D.6915 = retval;
+
+  <bb 7> :
+<L4>:
+  return D.6915;
+
+}
+
+
+rsdkHeapFreeLast (struct rsdk_heap_t * heap, int32_t size, void * buffer)
+{
+  rsdkStatus_t retval;
+  void * p;
+  int32_t freeSize;
+  rsdkStatus_t D.6909;
+
+  <bb 2> :
+  retval = 1;
+  if (heap == 0B)
+    goto <bb 7>; [INV]
+  else
+    goto <bb 3>; [INV]
+
+  <bb 3> :
+  _1 = heap->baseAdd;
+  if (_1 == 0B)
+    goto <bb 7>; [INV]
+  else
+    goto <bb 4>; [INV]
+
+  <bb 4> :
+  _2 = heap->topAdd;
+  if (_2 == 0B)
+    goto <bb 7>; [INV]
+  else
+    goto <bb 5>; [INV]
+
+  <bb 5> :
+  if (buffer == 0B)
+    goto <bb 7>; [INV]
+  else
+    goto <bb 6>; [INV]
+
+  <bb 6> :
+  if (size < 0)
+    goto <bb 7>; [INV]
+  else
+    goto <bb 8>; [INV]
+
+  <bb 7> :
+  retval = 2;
+  goto <bb 11>; [INV]
+
+  <bb 8> :
+  _3 = size + -1;
+  _4 = _3 / 64;
+  _5 = _4 + 1;
+  freeSize = _5 * 64;
+  buffer.5_6 = (long unsigned int) buffer;
+  freeSize.6_7 = (long unsigned int) freeSize;
+  _8 = buffer.5_6 + freeSize.6_7;
+  p = (void *) _8;
+  _9 = heap->topAdd;
+  if (p != _9)
+    goto <bb 9>; [INV]
+  else
+    goto <bb 10>; [INV]
+
+  <bb 9> :
+  retval = 106497;
+  goto <bb 11>; [INV]
+
+  <bb 10> :
+  heap->topAdd = buffer;
+  retval = 0;
+
+  <bb 11> :
+  D.6909 = retval;
+
+  <bb 12> :
+<L10>:
+  return D.6909;
+
+}
+
+
+rsdkHeapAlloc (struct rsdk_heap_t * heap, int32_t size, void * * buffer)
+{
+  rsdkStatus_t retval;
+  int32_t sizeLeft;
+  int32_t allocSize;
+  rsdkStatus_t D.6897;
+
+  <bb 2> :
+  retval = 1;
+  if (heap == 0B)
+    goto <bb 7>; [INV]
+  else
+    goto <bb 3>; [INV]
+
+  <bb 3> :
+  _1 = heap->baseAdd;
+  if (_1 == 0B)
+    goto <bb 7>; [INV]
+  else
+    goto <bb 4>; [INV]
+
+  <bb 4> :
+  _2 = heap->topAdd;
+  if (_2 == 0B)
+    goto <bb 7>; [INV]
+  else
+    goto <bb 5>; [INV]
+
+  <bb 5> :
+  if (buffer == 0B)
+    goto <bb 7>; [INV]
+  else
+    goto <bb 6>; [INV]
+
+  <bb 6> :
+  if (size < 0)
+    goto <bb 7>; [INV]
+  else
+    goto <bb 8>; [INV]
+
+  <bb 7> :
+  retval = 2;
+  goto <bb 11>; [INV]
+
+  <bb 8> :
+  _3 = size + -1;
+  _4 = _3 / 64;
+  _5 = _4 + 1;
+  allocSize = _5 * 64;
+  _6 = heap->buffSize;
+  _7 = heap->topAdd;
+  _8 = heap->baseAdd;
+  _9 = _7 - _8;
+  sizeLeft = _6 - _9;
+  if (allocSize > sizeLeft)
+    goto <bb 9>; [INV]
+  else
+    goto <bb 10>; [INV]
+
+  <bb 9> :
+  retval = 106496;
+  goto <bb 11>; [INV]
+
+  <bb 10> :
+  _10 = heap->topAdd;
+  *buffer = _10;
+  _11 = heap->topAdd;
+  _12 = (long unsigned int) _11;
+  allocSize.4_13 = (long unsigned int) allocSize;
+  _14 = _12 + allocSize.4_13;
+  _15 = (void *) _14;
+  heap->topAdd = _15;
+  retval = 0;
+
+  <bb 11> :
+  D.6897 = retval;
+
+  <bb 12> :
+<L10>:
+  return D.6897;
+
+}
+
+
+rsdkHeapMeasure (struct rsdk_heap_t * heap, uint32_t watermark, uint32_t * usedHeap)
+{
+  rsdkStatus_t retval;
+  uint32_t * p;
+  int32_t meas;
+  int32_t i;
+  rsdkStatus_t D.6885;
+
+  <bb 2> :
+  retval = 1;
+  if (heap == 0B)
+    goto <bb 5>; [INV]
+  else
+    goto <bb 3>; [INV]
+
+  <bb 3> :
+  _1 = heap->baseAdd;
+  if (_1 == 0B)
+    goto <bb 5>; [INV]
+  else
+    goto <bb 4>; [INV]
+
+  <bb 4> :
+  if (usedHeap == 0B)
+    goto <bb 5>; [INV]
+  else
+    goto <bb 6>; [INV]
+
+  <bb 5> :
+  retval = 2;
+  goto <bb 11>; [INV]
+
+  <bb 6> :
+  _2 = heap->buffSize;
+  _3 = (long unsigned int) _2;
+  _4 = _3 / 4;
+  _5 = _4 + 4294967295;
+  i = (int32_t) _5;
+  p = heap->baseAdd;
+  goto <bb 8>; [INV]
+
+  <bb 7> :
+  i = i + -1;
+
+  <bb 8> :
+  if (i >= 0)
+    goto <bb 9>; [INV]
+  else
+    goto <bb 10>; [INV]
+
+  <bb 9> :
+  i.1_6 = (unsigned int) i;
+  _7 = i.1_6 * 4;
+  _8 = p + _7;
+  _9 = *_8;
+  if (watermark == _9)
+    goto <bb 7>; [INV]
+  else
+    goto <bb 10>; [INV]
+
+  <bb 10> :
+  i.2_10 = (long unsigned int) i;
+  _11 = i.2_10 * 4;
+  meas = (int32_t) _11;
+  meas.3_12 = (long unsigned int) meas;
+  *usedHeap = meas.3_12;
+  retval = 0;
+
+  <bb 11> :
+  D.6885 = retval;
+
+  <bb 12> :
+<L9>:
+  return D.6885;
+
+}
+
+
+rsdkHeapMark (struct rsdk_heap_t * heap, uint32_t watermark)
+{
+  rsdkStatus_t retval;
+  uint32_t * p;
+  uint32_t i;
+  rsdkStatus_t D.6877;
+
+  <bb 2> :
+  retval = 1;
+  if (heap == 0B)
+    goto <bb 3>; [INV]
+  else
+    goto <bb 4>; [INV]
+
+  <bb 3> :
+  retval = 2;
+  goto <bb 8>; [INV]
+
+  <bb 4> :
+  p = heap->baseAdd;
+  i = 0;
+  goto <bb 6>; [INV]
+
+  <bb 5> :
+  _1 = i * 4;
+  _2 = p + _1;
+  *_2 = watermark;
+  i = i + 1;
+
+  <bb 6> :
+  _3 = heap->buffSize;
+  _4 = (long unsigned int) _3;
+  _5 = _4 / 4;
+  if (i < _5)
+    goto <bb 5>; [INV]
+  else
+    goto <bb 7>; [INV]
+
+  <bb 7> :
+  retval = 0;
+
+  <bb 8> :
+  D.6877 = retval;
+
+  <bb 9> :
+<L6>:
+  return D.6877;
+
+}
+
+
+rsdkHeapInit (struct rsdk_heap_t * heap, void * base, int32_t size)
+{
+  rsdkStatus_t retval;
+  rsdkStatus_t D.6872;
+
+  <bb 2> :
+  retval = 1;
+  if (heap == 0B)
+    goto <bb 6>; [INV]
+  else
+    goto <bb 3>; [INV]
+
+  <bb 3> :
+  if (base == 0B)
+    goto <bb 6>; [INV]
+  else
+    goto <bb 4>; [INV]
+
+  <bb 4> :
+  if (size < 0)
+    goto <bb 6>; [INV]
+  else
+    goto <bb 5>; [INV]
+
+  <bb 5> :
+  base.0_1 = (unsigned int) base;
+  _2 = base.0_1 & 63;
+  if (_2 != 0)
+    goto <bb 6>; [INV]
+  else
+    goto <bb 7>; [INV]
+
+  <bb 6> :
+  retval = 2;
+  goto <bb 8>; [INV]
+
+  <bb 7> :
+  heap->baseAdd = base;
+  _3 = heap->baseAdd;
+  heap->topAdd = _3;
+  heap->buffSize = size;
+  retval = 0;
+
+  <bb 8> :
+  D.6872 = retval;
+
+  <bb 9> :
+<L6>:
+  return D.6872;
+
+}
+
+

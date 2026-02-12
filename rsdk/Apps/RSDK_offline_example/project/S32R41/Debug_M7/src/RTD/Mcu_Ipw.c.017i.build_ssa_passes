@@ -1,0 +1,166 @@
+Mcu_Ipw_SleepOnExit (Mcu_SleepOnExitType SleepOnExit)
+{
+  <bb 2> :
+  if (SleepOnExit == 0)
+    goto <bb 3>; [INV]
+  else
+    goto <bb 4>; [INV]
+
+  <bb 3> :
+  Power_Ip_DisableSleepOnExit ();
+  goto <bb 5>; [INV]
+
+  <bb 4> :
+  Power_Ip_EnableSleepOnExit ();
+
+  <bb 5> :
+  return;
+
+}
+
+
+Mcu_Ipw_ClockNotificationsCallback (Clock_Ip_NotificationType Notification, Clock_Ip_NameType ClockName)
+{
+  <bb 2> :
+  _1 = (int) Notification;
+  switch (_1) <default: <L3> [INV], case 0: <L0> [INV], case 4: <L1> [INV], case 5: <L2> [INV]>
+
+  <bb 3> :
+<L0>:
+  Mcu_ClkSrcFailureNotification (ClockName);
+  goto <bb 7>; [INV]
+
+  <bb 4> :
+<L1>:
+  goto <bb 7>; [INV]
+
+  <bb 5> :
+<L2>:
+  goto <bb 7>; [INV]
+
+  <bb 6> :
+<L3>:
+
+  <bb 7> :
+  return;
+
+}
+
+
+Mcu_Ipw_GetResetRawValue ()
+{
+  Power_Ip_RawResetType ResetReason;
+  Mcu_RawResetType D.7098;
+
+  <bb 2> :
+  ResetReason = Power_Ip_GetResetRawValue ();
+  D.7098 = ResetReason;
+
+  <bb 3> :
+<L0>:
+  return D.7098;
+
+}
+
+
+Mcu_Ipw_GetResetReason ()
+{
+  Mcu_ResetType D.7096;
+
+  <bb 2> :
+  D.7096 = Power_Ip_GetResetReason ();
+
+  <bb 3> :
+<L0>:
+  return D.7096;
+
+}
+
+
+Mcu_Ipw_SetMode (const struct Mcu_ModeConfigType * ModeConfigPtr)
+{
+  <bb 2> :
+  SchM_Enter_Mcu_MCU_EXCLUSIVE_AREA_00 ();
+  Power_Ip_SetMode (ModeConfigPtr);
+  SchM_Exit_Mcu_MCU_EXCLUSIVE_AREA_00 ();
+  return;
+
+}
+
+
+MCU_Ipw_GetClockFrequency (Clock_Ip_NameType ClockName)
+{
+  uint32 D.7094;
+
+  <bb 2> :
+  D.7094 = Clock_Ip_GetClockFrequency (ClockName);
+
+  <bb 3> :
+<L0>:
+  return D.7094;
+
+}
+
+
+Mcu_Ipw_GetPllStatus ()
+{
+  Mcu_PllStatusType PllStatus;
+  Mcu_PllStatusType D.7092;
+
+  <bb 2> :
+  _1 = Clock_Ip_GetPllStatus ();
+  _2 = (int) _1;
+  switch (_2) <default: <L2> [INV], case 0: <L0> [INV], case 1: <L1> [INV]>
+
+  <bb 3> :
+<L0>:
+  PllStatus = 0;
+  goto <bb 6>; [INV]
+
+  <bb 4> :
+<L1>:
+  PllStatus = 1;
+  goto <bb 6>; [INV]
+
+  <bb 5> :
+<L2>:
+  PllStatus = 2;
+
+  <bb 6> :
+  D.7092 = PllStatus;
+
+  <bb 7> :
+<L5>:
+  return D.7092;
+
+}
+
+
+Mcu_Ipw_DistributePllClock ()
+{
+  <bb 2> :
+  Clock_Ip_DistributePll ();
+  return;
+
+}
+
+
+Mcu_Ipw_InitClock (const struct Mcu_ClockConfigType * ClockConfigPtr)
+{
+  <bb 2> :
+  Clock_Ip_InitClock (ClockConfigPtr);
+  return;
+
+}
+
+
+Mcu_Ipw_Init (const struct Power_Ip_HwIPsConfigType * HwIPsConfigPtr)
+{
+  <bb 2> :
+  Clock_Ip_InstallNotificationsCallback (Mcu_Ipw_ClockNotificationsCallback);
+  Power_Ip_Init (HwIPsConfigPtr);
+  return;
+
+}
+
+

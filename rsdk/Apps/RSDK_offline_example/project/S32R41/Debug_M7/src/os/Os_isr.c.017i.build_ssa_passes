@@ -1,0 +1,583 @@
+OSDisableInterruptSourceInternal (OSWORD ISRID, ISRType ISRIDVal)
+{
+  OSDWORD isrId;
+  struct OS_ISRTYPE * Isr;
+  StatusType retStatus;
+  StatusType D.5964;
+
+  <bb 2> :
+  retStatus = 0;
+  _1 = (int) ISRID;
+  Isr = &OsIsrTable[_1];
+  if (retStatus == 0)
+    goto <bb 3>; [INV]
+  else
+    goto <bb 5>; [INV]
+
+  <bb 3> :
+  _2 = Isr->index;
+  if (_2 > 15)
+    goto <bb 4>; [INV]
+  else
+    goto <bb 5>; [INV]
+
+  <bb 4> :
+  _3 = Isr->index;
+  _4 = (unsigned int) _3;
+  isrId = _4 + 4294967280;
+  _5 = isrId & 31;
+  _6 = isrId >> 5;
+  _7 = _6 << 2;
+  _8 = _7 + 3758154112;
+  _9 = (volatile OSDWORD *) _8;
+  _10 = 1 << _5;
+  *_9 = _10;
+
+  <bb 5> :
+  D.5964 = retStatus;
+
+  <bb 6> :
+<L4>:
+  return D.5964;
+
+}
+
+
+OSEnableInterruptSourceInternal (OSWORD ISRID, ISRType ISRIDVal, boolean ClearPendingVal)
+{
+  OSDWORD isrId;
+  OSDWORD isrId;
+  OSDWORD isrId;
+  struct OS_ISRTYPE * Isr;
+  StatusType retStatus;
+  StatusType D.5958;
+
+  <bb 2> :
+  retStatus = 0;
+  _1 = (int) ISRID;
+  Isr = &OsIsrTable[_1];
+  if (retStatus == 0)
+    goto <bb 3>; [INV]
+  else
+    goto <bb 11>; [INV]
+
+  <bb 3> :
+  if (ClearPendingVal != 0)
+    goto <bb 4>; [INV]
+  else
+    goto <bb 6>; [INV]
+
+  <bb 4> :
+  _2 = Isr->index;
+  if (_2 > 15)
+    goto <bb 5>; [INV]
+  else
+    goto <bb 6>; [INV]
+
+  <bb 5> :
+  _3 = Isr->index;
+  _4 = (unsigned int) _3;
+  isrId = _4 + 4294967280;
+  _5 = isrId & 31;
+  _6 = isrId >> 5;
+  _7 = _6 << 2;
+  _8 = _7 + 3758154368;
+  _9 = (volatile OSDWORD *) _8;
+  _10 = 1 << _5;
+  *_9 = _10;
+
+  <bb 6> :
+  _11 = Isr->index;
+  if (_11 > 15)
+    goto <bb 7>; [INV]
+  else
+    goto <bb 8>; [INV]
+
+  <bb 7> :
+  _12 = Isr->index;
+  _13 = (unsigned int) _12;
+  isrId = _13 + 4294967280;
+  _14 = Isr->isrPrio;
+  _15 = _14 << 4;
+  _16 = isrId + 3758154752;
+  _17 = (volatile OSBYTE *) _16;
+  _18 = _15 ^ 240;
+  *_17 = _18;
+  goto <bb 9>; [INV]
+
+  <bb 8> :
+  _19 = Isr->isrPrio;
+  _20 = _19 << 4;
+  _21 = Isr->index;
+  _22 = (long unsigned int) _21;
+  _23 = _22 + 3758157076;
+  _24 = (volatile OSBYTE *) _23;
+  _25 = _20 ^ 240;
+  *_24 = _25;
+
+  <bb 9> :
+  _26 = Isr->index;
+  if (_26 > 15)
+    goto <bb 10>; [INV]
+  else
+    goto <bb 11>; [INV]
+
+  <bb 10> :
+  _27 = Isr->index;
+  _28 = (unsigned int) _27;
+  isrId = _28 + 4294967280;
+  _29 = isrId & 31;
+  _30 = isrId >> 5;
+  _31 = _30 << 2;
+  _32 = _31 + 3758153984;
+  _33 = (volatile OSDWORD *) _32;
+  _34 = 1 << _29;
+  *_33 = _34;
+
+  <bb 11> :
+  D.5958 = retStatus;
+
+  <bb 12> :
+<L11>:
+  return D.5958;
+
+}
+
+
+__attribute__((optimize ("O1")))
+OSInterruptDispatcher1 (OSDWORD saved_xpsr, OSDWORD saved_lr)
+{
+  volatile OSINTMASKTYPE oldPri;
+  struct OS_ISRTYPE * handlerPtr;
+  OSBOOL exitFunction;
+
+  <bb 2> :
+  exitFunction = 0;
+  _1 = OSISRGetPrio ();
+  oldPri = _1;
+  _2 = OSISRGetIntVector ();
+  _3 = OsIsr[_2];
+  _4 = (int) _3;
+  handlerPtr = &OsIsrTable[_4];
+  _5 = handlerPtr->isrPrio;
+  _6 = (unsigned int) _5;
+  OSISRSetPrio (_6);
+  OSArmPushIrq (saved_xpsr, saved_lr);
+  _7 = handlerPtr->type;
+  if (_7 == 2)
+    goto <bb 3>; [INV]
+  else
+    goto <bb 4>; [INV]
+
+  <bb 3> :
+  oldPri.11_8 = oldPri;
+  OSExitISR1 (oldPri.11_8, saved_xpsr, saved_lr, handlerPtr);
+  exitFunction = 1;
+
+  <bb 4> :
+  if (exitFunction == 0)
+    goto <bb 5>; [INV]
+  else
+    goto <bb 6>; [INV]
+
+  <bb 5> :
+  OSISRException ();
+
+  <bb 6> :
+  return;
+
+}
+
+
+OSExitISR1 (OSINTMASKTYPE oldPri, OSDWORD saved_xpsr, OSDWORD saved_lr, struct OS_ISRTYPE * handlerPtr)
+{
+  <bb 2> :
+  __asm__ __volatile__("dsb
+ cpsie i
+");
+  _1 = handlerPtr->userISR;
+  _1 ();
+  __asm__ __volatile__("cpsid i");
+  OSArmDeactivateNIsr (saved_xpsr, saved_lr);
+  OSISRSetPrio (oldPri);
+
+  <bb 3> :
+<L0>:
+  return;
+
+}
+
+
+OSInitializeISR ()
+{
+  struct OS_ISRTYPE * handlerTablePtr;
+  const struct OSISRCFGTYPE * handlerCfgPtr;
+  OSWORD i;
+
+  <bb 2> :
+  i = 0;
+  goto <bb 4>; [INV]
+
+  <bb 3> :
+  _1 = (int) i;
+  handlerCfgPtr = &OsIsrCfg[_1];
+  _2 = (int) i;
+  handlerTablePtr = &OsIsrTable[_2];
+  handlerTablePtr->resources = 0B;
+  _3 = handlerCfgPtr->userISR;
+  handlerTablePtr->userISR = _3;
+  _4 = handlerCfgPtr->type;
+  handlerTablePtr->type = _4;
+  _5 = handlerCfgPtr->index;
+  handlerTablePtr->index = _5;
+  _6 = handlerCfgPtr->isrPrio;
+  _7 = _6 & 15;
+  handlerTablePtr->isrPrio = _7;
+  i.9_8 = i;
+  i = i.9_8 + 1;
+
+  <bb 4> :
+  if (i <= 4)
+    goto <bb 3>; [INV]
+  else
+    goto <bb 5>; [INV]
+
+  <bb 5> :
+  OsIsrLevel_ = 0;
+  OSPlatformIntcInit ();
+  __asm__ __volatile__("dsb");
+  __asm__ __volatile__("dsb");
+  OSISRSetPrio (0);
+  return;
+
+}
+
+
+OSISRException ()
+{
+  <bb 2> :
+  OSShutdownOS (21);
+  return;
+
+}
+
+
+OS_ClearPendingInterrupt (ISRType ISRID)
+{
+  OSDWORD isrId;
+  struct OS_ISRTYPE * Isr;
+  StatusType retStatus;
+  StatusType D.5936;
+
+  <bb 2> :
+  retStatus = 0;
+  if (retStatus == 0)
+    goto <bb 3>; [INV]
+  else
+    goto <bb 4>; [INV]
+
+  <bb 3> :
+  _1 = (int) ISRID;
+  Isr = &OsIsrTable[_1];
+
+  <bb 4> :
+  if (retStatus == 0)
+    goto <bb 5>; [INV]
+  else
+    goto <bb 7>; [INV]
+
+  <bb 5> :
+  _2 = Isr->index;
+  if (_2 > 15)
+    goto <bb 6>; [INV]
+  else
+    goto <bb 7>; [INV]
+
+  <bb 6> :
+  _3 = Isr->index;
+  _4 = (unsigned int) _3;
+  isrId = _4 + 4294967280;
+  _5 = isrId & 31;
+  _6 = isrId >> 5;
+  _7 = _6 << 2;
+  _8 = _7 + 3758154368;
+  _9 = (volatile OSDWORD *) _8;
+  _10 = 1 << _5;
+  *_9 = _10;
+
+  <bb 7> :
+  D.5936 = retStatus;
+
+  <bb 8> :
+<L6>:
+  return D.5936;
+
+}
+
+
+OS_EnableInterruptSource (ISRType ISRID, boolean ClearPending)
+{
+  StatusType retStatus;
+  StatusType D.5928;
+
+  <bb 2> :
+  retStatus = 0;
+  if (retStatus == 0)
+    goto <bb 3>; [INV]
+  else
+    goto <bb 4>; [INV]
+
+  <bb 3> :
+  retStatus = OSEnableInterruptSourceInternal (ISRID, ISRID, ClearPending);
+
+  <bb 4> :
+  D.5928 = retStatus;
+
+  <bb 5> :
+<L2>:
+  return D.5928;
+
+}
+
+
+OS_DisableInterruptSource (ISRType ISRID)
+{
+  StatusType retStatus;
+  StatusType D.5924;
+
+  <bb 2> :
+  retStatus = 0;
+  if (retStatus == 0)
+    goto <bb 3>; [INV]
+  else
+    goto <bb 4>; [INV]
+
+  <bb 3> :
+  retStatus = OSDisableInterruptSourceInternal (ISRID, ISRID);
+
+  <bb 4> :
+  D.5924 = retStatus;
+
+  <bb 5> :
+<L2>:
+  return D.5924;
+
+}
+
+
+OS_ResumeAllInterrupts ()
+{
+  OSBOOL errorDetected;
+
+  <bb 2> :
+  errorDetected = 0;
+  OsSuspendLevelAll_.4_1 = OsSuspendLevelAll_;
+  if (OsSuspendLevelAll_.4_1 == 0)
+    goto <bb 3>; [INV]
+  else
+    goto <bb 4>; [INV]
+
+  <bb 3> :
+  errorDetected = 1;
+
+  <bb 4> :
+  if (errorDetected == 0)
+    goto <bb 5>; [INV]
+  else
+    goto <bb 7>; [INV]
+
+  <bb 5> :
+  OsSuspendLevelAll_.5_2 = OsSuspendLevelAll_;
+  OsSuspendLevelAll_.6_3 = OsSuspendLevelAll_.5_2;
+  _4 = OsSuspendLevelAll_.6_3 + 255;
+  OsSuspendLevelAll_ = _4;
+  OsSuspendLevelAll_.7_5 = OsSuspendLevelAll_;
+  if (OsSuspendLevelAll_.7_5 == 0)
+    goto <bb 6>; [INV]
+  else
+    goto <bb 7>; [INV]
+
+  <bb 6> :
+  __asm__ __volatile__("dsb");
+  OsOldIntMaskAll_.8_6 = OsOldIntMaskAll_;
+  OSSETMSR (OsOldIntMaskAll_.8_6);
+
+  <bb 7> :
+  return;
+
+}
+
+
+OS_SuspendAllInterrupts ()
+{
+  <bb 2> :
+  OsSuspendLevelAll_.1_1 = OsSuspendLevelAll_;
+  if (OsSuspendLevelAll_.1_1 == 0)
+    goto <bb 3>; [INV]
+  else
+    goto <bb 4>; [INV]
+
+  <bb 3> :
+  _2 = OSGetMsrDI ();
+  OsOldIntMaskAll_ = _2;
+
+  <bb 4> :
+  OsSuspendLevelAll_.2_3 = OsSuspendLevelAll_;
+  OsSuspendLevelAll_.3_4 = OsSuspendLevelAll_.2_3;
+  _5 = OsSuspendLevelAll_.3_4 + 1;
+  OsSuspendLevelAll_ = _5;
+  return;
+
+}
+
+
+OS_EnableAllInterrupts ()
+{
+  <bb 2> :
+  __asm__ __volatile__("dsb");
+  OsOldMsr_.0_1 = OsOldMsr_;
+  OSSETMSR (OsOldMsr_.0_1);
+  return;
+
+}
+
+
+OS_DisableAllInterrupts ()
+{
+  <bb 2> :
+  _1 = OSGetMsrDI ();
+  OsOldMsr_ = _1;
+  return;
+
+}
+
+
+__attribute__((always_inline))
+OSISRGetPrio ()
+{
+  register OSDWORD result;
+  OSDWORD D.5943;
+
+  <bb 2> :
+  __asm__ __volatile__("MRS %0, basepri_max" : "=r" result);
+  _1 = result >> 4;
+  _2 = _1 ^ 15;
+  _3 = (unsigned char) _2;
+  result = (OSDWORD) _3;
+  D.5943 = result;
+
+  <bb 3> :
+<L0>:
+  return D.5943;
+
+}
+
+
+__attribute__((always_inline))
+OSISRSetPrio (OSDWORD prio)
+{
+  register OSDWORD converted_prio;
+
+  <bb 2> :
+  _1 = (unsigned char) prio;
+  _2 = ~_1;
+  _3 = _2 << 4;
+  converted_prio = (OSDWORD) _3;
+  __asm__ __volatile__("MSR basepri, %0" :  : "r" converted_prio);
+  return;
+
+}
+
+
+__attribute__((always_inline))
+OSISRGetIntVector ()
+{
+  register OSDWORD result;
+  OSDWORD D.5945;
+
+  <bb 2> :
+  __asm__ __volatile__("MRS %0, ipsr" : "=r" result);
+  D.5945 = result;
+
+  <bb 3> :
+<L0>:
+  return D.5945;
+
+}
+
+
+__attribute__((always_inline))
+OSGetMsrDI ()
+{
+  register OSDWORD msrReg;
+  OSDWORD D.5910;
+
+  <bb 2> :
+  msrReg = OSGETMSR ();
+  _1 = msrReg | 1;
+  OSSETMSR (_1);
+  D.5910 = msrReg;
+
+  <bb 3> :
+<L0>:
+  return D.5910;
+
+}
+
+
+__attribute__((always_inline))
+OSArmPushIrq (OSDWORD xpsrReg, OSDWORD lrReg)
+{
+  <bb 2> :
+  Os_ArmNvicNestingLevel_.12_1 = Os_ArmNvicNestingLevel_;
+  Os_ArmSavedIRQCtx_[Os_ArmNvicNestingLevel_.12_1].xpsr = xpsrReg;
+  Os_ArmNvicNestingLevel_.13_2 = Os_ArmNvicNestingLevel_;
+  Os_ArmSavedIRQCtx_[Os_ArmNvicNestingLevel_.13_2].lr = lrReg;
+  Os_ArmNvicNestingLevel_.14_3 = Os_ArmNvicNestingLevel_;
+  _4 = Os_ArmNvicNestingLevel_.14_3 + 1;
+  Os_ArmNvicNestingLevel_ = _4;
+  return;
+
+}
+
+
+__attribute__((always_inline))
+OSArmDeactivateNIsr (OSDWORD xpsrReg, OSDWORD lrReg)
+{
+  <bb 2> :
+  OSArmDeactivateIsr (xpsrReg, lrReg);
+  Os_ArmNvicNestingLevel_.10_1 = Os_ArmNvicNestingLevel_;
+  _2 = Os_ArmNvicNestingLevel_.10_1 + 4294967295;
+  Os_ArmNvicNestingLevel_ = _2;
+  return;
+
+}
+
+
+__attribute__((always_inline))
+OSSETMSR (OSDWORD primaskVal)
+{
+  <bb 2> :
+  __asm__ __volatile__(" msr primask, %0 " :  : "r" primaskVal);
+  return;
+
+}
+
+
+__attribute__((always_inline))
+OSGETMSR ()
+{
+  register OSDWORD primaskReg;
+  OSDWORD D.5912;
+
+  <bb 2> :
+  __asm__ __volatile__(" mrs %0, primask " : "=r" primaskReg);
+  D.5912 = primaskReg;
+
+  <bb 3> :
+<L0>:
+  return D.5912;
+
+}
+
+

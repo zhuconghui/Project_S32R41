@@ -1,0 +1,406 @@
+/**************************************************************************************************
+ *
+ * NXP Confidential Proprietary
+ *
+ * Copyright 2021, 2023 NXP
+ * All Rights Reserved
+ *
+ *****************************************************************************
+ *
+ * NXP Confidential and Proprietary. This software is owned or controlled by NXP and
+ * may only be used strictly in accordance with the applicable license terms.  By
+ * expressly accepting such terms or by downloading, installing, activating and/or
+ * otherwise using the software, you are agreeing that you have read, and that you
+ * agree to comply with and are bound by, such license terms.  If you do not agree to
+ * be bound by the applicable license terms, then you may not retain, install, activate or
+ * otherwise use the software.
+ *
+ **************************************************************************************************/
+
+/** @cond */
+/*==================================================================================================
+ *                                        INCLUDE FILES
+ *==================================================================================================*/
+ .include "oram.inc"                    /* include ORAM header file */
+ .include "tram.inc"                    /* include TRAM header file */
+ .include "wr.inc"                      /* include WR header file */
+ .include "spt_kernel_internals.inc"    /* include local defines */
+
+/*==================================================================================================
+ *                                          SECTION
+ *==================================================================================================*/
+ .section .RsdkSpt3 , "ax"   /* memory section where to store SPT code */
+
+/*==================================================================================================
+ *                                      LOCAL CONSTANTS
+ *==================================================================================================*/
+ .set SAMPLES_PER_CHIRP,        512
+ .set CHIRPS_PER_FRAME,         128
+ .set SDADC_ACTIVE_CHANNELS,      4 /* phy channels per MIPI-CSI2 link */
+ .set CHANNELS_NO,                8 /* total phy channels no */
+ .set BYTES_PER_SDADC_SAMPLE,     2
+ .set BYTES_COMPLEX_FFT_SAMPLE,   4
+ .set OUTPUT_SAMPLES_PER_CH,    (SAMPLES_PER_CHIRP >> 1)
+
+/** @endcond */
+/*==================================================================================================
+ *                                      GLOBAL FUNCTIONS
+ *==================================================================================================*/
+/*================================================================================================*/
+/**
+* @addtogroup spt_kernels_api_func
+* @{
+*
+* @fn             void *RsdkSptRange512smp128crp8ch();
+* @brief          Function for Range FFT 512, 8 channels(CH#0..CH#7)
+* @details        Compute Range FFT storing the results in SRAM.
+*
+* @param[in]      WR_1: 24bit(RE): 0 \n
+*                       24bit(IM): Offset(restricted to 24bit value!) of the first INPUT buffer (sample ADC, CH#0..CH#3),
+*                                 relative to SRAM start address @ref RSDK_SPT_OTHER_BASE_ADDR "RSDK_SPT_OTHER_BASE_ADDR".
+* @verbatim
+*                 INPUT Memory layout:
+*                 SRAM, 16bit Real ADC sample
+*                 63:48     47:32     31:16     15:0
+*                 CH0_0     CH0_1     CH0_2     CH0_3
+*                 CH0_4     CH0_5     CH0_6     CH0_7
+*                 CH1_0     CH1_1     CH1_2     CH1_3
+*                 CH1_4     CH1_5     CH1_6     CH1_7
+*                 CH2_0     CH2_1     CH2_2     CH2_3
+*                 CH2_4     CH2_5     CH2_6     CH2_7
+*                 CH3_0     CH3_1     CH3_2     CH3_3
+*                 CH3_4     CH3_5     CH3_6     CH3_7
+*                 |         |         |         |
+*                 |         |         |         |
+*                 |         |         |         |
+*                 CH0_504   CH0_505   CH0_506   CH0_507
+*                 CH0_508   CH0_509   CH0_510   CH0_511
+*                 CH1_504   CH1_505   CH1_506   CH1_507
+*                 CH1_508   CH1_509   CH1_510   CH1_511
+*                 CH2_504   CH2_505   CH2_506   CH2_507
+*                 CH2_508   CH2_509   CH2_510   CH2_511
+*                 CH3_504   CH3_505   CH3_506   CH3_507
+*                 CH3_508   CH3_509   CH3_510   CH3_511
+*                 ---------------------------------------
+*                 <RESERVED FOR CSI2 STATS: ADDR LINE 1>
+*                 <RESERVED FOR CSI2 STATS: ADDR LINE 2>
+*                 |
+*                 <RESERVED FOR CSI2 STATS: ADDR LINE 10>
+*                 ---------------------------------------
+* @endverbatim
+*
+* @param[in]      WR_2: 24bit(RE): 0 \n
+*                       24bit(IM): Offset(restricted to 24bit value!) of the second INPUT buffer (sample ADC, CH#4..CH#7),
+*                       relative to SRAM start address @ref RSDK_SPT_OTHER_BASE_ADDR "RSDK_SPT_OTHER_BASE_ADDR".
+* @verbatim
+*                 INPUT Memory layout:
+*                 SRAM, 16bit Real ADC sample
+*                 63:48     47:32     31:16     15:0
+*                 CH4_0     CH4_1     CH4_2     CH4_3
+*                 CH4_4     CH4_5     CH4_6     CH4_7
+*                 CH5_0     CH5_1     CH5_2     CH5_3
+*                 CH5_4     CH5_5     CH5_6     CH5_7
+*                 CH6_0     CH6_1     CH6_2     CH6_3
+*                 CH6_4     CH6_5     CH6_6     CH6_7
+*                 CH7_0     CH7_1     CH7_2     CH7_3
+*                 CH7_4     CH7_5     CH7_6     CH7_7
+*                 |         |         |         |
+*                 |         |         |         |
+*                 |         |         |         |
+*                 CH4_504   CH4_505   CH4_506   CH4_507
+*                 CH4_508   CH4_509   CH4_510   CH4_511
+*                 CH5_504   CH5_505   CH5_506   CH5_507
+*                 CH5_508   CH5_509   CH5_510   CH5_511
+*                 CH6_504   CH6_505   CH6_506   CH6_507
+*                 CH6_508   CH6_509   CH6_510   CH6_511
+*                 CH7_504   CH7_505   CH7_506   CH7_507
+*                 CH7_508   CH7_509   CH7_510   CH7_511
+*                 ---------------------------------------
+*                 <RESERVED FOR CSI2 STATS: ADDR LINE 1>
+*                 <RESERVED FOR CSI2 STATS: ADDR LINE 2>
+*                 |
+*                 <RESERVED FOR CSI2 STATS: ADDR LINE 10>
+*                 ---------------------------------------
+* @endverbatim
+*
+* @param[out]     WR_3: 24bit(RE): 0 \n
+*                       24bit(IM): Offset(restricted to 24bit value!) of the OUTPUT buffer (Range FFT results),
+*                       relative to SRAM start address @ref RSDK_SPT_CUBE_BASE_ADDR "RSDK_SPT_CUBE_BASE_ADDR".
+* @verbatim
+*                 OUTPUT Memory layout:
+*                 SRAM, 32bit complex(16b_Im + 16b_Re)
+*                 63:48               47:32               31:16               15:0
+*                 CH0_0-Im-Crp0       CH0_0-Re-Crp0       CH1_0-Im-Crp0       CH1_0-Re-Crp0
+*                 CH2_0-Im-Crp0       CH2_0-Re-Crp0       CH3_0_Im-Crp0       CH3_0-Re-Crp0
+*                 CH4_0-Im-Crp0       CH4_0-Re-Crp0       CH5_0-Im-Crp0       CH5_0-Re-Crp0
+*                 CH6_0-Im-Crp0       CH6_0-Re-Crp0       CH7_0-Im-Crp0       CH7_0-Re-Crp0
+*                 |                   |                   |                   |
+*                 |                   |                   |                   |
+*                 CH0_0-Im-Crp127     CH0_0-Re-Crp127     CH1_0-Im-Crp127     CH1_0-Re-Crp127
+*                 CH2_0-Im-Crp127     CH2_0-Re-Crp127     CH3_0_Im-Crp127     CH3_0-Re-Crp127
+*                 CH4_0-Im-Crp127     CH4_0-Re-Crp127     CH5_0-Im-Crp127     CH5_0-Re-Crp127
+*                 CH6_0-Im-Crp127     CH6_0-Re-Crp127     CH7_0-Im-Crp127     CH7_0-Re-Crp127    ---> RangeBin #0
+*                 -------------------------------------------------------------------------------------------------
+*                 |                   |                   |                   |
+*                 |                   |                   |                   |
+*                 |                   |                   |                   |
+*                 -------------------------------------------------------------------------------------------------
+*                 CH0_255-Im-Crp0     CH0_255-Re-Crp0     CH1_255-Im-Crp0     CH1_255-Re-Crp0
+*                 CH2_255-Im-Crp0     CH2_255-Re-Crp0     CH3_255_Im-Crp0     CH3_255-Re-Crp0
+*                 CH4_255-Im-Crp0     CH4_255-Re-Crp0     CH5_255-Im-Crp0     CH5_255-Re-Crp0
+*                 CH6_255-Im-Crp0     CH6_255-Re-Crp0     CH7_255-Im-Crp0     CH7_255-Re-Crp0
+*                 |                   |                   |                   |
+*                 |                   |                   |                   |
+*                 CH0_255-Im-Crp127   CH0_255-Re-Crp127   CH1_255-Im-Crp127   CH1_255-Re-Crp127
+*                 CH2_255-Im-Crp127   CH2_255-Re-Crp127   CH3_255_Im-Crp127   CH3_255-Re-Crp127
+*                 CH4_255-Im-Crp127   CH4_255-Re-Crp127   CH5_255-Im-Crp127   CH5_255-Re-Crp127
+*                 CH6_255-Im-Crp127   CH6_255-Re-Crp127   CH7_255-Im-Crp127   CH7_255-Re-Crp127  ---> RangeBin #255
+*                 -------------------------------------------------------------------------------------------------
+* @endverbatim
+*
+* @param[in]      WR_4: 24bit(RE): Scaling Factor, e.g. 1 for scale left with 1. \n
+*                       24bit(IM): 0.
+*
+* @return         WR_0: No value returned.
+* @retval         No value returned.
+*
+* @pre            Twiddle coeficients are placed in TRAM at TR_0_0_0 by the Init function. \n
+*                 Window coeficients are placed in TRAM at TR_0_80_0 by the Init function. \n
+*                 MIPI_EVENT_LINE is RFE HW connection dependent. Can be configured from spt_kernel_internals.inc.
+*
+* @note           The kernel implementation guarantees no saturation, for 0 output scaling factor.
+*                 If other scaling is used, it's the user responsibility to prevent saturation. \n
+*                 This kernel implementation assumes that each ADC buffer is followed by BYTES_CSI2_STATS [80B] reserved for MIPI-CSI2 statistics. \n
+*                 The current implementation is ONLY to be used in combination with 128 Doppler FFT. \n
+*                 The input buffer CANNOT be reused for the output buffer. \n
+*                 All buffers MUST be 8 bytes aligned.
+*
+* @}*/
+/*================================================================================================*/
+/** @cond */
+ .global RsdkSptRange512smp128crp8ch
+ .global RsdkSptRange512smp128crp8ch_size
+
+RsdkSptRange512smp128crp8ch:
+    /*=========================================================================
+     * Kernel watermarking instruction without side-effects. WR_0 can be ovewritten
+     * with the output parameter, according to the SPT calling convention
+     *=========================================================================*/
+    set #RSDK_SPT_KERNEL_WATERMARK, WR_0
+
+/*=========================================================================
+ * API parameter passing
+ *=========================================================================*/
+    /*=========================================================================
+     * INPUT
+     *=========================================================================
+     * WR_11: 24bit(RE): OPRAM address where to put SDADC samples of CH#0..CH#3 per chirp
+     *        24bit(IM): SRAM sample buffer address offset for CH#0..CH#3
+     * WR_12: 24bit(RE): OPRAM address where to put SDADC samples of CH#4..CH#7 per chirp
+     *        24bit(IM): SRAM sample buffer address offset for CH#4..CH#7
+     * WR_13: 24bit(RE): no adder for OPRAM address
+     *        24bit(IM): offset to 2nd / odd chirp in SDADC sample buffer
+     *=========================================================================*/
+    add .noshift .mod24 WR_1, #(OR_0_0_0), WR_11
+    add .noshift .mod24 WR_2, #(OR_2_0_0), WR_12
+    set #((SAMPLES_PER_CHIRP * SDADC_ACTIVE_CHANNELS * BYTES_PER_SDADC_SAMPLE + BYTES_CSI2_STATS) << 24), WR_13
+
+    /*=========================================================================
+     * OUTPUT
+     *=========================================================================
+     * WR_14: 24bit(RE): OPRAM address of FFT results for all 8 channels
+     *        24bit(IM): SRAM FFT result array offset
+     * WR_15: 24bit(RE): no adder for OPRAM address
+     *        24bit(IM): adder per loop #for FFT result array address pointer
+     *=========================================================================*/
+    add .noshift .mod24 WR_3, #(OR_1_0_0), WR_14
+    set #((CHANNELS_NO * BYTES_COMPLEX_FFT_SAMPLE) << 24), WR_15
+
+/*=========================================================================
+ * START RANGE FFT512 SECTION
+ *=========================================================================*/
+    /*=========================================================================
+     * set WR_46, for custom left shift. By default, left shift 8
+     *=========================================================================*/
+    set #0x8, WR_46
+    sub .noshift .mod24 WR_4, WR_46, WR_46
+
+    /*=========================================================================
+     * LOOP: loop #count is chirp number per frame divided by two as samples of two chirps are buffered
+     *=========================================================================*/
+    loop #(CHIRPS_PER_FRAME >> 1)
+
+        /*=========================================================================
+         * LOOP: loop #count 2 as SDADC sample array is double buffered, array holds samples of two chirps
+         *=========================================================================*/
+        loop #2
+
+ .if ENABLE_SW_EVT_WAIT==1
+            /*=========================================================================
+             * EVT: set event-7, event level high
+             *=========================================================================*/
+            evt.cpu 0xF
+
+            /*=========================================================================
+             * WAIT: wait.ext SW generated event
+             *=========================================================================*/
+            wait.cpu 0xF
+
+ .elseif ENABLE_CHIRP_ACQ_WAIT==1
+            /*=========================================================================
+             * WAIT: wait.ext pos edge chirp acquisition done
+             *=========================================================================*/
+            wait.ext MIPI_EVENT_LINE
+
+ .else
+ .error "ENABLE_SW_EVT_WAIT=1 or ENABLE_CHIRP_ACQ_WAIT=1 must be defined."
+ .endif
+
+            /*=========================================================================
+             * PDMA: transfer SDADC samples from even/odd chirp of all channels(CH#0..CH#7) from SRAM to OPRAM
+             *=========================================================================*/
+            pdma.ind .signext .16real .sysram2opram  .sync .notrace, SAMPLES_PER_CHIRP, RSDK_SPT_OTHER_BASE_ADDR, WR_11, 0x0, 0x1, 0x0, 0x1
+            pdma.ind .signext .16real .sysram2opram .async .notrace, SAMPLES_PER_CHIRP, RSDK_SPT_OTHER_BASE_ADDR, WR_12, 0x0, 0x1, 0x0, 0x1
+
+            /*=========================================================================
+             * COPY simple + R2I: combine CH#<n> with CH#<n+1> samples, n=+2 for real FFTs
+             *=========================================================================*/
+            copy.simple SAMPLES_PER_CHIRP, OR_0_0_0,  OR_1_0_0, 0x4, 0x1
+            copy.simple SAMPLES_PER_CHIRP, OR_0_2_0, OR_1_64_0, 0x4, 0x1
+            copy.partial_r2i .keep_orig, SAMPLES_PER_CHIRP, OR_0_1_0,  OR_1_0_0, 0x4, 0x1
+            copy.partial_r2i .keep_orig, SAMPLES_PER_CHIRP, OR_0_3_0, OR_1_64_0, 0x4, 0x1
+
+            /*=========================================================================
+             * FFT512 for CH#0 & CH#1
+             *=========================================================================
+             *=========================================================================
+             * RDX Round 0(+win, prescaling)...5(split round), Twiddle in TR_0_0_0, Window in TR_0_80_0,
+             * prescaling with 8 to benefit of having OPRAM on 24bit (Input on 16bit)
+             *=========================================================================*/
+            rdx4 .cmplx .real_win_real_tram .qext .noovs .round0 .shift8, SAMPLES_PER_CHIRP, OR_1_0_0, OR_0_0_0, 0x1, 0x1, TR_0_80_0, .mod0, 0x1
+            rdx4 .cmplx .no_win .qext .noovs .round1 .nosft, SAMPLES_PER_CHIRP, OR_0_0_0, OR_1_0_0, 0x1, 0x1, TR_0_0_0, .mod0, 0x1
+            rdx4 .cmplx .no_win .qext .noovs .round2 .nosft, SAMPLES_PER_CHIRP, OR_1_0_0, OR_0_0_0, 0x1, 0x1, TR_0_0_0, .mod0, 0x1
+            rdx4 .cmplx .no_win .qext .noovs .round3 .nosft, SAMPLES_PER_CHIRP, OR_0_0_0, OR_1_0_0, 0x1, 0x1, TR_0_0_0, .mod0, 0x1
+            rdx2 .cmplx .nosplit .qext .noovs .round4 .nosft, SAMPLES_PER_CHIRP, OR_1_0_0, OR_0_0_0, 0x1, 0x1, TR_0_0_0
+            rdx2 .cmplx .opsplit .noqext .noovs .round5 .nosft, SAMPLES_PER_CHIRP, OR_0_0_0, OR_1_0_0, 0x1, 0x1, TR_0_0_0
+
+            /*=========================================================================
+             * FFT512 for CH#2 & CH#3
+             *=========================================================================
+             *=========================================================================
+             * RDX Round 0(+win, prescaling)...5(split round), Twiddle in TR_0_0_0, Window in TR_0_80_0,
+             * prescaling with 8 to benefit of having OPRAM on 24bit (Input on 16bit)
+             *=========================================================================*/
+            rdx4 .cmplx .real_win_real_tram .qext .noovs .round0 .shift8, SAMPLES_PER_CHIRP, OR_1_64_0, OR_0_64_0, 0x1, 0x1, TR_0_80_0, .mod0, 0x1
+            rdx4 .cmplx .no_win .qext .noovs .round1 .nosft, SAMPLES_PER_CHIRP, OR_0_64_0, OR_1_64_0, 0x1, 0x1, TR_0_0_0, .mod0, 0x1
+            rdx4 .cmplx .no_win .qext .noovs .round2 .nosft, SAMPLES_PER_CHIRP, OR_1_64_0, OR_0_64_0, 0x1, 0x1, TR_0_0_0, .mod0, 0x1
+            rdx4 .cmplx .no_win .qext .noovs .round3 .nosft, SAMPLES_PER_CHIRP, OR_0_64_0, OR_1_64_0, 0x1, 0x1, TR_0_0_0, .mod0, 0x1
+            rdx2 .cmplx .nosplit .qext .noovs .round4 .nosft, SAMPLES_PER_CHIRP, OR_1_64_0, OR_0_64_0, 0x1, 0x1, TR_0_0_0
+            rdx2 .cmplx .opsplit .noqext .noovs .round5 .nosft, SAMPLES_PER_CHIRP, OR_0_64_0, OR_1_64_0, 0x1, 0x1, TR_0_0_0
+
+            /*=========================================================================
+             * VMT: custom shift(WR_46). Default, right shift 8.
+             * Linear read, interleaved channel write: CH#0..CH#3
+             *=========================================================================*/
+            vmt.shift_sq2s2 .cmplx .rst_sum .in_48 .op_off .no_sq2s1 WR_46 .no_sq2s3, OUTPUT_SAMPLES_PER_CH,  OR_1_0_0, OR_0_0_0, 0x1, 0x8
+            vmt.shift_sq2s2 .cmplx .rst_sum .in_48 .op_off .no_sq2s1 WR_46 .no_sq2s3, OUTPUT_SAMPLES_PER_CH, OR_1_32_0, OR_0_1_0, 0x1, 0x8
+            vmt.shift_sq2s2 .cmplx .rst_sum .in_48 .op_off .no_sq2s1 WR_46 .no_sq2s3, OUTPUT_SAMPLES_PER_CH, OR_1_64_0, OR_0_2_0, 0x1, 0x8
+            vmt.shift_sq2s2 .cmplx .rst_sum .in_48 .op_off .no_sq2s1 WR_46 .no_sq2s3, OUTPUT_SAMPLES_PER_CH, OR_1_96_0, OR_0_3_0, 0x1, 0x8
+
+            /*=========================================================================
+             * SYNC: make sure the PDMA for CH#4..CH#7 has finished
+             *=========================================================================*/
+            sync
+
+            /*=========================================================================
+             * COPY simple + R2I: combine CH#<n> with CH#<n+1> samples, n=+2 for real FFTs
+             *=========================================================================*/
+            copy.simple SAMPLES_PER_CHIRP, OR_2_0_0,  OR_3_0_0, 0x4, 0x1
+            copy.simple SAMPLES_PER_CHIRP, OR_2_2_0, OR_3_64_0, 0x4, 0x1
+            copy.partial_r2i .keep_orig, SAMPLES_PER_CHIRP, OR_2_1_0,  OR_3_0_0, 0x4, 0x1
+            copy.partial_r2i .keep_orig, SAMPLES_PER_CHIRP, OR_2_3_0, OR_3_64_0, 0x4, 0x1
+
+            /*=========================================================================
+             * FFT512 for CH#4 & CH#5
+             *=========================================================================
+             *=========================================================================
+             * RDX Round 0(+win, prescaling)...5(split round), Twiddle in TR_0_0_0, Window in TR_0_80_0,
+             * prescaling with 8 to benefit of having OPRAM on 24bit (Input on 16bit)
+             *=========================================================================*/
+            rdx4 .cmplx .real_win_real_tram .qext .noovs .round0 .shift8, SAMPLES_PER_CHIRP, OR_3_0_0, OR_2_0_0, 0x1, 0x1, TR_0_80_0, .mod0, 0x1
+            rdx4 .cmplx .no_win .qext .noovs .round1 .nosft, SAMPLES_PER_CHIRP, OR_2_0_0, OR_3_0_0, 0x1, 0x1, TR_0_0_0, .mod0, 0x1
+            rdx4 .cmplx .no_win .qext .noovs .round2 .nosft, SAMPLES_PER_CHIRP, OR_3_0_0, OR_2_0_0, 0x1, 0x1, TR_0_0_0, .mod0, 0x1
+            rdx4 .cmplx .no_win .qext .noovs .round3 .nosft, SAMPLES_PER_CHIRP, OR_2_0_0, OR_3_0_0, 0x1, 0x1, TR_0_0_0, .mod0, 0x1
+            rdx2 .cmplx .nosplit .qext .noovs .round4 .nosft, SAMPLES_PER_CHIRP, OR_3_0_0, OR_2_0_0, 0x1, 0x1, TR_0_0_0
+            rdx2 .cmplx .opsplit .noqext .noovs .round5 .nosft, SAMPLES_PER_CHIRP, OR_2_0_0, OR_3_0_0, 0x1, 0x1, TR_0_0_0
+
+            /*=========================================================================
+             * FFT512 for CH#6 & CH#7
+             *=========================================================================
+             *=========================================================================
+             * RDX Round 0(+win, prescaling)...5(split round), Twiddle in TR_0_0_0, Window in TR_0_80_0,
+             * prescaling with 8 to benefit of having OPRAM on 24bit (Input on 16bit)
+             *=========================================================================*/
+            rdx4 .cmplx .real_win_real_tram .qext .noovs .round0 .shift8, SAMPLES_PER_CHIRP, OR_3_64_0, OR_2_64_0, 0x1, 0x1, TR_0_80_0, .mod0, 0x1
+            rdx4 .cmplx .no_win .qext .noovs .round1 .nosft, SAMPLES_PER_CHIRP, OR_2_64_0, OR_3_64_0, 0x1, 0x1, TR_0_0_0, .mod0, 0x1
+            rdx4 .cmplx .no_win .qext .noovs .round2 .nosft, SAMPLES_PER_CHIRP, OR_3_64_0, OR_2_64_0, 0x1, 0x1, TR_0_0_0, .mod0, 0x1
+            rdx4 .cmplx .no_win .qext .noovs .round3 .nosft, SAMPLES_PER_CHIRP, OR_2_64_0, OR_3_64_0, 0x1, 0x1, TR_0_0_0, .mod0, 0x1
+            rdx2 .cmplx .nosplit .qext .noovs .round4 .nosft, SAMPLES_PER_CHIRP, OR_3_64_0, OR_2_64_0, 0x1, 0x1, TR_0_0_0
+            rdx2 .cmplx .opsplit .noqext .noovs .round5 .nosft, SAMPLES_PER_CHIRP, OR_2_64_0, OR_3_64_0, 0x1, 0x1, TR_0_0_0
+
+            /*=========================================================================
+             * VMT: custom shift(WR_46). Default, right shift 8.
+             * Linear read, interleaved channel write: CH#4..CH#7
+             *=========================================================================*/
+            vmt.shift_sq2s2 .cmplx .rst_sum .in_48 .op_off .no_sq2s1 WR_46 .no_sq2s3, OUTPUT_SAMPLES_PER_CH,  OR_3_0_0, OR_0_4_0, 0x1, 0x8
+            vmt.shift_sq2s2 .cmplx .rst_sum .in_48 .op_off .no_sq2s1 WR_46 .no_sq2s3, OUTPUT_SAMPLES_PER_CH, OR_3_32_0, OR_0_5_0, 0x1, 0x8
+            vmt.shift_sq2s2 .cmplx .rst_sum .in_48 .op_off .no_sq2s1 WR_46 .no_sq2s3, OUTPUT_SAMPLES_PER_CH, OR_3_64_0, OR_0_6_0, 0x1, 0x8
+            vmt.shift_sq2s2 .cmplx .rst_sum .in_48 .op_off .no_sq2s1 WR_46 .no_sq2s3, OUTPUT_SAMPLES_PER_CH, OR_3_96_0, OR_0_7_0, 0x1, 0x8
+
+            /*=========================================================================
+             * COPY 8x8 transpose for all channels
+             *=========================================================================*/
+            copy.trans CHANNELS_NO*OUTPUT_SAMPLES_PER_CH, OR_0_0_0, OR_1_0_0, 0x1, 0x1, 0x8, 0x8
+
+            /*=========================================================================
+             * PDMA: transfer(with skip) range FFT results of all channels from OPRAM to SRAM
+             *=========================================================================*/
+            pdma.ind .signext .16cmplx .opram2sysram .async .notrace, CHANNELS_NO*OUTPUT_SAMPLES_PER_CH, RSDK_SPT_CUBE_BASE_ADDR, WR_14, 0x0, 0x1, (4*(CHIRPS_PER_FRAME - 1)), 0x4
+
+            /*=========================================================================
+             * ADD: increment SRAM offset in SDADC sample buffers to second/odd chirp
+             *=========================================================================*/
+            add .noshift .mod24 WR_11, WR_13, WR_11
+            add .noshift .mod24 WR_12, WR_13, WR_12
+
+            /*=========================================================================
+             * ADD: increment SRAM offset in FFT result buffer to next chirp for all channels
+             *=========================================================================*/
+            add .noshift .mod24 WR_14, WR_15, WR_14
+
+        /*=========================================================================
+         * NEXT: end of inner loop
+         *=========================================================================*/
+        next
+
+        /*=========================================================================
+         * ADD: reset work registers on holding addresses for SDADC sample transfer
+         *=========================================================================*/
+        add .noshift .mod24 WR_1, #OR_0_0_0, WR_11
+        add .noshift .mod24 WR_2, #OR_2_0_0, WR_12
+
+    /*=========================================================================
+     * NEXT: end of outer loop
+     *=========================================================================*/
+    next
+
+/*=========================================================================
+ * STOP: end of FFT512 range program
+ *=========================================================================*/
+ stop
+
+ .set RsdkSptRange512smp128crp8ch_size, .-RsdkSptRange512smp128crp8ch
+/*******************************************************************************
+ * EOF
+ ******************************************************************************/
+/** @endcond */

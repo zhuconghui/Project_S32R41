@@ -1,0 +1,408 @@
+Spt_ConfigHw (const struct Spt_DriverInitType * const pSptInitInfo, volatile struct SPT_Type * pSptRegs)
+{
+  uint32 sptHwState;
+  Std_ReturnType retStatus;
+  Std_ReturnType D.7059;
+
+  <bb 2> :
+  retStatus = 0;
+  _1 = pSptRegs->CS_STATUS3;
+  _2 = _1 >> 3;
+  sptHwState = _2 & 15;
+  if (sptHwState != 0)
+    goto <bb 3>; [INV]
+  else
+    goto <bb 5>; [INV]
+
+  <bb 3> :
+  if (sptHwState != 1)
+    goto <bb 4>; [INV]
+  else
+    goto <bb 5>; [INV]
+
+  <bb 4> :
+  retStatus = Spt_StopHw ();
+
+  <bb 5> :
+  if (retStatus == 0)
+    goto <bb 6>; [INV]
+  else
+    goto <bb 8>; [INV]
+
+  <bb 6> :
+  Spt_ConfigEvtInterrupts (pSptRegs);
+  Spt_ConfigEcsInterrupts (pSptRegs, 0);
+  _3 = pSptRegs->CS_MODE_CTRL;
+  _4 = _3 | 65536;
+  pSptRegs->CS_MODE_CTRL = _4;
+  _5 = pSptRegs->CS_MODE_CTRL;
+  _6 = _5 | 32768;
+  pSptRegs->CS_MODE_CTRL = _6;
+  pSptRegs->PDMA_CONTROL = 0;
+  _7 = pSptInitInfo->hwPlatSpec.dspEn;
+  if (_7 != 0)
+    goto <bb 7>; [INV]
+  else
+    goto <bb 8>; [INV]
+
+  <bb 7> :
+  Spt_ConfigDspInterrupt (pSptRegs);
+  Spt_DspBoot (pSptRegs, pSptInitInfo);
+
+  <bb 8> :
+  if (retStatus == 0)
+    goto <bb 9>; [INV]
+  else
+    goto <bb 10>; [INV]
+
+  <bb 9> :
+  retStatus = Spt_CheckRst (pSptRegs);
+
+  <bb 10> :
+  D.7059 = retStatus;
+
+  <bb 11> :
+<L10>:
+  return D.7059;
+
+}
+
+
+Spt_StopHw ()
+{
+  volatile uint32 timeout;
+  volatile struct SPT_Type * const pSptRegs;
+  Std_ReturnType retStatus;
+  Std_ReturnType D.7047;
+
+  <bb 2> :
+  retStatus = 0;
+  pSptRegs = Spt_GetMemMap ();
+  _1 = pSptRegs->CS_MODE_CTRL;
+  _2 = _1 | 2;
+  pSptRegs->CS_MODE_CTRL = _2;
+  timeout = 1000;
+  goto <bb 4>; [INV]
+
+  <bb 3> :
+  timeout.9_3 = timeout;
+  _4 = timeout.9_3 + 4294967295;
+  timeout = _4;
+
+  <bb 4> :
+  _5 = pSptRegs->CS_STATUS3;
+  _6 = _5 >> 3;
+  _7 = _6 & 15;
+  if (_7 != 1)
+    goto <bb 5>; [INV]
+  else
+    goto <bb 6>; [INV]
+
+  <bb 5> :
+  timeout.10_8 = timeout;
+  if (timeout.10_8 != 0)
+    goto <bb 3>; [INV]
+  else
+    goto <bb 6>; [INV]
+
+  <bb 6> :
+  timeout.11_9 = timeout;
+  if (timeout.11_9 == 0)
+    goto <bb 7>; [INV]
+  else
+    goto <bb 8>; [INV]
+
+  <bb 7> :
+  retStatus = RsdkReportError (69641, 4024, 0, 6, 9);
+
+  <bb 8> :
+  pSptRegs->MEM_ERR_INT_EN = 0;
+  pSptRegs->HW_ACC_ERR_IE = 0;
+  pSptRegs->CS_INTEN1 = 0;
+  pSptRegs->CS_INTEN0 = 0;
+  pSptRegs->HIST_OVF_IE = 0;
+  pSptRegs->CS_EVT1_INTEN = 0;
+  pSptRegs->WR_ACCESS_ERR_INT_EN = 0;
+  pSptRegs->GBL_STATUS_IE = 0;
+  pSptRegs->DSP_ERR_INFO_INT_EN = 0;
+  pSptRegs->SCS0_INTEN0 = 0;
+  pSptRegs->SCS1_INTEN0 = 0;
+  pSptRegs->SCS0_INTEN1 = 0;
+  pSptRegs->SCS1_INTEN1 = 0;
+  D.7047 = retStatus;
+
+  <bb 9> :
+<L6>:
+  return D.7047;
+
+}
+
+
+Spt_WaitForSptDone (volatile struct SPT_Type * pSptRegs, volatile sint32 * sptRetValue)
+{
+  Std_ReturnType retStatus;
+  volatile uint32 timeout;
+  Std_ReturnType D.7042;
+
+  <bb 2> :
+  timeout = 100000;
+  retStatus = 0;
+  goto <bb 14>; [INV]
+
+  <bb 3> :
+  timeout.6_1 = timeout;
+  _2 = timeout.6_1 + 4294967295;
+  timeout = _2;
+  retStatus = Spt_CheckAndResetHwError (pSptRegs, &gSptMemPer.errInfo);
+  if (retStatus != 0)
+    goto <bb 4>; [INV]
+  else
+    goto <bb 5>; [INV]
+
+  <bb 4> :
+  Spt_SetDrvState (324508642);
+  _3 = (unsigned int) retStatus;
+  _4 = _3 + 69632;
+  retStatus = RsdkReportError (_4, 4024, 0, 5, retStatus);
+  goto <bb 15>; [INV]
+
+  <bb 5> :
+  timeout.7_5 = timeout;
+  if (timeout.7_5 == 0)
+    goto <bb 6>; [INV]
+  else
+    goto <bb 7>; [INV]
+
+  <bb 6> :
+  RsdkTraceLogEvent (2, 103, 0);
+  retStatus = RsdkReportError (69634, 4024, 0, 5, 2);
+  Spt_SetDrvState (324508642);
+
+  <bb 7> :
+  _6 = pSptRegs->CS_STATUS0;
+  _7 = _6 >> 3;
+  _8 = _7 & 1;
+  if (_8 == 1)
+    goto <bb 8>; [INV]
+  else
+    goto <bb 14>; [INV]
+
+  <bb 8> :
+  _9 = pSptRegs->CS_STATUS0;
+  _10 = _9 | 8;
+  pSptRegs->CS_STATUS0 = _10;
+  retStatus = Spt_CheckAndResetHwError (pSptRegs, &gSptMemPer.errInfo);
+  if (retStatus != 0)
+    goto <bb 9>; [INV]
+  else
+    goto <bb 10>; [INV]
+
+  <bb 9> :
+  Spt_SetDrvState (324508642);
+  _11 = (unsigned int) retStatus;
+  _12 = _11 + 69632;
+  retStatus = RsdkReportError (_12, 4024, 0, 5, retStatus);
+  goto <bb 15>; [INV]
+
+  <bb 10> :
+  _13 = gSptMemPer.state;
+  _14 = Spt_CheckUnexpectedStop (pSptRegs, _13);
+  if (_14 != 0)
+    goto <bb 11>; [INV]
+  else
+    goto <bb 12>; [INV]
+
+  <bb 11> :
+  retStatus = RsdkReportError (69642, 4024, 0, 5, 10);
+  goto <bb 13>; [INV]
+
+  <bb 12> :
+  Spt_GetKernelRetVal (sptRetValue);
+
+  <bb 13> :
+  Spt_SetDrvState (324508640);
+  goto <bb 15>; [INV]
+
+  <bb 14> :
+  timeout.8_15 = timeout;
+  if (timeout.8_15 != 0)
+    goto <bb 3>; [INV]
+  else
+    goto <bb 15>; [INV]
+
+  <bb 15> :
+  D.7042 = retStatus;
+
+  <bb 16> :
+<L14>:
+  return D.7042;
+
+}
+
+
+Spt_StartExec (volatile struct SPT_Type * pSptRegs)
+{
+  Std_ReturnType retStatus;
+  volatile uint32 timeout;
+  uint32 startBit;
+  uint32 stopBit;
+  uint32 bits32;
+  Std_ReturnType D.7022;
+
+  <bb 2> :
+  bits32 = 0;
+  timeout = 10000;
+  retStatus = 0;
+  bits32 = pSptRegs->GBL_CTRL;
+  _1 = bits32 | 4;
+  pSptRegs->GBL_CTRL = _1;
+
+  <bb 3> :
+  timeout.1_2 = timeout;
+  _3 = timeout.1_2 + 4294967295;
+  timeout = _3;
+  _4 = pSptRegs->CS_STATUS0;
+  _5 = _4 >> 3;
+  stopBit = _5 & 1;
+  _6 = pSptRegs->GBL_CTRL;
+  _7 = _6 >> 2;
+  startBit = _7 & 1;
+  timeout.2_8 = timeout;
+  if (timeout.2_8 != 0)
+    goto <bb 4>; [INV]
+  else
+    goto <bb 6>; [INV]
+
+  <bb 4> :
+  if (stopBit != 0)
+    goto <bb 3>; [INV]
+  else
+    goto <bb 5>; [INV]
+
+  <bb 5> :
+  if (startBit != 0)
+    goto <bb 3>; [INV]
+  else
+    goto <bb 6>; [INV]
+
+  <bb 6> :
+  timeout.3_9 = timeout;
+  if (timeout.3_9 == 0)
+    goto <bb 7>; [INV]
+  else
+    goto <bb 8>; [INV]
+
+  <bb 7> :
+  Spt_SetDrvState (324508642);
+  retStatus = RsdkReportError (69640, 4024, 0, 4, 8);
+
+  <bb 8> :
+  D.7022 = retStatus;
+
+  <bb 9> :
+<L6>:
+  return D.7022;
+
+}
+
+
+Spt_DspBoot (volatile struct SPT_Type * pSptRegs, const struct Spt_DriverInitType * const pSptInitInfo)
+{
+  uint32 isDspInReset;
+
+  <bb 2> :
+  _1 = pSptRegs->DSP_RST_REG;
+  isDspInReset = _1 & 1;
+  if (isDspInReset == 0)
+    goto <bb 3>; [INV]
+  else
+    goto <bb 4>; [INV]
+
+  <bb 3> :
+  pSptRegs->DSP_CONFIG_REG = 2;
+  pSptRegs->DSP_RST_REG = 1;
+  Spt_DspBootloaderCb ();
+  _2 = pSptRegs->DSP_CONFIG_REG;
+  _3 = _2 & 4294967293;
+  pSptRegs->DSP_CONFIG_REG = _3;
+
+  <bb 4> :
+  return;
+
+}
+
+
+Spt_SetDrvState (Spt_DrvStateType newState)
+{
+  <bb 2> :
+  gSptMemPer.state = newState;
+  return;
+
+}
+
+
+RsdkReportError (rsdkStatus_t rsdkErrCode, uint16 moduleId, uint8 instanceId, uint8 apiId, uint8 errCode)
+{
+  Std_ReturnType D.7029;
+  int iftmp.5;
+  int iftmp.4;
+
+  <bb 2> :
+  _1 = rsdkErrCode & 255;
+  _2 = (long unsigned int) errCode;
+  if (_1 == _2)
+    goto <bb 3>; [INV]
+  else
+    goto <bb 4>; [INV]
+
+  <bb 3> :
+  iftmp.4 = 1;
+  goto <bb 5>; [INV]
+
+  <bb 4> :
+  iftmp.4 = -1;
+
+  <bb 5> :
+  iftmp.5 = iftmp.4;
+  Det_ReportError (moduleId, instanceId, apiId, errCode);
+  D.7029 = 1;
+
+  <bb 6> :
+<L3>:
+  return D.7029;
+
+}
+
+
+__attribute__((unused))
+rsdk_test_not_null_lnk_sym (uintptr_t symName)
+{
+  volatile uintptr_t dummy_volatile;
+  uint8 retVal;
+  uint8 D.7013;
+
+  <bb 2> :
+  dummy_volatile = symName;
+  dummy_volatile.0_1 = dummy_volatile;
+  if (dummy_volatile.0_1 != 0)
+    goto <bb 3>; [INV]
+  else
+    goto <bb 4>; [INV]
+
+  <bb 3> :
+  retVal = 1;
+  goto <bb 5>; [INV]
+
+  <bb 4> :
+  retVal = 0;
+
+  <bb 5> :
+  D.7013 = retVal;
+
+  <bb 6> :
+<L3>:
+  return D.7013;
+
+}
+
+

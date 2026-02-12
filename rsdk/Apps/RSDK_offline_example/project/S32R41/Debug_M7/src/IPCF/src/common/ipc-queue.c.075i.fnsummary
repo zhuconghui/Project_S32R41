@@ -1,0 +1,595 @@
+Symbol table:
+
+ipc_memcpy/21 (ipc_memcpy) @06177c40
+  Type: function
+  Visibility: external public
+  References: 
+  Referring: 
+  Availability: not_available
+  Function flags:
+  Called by: ipc_queue_pop/15 ipc_queue_push/16 
+  Calls: 
+ipc_queue_check_integrity/20 (ipc_queue_check_integrity) @061777e0
+  Type: function definition analyzed
+  Visibility: force_output externally_visible no_reorder public
+  References: 
+  Referring: 
+  Availability: available
+  Function flags: body
+  Called by: ipc_queue_pop/15 
+  Calls: 
+ipc_queue_free/19 (ipc_queue_free) @06177540
+  Type: function definition analyzed
+  Visibility: force_output externally_visible no_reorder public
+  References: 
+  Referring: 
+  Availability: available
+  Function flags: body
+  Called by: 
+  Calls: 
+ipc_queue_init/18 (ipc_queue_init) @061772a0
+  Type: function definition analyzed
+  Visibility: force_output externally_visible no_reorder public
+  References: 
+  Referring: 
+  Availability: available
+  Function flags: body
+  Called by: 
+  Calls: ipc_queue_sync_index/17 
+ipc_queue_sync_index/17 (ipc_queue_sync_index) @06177000
+  Type: function definition analyzed
+  Visibility: force_output no_reorder prevailing_def_ironly
+  References: 
+  Referring: 
+  Availability: available
+  Function flags: body
+  Called by: ipc_queue_init/18 
+  Calls: 
+ipc_queue_push/16 (ipc_queue_push) @0616fee0
+  Type: function definition analyzed
+  Visibility: force_output externally_visible no_reorder public
+  References: 
+  Referring: 
+  Availability: available
+  Function flags: body
+  Called by: 
+  Calls: ipc_memcpy/21 
+ipc_queue_pop/15 (ipc_queue_pop) @0616fc40
+  Type: function definition analyzed
+  Visibility: force_output externally_visible no_reorder public
+  References: 
+  Referring: 
+  Availability: available
+  Function flags: body
+  Called by: 
+  Calls: ipc_memcpy/21 ipc_queue_check_integrity/20 
+ipc_queue_check_integrity (struct ipc_queue * queue)
+{
+  sint8 err;
+  sint8 D.5996;
+  struct ipc_ring * _1;
+  long long unsigned int _2;
+  struct ipc_ring * _3;
+  long long unsigned int _4;
+  sint8 _10;
+
+  <bb 2> :
+  err_6 = -6;
+  _1 = queue_8(D)->pop_ring;
+  _2 = _1->sentinel;
+  if (_2 == 5138124842591277129)
+    goto <bb 3>; [INV]
+  else
+    goto <bb 5>; [INV]
+
+  <bb 3> :
+  _3 = queue_8(D)->push_ring;
+  _4 = _3->sentinel;
+  if (_4 == 5138124842591277129)
+    goto <bb 4>; [INV]
+  else
+    goto <bb 5>; [INV]
+
+  <bb 4> :
+  err_9 = 0;
+
+  <bb 5> :
+  # err_5 = PHI <err_6(2), err_6(3), err_9(4)>
+  _10 = err_5;
+
+  <bb 6> :
+<L4>:
+  return _10;
+
+}
+
+
+ipc_queue_free (struct ipc_queue * queue)
+{
+  struct ipc_ring * _1;
+  struct ipc_ring * _2;
+  long long unsigned int _3;
+  struct ipc_ring * _4;
+  long long unsigned int _5;
+  struct ipc_ring * _6;
+  struct ipc_ring * _7;
+  struct ipc_ring * _8;
+
+  <bb 2> :
+  if (queue_11(D) != 0B)
+    goto <bb 3>; [INV]
+  else
+    goto <bb 8>; [INV]
+
+  <bb 3> :
+  _1 = queue_11(D)->push_ring;
+  if (_1 != 0B)
+    goto <bb 4>; [INV]
+  else
+    goto <bb 7>; [INV]
+
+  <bb 4> :
+  _2 = queue_11(D)->push_ring;
+  _3 = _2->sentinel;
+  if (_3 == 5138124842591277129)
+    goto <bb 6>; [INV]
+  else
+    goto <bb 5>; [INV]
+
+  <bb 5> :
+  _4 = queue_11(D)->push_ring;
+  _5 = _4->sentinel;
+  if (_5 == 6073471649104220233)
+    goto <bb 6>; [INV]
+  else
+    goto <bb 7>; [INV]
+
+  <bb 6> :
+  queue_11(D)->elem_num = 0;
+  queue_11(D)->elem_size = 0;
+  _6 = queue_11(D)->push_ring;
+  _6->sentinel = 0;
+  _7 = queue_11(D)->push_ring;
+  _7->write ={v} 0;
+  _8 = queue_11(D)->push_ring;
+  _8->read ={v} 0;
+
+  <bb 7> :
+  queue_11(D)->push_ring = 0B;
+
+  <bb 8> :
+  return;
+
+}
+
+
+ipc_queue_init (struct ipc_queue * queue, struct ipc_queue_data queue_data)
+{
+  sint8 err;
+  sint8 D.5983;
+  long unsigned int _1;
+  long unsigned int _2;
+  short unsigned int _3;
+  unsigned char _4;
+  unsigned char _5;
+  unsigned char _6;
+  ipc_shm_queue_type _7;
+  ipc_shm_queue_type _8;
+  short unsigned int _9;
+  short unsigned int _10;
+  unsigned char _11;
+  long unsigned int _12;
+  struct ipc_ring * _13;
+  long unsigned int _14;
+  struct ipc_ring * _15;
+  ipc_shm_queue_type _16;
+  sint8 _28;
+
+  <bb 2> :
+  err_19 = -3;
+  if (queue_20(D) != 0B)
+    goto <bb 3>; [INV]
+  else
+    goto <bb 11>; [INV]
+
+  <bb 3> :
+  _1 = queue_data.push_addr;
+  if (_1 != 0)
+    goto <bb 4>; [INV]
+  else
+    goto <bb 11>; [INV]
+
+  <bb 4> :
+  _2 = queue_data.pop_addr;
+  if (_2 != 0)
+    goto <bb 5>; [INV]
+  else
+    goto <bb 11>; [INV]
+
+  <bb 5> :
+  _3 = queue_data.elem_num;
+  if (_3 != 0)
+    goto <bb 6>; [INV]
+  else
+    goto <bb 11>; [INV]
+
+  <bb 6> :
+  _4 = queue_data.elem_size;
+  if (_4 != 0)
+    goto <bb 7>; [INV]
+  else
+    goto <bb 11>; [INV]
+
+  <bb 7> :
+  _5 = queue_data.elem_size;
+  _6 = _5 & 7;
+  if (_6 == 0)
+    goto <bb 8>; [INV]
+  else
+    goto <bb 11>; [INV]
+
+  <bb 8> :
+  _7 = queue_data.queue_type;
+  if (_7 == 0)
+    goto <bb 10>; [INV]
+  else
+    goto <bb 9>; [INV]
+
+  <bb 9> :
+  _8 = queue_data.queue_type;
+  if (_8 == 1)
+    goto <bb 10>; [INV]
+  else
+    goto <bb 11>; [INV]
+
+  <bb 10> :
+  _9 = queue_data.elem_num;
+  _10 = _9 + 1;
+  queue_20(D)->elem_num = _10;
+  _11 = queue_data.elem_size;
+  queue_20(D)->elem_size = _11;
+  _12 = queue_data.push_addr;
+  _13 = (struct ipc_ring *) _12;
+  queue_20(D)->push_ring = _13;
+  _14 = queue_data.pop_addr;
+  _15 = (struct ipc_ring *) _14;
+  queue_20(D)->pop_ring = _15;
+  _16 = queue_data.queue_type;
+  err_27 = ipc_queue_sync_index (queue_20(D), _16);
+
+  <bb 11> :
+  # err_17 = PHI <err_19(2), err_19(3), err_19(4), err_19(5), err_19(6), err_19(7), err_19(9), err_27(10)>
+  _28 = err_17;
+
+  <bb 12> :
+<L15>:
+  return _28;
+
+}
+
+
+ipc_queue_sync_index (struct ipc_queue * queue, ipc_shm_queue_type queue_type)
+{
+  sint8 err;
+  sint8 D.5966;
+  struct ipc_ring * _1;
+  long long unsigned int _2;
+  struct ipc_ring * _3;
+  struct ipc_ring * _4;
+  long long unsigned int _5;
+  struct ipc_ring * _6;
+  struct ipc_ring * _7;
+  long unsigned int _8;
+  struct ipc_ring * _9;
+  long unsigned int _10;
+  short unsigned int _11;
+  long unsigned int _12;
+  struct ipc_ring * _13;
+  long unsigned int _14;
+  struct ipc_ring * _15;
+  long unsigned int _16;
+  long unsigned int _17;
+  short unsigned int _18;
+  long unsigned int _19;
+  struct ipc_ring * _20;
+  long unsigned int _21;
+  struct ipc_ring * _22;
+  struct ipc_ring * _23;
+  sint8 _39;
+
+  <bb 2> :
+  err_27 = 0;
+  _1 = queue_29(D)->pop_ring;
+  _2 = _1->sentinel;
+  if (_2 == 6073471649104220233)
+    goto <bb 3>; [INV]
+  else
+    goto <bb 4>; [INV]
+
+  <bb 3> :
+  err_38 = -7;
+  goto <bb 10>; [INV]
+
+  <bb 4> :
+  _3 = queue_29(D)->push_ring;
+  _3->sentinel = 6073471649104220233;
+  _4 = queue_29(D)->pop_ring;
+  _5 = _4->sentinel;
+  if (_5 == 5138124842591277129)
+    goto <bb 5>; [INV]
+  else
+    goto <bb 8>; [INV]
+
+  <bb 5> :
+  _6 = queue_29(D)->pop_ring;
+  _7 = queue_29(D)->push_ring;
+  _8 ={v} _6->read;
+  _7->write ={v} _8;
+  if (queue_type_34(D) == 0)
+    goto <bb 6>; [INV]
+  else
+    goto <bb 7>; [INV]
+
+  <bb 6> :
+  _9 = queue_29(D)->pop_ring;
+  _10 ={v} _9->write;
+  _11 = queue_29(D)->elem_num;
+  _12 = (long unsigned int) _11;
+  _13 = queue_29(D)->push_ring;
+  _14 = _10 % _12;
+  _13->read ={v} _14;
+  goto <bb 9>; [INV]
+
+  <bb 7> :
+  _15 = queue_29(D)->pop_ring;
+  _16 ={v} _15->write;
+  _17 = _16 + 1;
+  _18 = queue_29(D)->elem_num;
+  _19 = (long unsigned int) _18;
+  _20 = queue_29(D)->push_ring;
+  _21 = _17 % _19;
+  _20->read ={v} _21;
+  goto <bb 9>; [INV]
+
+  <bb 8> :
+  _22 = queue_29(D)->push_ring;
+  _22->write ={v} 0;
+  _23 = queue_29(D)->push_ring;
+  _23->read ={v} 0;
+
+  <bb 9> :
+  err_37 = 0;
+
+  <bb 10> :
+  # err_24 = PHI <err_38(3), err_37(9)>
+  _39 = err_24;
+
+  <bb 11> :
+<L9>:
+  return _39;
+
+}
+
+
+ipc_queue_push (struct ipc_queue * queue, const void * buf)
+{
+  sint8 err;
+  void * dst;
+  uint32 read;
+  uint32 write;
+  sint8 D.5955;
+  struct ipc_ring * _1;
+  struct ipc_ring * _2;
+  short unsigned int _3;
+  long unsigned int _4;
+  short unsigned int _5;
+  long unsigned int _6;
+  long unsigned int _7;
+  short unsigned int _8;
+  long unsigned int _9;
+  long unsigned int _10;
+  struct ipc_ring * _11;
+  unsigned char _12;
+  long unsigned int _13;
+  long unsigned int _14;
+  unsigned char _15;
+  long unsigned int _16;
+  long unsigned int _17;
+  short unsigned int _18;
+  long unsigned int _19;
+  struct ipc_ring * _20;
+  long unsigned int _21;
+  sint8 _36;
+
+  <bb 2> :
+  err_24 = -3;
+  if (queue_25(D) != 0B)
+    goto <bb 3>; [INV]
+  else
+    goto <bb 10>; [INV]
+
+  <bb 3> :
+  if (buf_27(D) != 0B)
+    goto <bb 4>; [INV]
+  else
+    goto <bb 10>; [INV]
+
+  <bb 4> :
+  _1 = queue_25(D)->push_ring;
+  write_28 ={v} _1->write;
+  _2 = queue_25(D)->pop_ring;
+  read_29 ={v} _2->read;
+  _3 = queue_25(D)->elem_num;
+  _4 = (long unsigned int) _3;
+  if (read_29 >= _4)
+    goto <bb 6>; [INV]
+  else
+    goto <bb 5>; [INV]
+
+  <bb 5> :
+  _5 = queue_25(D)->elem_num;
+  _6 = (long unsigned int) _5;
+  if (write_28 >= _6)
+    goto <bb 6>; [INV]
+  else
+    goto <bb 7>; [INV]
+
+  <bb 6> :
+  err_35 = -3;
+  goto <bb 10>; [INV]
+
+  <bb 7> :
+  _7 = write_28 + 1;
+  _8 = queue_25(D)->elem_num;
+  _9 = (long unsigned int) _8;
+  _10 = _7 % _9;
+  if (read_29 == _10)
+    goto <bb 8>; [INV]
+  else
+    goto <bb 9>; [INV]
+
+  <bb 8> :
+  err_34 = -2;
+  goto <bb 10>; [INV]
+
+  <bb 9> :
+  _11 = queue_25(D)->push_ring;
+  _12 = queue_25(D)->elem_size;
+  _13 = (long unsigned int) _12;
+  _14 = write_28 * _13;
+  dst_30 = &_11->data[_14];
+  _15 = queue_25(D)->elem_size;
+  _16 = (long unsigned int) _15;
+  ipc_memcpy (dst_30, buf_27(D), _16);
+  _17 = write_28 + 1;
+  _18 = queue_25(D)->elem_num;
+  _19 = (long unsigned int) _18;
+  _20 = queue_25(D)->push_ring;
+  _21 = _17 % _19;
+  _20->write ={v} _21;
+  err_33 = 0;
+
+  <bb 10> :
+  # err_22 = PHI <err_24(2), err_24(3), err_35(6), err_34(8), err_33(9)>
+  _36 = err_22;
+
+  <bb 11> :
+<L11>:
+  return _36;
+
+}
+
+
+ipc_queue_pop (struct ipc_queue * queue, void * buf)
+{
+  sint8 err;
+  void * src;
+  uint32 read;
+  uint32 write;
+  sint8 D.5942;
+  struct ipc_ring * _1;
+  struct ipc_ring * _2;
+  short unsigned int _3;
+  long unsigned int _4;
+  short unsigned int _5;
+  long unsigned int _6;
+  signed char _7;
+  struct ipc_ring * _8;
+  unsigned char _9;
+  long unsigned int _10;
+  long unsigned int _11;
+  unsigned char _12;
+  long unsigned int _13;
+  long unsigned int _14;
+  short unsigned int _15;
+  long unsigned int _16;
+  struct ipc_ring * _17;
+  long unsigned int _18;
+  sint8 _35;
+
+  <bb 2> :
+  err_21 = -3;
+  if (queue_22(D) != 0B)
+    goto <bb 3>; [INV]
+  else
+    goto <bb 12>; [INV]
+
+  <bb 3> :
+  if (buf_24(D) != 0B)
+    goto <bb 4>; [INV]
+  else
+    goto <bb 12>; [INV]
+
+  <bb 4> :
+  _1 = queue_22(D)->pop_ring;
+  write_25 ={v} _1->write;
+  _2 = queue_22(D)->push_ring;
+  read_26 ={v} _2->read;
+  _3 = queue_22(D)->elem_num;
+  _4 = (long unsigned int) _3;
+  if (read_26 >= _4)
+    goto <bb 6>; [INV]
+  else
+    goto <bb 5>; [INV]
+
+  <bb 5> :
+  _5 = queue_22(D)->elem_num;
+  _6 = (long unsigned int) _5;
+  if (write_25 >= _6)
+    goto <bb 6>; [INV]
+  else
+    goto <bb 7>; [INV]
+
+  <bb 6> :
+  err_34 = -3;
+  goto <bb 12>; [INV]
+
+  <bb 7> :
+  _7 = ipc_queue_check_integrity (queue_22(D));
+  if (_7 != 0)
+    goto <bb 8>; [INV]
+  else
+    goto <bb 9>; [INV]
+
+  <bb 8> :
+  err_33 = -6;
+  goto <bb 12>; [INV]
+
+  <bb 9> :
+  if (read_26 == write_25)
+    goto <bb 10>; [INV]
+  else
+    goto <bb 11>; [INV]
+
+  <bb 10> :
+  err_32 = -4;
+  goto <bb 12>; [INV]
+
+  <bb 11> :
+  _8 = queue_22(D)->pop_ring;
+  _9 = queue_22(D)->elem_size;
+  _10 = (long unsigned int) _9;
+  _11 = read_26 * _10;
+  src_28 = &_8->data[_11];
+  _12 = queue_22(D)->elem_size;
+  _13 = (long unsigned int) _12;
+  ipc_memcpy (buf_24(D), src_28, _13);
+  _14 = read_26 + 1;
+  _15 = queue_22(D)->elem_num;
+  _16 = (long unsigned int) _15;
+  _17 = queue_22(D)->push_ring;
+  _18 = _14 % _16;
+  _17->read ={v} _18;
+  err_31 = 0;
+
+  <bb 12> :
+  # err_19 = PHI <err_21(2), err_21(3), err_34(6), err_33(8), err_32(10), err_31(11)>
+  _35 = err_19;
+
+  <bb 13> :
+<L14>:
+  return _35;
+
+}
+
+

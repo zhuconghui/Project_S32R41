@@ -1,0 +1,96 @@
+;--------------------------------------------------------------------------------
+; This script is used to load and execute a single core application on S32R41. 
+;
+; command line: do S32R41_RSDK_offline_example.cmm
+;
+; NOTE: The executable application is tightly coupled with these cmm scripts.
+;--------------------------------------------------------------------------------
+
+PRIVATE &dbg_tools_path &exec_path &exec_name_c0 &opt &os &bbe32Elf &hwplat
+PARAMETERS &param_hwplat &param_debug
+
+&exec_path="../../bin/"
+&dbg_tools_path="../../../../Tools/Debug_tools/T32"
+&bbe32Elf="../../../DSP_Dispatcher_example/bin/DSP_Dispatcher_Example_S32R41_debug.elf"
+
+; create the necessary output folders, if necessary
+if os.dir("../../data/out")
+(
+)
+else
+(
+    win.mkdir ../../data/out
+)
+if os.dir("../../data/out/S32R41")
+(
+)
+else
+(
+    win.mkdir ../../data/out/S32R41
+)
+
+PRINT "Hw platform = &param_hwplat"
+PRINT "Build target = &param_debug"
+
+if (STRing.ComPare(STRing.LoWeR("&param_debug"),"debug")==TRUE())
+(
+	&opt="_debug"
+)
+else
+(
+	&opt=""
+)
+
+if (STRing.ComPare(STRing.LoWeR("&param_hwplat"),"s32r418ab")==TRUE())
+(
+	&hwplat="S32R418AB"
+)
+else if (STRing.ComPare(STRing.LoWeR("&param_hwplat"),"s32r416lb")==TRUE())
+(
+	&hwplat="S32R416LB"
+)
+else
+(
+	&hwplat="S32R41"
+)
+
+&exec_name_c0="&(exec_path)rsdk_offline_example"+"_sa_gcc_"+"&hwplat"+"_m7"+"&opt"+".elf"
+
+// Configure debugger and set CPU to CM7_0
+SYStem.CONFIG DEBUGPORTTYPE JTAG
+SYStem.Down
+
+SYStem.CPU S32R41-M7-0
+
+SYStem.JtagClock 40MHz
+SYStem.Option DUALPORT ON
+SYStem.memaccess DAP
+
+// Reset behaviour
+SYStem.Option EnReset ON
+SYStem.Option TRST OFF
+SYStem.Option ResBreak off
+
+ON ERROR Continue
+
+ITM.off
+SYStem.Attach
+Break
+do "&dbg_tools_path/SAF_R41_SRAM_init.cmm" "s32r41"
+SYStem.Option DUALPORT OFF
+
+;do "&dbg_tools_path/RSDK_BBE32_launch.cmm" "s32r41" "&bbe32Elf" "&dbg_tools_path"
+;do "&dbg_tools_path/S32R41_launch_SPT.cmm" "&dbg_tools_path"
+
+do "&dbg_tools_path/window_layout_a53.cmm"                                                          ;build debug display window
+Area.create A000 100 1000
+area.clear
+
+Data.LOAD.Elf "&exec_name_c0"
+
+Break.delete
+;Break.Set sYmbol.begin(StartSptExec\9) /COUNT 2.                        ;HW_WRITE 9th line in StartSptExe func. Hit breakpoint after COUNT interations
+do "&dbg_tools_path/S32R_run_dbg_semihosting.cmm" "&exec_name_c0"   ;run the test script with semihosting support
+
+ENDDO
+

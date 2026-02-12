@@ -1,0 +1,446 @@
+Symbol table:
+
+Det_ReportError/20 (Det_ReportError) @064650e0
+  Type: function
+  Visibility: external public
+  References: 
+  Referring: 
+  Availability: not_available
+  Function flags:
+  Called by: RsdkReportError/1 
+  Calls: 
+Spt_CheckUnexpectedStop/19 (Spt_CheckUnexpectedStop) @063299a0
+  Type: function definition analyzed
+  Visibility: force_output externally_visible no_reorder public
+  References: 
+  Referring: 
+  Availability: available
+  Function flags: body
+  Called by: 
+  Calls: 
+Spt_CheckRst/18 (Spt_CheckRst) @06329700
+  Type: function definition analyzed
+  Visibility: force_output externally_visible no_reorder public
+  References: 
+  Referring: 
+  Availability: available
+  Function flags: body
+  Called by: 
+  Calls: RsdkReportError/1 
+Spt_CheckAndResetHwError/17 (Spt_CheckAndResetHwError) @06329460
+  Type: function definition analyzed
+  Visibility: force_output externally_visible no_reorder public
+  References: 
+  Referring: 
+  Availability: available
+  Function flags: body
+  Called by: 
+  Calls: 
+RsdkReportError/1 (RsdkReportError) @06274a80
+  Type: function definition analyzed
+  Visibility: no_reorder prevailing_def_ironly
+  References: 
+  Referring: 
+  Availability: local
+  Function flags: body local
+  Called by: Spt_CheckRst/18 
+  Calls: Det_ReportError/20 
+rsdk_test_not_null_lnk_sym/0 (rsdk_test_not_null_lnk_sym) @06274620
+  Type: function definition analyzed
+  Visibility: force_output no_reorder prevailing_def_ironly
+  References: 
+  Referring: 
+  Availability: available
+  Function flags: body
+  Called by: 
+  Calls: 
+Spt_CheckUnexpectedStop (volatile struct SPT_Type * const pSptRegs, Spt_DrvStateType drvState)
+{
+  uint8 sptCurrentInstrOpcode;
+  Std_ReturnType retStatus;
+  Std_ReturnType D.7019;
+  long unsigned int _1;
+  long unsigned int _2;
+  Std_ReturnType _11;
+
+  <bb 2> :
+  retStatus_4 = 0;
+  sptCurrentInstrOpcode_5 = 0;
+  _1 ={v} pSptRegs_7(D)->CS_CURR_INST3;
+  _2 = _1 >> 26;
+  sptCurrentInstrOpcode_8 = (uint8) _2;
+  if (drvState_9(D) != 324508641)
+    goto <bb 3>; [INV]
+  else
+    goto <bb 6>; [INV]
+
+  <bb 3> :
+  if (drvState_9(D) != 324508642)
+    goto <bb 4>; [INV]
+  else
+    goto <bb 6>; [INV]
+
+  <bb 4> :
+  if (sptCurrentInstrOpcode_8 == 4)
+    goto <bb 5>; [INV]
+  else
+    goto <bb 6>; [INV]
+
+  <bb 5> :
+  retStatus_10 = 1;
+
+  <bb 6> :
+  # retStatus_3 = PHI <retStatus_4(2), retStatus_4(3), retStatus_4(4), retStatus_10(5)>
+  _11 = retStatus_3;
+
+  <bb 7> :
+<L6>:
+  return _11;
+
+}
+
+
+Spt_CheckRst (volatile struct SPT_Type * pSptRegs)
+{
+  volatile uint32 timeout;
+  Std_ReturnType retStatus;
+  Std_ReturnType D.7004;
+  long unsigned int _1;
+  long unsigned int _2;
+  long unsigned int _3;
+  long unsigned int timeout.1_4;
+  long unsigned int _5;
+  long unsigned int timeout.2_6;
+  Std_ReturnType _19;
+
+  <bb 2> :
+  retStatus_11 = 1;
+  timeout ={v} 10;
+  goto <bb 6>; [INV]
+
+  <bb 3> :
+  _1 ={v} pSptRegs_14(D)->CS_STATUS3;
+  _2 = _1 >> 3;
+  _3 = _2 & 15;
+  if (_3 != 0)
+    goto <bb 4>; [INV]
+  else
+    goto <bb 5>; [INV]
+
+  <bb 4> :
+  retStatus_16 = 0;
+  goto <bb 7>; [INV]
+
+  <bb 5> :
+  timeout.1_4 ={v} timeout;
+  _5 = timeout.1_4 + 4294967295;
+  timeout ={v} _5;
+
+  <bb 6> :
+  timeout.2_6 ={v} timeout;
+  if (timeout.2_6 != 0)
+    goto <bb 3>; [INV]
+  else
+    goto <bb 7>; [INV]
+
+  <bb 7> :
+  # retStatus_7 = PHI <retStatus_16(4), retStatus_11(6)>
+  if (retStatus_7 != 0)
+    goto <bb 8>; [INV]
+  else
+    goto <bb 9>; [INV]
+
+  <bb 8> :
+  retStatus_18 = RsdkReportError (69663, 4024, 0, 7, 31);
+
+  <bb 9> :
+  # retStatus_8 = PHI <retStatus_7(7), retStatus_18(8)>
+  _19 = retStatus_8;
+
+  <bb 10> :
+<L7>:
+  return _19;
+
+}
+
+
+Spt_CheckAndResetHwError (volatile struct SPT_Type * const pSptRegs, uint32 * errInfo)
+{
+  Std_ReturnType status;
+  Std_ReturnType D.6998;
+  long unsigned int _1;
+  long unsigned int _2;
+  long unsigned int _3;
+  long unsigned int _4;
+  long unsigned int _5;
+  long unsigned int _6;
+  long unsigned int _7;
+  long unsigned int _8;
+  long unsigned int _9;
+  long unsigned int _10;
+  long unsigned int _11;
+  long unsigned int _12;
+  long unsigned int _13;
+  long unsigned int _14;
+  long unsigned int _15;
+  long unsigned int _16;
+  long unsigned int _17;
+  long unsigned int _18;
+  long unsigned int _19;
+  long unsigned int _20;
+  long unsigned int _21;
+  long unsigned int _22;
+  Std_ReturnType _67;
+
+  <bb 2> :
+  status_31 = 0;
+  *errInfo_33(D) = 0;
+  _1 ={v} pSptRegs_35(D)->MEM_ERR_STATUS;
+  if (_1 != 0)
+    goto <bb 3>; [INV]
+  else
+    goto <bb 4>; [INV]
+
+  <bb 3> :
+  _2 ={v} pSptRegs_35(D)->MEM_ERR_STATUS;
+  *errInfo_33(D) = _2;
+  pSptRegs_35(D)->MEM_ERR_STATUS ={v} 269567238;
+  status_45 = 4;
+  goto <bb 9>; [INV]
+
+  <bb 4> :
+  _3 ={v} pSptRegs_35(D)->HW_ACC_ERR_STATUS;
+  if (_3 != 0)
+    goto <bb 5>; [INV]
+  else
+    goto <bb 6>; [INV]
+
+  <bb 5> :
+  _4 ={v} pSptRegs_35(D)->HW_ACC_ERR_STATUS;
+  *errInfo_33(D) = _4;
+  pSptRegs_35(D)->HW_ACC_ERR_STATUS ={v} 4294549487;
+  status_42 = 6;
+  goto <bb 9>; [INV]
+
+  <bb 6> :
+  _5 ={v} pSptRegs_35(D)->CS_STATUS1;
+  if (_5 != 0)
+    goto <bb 7>; [INV]
+  else
+    goto <bb 8>; [INV]
+
+  <bb 7> :
+  _6 ={v} pSptRegs_35(D)->CS_STATUS1;
+  *errInfo_33(D) = _6;
+  pSptRegs_35(D)->CS_STATUS1 ={v} 4095;
+  status_39 = 7;
+  goto <bb 9>; [INV]
+
+  <bb 8> :
+  status_36 = 0;
+
+  <bb 9> :
+  # status_23 = PHI <status_45(3), status_42(5), status_39(7), status_36(8)>
+  if (status_23 == 0)
+    goto <bb 10>; [INV]
+  else
+    goto <bb 15>; [INV]
+
+  <bb 10> :
+  _7 ={v} pSptRegs_35(D)->HIST_OVF_STATUS0;
+  if (_7 != 0)
+    goto <bb 11>; [INV]
+  else
+    goto <bb 12>; [INV]
+
+  <bb 11> :
+  _8 ={v} pSptRegs_35(D)->HIST_OVF_STATUS0;
+  *errInfo_33(D) = _8;
+  pSptRegs_35(D)->HIST_OVF_STATUS0 ={v} 4294967295;
+  status_52 = 11;
+  goto <bb 15>; [INV]
+
+  <bb 12> :
+  _9 ={v} pSptRegs_35(D)->HIST_OVF_STATUS1;
+  if (_9 != 0)
+    goto <bb 13>; [INV]
+  else
+    goto <bb 14>; [INV]
+
+  <bb 13> :
+  _10 ={v} pSptRegs_35(D)->HIST_OVF_STATUS1;
+  *errInfo_33(D) = _10;
+  pSptRegs_35(D)->HIST_OVF_STATUS1 ={v} 4294967295;
+  status_49 = 12;
+  goto <bb 15>; [INV]
+
+  <bb 14> :
+  status_46 = 0;
+
+  <bb 15> :
+  # status_24 = PHI <status_23(9), status_52(11), status_49(13), status_46(14)>
+  if (status_24 == 0)
+    goto <bb 16>; [INV]
+  else
+    goto <bb 21>; [INV]
+
+  <bb 16> :
+  _11 ={v} pSptRegs_35(D)->GBL_STATUS;
+  _12 = _11 & 198400;
+  if (_12 != 0)
+    goto <bb 17>; [INV]
+  else
+    goto <bb 18>; [INV]
+
+  <bb 17> :
+  _13 ={v} pSptRegs_35(D)->GBL_STATUS;
+  _14 = _13 & 198400;
+  *errInfo_33(D) = _14;
+  pSptRegs_35(D)->GBL_STATUS ={v} 198400;
+  status_59 = 5;
+  goto <bb 21>; [INV]
+
+  <bb 18> :
+  _15 ={v} pSptRegs_35(D)->WR_ACCESS_ERR_REG;
+  _16 = _15 & 117901063;
+  if (_16 != 0)
+    goto <bb 19>; [INV]
+  else
+    goto <bb 20>; [INV]
+
+  <bb 19> :
+  _17 ={v} pSptRegs_35(D)->WR_ACCESS_ERR_REG;
+  _18 = _17 & 117901063;
+  *errInfo_33(D) = _18;
+  pSptRegs_35(D)->WR_ACCESS_ERR_REG ={v} 117901063;
+  status_56 = 15;
+  goto <bb 21>; [INV]
+
+  <bb 20> :
+  status_53 = 0;
+
+  <bb 21> :
+  # status_25 = PHI <status_24(15), status_59(17), status_56(19), status_53(20)>
+  if (status_25 == 0)
+    goto <bb 22>; [INV]
+  else
+    goto <bb 27>; [INV]
+
+  <bb 22> :
+  _19 ={v} pSptRegs_35(D)->SCS0_STATUS1;
+  if (_19 != 0)
+    goto <bb 23>; [INV]
+  else
+    goto <bb 24>; [INV]
+
+  <bb 23> :
+  _20 ={v} pSptRegs_35(D)->SCS0_STATUS1;
+  *errInfo_33(D) = _20;
+  pSptRegs_35(D)->SCS0_STATUS1 ={v} 4095;
+  status_66 = 16;
+  goto <bb 27>; [INV]
+
+  <bb 24> :
+  _21 ={v} pSptRegs_35(D)->SCS1_STATUS1;
+  if (_21 != 0)
+    goto <bb 25>; [INV]
+  else
+    goto <bb 26>; [INV]
+
+  <bb 25> :
+  _22 ={v} pSptRegs_35(D)->SCS1_STATUS1;
+  *errInfo_33(D) = _22;
+  pSptRegs_35(D)->SCS1_STATUS1 ={v} 4095;
+  status_63 = 17;
+  goto <bb 27>; [INV]
+
+  <bb 26> :
+  status_60 = 0;
+
+  <bb 27> :
+  # status_26 = PHI <status_25(21), status_66(23), status_63(25), status_60(26)>
+  _67 = status_26;
+
+  <bb 28> :
+<L33>:
+  return _67;
+
+}
+
+
+RsdkReportError (rsdkStatus_t rsdkErrCode, uint16 moduleId, uint8 instanceId, uint8 apiId, uint8 errCode)
+{
+  Std_ReturnType D.7011;
+  int iftmp.4;
+  int iftmp.3;
+  long unsigned int _1;
+  long unsigned int _2;
+  int iftmp.3_3;
+  int iftmp.3_6;
+  int iftmp.3_7;
+  int iftmp.4_8;
+  Std_ReturnType _14;
+
+  <bb 2> :
+  _1 = rsdkErrCode_4(D) & 255;
+  _2 = (long unsigned int) errCode_5(D);
+  if (_1 == _2)
+    goto <bb 3>; [INV]
+  else
+    goto <bb 4>; [INV]
+
+  <bb 3> :
+  iftmp.3_7 = 1;
+  goto <bb 5>; [INV]
+
+  <bb 4> :
+  iftmp.3_6 = -1;
+
+  <bb 5> :
+  # iftmp.3_3 = PHI <iftmp.3_7(3), iftmp.3_6(4)>
+  iftmp.4_8 = iftmp.3_3;
+  Det_ReportError (moduleId_10(D), instanceId_11(D), apiId_12(D), errCode_5(D));
+  _14 = 1;
+
+  <bb 6> :
+<L3>:
+  return _14;
+
+}
+
+
+__attribute__((unused))
+rsdk_test_not_null_lnk_sym (uintptr_t symName)
+{
+  volatile uintptr_t dummy_volatile;
+  uint8 retVal;
+  uint8 D.6963;
+  unsigned int dummy_volatile.0_1;
+  uint8 _8;
+
+  <bb 2> :
+  dummy_volatile ={v} symName_4(D);
+  dummy_volatile.0_1 ={v} dummy_volatile;
+  if (dummy_volatile.0_1 != 0)
+    goto <bb 3>; [INV]
+  else
+    goto <bb 4>; [INV]
+
+  <bb 3> :
+  retVal_7 = 1;
+  goto <bb 5>; [INV]
+
+  <bb 4> :
+  retVal_6 = 0;
+
+  <bb 5> :
+  # retVal_2 = PHI <retVal_7(3), retVal_6(4)>
+  _8 = retVal_2;
+
+  <bb 6> :
+<L3>:
+  return _8;
+
+}
+
+

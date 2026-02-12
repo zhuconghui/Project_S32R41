@@ -1,0 +1,205 @@
+; --------------------------------------------------------------------------------
+; This script is used to perform semihosting calls to T32 in a single core or multicore application on S32R247.
+; Supported operations: file read/write, print, switch debug context between cores etc.
+; 
+; command line: do S32R_run_dbg_semihosting.cmm "<exec_name_c0>" [optional: "<exec_name_c1>"]
+;
+; NOTE: this script is tightly coupled with with the executable application. 
+; It assumes the executable contains a DBG_POINT function, which is used for making T32 system calls.
+;  This function holds asm labels like dbg_point_label_class_regular and dbg_point_label_class_profiling.
+; The Z4 (core 0) executable is master at boot time and commands all file IO and switching of 
+; debug context on other cores (e.g. Z7). 
+; --------------------------------------------------------------------------------
+;
+
+  PARAMETERS &exec_name_c0 &exec_name_c1 &rsdkPath
+  
+;at this point we assume the executable has been loaded and the CPU is stopped either at startup or in a breakpoint
+  
+;enable breakpoint for semihosting  
+Break.Set dbg_point_label_class_regular
+
+
+if sYmbol.EXIST(main)
+(
+	GO.direct main
+)
+else
+(
+	PRINT "Cannot identify a main() function for lb semihosting"
+)
+
+WAIT !STATE.RUN()
+;have semihosting focus on core 0 (dbg_InFocus_monitored)
+; TODO DbgInit() would have set this from 0 (dbg_InFocus_uninit) to 1 (dbg_InFocus_init), 
+;   ideally before this point  or set it to dbg_InFocus_dont_care
+var.set DBG_InFocus=2
+Go
+
+while 1>0
+(
+    WAIT !STATE.RUN()
+    
+	;check if stopped in DBG_POINT or user-defined breakpoint
+	if STRing.count(sYmbol.FUNCTION(PP()),"DBG_POINT")>0
+	(
+		go.up                                ;return from DBG_POINT() to access context of the calling function
+		WAIT !STATE.RUN()                    ;wait until core stops
+		GOSUB DBG_POINT_handler "&exec_name_c0" "&exec_name_c1" "&rsdkPath" "&nexus"
+	)
+	else
+	(
+		;User breakpoint hit
+		STOP "Type CONT to resume script or ENDDO to return to caller .cmm script"
+	)
+	
+    Go
+)
+
+ENDDO
+
+; --------------------------------------------------------------------------------
+; This routine is used to act upon stopping in DBG_POINT()
+;  assumes C variable DBG_ID exists, used to pass info into this script
+; --------------------------------------------------------------------------------
+DBG_POINT_handler:
+(
+	PARAMETERS &exec_name_c0 &exec_name_c1 &rsdkPath &nexus
+	
+	PRIVATE &log_fname &log_fname_ratf &temp &log_prof &log_prof_tree &bpid
+	
+	&temp=STRing.CUT("&exec_name_c0",-4)	    ;delete ".elf" extension
+	&log_fname="&(temp).log"
+	&log_fname=OS.FILE.ABSPATH(&log_fname)    ;get the real Windows path
+	&log_prof="&(temp)_prof_fname.log"
+	&log_prof=OS.FILE.ABSPATH(&log_prof)    ;get the real Windows path
+	&log_prof_tree="&(temp)_prof_tree.log"
+	&log_prof_tree=OS.FILE.ABSPATH(&log_prof_tree)    ;get the real Windows path
+	&log_fname_ratf="&(temp)_ratf.log"
+	&log_fname_ratf=OS.FILE.ABSPATH(&log_fname_ratf)
+	
+	&bpid=Var.VALUE(DBG_ID)
+	;PRINT %Decimal "LB:DBG_ID = " Var.VALUE(DBG_ID)
+	
+	if &bpid==0x0A ;DBG_ID_FREAD
+	(
+		;read file
+		sYmbol.AddInfo.Var DBG_FileName ZSTRING
+		&DBG_fname=Var.string(DBG_FileName)
+		
+		&DBG_addr_start=Var.VALUE(DBG_DestAddr)
+		&DBG_addr_end=&DBG_addr_start+Var.VALUE(DBG_MaxBytes)-1
+		&DBG_offset=Var.VALUE(DBG_OffsetBytes)
+		
+		Data.Load.Binary &rsdkPath&DBG_fname &DBG_addr_start--&DBG_addr_end /SKIP &DBG_offset /Nosymbol
+		PRINT "LB:read_file addr_start &DBG_addr_start"
+	)
+	else if &bpid==0x0B ;DBG_ID_FWRITE
+	(
+		;write file
+		sYmbol.AddInfo.Var DBG_FileName ZSTRING
+		&DBG_fname=Var.string(DBG_FileName)
+		PRINT "LB:write_file &DBG_fname"
+		
+		&DBG_addr_start=Var.VALUE(DBG_SrcAddr)
+		&DBG_addr_end=&DBG_addr_start+Var.VALUE(DBG_NumBytes)-1
+		
+		Data.SAVE.Binary &rsdkPath&DBG_fname &DBG_addr_start--&DBG_addr_end
+		
+	)
+	else if &bpid==0x0C ;DBG_ID_FCOMP
+	(
+		;compare with file
+		sYmbol.AddInfo.Var DBG_FileName ZSTRING
+		&DBG_fname=Var.string(DBG_FileName)
+		PRINT "LB:compare output data &DBG_fname"
+
+		&DBG_addr_start=Var.VALUE(DBG_SrcAddr)
+				
+		Data.LOAD.Binary &rsdkPath&DBG_fname &DBG_addr_start /DIFF /Nosymbol
+
+		if FOUND()
+		(
+			PRIVATE &offset
+			PRIVATE &offending_addr
+			&offset=TRACK.ADDRESS()-&DBG_addr_start
+			PRINT "LB: TEST FAILED! binary comparison failed at offset &offset."
+			&offending_addr=ADDRESS.OFFSET(TRACK.ADDRESS())
+			var.set dbgCompareOffset=&offending_addr
+		)
+		else
+		(
+			PRINT "LB: TEST PASSED!"
+			var.set dbgCompareOffset=0
+		)
+	)
+	else if &bpid==0x0D ;DBG_ID_PRINT
+	(
+		;print message
+		sYmbol.AddInfo.Var gDbgMsg ZSTRING
+		&DBG_msg=Var.string(gDbgMsg)
+		PRINT "App:dbgprint:&DBG_msg"
+	)
+	else if &bpid==0x0E ;DBG_ID_TESTCASE_END
+	(
+		;test case end - update log file and continue
+		AREA.SAVE "&log_fname"
+		os.area copy "&log_fname" "&log_fname_ratf"	;save a copy for RATF to get execution status
+		;PRINT "&log_fname"
+	)
+	else if &bpid==0x0F ;DBG_ID_SESSION_END
+	(
+		;debug session end
+		PRINT "LB:Debug session end."
+		AREA.SAVE "&log_fname"
+		os.area copy "&log_fname" "&log_fname_ratf"	;save a copy for RATF to get execution status
+		;PRINT "&log_fname_ratf"
+		;dbg_InFocus_init
+		var.set DBG_InFocus=1           
+		ENDDO
+	)
+	else if &bpid==0x13 ;DBG_ID_SESSION_START
+	(
+		PRINT "LB:Debug session start."
+		AREA.SAVE "&log_fname"
+		os.area copy "&log_fname" "&log_fname_ratf"	;save a copy for RATF to get execution status
+	)
+	else if &bpid==0x14 ;DBG_ID_LB_PROFILE_REINIT
+	(
+		trace.autoarm off
+		;trace.arm
+		Trace.Init
+		Trace.SIZE 0.       ; Define maximum buffer size
+		PERF.RESET
+		PERF.METHOD TRACE 
+	)
+	else if &bpid==0x15 ;DBG_ID_LB_PROFILE_RESUME
+	(
+		trace.arm
+		Break.delete dbg_point_label_class_regular
+	)
+	else if &bpid==0x16 ;DBG_ID_LB_PROFILE_PAUSE
+	(
+		trace.off
+		Break.Set dbg_point_label_class_regular
+	)
+	else if &bpid==0x17 ;DBG_ID_LB_PROFILE_PRINT
+	(
+		Prt.file &log_prof
+		WinPrint.TRACE.STATISTIC.FUNC %LEN 50 NAME ALL /SORT ADDRESS
+		Prt.file &log_prof_tree
+		WinPrint.TRACE.STATISTIC.TREE %LEN 50  
+	)
+	else if &bpid==0x18 ;DBG_ID_LB_BRKPT
+	(
+		STOP "Stopped as requested. Type CONT to resume script"
+	)
+	else	;DBG_ID_OTHER
+	(
+		PRINT "LB:unknown bp."
+		ENDDO
+	)
+	
+	RETURN
+)
+  

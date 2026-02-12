@@ -1,0 +1,517 @@
+Spt_GenCrc8 (const uint8 * inData, uint8 numBytes)
+{
+  uint8 val;
+  uint8 i;
+  const uint8 gCrcFinalXor;
+  const uint8 gCrcInitVal;
+  uint8 D.7344;
+
+  <bb 2> :
+  gCrcInitVal = 255;
+  gCrcFinalXor = 255;
+  val = gCrcInitVal;
+  i = 0;
+  goto <bb 4>; [INV]
+
+  <bb 3> :
+  _1 = (sizetype) i;
+  _2 = inData + _1;
+  _3 = *_2;
+  _4 = val ^ _3;
+  _5 = (int) _4;
+  val = gCrcTable[_5];
+  i.8_6 = i;
+  i = i.8_6 + 1;
+
+  <bb 4> :
+  if (i < numBytes)
+    goto <bb 3>; [INV]
+  else
+    goto <bb 5>; [INV]
+
+  <bb 5> :
+  D.7344 = val ^ gCrcFinalXor;
+
+  <bb 6> :
+<L3>:
+  return D.7344;
+
+}
+
+
+Spt_ParamCheckInit (const struct Spt_DriverInitType * const pSptInitInfo)
+{
+  Std_ReturnType retStatus;
+  Std_ReturnType D.7342;
+
+  <bb 2> :
+  retStatus = 0;
+  D.7342 = retStatus;
+
+  <bb 3> :
+<L0>:
+  return D.7342;
+
+}
+
+
+Spt_ParamCheckRun (const struct Spt_DriverContextType * const sptContext, const Spt_DrvStateType state)
+{
+  Std_ReturnType retStatus;
+  Std_ReturnType D.7340;
+
+  <bb 2> :
+  retStatus = 0;
+  if (sptContext == 0B)
+    goto <bb 4>; [INV]
+  else
+    goto <bb 3>; [INV]
+
+  <bb 3> :
+  _1 = sptContext->kernelCodeAddr;
+  if (_1 == 0)
+    goto <bb 4>; [INV]
+  else
+    goto <bb 5>; [INV]
+
+  <bb 4> :
+  retStatus = RsdkReportError (69632, 4024, 0, 3, 0);
+
+  <bb 5> :
+  if (retStatus == 0)
+    goto <bb 6>; [INV]
+  else
+    goto <bb 8>; [INV]
+
+  <bb 6> :
+  _2 = sptContext->kernelCodeAddr;
+  _3 = _2 & 15;
+  if (_3 != 0)
+    goto <bb 7>; [INV]
+  else
+    goto <bb 8>; [INV]
+
+  <bb 7> :
+  retStatus = RsdkReportError (69632, 4024, 0, 3, 0);
+
+  <bb 8> :
+  if (retStatus == 0)
+    goto <bb 9>; [INV]
+  else
+    goto <bb 11>; [INV]
+
+  <bb 9> :
+  _4 = sptContext->checkKernelWatermark;
+  if (_4 == 1)
+    goto <bb 10>; [INV]
+  else
+    goto <bb 11>; [INV]
+
+  <bb 10> :
+  _5 = sptContext->kernelCodeAddr;
+  retStatus = Spt_ParamCheckKernelWatermark (_5);
+
+  <bb 11> :
+  if (retStatus == 0)
+    goto <bb 12>; [INV]
+  else
+    goto <bb 16>; [INV]
+
+  <bb 12> :
+  if (state == 324508641)
+    goto <bb 13>; [INV]
+  else
+    goto <bb 14>; [INV]
+
+  <bb 13> :
+  retStatus = RsdkReportError (69635, 4024, 0, 3, 3);
+  goto <bb 16>; [INV]
+
+  <bb 14> :
+  if (state != 324508640)
+    goto <bb 15>; [INV]
+  else
+    goto <bb 16>; [INV]
+
+  <bb 15> :
+  retStatus = RsdkReportError (69633, 4024, 0, 3, 1);
+
+  <bb 16> :
+  D.7340 = retStatus;
+
+  <bb 17> :
+<L19>:
+  return D.7340;
+
+}
+
+
+Spt_ParamCheckKernelWatermark (uintptr_t kernelCodeAddr)
+{
+  uint32 sptKernelWatermark[4];
+  Std_ReturnType retStatus;
+  Std_ReturnType D.7318;
+
+  <bb 2> :
+  retStatus = 0;
+  sptKernelWatermark = *.LC0;
+  kernelCodeAddr.7_1 = (const void *) kernelCodeAddr;
+  _2 = memcmp (kernelCodeAddr.7_1, &sptKernelWatermark, 16);
+  if (_2 != 0)
+    goto <bb 3>; [INV]
+  else
+    goto <bb 4>; [INV]
+
+  <bb 3> :
+  retStatus = RsdkReportError (69662, 4024, 0, 3, 30);
+
+  <bb 4> :
+  D.7318 = retStatus;
+  sptKernelWatermark = {CLOBBER};
+
+  <bb 5> :
+<L3>:
+  return D.7318;
+
+}
+
+
+Spt_GetKernelRetVal (volatile sint32 * kernelRetPar)
+{
+  uint32 wrValIm;
+  uint32 wrValRe;
+  volatile struct SPT_Type * const pSptRegs;
+
+  <bb 2> :
+  pSptRegs = Spt_GetMemMap ();
+  if (kernelRetPar != 0B)
+    goto <bb 3>; [INV]
+  else
+    goto <bb 4>; [INV]
+
+  <bb 3> :
+  wrValRe = pSptRegs->WR_R0_RE;
+  wrValIm = pSptRegs->WR_R0_IM;
+  _1 = wrValIm << 24;
+  _2 = wrValRe & 16777215;
+  _3 = _1 + _2;
+  _4 = (long int) _3;
+  *kernelRetPar = _4;
+
+  <bb 4> :
+  return;
+
+}
+
+
+Spt_SetInputParams (const struct Spt_DrvParamType * paramList)
+{
+  boolean parReadDone;
+  uint32 i;
+  uintptr_t addrOffset;
+  volatile union Spt_WrImTagType * wrAddrIm;
+  volatile union Spt_WrReTagType * wrAddrRe;
+  volatile struct SPT_Type * const pSptRegs;
+  Std_ReturnType retStatus;
+  Std_ReturnType D.7304;
+
+  <bb 2> :
+  retStatus = 0;
+  pSptRegs = Spt_GetMemMap ();
+  wrAddrRe = &pSptRegs->WR_R1_RE;
+  wrAddrIm = &pSptRegs->WR_R1_IM;
+  i = 0;
+  parReadDone = 0;
+
+  <bb 3> :
+  _1 = i * 8;
+  _2 = paramList + _1;
+  _3 = _2->paramType;
+  _4 = (int) _3;
+  switch (_4) <default: <L9> [INV], case 0: <L8> [INV], case 1: <L1> [INV], case 2: <L6> [INV], case 3: <L7> [INV]>
+
+  <bb 4> :
+<L1>:
+  wrAddrRe->R = 0;
+  _5 = i * 8;
+  _6 = paramList + _5;
+  _7 = _6->paramValue;
+  addrOffset = Spt_GetAddrOffset (_7);
+  if (addrOffset > 8388607)
+    goto <bb 6>; [INV]
+  else
+    goto <bb 5>; [INV]
+
+  <bb 5> :
+  _8 = i * 8;
+  _9 = paramList + _8;
+  _10 = _9->paramValue;
+  _11 = _10 & 7;
+  if (_11 != 0)
+    goto <bb 6>; [INV]
+  else
+    goto <bb 7>; [INV]
+
+  <bb 6> :
+  retStatus = RsdkReportError (69632, 4024, 0, 2, 0);
+  goto <bb 8>; [INV]
+
+  <bb 7> :
+  wrAddrIm->R = addrOffset;
+
+  <bb 8> :
+  goto <bb 13>; [INV]
+
+  <bb 9> :
+<L6>:
+  _12 = i * 8;
+  _13 = paramList + _12;
+  _14 = _13->paramValue;
+  _15 = _14 >> 24;
+  wrAddrIm->R = _15;
+  _16 = i * 8;
+  _17 = paramList + _16;
+  _18 = _17->paramValue;
+  _19 = _18 & 16777215;
+  wrAddrRe->R = _19;
+  goto <bb 13>; [INV]
+
+  <bb 10> :
+<L7>:
+  parReadDone = 1;
+  goto <bb 13>; [INV]
+
+  <bb 11> :
+<L8>:
+  retStatus = RsdkReportError (69632, 4024, 0, 2, 0);
+  goto <bb 13>; [INV]
+
+  <bb 12> :
+<L9>:
+  retStatus = RsdkReportError (69632, 4024, 0, 2, 0);
+
+  <bb 13> :
+  wrAddrRe = wrAddrRe + 8;
+  wrAddrIm = wrAddrIm + 8;
+  i = i + 1;
+  _20 = ~parReadDone;
+  if (_20 != 0)
+    goto <bb 14>; [INV]
+  else
+    goto <bb 16>; [INV]
+
+  <bb 14> :
+  if (i <= 9)
+    goto <bb 15>; [INV]
+  else
+    goto <bb 16>; [INV]
+
+  <bb 15> :
+  if (retStatus == 0)
+    goto <bb 3>; [INV]
+  else
+    goto <bb 16>; [INV]
+
+  <bb 16> :
+  D.7304 = retStatus;
+
+  <bb 17> :
+<L14>:
+  return D.7304;
+
+}
+
+
+Spt_GetAddrOffset (uintptr_t sysAddr)
+{
+  uintptr_t addrOffsetTemp;
+  uintptr_t addrOffset;
+  uintptr_t D.7296;
+
+  <bb 2> :
+  addrOffset = 4294967295;
+  RSDK_SPT_OTHER_BASE_ADDR.1_1 = (unsigned int) &RSDK_SPT_OTHER_BASE_ADDR;
+  if (sysAddr >= RSDK_SPT_OTHER_BASE_ADDR.1_1)
+    goto <bb 3>; [INV]
+  else
+    goto <bb 5>; [INV]
+
+  <bb 3> :
+  RSDK_SPT_OTHER_BASE_ADDR.2_2 = (unsigned int) &RSDK_SPT_OTHER_BASE_ADDR;
+  addrOffsetTemp = sysAddr - RSDK_SPT_OTHER_BASE_ADDR.2_2;
+  if (addrOffsetTemp < addrOffset)
+    goto <bb 4>; [INV]
+  else
+    goto <bb 5>; [INV]
+
+  <bb 4> :
+  addrOffset = addrOffsetTemp;
+
+  <bb 5> :
+  RSDK_SPT_CUBE_BASE_ADDR.3_3 = (unsigned int) &RSDK_SPT_CUBE_BASE_ADDR;
+  if (sysAddr >= RSDK_SPT_CUBE_BASE_ADDR.3_3)
+    goto <bb 6>; [INV]
+  else
+    goto <bb 8>; [INV]
+
+  <bb 6> :
+  RSDK_SPT_CUBE_BASE_ADDR.4_4 = (unsigned int) &RSDK_SPT_CUBE_BASE_ADDR;
+  addrOffsetTemp = sysAddr - RSDK_SPT_CUBE_BASE_ADDR.4_4;
+  if (addrOffsetTemp < addrOffset)
+    goto <bb 7>; [INV]
+  else
+    goto <bb 8>; [INV]
+
+  <bb 7> :
+  addrOffset = addrOffsetTemp;
+
+  <bb 8> :
+  D.7296 = addrOffset;
+
+  <bb 9> :
+<L8>:
+  return D.7296;
+
+}
+
+
+Spt_InitPersistentMem (struct Spt_DrvMemPerType * pSptMemPer, const struct Spt_DriverInitType * const pSptInitInfo)
+{
+  <bb 2> :
+  Spt_SetDrvState (324508639);
+  pSptMemPer->kernelRetPar = 0B;
+  pSptMemPer->errInfo = 0;
+  pSptMemPer->pSptRegs = 0B;
+  pSptMemPer->isSptMemMapped = 0;
+  pSptMemPer->prevOpMode = 0;
+  return;
+
+}
+
+
+Spt_UnmapMem ()
+{
+  Std_ReturnType retStatus;
+  Std_ReturnType D.7286;
+
+  <bb 2> :
+  retStatus = 0;
+  _1 = gSptMemPer.isSptMemMapped;
+  if (_1 != 0)
+    goto <bb 3>; [INV]
+  else
+    goto <bb 4>; [INV]
+
+  <bb 3> :
+  gSptMemPer.isSptMemMapped = 0;
+
+  <bb 4> :
+  D.7286 = retStatus;
+
+  <bb 5> :
+<L2>:
+  return D.7286;
+
+}
+
+
+Spt_GetMemMap ()
+{
+  volatile struct SPT_Type * D.7282;
+
+  <bb 2> :
+  _1 = gSptMemPer.isSptMemMapped;
+  _2 = ~_1;
+  if (_2 != 0)
+    goto <bb 3>; [INV]
+  else
+    goto <bb 4>; [INV]
+
+  <bb 3> :
+  gSptMemPer.pSptRegs = 1141506048B;
+  gSptMemPer.isSptMemMapped = 1;
+
+  <bb 4> :
+  D.7282 = gSptMemPer.pSptRegs;
+
+  <bb 5> :
+<L3>:
+  return D.7282;
+
+}
+
+
+Spt_SetDrvState (Spt_DrvStateType newState)
+{
+  <bb 2> :
+  gSptMemPer.state = newState;
+  return;
+
+}
+
+
+RsdkReportError (rsdkStatus_t rsdkErrCode, uint16 moduleId, uint8 instanceId, uint8 apiId, uint8 errCode)
+{
+  Std_ReturnType D.7311;
+  int iftmp.6;
+  int iftmp.5;
+
+  <bb 2> :
+  _1 = rsdkErrCode & 255;
+  _2 = (long unsigned int) errCode;
+  if (_1 == _2)
+    goto <bb 3>; [INV]
+  else
+    goto <bb 4>; [INV]
+
+  <bb 3> :
+  iftmp.5 = 1;
+  goto <bb 5>; [INV]
+
+  <bb 4> :
+  iftmp.5 = -1;
+
+  <bb 5> :
+  iftmp.6 = iftmp.5;
+  Det_ReportError (moduleId, instanceId, apiId, errCode);
+  D.7311 = 1;
+
+  <bb 6> :
+<L3>:
+  return D.7311;
+
+}
+
+
+__attribute__((unused))
+rsdk_test_not_null_lnk_sym (uintptr_t symName)
+{
+  volatile uintptr_t dummy_volatile;
+  uint8 retVal;
+  uint8 D.7277;
+
+  <bb 2> :
+  dummy_volatile = symName;
+  dummy_volatile.0_1 = dummy_volatile;
+  if (dummy_volatile.0_1 != 0)
+    goto <bb 3>; [INV]
+  else
+    goto <bb 4>; [INV]
+
+  <bb 3> :
+  retVal = 1;
+  goto <bb 5>; [INV]
+
+  <bb 4> :
+  retVal = 0;
+
+  <bb 5> :
+  D.7277 = retVal;
+
+  <bb 6> :
+<L3>:
+  return D.7277;
+
+}
+
+

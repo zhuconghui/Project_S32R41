@@ -1,0 +1,809 @@
+Spt_DspBootloaderCb ()
+{
+  uint32_t * pDest;
+  uint32_t * pSrc;
+  uint32_t iSeg;
+  uint32_t i;
+
+  <bb 2> :
+  iSeg = 0;
+  goto <bb 7>; [INV]
+
+  <bb 3> :
+  _1 = dspImgSegmentRunaddr[iSeg];
+  pDest = (uint32_t *) _1;
+  pSrc = dspImgSegmentLoadAddr[iSeg];
+  pSrc.40_2 = (unsigned int) pSrc;
+  pDest.41_3 = (unsigned int) pDest;
+  DbgPrintMsg ("Copying DSP image segment %d from 0x%lx to 0x%lx\n", iSeg, pSrc.40_2, pDest.41_3);
+  i = 0;
+  goto <bb 5>; [INV]
+
+  <bb 4> :
+  _4 = i * 4;
+  _5 = pSrc + _4;
+  _6 = i * 4;
+  _7 = pDest + _6;
+  _8 = *_5;
+  *_7 = _8;
+  i = i + 1;
+
+  <bb 5> :
+  _9 = dspImgSegmentSizes[iSeg];
+  _10 = _9 / 4;
+  if (i < _10)
+    goto <bb 4>; [INV]
+  else
+    goto <bb 6>; [INV]
+
+  <bb 6> :
+  iSeg = iSeg + 1;
+
+  <bb 7> :
+  if (iSeg <= 3)
+    goto <bb 3>; [INV]
+  else
+    goto <bb 8>; [INV]
+
+  <bb 8> :
+  return;
+
+}
+
+
+Dsphd_EventCb (uint32_t status)
+{
+  <bb 2> :
+  if (status == 2081284097)
+    goto <bb 3>; [INV]
+  else
+    goto <bb 4>; [INV]
+
+  <bb 3> :
+  AppCondFlagSignal (&bbe32AsyncDone);
+  goto <bb 5>; [INV]
+
+  <bb 4> :
+  goto <bb 4>; [INV]
+
+  <bb 5> :
+  return;
+
+}
+
+
+statusCheck (const char * funcName, int status)
+{
+  <bb 2> :
+  if (status != 0)
+    goto <bb 3>; [INV]
+  else
+    goto <bb 5>; [INV]
+
+  <bb 3> :
+  DbgPrintMsg ("%s error!, status: %d\n", funcName, status);
+
+  <bb 4> :
+  goto <bb 4>; [INV]
+
+  <bb 5> :
+  return;
+
+}
+
+
+Spt_DspIsrCb (rsdkStatus_t isrStatus, uint32_t errInfo)
+{
+  uint8_t inexactFlagMask;
+  uint8_t fpErrFunc;
+  uint8_t fpErrType;
+
+  <bb 2> :
+  if (isrStatus == 73751)
+    goto <bb 3>; [INV]
+  else
+    goto <bb 5>; [INV]
+
+  <bb 3> :
+  _1 = errInfo >> 8;
+  _2 = (unsigned char) _1;
+  fpErrType = _2 & 31;
+  fpErrFunc = (uint8_t) errInfo;
+  inexactFlagMask = 1;
+  if (fpErrType == inexactFlagMask)
+    goto <bb 8>; [INV]
+  else
+    goto <bb 4>; [INV]
+
+  <bb 4> :
+  _3 = (int) fpErrType;
+  _4 = (int) fpErrFunc;
+  DbgPrintMsg ("BBE32 FP Error! Exceptions: 0x%X - Func Id: 0x%X\n", _3, _4);
+  goto <bb 8>; [INV]
+
+  <bb 5> :
+  if (isrStatus == 73732)
+    goto <bb 6>; [INV]
+  else
+    goto <bb 7>; [INV]
+
+  <bb 6> :
+  DbgPrintMsg ("BBE32 Exception! exccause: 0x%X (found in corebits.h)\n", errInfo);
+  goto <bb 8>; [INV]
+
+  <bb 7> :
+  DbgPrintMsg ("BBE32 Error! Status: 0x%X\n", isrStatus);
+
+  <bb 8> :
+  return;
+
+}
+
+
+__attribute__((weak))
+Csi2_IrqHandlerRxErr0 ()
+{
+  <bb 2> :
+  return;
+
+}
+
+
+__attribute__((weak))
+Csi2_IrqHandlerPathErr0 ()
+{
+  <bb 2> :
+  return;
+
+}
+
+
+__attribute__((weak))
+Csi2_IrqHandlerEvents0 ()
+{
+  <bb 2> :
+  return;
+
+}
+
+
+RelocSptCode (void * runAddr, void * loadAddr, size_t codeSize)
+{
+  <bb 2> :
+  memcpy (runAddr, loadAddr, codeSize);
+  codeSize.39_1 = (int) codeSize;
+  CacheFlush (runAddr, codeSize.39_1);
+  return;
+
+}
+
+
+WaitForSPT (Spt_DriverOpModeType opMode)
+{
+  <bb 2> :
+  if (opMode == 1)
+    goto <bb 3>; [INV]
+  else
+    goto <bb 5>; [INV]
+
+  <bb 3> :
+  AppCondFlagWait (&sptDoneFlag);
+  currentError.37_1 = currentError;
+  _2 = (int) currentError.37_1;
+  _3 = isrStatusQueue[_2];
+  if (_3 == 69642)
+    goto <bb 4>; [INV]
+  else
+    goto <bb 5>; [INV]
+
+  <bb 4> :
+  currentError.38_4 = currentError;
+  _5 = (int) currentError.38_4;
+  _6 = isrStatusQueue[_5];
+  _7 = (int) _6;
+  statusCheck ("Wait for SPT ", _7);
+
+  <bb 5> :
+  return;
+
+}
+
+
+__attribute__((weak))
+Spt_EvtIsrCb (rsdkStatus_t isr_status, uint32_t evtInfo)
+{
+  rsdkStatus_t sptStatus;
+  struct Spt_DriverCommandType sptCmd;
+  struct Spt_DriverCmdResType sptCmdResult;
+  int numBytesRangeInputChirp;
+  int numBytesADCChirp;
+  int offsetADCDataNextChirp;
+  int offsetADCData;
+
+  <bb 2> :
+  sptCmd.cmdId = 3;
+  sptCmd.cmdParam = 0;
+  sptStatus = 0;
+  switch (evtInfo) <default: <L4> [INV], case 1: <L3> [INV], case 32768: <L0> [INV]>
+
+  <bb 3> :
+<L0>:
+  evtIntNum.29_1 = evtIntNum;
+  evtIntNum.30_2 = (unsigned int) evtIntNum.29_1;
+  _3 = evtIntNum.30_2 & 1;
+  if (_3 == 0)
+    goto <bb 4>; [INV]
+  else
+    goto <bb 5>; [INV]
+
+  <bb 4> :
+  numBytesADCChirp = 4096;
+  evtIntNum.31_4 = evtIntNum;
+  _5 = evtIntNum.31_4 / 2;
+  _6 = numBytesADCChirp * _5;
+  offsetADCData = _6 * 2;
+  offsetADCDataNextChirp = offsetADCData + numBytesADCChirp;
+  numBytesRangeInputChirp = 4176;
+  evtIntNum.32_7 = evtIntNum;
+  DbgPrintMsg ("SPT EVT interrupt number: %d. Sample buffer update from offset: %d\n", evtIntNum.32_7, offsetADCData);
+  sprintf (&fileName, "%s%s", "../../data/in/S32R41/", "rfft_in.dat");
+  _8 = gSdadcSampleBufferBufH.virtAddr;
+  DbgReadFileConvert (&fileName, offsetADCData, _8, numBytesADCChirp, "word16", 1);
+  _9 = gSdadcSampleBufferBufH.virtAddr;
+  numBytesRangeInputChirp.33_10 = (sizetype) numBytesRangeInputChirp;
+  _11 = _9 + numBytesRangeInputChirp.33_10;
+  DbgReadFileConvert (&fileName, offsetADCDataNextChirp, _11, numBytesADCChirp, "word16", 1);
+
+  <bb 5> :
+  evtIntNum.34_12 = evtIntNum;
+  _13 = evtIntNum.34_12 + 1;
+  evtIntNum = _13;
+  sptCmd.cmdId = 3;
+  sptCmd.cmdParam = 32768;
+  _14 = Spt_Command (&sptCmd, &sptCmdResult);
+  sptStatus = (rsdkStatus_t) _14;
+  sptStatus.35_15 = (int) sptStatus;
+  statusCheck ("RsdkSptCommand", sptStatus.35_15);
+  goto <bb 8>; [INV]
+
+  <bb 6> :
+<L3>:
+  sptCmd.cmdId = 3;
+  sptCmd.cmdParam = 1;
+  _16 = Spt_Command (&sptCmd, &sptCmdResult);
+  sptStatus = (rsdkStatus_t) _16;
+  sptStatus.36_17 = (int) sptStatus;
+  statusCheck ("RsdkSptCommand", sptStatus.36_17);
+  goto <bb 8>; [INV]
+
+  <bb 7> :
+<L4>:
+
+  <bb 8> :
+  sptCmdResult = {CLOBBER};
+  sptCmd = {CLOBBER};
+  return;
+
+}
+
+
+Spt_EcsIsrCb (rsdkStatus_t isrStatus, uint32_t errInfo)
+{
+  static uint32_t ecsIntNum = 0;
+
+  <bb 2> :
+  ecsIntNum.22_1 = ecsIntNum;
+  _2 = ecsIntNum.22_1 + 1;
+  ecsIntNum = _2;
+  if (isrStatus == 0)
+    goto <bb 3>; [INV]
+  else
+    goto <bb 4>; [INV]
+
+  <bb 3> :
+  AppCondFlagSignal (&sptDoneFlag);
+  goto <bb 10>; [INV]
+
+  <bb 4> :
+  if (isrStatus == 69642)
+    goto <bb 5>; [INV]
+  else
+    goto <bb 6>; [INV]
+
+  <bb 5> :
+  AppCondFlagSignal (&sptDoneFlag);
+
+  <bb 6> :
+  currentError.23_3 = currentError;
+  if (currentError.23_3 <= 9)
+    goto <bb 7>; [INV]
+  else
+    goto <bb 8>; [INV]
+
+  <bb 7> :
+  currentError.24_4 = currentError;
+  _5 = (int) currentError.24_4;
+  isrStatusQueue[_5] = isrStatus;
+  currentError.25_6 = currentError;
+  _7 = (int) currentError.25_6;
+  errInfoQueue[_7] = errInfo;
+  currentError.26_8 = currentError;
+  currentError.27_9 = currentError.26_8;
+  _10 = currentError.27_9 + 1;
+  currentError = _10;
+  goto <bb 10>; [INV]
+
+  <bb 8> :
+  bufOvf.28_11 = bufOvf;
+  if (bufOvf.28_11 == 0)
+    goto <bb 9>; [INV]
+  else
+    goto <bb 10>; [INV]
+
+  <bb 9> :
+  DbgPrintMsg ("SPT Error queue overflow! Only the first %d errors are reported. Check last executed kernel!\n", 10);
+  bufOvf = 1;
+
+  <bb 10> :
+  return;
+
+}
+
+
+MergeDetects (uint32_t * psBuff, uint32_t * cfarBuff, uint16_t nrRangeBins, uint16_t nrDopplerBins, uint32_t * detIndex)
+{
+  uint32_t nrBitsPack;
+  uint32_t sptPsPack;
+  uint32_t cfDet;
+  uint32_t psDet;
+  uint32_t cfIndPack;
+  uint32_t psIndPack;
+  uint32_t cfBitInd;
+  uint32_t psBitInd;
+  uint32_t cfInd;
+  uint32_t psInd;
+  uint16_t dInd;
+  uint16_t rInd;
+
+  <bb 2> :
+  nrBitsPack = 32;
+  gNrDetects = 0;
+  rInd = 0;
+  goto <bb 11>; [INV]
+
+  <bb 3> :
+  dInd = 0;
+  goto <bb 9>; [INV]
+
+  <bb 4> :
+  _1 = (int) dInd;
+  _2 = (int) nrRangeBins;
+  _3 = _1 * _2;
+  _4 = (int) rInd;
+  _5 = _3 + _4;
+  psInd = (uint32_t) _5;
+  psIndPack = psInd / nrBitsPack;
+  _6 = psIndPack * nrBitsPack;
+  psBitInd = psInd - _6;
+  _7 = psIndPack * 4;
+  _8 = psBuff + _7;
+  sptPsPack = *_8;
+  sptPsPack = sptPsPack r>> 16;
+  _9 = 1 << psBitInd;
+  _10 = (long unsigned int) _9;
+  psDet = sptPsPack & _10;
+  _11 = (int) rInd;
+  _12 = (int) nrDopplerBins;
+  _13 = _11 * _12;
+  _14 = (int) dInd;
+  _15 = _13 + _14;
+  cfInd = (uint32_t) _15;
+  cfIndPack = cfInd / nrBitsPack;
+  _16 = cfIndPack * nrBitsPack;
+  cfBitInd = cfInd - _16;
+  _17 = cfIndPack * 4;
+  _18 = cfarBuff + _17;
+  _19 = *_18;
+  _20 = 1 << cfBitInd;
+  _21 = (long unsigned int) _20;
+  cfDet = _19 & _21;
+  if (psDet != 0)
+    goto <bb 5>; [INV]
+  else
+    goto <bb 8>; [INV]
+
+  <bb 5> :
+  if (cfDet != 0)
+    goto <bb 6>; [INV]
+  else
+    goto <bb 8>; [INV]
+
+  <bb 6> :
+  gNrDetects.16_22 = gNrDetects;
+  if (gNrDetects.16_22 <= 31)
+    goto <bb 7>; [INV]
+  else
+    goto <bb 8>; [INV]
+
+  <bb 7> :
+  gNrDetects.17_23 = gNrDetects;
+  _24 = (unsigned int) gNrDetects.17_23;
+  _25 = _24 * 4;
+  _26 = detIndex + _25;
+  *_26 = cfInd;
+  gNrDetects.18_27 = gNrDetects;
+  gNrDetects.19_28 = gNrDetects.18_27;
+  _29 = gNrDetects.19_28 + 1;
+  gNrDetects = _29;
+
+  <bb 8> :
+  dInd.20_30 = dInd;
+  dInd = dInd.20_30 + 1;
+
+  <bb 9> :
+  if (dInd < nrDopplerBins)
+    goto <bb 4>; [INV]
+  else
+    goto <bb 10>; [INV]
+
+  <bb 10> :
+  rInd.21_31 = rInd;
+  rInd = rInd.21_31 + 1;
+
+  <bb 11> :
+  if (rInd < nrRangeBins)
+    goto <bb 3>; [INV]
+  else
+    goto <bb 12>; [INV]
+
+  <bb 12> :
+  return;
+
+}
+
+
+extractPeakData (uint16_t nrPeaksRDM, uint32_t * rdmPeakIndex, uint32_t * radarCube, uint32_t * peakAntennaData, uint16_t nrAnt)
+{
+  uint32_t antDatIndex;
+  uint32_t rdPeakIndex;
+  uint32_t packSamples;
+  uint32_t packSize;
+  volatile uint32_t * pGroup0;
+  uint32_t i;
+  Std_ReturnType D.9828;
+
+  <bb 2> :
+  if (radarCube == 0B)
+    goto <bb 5>; [INV]
+  else
+    goto <bb 3>; [INV]
+
+  <bb 3> :
+  if (peakAntennaData == 0B)
+    goto <bb 5>; [INV]
+  else
+    goto <bb 4>; [INV]
+
+  <bb 4> :
+  if (rdmPeakIndex == 0B)
+    goto <bb 5>; [INV]
+  else
+    goto <bb 6>; [INV]
+
+  <bb 5> :
+  D.9828 = 2;
+  // predicted unlikely by early return (on trees) predictor.
+  goto <bb 10>; [INV]
+
+  <bb 6> :
+  packSamples = (uint32_t) nrAnt;
+  packSize = packSamples * 4;
+  pGroup0 = radarCube;
+  i = 0;
+  goto <bb 8>; [INV]
+
+  <bb 7> :
+  _1 = i * 4;
+  _2 = rdmPeakIndex + _1;
+  _3 = *_2;
+  rdPeakIndex = packSamples * _3;
+  antDatIndex = packSamples * i;
+  _4 = antDatIndex * 4;
+  _5 = peakAntennaData + _4;
+  _6 = rdPeakIndex * 4;
+  _7 = pGroup0 + _6;
+  memcpy (_5, _7, packSize);
+  i = i + 1;
+
+  <bb 8> :
+  _8 = (long unsigned int) nrPeaksRDM;
+  if (i < _8)
+    goto <bb 7>; [INV]
+  else
+    goto <bb 9>; [INV]
+
+  <bb 9> :
+  D.9828 = 0;
+  // predicted unlikely by early return (on trees) predictor.
+
+  <bb 10> :
+<L7>:
+  return D.9828;
+
+}
+
+
+ExampleLaunchSptKernel (const struct Spt_DriverContextType * const pSptContext)
+{
+  int i;
+  rsdkStatus_t sptStatus;
+
+  <bb 2> :
+  currentError = 0;
+  bufOvf = 0;
+  _1 = Spt_Run (pSptContext);
+  sptStatus = (rsdkStatus_t) _1;
+  if (sptStatus != 0)
+    goto <bb 3>; [INV]
+  else
+    goto <bb 4>; [INV]
+
+  <bb 3> :
+  DbgPrintMsg ("RsdkSptRun error!, status: %d\n", sptStatus);
+  ExampleInitSPTDriver ();
+  DbgPrintMsg ("Re-initialized SPT driver \n");
+  goto <bb 9>; [INV]
+
+  <bb 4> :
+  _2 = pSptContext->opMode;
+  WaitForSPT (_2);
+  i = 0;
+  goto <bb 6>; [INV]
+
+  <bb 5> :
+  _3 = isrStatusQueue[i];
+  _4 = errInfoQueue[i];
+  DbgPrintMsg ("SptEcsIsrCb error!, Status: 0x%X, Error info: 0x%X\n", _3, _4);
+  i = i + 1;
+
+  <bb 6> :
+  currentError.15_5 = currentError;
+  _6 = (int) currentError.15_5;
+  if (i < _6)
+    goto <bb 5>; [INV]
+  else
+    goto <bb 7>; [INV]
+
+  <bb 7> :
+  DbgPrintMsg ("RsdkSptRun done. SPT processing done. Ready for next kernel.\n");
+  _7 = pSptContext->kernelRetPar;
+  if (_7 != 0B)
+    goto <bb 8>; [INV]
+  else
+    goto <bb 9>; [INV]
+
+  <bb 8> :
+  _8 = pSptContext->kernelRetPar;
+  _9 = *_8;
+  _10 = (unsigned int) _9;
+  DbgPrintMsg ("Kernel return param: 0x%X\n", _10);
+
+  <bb 9> :
+  return;
+
+}
+
+
+ExampleInitSPTDriver ()
+{
+  rsdkStatus_t status;
+
+  <bb 2> :
+  status = 0;
+  DbgPrintMsg ("Initializing SPT Driver \n");
+  _1 = Spt_Setup (&sptInitInfo);
+  status = (rsdkStatus_t) _1;
+  status.14_2 = (int) status;
+  statusCheck ("RsdkSptInit", status.14_2);
+  DbgPrintMsg ("RsdkSptInit done.\n");
+  AppCondFlagInit (&sptDoneFlag);
+  return;
+
+}
+
+
+AppInitDsphd ()
+{
+  rsdkStatus_t status;
+
+  <bb 2> :
+  status = 0;
+  _1 = Dsphd_Init ();
+  status = (rsdkStatus_t) _1;
+  status.13_2 = (int) status;
+  statusCheck ("Dsphd_Init", status.13_2);
+  DbgPrintMsg ("Dsphd_Init done.\n");
+  AppCheckDspResponsiveness ();
+  DbgPrintMsg ("ARM->BBE32 msg sent: DSPHD_MSG_CHECK_DISPATCHER_ALIVE.\n");
+  AppStartDspTrace ();
+  AppCondFlagInit (&bbe32AsyncDone);
+  return;
+
+}
+
+
+AppStopDspTrace ()
+{
+  rsdkStatus_t status;
+  uint8_t traceFileNameDsp[21];
+
+  <bb 2> :
+  traceFileNameDsp = "RsdkTraceDumpDsp.hex";
+  status = 0;
+  _1 = Dsphd_SendMsg (424252, 0);
+  status = (rsdkStatus_t) _1;
+  status.12_2 = (int) status;
+  statusCheck ("RsdkDspHDSendMsg", status.12_2);
+  CacheInvalidate (&gTraceBufferDsp, 25200);
+  DbgWriteFile (&traceFileNameDsp, &gTraceBufferDsp, 25200);
+  traceFileNameDsp = {CLOBBER};
+  return;
+
+}
+
+
+AppStartDspTrace ()
+{
+  rsdkStatus_t status;
+
+  <bb 2> :
+  status = 0;
+  dspTraceCfg.bufAddr = &gTraceBufferDsp;
+  dspTraceCfg.bufSize = 25200;
+  CacheFlush (&dspTraceCfg, 8);
+  dspTraceCfg.10_1 = (long unsigned int) &dspTraceCfg;
+  _2 = Dsphd_SendMsg (424251, dspTraceCfg.10_1);
+  status = (rsdkStatus_t) _2;
+  status.11_3 = (int) status;
+  statusCheck ("RsdkDspHDSendMsg", status.11_3);
+  return;
+
+}
+
+
+AppUpdateDspJobList (uint8_t * pJobListBuf, struct Dsphd_JobType * pDspJobsList, uint16_t numJobs)
+{
+  rsdkStatus_t status;
+
+  <bb 2> :
+  status = 0;
+  _1 = Dsphd_CreateJobList (pDspJobsList, pJobListBuf, numJobs, 1);
+  status = (rsdkStatus_t) _1;
+  if (status == 0)
+    goto <bb 3>; [INV]
+  else
+    goto <bb 4>; [INV]
+
+  <bb 3> :
+  CacheFlush (pJobListBuf, 162);
+
+  <bb 4> :
+  status.7_2 = (int) status;
+  statusCheck ("RsdkDspHDCreateJobList", status.7_2);
+  pJobListBuf.8_3 = (long unsigned int) pJobListBuf;
+  _4 = Dsphd_SendMsg (424243, pJobListBuf.8_3);
+  status = (rsdkStatus_t) _4;
+  status.9_5 = (int) status;
+  statusCheck ("RsdkDspHDSendMsg", status.9_5);
+  return;
+
+}
+
+
+AppRunDspAsyncJob (uint8_t * pJobListBuf, uint32_t phyAddr, uint16_t kernelName)
+{
+  struct Dsphd_JobType job;
+  rsdkStatus_t status;
+
+  <bb 2> :
+  status = 0;
+  _1 = (unsigned char) kernelName;
+  job.id = _1;
+  job.arg = phyAddr;
+  _2 = Dsphd_CreateJobList (&job, pJobListBuf, 1, 1);
+  status = (rsdkStatus_t) _2;
+  if (status == 0)
+    goto <bb 3>; [INV]
+  else
+    goto <bb 4>; [INV]
+
+  <bb 3> :
+  CacheFlush (pJobListBuf, 162);
+
+  <bb 4> :
+  status.4_3 = (int) status;
+  statusCheck ("RsdkDspHDCreateJobList", status.4_3);
+  DbgPrintMsg ("ARM->BBE32 sending msg: RSDK_DSPHD_MSG_RUN_ASYNC_JOB.\n");
+  pJobListBuf.5_4 = (long unsigned int) pJobListBuf;
+  _5 = Dsphd_SendMsg (424242, pJobListBuf.5_4);
+  status = (rsdkStatus_t) _5;
+  status.6_6 = (int) status;
+  statusCheck ("RsdkDspHDSendMsg", status.6_6);
+  DbgPrintMsg ("ARM->BBE32 msg sent: DSPHD_MSG_RUN_ASYNC_JOB.\n");
+  AppCondFlagWait (&bbe32AsyncDone);
+  DbgPrintMsg ("BBE32->ARM : RSDK_DSPHD_MSG_RUN_ASYNC_JOB done.\n");
+  job = {CLOBBER};
+  return;
+
+}
+
+
+AppChangeDspRuntimeConfig (uint16_t numberOfChirps, uint32_t p1TaskConfig, uint32_t fpuRoundConfig, uint8_t reportFPUExceptions)
+{
+  rsdkStatus_t status;
+
+  <bb 2> :
+  status = 0;
+  dspRuntimeCfg.numberOfChirps = numberOfChirps;
+  dspRuntimeCfg.p1TaskConfig = p1TaskConfig;
+  dspRuntimeCfg.fpuRoundConfig = fpuRoundConfig;
+  dspRuntimeCfg.reportFPUExceptions = reportFPUExceptions;
+  dspRuntimeCfg.pDispatcherState = &dispatcherState;
+  CacheFlush (&dspRuntimeCfg, 20);
+  dspRuntimeCfg.2_1 = (long unsigned int) &dspRuntimeCfg;
+  _2 = Dsphd_SendMsg (424249, dspRuntimeCfg.2_1);
+  status = (rsdkStatus_t) _2;
+  status.3_3 = (int) status;
+  statusCheck ("RsdkDspHDSendMsg", status.3_3);
+  return;
+
+}
+
+
+AppCheckDspResponsiveness ()
+{
+  rsdkStatus_t status;
+
+  <bb 2> :
+  status = 0;
+  _1 = Dsphd_SendMsg (424250, 0);
+  status = (rsdkStatus_t) _1;
+  status.1_2 = (int) status;
+  statusCheck ("RsdkDspHDSendMsg", status.1_2);
+  return;
+
+}
+
+
+__attribute__((unused))
+rsdk_test_not_null_lnk_sym (uintptr_t symName)
+{
+  volatile uintptr_t dummy_volatile;
+  uint8 retVal;
+  uint8 D.9813;
+
+  <bb 2> :
+  dummy_volatile = symName;
+  dummy_volatile.0_1 = dummy_volatile;
+  if (dummy_volatile.0_1 != 0)
+    goto <bb 3>; [INV]
+  else
+    goto <bb 4>; [INV]
+
+  <bb 3> :
+  retVal = 1;
+  goto <bb 5>; [INV]
+
+  <bb 4> :
+  retVal = 0;
+
+  <bb 5> :
+  D.9813 = retVal;
+
+  <bb 6> :
+<L3>:
+  return D.9813;
+
+}
+
+

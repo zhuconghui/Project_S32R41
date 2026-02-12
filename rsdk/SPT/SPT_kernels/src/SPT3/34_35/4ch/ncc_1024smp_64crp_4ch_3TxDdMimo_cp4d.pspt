@@ -1,0 +1,414 @@
+/**************************************************************************************************
+ *
+ *
+ * Copyright 2021 NXP
+ *
+ *****************************************************************************
+ *
+ * NXP Confidential and Proprietary. This software is owned or controlled by NXP and
+ * may only be used strictly in accordance with the applicable license terms.  By
+ * expressly accepting such terms or by downloading, installing, activating and/or
+ * otherwise using the software, you are agreeing that you have read, and that you
+ * agree to comply with and are bound by, such license terms.  If you do not agree to
+ * be bound by the applicable license terms, then you may not retain, install, activate or
+ * otherwise use the software.
+ *
+ **************************************************************************************************/
+
+/** @cond */
+/*==================================================================================================
+ *                                        INCLUDE FILES
+ *==================================================================================================*/
+ .include "oram.inc"                    /* include ORAM header file */
+ .include "tram.inc"                    /* include TRAM header file */
+ .include "wr.inc"                      /* include WR header file */
+ .include "spt_kernel_internals.inc"    /* include local defines */
+
+/*==================================================================================================
+ *                                          SECTION
+ *==================================================================================================*/
+ .section .RsdkSpt3 , "ax"   /* memory section where to store SPT code */
+
+/*==================================================================================================
+ *                                      LOCAL CONSTANTS
+ *==================================================================================================*/
+ .set SAMPLES_PER_CHIRP,        1024
+ .set DDMIMO_TX_SLOTS,             3
+ .set CHIRPS_PER_DDMIMO_TX,       64
+ .set CHANNELS_PER_DDMIMO_TX,      4
+ .set BYTES_CP4D_DATA,             8
+ .set LOG2_FORMAT_BYTE,            2
+ .set SCALAR_PROD_8TAPS,           8
+ .set SCALAR_PROD_2TAPS,           2
+ .set HIST_BINS,                  64
+ .set BYTES_HIST_BINS,             2
+ .set RANGE_BINS,               (SAMPLES_PER_CHIRP >> 1)
+ .set VIRT_CHANNELS_NO,         (DDMIMO_TX_SLOTS * CHANNELS_PER_DDMIMO_TX)
+ .set SRAM_SLICES,              ((VIRT_CHANNELS_NO * CHIRPS_PER_DDMIMO_TX) >> 2)
+
+/** @endcond */
+/*==================================================================================================
+ *                                      GLOBAL FUNCTIONS
+ *==================================================================================================*/
+/*================================================================================================*/
+/**
+* @addtogroup spt_kernels_api_func
+* @{
+*
+* @fn             void *RsdkSptNcc1024smp64crp4ch3TxDdMimoCp4d();
+* @brief          Function for Non coherent combining, 64 chirps/TX DD-MIMO slot(from 256chirps/frame), 1024 samples, 4 channels(CH#0..CH#3).
+* @details        Compute Non Coherent Combining, storing results in SRAM.
+*
+* @param[in]      WR_1: 24bit(RE): 0 \n
+*                       24bit(IM): Offset(restricted to 24bit value!) of the INPUT buffer(Doppler FFT CP4D compressed results),
+*                       relative to SRAM start address, @ref RSDK_SPT_CUBE_BASE_ADDR "RSDK_SPT_CUBE_BASE_ADDR".
+* @verbatim
+*                 INPUT Memory layout:
+*                 SRAM, 64bit compressed data
+*                 63:0
+*                 CH0_0-CH1_0-CH2_0-CH3_0-Crp0    -> TX1
+*                 CH4_0-CH5_0-CH6_0-CH7_0-Crp0    -> TX2
+*                 CH8_0-CH9_0-CH10_0-CH11_0-Crp0  -> TX3
+*                 |
+*                 CH0_0-CH1_0-CH2_0-CH3_0-Crp63   -> TX1
+*                 CH4_0-CH5_0-CH6_0-CH7_0-Crp63   -> TX2
+*                 CH8_0-CH9_0-CH10_0-CH11_0-Crp63 -> TX3           ---> RangeBin #0
+*                 -------------------------------------------------------------------
+*                 |
+*                 |
+*                 |
+*                 -------------------------------------------------------------------
+*                 CH0_511-CH1_511-CH2_511-CH3_511-Crp0    -> TX1
+*                 CH4_511-CH5_511-CH6_511-CH7_511-Crp0    -> TX2
+*                 CH8_511-CH9_511-CH10_511-CH11_511-Crp0  -> TX3
+*                 |
+*                 CH0_511-CH1_511-CH2_511-CH3_511-Crp63   -> TX1
+*                 CH4_511-CH5_511-CH6_511-CH7_511-Crp63   -> TX2
+*                 CH8_511-CH9_511-CH10_511-CH11_511-Crp63 -> TX3   ---> RangeBin #511
+*                 -------------------------------------------------------------------
+* @endverbatim
+*
+* @param[out]     WR_2: 24bit(RE): 0 \n
+*                       24bit(IM): Offset(restricted to 24bit value!) of the RDM OUTPUT buffer(NCC matrix),
+*                       relative to SRAM start address, @ref RSDK_SPT_OTHER_BASE_ADDR "RSDK_SPT_OTHER_BASE_ADDR".
+* @verbatim
+*                 OUTPUT Memory layout:
+*                 SRAM, 16 bit real Log2 Mag2 format
+*                 63:48           47:32           31:16           15:0
+*                 R0_D0_MAG       R0_D1_MAG       R0_D2_MAG       R0_D3_MAG
+*                 |               |               |               |
+*                 R0_D60_MAG      R0_D61_MAG      R0_D62_MAG      R0_D63_MAG
+*                 R1_D0_MAG       R1_D1_MAG       R1_D2_MAG       R1_D3_MAG
+*                 |               |               |               |
+*                 R1_D60_MAG      R1_D61_MAG      R1_D62_MAG      R1_D63_MAG
+*                 |               |               |               |
+*                 |               |               |               |
+*                 |               |               |               |
+*                 R511_D0_MAG     R511_D1_MAG     R511_D2_MAG     R511_D3_MAG
+*                 |               |               |               |
+*                 R511_D60_MAG    R511_D61_MAG    R511_D62_MAG    R511_D63_MAG
+* @endverbatim
+*
+* @param[out]     WR_3: 24bit(RE): 0 \n
+*                       24bit(IM): Offset(restricted to 24bit value!) of the Histogram OUTPUT buffer,
+*                       relative to SRAM start address, @ref RSDK_SPT_OTHER_BASE_ADDR "RSDK_SPT_OTHER_BASE_ADDR".
+* @verbatim
+*                 OUTPUT Memory layout:
+*                 SRAM, 16 bit values histogram counters
+*            0x0  bin1  bin0
+*            0x4  bin3  bin2
+*                 |     |
+*                 bin61 bin60
+*                 bin63 bin62 -> Range Bin 0
+*                 ----------------------------
+*                 bin1  bin0
+*                 bin3  bin2
+*                 |     |
+*                 bin61 bin60
+*                 bin63 bin62 -> Range Bin 1
+*                 ----------------------------
+*                 |     |
+*                 |     |
+*                 |     |
+*                 ----------------------------
+*                 bin1  bin0
+*                 bin3  bin2
+*                 |     |
+*                 bin61 bin60
+*                 bin63 bin62 -> Range Bin 511
+*                 ----------------------------
+* @endverbatim
+*
+* @return         WR_0: No value returned.
+* @retval         No value returned.
+*
+* @pre            The kernel rely on the assumption that TRAM can be used as temp buffer from TR_0_320_0 to TR_0_322_1.
+*
+* @note           The current implementation is ONLY to be used in combination with 1024 Range FFT and 256 Doppler FFT. \n
+*                 The input buffer MUST NOT be reused for the histogram or RDM output. \n
+*                 All buffers MUST be 8 bytes aligned.
+*
+* @}*/
+/*================================================================================================*/
+/** @cond */
+ .global RsdkSptNcc1024smp64crp4ch3TxDdMimoCp4d
+ .global RsdkSptNcc1024smp64crp4ch3TxDdMimoCp4d_size
+
+RsdkSptNcc1024smp64crp4ch3TxDdMimoCp4d:
+    /*=========================================================================
+     * Kernel watermarking instruction without side-effects. WR_0 can be ovewritten
+     * with the output parameter, according to the SPT calling convention
+     *=========================================================================*/
+    set #RSDK_SPT_KERNEL_WATERMARK, WR_0
+
+/*=========================================================================
+ * API parameter passing
+ *=========================================================================*/
+    /*=========================================================================
+     * INPUT
+     *=========================================================================
+     * WR_11: 24bit(RE): OPRAM address where to put ODD range bins for all channels
+     *        24bit(IM): SRAM offset to ODD range bins
+     * WR_12: 24bit(RE): OPRAM address where to put EVEN range bins for all channels
+     *        24bit(IM): SRAM offset to EVEN range bins
+     * WR_13: 24bit(RE): no adder for OPRAM address
+     *        24bit(IM): SRAM offset to next range bins
+     *=========================================================================*/
+    add .noshift .mod24 WR_1, #(OR_0_0_0), WR_11
+    add .noshift .mod24 WR_1, #(OR_2_0_0 | ((DDMIMO_TX_SLOTS * CHIRPS_PER_DDMIMO_TX * BYTES_CP4D_DATA) << 24)), WR_12
+    set #((2 * DDMIMO_TX_SLOTS * CHIRPS_PER_DDMIMO_TX * BYTES_CP4D_DATA) << 24), WR_13
+
+    /*=========================================================================
+     * OUTPUT
+     *=========================================================================
+     * WR_14: 24bit(RE): OPRAM address where to get the data after vmt Mag2+Log2, (ODD range bins)
+     *        24bit(IM): SRAM RDM result buffer address offset
+     * WR_15: 24bit(RE): OPRAM address where to get the data after vmt Mag2+Log2, (EVEN range bins)
+     *        24bit(IM): SRAM RDM result buffer address offset
+     * WR_16: 24bit(RE): no adder for OPRAM address
+     *        24bit(IM): SRAM offset for the results of the next range bin
+     *=========================================================================*/
+    add .noshift .mod24 WR_2, #(OR_1_0_0), WR_14
+    add .noshift .mod24 WR_2, #(OR_3_0_0 | ((CHIRPS_PER_DDMIMO_TX * LOG2_FORMAT_BYTE) << 24)), WR_15
+    set #((2 * CHIRPS_PER_DDMIMO_TX * LOG2_FORMAT_BYTE) << 24), WR_16
+
+    /*=========================================================================
+     * OUTPUT - Histogram
+     *=========================================================================
+     * WR_17: 24bit(RE): OPRAM address where to get the histogram counters, (ODD range bins)
+     *        24bit(IM): SRAM histogram buffer address offset
+     * WR_18: 24bit(RE): OPRAM address where to get the histogram counters, (EVEN range bins)
+     *        24bit(IM): SRAM histogram buffer address offset
+     * WR_19: 24bit(RE): no adder for OPRAM address
+     *        24bit(IM): SRAM offset for the results of the next range bin
+     *=========================================================================*/
+    add .noshift .mod24 WR_3, #(OR_0_0_0), WR_17
+    add .noshift .mod24 WR_3, #(OR_2_0_0 | ((HIST_BINS * BYTES_HIST_BINS) << 24)), WR_18
+    set #((2 * HIST_BINS * BYTES_HIST_BINS) << 24), WR_19
+
+/*=========================================================================
+ * NON COHERENT COMBINING SECTION
+ *=========================================================================*/
+    /*=========================================================================
+     * set WR_46, with left shift value 2
+     *=========================================================================*/
+    set #(0x2), WR_46
+
+    /*=========================================================================
+     * set TRAM column 320, slice 0..7 with "0.5" coef for the first 8 tap SCP
+     * set TRAM column 321, slice 0..3 with "0.5" and 4..7 with "0" coef for the second 8 tap SCP
+     * set TRAM column 322, slice 0..1 with "0.66" coef for the 2 tap SCP
+     *=========================================================================*/
+    set #(0x3FFF), TR_0_320_0 /*  0.5 */
+    set #(0x3FFF), TR_0_320_1 /*  0.5 */
+    set #(0x3FFF), TR_0_320_2 /*  0.5 */
+    set #(0x3FFF), TR_0_320_3 /*  0.5 */
+    set #(0x3FFF), TR_0_320_4 /*  0.5 */
+    set #(0x3FFF), TR_0_320_5 /*  0.5 */
+    set #(0x3FFF), TR_0_320_6 /*  0.5 */
+    set #(0x3FFF), TR_0_320_7 /*  0.5 */
+    set #(0x3FFF), TR_0_321_0 /*  0.5 */
+    set #(0x3FFF), TR_0_321_1 /*  0.5 */
+    set #(0x3FFF), TR_0_321_2 /*  0.5 */
+    set #(0x3FFF), TR_0_321_3 /*  0.5 */
+    set #(   0x0), TR_0_321_4 /*    0 */
+    set #(   0x0), TR_0_321_5 /*    0 */
+    set #(   0x0), TR_0_321_6 /*    0 */
+    set #(   0x0), TR_0_321_7 /*    0 */
+    set #(0x5555), TR_0_322_0 /* 0.66 */
+    set #(0x5555), TR_0_322_1 /* 0.66 */
+
+    /*=========================================================================
+     * LOOP: loop #count is number of range bins/2 (2 range bins processed within one iteration)
+     *=========================================================================*/
+    loop #(RANGE_BINS >> 1)
+
+        /*=========================================================================
+         * PDMA: transfer ODD/EVEN range bin data of all 4 channels from SRAM to OPRAM
+         *=========================================================================*/
+        pdma.ind .signext .CP4D .sysram2opram  .sync .notrace, SRAM_SLICES, RSDK_SPT_CUBE_BASE_ADDR, WR_11, 0x0, 0x1, 0x0, 0x1
+        pdma.ind .signext .CP4D .sysram2opram .async .notrace, SRAM_SLICES, RSDK_SPT_CUBE_BASE_ADDR, WR_12, 0x0, 0x1, 0x0, 0x1
+
+        /*=========================================================================
+         * ODD range bins proccesing part
+         *=========================================================================
+         *=========================================================================
+         * VMT: Op Seq 2, Stage 1, Vector Magnitude(sqrt(Re^2(x)+Im^2(x))/2), 12ch x CHIRPS_PER_DDMIMO_TX
+         *=========================================================================*/
+        vmt.no_sq2s2 .cmplx .rst_sum .in_48 .op_off .mag_sq2s1 .no_sq2s3, VIRT_CHANNELS_NO*CHIRPS_PER_DDMIMO_TX, OR_0_0_0, OR_1_0_0, 0x1, 0x1
+
+        /*=========================================================================
+         * COPY simple/shift: rearange the 12 virtual channels (CH#0..CH#11), done on half samples(interleaved)
+         *=========================================================================*/
+        copy.shift    VIRT_CHANNELS_NO*CHIRPS_PER_DDMIMO_TX,           OR_1_0_0,  OR_3_0_4, 0x1, 0x1
+        copy.simple 2*CHANNELS_PER_DDMIMO_TX*CHIRPS_PER_DDMIMO_TX>>1,  OR_1_0_0,  OR_0_0_0, 0x3, 0x2
+        copy.simple 2*CHANNELS_PER_DDMIMO_TX*CHIRPS_PER_DDMIMO_TX>>1,  OR_3_2_0,  OR_0_1_0, 0x3, 0x2
+        copy.simple 2*CHANNELS_PER_DDMIMO_TX*CHIRPS_PER_DDMIMO_TX>>1,  OR_1_1_0, OR_0_64_0, 0x3, 0x2
+        copy.simple 2*CHANNELS_PER_DDMIMO_TX*CHIRPS_PER_DDMIMO_TX>>1,  OR_3_3_0, OR_0_65_0, 0x3, 0x2
+
+        /*=========================================================================
+         * SCP: scalar product with 8 taps, coeficients = 0.5(protection for saturation), taken from TR_0_320_0, TR_0_321_0.
+         * Combine the first and the last 8 virtual channels into an interim RDM.
+         * S1 = (Mag(CH#0)/2 + Mag(CH#1)/2 + Mag(CH#2)/2 + Mag(CH#3)/2 + Mag(CH#4)/2 + Mag(CH#5)/2 + Mag(CH#6)/2 + Mag(CH#7)/2)/4
+         * S2 = (Mag(CH#8)/2 + Mag(CH#9)/2 + Mag(CH#10)/2 + Mag(CH#11)/2 + NA*0 + NA*0 + NA*0 + NA*0)/4
+         *=========================================================================*/
+        scp .real .coef_re .nosft SCALAR_PROD_8TAPS, 2*CHANNELS_PER_DDMIMO_TX*CHIRPS_PER_DDMIMO_TX,  OR_0_0_0, OR_1_0_0, 0x1, 0x1, TR_0_320_0
+        scp .real .coef_re .nosft SCALAR_PROD_8TAPS, 2*CHANNELS_PER_DDMIMO_TX*CHIRPS_PER_DDMIMO_TX, OR_0_64_0, OR_3_0_0, 0x1, 0x1, TR_0_321_0
+
+        /*=========================================================================
+         * COPY partial/unpack: rearange data for the final SCP (2 TAPS)
+         *=========================================================================*/
+        copy.partial_r2i .keep_orig, CHIRPS_PER_DDMIMO_TX, OR_3_0_0, OR_1_0_0, 0x1, 0x1
+        copy.unpack   .reset_values, CHIRPS_PER_DDMIMO_TX, OR_1_0_0, OR_0_0_0, 0x1, 0x1
+
+        /*=========================================================================
+         * SCP: scalar product with 2 taps, coeficients = 0.66, taken from TR_0_322_0,
+         * Combine the 2 interim values into the final RDM. S = (S1*2/3 + S2*2/3)/4
+         *=========================================================================*/
+        scp .real .coef_re .nosft SCALAR_PROD_2TAPS, 2*CHIRPS_PER_DDMIMO_TX, OR_0_0_0, OR_1_0_0, 0x1, 0x1, TR_0_322_0
+
+        /*=========================================================================
+         * VMT: Shift left(2 in WR_46) the input values to compensate the 2 bit resolution loss from SCP tap 2, out packed
+         *=========================================================================*/
+        vmt.shift_sq2s2 .real .rst_sum .in_24real .op_on .no_sq2s1 WR_46 .no_sq2s3, CHIRPS_PER_DDMIMO_TX, OR_1_0_0, OR_0_0_0, 0x1, 0x1
+
+        /*=========================================================================
+         * VMT: Operation Sequence 1, Mag2 and log2. log2(S^2). Input/Output packed.
+         *=========================================================================*/
+        vmt.sq1 .real .in_48 .op_on, CHIRPS_PER_DDMIMO_TX, OR_0_0_0, OR_1_0_0, 0x1, 0x1
+
+        /*=========================================================================
+         * HIST: Histogram per range bin. The output will be used for threshold calculation
+         * on the CPU. Input packed in log2 format. Threshold bin: 0
+         *=========================================================================*/
+        hist .log2 .no_preproc .read_store .64bins .no_preload .pack .24bits, CHIRPS_PER_DDMIMO_TX, OR_1_0_0, OR_0_0_0, 0x1, 0x1, 0x0
+
+        /*=========================================================================
+         * PDMA: move the Histogram counters in SRAM, for ODD range bins
+         *=========================================================================*/
+        pdma.ind .zeropad .16cmplx .opram2sysram .async .notrace, HIST_BINS>>1, RSDK_SPT_OTHER_BASE_ADDR, WR_17, 0x0, 0x1, 0x0, 0x1
+
+        /*=========================================================================
+         * PDMA: swap copy(packed data) the range-doppler matrix data to SRAM
+         * grouped 2 real columns in one(Re/Im) OPRAM slice, for ODD range bins
+         *=========================================================================*/
+        pdma.ind .zeropad .16swap .opram2sysram .async .notrace, CHIRPS_PER_DDMIMO_TX>>1, RSDK_SPT_OTHER_BASE_ADDR, WR_14, 0x0, 0x1, 0x0, 0x1
+
+        /*=========================================================================
+         * EVEN range bins proccesing part
+         *=========================================================================
+         *=========================================================================
+         * VMT: Op Seq 2, Stage 1, Vector Magnitude(sqrt(Re^2(x)+Im^2(x))/2), 12ch x CHIRPS_PER_DDMIMO_TX
+         *=========================================================================*/
+        vmt.no_sq2s2 .cmplx .rst_sum .in_48 .op_off .mag_sq2s1 .no_sq2s3, VIRT_CHANNELS_NO*CHIRPS_PER_DDMIMO_TX, OR_2_0_0, OR_3_0_0, 0x1, 0x1
+
+        /*=========================================================================
+         * COPY simple/shift: rearange the 12 virtual channels (CH#0..CH#11), done on half samples(interleaved)
+         *=========================================================================*/
+        copy.shift    VIRT_CHANNELS_NO*CHIRPS_PER_DDMIMO_TX,           OR_3_0_0,  OR_0_0_4, 0x1, 0x1
+        copy.simple 2*CHANNELS_PER_DDMIMO_TX*CHIRPS_PER_DDMIMO_TX>>1,  OR_3_0_0,  OR_2_0_0, 0x3, 0x2
+        copy.simple 2*CHANNELS_PER_DDMIMO_TX*CHIRPS_PER_DDMIMO_TX>>1,  OR_0_2_0,  OR_2_1_0, 0x3, 0x2
+        copy.simple 2*CHANNELS_PER_DDMIMO_TX*CHIRPS_PER_DDMIMO_TX>>1,  OR_3_1_0, OR_2_64_0, 0x3, 0x2
+        copy.simple 2*CHANNELS_PER_DDMIMO_TX*CHIRPS_PER_DDMIMO_TX>>1,  OR_0_3_0, OR_2_65_0, 0x3, 0x2
+
+        /*=========================================================================
+         * SCP: scalar product with 8 taps, coeficients = 0.5(protection for saturation), taken from TR_0_320_0, TR_0_321_0.
+         * Combine the first and the last 8 virtual channels into an interim RDM.
+         * S1 = (Mag(CH#0)/2 + Mag(CH#1)/2 + Mag(CH#2)/2 + Mag(CH#3)/2 + Mag(CH#4)/2 + Mag(CH#5)/2 + Mag(CH#6)/2 + Mag(CH#7)/2)/4
+         * S2 = (Mag(CH#8)/2 + Mag(CH#9)/2 + Mag(CH#10)/2 + Mag(CH#11)/2 + NA*0 + NA*0 + NA*0 + NA*0)/4
+         *=========================================================================*/
+        scp .real .coef_re .nosft SCALAR_PROD_8TAPS, 2*CHANNELS_PER_DDMIMO_TX*CHIRPS_PER_DDMIMO_TX,  OR_2_0_0, OR_3_0_0, 0x1, 0x1, TR_0_320_0
+        scp .real .coef_re .nosft SCALAR_PROD_8TAPS, 2*CHANNELS_PER_DDMIMO_TX*CHIRPS_PER_DDMIMO_TX, OR_2_64_0, OR_0_0_0, 0x1, 0x1, TR_0_321_0
+
+        /*=========================================================================
+         * COPY partial/unpack: rearange data for the final SCP (2 TAPS)
+         *=========================================================================*/
+        copy.partial_r2i .keep_orig, CHIRPS_PER_DDMIMO_TX, OR_0_0_0, OR_3_0_0, 0x1, 0x1
+        copy.unpack .reset_values,  CHIRPS_PER_DDMIMO_TX, OR_3_0_0, OR_2_0_0, 0x1, 0x1
+
+        /*=========================================================================
+         * SCP: scalar product with 2 taps, coeficients = 0.66, taken from TR_0_322_0,
+         * Combine the 2 interim values into the final RDM. S = (S1*2/3 + S2*2/3)/4
+         *=========================================================================*/
+        scp .real .coef_re .nosft SCALAR_PROD_2TAPS, 2*CHIRPS_PER_DDMIMO_TX, OR_2_0_0, OR_3_0_0, 0x1, 0x1, TR_0_322_0
+
+        /*=========================================================================
+         * VMT: Shift left(2 in WR_46) the input values to compensate the 2 bit resolution loss from SCP tap 2, out packed
+         *=========================================================================*/
+        vmt.shift_sq2s2 .real .rst_sum .in_24real .op_on .no_sq2s1 WR_46 .no_sq2s3, CHIRPS_PER_DDMIMO_TX, OR_3_0_0, OR_2_0_0, 0x1, 0x1
+
+        /*=========================================================================
+         * VMT: Operation Sequence 1, Mag2 and log2. log2(S^2). Input/Output packed.
+         *=========================================================================*/
+        vmt.sq1 .real .in_48 .op_on, CHIRPS_PER_DDMIMO_TX, OR_2_0_0, OR_3_0_0, 0x1, 0x1
+
+        /*=========================================================================
+         * HIST: Histogram per range bin. The output will be used for threshold calculation
+         * on the CPU. Input packed in log2 format. Threshold bin: 0
+         *=========================================================================*/
+        hist .log2 .no_preproc .read_store .64bins .no_preload .pack .24bits, CHIRPS_PER_DDMIMO_TX, OR_3_0_0, OR_2_0_0, 0x1, 0x1, 0x0
+
+        /*=========================================================================
+         * PDMA: move the Histogram counters in SRAM, for EVEN range bins
+         *=========================================================================*/
+        pdma.ind .zeropad .16cmplx .opram2sysram .async .notrace, HIST_BINS>>1, RSDK_SPT_OTHER_BASE_ADDR, WR_18, 0x0, 0x1, 0x0, 0x1
+
+        /*=========================================================================
+         * PDMA: swap copy(packed data) the range-doppler matrix data to SRAM
+         * grouped 2 real columns in one(Re/Im) OPRAM slice, for EVEN range bins
+         *=========================================================================*/
+        pdma.ind .zeropad .16swap .opram2sysram .async .notrace, CHIRPS_PER_DDMIMO_TX>>1, RSDK_SPT_OTHER_BASE_ADDR, WR_15, 0x0, 0x1, 0x0, 0x1
+
+        /*=========================================================================
+         * ADD: increment input SRAM offset to next ODD/EVEN range bin
+         *=========================================================================*/
+        add .noshift .mod24 WR_11, WR_13, WR_11
+        add .noshift .mod24 WR_12, WR_13, WR_12
+
+        /*=========================================================================
+         * ADD: increment output SRAM offset to next ODD/EVEN range bin (RDM)
+         *=========================================================================*/
+        add .noshift .mod24 WR_14, WR_16, WR_14
+        add .noshift .mod24 WR_15, WR_16, WR_15
+
+        /*=========================================================================
+         * ADD: increment output SRAM offset to next ODD/EVEN range bin histogram
+         *=========================================================================*/
+        add .noshift .mod24 WR_17, WR_19, WR_17
+        add .noshift .mod24 WR_18, WR_19, WR_18
+
+    /*=========================================================================
+     * NEXT: end of the loop
+     *=========================================================================*/
+    next
+
+/*=========================================================================
+ * STOP: end of Non Coherent Combining kernel
+ *=========================================================================*/
+ stop
+
+ .set RsdkSptNcc1024smp64crp4ch3TxDdMimoCp4d_size, .-RsdkSptNcc1024smp64crp4ch3TxDdMimoCp4d
+/*******************************************************************************
+ * EOF
+ ******************************************************************************/
+/** @endcond */
