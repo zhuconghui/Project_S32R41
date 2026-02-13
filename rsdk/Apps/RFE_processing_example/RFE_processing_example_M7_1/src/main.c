@@ -22,6 +22,7 @@
 #include "Siul2_Port_Ip.h"
 #include "Siul2_Port_Ip_Cfg.h"
 #include "OsIf.h"
+#include "IntCtrl_Ip.h"
 
 #include "lwip/init.h"
 #include "lwip/timeouts.h"
@@ -44,9 +45,17 @@
 
 static struct netif s_netif[ETHIF_NUMBER];
 extern void GmacIf_RxNotification(uint8 instance, uint8 channel);
+extern void PIT_0_ISR(void);
 static struct udp_pcb *s_udp_pcb = NULL;
 static ip_addr_t s_udp_dst;
 static uint8_t s_udp_payload[UDP_PAYLOAD_SIZE];
+
+static void Eth_Init1msTimerInterrupt(void)
+{
+    IntCtrl_Ip_InstallHandler(PIT0_IRQn, PIT_0_ISR, NULL_PTR);
+    IntCtrl_Ip_SetPriority(PIT0_IRQn, 9U);
+    IntCtrl_Ip_EnableIrq(PIT0_IRQn);
+}
 
 static void Eth_InitStackInterface(void)
 {
@@ -124,6 +133,7 @@ int main(void)
     OsIf_Init(NULL_PTR);
 
     Gpt_Init(&Gpt_Config);
+    Eth_Init1msTimerInterrupt();
     Gpt_EnableNotification(GPT_1MS_CHANNEL);
     Gpt_StartTimer(GPT_1MS_CHANNEL, GPT_1MS_TICKS);
 
@@ -139,7 +149,7 @@ int main(void)
     while (1)
     {
         /* Poll RX path so ARP/UDP replies can be processed. */
-//        GmacIf_RxNotification(0U, 0U);
+        GmacIf_RxNotification(0U, 0U);
         sys_check_timeouts();
     }
 }
