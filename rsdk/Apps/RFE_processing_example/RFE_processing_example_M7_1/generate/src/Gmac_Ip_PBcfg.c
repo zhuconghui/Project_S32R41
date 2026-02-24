@@ -115,10 +115,10 @@ extern void Eth_43_GMAC_TxIrqCallback(const uint8 CtrlIdx, const uint8 DMAChanne
 #define ETH_43_GMAC_START_SEC_VAR_CLEARED_UNSPECIFIED_NO_CACHEABLE
 #include "Eth_43_GMAC_MemMap.h"
 
-extern Gmac_Ip_BufferDescriptorType GMAC_0_RxRing_0_DescBuffer[];
-extern uint8 GMAC_0_RxRing_0_DataBuffer[];
-extern Gmac_Ip_BufferDescriptorType GMAC_0_TxRing_0_DescBuffer[];
-extern uint8 GMAC_0_TxRing_0_DataBuffer[];
+extern Gmac_Ip_BufferDescriptorType GMAC_1_RxRing_0_DescBuffer[];
+extern uint8 GMAC_1_RxRing_0_DataBuffer[];
+extern Gmac_Ip_BufferDescriptorType GMAC_1_TxRing_0_DescBuffer[];
+extern uint8 GMAC_1_TxRing_0_DataBuffer[];
 
 #define ETH_43_GMAC_STOP_SEC_VAR_CLEARED_UNSPECIFIED_NO_CACHEABLE
 #include "Eth_43_GMAC_MemMap.h"
@@ -129,8 +129,8 @@ extern uint8 GMAC_0_TxRing_0_DataBuffer[];
 #define ETH_43_GMAC_START_SEC_VAR_CLEARED_UNSPECIFIED
 #include "Eth_43_GMAC_MemMap.h"
 
-extern Gmac_Ip_StateType GMAC_0_StateStructure;
-static Gmac_Ip_TxGateControl GMAC_0_GateControlListPB[1U]  =
+extern Gmac_Ip_StateType GMAC_1_StateStructure;
+static Gmac_Ip_TxGateControl GMAC_1_GateControlListPB[1U]  =
 {
     {
         /*.timeInterval = */0U,
@@ -149,16 +149,16 @@ static Gmac_Ip_TxGateControl GMAC_0_GateControlListPB[1U]  =
 
 
 /*! @brief The MAC address(es) of the configured controller(s) */
-static const uint8 GMAC_0_au8MacAddrPB[GMAC_MAC_ADDR_LENGTH] = { 0x11U, 0x22U, 0x33U, 0x44U, 0x55U, 0x66U };
+static const uint8 GMAC_1_au8MacAddrPB[GMAC_MAC_ADDR_LENGTH] = { 0x11U, 0x22U, 0x33U, 0x44U, 0x55U, 0x66U };
 
 /*! @brief Reception ring configuration structures */
-static const Gmac_Ip_RxRingConfigType GMAC_0_aRxRingConfigPB[1U] =
+static const Gmac_Ip_RxRingConfigType GMAC_1_aRxRingConfigPB[1U] =
 {
     /* The configuration structure for Rx Ring 0 */
     {
-        /*.ringDesc = */GMAC_0_RxRing_0_DescBuffer,
+        /*.ringDesc = */GMAC_1_RxRing_0_DescBuffer,
         /*.callback = */&Eth_43_GMAC_RxIrqCallback,
-        /*.buffer = */GMAC_0_RxRing_0_DataBuffer,
+        /*.buffer = */GMAC_1_RxRing_0_DataBuffer,
         /*.interrupts = */(uint32)GMAC_CH_INTERRUPT_RI,
         /*.bufferLen = */1536U,
         /*.ringSize = */5U,
@@ -168,7 +168,7 @@ static const Gmac_Ip_RxRingConfigType GMAC_0_aRxRingConfigPB[1U] =
 };
 
 /*! @brief Transmission ring configuration structures */
-static const Gmac_Ip_TxRingConfigType GMAC_0_aTxRingConfigPB[1U] =
+static const Gmac_Ip_TxRingConfigType GMAC_1_aTxRingConfigPB[1U] =
 {
     /* The configuration structure for Tx Ring 0 */
     {
@@ -177,9 +177,9 @@ static const Gmac_Ip_TxRingConfigType GMAC_0_aTxRingConfigPB[1U] =
         /*.sendSlopeCredit = */0U,
         /*.hiCredit = */0U,
         /*.loCredit = */0,
-        /*.ringDesc = */GMAC_0_TxRing_0_DescBuffer,
+        /*.ringDesc = */GMAC_1_TxRing_0_DescBuffer,
         /*.callback = */&Eth_43_GMAC_TxIrqCallback,
-        /*.buffer = */GMAC_0_TxRing_0_DataBuffer,
+        /*.buffer = */GMAC_1_TxRing_0_DataBuffer,
         /*.interrupts = */(uint32)GMAC_CH_INTERRUPT_TI,
         /*.bufferLen = */1536U,
         /*.ringSize = */5U,
@@ -195,7 +195,7 @@ static const Gmac_Ip_TxRingConfigType GMAC_0_aTxRingConfigPB[1U] =
 };
 
 /*! @brief Module configuration structures */
-static const Gmac_Ip_ConfigType GMAC_0_InitConfigPB =
+static const Gmac_Ip_ConfigType GMAC_1_InitConfigPB =
 {
     /*.rxRingCount = */1U,
     /*.txRingCount = */1U,
@@ -208,9 +208,9 @@ static const Gmac_Ip_ConfigType GMAC_0_InitConfigPB =
 #endif
     /*.interrupts = */0U,
     /*.callback = */NULL_PTR,
-    /*.miiMode = */GMAC_RMII_MODE,
+    /*.miiMode = */GMAC_RGMII_MODE,
     /*.txSchedAlgo = */GMAC_SCHED_ALGO_SP,
-    /*.speed = */GMAC_SPEED_100M,
+    /*.speed = */GMAC_SPEED_1G,
     /*.duplex = */GMAC_FULL_DUPLEX,
     /*.macConfig = */0U | (uint32)GMAC_MAC_CONFIG_CRC_STRIPPING | (uint32)GMAC_MAC_CONFIG_AUTO_PAD | ((uint32)0U << GMAC_MAC_CONFIGURATION_IPG_SHIFT),
     /*.extendedMacConfig = */ 0U,
@@ -220,13 +220,13 @@ static const Gmac_Ip_ConfigType GMAC_0_InitConfigPB =
     /*.macPktFilterConfig = */0U | (uint32)GMAC_PKT_FILTER_HASH_OR_PERFECT_FILTER,
     /*.enableCtrl = */FALSE
 #if (GMAC_TX_SPORADIC_BIG_BUFFERS == STD_ON)
-    ,/*.TxBigBufferCount = */ GMAC_0_TX_SPORADIC_BIG_BUFFERS_COUNT
-    ,/*.TxBigBufferLength = */ GMAC_0_TX_SPORADIC_BIG_BUFFERS_LENGTH
+    ,/*.TxBigBufferCount = */ GMAC_1_TX_SPORADIC_BIG_BUFFERS_COUNT
+    ,/*.TxBigBufferLength = */ GMAC_1_TX_SPORADIC_BIG_BUFFERS_LENGTH
     ,/*.TxBigBuffer = */ NULL_PTR
 #endif
 #if (GMAC_RX_SPORADIC_BIG_BUFFERS == STD_ON)
-    ,/*.RxBigBufferCount = */ GMAC_0_RX_SPORADIC_BIG_BUFFERS_COUNT
-    ,/*.RxBigBufferLength = */ GMAC_0_RX_SPORADIC_BIG_BUFFERS_LENGTH
+    ,/*.RxBigBufferCount = */ GMAC_1_RX_SPORADIC_BIG_BUFFERS_COUNT
+    ,/*.RxBigBufferLength = */ GMAC_1_RX_SPORADIC_BIG_BUFFERS_LENGTH
     ,/*.RxBigBuffer = */ NULL_PTR
 #endif
 #ifdef GMAC_IP_DMA_PRIORITY_CONFIGURATION_ENABLE
@@ -251,7 +251,7 @@ static const Gmac_Ip_ConfigType GMAC_0_InitConfigPB =
 #endif
 };
 
-static const Gmac_Ip_TxTimeAwareShaper GMAC_0_pTxTimeShaperPB =
+static const Gmac_Ip_TxTimeAwareShaper GMAC_1_pTxTimeShaperPB =
 {
     /*.baseTimeSecond = */0U,
     /*.baseTimenanoSecond = */0U,
@@ -262,11 +262,11 @@ static const Gmac_Ip_TxTimeAwareShaper GMAC_0_pTxTimeShaperPB =
     /*.releaseAdvanceTime = */0U,
     /*.holdAdvanceTime = */0U,
     /*.preemptionClassification = */0U,
-    /*.GateControlList = */GMAC_0_GateControlListPB
+    /*.GateControlList = */GMAC_1_GateControlListPB
 };
 
 #if (STD_ON == GMAC_IP_HAS_RX_L3_L4_FILTERS)
-static const Gmac_Ip_RxL3L4FilterConfigType GMAC_0_aRxL3L4FilterConfigPB[0]  =
+static const Gmac_Ip_RxL3L4FilterConfigType GMAC_1_aRxL3L4FilterConfigPB[0]  =
 {
     {
         /*.DMAChannel = */0U,
@@ -285,7 +285,7 @@ static const Gmac_Ip_RxL3L4FilterConfigType GMAC_0_aRxL3L4FilterConfigPB[0]  =
 #endif
 
 #if (STD_ON == GMAC_IP_PPS_OUTPUT_SUPPORT)
-static const Gmac_Ip_FlexiblePPSOutput GMAC_0_paCtrlFlexiblePPSOutputPB[0]  =
+static const Gmac_Ip_FlexiblePPSOutput GMAC_1_paCtrlFlexiblePPSOutputPB[0]  =
 {
     {
         /*.PPSDutyCycle = */0U,
@@ -311,17 +311,17 @@ const Gmac_CtrlConfigType Gmac_aCtrlConfigPB[1U] =
 {
     /* The configuration structure for Gmac_aCtrlConfig[0U] */
     {
-        &GMAC_0_StateStructure,
-        &GMAC_0_InitConfigPB,
-        &GMAC_0_aRxRingConfigPB[0U],
-        &GMAC_0_aTxRingConfigPB[0U],
-        &GMAC_0_au8MacAddrPB[0U],
-        &GMAC_0_pTxTimeShaperPB,
+        &GMAC_1_StateStructure,
+        &GMAC_1_InitConfigPB,
+        &GMAC_1_aRxRingConfigPB[0U],
+        &GMAC_1_aTxRingConfigPB[0U],
+        &GMAC_1_au8MacAddrPB[0U],
+        &GMAC_1_pTxTimeShaperPB,
 #if (STD_ON == GMAC_IP_PPS_OUTPUT_SUPPORT)
-        &GMAC_0_paCtrlFlexiblePPSOutputPB[0U],
+        &GMAC_1_paCtrlFlexiblePPSOutputPB[0U],
 #endif
 #if (STD_ON == GMAC_IP_HAS_RX_L3_L4_FILTERS)
-        &GMAC_0_aRxL3L4FilterConfigPB[0U]
+        &GMAC_1_aRxL3L4FilterConfigPB[0U]
 #endif
     }
 };

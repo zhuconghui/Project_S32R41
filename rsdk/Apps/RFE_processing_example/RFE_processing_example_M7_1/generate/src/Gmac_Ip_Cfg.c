@@ -226,7 +226,7 @@ extern "C"{
 #include "Eth_43_GMAC_MemMap.h"
  const uint16 Gmac_aRxExternalBuffLength[1] =
 {
-    GMAC_0_MAX_RXBUFFLEN_SUPPORTED
+    GMAC_1_MAX_RXBUFFLEN_SUPPORTED
 };
 
 #define ETH_43_GMAC_STOP_SEC_CONST_16

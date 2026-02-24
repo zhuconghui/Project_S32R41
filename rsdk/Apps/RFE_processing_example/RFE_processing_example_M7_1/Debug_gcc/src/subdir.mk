@@ -6,17 +6,20 @@
 C_SRCS += \
 ../src/main.c \
 D:/workspaceS32DS.3.5/rsdk/RFE_abstract/RFE_driver2/RF_Common/src/rfe_crc_computation.c \
-D:/workspaceS32DS.3.5/rsdk/RFE_abstract/RFE_driver2/RF_Common/example/rfe_ipc_api_shm.c 
+D:/workspaceS32DS.3.5/rsdk/RFE_abstract/RFE_driver2/RF_Common/example/rfe_ipc_api_shm.c \
+../src/sys_init.c 
 
 OBJS += \
 ./src/main.o \
 ./src/rfe_crc_computation.o \
-./src/rfe_ipc_api_shm.o 
+./src/rfe_ipc_api_shm.o \
+./src/sys_init.o 
 
 C_DEPS += \
 ./src/main.d \
 ./src/rfe_crc_computation.d \
-./src/rfe_ipc_api_shm.d 
+./src/rfe_ipc_api_shm.d \
+./src/sys_init.d 
 
 
 # Each subdirectory must supply rules for building sources it contributes

@@ -854,16 +854,30 @@ typedef struct
 #define PortConf_PortPin_tx1QPs_ 25
 #define PortConf_PortPin_tx2QPs_ 26
 #define PortConf_PortPin_tx3QPs_ 27
+#define PortConf_PortPin_GMAC_1_RXDV_IN 28
+#define PortConf_PortPin_GMAC_1_RXD3_IN 29
+#define PortConf_PortPin_GMAC_1_TX_EN_OUT 30
+#define PortConf_PortPin_GMAC_1_TXD0_OUT 31
+#define PortConf_PortPin_GMAC_1_MD_INOUT 32
+#define PortConf_PortPin_GMAC_1_RXD0_IN 33
+#define PortConf_PortPin_GMAC_1_RXD1_IN 34
+#define PortConf_PortPin_GMAC_1_RXD2_IN 35
+#define PortConf_PortPin_GMAC_1_TXD3_OUT 36
+#define PortConf_PortPin_GMAC_1_TXD2_OUT 37
+#define PortConf_PortPin_GMAC_1_TXD1_OUT 38
+#define PortConf_PortPin_GMAC_1_MDC_OUT 39
+#define PortConf_PortPin_GMAC_1_RX_CLK_IN 40
+#define PortConf_PortPin_GMAC_1_TX_CLK_OUT 41
 
 /**
 * @brief The maximum number of configured pins
 */
-#define PORT_MAX_CONFIGURED_PADS_U16   ((uint16)28)
+#define PORT_MAX_CONFIGURED_PADS_U16   ((uint16)42)
 
 /**
 * @brief Number of UnUsed pin array
 */
-#define PORT_MAX_UNUSED_PADS_U16    (78U)
+#define PORT_MAX_UNUSED_PADS_U16    (64U)
 /**
 * @brief Port driver Pre-Compile configuration switch
 */

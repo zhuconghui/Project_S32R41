@@ -161,7 +161,7 @@ ETH_43_GMAC_IPW_CONFIG_EXT
 
 static const Eth_43_GMAC_EgressCfgType Eth_43_GMAC_aEgressConfigPB[1U] =
 {
-    /* The configuration structure for Eth_43_GMAC_aEgressConfigPB_[0U] - IP_0 */
+    /* The configuration structure for Eth_43_GMAC_aEgressConfigPB_[0U] - IP_1 */
     {
         5U,  /* Total number of buffers across all Tx FIFOs */
         1U, /* Total number of configured Tx FIFOs */
@@ -171,7 +171,7 @@ static const Eth_43_GMAC_EgressCfgType Eth_43_GMAC_aEgressConfigPB[1U] =
 
 static const Eth_43_GMAC_IngressCfgType Eth_43_GMAC_aIngressConfigPB[1U] =
 {
-    /* The configuration structure for Eth_43_GMAC_aIngressConfigPB_[0U] - IP_0 */
+    /* The configuration structure for Eth_43_GMAC_aIngressConfigPB_[0U] - IP_1 */
     {
         5U,  /* Total number of buffers across all Rx FIFOs */
         1U /* Total number of configured Rx FIFOs */
@@ -180,7 +180,7 @@ static const Eth_43_GMAC_IngressCfgType Eth_43_GMAC_aIngressConfigPB[1U] =
 
 static const Eth_43_GMAC_ClockCfgType Eth_43_GMAC_aClockConfigPB[1U] =
 {
-	/* The configuration structure for Eth_43_GMAC_aClockConfigPB_[0U] - IP_0 */
+	/* The configuration structure for Eth_43_GMAC_aClockConfigPB_[0U] - IP_1 */
 	{
 		(uint32)100000000U, /* Frequency of the application interface (in Hz) */
 		(uint8)0U,		 /* Default value for SSINC register. */
@@ -191,14 +191,14 @@ static const Eth_43_GMAC_ClockCfgType Eth_43_GMAC_aClockConfigPB[1U] =
 
 static const Eth_43_GMAC_CtrlCfgType Eth_43_GMAC_aCtrlConfigPB[1U] =
 {
-    /* The configuration structure for Eth_43_GMAC_aCtrlConfigPB[0U] - IP_0 */
+    /* The configuration structure for Eth_43_GMAC_aCtrlConfigPB[0U] - IP_1 */
     {
         &Eth_43_GMAC_Ipw_aCtrlConfigPB[0U],
         &Eth_43_GMAC_aEgressConfigPB[0U],
         &Eth_43_GMAC_aIngressConfigPB[0U],
         &Eth_43_GMAC_aClockConfigPB[0U],
         (uint8)0U,
-        (uint8)0U
+        (uint8)1U
 #if (STD_ON == ETH_43_GMAC_DEM_EVENT_DETECT)
        ,{
             { (uint32)STD_OFF, 0 },
@@ -247,7 +247,8 @@ static const Eth_43_GMAC_CtrlCfgType Eth_43_GMAC_aCtrlConfigPB[1U] =
 const Eth_43_GMAC_ConfigType Eth_43_GMAC_xPredefinedConfig =
 {
     {
-        &Eth_43_GMAC_aCtrlConfigPB[0U]  /* IP_0 */
+        NULL_PTR,  /* IP_0 */
+        &Eth_43_GMAC_aCtrlConfigPB[0U]  /* IP_1 */
     }
 };
 

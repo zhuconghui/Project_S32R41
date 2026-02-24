@@ -832,6 +832,370 @@ const Siul2_Port_Ip_PinSettingsConfig g_pin_mux_InitConfigArr[NUM_OF_CONFIGURED_
                                    PORT_INPUT_MUX_NO_INIT,
                                    PORT_INPUT_MUX_NO_INIT
                                  }
+    },
+    {
+        .base                  = IP_SIUL2_0,
+        .pinPortIdx            = 7,
+        .mux                   = PORT_MUX_AS_GPIO,
+        .safeMode              = PORT_SAFE_MODE_DISABLED,
+        .pullConfig            = PORT_INTERNAL_PULL_NOT_ENABLED,
+        .slewRateCtrlSel       = PORT_SLEW_RATE_CONTROL4,
+        .receiverSel           = PORT_RECEIVER_ENABLE_DIFFERENTIAL_VREF,
+        .openDrain             = PORT_OPEN_DRAIN_DISABLED,
+        .inputBuffer           = PORT_INPUT_BUFFER_ENABLED,
+        .outputBuffer          = PORT_OUTPUT_BUFFER_DISABLED,
+        .initValue             = 2,
+        .inputMuxReg           = {
+                                   80
+                                 },
+        .inputMux              = {
+                                   PORT_INPUT_MUX_ALT1,
+                                   PORT_INPUT_MUX_NO_INIT,
+                                   PORT_INPUT_MUX_NO_INIT,
+                                   PORT_INPUT_MUX_NO_INIT,
+                                   PORT_INPUT_MUX_NO_INIT,
+                                   PORT_INPUT_MUX_NO_INIT,
+                                   PORT_INPUT_MUX_NO_INIT,
+                                   PORT_INPUT_MUX_NO_INIT
+                                 }
+    },
+    {
+        .base                  = IP_SIUL2_0,
+        .pinPortIdx            = 11,
+        .mux                   = PORT_MUX_AS_GPIO,
+        .safeMode              = PORT_SAFE_MODE_DISABLED,
+        .pullConfig            = PORT_INTERNAL_PULL_NOT_ENABLED,
+        .slewRateCtrlSel       = PORT_SLEW_RATE_CONTROL4,
+        .receiverSel           = PORT_RECEIVER_ENABLE_DIFFERENTIAL_VREF,
+        .openDrain             = PORT_OPEN_DRAIN_DISABLED,
+        .inputBuffer           = PORT_INPUT_BUFFER_ENABLED,
+        .outputBuffer          = PORT_OUTPUT_BUFFER_DISABLED,
+        .initValue             = 2,
+        .inputMuxReg           = {
+                                   84
+                                 },
+        .inputMux              = {
+                                   PORT_INPUT_MUX_ALT1,
+                                   PORT_INPUT_MUX_NO_INIT,
+                                   PORT_INPUT_MUX_NO_INIT,
+                                   PORT_INPUT_MUX_NO_INIT,
+                                   PORT_INPUT_MUX_NO_INIT,
+                                   PORT_INPUT_MUX_NO_INIT,
+                                   PORT_INPUT_MUX_NO_INIT,
+                                   PORT_INPUT_MUX_NO_INIT
+                                 }
+    },
+    {
+        .base                  = IP_SIUL2_0,
+        .pinPortIdx            = 1,
+        .mux                   = PORT_MUX_ALT1,
+        .safeMode              = PORT_SAFE_MODE_DISABLED,
+        .pullConfig            = PORT_INTERNAL_PULL_NOT_ENABLED,
+        .slewRateCtrlSel       = PORT_SLEW_RATE_CONTROL4,
+        .receiverSel           = PORT_RECEIVER_ENABLE_DIFFERENTIAL_VREF,
+        .openDrain             = PORT_OPEN_DRAIN_DISABLED,
+        .inputBuffer           = PORT_INPUT_BUFFER_DISABLED,
+        .outputBuffer          = PORT_OUTPUT_BUFFER_ENABLED,
+        .initValue             = 2,
+        .inputMuxReg           = {
+                                   0
+                                 },
+        .inputMux              = {
+                                   PORT_INPUT_MUX_NO_INIT,
+                                   PORT_INPUT_MUX_NO_INIT,
+                                   PORT_INPUT_MUX_NO_INIT,
+                                   PORT_INPUT_MUX_NO_INIT,
+                                   PORT_INPUT_MUX_NO_INIT,
+                                   PORT_INPUT_MUX_NO_INIT,
+                                   PORT_INPUT_MUX_NO_INIT,
+                                   PORT_INPUT_MUX_NO_INIT
+                                 }
+    },
+    {
+        .base                  = IP_SIUL2_0,
+        .pinPortIdx            = 2,
+        .mux                   = PORT_MUX_ALT1,
+        .safeMode              = PORT_SAFE_MODE_DISABLED,
+        .pullConfig            = PORT_INTERNAL_PULL_NOT_ENABLED,
+        .slewRateCtrlSel       = PORT_SLEW_RATE_CONTROL4,
+        .receiverSel           = PORT_RECEIVER_ENABLE_DIFFERENTIAL_VREF,
+        .openDrain             = PORT_OPEN_DRAIN_DISABLED,
+        .inputBuffer           = PORT_INPUT_BUFFER_DISABLED,
+        .outputBuffer          = PORT_OUTPUT_BUFFER_ENABLED,
+        .initValue             = 2,
+        .inputMuxReg           = {
+                                   0
+                                 },
+        .inputMux              = {
+                                   PORT_INPUT_MUX_NO_INIT,
+                                   PORT_INPUT_MUX_NO_INIT,
+                                   PORT_INPUT_MUX_NO_INIT,
+                                   PORT_INPUT_MUX_NO_INIT,
+                                   PORT_INPUT_MUX_NO_INIT,
+                                   PORT_INPUT_MUX_NO_INIT,
+                                   PORT_INPUT_MUX_NO_INIT,
+                                   PORT_INPUT_MUX_NO_INIT
+                                 }
+    },
+    {
+        .base                  = IP_SIUL2_0,
+        .pinPortIdx            = 16,
+        .mux                   = PORT_MUX_ALT1,
+        .safeMode              = PORT_SAFE_MODE_DISABLED,
+        .pullConfig            = PORT_INTERNAL_PULL_NOT_ENABLED,
+        .slewRateCtrlSel       = PORT_SLEW_RATE_CONTROL4,
+        .receiverSel           = PORT_RECEIVER_ENABLE_DIFFERENTIAL_VREF,
+        .openDrain             = PORT_OPEN_DRAIN_DISABLED,
+        .inputBuffer           = PORT_INPUT_BUFFER_ENABLED,
+        .outputBuffer          = PORT_OUTPUT_BUFFER_ENABLED,
+        .initValue             = 2,
+        .inputMuxReg           = {
+                                   89
+                                 },
+        .inputMux              = {
+                                   PORT_INPUT_MUX_ALT1,
+                                   PORT_INPUT_MUX_NO_INIT,
+                                   PORT_INPUT_MUX_NO_INIT,
+                                   PORT_INPUT_MUX_NO_INIT,
+                                   PORT_INPUT_MUX_NO_INIT,
+                                   PORT_INPUT_MUX_NO_INIT,
+                                   PORT_INPUT_MUX_NO_INIT,
+                                   PORT_INPUT_MUX_NO_INIT
+                                 }
+    },
+    {
+        .base                  = IP_SIUL2_0,
+        .pinPortIdx            = 8,
+        .mux                   = PORT_MUX_AS_GPIO,
+        .safeMode              = PORT_SAFE_MODE_DISABLED,
+        .pullConfig            = PORT_INTERNAL_PULL_NOT_ENABLED,
+        .slewRateCtrlSel       = PORT_SLEW_RATE_CONTROL4,
+        .receiverSel           = PORT_RECEIVER_ENABLE_DIFFERENTIAL_VREF,
+        .openDrain             = PORT_OPEN_DRAIN_DISABLED,
+        .inputBuffer           = PORT_INPUT_BUFFER_ENABLED,
+        .outputBuffer          = PORT_OUTPUT_BUFFER_DISABLED,
+        .initValue             = 2,
+        .inputMuxReg           = {
+                                   81
+                                 },
+        .inputMux              = {
+                                   PORT_INPUT_MUX_ALT1,
+                                   PORT_INPUT_MUX_NO_INIT,
+                                   PORT_INPUT_MUX_NO_INIT,
+                                   PORT_INPUT_MUX_NO_INIT,
+                                   PORT_INPUT_MUX_NO_INIT,
+                                   PORT_INPUT_MUX_NO_INIT,
+                                   PORT_INPUT_MUX_NO_INIT,
+                                   PORT_INPUT_MUX_NO_INIT
+                                 }
+    },
+    {
+        .base                  = IP_SIUL2_0,
+        .pinPortIdx            = 9,
+        .mux                   = PORT_MUX_AS_GPIO,
+        .safeMode              = PORT_SAFE_MODE_DISABLED,
+        .pullConfig            = PORT_INTERNAL_PULL_NOT_ENABLED,
+        .slewRateCtrlSel       = PORT_SLEW_RATE_CONTROL4,
+        .receiverSel           = PORT_RECEIVER_ENABLE_DIFFERENTIAL_VREF,
+        .openDrain             = PORT_OPEN_DRAIN_DISABLED,
+        .inputBuffer           = PORT_INPUT_BUFFER_ENABLED,
+        .outputBuffer          = PORT_OUTPUT_BUFFER_DISABLED,
+        .initValue             = 2,
+        .inputMuxReg           = {
+                                   82
+                                 },
+        .inputMux              = {
+                                   PORT_INPUT_MUX_ALT1,
+                                   PORT_INPUT_MUX_NO_INIT,
+                                   PORT_INPUT_MUX_NO_INIT,
+                                   PORT_INPUT_MUX_NO_INIT,
+                                   PORT_INPUT_MUX_NO_INIT,
+                                   PORT_INPUT_MUX_NO_INIT,
+                                   PORT_INPUT_MUX_NO_INIT,
+                                   PORT_INPUT_MUX_NO_INIT
+                                 }
+    },
+    {
+        .base                  = IP_SIUL2_0,
+        .pinPortIdx            = 10,
+        .mux                   = PORT_MUX_AS_GPIO,
+        .safeMode              = PORT_SAFE_MODE_DISABLED,
+        .pullConfig            = PORT_INTERNAL_PULL_NOT_ENABLED,
+        .slewRateCtrlSel       = PORT_SLEW_RATE_CONTROL4,
+        .receiverSel           = PORT_RECEIVER_ENABLE_DIFFERENTIAL_VREF,
+        .openDrain             = PORT_OPEN_DRAIN_DISABLED,
+        .inputBuffer           = PORT_INPUT_BUFFER_ENABLED,
+        .outputBuffer          = PORT_OUTPUT_BUFFER_DISABLED,
+        .initValue             = 2,
+        .inputMuxReg           = {
+                                   83
+                                 },
+        .inputMux              = {
+                                   PORT_INPUT_MUX_ALT1,
+                                   PORT_INPUT_MUX_NO_INIT,
+                                   PORT_INPUT_MUX_NO_INIT,
+                                   PORT_INPUT_MUX_NO_INIT,
+                                   PORT_INPUT_MUX_NO_INIT,
+                                   PORT_INPUT_MUX_NO_INIT,
+                                   PORT_INPUT_MUX_NO_INIT,
+                                   PORT_INPUT_MUX_NO_INIT
+                                 }
+    },
+    {
+        .base                  = IP_SIUL2_0,
+        .pinPortIdx            = 5,
+        .mux                   = PORT_MUX_ALT1,
+        .safeMode              = PORT_SAFE_MODE_DISABLED,
+        .pullConfig            = PORT_INTERNAL_PULL_NOT_ENABLED,
+        .slewRateCtrlSel       = PORT_SLEW_RATE_CONTROL4,
+        .receiverSel           = PORT_RECEIVER_ENABLE_DIFFERENTIAL_VREF,
+        .openDrain             = PORT_OPEN_DRAIN_DISABLED,
+        .inputBuffer           = PORT_INPUT_BUFFER_DISABLED,
+        .outputBuffer          = PORT_OUTPUT_BUFFER_ENABLED,
+        .initValue             = 2,
+        .inputMuxReg           = {
+                                   0
+                                 },
+        .inputMux              = {
+                                   PORT_INPUT_MUX_NO_INIT,
+                                   PORT_INPUT_MUX_NO_INIT,
+                                   PORT_INPUT_MUX_NO_INIT,
+                                   PORT_INPUT_MUX_NO_INIT,
+                                   PORT_INPUT_MUX_NO_INIT,
+                                   PORT_INPUT_MUX_NO_INIT,
+                                   PORT_INPUT_MUX_NO_INIT,
+                                   PORT_INPUT_MUX_NO_INIT
+                                 }
+    },
+    {
+        .base                  = IP_SIUL2_0,
+        .pinPortIdx            = 4,
+        .mux                   = PORT_MUX_ALT1,
+        .safeMode              = PORT_SAFE_MODE_DISABLED,
+        .pullConfig            = PORT_INTERNAL_PULL_NOT_ENABLED,
+        .slewRateCtrlSel       = PORT_SLEW_RATE_CONTROL4,
+        .receiverSel           = PORT_RECEIVER_ENABLE_DIFFERENTIAL_VREF,
+        .openDrain             = PORT_OPEN_DRAIN_DISABLED,
+        .inputBuffer           = PORT_INPUT_BUFFER_DISABLED,
+        .outputBuffer          = PORT_OUTPUT_BUFFER_ENABLED,
+        .initValue             = 2,
+        .inputMuxReg           = {
+                                   0
+                                 },
+        .inputMux              = {
+                                   PORT_INPUT_MUX_NO_INIT,
+                                   PORT_INPUT_MUX_NO_INIT,
+                                   PORT_INPUT_MUX_NO_INIT,
+                                   PORT_INPUT_MUX_NO_INIT,
+                                   PORT_INPUT_MUX_NO_INIT,
+                                   PORT_INPUT_MUX_NO_INIT,
+                                   PORT_INPUT_MUX_NO_INIT,
+                                   PORT_INPUT_MUX_NO_INIT
+                                 }
+    },
+    {
+        .base                  = IP_SIUL2_0,
+        .pinPortIdx            = 3,
+        .mux                   = PORT_MUX_ALT1,
+        .safeMode              = PORT_SAFE_MODE_DISABLED,
+        .pullConfig            = PORT_INTERNAL_PULL_NOT_ENABLED,
+        .slewRateCtrlSel       = PORT_SLEW_RATE_CONTROL4,
+        .receiverSel           = PORT_RECEIVER_ENABLE_DIFFERENTIAL_VREF,
+        .openDrain             = PORT_OPEN_DRAIN_DISABLED,
+        .inputBuffer           = PORT_INPUT_BUFFER_DISABLED,
+        .outputBuffer          = PORT_OUTPUT_BUFFER_ENABLED,
+        .initValue             = 2,
+        .inputMuxReg           = {
+                                   0
+                                 },
+        .inputMux              = {
+                                   PORT_INPUT_MUX_NO_INIT,
+                                   PORT_INPUT_MUX_NO_INIT,
+                                   PORT_INPUT_MUX_NO_INIT,
+                                   PORT_INPUT_MUX_NO_INIT,
+                                   PORT_INPUT_MUX_NO_INIT,
+                                   PORT_INPUT_MUX_NO_INIT,
+                                   PORT_INPUT_MUX_NO_INIT,
+                                   PORT_INPUT_MUX_NO_INIT
+                                 }
+    },
+    {
+        .base                  = IP_SIUL2_0,
+        .pinPortIdx            = 17,
+        .mux                   = PORT_MUX_ALT1,
+        .safeMode              = PORT_SAFE_MODE_DISABLED,
+        .pullConfig            = PORT_INTERNAL_PULL_NOT_ENABLED,
+        .slewRateCtrlSel       = PORT_SLEW_RATE_CONTROL4,
+        .receiverSel           = PORT_RECEIVER_ENABLE_DIFFERENTIAL_VREF,
+        .openDrain             = PORT_OPEN_DRAIN_DISABLED,
+        .inputBuffer           = PORT_INPUT_BUFFER_DISABLED,
+        .outputBuffer          = PORT_OUTPUT_BUFFER_ENABLED,
+        .initValue             = 2,
+        .inputMuxReg           = {
+                                   0
+                                 },
+        .inputMux              = {
+                                   PORT_INPUT_MUX_NO_INIT,
+                                   PORT_INPUT_MUX_NO_INIT,
+                                   PORT_INPUT_MUX_NO_INIT,
+                                   PORT_INPUT_MUX_NO_INIT,
+                                   PORT_INPUT_MUX_NO_INIT,
+                                   PORT_INPUT_MUX_NO_INIT,
+                                   PORT_INPUT_MUX_NO_INIT,
+                                   PORT_INPUT_MUX_NO_INIT
+                                 }
+    },
+    {
+        .base                  = IP_SIUL2_0,
+        .pinPortIdx            = 6,
+        .mux                   = PORT_MUX_AS_GPIO,
+        .safeMode              = PORT_SAFE_MODE_DISABLED,
+        .pullConfig            = PORT_INTERNAL_PULL_NOT_ENABLED,
+        .slewRateCtrlSel       = PORT_SLEW_RATE_CONTROL4,
+        .receiverSel           = PORT_RECEIVER_ENABLE_DIFFERENTIAL_VREF,
+        .openDrain             = PORT_OPEN_DRAIN_DISABLED,
+        .inputBuffer           = PORT_INPUT_BUFFER_ENABLED,
+        .outputBuffer          = PORT_OUTPUT_BUFFER_DISABLED,
+        .initValue             = 2,
+        .inputMuxReg           = {
+                                   79
+                                 },
+        .inputMux              = {
+                                   PORT_INPUT_MUX_ALT1,
+                                   PORT_INPUT_MUX_NO_INIT,
+                                   PORT_INPUT_MUX_NO_INIT,
+                                   PORT_INPUT_MUX_NO_INIT,
+                                   PORT_INPUT_MUX_NO_INIT,
+                                   PORT_INPUT_MUX_NO_INIT,
+                                   PORT_INPUT_MUX_NO_INIT,
+                                   PORT_INPUT_MUX_NO_INIT
+                                 }
+    },
+    {
+        .base                  = IP_SIUL2_0,
+        .pinPortIdx            = 0,
+        .mux                   = PORT_MUX_ALT1,
+        .safeMode              = PORT_SAFE_MODE_DISABLED,
+        .pullConfig            = PORT_INTERNAL_PULL_NOT_ENABLED,
+        .slewRateCtrlSel       = PORT_SLEW_RATE_CONTROL4,
+        .receiverSel           = PORT_RECEIVER_ENABLE_DIFFERENTIAL_VREF,
+        .openDrain             = PORT_OPEN_DRAIN_DISABLED,
+        .inputBuffer           = PORT_INPUT_BUFFER_DISABLED,
+        .outputBuffer          = PORT_OUTPUT_BUFFER_ENABLED,
+        .initValue             = 2,
+        .inputMuxReg           = {
+                                   0
+                                 },
+        .inputMux              = {
+                                   PORT_INPUT_MUX_NO_INIT,
+                                   PORT_INPUT_MUX_NO_INIT,
+                                   PORT_INPUT_MUX_NO_INIT,
+                                   PORT_INPUT_MUX_NO_INIT,
+                                   PORT_INPUT_MUX_NO_INIT,
+                                   PORT_INPUT_MUX_NO_INIT,
+                                   PORT_INPUT_MUX_NO_INIT,
+                                   PORT_INPUT_MUX_NO_INIT
+                                 }
     }
 };
 #define PORT_STOP_SEC_CONFIG_DATA_UNSPECIFIED

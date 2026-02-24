@@ -33,6 +33,8 @@
 
 #include "netifcfg.h"
 #include "gmacif.h"
+#include "Clock_Ip.h"
+#include "IntCtrl_Ip.h"
 
 #define GPT_1MS_CHANNEL GptConf_GptChannelConfiguration_GptChannelConfiguration_2
 #define GPT_1MS_TICKS   (100000U)
@@ -44,9 +46,19 @@
 
 static struct netif s_netif[ETHIF_NUMBER];
 extern void GmacIf_RxNotification(uint8 instance, uint8 channel);
+extern void GmacIf_TxNotification(uint8 instance, uint8 channel);
 static struct udp_pcb *s_udp_pcb = NULL;
 static ip_addr_t s_udp_dst;
+//static ip_addr_t s_udp_src;
 static uint8_t s_udp_payload[UDP_PAYLOAD_SIZE];
+
+err_t err_code = -1;
+volatile uint32_t err_num = 0;
+volatile uint32_t cb_cnt = 0;
+
+extern void PIT_0_ISR(void);
+extern void GMAC1_CH0_TX_IRQHandler(void);
+extern void GMAC1_CH0_RX_IRQHandler(void);
 
 static void Eth_InitStackInterface(void)
 {
@@ -119,11 +131,28 @@ int main(void)
     Mcu_Init(&Mcu_Config);
     (void)Mcu_InitClock(McuConf_McuClockSettingConfig_McuClockSettingConfig_0);
 
+    extern Std_ReturnType sys_init_clock_full(void);
+    sys_init_clock_full();
+
     (void)Siul2_Port_Ip_Init(NUM_OF_CONFIGURED_PINS, g_pin_mux_InitConfigArr);
 
     OsIf_Init(NULL_PTR);
 
     Gpt_Init(&Gpt_Config);
+
+    /* Install interrupt handlers for PIT and EMAC */
+    IntCtrl_Ip_InstallHandler(PIT0_IRQn, PIT_0_ISR, NULL_PTR);
+    IntCtrl_Ip_SetPriority(PIT0_IRQn, 9);
+    IntCtrl_Ip_EnableIrq(PIT0_IRQn);
+
+    // IntCtrl_Ip_InstallHandler(GMAC1_CH0_TX_IRQn, GMAC1_CH0_TX_IRQHandler, NULL_PTR);
+    // IntCtrl_Ip_SetPriority(GMAC1_CH0_TX_IRQn, 8);
+    // IntCtrl_Ip_EnableIrq(GMAC1_CH0_TX_IRQn);
+
+    // IntCtrl_Ip_InstallHandler(GMAC1_CH0_RX_IRQn, GMAC1_CH0_RX_IRQHandler, NULL_PTR);
+    // IntCtrl_Ip_SetPriority(GMAC1_CH0_RX_IRQn, 7);
+    // IntCtrl_Ip_EnableIrq(GMAC1_CH0_RX_IRQn);
+
     Gpt_EnableNotification(GPT_1MS_CHANNEL);
     Gpt_StartTimer(GPT_1MS_CHANNEL, GPT_1MS_TICKS);
 
@@ -139,7 +168,8 @@ int main(void)
     while (1)
     {
         /* Poll RX path so ARP/UDP replies can be processed. */
-//        GmacIf_RxNotification(0U, 0U);
+        GmacIf_RxNotification(0U, 0U);
+        GmacIf_TxNotification(0U, 0U);
         sys_check_timeouts();
     }
 }

@@ -97,8 +97,8 @@ extern "C"{
 
 #ifndef EthConf_EthCtrlConfig_EthCtrlConfig_0
     /*! @brief Controller symbolic name to be passed to API functions that require CtrlIdx */
-    #define EthConf_EthCtrlConfig_EthCtrlConfig_0    (0U)
-#elif (EthConf_EthCtrlConfig_EthCtrlConfig_0 != 0)
+    #define EthConf_EthCtrlConfig_EthCtrlConfig_0    (1U)
+#elif (EthConf_EthCtrlConfig_EthCtrlConfig_0 != 1)
     #error "[TPS_ECUC_06074] Invalid configuration due to symbolic name values"
 #endif
 

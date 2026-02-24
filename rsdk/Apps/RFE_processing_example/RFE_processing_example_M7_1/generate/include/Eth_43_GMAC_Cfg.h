@@ -188,7 +188,7 @@ extern "C"{
 #endif
 
 /*! @brief Number of controllers configured by the driver */
-#define ETH_43_GMAC_MAX_CTRLIDX_SUPPORTED       (1U)     /* Maximum configured controller hardware index + 1 (might be different from the total number of hardware controllers available on the platform) */
+#define ETH_43_GMAC_MAX_CTRLIDX_SUPPORTED       (2U)     /* Maximum configured controller hardware index + 1 (might be different from the total number of hardware controllers available on the platform) */
 
 /*! @brief Number of VLAN Priority Code Points */
 #define ETH_43_GMAC_MAX_VLAN_PCP                (8U)
