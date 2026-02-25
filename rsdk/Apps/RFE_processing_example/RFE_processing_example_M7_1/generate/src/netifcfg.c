@@ -33,17 +33,17 @@
 #include "BasicTypes.h"
 #include "netifcfg.h"
 
-#ifndef LWIP_NETIF_HOSTNAME_TEXT_0
-#define LWIP_NETIF_HOSTNAME_TEXT_0          ("tcpipBoard0")
-#endif /* LWIP_NETIF_HOSTNAME_TEXT_0 */
+#ifndef LWIP_NETIF_HOSTNAME_TEXT_1
+#define LWIP_NETIF_HOSTNAME_TEXT_1          ("tcpipBoard1")
+#endif /* LWIP_NETIF_HOSTNAME_TEXT_1 */
 
-#ifndef IF_NAME_0
-#define IF_NAME_0     'i', '1'
-#endif /* IF_NAME_0 */
+#ifndef IF_NAME_1
+#define IF_NAME_1     'i', '2'
+#endif /* IF_NAME_1 */
 
 /* Each netif configuration */
-netif_custom_t netifCfg_0 = {
-    .num         = 0,
+netif_custom_t netifCfg_1 = {
+    .num         = 1,
     .hwaddr      = { 0x11, 0x22, 0x33, 0x44, 0x55, 0x66 },
     .has_dhcp    = false,
     .has_auto_ip = false,
@@ -51,12 +51,12 @@ netif_custom_t netifCfg_0 = {
     .ip_addr     = { 192,168,0,200 },
     .netmask     = { 255,255,255,0 },
     .gw          = { 192,168,0,1 },
-    .hostname    = LWIP_NETIF_HOSTNAME_TEXT_0,
-    .name        = { IF_NAME_0 }
+    .hostname    = LWIP_NETIF_HOSTNAME_TEXT_1,
+    .name        = { IF_NAME_1 }
 };
 
 /* Array of netif configurations */
 netif_custom_t *netif_cfg[] = {
-    &netifCfg_0
+    &netifCfg_1
 };
 

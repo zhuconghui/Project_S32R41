@@ -197,7 +197,7 @@ static const Eth_43_GMAC_CtrlCfgType Eth_43_GMAC_aCtrlConfigPB[1U] =
         &Eth_43_GMAC_aEgressConfigPB[0U],
         &Eth_43_GMAC_aIngressConfigPB[0U],
         &Eth_43_GMAC_aClockConfigPB[0U],
-        (uint8)0U,
+        (uint8)1U,
         (uint8)1U
 #if (STD_ON == ETH_43_GMAC_DEM_EVENT_DETECT)
        ,{
