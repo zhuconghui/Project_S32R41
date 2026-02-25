@@ -128,6 +128,9 @@ static void Eth_StartPeriodicUdpSend(void)
 
 int main(void)
 {
+    /* Init mode for PHY node and PHY interface with RGMII mode, speed 1G */
+    IP_SRC->GMAC_1_CTRL_REG |= (SRC_GMAC_1_CTRL_REG_PHY_INTF_SEL(0U) | SRC_GMAC_1_CTRL_REG_PHY_INTF_SEL(1U));
+
     Mcu_Init(&Mcu_Config);
     (void)Mcu_InitClock(McuConf_McuClockSettingConfig_McuClockSettingConfig_0);
 

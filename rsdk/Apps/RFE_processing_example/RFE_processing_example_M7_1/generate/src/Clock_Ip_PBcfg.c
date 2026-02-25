@@ -336,7 +336,7 @@ static const Clock_Ip_SelectorConfigType Clock_Ip_SelectorConfigurations_0[CLOCK
     #if CLOCK_IP_CONFIGURED_SELECTORS_0_NO > 19U
     {
         GMAC1_RX_CLK,                    /* Clock name associated to selector */
-        FIRC_CLK,                    /* Name of the selected input source */
+        GMAC_1_EXT_RX_CLK,                    /* Name of the selected input source */
     },
     #endif
 
@@ -1201,7 +1201,7 @@ static const Clock_Ip_CmuConfigType Clock_Ip_CmuConfigurations_0[CLOCK_IP_CONFIG
             CMU_FC_IER_FLLAIE(0) |
             CMU_FC_IER_FHHAIE(0)
         ),
-        48000000U,
+        125000000U,
         {
             0U,          /* Start index in register values array */
             0U,          /* End index in register values array */
